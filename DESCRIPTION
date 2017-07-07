@@ -10,4 +10,6 @@ LazyData: true
 Depends: 
 	ggplot2,
     data.table
+Imports:
+	svd
 RoxygenNote: 6.0.1.9000

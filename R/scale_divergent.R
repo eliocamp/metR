@@ -1,6 +1,6 @@
 #' Divergent color scales
 #'
-#' Wraper around ggplot's \code{scale_*_gradient2} with better defaults and
+#' Wraper around ggplot's \code{\link[ggplot2]{scale_colour_gradient2}} with better defaults and
 #' automatic annotated breaks. It's main use it to label the same levels as
 #' the contours in a plot.
 #'
@@ -13,6 +13,9 @@
 #' gplot(surface, aes(Var1, Var2, z = value)) +
 #'   geom_contour(binwidth = 30, aes(color = ..level..)) +
 #'   scale_color_divergent(binwidth = 30)
+#'
+#' @rdname scale_divergent
+#' @family ggplo2 helpers
 #' @export
 scale_color_divergent <- function(low = muted("blue"), high = muted("red"), binwidth = NA, ...) {
     # Escala divergente con defaults más razonables.
@@ -26,6 +29,7 @@ scale_color_divergent <- function(low = muted("blue"), high = muted("red"), binw
     }
 }
 
+#' @rdname scale_divergent
 #' @export
 scale_fill_divergent <- function(low = muted("blue"), high = muted("red"), binwidth = NA, ...) {
     # Escala divergente con defaults más razonables.

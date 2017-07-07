@@ -1,6 +1,6 @@
 #' Filled 2d contours of a 3d surface
 #'
-#' While ggplot2's  \code{\link{stat_contour}} can plot nice contours, it
+#' While ggplot2's  \code{\link[ggplot2]{stat_contour}} can plot nice contours, it
 #' doesn't work with the polygon geom.
 #'
 #' @section Computed variables:
@@ -12,6 +12,8 @@
 #' surface <- reshape2::melt(volcano)
 #' ggplot(surface, aes(Var1, Var2, z = value)) +
 #'   stat_fill_contour()
+#'
+#' @family ggplo2 helpers
 #' @export
 stat_fill_contour <- function(mapping = NULL, data = NULL,
                               geom = "polygon", position = "identity",

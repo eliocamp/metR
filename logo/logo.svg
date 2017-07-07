@@ -1,0 +1,2676 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   preserveAspectRatio="xMidYMid"
+   width="806.46771"
+   height="806.46771"
+   viewBox="0 0 806.46771 806.46771"
+   version="1.1"
+   id="svg18"
+   sodipodi:docname="logo.svg"
+   inkscape:version="0.92.1 unknown"
+   inkscape:export-filename="/home/elio/Documents/meteoR/logo/logo.png"
+   inkscape:export-xdpi="15.24"
+   inkscape:export-ydpi="15.24">
+  <metadata
+     id="metadata22">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     id="namedview20"
+     showgrid="false"
+     inkscape:measure-start="-68.7418,-1.80899"
+     inkscape:measure-end="41.6069,-45.2249"
+     inkscape:zoom="0.5"
+     inkscape:cx="231.70767"
+     inkscape:cy="384.20121"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg18"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     showguides="true" />
+  <defs
+     id="defs12">
+    <inkscape:path-effect
+       effect="powerstroke"
+       id="path-effect5153"
+       is_visible="true"
+       offset_points="0.19407776,-3.9653003 | 0.78255745,-18.364451 | 0.7835556,-34.756292"
+       sort_points="true"
+       interpolator_type="Linear"
+       interpolator_beta="0.2"
+       start_linecap_type="zerowidth"
+       linejoin_type="extrp_arc"
+       miter_limit="4"
+       end_linecap_type="zerowidth" />
+    <marker
+       inkscape:stockid="ExperimentalArrow"
+       orient="auto-start-reverse"
+       refY="3"
+       refX="5"
+       id="ExperimentalArrow"
+       inkscape:isstock="true">
+      <path
+         id="path4767"
+         d="M 10,3 0,6 V 0 Z"
+         style="fill:context-stroke;stroke:#000000;stroke-opacity:1"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Scissors"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Scissors"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="schere"
+         d="M 9.0898857,-3.6061018 C 8.1198849,-4.7769976 6.3697607,-4.7358294 5.0623558,-4.2327734 l -8.2124046,3.0779029 c -2.3882933,-1.3067135 -4.7482873,-0.9325372 -4.7482873,-1.5687873 0,-0.4973164 0.4566662,-0.3883222 0.3883068,-1.6831941 -0.065635,-1.2432767 -1.3635771,-2.1630796 -2.5903987,-2.0816435 -1.227271,-0.00735 -2.499439,0.9331613 -2.510341,2.2300611 -0.09143,1.3063864 1.007209,2.5196896 2.306764,2.6052316 1.5223406,0.2266616 4.218258,-0.6955566 5.482945,1.57086006 -0.9422847,1.73825774 -2.6140244,1.74307674 -4.1255107,1.65607034 -1.2548743,-0.072235 -2.7620933,0.2873979 -3.3606483,1.5208605 -0.578367,1.1820862 -0.0112,2.8646022 1.316749,3.226412 1.3401912,0.4918277 3.1806689,-0.129711 3.4993722,-1.6707242 0.2456585,-1.187823 -0.5953659,-1.7459574 -0.2725074,-2.1771537 0.2436135,-0.32536 1.7907806,-0.1368452 4.5471053,-1.3748244 L 5.6763468,4.2330688 C 6.8000164,4.5467672 8.1730685,4.5362646 9.1684433,3.4313614 l -9.22008423,-3.48508362 z m -18.3078016,-1.900504 c 1.294559,0.7227998 1.1888392,2.6835702 -0.1564272,3.0632889 -1.2165179,0.423661 -2.7710269,-0.7589694 -2.3831779,-2.0774648 0.227148,-1.0818519 1.653387,-1.480632 2.5396051,-0.9858241 z m 0.056264,8.0173649 c 1.3508301,0.4988648 1.1214429,2.7844356 -0.2522207,3.091609 -0.9110594,0.3163391 -2.2135494,-0.1387976 -2.3056964,-1.2121394 -0.177609,-1.305055 1.356085,-2.4841482 2.5579171,-1.8794696 z"
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleInL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker8557"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path8555"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(-0.8)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker8469"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path8467"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(1.1,0,0,1.1,1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker8363"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path8361"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4514"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="DiamondL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DiamondL"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4593"
+         d="M 0,-7.0710768 -7.0710894,0 0,7.0710589 7.0710462,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.8)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker8109"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path8107"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.8)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutM"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="TriangleOutM"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4659"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.4)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6821"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path6819"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4535"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleInL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="TriangleInL"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4647"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(-0.8)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4836"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4834"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(1.1,0,0,1.1,1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4532"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(1.1,0,0,1.1,1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="TriangleOutL"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4656"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.8)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <linearGradient
+       id="gradientFill-1"
+       x1="0"
+       x2="1"
+       y1="0"
+       y2="1"
+       gradientUnits="objectBoundingBox"
+       spreadMethod="pad">
+      <stop
+         offset="0"
+         stop-color="rgb(203,206,208)"
+         stop-opacity="1"
+         id="stop2" />
+      <stop
+         offset="1"
+         stop-color="rgb(132,131,139)"
+         stop-opacity="1"
+         id="stop4" />
+    </linearGradient>
+    <linearGradient
+       id="gradientFill-2"
+       x1="0"
+       x2="1"
+       y1="0"
+       y2="1"
+       gradientUnits="objectBoundingBox"
+       spreadMethod="pad">
+      <stop
+         offset="0"
+         stop-color="rgb(39,109,195)"
+         stop-opacity="1"
+         id="stop7" />
+      <stop
+         offset="1"
+         stop-color="rgb(22,92,170)"
+         stop-opacity="1"
+         id="stop9" />
+    </linearGradient>
+    <style
+       id="style9983"
+       type="text/css"><![CDATA[
+    line, polyline, path, rect, circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+    <clipPath
+       id="cpMTA3Ljk0NHwyOTIuNTU2fDIzNHww">
+      <rect
+         id="rect9989"
+         height="234"
+         width="184.61"
+         y="0"
+         x="107.94"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="cpMHw0MDAuNXwyMzR8MA==">
+      <rect
+         id="rect9994"
+         height="234"
+         width="400.5"
+         y="0"
+         x="0"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="cpMTQ0LjQwNXwyODcuMDc2fDE0OC4xNTF8NS40Nzk0NQ==">
+      <rect
+         id="rect9999"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10272">
+      <rect
+         id="rect10270"
+         height="234"
+         width="400.5"
+         y="0"
+         x="0"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="cpMTQ0LjQwNXwyODcuMDc2fDE0OC4xNTF8NS40Nzk0NQ==-9">
+      <rect
+         id="rect9999-2"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10552">
+      <rect
+         id="rect10550"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10556">
+      <rect
+         id="rect10554"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10560">
+      <rect
+         id="rect10558"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10564">
+      <rect
+         id="rect10562"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10568">
+      <rect
+         id="rect10566"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10572">
+      <rect
+         id="rect10570"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10576">
+      <rect
+         id="rect10574"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10580">
+      <rect
+         id="rect10578"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10584">
+      <rect
+         id="rect10582"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10588">
+      <rect
+         id="rect10586"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10592">
+      <rect
+         id="rect10590"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10596">
+      <rect
+         id="rect10594"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10600">
+      <rect
+         id="rect10598"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10604">
+      <rect
+         id="rect10602"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10608">
+      <rect
+         id="rect10606"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10612">
+      <rect
+         id="rect10610"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10616">
+      <rect
+         id="rect10614"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10620">
+      <rect
+         id="rect10618"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10624">
+      <rect
+         id="rect10622"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10628">
+      <rect
+         id="rect10626"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10632">
+      <rect
+         id="rect10630"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10636">
+      <rect
+         id="rect10634"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10640">
+      <rect
+         id="rect10638"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10644">
+      <rect
+         id="rect10642"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10648">
+      <rect
+         id="rect10646"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10652">
+      <rect
+         id="rect10650"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10656">
+      <rect
+         id="rect10654"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10660">
+      <rect
+         id="rect10658"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10664">
+      <rect
+         id="rect10662"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10668">
+      <rect
+         id="rect10666"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10672">
+      <rect
+         id="rect10670"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10676">
+      <rect
+         id="rect10674"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10680">
+      <rect
+         id="rect10678"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10684">
+      <rect
+         id="rect10682"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10688">
+      <rect
+         id="rect10686"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10692">
+      <rect
+         id="rect10690"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10696">
+      <rect
+         id="rect10694"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10700">
+      <rect
+         id="rect10698"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10704">
+      <rect
+         id="rect10702"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10708">
+      <rect
+         id="rect10706"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10712">
+      <rect
+         id="rect10710"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10716">
+      <rect
+         id="rect10714"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10720">
+      <rect
+         id="rect10718"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10724">
+      <rect
+         id="rect10722"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10728">
+      <rect
+         id="rect10726"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10732">
+      <rect
+         id="rect10730"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10736">
+      <rect
+         id="rect10734"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10740">
+      <rect
+         id="rect10738"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10744">
+      <rect
+         id="rect10742"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10748">
+      <rect
+         id="rect10746"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10752">
+      <rect
+         id="rect10750"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10756">
+      <rect
+         id="rect10754"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10760">
+      <rect
+         id="rect10758"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10764">
+      <rect
+         id="rect10762"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10768">
+      <rect
+         id="rect10766"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10772">
+      <rect
+         id="rect10770"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10776">
+      <rect
+         id="rect10774"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10780">
+      <rect
+         id="rect10778"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10784">
+      <rect
+         id="rect10782"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10788">
+      <rect
+         id="rect10786"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10792">
+      <rect
+         id="rect10790"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10796">
+      <rect
+         id="rect10794"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10800">
+      <rect
+         id="rect10798"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10804">
+      <rect
+         id="rect10802"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10808">
+      <rect
+         id="rect10806"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10812">
+      <rect
+         id="rect10810"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10816">
+      <rect
+         id="rect10814"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10820">
+      <rect
+         id="rect10818"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10824">
+      <rect
+         id="rect10822"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10828">
+      <rect
+         id="rect10826"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10832">
+      <rect
+         id="rect10830"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10836">
+      <rect
+         id="rect10834"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10840">
+      <rect
+         id="rect10838"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10844">
+      <rect
+         id="rect10842"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10848">
+      <rect
+         id="rect10846"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10852">
+      <rect
+         id="rect10850"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10856">
+      <rect
+         id="rect10854"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10860">
+      <rect
+         id="rect10858"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10864">
+      <rect
+         id="rect10862"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10868">
+      <rect
+         id="rect10866"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10872">
+      <rect
+         id="rect10870"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10876">
+      <rect
+         id="rect10874"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10880">
+      <rect
+         id="rect10878"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10884">
+      <rect
+         id="rect10882"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10888">
+      <rect
+         id="rect10886"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10892">
+      <rect
+         id="rect10890"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10896">
+      <rect
+         id="rect10894"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10900">
+      <rect
+         id="rect10898"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10904">
+      <rect
+         id="rect10902"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10908">
+      <rect
+         id="rect10906"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10912">
+      <rect
+         id="rect10910"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10916">
+      <rect
+         id="rect10914"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10920">
+      <rect
+         id="rect10918"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10924">
+      <rect
+         id="rect10922"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10928">
+      <rect
+         id="rect10926"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10932">
+      <rect
+         id="rect10930"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10936">
+      <rect
+         id="rect10934"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10940">
+      <rect
+         id="rect10938"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10944">
+      <rect
+         id="rect10942"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10948">
+      <rect
+         id="rect10946"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10952">
+      <rect
+         id="rect10950"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10956">
+      <rect
+         id="rect10954"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10960">
+      <rect
+         id="rect10958"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10964">
+      <rect
+         id="rect10962"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10968">
+      <rect
+         id="rect10966"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10972">
+      <rect
+         id="rect10970"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10976">
+      <rect
+         id="rect10974"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10980">
+      <rect
+         id="rect10978"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10984">
+      <rect
+         id="rect10982"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10988">
+      <rect
+         id="rect10986"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10992">
+      <rect
+         id="rect10990"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath10996">
+      <rect
+         id="rect10994"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11000">
+      <rect
+         id="rect10998"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11004">
+      <rect
+         id="rect11002"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11008">
+      <rect
+         id="rect11006"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11012">
+      <rect
+         id="rect11010"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11016">
+      <rect
+         id="rect11014"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11020">
+      <rect
+         id="rect11018"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11024">
+      <rect
+         id="rect11022"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11028">
+      <rect
+         id="rect11026"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11032">
+      <rect
+         id="rect11030"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11036">
+      <rect
+         id="rect11034"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11040">
+      <rect
+         id="rect11038"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11044">
+      <rect
+         id="rect11042"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11048">
+      <rect
+         id="rect11046"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath11052">
+      <rect
+         id="rect11050"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <style
+       id="style12856"
+       type="text/css"><![CDATA[
+    line, polyline, path, rect, circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+    <clipPath
+       id="cpMTA3Ljk0NHwyOTIuNTU2fDIzNHww-4">
+      <rect
+         id="rect12862"
+         height="234"
+         width="184.61"
+         y="0"
+         x="107.94"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="cpMHw0MDAuNXwyMzR8MA==-4">
+      <rect
+         id="rect12867"
+         height="234"
+         width="400.5"
+         y="0"
+         x="0"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="cpMTQ0LjQwNXwyODcuMDc2fDE0OC4xNTF8NS40Nzk0NQ==-5">
+      <rect
+         id="rect12872"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13061">
+      <rect
+         id="rect13059"
+         height="234"
+         width="400.5"
+         y="0"
+         x="0"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="cpMTQ0LjQwNXwyODcuMDc2fDE0OC4xNTF8NS40Nzk0NQ==-5-9">
+      <rect
+         id="rect12872-1"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13369">
+      <rect
+         id="rect13367"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13373">
+      <rect
+         id="rect13371"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13377">
+      <rect
+         id="rect13375"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13381">
+      <rect
+         id="rect13379"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13385">
+      <rect
+         id="rect13383"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13389">
+      <rect
+         id="rect13387"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13393">
+      <rect
+         id="rect13391"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13397">
+      <rect
+         id="rect13395"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13401">
+      <rect
+         id="rect13399"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13405">
+      <rect
+         id="rect13403"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13409">
+      <rect
+         id="rect13407"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13413">
+      <rect
+         id="rect13411"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13417">
+      <rect
+         id="rect13415"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13421">
+      <rect
+         id="rect13419"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13425">
+      <rect
+         id="rect13423"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13429">
+      <rect
+         id="rect13427"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13433">
+      <rect
+         id="rect13431"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13437">
+      <rect
+         id="rect13435"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13441">
+      <rect
+         id="rect13439"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13445">
+      <rect
+         id="rect13443"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13449">
+      <rect
+         id="rect13447"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13453">
+      <rect
+         id="rect13451"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13457">
+      <rect
+         id="rect13455"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13461">
+      <rect
+         id="rect13459"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13465">
+      <rect
+         id="rect13463"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13469">
+      <rect
+         id="rect13467"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13473">
+      <rect
+         id="rect13471"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13477">
+      <rect
+         id="rect13475"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13481">
+      <rect
+         id="rect13479"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13485">
+      <rect
+         id="rect13483"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13489">
+      <rect
+         id="rect13487"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13493">
+      <rect
+         id="rect13491"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13497">
+      <rect
+         id="rect13495"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13501">
+      <rect
+         id="rect13499"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13505">
+      <rect
+         id="rect13503"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13509">
+      <rect
+         id="rect13507"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13513">
+      <rect
+         id="rect13511"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13517">
+      <rect
+         id="rect13515"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13521">
+      <rect
+         id="rect13519"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13525">
+      <rect
+         id="rect13523"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13529">
+      <rect
+         id="rect13527"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13533">
+      <rect
+         id="rect13531"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13537">
+      <rect
+         id="rect13535"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13541">
+      <rect
+         id="rect13539"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13545">
+      <rect
+         id="rect13543"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13549">
+      <rect
+         id="rect13547"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13553">
+      <rect
+         id="rect13551"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13557">
+      <rect
+         id="rect13555"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13561">
+      <rect
+         id="rect13559"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13565">
+      <rect
+         id="rect13563"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13569">
+      <rect
+         id="rect13567"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13573">
+      <rect
+         id="rect13571"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13577">
+      <rect
+         id="rect13575"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13581">
+      <rect
+         id="rect13579"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13585">
+      <rect
+         id="rect13583"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13589">
+      <rect
+         id="rect13587"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13593">
+      <rect
+         id="rect13591"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13597">
+      <rect
+         id="rect13595"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13601">
+      <rect
+         id="rect13599"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13605">
+      <rect
+         id="rect13603"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13609">
+      <rect
+         id="rect13607"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13613">
+      <rect
+         id="rect13611"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13617">
+      <rect
+         id="rect13615"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13621">
+      <rect
+         id="rect13619"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13625">
+      <rect
+         id="rect13623"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13629">
+      <rect
+         id="rect13627"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13633">
+      <rect
+         id="rect13631"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13637">
+      <rect
+         id="rect13635"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13641">
+      <rect
+         id="rect13639"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13645">
+      <rect
+         id="rect13643"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13649">
+      <rect
+         id="rect13647"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13653">
+      <rect
+         id="rect13651"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13657">
+      <rect
+         id="rect13655"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13661">
+      <rect
+         id="rect13659"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13665">
+      <rect
+         id="rect13663"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13669">
+      <rect
+         id="rect13667"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13673">
+      <rect
+         id="rect13671"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13677">
+      <rect
+         id="rect13675"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13681">
+      <rect
+         id="rect13679"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13685">
+      <rect
+         id="rect13683"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13689">
+      <rect
+         id="rect13687"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13693">
+      <rect
+         id="rect13691"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13697">
+      <rect
+         id="rect13695"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <clipPath
+       id="clipPath13701">
+      <rect
+         id="rect13699"
+         height="142.67"
+         width="142.67"
+         y="5.48"
+         x="144.39999"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" />
+    </clipPath>
+    <marker
+       inkscape:stockid="ExperimentalArrow"
+       orient="auto-start-reverse"
+       refY="3"
+       refX="5"
+       id="ExperimentalArrow-6"
+       inkscape:isstock="true">
+      <path
+         id="path4767-7"
+         d="M 10,3 0,6 V 0 Z"
+         style="fill:context-stroke;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <path
+     sodipodi:type="star"
+     style="fill:#008080;fill-opacity:1;fill-rule:nonzero;stroke:#003636;stroke-width:22.26600075;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0.90000069;stroke-dasharray:none;stroke-opacity:1"
+     id="path5912"
+     sodipodi:sides="6"
+     sodipodi:cx="403.23386"
+     sodipodi:cy="403.23386"
+     sodipodi:r1="391.95102"
+     sodipodi:r2="339.43954"
+     sodipodi:arg1="0.52359878"
+     sodipodi:arg2="1.0471976"
+     inkscape:flatsided="true"
+     inkscape:rounded="0"
+     inkscape:randomized="0"
+     d="M 742.6734,599.20937 403.23385,795.18488 63.794316,599.20936 63.794317,207.25835 403.23386,11.282837 742.6734,207.25835 Z"
+     inkscape:export-xdpi="17.530001"
+     inkscape:export-ydpi="17.530001" />
+  <g
+     id="g5187"
+     transform="translate(76,-4)">
+    <path
+       inkscape:export-ydpi="17.530001"
+       inkscape:export-xdpi="17.530001"
+       inkscape:original-d="M 180.58315,189.89335 C 418.43085,299.66921 544.1372,488.76462 642.93547,633.30283"
+       inkscape:path-effect="#path-effect5153"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path5151"
+       d="m 180.58315,189.89335 c 46.71957,20.10698 89.41437,43.29496 128.68164,68.70576 62.16268,39.73649 115.71935,84.95355 163.02423,132.16623 43.68263,43.59749 81.84615,88.7073 116.37544,132.42912 0.008,-0.005 13.61388,-9.13187 13.62184,-9.13721 15.77651,41.52849 28.84037,81.4586 40.64917,119.24558 -30.94884,-24.74672 -63.19276,-51.61385 -96.94893,-78.47365 -0.007,0.006 12.94334,-10.08927 12.9362,-10.08371 -30.19898,-45.60128 -64.00293,-92.62246 -103.40606,-138.38639 -42.65072,-49.53577 -92.04661,-97.81443 -150.74696,-141.2263 -37.40593,-27.339 -78.58333,-52.73615 -124.18657,-75.23943 z"
+       style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="17.530001"
+       inkscape:export-xdpi="17.530001"
+       inkscape:connector-curvature="0"
+       id="path5199"
+       d="m 484.32382,351.293 c -16.76841,0.30394 -33.65093,-0.40817 -50.34961,0.64648 -12.23758,3.19934 -17.10297,17.51657 -14.86523,28.9043 0.15763,84.84833 -0.31522,169.77458 0.23632,254.57422 4.17061,8.24114 14.51344,4.31363 21.67188,4.85547 6.12813,0.0846 15.65821,2.63671 18.16211,-5.27149 0.87683,-63.83532 0.0883,-127.68435 0.36914,-191.52539 0,-17.24414 0,-34.48828 0,-51.73242 39.14648,0 78.29297,0 117.43945,0 -17.42215,16.23395 -36.04319,31.45376 -52.36718,48.70117 -1.2431,9.32913 9.11643,13.55629 13.49182,20.38404 3.17541,5.05534 9.87796,11.56951 15.87146,6.58862 30.38978,-28.7213 62.60014,-55.70523 92.375,-85.16016 8.91675,-12.6682 -2.75709,-32.76315 -18.26563,-30.95175 -47.92318,0.10562 -95.84635,-0.10585 -143.76953,-0.0131 z"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#008080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:28.44000053;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0.90000069;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <flowRoot
+       inkscape:export-ydpi="17.530001"
+       inkscape:export-xdpi="17.530001"
+       transform="matrix(1.1065522,0,0,1.1065522,-11.827051,207.85843)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="flowRoot5914"
+       xml:space="preserve"><flowRegion
+         style="stroke:#000000;stroke-opacity:1"
+         id="flowRegion5916"><rect
+           style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
+           y="208.24617"
+           x="101.30367"
+           height="359.98981"
+           width="736.26056"
+           id="rect5918" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:106.66666412px;font-family:'Anonymous Pro';-inkscape-font-specification:'Anonymous Pro';stroke:#000000;stroke-opacity:1"
+         id="flowPara5920">meteo</flowPara></flowRoot>    <path
+       inkscape:export-ydpi="17.530001"
+       inkscape:export-xdpi="17.530001"
+       sodipodi:nodetypes="cccc"
+       inkscape:connector-curvature="0"
+       id="path4510"
+       d="M 439.32889,634.47661 V 371.52398 h 189.8391 l -89.87425,81.77633"
+       style="fill:none;stroke:#000000;stroke-width:28.44000053;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0.90000069;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+  <path
+     sodipodi:type="star"
+     style="fill:#008080;fill-opacity:1;fill-rule:nonzero;stroke:#003636;stroke-width:22.56599998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0.90000069;stroke-dasharray:none;stroke-opacity:1"
+     id="path5912-5"
+     sodipodi:sides="6"
+     sodipodi:cx="-454"
+     sodipodi:cy="434.46771"
+     sodipodi:r1="391.95102"
+     sodipodi:r2="339.43954"
+     sodipodi:arg1="0.52359878"
+     sodipodi:arg2="1.0471976"
+     inkscape:flatsided="true"
+     inkscape:rounded="0"
+     inkscape:randomized="0"
+     d="M -114.56046,630.44322 -454,826.41873 -793.43954,630.44322 l 0,-391.95102 L -454,42.516688 -114.56046,238.4922 Z" />
+  <flowRoot
+     xml:space="preserve"
+     id="flowRoot5914-3"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+     transform="matrix(1.1065522,0,0,1.1065522,-869.0609,239.09231)"><flowRegion
+       id="flowRegion5916-5"
+       style="stroke:#000000;stroke-opacity:1"><rect
+         id="rect5918-6"
+         width="736.26056"
+         height="359.98981"
+         x="101.30367"
+         y="208.24617"
+         style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1" /></flowRegion><flowPara
+       id="flowPara5920-2"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:106.66666412px;font-family:'Anonymous Pro';-inkscape-font-specification:'Anonymous Pro';stroke:#000000;stroke-opacity:1">meteo</flowPara></flowRoot>  <g
+     id="g9509"
+     transform="matrix(1.6557826,0,0,1.6557826,-1219.7768,-196.70156)">
+    <path
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path4510-9"
+       d="M 484.28568,520.8486 V 362.03993 h 114.65219 l -69.7209,58.87541 37.99217,48.37693"
+       style="fill:none;stroke:#000000;stroke-width:17.17605209;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0.90000069;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path8093"
+       d="M 584.16846,490.77408 552.42155,451.10362"
+       style="fill:none;stroke:#000000;stroke-width:5.69999981;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#ExperimentalArrow-6)" />
+  </g>
+</svg>

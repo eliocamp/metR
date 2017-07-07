@@ -9,7 +9,7 @@ stat_fill_contour(mapping = NULL, data = NULL, geom = "polygon",
   inherit.aes = TRUE)
 }
 \description{
-While ggplot2's  \code{\link{stat_contour}} can plot nice contours, it
+While ggplot2's  \code{\link[ggplot2]{stat_contour}} can plot nice contours, it
 doesn't work with the polygon geom.
 }
 \section{Computed variables}{
@@ -24,4 +24,11 @@ library(ggplot2)
 surface <- reshape2::melt(volcano)
 ggplot(surface, aes(Var1, Var2, z = value)) +
   stat_fill_contour()
+
+}
+\seealso{
+Other ggplo2 helpers: \code{\link{DivideTimeseries}},
+  \code{\link{RepeatLon}},
+  \code{\link{scale_color_divergent}},
+  \code{\link{scale_x_longitude}}
 }

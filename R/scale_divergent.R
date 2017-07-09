@@ -31,6 +31,7 @@ scale_color_divergent <- function(low = muted("blue"), high = muted("red"), binw
 
 #' @rdname scale_divergent
 #' @export
+#' @import scales
 scale_fill_divergent <- function(low = muted("blue"), high = muted("red"), binwidth = NA, ...) {
     # Escala divergente con defaults más razonables.
     if (!is.na(binwidth)) {

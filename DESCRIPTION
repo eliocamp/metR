@@ -1,15 +1,18 @@
 Package: meteoR
 Type: Package
 Title: Make R great again for meteorological data
-Version: 0.0.9000
+Version: 0.0.9001
 Authors@R: person("Elio", "Campitelli", email = "elio.campitelli@cima.fcen.uba.ar", role = c("cre", "aut"))
 Description: Many usefull functions and extensions for dealing with meteorological data. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Depends: 
+Depends:
 	ggplot2,
     data.table
 Imports:
 	svd
 RoxygenNote: 6.0.1.9000
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr

@@ -17,11 +17,11 @@
 #'
 #' @export
 reverselog_trans <- function(base = 10) {
-    library("scales")
+    # library("scales")
     trans <- function(x) -log(x, base)
     inv <- function(x) base^(-x)
 
-    trans_new(paste0("reverselog-", format(base)), trans, inv,
+    scales::trans_new(paste0("reverselog-", format(base)), trans, inv,
               log_breaks(base = base),
               domain = c(1e-100, Inf))
 }

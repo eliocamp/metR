@@ -41,6 +41,6 @@ DivideTimeseries(g, n = 3, series$date, xlab = "Date", ylab = "Variable")
 \seealso{
 Other ggplo2 helpers: \code{\link{RepeatLon}},
   \code{\link{scale_color_divergent}},
-  \code{\link{scale_x_longitude}},
+  \code{\link{scale_longitude}},
   \code{\link{stat_fill_contour}}
 }

@@ -30,6 +30,6 @@ gplot(surface, aes(Var1, Var2, z = value)) +
 }
 \seealso{
 Other ggplo2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{RepeatLon}}, \code{\link{scale_x_longitude}},
+  \code{\link{RepeatLon}}, \code{\link{scale_longitude}},
   \code{\link{stat_fill_contour}}
 }

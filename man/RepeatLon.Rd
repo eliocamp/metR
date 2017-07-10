@@ -4,35 +4,41 @@
 \alias{RepeatLon}
 \title{Repeat minimum longitude}
 \usage{
-RepeatLon(x, colname = "lon")
+RepeatLon(x, colname = "lon", maxlon = 360)
 }
 \arguments{
-\item{x}{A data.table (or a data.frame which will be converted into a
-data.table).}
+\item{x}{a data.frame}
 
-\item{colname}{The name of the longitude-like column.}
+\item{colname}{the name of the longitude-like column}
+
+\item{maxlon}{the value of the longitude-like column that the duplicated
+values should have.}
 }
 \value{
-A data.table with the values corresponding to the minimum longitude
+A data.frame with the values corresponding to the minimum longitude
 repeated next to the maximum.
 }
 \description{
-ggplot's \code{\link[ggplot2]{coord_polar}} doesn't close contours in cyclical data so
-the workaround is to repeat the leftmost data.
+ggplot's \code{\link[ggplot2]{coord_polar}} doesn't close contours in
+cyclical data so the workaround is to copy the leftmost data to the right.
 }
 \examples{
-library(data.table)
 library(ggplot2)
-field <- setDT(expand.grid(lat = seq(-90, 0, by = 3.5),
-                           lon = seq(0, 360, by = 3.5)))
-field$z <- with(field, sin(lat*pi/180*4) + cos(lon*pi/180*5))
-ggplot(RepeatLon(field), aes(lon, lat)) +
-    geom_contour(aes(z = z)) +
-    coord_polar()
+slp <- copy(slp)
+g <- ggplot(slp, aes(lon, lat)) +
+    geom_contour(aes(z = slp)) +
+    coord_polar() +
+    ylim(c(-90, -10))
+
+# This plot has problems in lon = 0
+g
+
+# But using RepeatLon solves it.
+g \%+\% RepeatLon(slp)
 }
 \seealso{
 Other ggplo2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{scale_color_divergent}},
-  \code{\link{scale_x_longitude}},
+  \code{\link{scale_longitude}},
   \code{\link{stat_fill_contour}}
 }

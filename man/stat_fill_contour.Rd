@@ -30,5 +30,5 @@ ggplot(surface, aes(Var1, Var2, z = value)) +
 Other ggplo2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{RepeatLon}},
   \code{\link{scale_color_divergent}},
-  \code{\link{scale_x_longitude}}
+  \code{\link{scale_longitude}}
 }

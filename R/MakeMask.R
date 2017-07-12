@@ -2,8 +2,8 @@
 #'
 #' Creates a  mask
 #'
-#' @param lat a vector of latitudes in degrees
 #' @param lon a vector of longitudes in degrees in 0-360 format
+#' @param lat a vector of latitudes in degrees
 #' @param mask the name of the dataset (that will be load with
 #' \code{\link[maps]{map}}) for creating the mask
 #' @param wrap the longitude range to be used for a global mask
@@ -16,12 +16,12 @@
 #' @examples
 #'
 #' # Make a sea-land mask
-#' nceptemperature[, land := MakeMask(lat, lon)]
+#' nceptemperature[, land := MakeMask(lon, lat)]
 #'
 #' # Take the temperature difference between land and ocean
-#' diftemp <- nceptemperature[, .(tempdif = mean(air[land == TRUE])
-#'                                - mean(air[land == FALSE])),
-#'                            by = .(lat, lev)]
+#' diftemp <- nceptemperature[,
+#'           .(tempdif = mean(air[land == TRUE]) - mean(air[land == FALSE])),
+#'            by = .(lat, lev)]
 #' ggplot(diftemp, aes(lat, lev)) +
 #'     geom_contour(aes(z = tempdif, color = ..level..)) +
 #'     scale_y_level() +
@@ -29,7 +29,7 @@
 #'     scale_color_divergent()
 #'
 #' # Mean temperature in the USA
-#' usatemp <- nceptemperature[, usa := MakeMask(lat, lon, mask = "usa")][
+#' usatemp <- nceptemperature[, usa := MakeMask(lon, lat, mask = "usa")][
 #'     , .(air = weighted.mean(air, cos(lat*pi/180))), by = .(usa, lev)][
 #'         usa == TRUE]
 #'
@@ -43,7 +43,7 @@
 #' @import maps
 #' @import maptools
 #' @import sp
-MakeMask <- function(lat, lon, mask = "world", wrap = c(0, 360)) {
+MakeMask <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
     seamask <- maps::map(paste0("maps::", mask), fill = TRUE, col = "transparent",
                          plot = F, wrap = wrap)
     IDs <- sapply(strsplit(seamask$names, ":"), function(x) x[1])

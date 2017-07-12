@@ -17,14 +17,37 @@ DerivatePhysical(variable, lon, lat, order = c(1, 2), bc = c("cyclic",
 \item{order}{order of the derivative}
 
 \item{bc}{boundary conditions}
+
+\item{a}{the radius of the earth in kilometers}
 }
 \value{
 A numeric vector of the same length as \code{variable}.
 }
 \description{
 Derivates a variable in the zonal or meridional direction taking into account
-the size of th Earth.
+the size of the Earth.
+}
+\details{
+This function is usefull when using gridded data in a longitude-latitude
+regular grid and one needs to compute zonal or meridional derivatives. If
+\code{lon} is of length 1, it computes the meridional derivative (\eqn{d/dy})
+at the given longitude. If \code{lat} is of length 1, then it computes
+the zonal derivative (\eqn{d/dx}) at the given latitude.
+}
+\examples{
+nceptemperature[, air.dy := DerivatePhysical(air, lon = lon, lat, bc = "none"),
+                by = .(lev, lon)]
+
+ggplot(nceptemperature[lev == 500], aes(lon, lat)) +
+    geom_tile(aes(fill = air)) +
+    geom_contour(aes(z = air.dy, color = ..level..)) +
+    scale_color_divergent()
+
 }
 \seealso{
 \code{\link{Derivate}}
+
+Other meteorology functions: \code{\link{Derivate}},
+  \code{\link{EOF}}, \code{\link{FitQsWave}},
+  \code{\link{WaveFlux}}
 }

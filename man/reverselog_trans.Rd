@@ -24,3 +24,10 @@ ggplot(t, aes(p, t)) +
    scale_x_continuous(trans = "reverselog")
 
 }
+\seealso{
+Other ggplo2 helpers: \code{\link{DivideTimeseries}},
+  \code{\link{RepeatLon}},
+  \code{\link{scale_color_divergent}},
+  \code{\link{scale_longitude}},
+  \code{\link{stat_fill_contour}}
+}

@@ -23,7 +23,7 @@ Derivate a discrete variable using finite differences
 }
 \details{
 Each element of the reuturn vector is an estimation of \eqn{dx/dy} (or
-\dqn{d^2x/dy^2} if \code{order} = 2) by finite differences. The first and
+\eqn{d^2x/dy^2} if \code{order} = 2) by finite differences. The first and
 last elements will be \code{NAs} unless cyclical boundary conditions are set
 in \code{bc}.
 }
@@ -35,8 +35,11 @@ dx_finitediff <- Derivate(x, theta)
 
 plot(theta, dx_analytical, type = "l")
 points(theta, dx_finitediff, col = "red")
-
 }
 \seealso{
 \code{\link{DerivatePhysical}}
+
+Other meteorology functions: \code{\link{DerivatePhysical}},
+  \code{\link{EOF}}, \code{\link{FitQsWave}},
+  \code{\link{WaveFlux}}
 }

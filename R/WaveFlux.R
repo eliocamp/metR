@@ -17,6 +17,7 @@
 #' @references
 #' Takaya, K. and H. Nakamura, 2001: A Formulation of a Phase-Independent Wave-Activity Flux for Stationary and Migratory Quasigeostrophic Eddies on a Zonally Varying Basic Flow. J. Atmos. Sci., 58, 608–627, \url{https://doi.org/10.1175/1520-0469(2001)058<0608:AFOAPI>2.0.CO;2} \cr
 #' Adapted from \url{https://github.com/marisolosman/Reunion_Clima/blob/master/WAF/Calculo_WAF.ipynb}
+#' @family meteorology functions
 #' @export
 #' @import data.table
 WaveFlux <- function(gh, u, v, lon, lat, lev) {

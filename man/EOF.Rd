@@ -4,25 +4,60 @@
 \alias{EOF}
 \title{Empirical Orthogonal Function}
 \usage{
-EOF(z, lon, lat, date, n = 1, return = c("loadings", "field"))
+EOF(data, formula, value.var, n = 1)
 }
 \arguments{
-\item{z}{numeric vector of variable}
+\item{data}{a data.frame}
 
-\item{lon}{longitude (in degrees)}
+\item{formula}{formula parsed to \code{\link[data.table]{dcast}} to build
+the matrix that will be used in the SVD decomposition (see details)}
 
-\item{date}{date}
+\item{value.var}{name of the column whose values will be used}
 
-\item{n}{which singular value to compute}
-
-\item{return}{should the function return loadings or the field?}
-
-\item{lon}{longitude (in degrees)}
+\item{n}{which singular values to return}
 }
 \value{
-A data.table of loadings or fields.
+A list of 3 named elements containing tidy data.tables of the right and left
+singular vectors, and a named vector of singular values.
 }
 \description{
 Uses \code{\link[svd]{propack.svd}} to compute Empirical Orthogonal Functions
 (aka Singular Value Decomposition).
+}
+\details{
+Singular values can be computed over matrices so \code{formula} denotes how
+to build a matrix from the data. It is a formula of the form LHS ~ RHS in
+which LHS represent the variables used to make the rows and RHS, the columns
+of the matrix. The result of LHS ~ RHS and RHS ~ LHS (ie, terms reversed)
+is the same, with the exception that the order of the singular vector is
+reversed (right is left and left is right).
+
+The variable combination used in this formula *must* identify
+an unique value in a cell. For the time being, no error will be raised, but
+there will be a message from \code{\link[data.table]{dcast}}.
+
+\code{\link[svd]{propack.svd}} does not accept \code{NA}s, so each combination
+of the variables in \code{formula} must be a valid numeric value.
+}
+\examples{
+# The Antarctic Oscillation is computed from the
+monthly geopotential height anomalies weigthed by latitude.
+aao[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
+      by = .(lon, lat, month(date))]
+aao.svd <- EOF(aao, lat + lon ~ date, value.var = "gh.t.w", n = 1)
+
+# AAO field
+ggplot(aao.svd$left, aes(lon, lat, z = loading.1)) +
+    geom_contour(aes(color = ..level..)) +
+    coord_polar()
+
+# AAO signal
+ggplot(aao.svd$right, aes(date, loading.1)) +
+    geom_line()
+
+}
+\seealso{
+Other meteorology functions: \code{\link{DerivatePhysical}},
+  \code{\link{Derivate}}, \code{\link{FitQsWave}},
+  \code{\link{WaveFlux}}
 }

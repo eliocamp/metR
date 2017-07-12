@@ -4,12 +4,12 @@
 \alias{MakeMask}
 \title{Mask}
 \usage{
-MakeMask(lat, lon, mask = "world", wrap = c(0, 360))
+MakeMask(lon, lat, mask = "world", wrap = c(0, 360))
 }
 \arguments{
-\item{lat}{a vector of latitudes in degrees}
-
 \item{lon}{a vector of longitudes in degrees in 0-360 format}
+
+\item{lat}{a vector of latitudes in degrees}
 
 \item{mask}{the name of the dataset (that will be load with
 \code{\link[maps]{map}}) for creating the mask}
@@ -27,12 +27,12 @@ Creates a  mask
 \examples{
 
 # Make a sea-land mask
-nceptemperature[, land := MakeMask(lat, lon)]
+nceptemperature[, land := MakeMask(lon, lat)]
 
 # Take the temperature difference between land and ocean
-diftemp <- nceptemperature[, .(tempdif = mean(air[land == TRUE])
-                               - mean(air[land == FALSE])),
-                           by = .(lat, lev)]
+diftemp <- nceptemperature[,
+          .(tempdif = mean(air[land == TRUE]) - mean(air[land == FALSE])),
+           by = .(lat, lev)]
 ggplot(diftemp, aes(lat, lev)) +
     geom_contour(aes(z = tempdif, color = ..level..)) +
     scale_y_level() +
@@ -40,7 +40,7 @@ ggplot(diftemp, aes(lat, lev)) +
     scale_color_divergent()
 
 # Mean temperature in the USA
-usatemp <- nceptemperature[, usa := MakeMask(lat, lon, mask = "usa")][
+usatemp <- nceptemperature[, usa := MakeMask(lon, lat, mask = "usa")][
     , .(air = weighted.mean(air, cos(lat*pi/180))), by = .(usa, lev)][
         usa == TRUE]
 

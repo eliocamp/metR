@@ -41,3 +41,8 @@ represents the location (in radians) of the first maximum of each wave number.  
 \code{BuildQsField} is, in a way, the opositve. It computes  the
 the above mentioned sum but for only the selected wave numbers.
 }
+\seealso{
+Other meteorology functions: \code{\link{DerivatePhysical}},
+  \code{\link{Derivate}}, \code{\link{EOF}},
+  \code{\link{WaveFlux}}
+}

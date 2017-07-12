@@ -25,6 +25,7 @@
 #' the above mentioned sum but for only the selected wave numbers.
 #'
 #' @rdname QsWave
+#' @family meteorology functions
 #' @aliases BuildQsWave FitQsWave
 #' @export
 FitQsWave <- function(y, k = 1) {

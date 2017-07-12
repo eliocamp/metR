@@ -16,15 +16,12 @@
 #'
 #' @examples
 #' library(ggplot2)
-#' series <- expand.grid(year = 1980:2000,
-#'                      month = 1:12)
-#' series$var = rnorm(nrow(series))
-#' series$type = sample(letters[1:3], nrow(series), replace = TRUE)
-#' series$date = with(series, as.Date(paste0(year, "-", month, "-01")))
-#'
-#' g <- ggplot(series, aes(date, var, color = type)) +
-#'     geom_line()
-#' DivideTimeseries(g, n = 3, series$date, xlab = "Date", ylab = "Variable")
+#' gdata <- claris[year(date) == 2009][id == id[1]]
+#' g <- ggplot(gdata, aes(date, max)) +
+#'     geom_line() +
+#'     geom_smooth() +
+#'     scale_x_date(date_breaks = "1 month", date_labels = "%b")
+#' DivideTimeseries(g, gdata$date, n = 2, "Date", "Max Temperature")
 #' @family ggplo2 helpers
 #' @export
 DivideTimeseries <- function(g, x, n = 2, xlab = "x", ylab = "y") {

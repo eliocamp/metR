@@ -6,7 +6,7 @@
 #'
 #' @return
 #' A numeric vector of the same length as x with each value's distance to the
-#' mena.
+#' mean.
 #'
 #' @details
 #' Really just a very small wraper around \code{\link{scale}} that returns a
@@ -76,6 +76,10 @@ Mag <- function(x, y) {
 #' Extended binary operators for easy subsetting.
 #'
 #' @param x,target,limits numeric vectors
+#' @param tol tolerance for similarity
+#' @param include logical vector of length 2 (or 1) indicating wheter to include
+#'  the extreme bounds
+#'
 #'
 #' @return
 #' A logical vector of the same length of x.
@@ -83,12 +87,25 @@ Mag <- function(x, y) {
 #' @details
 #' \code{\%~\%} can be thought as a "similar" operator. It's a fuzzy version of
 #' \code{\link{\%in\%}} in that returns \code{TRUE} for the element of \code{x}
-#' which is the closest to any element of \code{target}. \cr
+#' which is the closest to any element of \code{target}.
+#'
+#' \code{Similar} is a functional version of \code{\%~\%} that also has a
+#' \code{tol} parameter that indicates the maximum allowed tolerance.
 #'
 #' \code{\%b\%} can be thought as the "between" operator. It returns \code{TRUE}
 #' for each element of \code{x} that is between the minimum and the maximum of
 #' \code{limits}.
 #'
+#' \code{Between} is a functional version of \code{\%b\%} that also has an
+#' \code{include} parameter that let's you test for \code{x > lower & x < upper}.
+#' If it's a unitary vector, it will be recicled so that \code{include = TRUE} is
+#' equivalent to \code{include = c(TRUE, TRUE)}.
+#'
+#' It's important to note that \link{data.table} already has a
+#' \code{\link[data.table]{between}} function optimized with c code, so these
+#' functions use that implementation if data.table is installed (except for the
+#' case of \code{include[1] != include[2]}, for wich data.table has no
+#' implementation yet).
 #'
 #' @examples
 #' set.seed(198)
@@ -101,9 +118,7 @@ Mag <- function(x, y) {
 #' library(ggplot2)
 #' ggplot(nceptemperature[lon %~% cross.lon & lat %b% c(-50, 50)],
 #'        aes(lat, lev)) +
-#'     geom_contour(aes(z = air)) +
-#'     scale_y_level() +
-#'     scale_x_latitude()
+#'     geom_contour(aes(z = air))
 #'
 #' @family utilities
 #' @name logic
@@ -117,12 +132,51 @@ Mag <- function(x, y) {
     return(r)
 }
 
+#' @rdname logic
+#' @export
+Similar <- function(x, target, tol = Inf) {
+    r <- rep(FALSE, length(x))
+    if (is.null(tol)) tol <- NA
+    for (i in seq_along(target)) {
+        y <- abs(x - target[i])
+        r <- r | ((y == min(y)) & (is.na(tol) | y < abs(tol)))
+    }
+    return(r)
+}
+
 
 #' @rdname logic
 #' @export
 `%b%` <- function(x, limits) {
     # Operador "between"
-    return(x >= min(limits) & x <= max(limits))
+    if (require(data.table)) {
+        ret <- data.table::between(x, min(limits), max(limits))
+    } else {
+        ret <- x >= min(limits) & x <= max(limits)
+    }
+    return(ret)
+}
+
+#' @rdname logic
+#' @export
+Between <- function(x, limits, include = c(TRUE, TRUE)) {
+    # Operador "between"
+    if (length(include) < 2) include <- rep(include[1], 2)
+
+    if (include[1] == include[2] & require(data.table)) {
+        ret <- data.table::between(x, min(limits), max(limits),
+                                   incbounds = include[1])
+    } else {
+        ret <- x > min(limits) & x < max(limits)
+        if (include[1] == TRUE) {
+            ret <- ret | x == min(limits)
+        }
+        if (include[2] == TRUE) {
+            ret <- ret | x == max(limits)
+        }
+    }
+
+    return(ret)
 }
 
 #' Skip observations
@@ -143,6 +197,7 @@ Mag <- function(x, y) {
 #' @examples
 #' x <- 1:50
 #' JumpBy(x, 2)   # only odd numbers
+#' JumpBy(x, 2, start = 2)   # only even numbers
 #' JumpBy(x, 2, fill = NA)   # even numbers replaced by NA
 #' JumpBy(x, 2, fill = 6)   # even numbers replaced by 6
 #'

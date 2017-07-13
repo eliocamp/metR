@@ -49,7 +49,6 @@
 #' @import data.table
 #' @import svd
 EOF <- function(data, formula, value.var, n = 1) {
-
     row.vars <- all.vars(formula[[2]])
     col.vars <- all.vars(formula[[3]])
 
@@ -82,12 +81,12 @@ EOF <- function(data, formula, value.var, n = 1) {
 
     left <- as.data.table(eof$u)
     colnames(left) <- paste0("loading.", 1:max(n))
+    left <- left[, n, with = FALSE]
     left <- cbind(left, g[, row.vars, with = F])
 
     sv <- eof$d
     names(sv) <-  paste0("loading.", 1:max(n))
+    sv <- sv[n]
 
     return(list(right = right, left = left, sv = sv))
 }
-
-

@@ -32,7 +32,7 @@ of the matrix. The result of LHS ~ RHS and RHS ~ LHS (ie, terms reversed)
 is the same, with the exception that the order of the singular vector is
 reversed (right is left and left is right).
 
-The variable combination used in this formula *must* identify
+The variable combination used in this formula \emph{must} identify
 an unique value in a cell. For the time being, no error will be raised, but
 there will be a message from \code{\link[data.table]{dcast}}.
 
@@ -52,7 +52,7 @@ ggplot(aao.svd$left, aes(lon, lat, z = loading.1)) +
     coord_polar()
 
 # AAO signal
-ggplot(aao.svd$right, aes(date, loading.1)) +
+ggplot(aao.svd$right, aes(date, loading.3)) +
     geom_line()
 
 }

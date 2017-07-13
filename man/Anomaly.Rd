@@ -11,7 +11,7 @@ Anomaly(x)
 }
 \value{
 A numeric vector of the same length as x with each value's distance to the
-mena.
+mean.
 }
 \description{
 Saves keystrokes for computing anomalies.

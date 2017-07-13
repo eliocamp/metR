@@ -15,8 +15,8 @@ doesn't work with the polygon geom.
 \section{Computed variables}{
 
 \describe{
- \item{int.level}{value of the interior contour}
- }
+\item{int.level}{value of the interior contour}
+}
 }
 
 \examples{

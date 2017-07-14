@@ -36,6 +36,10 @@ The variable combination used in this formula \emph{must} identify
 an unique value in a cell. For the time being, no error will be raised, but
 there will be a message from \code{\link[data.table]{dcast}}.
 
+In the result, the \code{right} and \code{left} singular vectors have a
+value for each singular value and each combination of the variables
+used in RHS and LHS of \code{formula}, respectively.
+
 \code{\link[svd]{propack.svd}} does not accept \code{NA}s, so each combination
 of the variables in \code{formula} must be a valid numeric value.
 }
@@ -47,12 +51,12 @@ aao[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
 aao.svd <- EOF(aao, lat + lon ~ date, value.var = "gh.t.w", n = 1)
 
 # AAO field
-ggplot(aao.svd$left, aes(lon, lat, z = loading.1)) +
+ggplot(aao.svd$left, aes(lon, lat, z = value)) +
     geom_contour(aes(color = ..level..)) +
     coord_polar()
 
 # AAO signal
-ggplot(aao.svd$right, aes(date, loading.3)) +
+ggplot(aao.svd$right, aes(date, value)) +
     geom_line()
 
 }

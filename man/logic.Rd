@@ -43,7 +43,7 @@ for each element of \code{x} that is between the minimum and the maximum of
 \code{limits}.
 
 \code{Between} is a functional version of \code{\%b\%} that also has an
-\code{include} parameter that let's you test for \code{x < lower & x < upper}.
+\code{include} parameter that let's you test for \code{x > lower & x < upper}.
 If it's a unitary vector, it will be recicled so that \code{include = TRUE} is
 equivalent to \code{include = c(TRUE, TRUE)}.
 
@@ -64,9 +64,7 @@ cross.lon <- -34 + 360
 library(ggplot2)
 ggplot(nceptemperature[lon \%~\% cross.lon & lat \%b\% c(-50, 50)],
        aes(lat, lev)) +
-    geom_contour(aes(z = air)) +
-    scale_y_level() +
-    scale_x_latitude()
+    geom_contour(aes(z = air))
 
 }
 \seealso{

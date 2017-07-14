@@ -11,7 +11,7 @@
 #'
 #' @return
 #' A list of 3 named elements containing tidy data.tables of the right and left
-#' singular vectors, and a named vector of singular values.
+#' singular vectors, and of their singular values.
 #'
 #' @details
 #' Singular values can be computed over matrices so \code{formula} denotes how
@@ -25,6 +25,10 @@
 #' an unique value in a cell. For the time being, no error will be raised, but
 #' there will be a message from \code{\link[data.table]{dcast}}.
 #'
+#' In the result, the \code{right} and \code{left} singular vectors have a
+#' value for each singular value and each combination of the variables
+#' used in RHS and LHS of \code{formula}, respectively.
+#'
 #' \code{\link[svd]{propack.svd}} does not accept \code{NA}s, so each combination
 #' of the variables in \code{formula} must be a valid numeric value.
 #'
@@ -36,12 +40,12 @@
 #' aao.svd <- EOF(aao, lat + lon ~ date, value.var = "gh.t.w", n = 1)
 #'
 #' # AAO field
-#' ggplot(aao.svd$left, aes(lon, lat, z = loading.1)) +
+#' ggplot(aao.svd$left, aes(lon, lat, z = value)) +
 #'     geom_contour(aes(color = ..level..)) +
 #'     coord_polar()
 #'
 #' # AAO signal
-#' ggplot(aao.svd$right, aes(date, loading.1)) +
+#' ggplot(aao.svd$right, aes(date, value)) +
 #'     geom_line()
 #'
 #' @family meteorology functions
@@ -75,18 +79,20 @@ EOF <- function(data, formula, value.var, n = 1) {
                             neig = max(n))
 
     right <- as.data.table(eof$v)
-    colnames(right) <- paste0("loading.", 1:max(n))
+    colnames(right) <- paste0("PC", 1:max(n))
     right <- right[, n, with = FALSE]
     right <- cbind(right, as.data.table(dims))
+    right <- melt(right, id.vars = col.vars, variable = "PC")
 
     left <- as.data.table(eof$u)
-    colnames(left) <- paste0("loading.", 1:max(n))
+    colnames(left) <- paste0("PC", 1:max(n))
     left <- left[, n, with = FALSE]
     left <- cbind(left, g[, row.vars, with = F])
+    left <- melt(left, id.vars = row.vars, variable = "PC")
 
     sv <- eof$d
-    names(sv) <-  paste0("loading.", 1:max(n))
-    sv <- sv[n]
+    sv <- as.data.table(sv[n])
+    colnames(sv) <- paste0("PC", 1:max(n))
 
     return(list(right = right, left = left, sv = sv))
 }

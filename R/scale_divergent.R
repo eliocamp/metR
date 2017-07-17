@@ -15,7 +15,7 @@
 #'   scale_color_divergent(binwidth = 30)
 #'
 #' @rdname scale_divergent
-#' @family ggplo2 helpers
+#' @family ggplot2 helpers
 #' @export
 scale_color_divergent <- function(low = muted("blue"), high = muted("red"), binwidth = NA, ...) {
     # Escala divergente con defaults más razonables.

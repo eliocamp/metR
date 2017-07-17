@@ -1,7 +1,7 @@
 Package: meteoR
 Type: Package
 Title: Make R great again for meteorological data
-Version: 0.0.9001
+Version: 0.0.9002
 Authors@R: person("Elio", "Campitelli", email = "elio.campitelli@cima.fcen.uba.ar", role = c("cre", "aut"))
 Description: Many usefull functions and extensions for dealing with meteorological data. 
 License: GPL-3

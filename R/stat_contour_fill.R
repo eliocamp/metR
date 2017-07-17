@@ -1,7 +1,12 @@
 #' Filled 2d contours of a 3d surface
 #'
-#' While ggplot2's  \code{\link[ggplot2]{stat_contour}} can plot nice contours, it
-#' doesn't work with the polygon geom.
+#' While ggplot2's \code{\link[ggplot2]{stat_contour}} can plot nice contours, it
+#' doesn't work with the polygon geom. This stat makes some small manipulation
+#' of the data to ensure that all contours are closed and also computes a new
+#' aesthetic \code{int.level}, which differs from \code{level} (computed by
+#' [ggplot2::stat_contour]) in that represents
+#' the value of the \code{z} aesthetic *inside* the contour instead of at the edge.
+#'
 #'
 #' @section Computed variables:
 #' \describe{
@@ -11,11 +16,19 @@
 #' library(ggplot2)
 #' surface <- reshape2::melt(volcano)
 #' ggplot(surface, aes(Var1, Var2, z = value)) +
-#'   stat_fill_contour()
+#'   stat_contour_fill() +
+#'   geom_contour(color = "black", size = 0.1)
 #'
-#' @family ggplo2 helpers
+#' # If one uses level instead of int.level, one of the small
+#' # contours near the crater disapears
+#' ggplot(surface, aes(Var1, Var2, z = value)) +
+#'   stat_contour_fill(aes(fill = ..level..))
+#'
+#'
+#'
+#' @family ggplot2 helpers
 #' @export
-stat_fill_contour <- function(mapping = NULL, data = NULL,
+stat_contour_fill <- function(mapping = NULL, data = NULL,
                               geom = "polygon", position = "identity",
                               ...,
                               na.rm = FALSE,
@@ -24,7 +37,7 @@ stat_fill_contour <- function(mapping = NULL, data = NULL,
     layer(
         data = data,
         mapping = mapping,
-        stat = StatFillContour,
+        stat = StatContourFill,
         geom = geom,
         position = position,
         show.legend = show.legend,
@@ -37,7 +50,7 @@ stat_fill_contour <- function(mapping = NULL, data = NULL,
 }
 
 
-StatFillContour <- ggproto("StatFillContour", Stat,
+StatContourFill <- ggproto("StatContourFill", Stat,
                            required_aes = c("x", "y", "z"),
                            default_aes = aes(fill = ..int.level..),
 
@@ -220,7 +233,3 @@ IsInside <- function(xp, yp, x, y) {
     !(sp::point.in.polygon(xp, yp, x, y) == 0)
 }
 
-`%~%` <- function(x, target) {
-    x <- abs(x - target)
-    return(x == suppressWarnings(min(x)))
-}

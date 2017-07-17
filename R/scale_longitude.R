@@ -26,7 +26,7 @@
 #'     scale_x_longitude() +
 #'     scale_y_latitude()
 #'
-#' @family ggplo2 helpers
+#' @family ggplot2 helpers
 #' @export
 scale_x_longitude <- function(ticks = 60, name = "", expand = c(0, 0), ...) {
     scale_x_continuous(name = name, expand = expand,

@@ -37,9 +37,9 @@ g
 g \%+\% RepeatLon(slp)
 }
 \seealso{
-Other ggplo2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{reverselog_trans}},
+Other ggplot2 helpers: \code{\link{DivideTimeseries}},
+  \code{\link{geom_arrow}}, \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
   \code{\link{scale_longitude}},
-  \code{\link{stat_fill_contour}}
+  \code{\link{stat_contour_fill}}
 }

@@ -18,7 +18,7 @@ the matrix that will be used in the SVD decomposition (see details)}
 }
 \value{
 A list of 3 named elements containing tidy data.tables of the right and left
-singular vectors, and a named vector of singular values.
+singular vectors, and of their singular values.
 }
 \description{
 Uses \code{\link[svd]{propack.svd}} to compute Empirical Orthogonal Functions

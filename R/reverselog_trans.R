@@ -15,7 +15,7 @@
 #'    coord_flip() +
 #'    scale_x_continuous(trans = "reverselog")
 #'
-#' @family ggplo2 helpers
+#' @family ggplot2 helpers
 #' @export
 reverselog_trans <- function(base = 10) {
     # library("scales")

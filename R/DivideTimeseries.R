@@ -22,7 +22,7 @@
 #'     geom_smooth() +
 #'     scale_x_date(date_breaks = "1 month", date_labels = "%b")
 #' DivideTimeseries(g, gdata$date, n = 2, "Date", "Max Temperature")
-#' @family ggplo2 helpers
+#' @family ggplot2 helpers
 #' @export
 DivideTimeseries <- function(g, x, n = 2, xlab = "x", ylab = "y") {
     M <- max(x)

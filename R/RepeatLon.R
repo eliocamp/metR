@@ -25,7 +25,7 @@
 #'
 #' # But using RepeatLon solves it.
 #' g %+% RepeatLon(slp)
-#' @family ggplo2 helpers
+#' @family ggplot2 helpers
 #' @export
 RepeatLon <- function(x, colname = "lon", maxlon = 360) {
     dt <- is.data.table(x)

@@ -13,7 +13,7 @@ While ggplot2's \code{\link[ggplot2]{stat_contour}} can plot nice contours, it
 doesn't work with the polygon geom. This stat makes some small manipulation
 of the data to ensure that all contours are closed and also computes a new
 aesthetic \code{int.level}, which differs from \code{level} (computed by
-\link[ggplot2:stat_contour]{ggplot2::stat_contour} in that represents
+\link[ggplot2:stat_contour]{ggplot2::stat_contour}) in that represents
 the value of the \code{z} aesthetic \emph{inside} the contour instead of at the edge.
 }
 \section{Computed variables}{

@@ -6,14 +6,13 @@
 \usage{
 geom_arrow(mapping = NULL, data = NULL, stat = StatArrow,
   position = "identity", ..., arrow.size = 0.5, arrow.angle = 14,
-  lineend = "butt", na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+  lineend = "butt", skip = 0, min.mag = 0, na.rm = FALSE,
+  show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{arrow.size}{size of the arrow (see \link[grid:arrow]{grid::arrow})}
 
 \item{arrow.angle}{angle of the arrow (see \link[grid:arrow]{grid::arrow})}
-
-\item{scale}{scaling factor for the segment}
 
 \item{skip}{numeric vector specifying number of gridpoints not to draw in
 the x and y direction; recicled if not of length 2}

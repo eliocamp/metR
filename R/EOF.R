@@ -7,11 +7,11 @@
 #' @param formula formula parsed to \code{\link[data.table]{dcast}} to build
 #' the matrix that will be used in the SVD decomposition (see details)
 #' @param value.var name of the column whose values will be used
-#' @param n which singular values to return
+#' @param n which singular values to return (if \code{NULL}, defaults to all)
 #'
 #' @return
 #' A list of 3 named elements containing tidy data.tables of the right and left
-#' singular vectors, and of their singular values.
+#' singular vectors, and of their explained variance.
 #'
 #' @details
 #' Singular values can be computed over matrices so \code{formula} denotes how
@@ -29,8 +29,8 @@
 #' value for each singular value and each combination of the variables
 #' used in RHS and LHS of \code{formula}, respectively.
 #'
-#' \code{\link[svd]{propack.svd}} does not accept \code{NA}s, so each combination
-#' of the variables in \code{formula} must be a valid numeric value.
+#' It is much faster to compute only some singular vectors, so is advisable not
+#' to set n to \code{NULL}.
 #'
 #' @examples
 #' # The Antarctic Oscillation is computed from the
@@ -47,6 +47,9 @@
 #' # AAO signal
 #' ggplot(aao.svd$right, aes(date, value)) +
 #'     geom_line()
+#'
+#' # % of explained variance
+#' aao.svd$sdev
 #'
 #' @family meteorology functions
 #' @export
@@ -74,25 +77,28 @@ EOF <- function(data, formula, value.var, n = 1) {
         }
     }
     names(dims) <- col.vars
+    g.matrix <- as.matrix(g[,-seq_along(row.vars), with = F])
 
-    eof <- svd::propack.svd(as.matrix(g[,-seq_along(row.vars), with = F]),
-                            neig = max(n))
+    if (is.null(n)){
+        eof <- svd::propack.svd(g.matrix)
+    } else {
+        eof <- svd::propack.svd(g.matrix, n = max(n))
+    }
 
     right <- as.data.table(eof$v)
-    colnames(right) <- paste0("PC", 1:max(n))
-    right <- right[, n, with = FALSE]
+    pcomps <- paste0("PC", 1:ncol(right))
+    colnames(right) <- pcomps
     right <- cbind(right, as.data.table(dims))
     right <- melt(right, id.vars = col.vars, variable = "PC")
 
     left <- as.data.table(eof$u)
-    colnames(left) <- paste0("PC", 1:max(n))
-    left <- left[, n, with = FALSE]
+    colnames(left) <- pcomps
     left <- cbind(left, g[, row.vars, with = F])
     left <- melt(left, id.vars = row.vars, variable = "PC")
 
-    sv <- eof$d
-    sv <- as.data.table(sv[n])
-    colnames(sv) <- paste0("PC", 1:max(n))
+    v.g  <- norm(g.matrix, type = "F")
+    sdev <- data.table(PC = pcomps, sd = eof$d)
+    sdev[, r.squared := sd^2/v.g^2]
 
-    return(list(right = right, left = left, sv = sv))
+    return(list(right = right, left = left, sdev = sdev))
 }

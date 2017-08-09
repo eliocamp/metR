@@ -37,7 +37,7 @@ FitQsWave <- function(y, k = 1) {
     # Sale:
     #   una lista con la amplitud, la fase, la varianza explicada y el número
     #   de onda.
-    f <- fft(variable)
+    f <- fft(y)
     f <- f/length(f)
     amp <- Mod(f)*2
     phase <- -Arg(f)
@@ -46,7 +46,7 @@ FitQsWave <- function(y, k = 1) {
     phase[phase < 0] <- phase[phase < 0] + 2*pi
     phase <- phase/(seq_along(phase) - 1)
 
-    r <- amp^2/(2*sd(variable)^2)
+    r <- amp^2/(2*sd(y)^2)
     k <- k + 1
 
     cols <- c("amplitude", "phase", "r2", "k")

@@ -43,6 +43,65 @@ Derivate <- function(x, y, order = c(1, 2), bc = c("cyclic", "none")) {
     return(dxdy)
 }
 
+
+Derivate2 <- function(formula, order = c(1, 2), bc = c("none"), data = NULL) {
+    dep.var <- all.vars(formula[[2]])
+    ind.var <- all.vars(formula[[3]])
+
+    if (length(ind.var) > 1) {
+        if (length(bc) == 1) {
+            bc <- rep(bc, length(ind.var))
+        } else if(length(bc) < length(ind.var)) {
+            stop("One boundary condition per variable needed.")
+        }
+    }
+    if (is.null(data)) {
+        data <- setDT(model.frame(formula, data = parent.frame()))
+        f <<- data
+    }
+
+    data[, id := 1:.N]
+
+    df <- copy(as.data.table(data))
+    setkeyv(df, ind.var)
+    res <- copy(df)
+    dernames <- paste0(dep.var, ".", paste0(rep("d", order[1]), collapse = ""), ind.var)
+
+    for (v in seq_along(ind.var)) {
+        res[[dernames[v]]] <- df[, .(id, derv(get(dep.var), get(ind.var[v]),
+                                        order = order[1], bc = bc[v])),
+                                 by = c(ind.var[-v])][order(id)]$V2
+    }
+
+
+    res <- res[, dernames, with = F]
+
+    if (length(ind.var) == 1) {
+        return(res[[1]])
+    } else {
+        return(res)
+    }
+}
+
+
+derv <- function(x, y, order = c(1, 2), bc = c("cyclic", "none")) {
+    N <- length(x)
+
+    d <- y[2] - y[1]
+
+    if (order[1] == 1) {
+        dxdy <- (x[c(2:N, 1)] - x[c(N, 1:(N-1))])/(2*d)
+
+    } else if (order[1] == 2) {
+        dxdy <- (x[c(2:N, 1)] + x[c(N, 1:(N-1))] - 2*x)/d^2
+    }
+    if (bc[1] != "cyclic") {
+        dxdy[c(1, N)] <- NA
+    }
+
+    return(dxdy)
+}
+
 #' Zonal or meridional derivative
 #'
 #' Derivates a variable in the zonal or meridional direction taking into account
@@ -90,6 +149,4 @@ DerivatePhysical <- function(variable, lon, lat, order = c(1, 2),
     }
     return(dv)
 }
-
-
 

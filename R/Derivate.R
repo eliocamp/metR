@@ -44,9 +44,8 @@ Derivate <- function(x, y, order = c(1, 2), bc = c("cyclic", "none")) {
 }
 
 
-Derivate2 <- function(formula, order = c(1, 2), bc = c("none"), data = NULL) {
-    dep.var <- all.vars(formula[[2]])
-    ind.var <- all.vars(formula[[3]])
+Derivate2 <- function(formula, order = c(1, 2), bc = c("none"), data = NULL,
+                      sphere = FALSE, a = 6731) {
 
     if (length(ind.var) > 1) {
         if (length(bc) == 1) {
@@ -55,31 +54,46 @@ Derivate2 <- function(formula, order = c(1, 2), bc = c("none"), data = NULL) {
             stop("One boundary condition per variable needed.")
         }
     }
-    if (is.null(data)) {
-        data <- setDT(model.frame(formula, data = parent.frame()))
-        f <<- data
-    }
 
-    data[, id := 1:.N]
+    # Build dataframe
+    mf <- match.call(expand.dots = F)
+    mf[[1]] <- quote(model.frame)
+    m <- match(c("formula", "data"), names(mf))
+    mf <- mf[c(1L, m)]
+    data <- as.data.table(eval(mf, parent.frame()))
+    dep.var <- colnames(data)[1]
+    ind.var <- colnames(data)[-1]
+    data[, id := 1:.N]    # for order.
+    setkeyv(data, ind.var)
 
-    df <- copy(as.data.table(data))
-    setkeyv(df, ind.var)
-    res <- copy(df)
+    # f <<- copy(data)
     dernames <- paste0(dep.var, ".", paste0(rep("d", order[1]), collapse = ""), ind.var)
-
     for (v in seq_along(ind.var)) {
-        res[[dernames[v]]] <- df[, .(id, derv(get(dep.var), get(ind.var[v]),
-                                        order = order[1], bc = bc[v])),
-                                 by = c(ind.var[-v])][order(id)]$V2
+        temp <- data[, .(id,
+                         derv(get(dep.var), get(ind.var[v]),
+                                                   order = order[1], bc = bc[v])),
+                                 by = c(ind.var[-v])]
+        setnames(temp, "V2", dernames[v])
+        data <- data[temp, on = "id"]
+    }
+    data <- data[order(id)]
+    r <<- copy(data)
+
+    # Correction for spherical coordinates.
+    if (sphere == TRUE) {
+        a <- a*1000
+        set(data, j = dernames[1],
+            value = data[, get(dernames[1])]*(180/pi/(a*cos(data[, get(ind.var[2])]*pi/180)))^order[1])
+        set(data, j = dernames[2],
+            value = data[, get(dernames[2])]*(180/pi/a)^order[1])
     }
 
-
-    res <- res[, dernames, with = F]
+    data <- data[, dernames, with = F]
 
     if (length(ind.var) == 1) {
-        return(res[[1]])
+        return(data[[1]])
     } else {
-        return(res)
+        return(as.list(data))
     }
 }
 
@@ -149,4 +163,3 @@ DerivatePhysical <- function(variable, lon, lat, order = c(1, 2),
     }
     return(dv)
 }
-

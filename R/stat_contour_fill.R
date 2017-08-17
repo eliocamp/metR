@@ -92,7 +92,7 @@ StatContourFill <- ggproto("StatContourFill", Stat,
                                # Y le doy un valor muy bajo.
                                # extra$z <- range.data$z[1] - 3*binwidth
                                mean.z <- mean(data$z)
-                               mean.level <- breaks.keep[breaks.keep %~% mean.z]
+                               mean.level <- breaks[breaks %~% mean.z]
                                extra$z <- mean.z
                                # extra$PANEL <- data$PANEL[1]
                                cur.group <- data$group[1]
@@ -114,15 +114,18 @@ StatContourFill <- ggproto("StatContourFill", Stat,
                                i <-  which(breaks.keep == mean.level)
                                correction <- (breaks.keep[i + sign(mean.z - mean.level)] - mean.level)/2
                                # correction <- 0
-                               mean.cont  <- data.frame(
-                                   level = mean.level,
-                                   x = c(rep(range.data$x[1], 2), rep(range.data$x[2], 2)),
-                                   y = c(range.data$y[1], rep(range.data$y[2], 2), range.data$y[1]),
-                                   piece = max(cont$piece) + 1,
-                                   int.level = mean.level + correction)
 
-                               mean.cont$group <- factor(paste(cur.group, sprintf("%03d", mean.cont$piece), sep = "-"))
-                               cont <- rbind(cont, mean.cont)
+                               if (mean.level %in% breaks.keep) {
+                                   mean.cont  <- data.frame(
+                                       level = mean.level,
+                                       x = c(rep(range.data$x[1], 2), rep(range.data$x[2], 2)),
+                                       y = c(range.data$y[1], rep(range.data$y[2], 2), range.data$y[1]),
+                                       piece = max(cont$piece) + 1,
+                                       int.level = mean.level + correction)
+
+                                   mean.cont$group <- factor(paste(cur.group, sprintf("%03d", mean.cont$piece), sep = "-"))
+                                   cont <- rbind(cont, mean.cont)
+                               }
                                #co.2 <<- copy(cont)    # debug
 
                                areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][

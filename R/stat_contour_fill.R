@@ -80,6 +80,7 @@ StatContourFill <- ggproto("StatContourFill", Stat,
                                dx <- abs(diff(subset(data, y == data$y[1])$x)[1])
                                dy <- abs(diff(subset(data, x == data$x[1])$y)[1])
 
+                               #Extender para grilla rectangular.
                                range.data <- as.data.frame(sapply(data[c("x", "y", "z")], range))
 
                                extra <- rbind(
@@ -89,8 +90,12 @@ StatContourFill <- ggproto("StatContourFill", Stat,
                                                x = c(range.data$x[1] - dx, range.data$x[2] + dx))
                                )
 
-                               # Y le doy un valor muy bajo.
-                               # extra$z <- range.data$z[1] - 3*binwidth
+                               ## Extender cualqueir grilla
+                               # setDT(data)
+                               # extra.x <- data[ ,  .(x = c(max(x) + dx, min(x) - dx)), by = y]
+                               # extra.y <- data[ ,  .(y = c(max(y) + dy, min(y) - dy)), by = x]
+                               # extra   <- rbind(extra.y, extra.x)
+
                                mean.z <- mean(data$z)
                                mean.level <- breaks[breaks %~% mean.z]
                                extra$z <- mean.z
@@ -106,7 +111,7 @@ StatContourFill <- ggproto("StatContourFill", Stat,
 
                                setDT(cont)
 
-                               #co <<- copy(cont)    # debug
+                               # co <<- copy(cont)    # debug
                                #data3 <<- data2    # debug
                                cont <- CorrectFill(cont, data2, breaks)
 

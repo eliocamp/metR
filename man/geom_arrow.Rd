@@ -22,7 +22,7 @@ the x and y direction; recicled if not of length 2}
 \description{
 Parametrization of \link[ggplot2:geom_segment]{ggplot2::geom_segment} by location and displacement that
 also defaults to drawing arrows at the end of the segment. Useful for plotting
-vector fields characterized by magnitued of the \code{x} and \code{y} components.
+vector fields characterized by magnitude of the \code{x} and \code{y} components.
 }
 \examples{
 speed <- expand.grid(lon = 1:360, lat = -90:0)

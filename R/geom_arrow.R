@@ -2,7 +2,7 @@
 #'
 #' Parametrization of [ggplot2::geom_segment] by location and displacement that
 #' also defaults to drawing arrows at the end of the segment. Useful for plotting
-#' vector fields characterized by magnitued of the `x` and `y` components.
+#' vector fields characterized by magnitude of the `x` and `y` components.
 #'
 #' @param skip numeric vector specifying number of gridpoints not to draw in
 #' the x and y direction; recicled if not of length 2

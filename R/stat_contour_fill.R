@@ -121,6 +121,7 @@ StatContourFill <- ggproto("StatContourFill", Stat,
                                # correction <- 0
 
                                if (mean.level %in% breaks.keep) {
+                                   l <<- mean.level
                                    mean.cont  <- data.frame(
                                        level = mean.level,
                                        x = c(rep(range.data$x[1], 2), rep(range.data$x[2], 2)),
@@ -136,7 +137,7 @@ StatContourFill <- ggproto("StatContourFill", Stat,
                                areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][
                                    , rank := frank(-area, ties.method = "dense")]
                                areas <- areas[, head(.SD, 1), by = piece]
-                               cont <-cont[areas, on = "piece"]
+                               cont <- cont[areas, on = "piece"]
                                cont[, piece := rank]
                                cont[, group := factor(paste(cur.group,
                                                             sprintf("%03d", piece), sep = "-"))]

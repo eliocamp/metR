@@ -14,11 +14,11 @@ the matrix that will be used in the SVD decomposition (see details)}
 
 \item{value.var}{name of the column whose values will be used}
 
-\item{n}{which singular values to return}
+\item{n}{which singular values to return (if \code{NULL}, defaults to all)}
 }
 \value{
 A list of 3 named elements containing tidy data.tables of the right and left
-singular vectors, and of their singular values.
+singular vectors, and of their explained variance.
 }
 \description{
 Uses \code{\link[svd]{propack.svd}} to compute Empirical Orthogonal Functions
@@ -40,8 +40,8 @@ In the result, the \code{right} and \code{left} singular vectors have a
 value for each singular value and each combination of the variables
 used in RHS and LHS of \code{formula}, respectively.
 
-\code{\link[svd]{propack.svd}} does not accept \code{NA}s, so each combination
-of the variables in \code{formula} must be a valid numeric value.
+It is much faster to compute only some singular vectors, so is advisable not
+to set n to \code{NULL}.
 }
 \examples{
 # The Antarctic Oscillation is computed from the
@@ -58,6 +58,9 @@ ggplot(aao.svd$left, aes(lon, lat, z = value)) +
 # AAO signal
 ggplot(aao.svd$right, aes(date, value)) +
     geom_line()
+
+# \% of explained variance
+aao.svd$sdev
 
 }
 \seealso{

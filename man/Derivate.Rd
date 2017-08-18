@@ -4,37 +4,65 @@
 \alias{Derivate}
 \title{Derivate a discrete variable using finite differences}
 \usage{
-Derivate(x, y, order = c(1, 2), bc = c("cyclic", "none"))
+Derivate(formula, order = c(1, 2), bc = "none", data = NULL,
+  sphere = FALSE, a = 6731)
 }
 \arguments{
-\item{x}{numeric vector of discrete values}
-
-\item{y}{numeric vector of locations}
+\item{formula}{a formula indicating dependent and independend variables}
 
 \item{order}{order of the derivative}
 
-\item{bc}{boundary conditions}
+\item{bc}{boundary conditions for each independend variable}
+
+\item{data}{optional data.frame containing the variables}
+
+\item{sphere}{logical indicating wheter to use spherical coordinates
+(see details)}
+
+\item{a}{radius or the Earth in kilometers for use in spherical coordinates}
 }
 \value{
-A numeric vector of the same length as \code{x}.
+If there is one independent variable, a numeric vector of the same length as
+the dependent variable.
+If there is two or more independent variables, a list containing the
+directional derivatives of the dependent variable.
 }
 \description{
 Derivate a discrete variable using finite differences
 }
 \details{
-Each element of the reuturn vector is an estimation of \eqn{dx/dy} (or
-\eqn{d^2x/dy^2} if \code{order} = 2) by finite differences. The first and
+Each element of the return vector is an estimation of \eqn{dx/dy} (or
+\eqn{d^2x/dy^2} if \code{order} = 2) by centerd finite differences. The first and
 last elements will be \code{NAs} unless cyclical boundary conditions are set
 in \code{bc}.
+
+If \code{sphere} is \code{TRUE}, then the first two independent variables are
+assumed to be longitude and latitude (in that order) in degrees. Then, a
+correction is applied to the derivative so that they are in units of distance.
 }
 \examples{
 theta <- seq(0, 360, length.out = 20)*pi/180
+theta <- theta[-1]
 x <- cos(theta)
 dx_analytical <- -sin(theta)
-dx_finitediff <- Derivate(x, theta)
+dx_finitediff <- Derivate(x ~ theta, bc = "cyclic")
 
 plot(theta, dx_analytical, type = "l")
 points(theta, dx_finitediff, col = "red")
+
+# Curvature (Laplacian)
+# Note the different boundary conditions for each variable
+variable <- expand.grid(lon = seq(0, 360, by = 3)[-1],
+                        lat = seq(-90, 90, by = 3))
+variable$z <- with(variable, cos(lat*pi/180*3) + sin(lon*pi/180*2))
+variable <- cbind(variable,
+                  as.data.frame(Derivate(z ~ lon + lat, data = variable,
+                                        bc = c("cyclic", "none"), order = 2)))
+library(ggplot2)
+ggplot(variable, aes(lon, lat)) +
+    geom_contour(aes(z = z)) +
+     geom_contour(aes(z = z.ddlon + z.ddlat), color = "red")
+
 }
 \seealso{
 \code{\link{DerivatePhysical}}

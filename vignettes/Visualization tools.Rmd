@@ -10,14 +10,21 @@ vignette: >
 ---
 
 
+
+
+
+
 ```{r}
 library(meteoR)
-slp <- copy(slp)
+nceptemperature <- copy(nceptemperature)
 
-slp[, slp.z := Anomaly(slp), by = .(lat)]
+nceptemperature[, air.z := Anomaly(air), by = .(lat, lev)]
 
-ggplot(slp, aes(lon, lat, z = slp.z)) +
-    stat_fill_contour(binwidth = 10) +
+b <- c(-8, -6, -4, -2, 2, 4)
+ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+    stat_contour_fill(breaks = seq(-8, 4, by = 2), exclude = 0) +
+    geom_contour(breaks = b)
+    
     # geom_contourlabel(binwidth = 10, step = 1, size = 2) +
     scale_fill_divergent() +
     scale_x_longitude() +

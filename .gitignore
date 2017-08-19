@@ -1,6 +1,6 @@
 .Rproj.user
 .Rhistory
 .RData
-inst/doc
+inst
 
 R/mejora_fillcontour\.R

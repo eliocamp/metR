@@ -21,7 +21,7 @@ A list of 3 named elements containing tidy data.tables of the right and left
 singular vectors, and of their explained variance.
 }
 \description{
-Uses \code{\link[svd]{propack.svd}} to compute Empirical Orthogonal Functions
+Uses \code{\link[irlba]{irlba}} to compute Empirical Orthogonal Functions
 (aka Singular Value Decomposition).
 }
 \details{

@@ -140,7 +140,7 @@ g + geom_arrow(aes(dx = t.dx, dy = t.dy), skip = c(2, 2), scale = 5e5, min.mag =
 
 ## RepeatLon
 
-The function `RepeatLon()` is a kludge to fix an issue when using polar coordinates in ggplot2. Contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.
+The function `RepeatLon()` is an ugly kludge to fix an issue when using polar coordinates in ggplot2. Contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.
 
 ```{r, fig.width = 3.3, fig.show = 'hold', warning = FALSE}
 g <- ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +

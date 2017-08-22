@@ -107,31 +107,3 @@ EOF <- function(data, formula, value.var, n = 1) {
 }
 
 
-# Turns tidy field to matrix + 2 data frames of row and column dimensions
-.tidy2matrix <- function(data, formula, value.var) {
-    row.vars <- all.vars(formula[[2]])
-    col.vars <- all.vars(formula[[3]])
-
-    g <- dcast(setDT(data), formula, value.var = value.var)
-
-    dims <- list()
-    if (length(col.vars) > 1) {
-        cols <- unlist(strsplit(colnames(g), split = "_"))
-    } else {
-        cols <- colnames(g)
-    }
-
-    for (i in seq_along(col.vars)) {
-        dims[[i]] <- JumpBy(cols, length(col.vars), start = i + length(row.vars))
-        if (class(data[[col.vars[i]]]) != "Date") {
-            dims[[i]] <- as(dims[[i]], class(data[[col.vars[i]]]))
-        } else {
-            dims[[i]] <- as.Date(dims[[i]])
-        }
-    }
-    names(dims) <- col.vars
-    return(list(matrix = as.matrix(g[,-seq_along(row.vars), with = F]),
-                coldims = dims,
-                rowdims = as.list(g[, row.vars, with = F])))
-}
-

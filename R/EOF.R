@@ -1,6 +1,6 @@
 #' Empirical Orthogonal Function
 #'
-#' Uses \code{\link[svd]{propack.svd}} to compute Empirical Orthogonal Functions
+#' Uses \code{\link[irlba]{irlba}} to compute Empirical Orthogonal Functions
 #' (aka Singular Value Decomposition).
 #'
 #' @param data a data.frame
@@ -56,6 +56,59 @@
 #' @import data.table
 #' @import svd
 EOF <- function(data, formula, value.var, n = 1) {
+    # row.vars <- all.vars(formula[[2]])
+    # col.vars <- all.vars(formula[[3]])
+    #
+    # g <- dcast(setDT(data), formula, value.var = value.var)
+    #
+    # dims <- list()
+    # if (length(col.vars) > 1) {
+    #     cols <- unlist(strsplit(colnames(g), split = "_"))
+    # } else {
+    #     cols <- colnames(g)
+    # }
+    #
+    # for (i in seq_along(col.vars)) {
+    #     dims[[i]] <- JumpBy(cols, length(col.vars), start = i + length(row.vars))
+    #     if (class(data[[col.vars[i]]]) != "Date") {
+    #         dims[[i]] <- as(dims[[i]], class(data[[col.vars[i]]]))
+    #     } else {
+    #         dims[[i]] <- as.Date(dims[[i]])
+    #     }
+    # }
+    # names(dims) <- col.vars
+    # g$matrix <- as.matrix(g[,-seq_along(row.vars), with = F])
+
+    g <- .tidy2matrix(setDT(data), formula, value.var)
+
+    f <<- copy(g)
+
+    if (is.null(n)) n = min(ncol(g$matrix), nrow(g$matrix))
+
+    # eof <- svd::propack.svd(g$matrix, n = max(n))
+    eof <- irlba::irlba(g$matrix, nv = max(n))
+
+    right <- as.data.table(eof$v)
+    pcomps <- paste0("PC", 1:ncol(right))
+    colnames(right) <- pcomps
+    right <- cbind(right, as.data.table(g$coldims))
+    right <- melt(right, id.vars = names(g$coldims), variable = "PC")
+
+    left <- as.data.table(eof$u)
+    colnames(left) <- pcomps
+    left <- cbind(left, as.data.table(g$rowdims))
+    left <- melt(left, id.vars = names(g$rowdims), variable = "PC")
+
+    v.g  <- norm(g$matrix, type = "F")
+    sdev <- data.table(PC = pcomps, sd = eof$d)
+    sdev[, r.squared := sd^2/v.g^2]
+
+    return(list(right = right, left = left, sdev = sdev))
+}
+
+
+# Turns tidy field to matrix + 2 data frames of row and column dimensions
+.tidy2matrix <- function(data, formula, value.var) {
     row.vars <- all.vars(formula[[2]])
     col.vars <- all.vars(formula[[3]])
 
@@ -77,28 +130,8 @@ EOF <- function(data, formula, value.var, n = 1) {
         }
     }
     names(dims) <- col.vars
-    g.matrix <- as.matrix(g[,-seq_along(row.vars), with = F])
-
-    if (is.null(n)){
-        eof <- svd::propack.svd(g.matrix)
-    } else {
-        eof <- svd::propack.svd(g.matrix, n = max(n))
-    }
-
-    right <- as.data.table(eof$v)
-    pcomps <- paste0("PC", 1:ncol(right))
-    colnames(right) <- pcomps
-    right <- cbind(right, as.data.table(dims))
-    right <- melt(right, id.vars = col.vars, variable = "PC")
-
-    left <- as.data.table(eof$u)
-    colnames(left) <- pcomps
-    left <- cbind(left, g[, row.vars, with = F])
-    left <- melt(left, id.vars = row.vars, variable = "PC")
-
-    v.g  <- norm(g.matrix, type = "F")
-    sdev <- data.table(PC = pcomps, sd = eof$d)
-    sdev[, r.squared := sd^2/v.g^2]
-
-    return(list(right = right, left = left, sdev = sdev))
+    return(list(matrix = as.matrix(g[,-seq_along(row.vars), with = F]),
+                coldims = dims,
+                rowdims = as.list(g[, row.vars, with = F])))
 }
+

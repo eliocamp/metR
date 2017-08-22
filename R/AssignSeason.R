@@ -10,7 +10,7 @@
 #'
 #' @export
 AssignSeason <- function(month, hemisphere = c("south", "north"), lang = c("es", "en")) {
-    hemisphere <- substr(tolower(hemisphere), 1, 1)
+    hemisphere <- substr(tolower(hemisphere[[1]]), 1, 1)
     if (lang[1] == "en") {
         sum = "Summer"
         win = "Winter"
@@ -25,7 +25,7 @@ AssignSeason <- function(month, hemisphere = c("south", "north"), lang = c("es",
     if (hemisphere == "s") {
         seasons <- c(sum, sum, rep(c(aut, win, spr), each = 3), sum)
     } else {
-        seasons <- c(win, win, rep(spr, sum, aut), each = 3, win)
+        seasons <- c(win, win, rep(c(spr, sum, aut), each = 3), win)
     }
     return(factor(seasons[month], levels = c(sum, aut, win, spr)))
 }

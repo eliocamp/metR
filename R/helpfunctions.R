@@ -211,3 +211,7 @@ JumpBy <- function(x, by, start = 1, fill = NULL) {
     }
     return(x)
 }
+
+
+
+is.error <- function(x) inherits(x, "try-error")

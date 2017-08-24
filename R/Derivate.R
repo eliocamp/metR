@@ -60,7 +60,7 @@ Derivate <- function(formula, order = c(1, 2), bc = "none", data = NULL,
     mf <- mf[c(1L, m)]
     # mff <<- mf
     data <- as.data.table(eval(mf, parent.frame()))
-    f <<- copy(data)
+    # f <<- copy(data)
     dep.var <- colnames(data)[1]
     ind.var <- colnames(data)[-1]
     data[, id := 1:.N]    # for order.

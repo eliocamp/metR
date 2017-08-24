@@ -8,9 +8,9 @@ test_that("AssignSeason assigns season", {
     expect_equal(as.character(AssignSeason(1, lang = "en")),
                  "Summer")
     expect_equal(as.character(AssignSeason(c(1, 3))),
-                 c("Verano", "Otoño"))
+                 c("Verano", "Oto\u00f1o"))
     expect_equal(levels(AssignSeason(1)),
-                 c("Verano", "Otoño", "Invierno", "Primavera"))
+                 c("Verano", "Oto\u00f1o", "Invierno", "Primavera"))
 })
 
 
@@ -40,7 +40,5 @@ test_that("MakeMask respects boundaries", {
     expect_warning(MakeMask(361, 15))
     expect_equal(MakeMask(0, -91), NA)
     expect_equal(MakeMask(0, 91), NA)
-    expect_equal(MakeMask(-180, 90, wrap = c(-180, 180)), NA)
+    expect_equal(MakeMask(360-58, 90, wrap = c(-180, 180)), NA)
 })
-
-expec

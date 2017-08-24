@@ -26,6 +26,8 @@
 #' }
 #'
 #' @export
+#' @import data.table
+#' @import lubridate
 ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
     # Usa la librería netcdf para leer archivos y organiza todo en un data.table
     # Entra:
@@ -38,9 +40,7 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
     #   si list.vars == T, una lista con el nombre de las variables y las
     #   dimensiones.
 
-    library(ncdf4)
-    library(data.table)
-    ncfile <- nc_open(file)
+    ncfile <- ncdf4::nc_open(file)
 
     if (is.null(vars)) {
         vars <- names(ncfile$var)
@@ -51,7 +51,7 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
     ids <- vector()
     dimensions <- list()
     for (i in seq_along(dims)) {
-        dimensions[[dims[i]]] <- ncvar_get(ncfile, dims[i])
+        dimensions[[dims[i]]] <- ncdf4::ncvar_get(ncfile, dims[i])
         ids[i] <- ncfile$dim[[i]]$id
     }
     names(dims) <- ids
@@ -61,7 +61,7 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
         date.unit <- ncfile$dim$time$units
         date.unit <- strsplit(date.unit, " since ", fixed = TRUE)[[1]]
         library(lubridate)
-        date.fun <- match.fun(date.unit[1])
+        date.fun <- match.fun( date.unit[1])
         dimensions[["time"]] <- as.character(ymd_hms(date.unit[2]) + date.fun(dimensions[["time"]]))
     }
 
@@ -72,7 +72,7 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
 
     # Leo la primera variable para luego hacer melt y obtener el data.table
     # al que luego le agrego las otras variables
-    var1 <- ncvar_get(ncfile, vars[1], collapse_degen = FALSE)
+    var1 <- ncdf4::ncvar_get(ncfile, vars[1], collapse_degen = FALSE)
     order <- ncfile$var[[vars[1]]]$dimids
     dimensions <- dimensions[dims[as.character(order)]]
     dimnames(var1) <- dimensions
@@ -83,9 +83,9 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
         nc[, time := NULL]
     }
     if (length(vars) > 1) {
-        nc[, c(vars[-1]) := lapply(vars[-1], ncvar_get, nc = ncfile)]    # otras variables
+        nc[, c(vars[-1]) := lapply(vars[-1], ncdf4::ncvar_get, nc = ncfile)]    # otras variables
     }
     # Dejemos todo prolijo antes de salir.
-    nc_close(ncfile)
+    ncdf4::nc_close(ncfile)
     return(nc)
 }

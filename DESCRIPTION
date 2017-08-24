@@ -20,6 +20,8 @@ RoxygenNote: 6.0.1.9000
 Suggests: knitr,
     rmarkdown,
     testthat,
-    mapproj
+    mapproj,
+    ncdf4,
+    lubridate
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

@@ -44,6 +44,11 @@
 #' @import maptools
 #' @import sp
 MakeMask <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
+    # Chek arguments
+    valid <- (lat %b% c(-90, 90)) & (lon %b% wrap)
+
+    if (sum(!valid) != 0) warning("Points out of bounds")
+
     seamask <- maps::map(paste0("maps::", mask), fill = TRUE, col = "transparent",
                          plot = F, wrap = wrap)
     IDs <- sapply(strsplit(seamask$names, ":"), function(x) x[1])
@@ -52,7 +57,8 @@ MakeMask <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
 
     points <- sp::SpatialPoints(data.frame(lon, lat),
                             proj4string = sp::CRS("+proj=longlat +datum=WGS84"))
-    land <-  !is.na(sp::over(points, seamask))
+    land <-  unname(!is.na(sp::over(points, seamask)))
+    land[!valid] <- NA
     return(land)
 }
 

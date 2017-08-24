@@ -28,4 +28,19 @@ test_that("Derivative works", {
         1)
     })
 
+context("MakeMask")
+test_that("Water is still water", {
+    expect_equal(MakeMask(120, 14), FALSE)
+    expect_equal(MakeMask(360-58, -34), TRUE)
+    expect_equal(MakeMask(-58, -34, wrap = c(-180, 180)), TRUE)
+})
 
+test_that("MakeMask respects boundaries", {
+    expect_equal(MakeMask(361, 15), NA)
+    expect_warning(MakeMask(361, 15))
+    expect_equal(MakeMask(0, -91), NA)
+    expect_equal(MakeMask(0, 91), NA)
+    expect_equal(MakeMask(-180, 90, wrap = c(-180, 180)), NA)
+})
+
+expec

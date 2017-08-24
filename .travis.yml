@@ -4,3 +4,8 @@ language: R
 sudo: false
 cache: packages
 warnings_are_error: false
+addons:
+  apt:
+    packages:
+      - libnetcdf-dev
+      - netcdf-bin

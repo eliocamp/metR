@@ -19,7 +19,7 @@ AssignSeason <- function(month, hemisphere = c("south", "north"), lang = c("es",
     } else {
         sum = "Verano"
         win = "Invierno"
-        aut = "Otoño"
+        aut = "Oto\u00f1o"
         spr = "Primavera"
     }
     if (hemisphere == "s") {

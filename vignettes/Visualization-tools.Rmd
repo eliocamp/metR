@@ -122,7 +122,7 @@ There are (currently) many limitations of `geom_arrow()`:
 * It does not preserve direction under coordinate transformations, i.e wind coming from the south west will appear to come from the west south west if the x coordinate is stretched, but it will still be parallel to streamlines. 
 
 * Vectors that cross the dateline cause problems when using map proyections since they extend the data to values outside the bounds of the map. 
-s
+
 ```{r, fig.show='hold', fig.width = 3.3, warning = FALSE}
 g <- ggplot(RepeatLon(nceptemperature[lev == 500]), aes(lon, lat)) +
     stat_contour_fill(aes(z = air.z)) +

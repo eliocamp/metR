@@ -54,7 +54,7 @@
 #' @family meteorology functions
 #' @export
 #' @import data.table
-#' @import svd
+#' @import irlba
 EOF <- function(data, formula, value.var, n = 1) {
     # row.vars <- all.vars(formula[[2]])
     # col.vars <- all.vars(formula[[3]])

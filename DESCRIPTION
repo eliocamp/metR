@@ -13,7 +13,9 @@ Depends:
 	ggplot2,
     data.table
 Imports:
-	svd
+	maps,
+	irlba,
+	maptools,
 RoxygenNote: 6.0.1.9000
 Suggests: knitr,
     rmarkdown,

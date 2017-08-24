@@ -5,11 +5,11 @@
 \alias{scale_fill_divergent}
 \title{Divergent color scales}
 \usage{
-scale_color_divergent(low = muted("blue"), high = muted("red"),
-  binwidth = NA, ...)
+scale_color_divergent(low = scales::muted("blue"),
+  high = scales::muted("red"), binwidth = NA, ...)
 
-scale_fill_divergent(low = muted("blue"), high = muted("red"),
-  binwidth = NA, ...)
+scale_fill_divergent(low = scales::muted("blue"),
+  high = scales::muted("red"), binwidth = NA, ...)
 }
 \arguments{
 \item{binwidth}{(optional) Binwidth for computing breaks. For best resutls,

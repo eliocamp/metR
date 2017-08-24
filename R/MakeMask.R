@@ -42,7 +42,6 @@
 #' @export
 #' @import maps
 #' @import maptools
-#' @import sp
 MakeMask <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
     # Chek arguments
     valid <- (lat %b% c(-90, 90)) & (lon %b% wrap)

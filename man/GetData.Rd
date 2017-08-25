@@ -3,11 +3,26 @@
 \name{GetData}
 \alias{GetData}
 \title{Get Meteorological data}
+\source{
+https://ssl.smn.gob.ar/dpd/pron5d-calendario.php
+}
 \usage{
 GetData(date, source = "SMN", bar = FALSE)
 }
+\arguments{
+\item{date}{date vector of dates to fectch data}
+
+\item{source}{ignored for now}
+
+\item{bar}{logical object indicating wether to show a progress bar}
+}
+\value{
+a dataframe with daily minimum and maximum temperature for all available stations
+and each date.
+}
 \description{
-Downloads station data from Argentina's National Meteorological Service's
+Downloads minimum and maximum temperature station data from
+Argentina's National Wheather Service's
 public access. Data availability is restricted to one year prior.
 }
 \examples{
@@ -20,4 +35,5 @@ ggplot(subset(data, station == "BASE BELGRANO II"),
        aes(date, (t.max + t.min)/2)) +
     geom_line()
 }
+
 }

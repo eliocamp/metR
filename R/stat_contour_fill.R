@@ -7,6 +7,7 @@
 #' [ggplot2::stat_contour]) in that represents
 #' the value of the \code{z} aesthetic *inside* the contour instead of at the edge.
 #'
+#' @inheritParams ggplot2::stat_contour
 #'
 #' @section Computed variables:
 #' \describe{

@@ -6,6 +6,7 @@
 #'
 #' @param binwidth (optional) Binwidth for computing breaks. For best resutls,
 #' should be the same value as the related \code{stat_contour} call.
+#' @inheritParams ggplot2::scale_colour_gradient2
 #'
 #' @examples
 #' library(ggplot2)

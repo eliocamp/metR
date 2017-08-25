@@ -9,6 +9,7 @@
 #' @param min.mag minimum magnitude of the plotted vectors
 #' @param arrow.size size of the arrow (see [grid::arrow])
 #' @param arrow.angle angle of the arrow (see [grid::arrow])
+#' @inheritParams ggplot2::geom_segment
 #'
 #' @examples
 #' speed <- expand.grid(lon = 1:360, lat = -90:0)
@@ -29,7 +30,8 @@
 #' @family ggplot2 helpers
 #' @import ggplot2
 geom_arrow <- function(mapping = NULL, data = NULL,
-                       stat = StatArrow, position = "identity",
+                       stat = StatArrow,
+                       position = "identity",
                        ...,
                        arrow.size = 0.5,
                        arrow.angle = 14,

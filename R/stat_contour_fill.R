@@ -28,6 +28,8 @@
 #'
 #' @family ggplot2 helpers
 #' @export
+#' @import sp
+#' @import ggplot2
 stat_contour_fill <- function(mapping = NULL, data = NULL,
                               geom = "polygon", position = "identity",
                               ...,
@@ -49,10 +51,10 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
     )
 }
 
-
-StatContourFill <- ggproto("StatContourFill", Stat,
+#' @import ggplot2
+StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                            required_aes = c("x", "y", "z"),
-                           default_aes = aes(fill = ..int.level..),
+                           default_aes = ggplot2::aes(fill = ..int.level..),
 
                            compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                                                     breaks = NULL, complete = FALSE, na.rm = FALSE,
@@ -73,7 +75,7 @@ StatContourFill <- ggproto("StatContourFill", Stat,
                                # if (is.null(binwidth)) {
                                #     binwidth <- diff(range(data$z)) / length(breaks)
                                # }
-                               library(data.table)
+                               # library(data.table)
 
                                breaks.keep <- breaks[!(breaks %in% exclude)]
                                #f <<- data    # debug
@@ -109,7 +111,7 @@ StatContourFill <- ggproto("StatContourFill", Stat,
 
                                cont <- ggplot2:::contour_lines(data2, breaks.keep, complete = complete)
 
-                               setDT(cont)
+                               data.table::setDT(cont)
 
                                # co <<- copy(cont)    # debug
                                #data3 <<- data2    # debug
@@ -121,7 +123,6 @@ StatContourFill <- ggproto("StatContourFill", Stat,
                                # correction <- 0
 
                                if (mean.level %in% breaks.keep) {
-                                   l <<- mean.level
                                    mean.cont  <- data.frame(
                                        level = mean.level,
                                        x = c(rep(range.data$x[1], 2), rep(range.data$x[2], 2)),
@@ -163,7 +164,7 @@ area <- function(x, y){
     -sum((x[2:lx] - x[1:lx-1])*(y[2:lx] + y[1:lx-1]))/2
 }
 
-
+#' @import data.table
 CorrectFill <- function(cont, data, breaks) {
     levels <- breaks
     m.level <- -levels[2] + 2*levels[1]
@@ -172,7 +173,7 @@ CorrectFill <- function(cont, data, breaks) {
     cont[, int.level := 0]
     pieces <- unique(cont$piece)
 
-    data <- as.data.table(data)
+    data <- data.table::as.data.table(data)
     x.data <- unique(data$x)
     x.data <- x.data[order(x.data)]
     x.N <- length(x.data)
@@ -237,6 +238,7 @@ Closest <- function(x, target, sign = c(1, -1)) {
     tmp[tmp<0] <- NA
     x[which.min(abs(tmp))]
 }
+
 
 IsInside <- function(xp, yp, x, y) {
     !(sp::point.in.polygon(xp, yp, x, y) == 0)

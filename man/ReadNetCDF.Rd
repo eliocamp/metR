@@ -22,7 +22,7 @@ Else, it returns a character vector with the names of the variables
 (not the dimensions) included in the file.
 }
 \description{
-Using the \code{\link{ncdf4}} package, it reads an .nc file. The advantage
+Using the \code{\link[ncdf4]{ncdf4-package}} package, it reads an .nc file. The advantage
 over using \code{\link[ncdf4]{ncvar_get}} is that the output is a tidy data.table
 with proper dimensions.
 }

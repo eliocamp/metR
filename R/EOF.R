@@ -34,12 +34,15 @@
 #'
 #' @examples
 #' # The Antarctic Oscillation is computed from the
-#' monthly geopotential height anomalies weigthed by latitude.
+#' # monthly geopotential height anomalies weigthed by latitude.
+#' library(data.table)
+#' aao <- copy(aao)
 #' aao[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
 #'       by = .(lon, lat, month(date))]
 #' aao.svd <- EOF(aao, lat + lon ~ date, value.var = "gh.t.w", n = 1)
 #'
 #' # AAO field
+#' library(ggplot2)
 #' ggplot(aao.svd$left, aes(lon, lat, z = value)) +
 #'     geom_contour(aes(color = ..level..)) +
 #'     coord_polar()
@@ -81,7 +84,7 @@ EOF <- function(data, formula, value.var, n = 1) {
 
     g <- .tidy2matrix(setDT(data), formula, value.var)
 
-    f <<- copy(g)
+    # f <<- copy(g)
 
     if (is.null(n)) n = min(ncol(g$matrix), nrow(g$matrix))
 
@@ -92,12 +95,12 @@ EOF <- function(data, formula, value.var, n = 1) {
     pcomps <- paste0("PC", 1:ncol(right))
     colnames(right) <- pcomps
     right <- cbind(right, as.data.table(g$coldims))
-    right <- melt(right, id.vars = names(g$coldims), variable = "PC")
+    right <- data.table::melt(right, id.vars = names(g$coldims), variable = "PC")
 
     left <- as.data.table(eof$u)
     colnames(left) <- pcomps
     left <- cbind(left, as.data.table(g$rowdims))
-    left <- melt(left, id.vars = names(g$rowdims), variable = "PC")
+    left <- data.table::melt(left, id.vars = names(g$rowdims), variable = "PC")
 
     v.g  <- norm(g$matrix, type = "F")
     sdev <- data.table(PC = pcomps, sd = eof$d)

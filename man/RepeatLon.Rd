@@ -24,9 +24,9 @@ cyclical data so the workaround is to copy the leftmost data to the right.
 }
 \examples{
 library(ggplot2)
-slp <- copy(slp)
-g <- ggplot(slp, aes(lon, lat)) +
-    geom_contour(aes(z = slp)) +
+library(data.table)
+g <- ggplot(aao[date == date[1]], aes(lon, lat)) +
+    geom_contour(aes(z = gh)) +
     coord_polar() +
     ylim(c(-90, -10))
 
@@ -34,7 +34,7 @@ g <- ggplot(slp, aes(lon, lat)) +
 g
 
 # But using RepeatLon solves it.
-g \%+\% RepeatLon(slp)
+g \%+\% RepeatLon(aao[date == date[1]])
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},

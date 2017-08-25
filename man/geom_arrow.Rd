@@ -29,7 +29,7 @@ speed <- expand.grid(lon = 1:360, lat = -90:0)
 speed <- transform(speed,
                    vx = 1,
                    vy = 0.3)
-
+library(ggplot2)
 g <- ggplot(speed, aes(lon, lat)) +
     geom_arrow(aes(dx = vx, dy = vy), scale = 5,
                skip = c(7, 5), arrow.size = 0.2) +

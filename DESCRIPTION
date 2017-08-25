@@ -10,18 +10,25 @@ LazyData: true
 URL: https://github.com/eliocamp/meteoR
 BugReports: https://github.com/eliocamp/meteoR/issues
 Depends:
-	ggplot2,
-    data.table
+    R (>= 2.10)
 Imports:
+    ggplot2,
+    data.table,
 	maps,
 	irlba,
 	maptools,
-	lubridate
+	lubridate,
+    mapproj,
+    ncdf4,
+    gridExtra,
+    sp,
+    RCurl,
+    scales,
+    stringr
 RoxygenNote: 6.0.1.9000
 Suggests: knitr,
     rmarkdown,
     testthat,
-    mapproj,
-    ncdf4
+    reshape2
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

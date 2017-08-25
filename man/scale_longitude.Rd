@@ -47,8 +47,7 @@ from -180 to 180.
 }
 \examples{
 library(ggplot2)
-slp <- copy(slp)
-ggplot(slp, aes(lon, lat, z = slp)) +
+ggplot(aao[date == date[1]], aes(lon, lat, z = gh)) +
     geom_contour() +
     scale_x_longitude() +
     scale_y_latitude()

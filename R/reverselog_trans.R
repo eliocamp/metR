@@ -10,6 +10,8 @@
 #' gamma <- 0.286
 #' t <- data.frame(p = c(1000, 950, 850, 700, 500, 300, 200, 100))
 #' t$t <- 300*(t$p/1000)^gamma
+#'
+#' library(ggplot2)
 #' ggplot(t, aes(p, t)) +
 #'    geom_line() +
 #'    coord_flip() +
@@ -17,8 +19,8 @@
 #'
 #' @family ggplot2 helpers
 #' @export
+#' @import scales
 reverselog_trans <- function(base = 10) {
-    # library("scales")
     trans <- function(x) -log(x, base)
     inv <- function(x) base^(-x)
 

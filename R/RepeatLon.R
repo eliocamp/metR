@@ -14,9 +14,9 @@
 #'
 #' @examples
 #' library(ggplot2)
-#' slp <- copy(slp)
-#' g <- ggplot(slp, aes(lon, lat)) +
-#'     geom_contour(aes(z = slp)) +
+#' library(data.table)
+#' g <- ggplot(aao[date == date[1]], aes(lon, lat)) +
+#'     geom_contour(aes(z = gh)) +
 #'     coord_polar() +
 #'     ylim(c(-90, -10))
 #'
@@ -24,12 +24,13 @@
 #' g
 #'
 #' # But using RepeatLon solves it.
-#' g %+% RepeatLon(slp)
+#' g %+% RepeatLon(aao[date == date[1]])
 #' @family ggplot2 helpers
 #' @export
+#' @import data.table
 RepeatLon <- function(x, colname = "lon", maxlon = 360) {
-    dt <- is.data.table(x)
-    setDT(x)
+    dt <- data.table::is.data.table(x)
+    data.table::setDT(x)
     minlon = x[, min(get(colname))]
     # maxlon = x[, max(get(colname))]
     border <- x[get(colname) == minlon, ]

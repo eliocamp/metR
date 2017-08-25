@@ -1,6 +1,6 @@
 #' Read NetCDF files.
 #'
-#' Using the \code{\link{ncdf4}} package, it reads an .nc file. The advantage
+#' Using the \code{\link[ncdf4]{ncdf4-package}} package, it reads an .nc file. The advantage
 #' over using \code{\link[ncdf4]{ncvar_get}} is that the output is a tidy data.table
 #' with proper dimensions.
 #'
@@ -26,8 +26,8 @@
 #' }
 #'
 #' @export
-#' @import data.table
 #' @import lubridate
+#' @import data.table
 ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
     # Usa la librería netcdf para leer archivos y organiza todo en un data.table
     # Entra:
@@ -60,8 +60,7 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
     if ("time" %in% names(dimensions)) {
         date.unit <- ncfile$dim$time$units
         date.unit <- strsplit(date.unit, " since ", fixed = TRUE)[[1]]
-        library(lubridate)
-        date.fun <- match.fun( date.unit[1])
+        date.fun <- get(paste0(date.unit[1]))
         dimensions[["time"]] <- as.character(ymd_hms(date.unit[2]) + date.fun(dimensions[["time"]]))
     }
 
@@ -76,7 +75,7 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
     order <- ncfile$var[[vars[1]]]$dimids
     dimensions <- dimensions[dims[as.character(order)]]
     dimnames(var1) <- dimensions
-    nc <- melt(var1, varnames = names(dimensions), value.name = vars[1])
+    nc <- data.table::melt(var1, varnames = names(dimensions), value.name = vars[1])
     setDT(nc)
     if ("time" %in% names(dimensions)) {
         nc[, date := as.Date(time[1]), by = time]

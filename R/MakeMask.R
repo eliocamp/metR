@@ -16,12 +16,15 @@
 #' @examples
 #'
 #' # Make a sea-land mask
+#' library(data.table)
+#' nceptemperature <- copy(nceptemperature)
 #' nceptemperature[, land := MakeMask(lon, lat)]
 #'
 #' # Take the temperature difference between land and ocean
 #' diftemp <- nceptemperature[,
 #'           .(tempdif = mean(air[land == TRUE]) - mean(air[land == FALSE])),
 #'            by = .(lat, lev)]
+#' library(ggplot2)
 #' ggplot(diftemp, aes(lat, lev)) +
 #'     geom_contour(aes(z = tempdif, color = ..level..)) +
 #'     scale_y_level() +
@@ -42,6 +45,7 @@
 #' @export
 #' @import maps
 #' @import maptools
+#' @import sp
 MakeMask <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
     # Chek arguments
     valid <- (lat %b% c(-90, 90)) & (lon %b% wrap)

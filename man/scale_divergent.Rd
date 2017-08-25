@@ -23,7 +23,7 @@ the contours in a plot.
 \examples{
 library(ggplot2)
 surface <- reshape2::melt(volcano)
-gplot(surface, aes(Var1, Var2, z = value)) +
+ggplot(surface, aes(Var1, Var2, z = value)) +
   geom_contour(binwidth = 30, aes(color = ..level..)) +
   scale_color_divergent(binwidth = 30)
 

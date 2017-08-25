@@ -69,7 +69,7 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X), min.eof = 1
     if (is.data.frame(data)) {
         dimnames(X.rec) <- list(unlist(g$rowdims), unlist(g$coldims))
         names(dimnames(X.rec)) <- list(names(g$rowdims), names(g$coldims))
-        X.rec <- melt(X.rec, value.name = value.var)
+        X.rec <- data.table::melt(X.rec, value.name = value.var)
     }
 
     attr(X.rec, "eof") <- eof

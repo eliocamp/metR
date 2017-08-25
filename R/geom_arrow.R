@@ -15,7 +15,7 @@
 #' speed <- transform(speed,
 #'                    vx = 1,
 #'                    vy = 0.3)
-#'
+#' library(ggplot2)
 #' g <- ggplot(speed, aes(lon, lat)) +
 #'     geom_arrow(aes(dx = vx, dy = vy), scale = 5,
 #'                skip = c(7, 5), arrow.size = 0.2) +
@@ -27,6 +27,7 @@
 #'
 #' @export
 #' @family ggplot2 helpers
+#' @import ggplot2
 geom_arrow <- function(mapping = NULL, data = NULL,
                        stat = StatArrow, position = "identity",
                        ...,
@@ -57,10 +58,10 @@ geom_arrow <- function(mapping = NULL, data = NULL,
     )
 }
 
-
-StatArrow <- ggproto("StatArrow", Stat,
+#' @import ggplot2
+StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
                      required_aes = c("x", "y", "dx", "dy"),
-                     default_aes = aes(scale = 0.5),
+                     default_aes = ggplot2::aes(scale = 0.5),
 
                      compute_group = function(data, scales, scale = 0.4, skip = skip,
                                               min.mag = min.mag) {

@@ -28,6 +28,7 @@ readability.
 }
 \examples{
 library(ggplot2)
+library(data.table)
 gdata <- claris[year(date) == 2009][id == id[1]]
 g <- ggplot(gdata, aes(date, max)) +
     geom_line() +

@@ -22,7 +22,8 @@ numeric vector and defaults to sacale = FALSE.
 }
 \examples{
 # Zonal temperature anomaly
-nceptemperature[, air.z := Anomaly(air), by = .(lat, lev)]
+library(data.table)
+nceptemperature[, .(lon = lon, air.z = Anomaly(air)), by = .(lat, lev)]
 
 }
 \seealso{

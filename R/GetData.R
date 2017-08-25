@@ -1,14 +1,21 @@
 #' Get Meteorological data
 #'
-#' @examples
-#' dates <- seq.Date(as.Date("2016-07-14"), as.Date("2017-07-14"), by = "1 day")
-#' data <- GetData(dates)    # long!
+#' Downloads station data from Argentina's National Meteorological Service's
+#' public access. Data availability is restricted to one year prior.
 #'
+#' @examples
+#' \dontrun{
+#' dates <- seq.Date(as.Date("2016-07-14"), as.Date("2017-07-14"), by = "1 day")
+#' data <- GetData(dates, bar = FALSE)    # long!
+#'
+#' library(ggplot2)
 #' ggplot(subset(data, station == "BASE BELGRANO II"),
 #'        aes(date, (t.max + t.min)/2)) +
 #'     geom_line()
+#' }
 #' @export
-GetData <- function(date, source = "SMN", bar = TRUE) {
+#' @import RCurl
+GetData <- function(date, source = "SMN", bar = FALSE) {
     return.data <- data.frame()
     if (bar == TRUE) pb <- txtProgressBar(min = 1, max = length(date), style = 3)
     for (i in seq_along(date)) {
@@ -21,7 +28,7 @@ GetData <- function(date, source = "SMN", bar = TRUE) {
         url <- paste0(base.url, file.url)
         obs <- readLines(url, warn = F)
         if (obs[1] != "El archivo no existe.") {
-            data <- CleanSMN(obs)
+            data <- .CleanSMN(obs)
             data$date <- as.Date(date[i])
             return.data <- rbindlist(list(return.data, data))
         }
@@ -31,7 +38,7 @@ GetData <- function(date, source = "SMN", bar = TRUE) {
 }
 
 
-CleanSMN <- function(obs) {
+.CleanSMN <- function(obs) {
     obs <- obs[4:length(obs)]
     t.max <- as.numeric(stringr::str_sub(obs, 10, 15))
     t.min <- as.numeric(stringr::str_sub(obs, 16, 21))

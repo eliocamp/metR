@@ -20,16 +20,16 @@
 #' @aliases scale_latitude
 #' @examples
 #' library(ggplot2)
-#' slp <- copy(slp)
-#' ggplot(slp, aes(lon, lat, z = slp)) +
+#' ggplot(aao[date == date[1]], aes(lon, lat, z = gh)) +
 #'     geom_contour() +
 #'     scale_x_longitude() +
 #'     scale_y_latitude()
 #'
 #' @family ggplot2 helpers
 #' @export
+#' @import ggplot2
 scale_x_longitude <- function(ticks = 60, name = "", expand = c(0, 0), ...) {
-    scale_x_continuous(name = name, expand = expand,
+    ggplot2::scale_x_continuous(name = name, expand = expand,
                        breaks = seq(0, 360 - ticks, by = ticks),
                        labels = c(seq(0, 180, by = ticks),
                                   seq(-180 + ticks, 0 - ticks, by = ticks)),
@@ -38,8 +38,9 @@ scale_x_longitude <- function(ticks = 60, name = "", expand = c(0, 0), ...) {
 
 #' @rdname scale_longitude
 #' @export
+#' @import ggplot2
 scale_y_longitude <- function(ticks = 60, name = "", expand = c(0, 0), ...) {
-    scale_y_continuous(name = name, expand = expand,
+    ggplot2::scale_y_continuous(name = name, expand = expand,
                        breaks = seq(0, 360 - ticks, by = ticks),
                        labels = c(seq(0, 180, by = ticks),
                                   seq(-180 + ticks, 0 - ticks, by = ticks)),
@@ -49,32 +50,36 @@ scale_y_longitude <- function(ticks = 60, name = "", expand = c(0, 0), ...) {
 
 #' @rdname scale_longitude
 #' @export
+#' @import ggplot2
 scale_x_latitude <- function(ticks = 30, name = "", expand = c(0, 0), ...) {
-    scale_x_continuous(name = name, expand = expand,
+    ggplot2::scale_x_continuous(name = name, expand = expand,
                        breaks = seq(-90, 90, by = ticks),
                        ...)
 }
 
 #' @rdname scale_longitude
 #' @export
+#' @import ggplot2
 scale_y_latitude <- function(ticks = 30, name = "", expand = c(0, 0), ...) {
-    scale_y_continuous(name = name, expand = expand,
+    ggplot2::scale_y_continuous(name = name, expand = expand,
                        breaks = seq(-90, 90, by = ticks),
                        ...)
 }
 
 #' @rdname scale_longitude
 #' @export
+#' @import ggplot2
 scale_x_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...) {
-    scale_x_continuous(name = name, expand = expand,
+    ggplot2::scale_x_continuous(name = name, expand = expand,
                        trans = trans,
                        ...)
 }
 
 #' @rdname scale_longitude
 #' @export
+#' @import ggplot2
 scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...) {
-    scale_y_continuous(name = name, expand = expand,
+    ggplot2::scale_y_continuous(name = name, expand = expand,
                        trans = trans,
                        ...)
 }

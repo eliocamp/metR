@@ -27,12 +27,15 @@ Creates a  mask
 \examples{
 
 # Make a sea-land mask
+library(data.table)
+nceptemperature <- copy(nceptemperature)
 nceptemperature[, land := MakeMask(lon, lat)]
 
 # Take the temperature difference between land and ocean
 diftemp <- nceptemperature[,
           .(tempdif = mean(air[land == TRUE]) - mean(air[land == FALSE])),
            by = .(lat, lev)]
+library(ggplot2)
 ggplot(diftemp, aes(lat, lev)) +
     geom_contour(aes(z = tempdif, color = ..level..)) +
     scale_y_level() +

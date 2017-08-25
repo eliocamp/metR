@@ -14,7 +14,8 @@
 #'
 #' @examples
 #' # Zonal temperature anomaly
-#' nceptemperature[, air.z := Anomaly(air), by = .(lat, lev)]
+#' library(data.table)
+#' nceptemperature[, .(lon = lon, air.z = Anomaly(air)), by = .(lat, lev)]
 #'
 #' @family utilities
 #' @export
@@ -38,9 +39,12 @@ Anomaly <- function(x) {
 #' p <- Percentile(x)
 #'
 #' # Number of extreme temperature station-days
+#' library(data.table)
+#' claris <- copy(claris)
 #' claris[!is.na(max), percentile := Percentile(max), by = .(id, month(date))]
 #' extreme.days <- claris[, .(n = sum(percentile > 0.90, na.rm = TRUE)),
 #'                        by = .(year(date))]
+#' library(ggplot2)
 #' ggplot(extreme.days, aes(year, n)) +
 #'     geom_line()
 #' @family utilities
@@ -147,9 +151,10 @@ Similar <- function(x, target, tol = Inf) {
 
 #' @rdname logic
 #' @export
+#' @import data.table
 `%b%` <- function(x, limits) {
     # Operador "between"
-    if (require(data.table)) {
+    if (requireNamespace("data.table", quietly = T)) {
         ret <- data.table::between(x, min(limits), max(limits))
     } else {
         ret <- x >= min(limits) & x <= max(limits)
@@ -159,11 +164,12 @@ Similar <- function(x, target, tol = Inf) {
 
 #' @rdname logic
 #' @export
+#' @import data.table
 Between <- function(x, limits, include = c(TRUE, TRUE)) {
     # Operador "between"
     if (length(include) < 2) include <- rep(include[1], 2)
 
-    if (include[1] == include[2] & require(data.table)) {
+    if (include[1] == include[2] & requireNamespace("data.table", quietly = T)) {
         ret <- data.table::between(x, min(limits), max(limits),
                                    incbounds = include[1])
     } else {

@@ -35,11 +35,13 @@ at the given longitude. If \code{lat} is of length 1, then it computes
 the zonal derivative (\eqn{d/dx}) at the given latitude.
 }
 \examples{
-nceptemperature[, air.dy := DerivatePhysical(air, lon = lon, lat, bc = "none"),
+library(data.table)
+temp.derv <- nceptemperature[lev == 500,
+                              .(lat = lat, air.dy = DerivatePhysical(air,
+                                                      lon = lon, lat, bc = "none")),
                 by = .(lev, lon)]
-
-ggplot(nceptemperature[lev == 500], aes(lon, lat)) +
-    geom_tile(aes(fill = air)) +
+library(ggplot2)
+ggplot(temp.derv, aes(lon, lat)) +
     geom_contour(aes(z = air.dy, color = ..level..)) +
     scale_color_divergent()
 

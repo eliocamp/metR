@@ -10,13 +10,14 @@
 #' @examples
 #' library(ggplot2)
 #' surface <- reshape2::melt(volcano)
-#' gplot(surface, aes(Var1, Var2, z = value)) +
+#' ggplot(surface, aes(Var1, Var2, z = value)) +
 #'   geom_contour(binwidth = 30, aes(color = ..level..)) +
 #'   scale_color_divergent(binwidth = 30)
 #'
 #' @rdname scale_divergent
 #' @family ggplot2 helpers
 #' @export
+#' @import ggplot2 scales
 scale_color_divergent <- function(low = scales::muted("blue"), high = scales::muted("red"),
                                   binwidth = NA, ...) {
     # Escala divergente con defaults más razonables.
@@ -24,14 +25,15 @@ scale_color_divergent <- function(low = scales::muted("blue"), high = scales::mu
         breaks <- function(x){
             c(seq(x[1], 0 - binwidth, by = -binwidth), seq(0, x[2], by = binwidth))
         }
-        return(scale_color_gradient2(low = low, high = high, breaks = breaks, ...))
+        return(ggplot2::scale_color_gradient2(low = low, high = high, breaks = breaks, ...))
     } else {
-        return(scale_color_gradient2(low = low, high = high, ...))
+        return(ggplot2::scale_color_gradient2(low = low, high = high, ...))
     }
 }
 
 #' @rdname scale_divergent
 #' @export
+#' @import ggplot2 scales
 scale_fill_divergent <- function(low = scales::muted("blue"), high = scales::muted("red"),
                                  binwidth = NA, ...) {
     # Escala divergente con defaults más razonables.
@@ -39,8 +41,8 @@ scale_fill_divergent <- function(low = scales::muted("blue"), high = scales::mut
         breaks <- function(x){
             c(seq(x[1], 0 - binwidth, by = -binwidth), seq(0, x[2], by = binwidth))
         }
-        return(scale_fill_gradient2(low = low, high = high, breaks = breaks, ...))
+        return(ggplot2::scale_fill_gradient2(low = low, high = high, breaks = breaks, ...))
     } else {
-        return(scale_fill_gradient2(low = low, high = high, ...))
+        return(ggplot2::scale_fill_gradient2(low = low, high = high, ...))
     }
 }

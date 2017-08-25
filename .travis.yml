@@ -3,7 +3,7 @@
 language: R
 sudo: false
 cache: packages
-warnings_are_error: false
+warnings_are_errors: false
 addons:
   apt:
     packages:

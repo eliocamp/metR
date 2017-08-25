@@ -16,12 +16,12 @@ Imports:
 	maps,
 	irlba,
 	maptools,
+	lubridate
 RoxygenNote: 6.0.1.9000
 Suggests: knitr,
     rmarkdown,
     testthat,
     mapproj,
-    ncdf4,
-    lubridate
+    ncdf4
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

@@ -27,9 +27,8 @@ Creates a  mask
 \examples{
 
 # Make a sea-land mask
-library(data.table)
-nceptemperature <- copy(nceptemperature)
-nceptemperature[, land := MakeMask(lon, lat)]
+mask <- nceptemperature[lev == 1000, .(lon = lon, lat = lat, land = MakeMask(lon, lat))]
+nceptemperature <- nceptemperature[mask, on = c("lon", "lat")]
 
 # Take the temperature difference between land and ocean
 diftemp <- nceptemperature[,

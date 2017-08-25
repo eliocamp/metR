@@ -26,7 +26,7 @@
 #' }
 #'
 #' @export
-#' @import lubridate
+#' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
 #' @import data.table
 ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
     # Usa la librería netcdf para leer archivos y organiza todo en un data.table
@@ -61,7 +61,8 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
         date.unit <- ncfile$dim$time$units
         date.unit <- strsplit(date.unit, " since ", fixed = TRUE)[[1]]
         date.fun <- get(paste0(date.unit[1]))
-        dimensions[["time"]] <- as.character(ymd_hms(date.unit[2]) + date.fun(dimensions[["time"]]))
+        dimensions[["time"]] <- as.character(lubridate::ymd_hms(date.unit[2]) +
+                                                 date.fun(dimensions[["time"]]))
     }
 
     if (list.vars == T) {

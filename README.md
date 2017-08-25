@@ -28,8 +28,6 @@ In this example we easily perform Principal Components Decomposition (EOF) on mo
 
 ``` r
 library(meteoR)
-#> Loading required package: ggplot2
-#> Loading required package: data.table
 library(data.table)
 library(ggplot2)
 

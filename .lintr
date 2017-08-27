@@ -1,0 +1,9 @@
+linters: with_defaults(
+    infix_spaces_linter = NULL, # 110
+    line_length_linter = line_length_linter(95), 
+    object_usage_linter = NULL, # 42
+    spaces_left_parentheses_linter = NULL, # 20
+    camel_case_linter = NULL, # 13
+    multiple_dots_linter = NULL, # 12
+    NULL
+  )

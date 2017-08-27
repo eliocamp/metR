@@ -55,7 +55,7 @@ WaveFlux <- function(gh, u, v, lon, lat, lev) {
         w.y <- coeff*(u.mean*xv + v.mean*coslat*yv)
 
         list(lon = lon, lat = lat,
-             w.x = w.x, w.y = w.y)}
-        ]
+             w.x = w.x, w.y = w.y)
+        }]
     return(flux)
 }

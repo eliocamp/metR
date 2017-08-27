@@ -1,11 +1,12 @@
 ## DNIEOF
-## Based on http://menugget.blogspot.com/2012/10/dineof-data-interpolating-empirical.html#more
-#http://journals.ametsoc.org/doi/full/10.1175/1520-0426%282003%29020%3C1839%3AECADFF%3E2.0.CO%3B2
+# Based on http://menugget.blogspot.com/2012/10/dineof-data-interpolating-empirical.html#more
+# http://journals.ametsoc.org/doi/full/10.1175/1520-0426%282003%29020%3C1839%3AECADFF%3E2.0.CO%3B2
 
 
 
-ImputeEOF <- function(data, formula, value.var, max.eof = length(X), min.eof = 1, tol = 1e-4,
-                      max.iter = 10000, validation = NULL, verbose = FALSE) {
+ImputeEOF <- function(data, formula, value.var, max.eof = length(X),
+                      min.eof = 1, tol = 1e-4, max.iter = 10000,
+                      validation = NULL, verbose = FALSE) {
     # Build matrix if necessary.
     if (is.matrix(data)) {
         X <- data
@@ -40,8 +41,9 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X), min.eof = 1
 
     for (i in 2:length(eofs)) {
         # After first guess, impute gaps and validation.
-        X.rec.temp <- try(.ImputeEOF1(X.rec, c(gaps, validation), eofs[i], tol = tol,
-                                      max.iter = max.iter, verbose = verbose))
+        X.rec.temp <- try(.ImputeEOF1(X.rec, c(gaps, validation), eofs[i],
+                                      tol = tol, max.iter = max.iter,
+                                      verbose = verbose))
         # If it doesn't converge, then rmse is infinite
         if (is.error(X.rec.temp)) {
             rmse <- c(rmse, Inf)
@@ -60,7 +62,6 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X), min.eof = 1
             break
         }
     }
-    # print(rmse)
     # Select best eof and make proper imputation.
     eof <- eofs[which.min(rmse)]
     X[gaps] <- fill
@@ -84,7 +85,7 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X), min.eof = 1
         svd <- irlba::irlba(X.rec, neig = n.eof)
         R <- svd$u%*%diag(svd$d, nrow = n.eof)%*%t(svd$v)
         rmse <- sqrt(mean((R[X.na] - X.rec[X.na])^2))
-        # print(rmse)
+
         X.rec[X.na] <- R[X.na]
 
         if (rmse < tol) {
@@ -124,7 +125,7 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X), min.eof = 1
         }
     }
     names(dims) <- col.vars
-    return(list(matrix = as.matrix(g[,-seq_along(row.vars), with = F]),
+    return(list(matrix = as.matrix(g[, -seq_along(row.vars), with = F]),
                 coldims = dims,
                 rowdims = as.list(g[, row.vars, with = F])))
 }

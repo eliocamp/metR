@@ -52,15 +52,15 @@
 #' @seealso \code{\link{DerivatePhysical}}
 #' @export
 Derivate <- function(formula, order = c(1, 2), bc = "none", data = NULL,
-                      sphere = FALSE, a = 6731) {
+                     sphere = FALSE, a = 6731) {
     # Build dataframe
     mf <- match.call(expand.dots = F)
     mf[[1]] <- quote(model.frame)
     m <- match(c("formula", "data"), names(mf))
     mf <- mf[c(1L, m)]
-    # mff <<- mf
+
     data <- as.data.table(eval(mf, parent.frame()))
-    # f <<- copy(data)
+
     dep.var <- colnames(data)[1]
     ind.var <- colnames(data)[-1]
     data[, id := 1:.N]    # for order.
@@ -69,28 +69,29 @@ Derivate <- function(formula, order = c(1, 2), bc = "none", data = NULL,
     if (length(ind.var) > 1) {
         if (length(bc) == 1) {
             bc <- rep(bc, length(ind.var))
-        } else if(length(bc) < length(ind.var)) {
+        } else if (length(bc) < length(ind.var)) {
             stop("One boundary condition per variable needed.")
         }
     }
 
-    dernames <- paste0(dep.var, ".", paste0(rep("d", order[1]), collapse = ""), ind.var)
+    dernames <- paste0(dep.var, ".", paste0(rep("d", order[1]), collapse = ""),
+                       ind.var)
     for (v in seq_along(ind.var)) {
         temp <- data[, .(id,
                          .derv(get(dep.var), get(ind.var[v]),
-                                                   order = order[1], bc = bc[v])),
-                                 by = c(ind.var[-v])]
+                               order = order[1], bc = bc[v])),
+                     by = c(ind.var[-v])]
         setnames(temp, "V2", dernames[v])
         data <- data[temp, on = "id"]
     }
     data <- data[order(id)]
-    # r <<- copy(data)
 
     # Correction for spherical coordinates.
     if (sphere == TRUE) {
         a <- a*1000
+        cosvar <- cos(data[, get(ind.var[2])]*pi/180)
         set(data, j = dernames[1],
-            value = data[, get(dernames[1])]*(180/pi/(a*cos(data[, get(ind.var[2])]*pi/180)))^order[1])
+            value = data[, get(dernames[1])]*(180/pi/(a*cosvar))^order[1])
         set(data, j = dernames[2],
             value = data[, get(dernames[2])]*(180/pi/a)^order[1])
     }
@@ -163,15 +164,11 @@ DerivatePhysical <- function(variable, lon, lat, order = c(1, 2),
                              bc = c("cyclic", "none"), a = 6731) {
     a <- a*1000
     if (length(lon) == 1) {
-        # dv/dy
-        dv = .derv(variable, lat*pi/180, order = order[1],
-                      bc = bc[1])/a^order[1]
+        dv <- .derv(variable, lat*pi/180, order = order[1],
+                   bc = bc[1])/a^order[1]
     } else {
-        dv = Derivate(variable, lon*pi/180, order = order[1],
+        dv <- Derivate(variable, lon*pi/180, order = order[1],
                       bc = bc[1])/(a*cos(lat*pi/180))^order[1]
     }
     return(dv)
 }
-
-
-

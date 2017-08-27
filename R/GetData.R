@@ -55,8 +55,9 @@ GetData <- function(date, source = "SMN", bar = FALSE) {
     if (bar == TRUE) close(pb)
 
     if (length(return.data) == 0) stop("No data available for any of selected dates")
-    if (length(no_data) != 0) warning(paste0("No data for available for these dates: "), date[no_data])
-
+    if (length(no_data) != 0) {
+        warning(paste0("No data for available for these dates: "), date[no_data])
+    }
     return(return.data)
 }
 
@@ -69,6 +70,3 @@ GetData <- function(date, source = "SMN", bar = FALSE) {
     station <- stringr::str_trim(station)
     return(data.frame(t.max, t.min, station, stringsAsFactors = F))
 }
-
-
-

@@ -31,8 +31,7 @@
 RepeatLon <- function(x, colname = "lon", maxlon = 360) {
     dt <- data.table::is.data.table(x)
     data.table::setDT(x)
-    minlon = x[, min(get(colname))]
-    # maxlon = x[, max(get(colname))]
+    minlon <- x[, min(get(colname))]
     border <- x[get(colname) == minlon, ]
     border[, c(colname) := maxlon]
     full <- rbind(x, border)
@@ -42,8 +41,3 @@ RepeatLon <- function(x, colname = "lon", maxlon = 360) {
         return(setDF(full))
     }
 }
-
-
-
-
-

@@ -83,4 +83,3 @@ scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...
                        trans = trans,
                        ...)
 }
-

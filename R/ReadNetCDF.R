@@ -83,7 +83,8 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
         nc[, time := NULL]
     }
     if (length(vars) > 1) {
-        nc[, c(vars[-1]) := lapply(vars[-1], ncdf4::ncvar_get, nc = ncfile)]    # otras variables
+        # Otras variables.
+        nc[, c(vars[-1]) := lapply(vars[-1], ncdf4::ncvar_get, nc = ncfile)]
     }
     # Dejemos todo prolijo antes de salir.
     ncdf4::nc_close(ncfile)

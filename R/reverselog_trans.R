@@ -28,5 +28,3 @@ reverselog_trans <- function(base = 10) {
               scales::log_breaks(base = base),
               domain = c(1e-100, Inf))
 }
-
-

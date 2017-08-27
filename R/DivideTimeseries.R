@@ -42,8 +42,10 @@ DivideTimeseries <- function(g, x, n = 2, xlab = "x", ylab = "y") {
             leg <- which(sapply(pl$grobs, function(x) x$name) == "guide-box")
             try(legend.new <- pl$grobs[[leg]])
         }
-        pl <- g + ggplot2::coord_cartesian(xlim = as.Date(c(m + step*(i-1), m + i*step))) +
-            ggplot2::theme(axis.title = ggplot2::element_blank()) + ggplot2::guides(color = FALSE)
+        pl <- g +
+            ggplot2::coord_cartesian(xlim = as.Date(c(m + step*(i-1), m + i*step))) +
+            ggplot2::theme(axis.title = ggplot2::element_blank()) +
+            ggplot2::guides(color = FALSE)
         pl <- ggplot2::ggplot_gtable(ggplot2::ggplot_build(pl))
         plots[[i]] <- pl
     }
@@ -53,4 +55,3 @@ DivideTimeseries <- function(g, x, n = 2, xlab = "x", ylab = "y") {
     gridExtra::grid.arrange(grobs = plots, ncol = 1, heights = c(rep(10, n), 2),
                             bottom = xlab, left = ylab)
 }
-

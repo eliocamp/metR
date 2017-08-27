@@ -70,8 +70,8 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
                          if (length(skip) < 2) {
                              skip[2] <- skip[1]
                          }
-                         x.skip = skip[1]
-                         y.skip = skip[2]
+                         x.skip <- skip[1]
+                         y.skip <- skip[2]
 
                          data <- subset(data, x %in% JumpBy(unique(data$x), x.skip + 1) &
                                             y %in% JumpBy(unique(data$y), y.skip + 1) &
@@ -111,6 +111,3 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
 #     ggproto("GeomArrow", GeomSegment,
 #             arrow = arrow(arrow.angle, unit(arrow.size, "lines")))
 # }
-
-
-

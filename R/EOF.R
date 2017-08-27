@@ -59,36 +59,10 @@
 #' @import data.table
 #' @import irlba
 EOF <- function(data, formula, value.var, n = 1) {
-    # row.vars <- all.vars(formula[[2]])
-    # col.vars <- all.vars(formula[[3]])
-    #
-    # g <- dcast(setDT(data), formula, value.var = value.var)
-    #
-    # dims <- list()
-    # if (length(col.vars) > 1) {
-    #     cols <- unlist(strsplit(colnames(g), split = "_"))
-    # } else {
-    #     cols <- colnames(g)
-    # }
-    #
-    # for (i in seq_along(col.vars)) {
-    #     dims[[i]] <- JumpBy(cols, length(col.vars), start = i + length(row.vars))
-    #     if (class(data[[col.vars[i]]]) != "Date") {
-    #         dims[[i]] <- as(dims[[i]], class(data[[col.vars[i]]]))
-    #     } else {
-    #         dims[[i]] <- as.Date(dims[[i]])
-    #     }
-    # }
-    # names(dims) <- col.vars
-    # g$matrix <- as.matrix(g[,-seq_along(row.vars), with = F])
-
     g <- .tidy2matrix(setDT(data), formula, value.var)
 
-    # f <<- copy(g)
+    if (is.null(n)) n <- min(ncol(g$matrix), nrow(g$matrix))
 
-    if (is.null(n)) n = min(ncol(g$matrix), nrow(g$matrix))
-
-    # eof <- svd::propack.svd(g$matrix, n = max(n))
     eof <- irlba::irlba(g$matrix, nv = max(n))
 
     right <- as.data.table(eof$v)
@@ -108,5 +82,3 @@ EOF <- function(data, formula, value.var, n = 1) {
 
     return(list(right = right, left = left, sdev = sdev))
 }
-
-

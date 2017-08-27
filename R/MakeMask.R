@@ -54,15 +54,11 @@ MakeMask <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
     seamask <- maps::map(paste0("maps::", mask), fill = TRUE, col = "transparent",
                          plot = F, wrap = wrap)
     IDs <- sapply(strsplit(seamask$names, ":"), function(x) x[1])
-    seamask <- maptools::map2SpatialPolygons(seamask, IDs = IDs,
-                                                    proj4string = sp::CRS("+proj=longlat +datum=WGS84"))
+    proj <- sp::CRS("+proj=longlat +datum=WGS84")
+    seamask <- maptools::map2SpatialPolygons(seamask, IDs = IDs, proj4string = proj)
 
-    points <- sp::SpatialPoints(data.frame(lon, lat),
-                            proj4string = sp::CRS("+proj=longlat +datum=WGS84"))
+    points <- sp::SpatialPoints(data.frame(lon, lat), proj4string = proj)
     land <-  unname(!is.na(sp::over(points, seamask)))
     land[!valid] <- NA
     return(land)
 }
-
-
-

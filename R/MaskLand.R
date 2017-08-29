@@ -16,7 +16,7 @@
 #' @examples
 #'
 #' # Make a sea-land mask
-#' mask <- nceptemperature[lev == 1000, .(lon = lon, lat = lat, land = MakeMask(lon, lat))]
+#' mask <- nceptemperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon, lat))]
 #' nceptemperature <- nceptemperature[mask, on = c("lon", "lat")]
 #'
 #' # Take the temperature difference between land and ocean
@@ -31,7 +31,7 @@
 #'     scale_color_divergent()
 #'
 #' # Mean temperature in the USA
-#' usatemp <- nceptemperature[, usa := MakeMask(lon, lat, mask = "usa")][
+#' usatemp <- nceptemperature[, usa := MaskLand(lon, lat, mask = "usa")][
 #'     , .(air = weighted.mean(air, cos(lat*pi/180))), by = .(usa, lev)][
 #'         usa == TRUE]
 #'
@@ -40,16 +40,13 @@
 #'     scale_x_level() +
 #'     coord_flip()
 #'
-#'
 #' @export
 #' @import maps
 #' @import maptools
 #' @import sp
-MakeMask <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
+MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
     # Chek arguments
-    valid <- (lat %b% c(-90, 90)) & (lon %b% wrap)
-
-    if (sum(!valid) != 0) warning("Points out of bounds")
+    # if (sum(!valid) != 0) warning("Points out of bounds")
 
     seamask <- maps::map(paste0("maps::", mask), fill = TRUE, col = "transparent",
                          plot = F, wrap = wrap)
@@ -57,8 +54,14 @@ MakeMask <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
     proj <- sp::CRS("+proj=longlat +datum=WGS84")
     seamask <- maptools::map2SpatialPolygons(seamask, IDs = IDs, proj4string = proj)
 
-    points <- sp::SpatialPoints(data.frame(lon, lat), proj4string = proj)
-    land <-  unname(!is.na(sp::over(points, seamask)))
-    land[!valid] <- NA
-    return(land)
+    field <- data.table(lon, lat)
+    field.unique <- unique(field)
+
+    points <- sp::SpatialPoints(field.unique, proj4string = proj)
+    field.unique[, land := unname(!is.na(sp::over(points, seamask)))]
+    field.unique[!((lat %b% c(-90, 90)) & (lon %b% wrap)), land := NA]
+
+    field <- field.unique[, .(lon, lat, land)][field, on = c("lon", "lat")]
+
+    return(field$land)
 }

@@ -1,9 +1,52 @@
-## DNIEOF
-# Based on http://menugget.blogspot.com/2012/10/dineof-data-interpolating-empirical.html#more
-# http://journals.ametsoc.org/doi/full/10.1175/1520-0426%282003%29020%3C1839%3AECADFF%3E2.0.CO%3B2
-
-
-
+#' Impute missing values
+#'
+#' Imputes missing values via Data Interpolating Empirical Orthogonal Functions
+#' (DINEOF).
+#'
+#' @inheritParams EOF
+#' @param max.eof,min.eof maximum and minimum number of singular values used for
+#' imputation
+#' @param tol tolerance used for determining convergence
+#' @param max.iter maximum iterations allowed for the algorithm
+#' @param validation number of points to use in crossvalidation (defaults to
+#' 30 or 10\% of the non NA points)
+#' @param verbose ligical indicating whetehr to print progress
+#'
+#' @return
+#' A data table with imputed values.
+#'
+#' @details
+#' If `data` is a matrix, the `formula` argument is ignored and the function
+#' returns a matrix.
+#'
+#' @references
+#' Beckers, J.-M., Barth, A., and Alvera-Azcárate, A.: DINEOF reconstruction of clouded images including error maps – application to the Sea-Surface Temperature around Corsican Island, Ocean Sci., 2, 183-199, https://doi.org/10.5194/os-2-183-2006, 2006.
+#'
+#' @examples
+#' library(data.table)
+#' aao <- copy(aao)
+#' aao[, gh.t := Anomaly(gh), by = .(lat, lon)]
+#' aao <- aao[date == date[1]]
+#'
+#' # Add gaps to field
+#' aao[, gh.gap := gh.t]
+#' aao[sample(1:.N, .N*0.3), gh.gap := NA]
+#'
+#' aao.full <- as.data.table(ImputeEOF(aao, lon ~ lat,  value.var = "gh.gap",
+#'                                     verbose = T, max.iter = 2000))
+#'
+#' aao <- aao[aao.full[, .(lon, lat, gh.impute = gh.gap)], on = c("lon", "lat")]
+#'
+#' library(ggplot2)
+#' ggplot(aao, aes(lon, lat)) +
+#'     geom_contour(aes(z = gh.t), color = "black") +
+#'     geom_contour(aes(z = gh.impute))
+#'
+#' ggplot(aao[is.na(gh.gap)], aes(gh.t, gh.impute)) +
+#'     geom_point()
+#'
+#' @import data.table
+#' @export
 ImputeEOF <- function(data, formula, value.var, max.eof = length(X),
                       min.eof = 1, tol = 1e-4, max.iter = 10000,
                       validation = NULL, verbose = FALSE) {
@@ -13,7 +56,7 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X),
     } else if (is.data.frame(data)) {
         nas <- sum(is.na(data[[value.var]]))
         if (nas == 0) {
-            warning("Data has no missing values")
+            warning("data has no missing values")
             return(data)
         }
         g <- .tidy2matrix(data, formula, value.var)
@@ -82,7 +125,13 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X),
 .ImputeEOF1 <- function(X, X.na, n.eof, tol = 1e-4, max.iter = 10000, verbose = TRUE) {
     X.rec <- X
     for (i in 1:max.iter) {
-        svd <- irlba::irlba(X.rec, neig = n.eof)
+        if (requireNamespace("irlba", quietly = TRUE)) {
+            svd <- irlba::irlba(X.rec, nv = n.eof)
+        } else {
+            svd <- svd(X.rec, nu = n.eof, nv = n.eof)
+            svd$d <- svd$d[1:n.eof]
+        }
+
         R <- svd$u%*%diag(svd$d, nrow = n.eof)%*%t(svd$v)
         rmse <- sqrt(mean((R[X.na] - X.rec[X.na])^2))
 
@@ -99,33 +148,4 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X),
         stop()
     }
 
-}
-
-
-# Turns tidy field to matrix + 2 data frames of row and column dimensions
-.tidy2matrix <- function(data, formula, value.var) {
-    row.vars <- all.vars(formula[[2]])
-    col.vars <- all.vars(formula[[3]])
-
-    g <- dcast(setDT(data), formula, value.var = value.var)
-
-    dims <- list()
-    if (length(col.vars) > 1) {
-        cols <- unlist(strsplit(colnames(g), split = "_"))
-    } else {
-        cols <- colnames(g)
-    }
-
-    for (i in seq_along(col.vars)) {
-        dims[[i]] <- JumpBy(cols, length(col.vars), start = i + length(row.vars))
-        if (class(data[[col.vars[i]]]) != "Date") {
-            dims[[i]] <- as(dims[[i]], class(data[[col.vars[i]]]))
-        } else {
-            dims[[i]] <- as.Date(dims[[i]])
-        }
-    }
-    names(dims) <- col.vars
-    return(list(matrix = as.matrix(g[, -seq_along(row.vars), with = F]),
-                coldims = dims,
-                rowdims = as.list(g[, row.vars, with = F])))
 }

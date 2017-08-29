@@ -1,10 +1,10 @@
 #' Empirical Orthogonal Function
 #'
-#' Uses \code{\link[irlba]{irlba}} to compute Empirical Orthogonal Functions
-#' (aka Singular Value Decomposition).
+#' Computes Singular Value Decomposition (also known as Principal Components
+#' Analysis or Empirical Orthogonal Functions).
 #'
 #' @param data a data.frame
-#' @param formula formula parsed to \code{\link[data.table]{dcast}} to build
+#' @param formula formula passed to \code{\link[data.table]{dcast}} to build
 #' the matrix that will be used in the SVD decomposition (see details)
 #' @param value.var name of the column whose values will be used
 #' @param n which singular values to return (if \code{NULL}, defaults to all)
@@ -30,7 +30,8 @@
 #' used in RHS and LHS of \code{formula}, respectively.
 #'
 #' It is much faster to compute only some singular vectors, so is advisable not
-#' to set n to \code{NULL}.
+#' to set n to \code{NULL}. If the irba package is installed, EOF uses
+#' [irlba::irlba] instead of [base::svd] since it's much faster.
 #'
 #' @examples
 #' # The Antarctic Oscillation is computed from the
@@ -57,13 +58,17 @@
 #' @family meteorology functions
 #' @export
 #' @import data.table
-#' @import irlba
 EOF <- function(data, formula, value.var, n = 1) {
     g <- .tidy2matrix(setDT(data), formula, value.var)
 
     if (is.null(n)) n <- min(ncol(g$matrix), nrow(g$matrix))
 
-    eof <- irlba::irlba(g$matrix, nv = max(n))
+    if (requireNamespace("irlba", quietly = TRUE)) {
+        eof <- irlba::irlba(g$matrix, nv = max(n))
+    } else {
+        eof <- svd(g$matrix, nu = max(n), nv = max(n))
+        eof$d <- eof$d[1:max(n)]
+    }
 
     right <- as.data.table(eof$v)
     pcomps <- paste0("PC", 1:ncol(right))

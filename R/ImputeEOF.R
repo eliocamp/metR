@@ -33,7 +33,7 @@
 #' aao[sample(1:.N, .N*0.3), gh.gap := NA]
 #'
 #' aao.full <- as.data.table(ImputeEOF(aao, lon ~ lat,  value.var = "gh.gap",
-#'                                     verbose = T, max.iter = 2000))
+#'                                     verbose = TRUE, max.iter = 2000))
 #'
 #' aao <- aao[aao.full[, .(lon, lat, gh.impute = gh.gap)], on = c("lon", "lat")]
 #'

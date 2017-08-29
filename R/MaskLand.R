@@ -46,8 +46,6 @@
 #' @import sp
 MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
     # Chek arguments
-    # if (sum(!valid) != 0) warning("Points out of bounds")
-
     seamask <- maps::map(paste0("maps::", mask), fill = TRUE, col = "transparent",
                          plot = F, wrap = wrap)
     IDs <- sapply(strsplit(seamask$names, ":"), function(x) x[1])

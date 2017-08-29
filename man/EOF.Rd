@@ -9,7 +9,7 @@ EOF(data, formula, value.var, n = 1)
 \arguments{
 \item{data}{a data.frame}
 
-\item{formula}{formula parsed to \code{\link[data.table]{dcast}} to build
+\item{formula}{formula passed to \code{\link[data.table]{dcast}} to build
 the matrix that will be used in the SVD decomposition (see details)}
 
 \item{value.var}{name of the column whose values will be used}
@@ -21,8 +21,8 @@ A list of 3 named elements containing tidy data.tables of the right and left
 singular vectors, and of their explained variance.
 }
 \description{
-Uses \code{\link[irlba]{irlba}} to compute Empirical Orthogonal Functions
-(aka Singular Value Decomposition).
+Computes Singular Value Decomposition (also known as Principal Components
+Analysis or Empirical Orthogonal Functions).
 }
 \details{
 Singular values can be computed over matrices so \code{formula} denotes how
@@ -41,7 +41,8 @@ value for each singular value and each combination of the variables
 used in RHS and LHS of \code{formula}, respectively.
 
 It is much faster to compute only some singular vectors, so is advisable not
-to set n to \code{NULL}.
+to set n to \code{NULL}. If the irba package is installed, EOF uses
+\link[irlba:irlba]{irlba::irlba} instead of \link[base:svd]{base::svd} since it's much faster.
 }
 \examples{
 # The Antarctic Oscillation is computed from the

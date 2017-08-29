@@ -140,7 +140,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 # From https://stat.ethz.ch/pipermail/r-help/2004-December/063046.html
 area <- function(x, y){
     X <- matrix(c(x, y), ncol = 2)
-    X <- rbind(X,X[1, ])
+    X <- rbind(X, X[1, ])
     x <- X[, 1]
     y <- X[, 2]
     lx <- length(x)

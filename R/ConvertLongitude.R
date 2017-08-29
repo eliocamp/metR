@@ -32,9 +32,3 @@ ConvertLongitude <- function(lon, from = c(360, 180)) {
     }
     return(lon)
 }
-
-
-ggplot(aao[date == date[1]], aes(lon, lat, z = gh)) +
-    geom_contour(color = "black",
-                 aes(x = ConvertLongitude(ConvertLongitude(lon, 360), 180))) +
-    geom_contour()

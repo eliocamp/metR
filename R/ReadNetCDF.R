@@ -4,31 +4,38 @@
 #' over using \code{\link[ncdf4]{ncvar_get}} is that the output is a tidy data.table
 #' with proper dimensions.
 #'
-#' @param file File to read from.
-#' @param vars A character vector with the name of the variables to read. If
+#' @param file file to read from.
+#' @param vars a character vector with the name of the variables to read. If
 #' \code{NULL}, then it read all the variables.
-#' @param list.vars If \code{TRUE}, then it only list available variables instead of reading
-#' their values.
+#' @param out character indicating the type of output desired
 #'
-#' @return If \code{list.vars} is \code{FALSE} (de default) then it returns a
-#' data.table in which each column is a variable and each rown an observation. \cr
-#' Else, it returns a character vector with the names of the variables
-#' (not the dimensions) included in the file.
+#' @return
+#' The return format is specified by `out`. It can be a data table in which each
+#' column is a variable and each rown an observation; an array with named
+#' dimensions; or a vector. Either of these two options are much faster than the
+#' first since the most time consuming part is the melting of the array
+#' returned by [ncdf4::ncvar_get]. `out = "vector"` is particularly  usefull for
+#' adding new variables to an existing data frame with the same dimensions.
 #'
+#' Finally, it can also be `vars`, in which case it returns a list with the name
+#' of the available variables and the dimensions of the spaciotemporal grid.
 #'
 #' @examples
 #' \dontrun{
 #' file <- "file.nc"
 #' # Get a list of variables.
-#' variables <- ReadNetCDF(file, list.vars = T)
-#' # Read only the first one.
-#' field <- ReadNetCDF(file, vars = variables[1])
+#' variables <- ReadNetCDF(file, out = "vars")
+#' # Read only the first one with name "var".
+#' field <- ReadNetCDF(file, vars = c(var = variables$vars[1]))
+#' # Add a new variable.
+#' # ¡Make sure it's on the same exact grid!
+#' field[, var2 := ReadNerCDF(file2, out = "vector")]
 #' }
 #'
 #' @export
 #' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
 #' @import data.table
-ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
+ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array", "vars")) {
     # Usa la librería netcdf para leer archivos y organiza todo en un data.table
     # Entra:
     #   file: la ruta del archivo
@@ -44,6 +51,7 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
 
     if (is.null(vars)) {
         vars <- names(ncfile$var)
+        names(vars) <- vars
     }
     # Leo las dimensiones
     dims <- names(ncfile$dim)
@@ -65,7 +73,7 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
                                                  date.fun(dimensions[["time"]]))
     }
 
-    if (list.vars == T) {
+    if (out[1] == "vars") {
         r <- list(vars = vars, dimensions = dimensions)
         return(r)
     }
@@ -76,17 +84,26 @@ ReadNetCDF <- function(file, vars = NULL, list.vars = F) {
     order <- ncfile$var[[vars[1]]]$dimids
     dimensions <- dimensions[dims[as.character(order)]]
     dimnames(var1) <- dimensions
-    nc <- data.table::melt(var1, varnames = names(dimensions), value.name = vars[1])
-    setDT(nc)
-    if ("time" %in% names(dimensions)) {
-        nc[, date := as.Date(time[1]), by = time]
-        nc[, time := NULL]
+    if (out[1] == "array") {
+        ncdf4::nc_close(ncfile)
+        return(var1)
+    } else if (out[1] == "vector") {
+        ncdf4::nc_close(ncfile)
+        return(c(var1))
+    } else {
+        nc <- data.table::melt(var1, varnames = names(dimensions), value.name = names(vars)[1])
+        setDT(nc)
+
+        if ("time" %in% names(dimensions)) {
+            nc[, date := as.Date(time[1]), by = time]
+            nc[, time := NULL]
+        }
+        if (length(vars) > 1) {
+            # Otras variables.
+            nc[, c(vars[-1]) := lapply(vars[-1], ncdf4::ncvar_get, nc = ncfile)]
+        }
+        # Dejemos todo prolijo antes de salir.
+        ncdf4::nc_close(ncfile)
+        return(nc)
     }
-    if (length(vars) > 1) {
-        # Otras variables.
-        nc[, c(vars[-1]) := lapply(vars[-1], ncdf4::ncvar_get, nc = ncfile)]
-    }
-    # Dejemos todo prolijo antes de salir.
-    ncdf4::nc_close(ncfile)
-    return(nc)
 }

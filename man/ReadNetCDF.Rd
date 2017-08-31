@@ -4,22 +4,27 @@
 \alias{ReadNetCDF}
 \title{Read NetCDF files.}
 \usage{
-ReadNetCDF(file, vars = NULL, list.vars = F)
+ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array",
+  "vars"))
 }
 \arguments{
-\item{file}{File to read from.}
+\item{file}{file to read from.}
 
-\item{vars}{A character vector with the name of the variables to read. If
+\item{vars}{a character vector with the name of the variables to read. If
 \code{NULL}, then it read all the variables.}
 
-\item{list.vars}{If \code{TRUE}, then it only list available variables instead of reading
-their values.}
+\item{out}{character indicating the type of output desired}
 }
 \value{
-If \code{list.vars} is \code{FALSE} (de default) then it returns a
-data.table in which each column is a variable and each rown an observation. \cr
-Else, it returns a character vector with the names of the variables
-(not the dimensions) included in the file.
+The return format is specified by \code{out}. It can be a data table in which each
+column is a variable and each rown an observation; an array with named
+dimensions; or a vector. Either of these two options are much faster than the
+first since the most time consuming part is the melting of the array
+returned by \link[ncdf4:ncvar_get]{ncdf4::ncvar_get}. \code{out = "vector"} is particularly  usefull for
+adding new variables to an existing data frame with the same dimensions.
+
+Finally, it can also be \code{vars}, in which case it returns a list with the name
+of the available variables and the dimensions of the spaciotemporal grid.
 }
 \description{
 Using the \code{\link[ncdf4]{ncdf4-package}} package, it reads an .nc file. The advantage
@@ -30,9 +35,12 @@ with proper dimensions.
 \dontrun{
 file <- "file.nc"
 # Get a list of variables.
-variables <- ReadNetCDF(file, list.vars = T)
-# Read only the first one.
-field <- ReadNetCDF(file, vars = variables[1])
+variables <- ReadNetCDF(file, out = "vars")
+# Read only the first one with name "var".
+field <- ReadNetCDF(file, vars = c(var = variables$vars[1]))
+# Add a new variable.
+# ¡Make sure it's on the same exact grid!
+field[, var2 := ReadNerCDF(file2, out = "vector")]
 }
 
 }

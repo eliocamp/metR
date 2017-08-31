@@ -1,4 +1,4 @@
 library(testthat)
-library(meteoR)
+library(metR)
 
-test_check("meteoR")
+test_check("metR")

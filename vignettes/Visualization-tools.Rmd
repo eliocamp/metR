@@ -10,18 +10,18 @@ vignette: >
 ---
 
 
-One of the "conceptual branches" of meteoR is the *visualization tools*. These are a set of functions that interface with [ggplot2](http://ggplot2.tidyverse.org/index.html) for easier and better plotting. 
+One of the "conceptual branches" of metR is the *visualization tools*. These are a set of functions that interface with [ggplot2](http://ggplot2.tidyverse.org/index.html) for easier and better plotting. 
 
 ## Scales
 
-Many meteorological fields are defined in a longitude×latitude×level grid, so meteoR includes scales for each dimension. These are glorified wrapers around `scale_*_continuous()` with sensible defaults and, in the case of `scale_*_level()`, the implementation of `reverselog_trans()`. 
+Many meteorological fields are defined in a longitude×latitude×level grid, so metR includes scales for each dimension. These are glorified wrapers around `scale_*_continuous()` with sensible defaults and, in the case of `scale_*_level()`, the implementation of `reverselog_trans()`. 
 
 There's also `scale_*_divergent()` which are wrapers around `scale_*_gradient2()` but with sane default colors for positive and negative values -particularily useful for plotting anomaly values. 
 
 To see how this scales work, let's visualize the vertical distribution of temperature anomalies from the zonal mean. 
 
 ```{r, message = FALSE, fig.width = 7}
-library(meteoR)
+library(metR)
 library(ggplot2)
 library(data.table)
 nceptemperature <- copy(nceptemperature)
@@ -34,7 +34,7 @@ g <- ggplot(nceptemperature[lon %~% 180], aes(lat, lev, z = air.z)) +
 g
 ```
 
-While this is fine, since pressure levels are roughly proportional to $\mathrm{e}^{-z}$ in meteorology we usually plot the vertical coordinate as $-\log(p)$. However, while ggplot2 has `scale_y_log10()` and `scale_y_reverse()`, they don't work together. meteoR defines a new transformation `reverselog_trans()` that can be used with any scale but that is the default for `scale_*_level()`. 
+While this is fine, since pressure levels are roughly proportional to $\mathrm{e}^{-z}$ in meteorology we usually plot the vertical coordinate as $-\log(p)$. However, while ggplot2 has `scale_y_log10()` and `scale_y_reverse()`, they don't work together. metR defines a new transformation `reverselog_trans()` that can be used with any scale but that is the default for `scale_*_level()`. 
 
 On the other hand, `scale_*_latitude()` (and `scale_*_longitude()`) not only sets `expand` to `c(0, 0)`, but also has a `ticks` argument that specifies the spacing of breaks. 
 
@@ -51,7 +51,7 @@ Note: `scale_*_longitude()` (currently)  assumes the data goes from 0° to 360°
 
 ## Geoms and stats
 
-meteoR implements one geom and one stat. 
+metR implements one geom and one stat. 
 
 ### stat_contour_fill()
 

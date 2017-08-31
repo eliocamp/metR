@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-meteoR
-======
+metR
+====
 
 [![Build Status](https://travis-ci.org/eliocamp/meteoR.svg?branch=master)](https://travis-ci.org/eliocamp/meteoR)
 
@@ -18,7 +18,7 @@ You can install meteoR from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("eliocamp/meteoR")
+devtools::install_github("eliocamp/metR")
 ```
 
 Examples

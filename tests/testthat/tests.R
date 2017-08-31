@@ -1,4 +1,4 @@
-library(meteoR)
+library(metR)
 
 context("")
 test_that("AssignSeason assigns season", {

@@ -1,4 +1,4 @@
-Package: meteoR
+Package: metR
 Type: Package
 Title: Tools for Better Analysis of Meteorological Fields
 Version: 0.0.9101
@@ -10,8 +10,8 @@ Description: Many useful functions and extensions for dealing with
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/eliocamp/meteoR
-BugReports: https://github.com/eliocamp/meteoR/issues
+URL: https://github.com/eliocamp/metR
+BugReports: https://github.com/eliocamp/metR/issues
 Depends:
     R (>= 2.10)
 Imports:

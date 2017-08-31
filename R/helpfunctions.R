@@ -222,7 +222,7 @@ JumpBy <- function(x, by, start = 1, fill = NULL) {
 
 is.error <- function(x) inherits(x, "try-error")
 
-# Turns tidy field to matrix + 2 data frames of row and column dimensions
+
 .tidy2matrix <- function(data, formula, value.var) {
     row.vars <- all.vars(formula[[2]])
     col.vars <- all.vars(formula[[3]])

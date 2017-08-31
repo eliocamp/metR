@@ -20,6 +20,7 @@
 #' Longitude coordinates must be between 0 and 360.
 #'
 #' @examples
+#' \dontrun{
 #' topo <- GetTopography(280, 330, 0, -60, resolution = 0.5, verbose = FALSE)
 #' library(ggplot2)
 #' ggplot(topo, aes(lon, lat)) +
@@ -27,7 +28,7 @@
 #'     geom_contour(aes(z = h), breaks = 0, color = "black", size = 0.3) +
 #'     scale_fill_gradient2(low = "steelblue", high = "goldenrod2", mid = "olivedrab") +
 #'     coord_quickmap()
-#'
+#' }
 #' @references
 #' Inspired on [marmap::getNOAA.bathy].
 #'

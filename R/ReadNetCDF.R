@@ -14,8 +14,9 @@
 #' column is a variable and each rown an observation; an array with named
 #' dimensions; or a vector. Either of these two options are much faster than the
 #' first since the most time consuming part is the melting of the array
-#' returned by [ncdf4::ncvar_get]. `out = "vector"` is particularly  usefull for
-#' adding new variables to an existing data frame with the same dimensions.
+#' returned by [ncdf4::ncvar_get]. `out = "vector"` is particularly usefull for
+#' adding new variables to an existing data frame with the same dimensions. Note
+#' that only one variable can be retrieved at a time with these formats.
 #'
 #' Finally, it can also be `vars`, in which case it returns a list with the name
 #' of the available variables and the dimensions of the spaciotemporal grid.
@@ -51,9 +52,18 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
 
     if (is.null(vars)) {
         vars <- names(ncfile$var)
-        names(vars) <- vars
     }
-    # Leo las dimensiones
+
+    # Vars must be a (fully) named vector.
+    varnames <- names(vars)
+    if (is.null(varnames)) {
+        names(vars) <- vars
+    } else {
+        no.names <- sapply(varnames, nchar) == 0
+        names(vars)[no.names] <- vars[no.names]
+    }
+
+    # Leo las dimensiones.
     dims <- names(ncfile$dim)
     dims <- dims[dims != "nbnds"]
     ids <- vector()
@@ -92,7 +102,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
         return(c(var1))
     } else {
         nc <- data.table::melt(var1, varnames = names(dimensions), value.name = names(vars)[1])
-        setDT(nc)
+        data.table::setDT(nc)
 
         if ("time" %in% names(dimensions)) {
             nc[, date := as.Date(time[1]), by = time]
@@ -100,7 +110,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
         }
         if (length(vars) > 1) {
             # Otras variables.
-            nc[, c(vars[-1]) := lapply(vars[-1], ncdf4::ncvar_get, nc = ncfile)]
+            nc[, c(names(vars[-1])) := lapply(vars[-1], ncdf4::ncvar_get, nc = ncfile)]
         }
         # Dejemos todo prolijo antes de salir.
         ncdf4::nc_close(ncfile)

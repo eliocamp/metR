@@ -5,8 +5,8 @@
 \title{Filled 2d contours of a 3d surface}
 \usage{
 stat_contour_fill(mapping = NULL, data = NULL, geom = "polygon",
-  position = "identity", ..., na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+  position = "identity", ..., na.rm = FALSE, exclude = NULL,
+  show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -40,6 +40,9 @@ to the paired geom/stat.}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
+
+\item{exclude}{a numeric vector of levels that should be excluded from the
+contour calculation}
 
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.

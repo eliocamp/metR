@@ -4,8 +4,10 @@
 #' automatic annotated breaks. It's main use it to label the same levels as
 #' the contours in a plot.
 #'
-#' @param binwidth (optional) Binwidth for computing breaks. For best resutls,
+#' @param binwidth optional binwidth for computing breaks. For best resutls,
 #' should be the same value as the related \code{stat_contour} call.
+#' @param exclude a numeric vector of levels that should be excluded from the
+#' contour calculation
 #' @inheritParams ggplot2::scale_colour_gradient2
 #'
 #' @examples
@@ -20,11 +22,12 @@
 #' @export
 #' @import ggplot2 scales
 scale_color_divergent <- function(low = scales::muted("blue"), high = scales::muted("red"),
-                                  binwidth = NA, ...) {
+                                  binwidth = NA, exclude = NULL, ...) {
     # Escala divergente con defaults más razonables.
     if (!is.na(binwidth)) {
         breaks <- function(x){
-            c(seq(x[1], 0 - binwidth, by = -binwidth), seq(0, x[2], by = binwidth))
+            breaks <- fullseq(x, binwidth)
+            breaks[!(breaks %in% exclude)]
         }
         return(ggplot2::scale_color_gradient2(low = low, high = high, breaks = breaks, ...))
     } else {
@@ -36,11 +39,12 @@ scale_color_divergent <- function(low = scales::muted("blue"), high = scales::mu
 #' @export
 #' @import ggplot2 scales
 scale_fill_divergent <- function(low = scales::muted("blue"), high = scales::muted("red"),
-                                 binwidth = NA, ...) {
+                                 binwidth = NA, exclude = NULL, ...) {
     # Escala divergente con defaults más razonables.
     if (!is.na(binwidth)) {
         breaks <- function(x){
-            c(seq(x[1], 0 - binwidth, by = -binwidth), seq(0, x[2], by = binwidth))
+            breaks <- fullseq(x, binwidth)
+            breaks[!(breaks %in% exclude)]
         }
         return(ggplot2::scale_fill_gradient2(low = low, high = high, breaks = breaks, ...))
     } else {

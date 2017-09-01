@@ -6,18 +6,21 @@
 \title{Divergent color scales}
 \usage{
 scale_color_divergent(low = scales::muted("blue"),
-  high = scales::muted("red"), binwidth = NA, ...)
+  high = scales::muted("red"), binwidth = NA, exclude = NULL, ...)
 
 scale_fill_divergent(low = scales::muted("blue"),
-  high = scales::muted("red"), binwidth = NA, ...)
+  high = scales::muted("red"), binwidth = NA, exclude = NULL, ...)
 }
 \arguments{
 \item{low}{Colours for low and high ends of the gradient.}
 
 \item{high}{Colours for low and high ends of the gradient.}
 
-\item{binwidth}{(optional) Binwidth for computing breaks. For best resutls,
+\item{binwidth}{optional binwidth for computing breaks. For best resutls,
 should be the same value as the related \code{stat_contour} call.}
+
+\item{exclude}{a numeric vector of levels that should be excluded from the
+contour calculation}
 
 \item{...}{Arguments passed on to \code{continuous_scale}
 \describe{

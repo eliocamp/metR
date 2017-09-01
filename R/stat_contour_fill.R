@@ -8,6 +8,8 @@
 #' the value of the \code{z} aesthetic *inside* the contour instead of at the edge.
 #'
 #' @inheritParams ggplot2::stat_contour
+#' @param exclude a numeric vector of levels that should be excluded from the
+#' contour calculation
 #'
 #' @section Computed variables:
 #' \describe{
@@ -35,6 +37,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               geom = "polygon", position = "identity",
                               ...,
                               na.rm = FALSE,
+                              exclude = NULL,
                               show.legend = NA,
                               inherit.aes = TRUE) {
     layer(
@@ -47,6 +50,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
         inherit.aes = inherit.aes,
         params = list(
             na.rm = na.rm,
+            exclude = exclude,
             ...
         )
     )
@@ -59,7 +63,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
                                     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                                                              breaks = NULL, complete = FALSE,
-                                                             na.rm = FALSE, exclude = NA) {
+                                                             na.rm = FALSE, exclude = NULL) {
                                         # If no parameters set, use pretty bins
                                         if (is.null(bins) && is.null(binwidth) && is.null(breaks)) {
                                             breaks <- pretty(range(data$z), 10)

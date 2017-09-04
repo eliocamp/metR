@@ -14,7 +14,7 @@
    version="1.1"
    id="svg18"
    sodipodi:docname="logo.svg"
-   inkscape:version="0.92.1 unknown"
+   inkscape:version="0.92.2 (unknown)"
    inkscape:export-filename="/home/elio/Documents/meteoR/logo/logo.png"
    inkscape:export-xdpi="15.24"
    inkscape:export-ydpi="15.24">
@@ -26,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -46,8 +46,8 @@
      inkscape:measure-start="-68.7418,-1.80899"
      inkscape:measure-end="41.6069,-45.2249"
      inkscape:zoom="0.5"
-     inkscape:cx="231.70767"
-     inkscape:cy="384.20121"
+     inkscape:cx="574.56007"
+     inkscape:cy="348.20121"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -2572,8 +2572,8 @@
      style="fill:#008080;fill-opacity:1;fill-rule:nonzero;stroke:#003636;stroke-width:22.26600075;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0.90000069;stroke-dasharray:none;stroke-opacity:1"
      id="path5912"
      sodipodi:sides="6"
-     sodipodi:cx="403.23386"
-     sodipodi:cy="403.23386"
+     sodipodi:cx="1303.2339"
+     sodipodi:cy="373.23386"
      sodipodi:r1="391.95102"
      sodipodi:r2="339.43954"
      sodipodi:arg1="0.52359878"
@@ -2581,12 +2581,12 @@
      inkscape:flatsided="true"
      inkscape:rounded="0"
      inkscape:randomized="0"
-     d="M 742.6734,599.20937 403.23385,795.18488 63.794316,599.20936 63.794317,207.25835 403.23386,11.282837 742.6734,207.25835 Z"
+     d="m 1642.6734,569.20937 -339.4395,195.97551 -339.43955,-195.97552 0,-391.95101 339.43955,-195.975513 339.4395,195.975513 z"
      inkscape:export-xdpi="17.530001"
      inkscape:export-ydpi="17.530001" />
   <g
      id="g5187"
-     transform="translate(76,-4)">
+     transform="translate(976,-34)">
     <path
        inkscape:export-ydpi="17.530001"
        inkscape:export-xdpi="17.530001"
@@ -2634,8 +2634,8 @@
      style="fill:#008080;fill-opacity:1;fill-rule:nonzero;stroke:#003636;stroke-width:22.56599998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0.90000069;stroke-dasharray:none;stroke-opacity:1"
      id="path5912-5"
      sodipodi:sides="6"
-     sodipodi:cx="-454"
-     sodipodi:cy="434.46771"
+     sodipodi:cx="403.23386"
+     sodipodi:cy="403.23386"
      sodipodi:r1="391.95102"
      sodipodi:r2="339.43954"
      sodipodi:arg1="0.52359878"
@@ -2643,12 +2643,12 @@
      inkscape:flatsided="true"
      inkscape:rounded="0"
      inkscape:randomized="0"
-     d="M -114.56046,630.44322 -454,826.41873 -793.43954,630.44322 l 0,-391.95102 L -454,42.516688 -114.56046,238.4922 Z" />
+     d="M 742.6734,599.20937 403.23385,795.18488 63.794316,599.20936 63.794317,207.25835 403.23386,11.282837 742.6734,207.25835 Z" />
   <flowRoot
      xml:space="preserve"
      id="flowRoot5914-3"
      style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1"
-     transform="matrix(1.1065522,0,0,1.1065522,-869.0609,239.09231)"><flowRegion
+     transform="matrix(1.1065522,0,0,1.1065522,8.8558889,121.85845)"><flowRegion
        id="flowRegion5916-5"
        style="stroke:#000000;stroke-opacity:1"><rect
          id="rect5918-6"
@@ -2658,9 +2658,9 @@
          y="208.24617"
          style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1" /></flowRegion><flowPara
        id="flowPara5920-2"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:106.66666412px;font-family:'Anonymous Pro';-inkscape-font-specification:'Anonymous Pro';stroke:#000000;stroke-opacity:1">meteo</flowPara></flowRoot>  <g
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:192.79103088px;font-family:'Anonymous Pro';-inkscape-font-specification:'Anonymous Pro';stroke:#000000;stroke-opacity:1">met</flowPara></flowRoot>  <g
      id="g9509"
-     transform="matrix(1.6557826,0,0,1.6557826,-1219.7768,-196.70156)">
+     transform="matrix(1.6557826,0,0,1.6557826,-319.86001,-249.93542)">
     <path
        sodipodi:nodetypes="ccccc"
        inkscape:connector-curvature="0"

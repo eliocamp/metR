@@ -124,15 +124,16 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X),
 
 .ImputeEOF1 <- function(X, X.na, n.eof, tol = 1e-4, max.iter = 10000, verbose = TRUE) {
     X.rec <- X
+    v <- NULL
     for (i in 1:max.iter) {
         if (requireNamespace("irlba", quietly = TRUE)) {
-            svd <- irlba::irlba(X.rec, nv = n.eof)
+            prval <- irlba::irlba(X.rec, nv = n.eof, v = v)
         } else {
-            svd <- svd(X.rec, nu = n.eof, nv = n.eof)
-            svd$d <- svd$d[1:n.eof]
+            prval <- prval(X.rec, nu = n.eof, nv = n.eof)
+            prval$d <- prval$d[1:n.eof]
         }
-
-        R <- svd$u%*%diag(svd$d, nrow = n.eof)%*%t(svd$v)
+        v <- prval$v
+        R <- prval$u%*%diag(prval$d, nrow = n.eof)%*%t(v)
         rmse <- sqrt(mean((R[X.na] - X.rec[X.na])^2))
 
         X.rec[X.na] <- R[X.na]

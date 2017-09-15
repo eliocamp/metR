@@ -50,8 +50,9 @@
 #'
 #' @family meteorology functions
 #' @seealso \code{\link{DerivatePhysical}}
+#' @import data.table
 #' @export
-Derivate <- function(formula, order = c(1, 2), bc = "none", data = NULL,
+Derivate <- function(formula, data = NULL, order = c(1, 2), bc = "none",
                      sphere = FALSE, a = 6731) {
     # Build dataframe
     mf <- match.call(expand.dots = F)
@@ -61,8 +62,11 @@ Derivate <- function(formula, order = c(1, 2), bc = "none", data = NULL,
 
     data <- as.data.table(eval(mf, parent.frame()))
 
+    vars.original <- colnames(data)
+    colnames(data) <- c("ivar", paste0("dvar.", 1:(length(colnames) - 1)))
     dep.var <- colnames(data)[1]
     ind.var <- colnames(data)[-1]
+
     data[, id := 1:.N]    # for order.
     setkeyv(data, ind.var)
 
@@ -74,14 +78,20 @@ Derivate <- function(formula, order = c(1, 2), bc = "none", data = NULL,
         }
     }
 
-    dernames <- paste0(dep.var, ".", paste0(rep("d", order[1]), collapse = ""),
-                       ind.var)
+    dernames <- paste0(vars.original[1], ".", paste0(rep("d", order[1]), collapse = ""),
+                       vars.original[-1])
+
     for (v in seq_along(ind.var)) {
+        this.var <- ind.var[v]
+        this.bc <- bc[v]
+
         temp <- data[, .(id,
-                         .derv(get(dep.var), get(ind.var[v]),
-                               order = order[1], bc = bc[v])),
+                         .derv(get(dep.var), get(this.var), order = order[1],
+                               bc = this.bc)),
                      by = c(ind.var[-v])]
+
         setnames(temp, "V2", dernames[v])
+
         data <- data[temp, on = "id"]
     }
     data <- data[order(id)]

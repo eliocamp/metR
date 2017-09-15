@@ -10,6 +10,7 @@
 #' @inheritParams ggplot2::stat_contour
 #' @param exclude a numeric vector of levels that should be excluded from the
 #' contour calculation
+#' @param complete a logical indicating whether to fill the plot
 #'
 #' @section Computed variables:
 #' \describe{
@@ -21,6 +22,11 @@
 #' ggplot(surface, aes(Var1, Var2, z = value)) +
 #'   stat_contour_fill() +
 #'   geom_contour(color = "black", size = 0.1)
+#'
+#' # Plots only deviations from the mean.
+#' ggplot(surface, aes(Var1, Var2, z = as.numeric(scale(value)))) +
+#'   stat_contour_fill(complete = F, exclude = 0)
+#'
 #'
 #' # If one uses level instead of int.level, one of the small
 #' # contours near the crater disapears
@@ -62,7 +68,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                     default_aes = ggplot2::aes(fill = ..int.level..),
 
                                     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
-                                                             breaks = NULL, complete = FALSE,
+                                                             breaks = NULL, complete = TRUE,
                                                              na.rm = FALSE, exclude = NULL) {
                                         # If no parameters set, use pretty bins
                                         if (is.null(bins) && is.null(binwidth) && is.null(breaks)) {
@@ -110,7 +116,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                         i <-  which(breaks.keep == mean.level)
                                         correction <- (breaks.keep[i + sign(mean.z - mean.level)] - mean.level)/2
 
-                                        if (mean.level %in% breaks.keep) {
+                                        if (mean.level %in% breaks.keep & complete == TRUE) {
                                             mean.cont  <- data.frame(
                                                 level = mean.level,
                                                 x = c(rep(range.data$x[1], 2), rep(range.data$x[2], 2)),

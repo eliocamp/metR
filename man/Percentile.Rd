@@ -35,3 +35,4 @@ Other utilities: \code{\link{Anomaly}},
   \code{\link{JumpBy}}, \code{\link{Mag}},
   \code{\link{logic}}
 }
+\concept{utilities}

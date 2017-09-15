@@ -30,3 +30,4 @@ nceptemperature[, .(lon = lon, air.z = Anomaly(air)), by = .(lat, lev)]
 Other utilities: \code{\link{JumpBy}}, \code{\link{Mag}},
   \code{\link{Percentile}}, \code{\link{logic}}
 }
+\concept{utilities}

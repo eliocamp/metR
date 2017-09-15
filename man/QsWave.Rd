@@ -46,3 +46,4 @@ Other meteorology functions: \code{\link{DerivatePhysical}},
   \code{\link{Derivate}}, \code{\link{EOF}},
   \code{\link{WaveFlux}}
 }
+\concept{meteorology functions}

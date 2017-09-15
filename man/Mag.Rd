@@ -24,3 +24,4 @@ Other utilities: \code{\link{Anomaly}},
   \code{\link{JumpBy}}, \code{\link{Percentile}},
   \code{\link{logic}}
 }
+\concept{utilities}

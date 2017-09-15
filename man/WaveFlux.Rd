@@ -38,3 +38,4 @@ Other meteorology functions: \code{\link{DerivatePhysical}},
   \code{\link{Derivate}}, \code{\link{EOF}},
   \code{\link{FitQsWave}}
 }
+\concept{meteorology functions}

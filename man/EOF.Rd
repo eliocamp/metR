@@ -72,3 +72,4 @@ Other meteorology functions: \code{\link{DerivatePhysical}},
   \code{\link{Derivate}}, \code{\link{FitQsWave}},
   \code{\link{WaveFlux}}
 }
+\concept{meteorology functions}

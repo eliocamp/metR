@@ -53,3 +53,4 @@ Other meteorology functions: \code{\link{Derivate}},
   \code{\link{EOF}}, \code{\link{FitQsWave}},
   \code{\link{WaveFlux}}
 }
+\concept{meteorology functions}

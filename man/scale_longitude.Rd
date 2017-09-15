@@ -60,3 +60,4 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{scale_color_divergent}},
   \code{\link{stat_contour_fill}}
 }
+\concept{ggplot2 helpers}

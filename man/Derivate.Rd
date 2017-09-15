@@ -4,17 +4,17 @@
 \alias{Derivate}
 \title{Derivate a discrete variable using finite differences}
 \usage{
-Derivate(formula, order = c(1, 2), bc = "none", data = NULL,
+Derivate(formula, data = NULL, order = c(1, 2), bc = "none",
   sphere = FALSE, a = 6731)
 }
 \arguments{
 \item{formula}{a formula indicating dependent and independend variables}
 
+\item{data}{optional data.frame containing the variables}
+
 \item{order}{order of the derivative}
 
 \item{bc}{boundary conditions for each independend variable}
-
-\item{data}{optional data.frame containing the variables}
 
 \item{sphere}{logical indicating wheter to use spherical coordinates
 (see details)}
@@ -71,3 +71,4 @@ Other meteorology functions: \code{\link{DerivatePhysical}},
   \code{\link{EOF}}, \code{\link{FitQsWave}},
   \code{\link{WaveFlux}}
 }
+\concept{meteorology functions}

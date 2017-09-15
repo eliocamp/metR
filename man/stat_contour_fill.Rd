@@ -54,6 +54,8 @@ display.}
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
+
+\item{complete}{a logical indicating whether to fill the plot}
 }
 \description{
 While ggplot2's \code{\link[ggplot2]{stat_contour}} can plot nice contours, it
@@ -77,6 +79,11 @@ ggplot(surface, aes(Var1, Var2, z = value)) +
   stat_contour_fill() +
   geom_contour(color = "black", size = 0.1)
 
+# Plots only deviations from the mean.
+ggplot(surface, aes(Var1, Var2, z = as.numeric(scale(value)))) +
+  stat_contour_fill(complete = F, exclude = 0)
+
+
 # If one uses level instead of int.level, one of the small
 # contours near the crater disapears
 ggplot(surface, aes(Var1, Var2, z = value)) +
@@ -92,3 +99,4 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{scale_color_divergent}},
   \code{\link{scale_longitude}}
 }
+\concept{ggplot2 helpers}

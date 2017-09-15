@@ -106,3 +106,4 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{scale_longitude}},
   \code{\link{stat_contour_fill}}
 }
+\concept{ggplot2 helpers}

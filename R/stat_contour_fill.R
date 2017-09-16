@@ -63,6 +63,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
 }
 
 #' @import ggplot2
+#' @import scales
 StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                     required_aes = c("x", "y", "z"),
                                     default_aes = ggplot2::aes(fill = ..int.level..),
@@ -80,7 +81,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                         }
                                         # If necessary, compute breaks from binwidth
                                         if (is.null(breaks)) {
-                                            breaks <- fullseq(range(data$z), binwidth)
+                                            breaks <- scales::fullseq(range(data$z), binwidth)
                                         }
 
                                         breaks.keep <- breaks[!(breaks %in% exclude)]
@@ -129,7 +130,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                         }
 
                                         areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][
-                                            , rank := frank(-area, ties.method = "dense")]
+                                            , rank := frank(-area, ties.method = "random")]
                                         areas <- areas[, head(.SD, 1), by = piece]
                                         cont <- cont[areas, on = "piece"]
                                         cont[, piece := rank]

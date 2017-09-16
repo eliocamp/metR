@@ -224,11 +224,43 @@ CorrectFill <- function(cont, data, breaks) {
 
 Closest <- function(x, target, sign = c(1, -1)) {
     tmp <- (x - target)*sign[1]
-    tmp[tmp<0] <- NA
+    tmp[tmp < 0] <- NA
     x[which.min(abs(tmp))]
 }
 
 
 IsInside <- function(xp, yp, x, y) {
     !(sp::point.in.polygon(xp, yp, x, y) == 0)
+}
+
+is_closed <- function(x, y) {
+    (x[length(x)] == x[1]) & (y[length(x)] == y[1])
+}
+
+
+close_path <- function(x, y, range_x, range_y) {
+    L <- length(x)
+    if ((x[1] == x[L] & x[1] %in% range_x) |
+        (y[1] == y[L] & y[1] %in% range_y)) {
+
+    } else if (sum(x %in% range_x)*sum(y %in% range_y) != 0) {
+        x[L + 1] <- x[x %in% range_x]
+        y[L + 1] <- y[y %in% range_y]
+    } else if (sum(y %in% range_y) == 0) {
+        x[L + 1] <- x[L]
+        y[L + 1] <- range_y[1]    # arbitrary
+
+        y[L + 2] <- y[L + 1]
+        x[L + 2] <- x[1]
+    } else if (sum(x %in% range_x) == 0) {
+        y[L + 1] <- y[L]
+        x[L + 1] <- range_x[1]    # arbitrary
+
+        y[L + 2] <- y[1]
+        x[L + 2] <- x[L + 1]
+    }
+    L <- length(x)
+    x[L + 1] <- x[1]
+    y[L + 1] <- y[1]
+    return(list(x = x, y = y))
 }

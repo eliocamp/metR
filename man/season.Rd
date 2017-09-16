@@ -5,7 +5,7 @@
 \alias{AssignSeason}
 \title{Assign seasons to months}
 \usage{
-season(month, date, hemisphere = c("south", "north"), lang = c("es", "en"))
+season(month, hemisphere = c("south", "north"), lang = c("es", "en"))
 }
 \arguments{
 \item{month}{A numeric vector of months or a vector of dates.}

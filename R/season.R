@@ -12,8 +12,7 @@
 #' season()
 #' @aliases AssignSeason
 #' @export
-#' @import lubridate
-season <- function(month, date, hemisphere = c("south", "north"),
+season <- function(month, hemisphere = c("south", "north"),
                          lang = c("es", "en")) {
 
     if (is.Date(month)) month <- lubridate::month(month)

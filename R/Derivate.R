@@ -63,7 +63,7 @@ Derivate <- function(formula, data = NULL, order = c(1, 2), bc = "none",
     data <- as.data.table(eval(mf, parent.frame()))
 
     vars.original <- colnames(data)
-    colnames(data) <- c("ivar", paste0("dvar.", 1:(length(colnames) - 1)))
+    colnames(data) <- c("ivar", paste0("dvar.", 1:(length(colnames(data)) - 1)))
     dep.var <- colnames(data)[1]
     ind.var <- colnames(data)[-1]
 

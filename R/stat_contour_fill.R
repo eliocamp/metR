@@ -10,7 +10,6 @@
 #' @inheritParams ggplot2::stat_contour
 #' @param exclude a numeric vector of levels that should be excluded from the
 #' contour calculation
-#' @param complete a logical indicating whether to fill the plot
 #'
 #' @section Computed variables:
 #' \describe{
@@ -25,7 +24,7 @@
 #'
 #' # Plots only deviations from the mean.
 #' ggplot(surface, aes(Var1, Var2, z = as.numeric(scale(value)))) +
-#'   stat_contour_fill(complete = F, exclude = 0)
+#'   stat_contour_fill(complete = FALSE, exclude = 0)
 #'
 #'
 #' # If one uses level instead of int.level, one of the small
@@ -151,9 +150,6 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 # area
 # clockwise > 0, counterclockwise < 0
 # From http://stackoverflow.com/questions/1165647
-# x <- c(5, 6, 4, 1, 1)
-# y <- c(0, 4, 5, 5, 0)
-# area(x, y)
 area <- function(x, y) {
     xdiff <- c(x[-1], x[1]) - x
     ysum <- c(y[-1], y[1]) + y

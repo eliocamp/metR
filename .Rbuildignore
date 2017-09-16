@@ -6,3 +6,4 @@
 ^\.travis\.yml$
 ^NEWS\.md$
 ^.lintr
+^R/ReadCtl\.R$

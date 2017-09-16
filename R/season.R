@@ -9,13 +9,16 @@
 #' month.
 #'
 #' @examples
-#' season()
+#' season(1, lang = "en", h = "n")
+#' season(1, lang = "en")
+#' season(as.Date("2017-01-01"))
+#'
 #' @aliases AssignSeason
 #' @export
 season <- function(month, hemisphere = c("south", "north"),
                          lang = c("es", "en")) {
 
-    if (is.Date(month)) month <- lubridate::month(month)
+    if (is(month, "Date")) month <- lubridate::month(month)
 
     hemisphere <- substr(tolower(hemisphere[[1]]), 1, 1)
     if (lang[1] == "en") {

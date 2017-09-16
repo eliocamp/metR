@@ -247,8 +247,3 @@ template <- "attm_%y4.ctl"
         sprintf("%02d", d)
     }
 )
-
-
-
-
-

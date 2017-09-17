@@ -1,8 +1,8 @@
 # http://cola.gmu.edu/grads/gadoc/descriptorfile.html
 library(lubridate)
+
 ReadCtl <- function(descriptor, hd.rm = T) {
     components <- .ParseCTL(readLines(descriptor))
-
     # DSET can start with "^" (grib files are on the same dir as descriptor) or
     # can contain a full path.
     if (substr(components$DSET, 1, 1) == "^") {
@@ -14,57 +14,56 @@ ReadCtl <- function(descriptor, hd.rm = T) {
     }
     components$DSET <- list(pattern = pattern, dir = dir)
 
-    # Spatiotemporal rids.
+    # Variables.
+    vars <- sapply(components$VARS, function(x) x[[1]])
+    vars.levs <- as.numeric(sapply(components$VARS, function(x) x[[2]]))
+
+    # Spatiotemporal grids.
     x.grid <- .GetSpatialGrid(components$XDEF)
     y.grid <- .GetSpatialGrid(components$YDEF)
-    z.grid <- .GetSpatialGrid(components$ZDEF)
+    z.grid <- as.character(.GetSpatialGrid(components$ZDEF))
     t.grid <- .GetTimeGrid(components$TDEF)
 
-    # --------
-    # Build files from template and t.grid
-    # test with ^attm106_%y4.grd
+    doParallel::registerDoParallel(4)
+    library(foreach)
+    grid <- data.table::rbindlist(foreach(v = seq_along(vars)) %dopar% {
+        if (vars.levs[v] != 0) {
+            used.levs <- z.grid[1:vars.levs[v]]
+        } else {
+            used.levs <- "sfc"
+        }
+        data.table::setDT(expand.grid(lon = x.grid, lat = y.grid,
+                                      lev = used.levs, var = vars[v]))
+    })
+    date <- data.table::data.table(date.i = rep(seq_along(t.grid), each = nrow(grid)))
+    date[,`:=`(lon = grid$lon, lat = grid$lat,
+               lev = grid$lev, var = grid$var)]
+    remove(grid)
+    date[, date := t.grid[date.i]]
+    date[, date.i := NULL]
 
+    # List of files to read.
     files <- .FilesFromTemplate(t.grid, components$DSET$pattern)
     unique.files <- unique(files)
-    # Variables
-    vars <- sapply(components$VARS, function(x) x[[1]])
-    varlevs <- vars[1:9]
 
-    field.levs <- vector()
+    date[, value := 0]
+    start <- 1
     for (f in seq_along(unique.files)) {
-        print(f)
+        print(round(f/length(unique.files), 2))
         path <- file.path(components$DSET$dir, files[f])
-        number_lines <- file.info(path)$size/4
+        number.lines <- file.info(path)$size/4
 
+        # Read whole field
         file <- file(path, "rb")
-        field <- readBin(file, "double", n  = number_lines*4, size = 4, endian = "big")
+        field <- readBin(file, "double", n = number.lines*4, size = 4, endian = "big")
         close(file)
         field <- field[field != field[1]]
 
-        t.grid.file <- t.grid[files %in% unique.files[f]]
-        size <- length(x.grid)*length(y.grid)*length(z.grid)*length(varlevs)*length(t.grid.file)
-        field.levs <- c(field.levs, field[1:size])
+        end <- length(field) + start - 1
+        date[start:end, value := field]
+        start <- end + 1
     }
-    field.levs2 <- array(field.levs,
-                         dim = c(length(x.grid), length(y.grid), length(z.grid),
-                                 length(varlevs), length(t.grid)),
-                         dimnames = list(x = x.grid, y = y.grid, z = z.grid,
-                                         var = varlevs, t = t.grid)
-                         )
-
-    dimnames(field.levs) <- list(lon = x.grid, lat = y.grid,
-                                 lev = z.grid, var = vars[1:9],
-                                 date = as.character(t.grid[1:24]))
-
-    # Remove bullsh*t headers
-    if (hd.rm == T) {
-        fields <- fields[fields != fields[1]]
-
-        return(fields)
-    } else {
-        return(fields)
-    }
-
+    return(date)
 }
 
 .ctlcomp <- c("DSET", "CHSUB", "DTYPE", "INDEX", "STNMAP", "TITLE", "UNDEF",
@@ -121,7 +120,7 @@ ReadCtl <- function(descriptor, hd.rm = T) {
 }
 
 .GetTimeGrid <- function(tdef) {
-    nt <- tdef[1]
+    nt <- as.numeric(tdef[1])
     start <- tdef[3]
     increment <- tdef[4]
 
@@ -201,7 +200,7 @@ ReadCtl <- function(descriptor, hd.rm = T) {
     fun.date <- function(x) {
         date.time + increment*unit.fun(x)
     }
-    return(fun.date(0:nt))
+    return(fun.date(0:(nt - 1)))
 }
 
 
@@ -220,6 +219,7 @@ template <- "attm_%y4.ctl"
 
 
 # Template functions
+# http://cola.gmu.edu/grads/gadoc/templates.html
 .template.funs <- list(
     `%y4` = function(date) {
         y <- lubridate::year(date)
@@ -233,8 +233,7 @@ template <- "attm_%y4.ctl"
         lubridate::month(date)
     },
     `%m2` = function(date) {
-        m <- lubridate::month(date)
-        sprintf("%02d", m)
+        sprintf("%02d", lubridate::month(date))
     },
     `%mc` = function(date) {
         tolower(month.abb[lubridate::month(date)])
@@ -243,7 +242,27 @@ template <- "attm_%y4.ctl"
         lubridate::day(date)
     },
     `%d2` = function(date) {
-        d <- lubridate::day(date)
-        sprintf("%02d", d)
+        sprintf("%02d", lubridate::day(date))
+    },
+    `%h1` = function(date) {
+        lubridate::hour(date)
+    },
+    `%h2` = function(date) {
+        sprintf("%02d", lubridate::hour(date))
     }
 )
+
+
+.NotImplemented <- function(date) {
+    m <- match.call()[[1]]
+    m <- m[[length(m)]]
+    stop(paste0(m, " not implemented yet."))
+}
+
+
+
+# From https://stackoverflow.com/questions/10405637/use-outer-instead-of-expand-grid
+expand.grid.alt <- function(seq1,seq2) {
+    cbind(rep.int(seq1, length(seq2)),
+          c(t(matrix(rep.int(seq2, length(seq1)), nrow=length(seq2)))))
+}

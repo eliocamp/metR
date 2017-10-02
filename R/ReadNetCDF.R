@@ -26,7 +26,7 @@
 #' file <- "file.nc"
 #' # Get a list of variables.
 #' variables <- ReadNetCDF(file, out = "vars")
-#' # Read only the first one with name "var".
+#' # Read only the first one, with name "var".
 #' field <- ReadNetCDF(file, vars = c(var = variables$vars[1]))
 #' # Add a new variable.
 #' # ¡Make sure it's on the same exact grid!
@@ -37,17 +37,6 @@
 #' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
 #' @import data.table
 ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array", "vars")) {
-    # Usa la librería netcdf para leer archivos y organiza todo en un data.table
-    # Entra:
-    #   file: la ruta del archivo
-    #   vars: las variables a leer. Si es NULL, lee todas.
-    #   list.vars: leer los datos o sólo listar las variables y dimensiones
-    # Sale:
-    #   si list.vars == F, un elemento de clase data.table con las variables
-    #   en cada columna.
-    #   si list.vars == T, una lista con el nombre de las variables y las
-    #   dimensiones.
-
     ncfile <- ncdf4::nc_open(file)
 
     if (is.null(vars)) {
@@ -73,7 +62,6 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
         ids[i] <- ncfile$dim[[i]]$id
     }
     names(dims) <- ids
-
 
     if ("time" %in% names(dimensions)) {
         date.unit <- ncfile$dim$time$units
@@ -105,7 +93,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
         data.table::setDT(nc)
 
         if ("time" %in% names(dimensions)) {
-            nc[, date := as.Date(time[1]), by = time]
+            nc[, date := as.POSIXct(time[1]), by = time]
             nc[, time := NULL]
         }
         if (length(vars) > 1) {

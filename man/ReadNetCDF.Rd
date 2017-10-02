@@ -37,7 +37,7 @@ with proper dimensions.
 file <- "file.nc"
 # Get a list of variables.
 variables <- ReadNetCDF(file, out = "vars")
-# Read only the first one with name "var".
+# Read only the first one, with name "var".
 field <- ReadNetCDF(file, vars = c(var = variables$vars[1]))
 # Add a new variable.
 # ¡Make sure it's on the same exact grid!

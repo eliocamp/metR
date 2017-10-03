@@ -7,3 +7,4 @@
 ^NEWS\.md$
 ^.lintr
 ^R/ReadCtl\.R$
+^docs$

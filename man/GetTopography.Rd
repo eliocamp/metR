@@ -8,7 +8,7 @@ GetTopography(lon.west, lon.east, lat.north, lat.south, resolution = 3.5,
   cache = TRUE, file.dir = tempdir(), verbose = interactive())
 }
 \arguments{
-\item{lon.west, lon.east, lat.north, lat.south}{latitues and longitudes of the
+\item{lon.west, lon.east, lat.north, lat.south}{latitudes and longitudes of the
 bounding box in degrees}
 
 \item{resolution}{numeric vector indicating the desired resolution (in degrees)
@@ -24,11 +24,11 @@ in the lon and lat directions (maximum resolution is 1 minute)}
 A data table with height (in meters) for each longitude and latitude.
 }
 \description{
-Retrieves topographica data from ETOPO1 Global Relief Model (see references).
+Retrieves topographic data from ETOPO1 Global Relief Model (see references).
 }
 \details{
 Very large requests can take long and can be denied by the NOAA server.
-If the funtion fails, try with a smaller bounding box or coarser resolution.
+If the function fails, try with a smaller bounding box or coarser resolution.
 
 Longitude coordinates must be between 0 and 360.
 }

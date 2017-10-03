@@ -1,8 +1,8 @@
 #' Get topographic data
 #'
-#' Retrieves topographica data from ETOPO1 Global Relief Model (see references).
+#' Retrieves topographic data from ETOPO1 Global Relief Model (see references).
 #'
-#' @param lon.west,lon.east,lat.north,lat.south latitues and longitudes of the
+#' @param lon.west,lon.east,lat.north,lat.south latitudes and longitudes of the
 #' bounding box in degrees
 #' @param resolution numeric vector indicating the desired resolution (in degrees)
 #' in the lon and lat directions (maximum resolution is 1 minute)
@@ -15,7 +15,7 @@
 #'
 #' @details
 #' Very large requests can take long and can be denied by the NOAA server.
-#' If the funtion fails, try with a smaller bounding box or coarser resolution.
+#' If the function fails, try with a smaller bounding box or coarser resolution.
 #'
 #' Longitude coordinates must be between 0 and 360.
 #'

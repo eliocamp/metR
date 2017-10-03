@@ -1,12 +1,12 @@
 #' Get Meteorological data
 #'
 #' Downloads minimum and maximum temperature station data from
-#' Argentina's National Wheather Service's
+#' Argentina's National Weather Service's
 #' public access. Data availability is restricted to one year prior.
 #'
-#' @param date date vector of dates to fectch data
+#' @param date date vector of dates to fetch data
 #' @param source ignored for now
-#' @param bar logical object indicating wether to show a progress bar
+#' @param bar logical object indicating whether to show a progress bar
 #'
 #' @return
 #' a dataframe with daily minimum and maximum temperature for all available stations

@@ -22,7 +22,7 @@ BuildQsField(x, amplitude, phase, k)
 \item{phase}{numeric vector of phases}
 }
 \value{
-\code{FitQsWave} reurns a named list of amplitude, phase and
+a named list of amplitude, phase and
 wave number. \cr
 
 \code{BuildQsField} returns a vector.
@@ -38,7 +38,7 @@ The  amplitude (A), phase (\eqn{\phi}) and wave number (k) satisfy:
 The phase is calculated so that it lies between 0 and \eqn{2\pi/k} so it
 represents the location (in radians) of the first maximum of each wave number.  \cr
 
-\code{BuildQsField} is, in a way, the opositve. It computes  the
+\code{BuildQsField} is, in a way, the opposite. It computes  the
 the above mentioned sum but for only the selected wave numbers.
 }
 \seealso{

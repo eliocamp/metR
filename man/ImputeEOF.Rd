@@ -25,7 +25,7 @@ imputation}
 \item{validation}{number of points to use in crossvalidation (defaults to
 30 or 10\% of the non NA points)}
 
-\item{verbose}{ligical indicating whetehr to print progress}
+\item{verbose}{logical indicating whether to print progress}
 }
 \value{
 A data table with imputed values.

@@ -9,8 +9,8 @@
 #' mean.
 #'
 #' @details
-#' Really just a very small wraper around \code{\link{scale}} that returns a
-#' numeric vector and defaults to sacale = FALSE.
+#' Really just a very small wrapper around \code{\link{scale}} that returns a
+#' numeric vector and defaults to scale = FALSE.
 #'
 #' @examples
 #' # Zonal temperature anomaly
@@ -75,13 +75,13 @@ Mag <- function(x, y) {
     sqrt(x^2 + y^2)
 }
 
-#' Extended logical operatos
+#' Extended logical operators
 #'
 #' Extended binary operators for easy subsetting.
 #'
 #' @param x,target,limits numeric vectors
 #' @param tol tolerance for similarity
-#' @param include logical vector of length 2 (or 1) indicating wheter to include
+#' @param include logical vector of length 2 (or 1) indicating whether to include
 #'  the extreme bounds
 #'
 #'
@@ -102,13 +102,13 @@ Mag <- function(x, y) {
 #'
 #' \code{Between} is a functional version of \code{\%b\%} that also has an
 #' \code{include} parameter that let's you test for \code{x > lower & x < upper}.
-#' If it's a unitary vector, it will be recicled so that \code{include = TRUE} is
+#' If it's a unitary vector, it will be recycled so that \code{include = TRUE} is
 #' equivalent to \code{include = c(TRUE, TRUE)}.
 #'
 #' It's important to note that \link{data.table} already has a
 #' \code{\link[data.table]{between}} function optimized with c code, so these
 #' functions use that implementation if data.table is installed (except for the
-#' case of \code{include[1] != include[2]}, for wich data.table has no
+#' case of \code{include[1] != include[2]}, for which data.table has no
 #' implementation yet).
 #'
 #' @examples

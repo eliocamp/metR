@@ -28,7 +28,7 @@ Derivates a variable in the zonal or meridional direction taking into account
 the size of the Earth.
 }
 \details{
-This function is usefull when using gridded data in a longitude-latitude
+This function is useful when using gridded data in a longitude-latitude
 regular grid and one needs to compute zonal or meridional derivatives. If
 \code{lon} is of length 1, it computes the meridional derivative (\eqn{d/dy})
 at the given longitude. If \code{lat} is of length 1, then it computes

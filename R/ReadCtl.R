@@ -1,6 +1,6 @@
 # http://cola.gmu.edu/grads/gadoc/descriptorfile.html
 library(lubridate)
-
+library(data.table)
 ReadCtl <- function(descriptor, hd.rm = T) {
     components <- .ParseCTL(readLines(descriptor))
     # DSET can start with "^" (grib files are on the same dir as descriptor) or

@@ -1,11 +1,11 @@
 #' Converts between longitude conventions
 #'
-#' Converts longitude from [0, 360) to [-180, 180) and viceversa.
+#' Converts longitude from [0, 360) to [-180, 180) and vice versa.
 #'
 #' @param lon numeric vector of longitude
 #' @param from numeric vector representing the convention of the input vector
 #'
-#' @return A numeric vector the same lenght of lon.
+#' @return A numeric vector the same length of lon.
 #'
 #' @examples
 #' library(ggplot2)

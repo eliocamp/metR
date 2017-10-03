@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -110,7 +110,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>formula</th>
-      <td><p>a formula indicating dependent and independend variables</p></td>
+      <td><p>a formula indicating dependent and independent variables</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -122,11 +122,11 @@
     </tr>
     <tr>
       <th>bc</th>
-      <td><p>boundary conditions for each independend variable</p></td>
+      <td><p>boundary conditions for each independent variable</p></td>
     </tr>
     <tr>
       <th>sphere</th>
-      <td><p>logical indicating wheter to use spherical coordinates
+      <td><p>logical indicating whether to use spherical coordinates
 (see details)</p></td>
     </tr>
     <tr>
@@ -167,7 +167,7 @@ correction is applied to the derivative so that they are in units of distance.</
 <span class='no'>dx_analytical</span> <span class='kw'>&lt;-</span> -<span class='fu'>sin</span>(<span class='no'>theta</span>)
 <span class='no'>dx_finitediff</span> <span class='kw'>&lt;-</span> <span class='fu'>Derivate</span>(<span class='no'>x</span> ~ <span class='no'>theta</span>, <span class='kw'>bc</span> <span class='kw'>=</span> <span class='st'>"cyclic"</span>)
 
-<span class='fu'>plot</span>(<span class='no'>theta</span>, <span class='no'>dx_analytical</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)</div><div class='input'><span class='fu'>points</span>(<span class='no'>theta</span>, <span class='no'>dx_finitediff</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='Derivate-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>theta</span>, <span class='no'>dx_analytical</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)</div><div class='input'><span class='fu'>points</span>(<span class='no'>theta</span>, <span class='no'>dx_finitediff</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='Derivate-7.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Curvature (Laplacian)</span>
 <span class='co'># Note the different boundary conditions for each variable</span>
 <span class='no'>variable</span> <span class='kw'>&lt;-</span> <span class='fu'>expand.grid</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>0</span>, <span class='fl'>360</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>3</span>)[-<span class='fl'>1</span>],
@@ -179,7 +179,7 @@ correction is applied to the derivative so that they are in units of distance.</
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>variable</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z</span>)) +
-     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z.ddlon</span> + <span class='no'>z.ddlat</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 240 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='Derivate-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z.ddlon</span> + <span class='no'>z.ddlat</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 240 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='Derivate-8.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

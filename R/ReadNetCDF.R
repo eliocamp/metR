@@ -11,15 +11,15 @@
 #'
 #' @return
 #' The return format is specified by `out`. It can be a data table in which each
-#' column is a variable and each rown an observation; an array with named
+#' column is a variable and each row, an observation; an array with named
 #' dimensions; or a vector. Either of these two options are much faster than the
 #' first since the most time consuming part is the melting of the array
-#' returned by [ncdf4::ncvar_get]. `out = "vector"` is particularly usefull for
+#' returned by [ncdf4::ncvar_get]. `out = "vector"` is particularly useful for
 #' adding new variables to an existing data frame with the same dimensions. Note
 #' that only one variable can be retrieved at a time with these formats.
 #'
 #' Finally, it can also be `vars`, in which case it returns a list with the name
-#' of the available variables and the dimensions of the spaciotemporal grid.
+#' of the available variables and the dimensions of the spatiotemporal grid.
 #'
 #' @examples
 #' \dontrun{

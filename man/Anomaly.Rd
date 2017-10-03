@@ -17,8 +17,8 @@ mean.
 Saves keystrokes for computing anomalies.
 }
 \details{
-Really just a very small wraper around \code{\link{scale}} that returns a
-numeric vector and defaults to sacale = FALSE.
+Really just a very small wrapper around \code{\link{scale}} that returns a
+numeric vector and defaults to scale = FALSE.
 }
 \examples{
 # Zonal temperature anomaly

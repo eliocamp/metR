@@ -6,7 +6,7 @@
 \alias{Similar}
 \alias{\%b\%}
 \alias{Between}
-\title{Extended logical operatos}
+\title{Extended logical operators}
 \usage{
 x \%~\% target
 
@@ -21,7 +21,7 @@ Between(x, limits, include = c(TRUE, TRUE))
 
 \item{tol}{tolerance for similarity}
 
-\item{include}{logical vector of length 2 (or 1) indicating wheter to include
+\item{include}{logical vector of length 2 (or 1) indicating whether to include
 the extreme bounds}
 }
 \value{
@@ -44,13 +44,13 @@ for each element of \code{x} that is between the minimum and the maximum of
 
 \code{Between} is a functional version of \code{\%b\%} that also has an
 \code{include} parameter that let's you test for \code{x > lower & x < upper}.
-If it's a unitary vector, it will be recicled so that \code{include = TRUE} is
+If it's a unitary vector, it will be recycled so that \code{include = TRUE} is
 equivalent to \code{include = c(TRUE, TRUE)}.
 
 It's important to note that \link{data.table} already has a
 \code{\link[data.table]{between}} function optimized with c code, so these
 functions use that implementation if data.table is installed (except for the
-case of \code{include[1] != include[2]}, for wich data.table has no
+case of \code{include[1] != include[2]}, for which data.table has no
 implementation yet).
 }
 \examples{

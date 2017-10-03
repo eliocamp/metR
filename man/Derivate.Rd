@@ -8,15 +8,15 @@ Derivate(formula, data = NULL, order = c(1, 2), bc = "none",
   sphere = FALSE, a = 6731)
 }
 \arguments{
-\item{formula}{a formula indicating dependent and independend variables}
+\item{formula}{a formula indicating dependent and independent variables}
 
 \item{data}{optional data.frame containing the variables}
 
 \item{order}{order of the derivative}
 
-\item{bc}{boundary conditions for each independend variable}
+\item{bc}{boundary conditions for each independent variable}
 
-\item{sphere}{logical indicating wheter to use spherical coordinates
+\item{sphere}{logical indicating whether to use spherical coordinates
 (see details)}
 
 \item{a}{radius or the Earth in kilometers for use in spherical coordinates}

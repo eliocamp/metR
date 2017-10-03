@@ -7,7 +7,7 @@
 WaveFlux(gh, u, v, lon, lat, lev)
 }
 \arguments{
-\item{gh}{geopotencial height}
+\item{gh}{geopotential height}
 
 \item{u}{mean zonal velocity}
 

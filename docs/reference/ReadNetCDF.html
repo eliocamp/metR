@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -128,14 +128,14 @@ with proper dimensions.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The return format is specified by <code>out</code>. It can be a data table in which each
-column is a variable and each rown an observation; an array with named
+column is a variable and each row, an observation; an array with named
 dimensions; or a vector. Either of these two options are much faster than the
 first since the most time consuming part is the melting of the array
-returned by <a href='http://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get'>ncdf4::ncvar_get</a>. <code>out = "vector"</code> is particularly usefull for
+returned by <a href='http://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get'>ncdf4::ncvar_get</a>. <code>out = "vector"</code> is particularly useful for
 adding new variables to an existing data frame with the same dimensions. Note
 that only one variable can be retrieved at a time with these formats.</p>
 <p>Finally, it can also be <code>vars</code>, in which case it returns a list with the name
-of the available variables and the dimensions of the spaciotemporal grid.</p>
+of the available variables and the dimensions of the spatiotemporal grid.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

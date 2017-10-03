@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -99,7 +99,7 @@
     </div>
 
     
-    <p>Retrieves topographica data from ETOPO1 Global Relief Model (see references).</p>
+    <p>Retrieves topographic data from ETOPO1 Global Relief Model (see references).</p>
     
 
     <pre class="usage"><span class='fu'>GetTopography</span>(<span class='no'>lon.west</span>, <span class='no'>lon.east</span>, <span class='no'>lat.north</span>, <span class='no'>lat.south</span>, <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>3.5</span>,
@@ -110,7 +110,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>lon.west, lon.east, lat.north, lat.south</th>
-      <td><p>latitues and longitudes of the
+      <td><p>latitudes and longitudes of the
 bounding box in degrees</p></td>
     </tr>
     <tr>
@@ -139,7 +139,7 @@ in the lon and lat directions (maximum resolution is 1 minute)</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Very large requests can take long and can be denied by the NOAA server.
-If the funtion fails, try with a smaller bounding box or coarser resolution.</p>
+If the function fails, try with a smaller bounding box or coarser resolution.</p>
 <p>Longitude coordinates must be between 0 and 360.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

@@ -1,10 +1,10 @@
 #' Derivate a discrete variable using finite differences
 #'
-#' @param formula a formula indicating dependent and independend variables
+#' @param formula a formula indicating dependent and independent variables
 #' @param order order of the derivative
-#' @param bc boundary conditions for each independend variable
+#' @param bc boundary conditions for each independent variable
 #' @param data optional data.frame containing the variables
-#' @param sphere logical indicating wheter to use spherical coordinates
+#' @param sphere logical indicating whether to use spherical coordinates
 #' (see details)
 #' @param a radius or the Earth in kilometers for use in spherical coordinates
 #'
@@ -147,7 +147,7 @@ Derivate <- function(formula, data = NULL, order = c(1, 2), bc = "none",
 #' @param a the radius of the earth in kilometers
 #'
 #' @details
-#' This function is usefull when using gridded data in a longitude-latitude
+#' This function is useful when using gridded data in a longitude-latitude
 #' regular grid and one needs to compute zonal or meridional derivatives. If
 #' \code{lon} is of length 1, it computes the meridional derivative (\eqn{d/dy})
 #' at the given longitude. If \code{lat} is of length 1, then it computes

@@ -17,15 +17,15 @@ ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array",
 }
 \value{
 The return format is specified by \code{out}. It can be a data table in which each
-column is a variable and each rown an observation; an array with named
+column is a variable and each row, an observation; an array with named
 dimensions; or a vector. Either of these two options are much faster than the
 first since the most time consuming part is the melting of the array
-returned by \link[ncdf4:ncvar_get]{ncdf4::ncvar_get}. \code{out = "vector"} is particularly usefull for
+returned by \link[ncdf4:ncvar_get]{ncdf4::ncvar_get}. \code{out = "vector"} is particularly useful for
 adding new variables to an existing data frame with the same dimensions. Note
 that only one variable can be retrieved at a time with these formats.
 
 Finally, it can also be \code{vars}, in which case it returns a list with the name
-of the available variables and the dimensions of the spaciotemporal grid.
+of the available variables and the dimensions of the spatiotemporal grid.
 }
 \description{
 Using the \code{\link[ncdf4]{ncdf4-package}} package, it reads an .nc file. The advantage

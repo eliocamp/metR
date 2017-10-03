@@ -19,7 +19,7 @@
 aao
 }
 \description{
-Monthly geopotential field at 700hPa south of 20°S from january 1990 to
-decembar 2000.
+Monthly geopotential field at 700hPa south of 20°S from January 1990 to
+December 2000.
 }
 \keyword{datasets}

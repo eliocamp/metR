@@ -5,7 +5,7 @@
 #' vector fields characterized by magnitude of the `x` and `y` components.
 #'
 #' @param skip numeric vector specifying number of gridpoints not to draw in
-#' the x and y direction; recicled if not of length 2
+#' the x and y direction; recycled if not of length 2
 #' @param min.mag minimum magnitude of the plotted vectors
 #' @param arrow.size size of the arrow (see [grid::arrow])
 #' @param arrow.angle angle of the arrow (see [grid::arrow])

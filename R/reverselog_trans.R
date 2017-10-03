@@ -1,6 +1,6 @@
 #' Reverse log transform
 #'
-#' Reverse log transformation. Usefull when plotting and one axis is in pressure
+#' Reverse log transformation. Useful when plotting and one axis is in pressure
 #' levels.
 #'
 #' @param base Base of the logarithm

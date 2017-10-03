@@ -10,7 +10,7 @@ season(month, hemisphere = c("south", "north"), lang = c("es", "en"))
 \arguments{
 \item{month}{A numeric vector of months or a vector of dates.}
 
-\item{hemisphere}{A character with the hemisphere for wich to assign the seaons.}
+\item{hemisphere}{A character with the hemisphere for which to assign the seasons.}
 
 \item{lang}{Language to use.}
 }

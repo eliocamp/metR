@@ -12,10 +12,10 @@ ConvertLongitude(lon, from = c(360, 180))
 \item{from}{numeric vector representing the convention of the input vector}
 }
 \value{
-A numeric vector the same lenght of lon.
+A numeric vector the same length of lon.
 }
 \description{
-Converts longitude from [0, 360) to [-180, 180) and viceversa.
+Converts longitude from [0, 360) to [-180, 180) and vice versa.
 }
 \examples{
 library(ggplot2)

@@ -1,6 +1,6 @@
 #' Calculate wave-activity flux
 #'
-#' @param gh geopotencial height
+#' @param gh geopotential height
 #' @param u mean zonal velocity
 #' @param v mean meridional velocity
 #' @param lon longitude (in degrees)

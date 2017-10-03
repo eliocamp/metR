@@ -10,7 +10,7 @@ reverselog_trans(base = 10)
 \item{base}{Base of the logarithm}
 }
 \description{
-Reverse log transformation. Usefull when plotting and one axis is in pressure
+Reverse log transformation. Useful when plotting and one axis is in pressure
 levels.
 }
 \examples{

@@ -1,9 +1,9 @@
 #' Helpful scales for maps
 #'
-#' These functions are simple wrapers around
+#' These functions are simple wrappers around
 #' \code{\link[ggplot2]{scale_x_continuous}} and
 #' \code{\link[ggplot2]{scale_y_continuous}} with
-#' helpful defaults for ploting longitude and latitude.
+#' helpful defaults for plotting longitude and latitude.
 #'
 #' @param ticks spacing between breaks
 #' @param name name of the scale

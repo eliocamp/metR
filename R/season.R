@@ -1,7 +1,7 @@
 #' Assign seasons to months
 #'
 #' @param month A numeric vector of months or a vector of dates.
-#' @param hemisphere A character with the hemisphere for wich to assign the seaons.
+#' @param hemisphere A character with the hemisphere for which to assign the seasons.
 #' @param lang Language to use.
 #'
 #' @return

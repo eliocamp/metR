@@ -10,11 +10,11 @@ https://ssl.smn.gob.ar/dpd/pron5d-calendario.php
 GetData(date, source = "SMN", bar = FALSE)
 }
 \arguments{
-\item{date}{date vector of dates to fectch data}
+\item{date}{date vector of dates to fetch data}
 
 \item{source}{ignored for now}
 
-\item{bar}{logical object indicating wether to show a progress bar}
+\item{bar}{logical object indicating whether to show a progress bar}
 }
 \value{
 a dataframe with daily minimum and maximum temperature for all available stations
@@ -22,7 +22,7 @@ and each date.
 }
 \description{
 Downloads minimum and maximum temperature station data from
-Argentina's National Wheather Service's
+Argentina's National Weather Service's
 public access. Data availability is restricted to one year prior.
 }
 \examples{

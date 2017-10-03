@@ -36,10 +36,10 @@ additive expansion constants.}
 \item{trans}{either the name of a transformation object, or the object itself}
 }
 \description{
-These functions are simple wrapers around
+These functions are simple wrappers around
 \code{\link[ggplot2]{scale_x_continuous}} and
 \code{\link[ggplot2]{scale_y_continuous}} with
-helpful defaults for ploting longitude and latitude.
+helpful defaults for plotting longitude and latitude.
 }
 \details{
 scale_*_longitude assumes that your data is between 0 and 360 but labels it

@@ -10,7 +10,7 @@
 #' @param max.iter maximum iterations allowed for the algorithm
 #' @param validation number of points to use in crossvalidation (defaults to
 #' 30 or 10\% of the non NA points)
-#' @param verbose ligical indicating whetehr to print progress
+#' @param verbose logical indicating whether to print progress
 #'
 #' @return
 #' A data table with imputed values.

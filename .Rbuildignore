@@ -8,3 +8,4 @@
 ^.lintr
 ^R/ReadCtl\.R$
 ^docs$
+^_pkgdown\.yml$

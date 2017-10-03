@@ -16,7 +16,7 @@ scale_fill_divergent(low = scales::muted("blue"),
 
 \item{high}{Colours for low and high ends of the gradient.}
 
-\item{binwidth}{optional binwidth for computing breaks. For best resutls,
+\item{binwidth}{optional binwidth for computing breaks. For best results,
 should be the same value as the related \code{stat_contour} call.}
 
 \item{exclude}{a numeric vector of levels that should be excluded from the
@@ -87,7 +87,7 @@ expand the scale by 5\% on each side for continuous variables, and by
 }}
 }
 \description{
-Wraper around ggplot's \code{\link[ggplot2]{scale_colour_gradient2}} with better defaults and
+Wrapper around ggplot's \code{\link[ggplot2]{scale_colour_gradient2}} with better defaults and
 automatic annotated breaks. It's main use it to label the same levels as
 the contours in a plot.
 }

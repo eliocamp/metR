@@ -1,10 +1,10 @@
 #' Divergent color scales
 #'
-#' Wraper around ggplot's \code{\link[ggplot2]{scale_colour_gradient2}} with better defaults and
+#' Wrapper around ggplot's \code{\link[ggplot2]{scale_colour_gradient2}} with better defaults and
 #' automatic annotated breaks. It's main use it to label the same levels as
 #' the contours in a plot.
 #'
-#' @param binwidth optional binwidth for computing breaks. For best resutls,
+#' @param binwidth optional binwidth for computing breaks. For best results,
 #' should be the same value as the related \code{stat_contour} call.
 #' @param exclude a numeric vector of levels that should be excluded from the
 #' contour calculation

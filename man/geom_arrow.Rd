@@ -47,7 +47,7 @@ to the paired geom/stat.}
 \item{lineend}{Line end style (round, butt, square).}
 
 \item{skip}{numeric vector specifying number of gridpoints not to draw in
-the x and y direction; recicled if not of length 2}
+the x and y direction; recycled if not of length 2}
 
 \item{min.mag}{minimum magnitude of the plotted vectors}
 

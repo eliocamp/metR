@@ -36,7 +36,7 @@ devtools::install_github("eliocamp/metR")
 
 In this example we easily perform Principal Components Decomposition (EOF) on monthly geopotential height and plot it to get the Antarctic Oscillation. 
 
-```{r example}
+```{r field}
 library(metR)
 library(data.table)
 library(ggplot2)
@@ -55,7 +55,8 @@ ggplot(aao.svd$left, aes(lon, lat, z = value)) +
     scale_fill_divergent(name = "AAO pattern") +
     coord_polar()
 ```
-```{r}
+
+```{r timeseries}
 # AAO signal
 g <- ggplot(aao.svd$right, aes(date, value)) +
     geom_line() +

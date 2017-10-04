@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Reverse log transform — reverselog_trans • metR</title>
+<title>Effects of the Earth's rotation — coriolis • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -95,56 +95,49 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Reverse log transform</h1>
+    <h1>Effects of the Earth's rotation</h1>
     </div>
 
     
-    <p>Reverse log transformation. Useful when plotting and one axis is in pressure
-levels.</p>
+    <p>Coriolis and beta parameters by latitude.</p>
     
 
-    <pre class="usage"><span class='fu'>reverselog_trans</span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
+    <pre class="usage"><span class='fu'>coriolis</span>(<span class='no'>lat</span>)
+
+<span class='fu'>f</span>(<span class='no'>lat</span>)
+
+<span class='fu'>coriolis.dy</span>(<span class='no'>lat</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371</span>)
+
+<span class='fu'>f.dy</span>(<span class='no'>lat</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>base</th>
-      <td><p>Base of the logarithm</p></td>
+      <th>lat</th>
+      <td><p>latitude in degrees</p></td>
+    </tr>
+    <tr>
+      <th>a</th>
+      <td><p>radius of the earth in kilometers</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
-  <code><a href='RepeatLon.html'>RepeatLon</a></code>, <code><a href='geom_arrow.html'>geom_arrow</a></code>,
-  <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
-  <code><a href='scale_longitude.html'>scale_longitude</a></code>,
-  <code><a href='stat_contour_fill.html'>stat_contour_fill</a></code></p>
+    <p>All functions use the correct sideral day (24hs 56mins 4.091s) instead of
+the incorrect solar day (24hs) for 0.3% more precision and 1000% more
+pedantry.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Adiabatic temperature profile</span>
-<span class='no'>gamma</span> <span class='kw'>&lt;-</span> <span class='fl'>0.286</span>
-<span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1000</span>, <span class='fl'>950</span>, <span class='fl'>850</span>, <span class='fl'>700</span>, <span class='fl'>500</span>, <span class='fl'>300</span>, <span class='fl'>200</span>, <span class='fl'>100</span>))
-<span class='no'>t</span>$<span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fl'>300</span>*(<span class='no'>t</span>$<span class='no'>p</span>/<span class='fl'>1000</span>)^<span class='no'>gamma</span>
-
-<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>t</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>p</span>, <span class='no'>t</span>)) +
-   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>() +
-   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip'>coord_flip</a></span>() +
-   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous'>scale_x_continuous</a></span>(<span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"reverselog"</span>)</div><div class='img'><img src='reverselog_trans-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

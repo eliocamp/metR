@@ -163,52 +163,53 @@ returns a matrix.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>data.table</span>)
 <span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/copy'>copy</a></span>(<span class='no'>aao</span>)
-<span class='no'>aao</span>[, <span class='no'>gh.t</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lon</span>)]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t
-#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01   2.923688
-#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01   3.552416
-#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01   4.996166
-#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01   5.677799
-#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01   5.023650
-#&gt;     ---                                               
-#&gt; 532220: 347.5 -90.0 700 2762.000 2000-12-01 122.685110
-#&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 122.685110
-#&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 122.685110
-#&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 122.685110
-#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 122.685110</div><div class='input'><span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='no'>aao</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]]
+<span class='no'>aao</span>[, <span class='no'>gh.t</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lon</span>)]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t.w       gh.t
+#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01 2.479552e-01   2.923688
+#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01 1.685554e+00   3.552416
+#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01 4.036403e+00   4.996166
+#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01 6.003832e+00   5.677799
+#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01 7.255320e+00   5.023650
+#&gt;     ---                                                            
+#&gt; 532220: 347.5 -90.0 700 2762.000 2000-12-01 5.045014e-07 122.685110
+#&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 5.045014e-07 122.685110
+#&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 5.045014e-07 122.685110
+#&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 5.045014e-07 122.685110
+#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 5.045014e-07 122.685110</div><div class='input'><span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='no'>aao</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]]
 
 <span class='co'># Add gaps to field</span>
-<span class='no'>aao</span>[, <span class='no'>gh.gap</span> <span class='kw'>:=</span> <span class='no'>gh.t</span>]</div><div class='output co'>#&gt;         lon   lat lev       gh       date      gh.t    gh.gap
-#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01  2.923688  2.923688
-#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01  3.552416  3.552416
-#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01  4.996166  4.996166
-#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01  5.677799  5.677799
-#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01  5.023650  5.023650
-#&gt;   ---                                                        
-#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
-#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
-#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
-#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657</div><div class='input'><span class='no'>aao</span>[<span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='no'>.N</span>, <span class='no'>.N</span>*<span class='fl'>0.3</span>), <span class='no'>gh.gap</span> <span class='kw'>:=</span> <span class='fl'>NA</span>]</div><div class='output co'>#&gt;         lon   lat lev       gh       date      gh.t    gh.gap
-#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01  2.923688        NA
-#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01  3.552416  3.552416
-#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01  4.996166        NA
-#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01  5.677799  5.677799
-#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01  5.023650  5.023650
-#&gt;   ---                                                        
-#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
-#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
-#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
-#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 76.620657        NA
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657</div><div class='input'>
+<span class='no'>aao</span>[, <span class='no'>gh.gap</span> <span class='kw'>:=</span> <span class='no'>gh.t</span>]</div><div class='output co'>#&gt;         lon   lat lev       gh       date       gh.t.w      gh.t    gh.gap
+#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 2.479552e-01  2.923688  2.923688
+#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 1.685554e+00  3.552416  3.552416
+#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 4.036403e+00  4.996166  4.996166
+#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01 6.003832e+00  5.677799  5.677799
+#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01 7.255320e+00  5.023650  5.023650
+#&gt;   ---                                                                     
+#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 7.428175e-08 76.620657 76.620657
+#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 7.428175e-08 76.620657 76.620657
+#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 7.428175e-08 76.620657 76.620657
+#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 7.428175e-08 76.620657 76.620657
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 7.428175e-08 76.620657 76.620657</div><div class='input'><span class='no'>aao</span>[<span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='no'>.N</span>, <span class='no'>.N</span>*<span class='fl'>0.3</span>), <span class='no'>gh.gap</span> <span class='kw'>:=</span> <span class='fl'>NA</span>]</div><div class='output co'>#&gt;         lon   lat lev       gh       date       gh.t.w      gh.t    gh.gap
+#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 2.479552e-01  2.923688  2.923688
+#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 1.685554e+00  3.552416        NA
+#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 4.036403e+00  4.996166  4.996166
+#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01 6.003832e+00  5.677799        NA
+#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01 7.255320e+00  5.023650        NA
+#&gt;   ---                                                                     
+#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 7.428175e-08 76.620657        NA
+#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 7.428175e-08 76.620657        NA
+#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 7.428175e-08 76.620657 76.620657
+#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 7.428175e-08 76.620657        NA
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 7.428175e-08 76.620657 76.620657</div><div class='input'>
 <span class='no'>aao.full</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/as.data.table'>as.data.table</a></span>(<span class='fu'>ImputeEOF</span>(<span class='no'>aao</span>, <span class='no'>lon</span> ~ <span class='no'>lat</span>,  <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='st'>"gh.gap"</span>,
-                                    <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>))</div><div class='output co'>#&gt;  With 1 eof - convergence: TRUE With 2 eof - convergence: TRUE With 3 eof - convergence: TRUE With 4 eof - convergence: TRUE With 5 eof - convergence: TRUE With 6 eof - convergence: TRUE With 7 eof - convergence: TRUE With 8 eof - convergence: FALSE</div><div class='output co'>#&gt; <span class='error'>Error in .ImputeEOF1(X, gaps, eof, tol = tol, max.iter = max.iter): Algorithm failed to converge after 2000 iterations</span></div><div class='input'>
-<span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='no'>aao</span>[<span class='no'>aao.full</span>[, <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>gh.impute</span> <span class='kw'>=</span> <span class='no'>gh.gap</span>)], <span class='kw'>on</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"lon"</span>, <span class='st'>"lat"</span>)]</div><div class='output co'>#&gt; <span class='error'>Error in eval(.massagei(isub), x, parent.frame()): object 'aao.full' not found</span></div><div class='input'>
+                                    <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>))</div><div class='output co'>#&gt;  With 1 eof - convergence: TRUE With 2 eof - convergence: TRUE With 3 eof - convergence: TRUE With 4 eof - convergence: TRUE With 5 eof - convergence: TRUE</div><div class='input'>
+<span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='no'>aao</span>[<span class='no'>aao.full</span>[, <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>gh.impute</span> <span class='kw'>=</span> <span class='no'>gh.gap</span>)], <span class='kw'>on</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"lon"</span>, <span class='st'>"lat"</span>)]
+
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.impute</span>))</div><div class='output co'>#&gt; <span class='error'>Error in FUN(X[[i]], ...): object 'gh.impute' not found</span></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.impute</span>))</div><div class='img'><img src='ImputeEOF-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>[<span class='fu'>is.na</span>(<span class='no'>gh.gap</span>)], <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>gh.t</span>, <span class='no'>gh.impute</span>)) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in FUN(X[[i]], ...): object 'gh.impute' not found</span></div><div class='img'><img src='ImputeEOF-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>()</div><div class='img'><img src='ImputeEOF-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

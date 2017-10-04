@@ -46,7 +46,7 @@ ggplot(aao.svd$left, aes(lon, lat, z = value)) +
     coord_polar()
 ```
 
-![](README-example-1.png)
+![](README-field-1.png)
 
 ``` r
 # AAO signal
@@ -60,6 +60,6 @@ DivideTimeseries(g, aao.svd$right$date, xlab = "Date", ylab = "AAO signal")
 #> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-![](README-unnamed-chunk-2-1.png)
+![](README-timeseries-1.png)
 
 You can read more in the vignettes (comming soon).

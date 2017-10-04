@@ -112,7 +112,7 @@ aao.svd &lt;-<span class="st"> </span><span class="kw"><a href="reference/EOF.ht
 <span class="st">    </span><span class="kw"><a href="reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="reference/scale_divergent.html">scale_fill_divergent</a></span>(<span class="dt">name =</span> <span class="st">"AAO pattern"</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</code></pre></div>
-<p><img src="README-example-1.png" width="672"></p>
+<p><img src="README-field-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># AAO signal</span>
 g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao.svd<span class="op">$</span>right, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, value)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
@@ -122,7 +122,7 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentat
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span>
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span>
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></code></pre></div>
-<p><img src="README-unnamed-chunk-2-1.png" width="672"></p>
+<p><img src="README-timeseries-1.png" width="672"></p>
 <p>You can read more in the vignettes (comming soon).</p>
 </div>
 </div>

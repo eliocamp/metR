@@ -7,6 +7,7 @@ Description: Many useful functions and extensions for dealing with
     meteorological data in the tidy data framework. Extends ggplot2 for better
     plotting of scalar and vector fields and provides commonly used analysis 
     methods in the atmospheric sciences. 
+Date: 2017-10-04
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

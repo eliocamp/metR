@@ -64,6 +64,7 @@ EOF <- function(data, formula, value.var, n = 1) {
     if (is.null(n)) n <- min(ncol(g$matrix), nrow(g$matrix))
 
     if (requireNamespace("irlba", quietly = TRUE)) {
+        set.seed(42)
         eof <- irlba::irlba(g$matrix, nv = max(n))
     } else {
         eof <- svd(g$matrix, nu = max(n), nv = max(n))
@@ -87,3 +88,4 @@ EOF <- function(data, formula, value.var, n = 1) {
 
     return(list(right = right, left = left, sdev = sdev))
 }
+

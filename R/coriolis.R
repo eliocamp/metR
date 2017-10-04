@@ -22,9 +22,13 @@ f <- coriolis
 
 #' @export
 #' @rdname  coriolis
-beta <- function(lat, a = 6371) {
+coriolis.dy <- function(lat, a = 6371) {
     a <- a*1000
     2*.omega*cos(lat*pi/180)/a
 }
+
+#' @export
+#' @rdname coriolis
+f.dy <- coriolis.dy
 
 .omega <- 2*pi/(23*3600 + 56*60 + 4.091)

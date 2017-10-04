@@ -3,14 +3,17 @@
 \name{coriolis}
 \alias{coriolis}
 \alias{f}
-\alias{beta}
+\alias{coriolis.dy}
+\alias{f.dy}
 \title{Effects of the Earth's rotation}
 \usage{
 coriolis(lat)
 
 f(lat)
 
-beta(lat, a = 6371)
+coriolis.dy(lat, a = 6371)
+
+f.dy(lat, a = 6371)
 }
 \arguments{
 \item{lat}{latitude in degrees}

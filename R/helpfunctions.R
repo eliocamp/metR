@@ -3,14 +3,11 @@
 #' Saves keystrokes for computing anomalies.
 #'
 #' @param x numeric vector
+#' @param ... other arguments passed to \code{\link{mean}} such as `na.rm`
 #'
 #' @return
 #' A numeric vector of the same length as x with each value's distance to the
 #' mean.
-#'
-#' @details
-#' Really just a very small wrapper around \code{\link{scale}} that returns a
-#' numeric vector and defaults to scale = FALSE.
 #'
 #' @examples
 #' # Zonal temperature anomaly
@@ -19,8 +16,8 @@
 #'
 #' @family utilities
 #' @export
-Anomaly <- function(x) {
-    as.numeric(scale(x, scale = F))
+Anomaly <- function(x, ...) {
+    x - mean(x, ...)
 }
 
 

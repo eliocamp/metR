@@ -4,10 +4,12 @@
 \alias{Anomaly}
 \title{Anomalies}
 \usage{
-Anomaly(x)
+Anomaly(x, ...)
 }
 \arguments{
 \item{x}{numeric vector}
+
+\item{...}{other arguments passed to \code{\link{mean}} such as \code{na.rm}}
 }
 \value{
 A numeric vector of the same length as x with each value's distance to the
@@ -15,10 +17,6 @@ mean.
 }
 \description{
 Saves keystrokes for computing anomalies.
-}
-\details{
-Really just a very small wrapper around \code{\link{scale}} that returns a
-numeric vector and defaults to scale = FALSE.
 }
 \examples{
 # Zonal temperature anomaly

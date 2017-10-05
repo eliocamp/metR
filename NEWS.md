@@ -4,6 +4,7 @@
 - Changed name. 
 - New website ([https://eliocamp.github.io/metR/](https://eliocamp.github.io/metR/)) with documentation. Thanks to `pkgdown`.
 - New functions: `coriolis()` and `coriolis.dy()`.
+- Faster `Anomaly()` (can't believe I did that).
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

@@ -18,7 +18,7 @@
 season <- function(month, hemisphere = c("south", "north"),
                          lang = c("es", "en")) {
 
-    if (is(month, "Date")) month <- lubridate::month(month)
+    if (.is.somedate(month)) month <- lubridate::month(month)
 
     hemisphere <- substr(tolower(hemisphere[[1]]), 1, 1)
     if (lang[1] == "en") {
@@ -42,3 +42,8 @@ season <- function(month, hemisphere = c("south", "north"),
 
 #' @export
 AssignSeason <- season
+
+
+.is.somedate <- function(x) {
+    inherits(x, "Date") | inherits(x, "POSIXct") | inherits(x, "POSIXlt")
+}

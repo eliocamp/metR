@@ -5,7 +5,7 @@
 \title{Derivate a discrete variable using finite differences}
 \usage{
 Derivate(formula, data = NULL, order = c(1, 2), bc = "none",
-  sphere = FALSE, a = 6731)
+  sphere = FALSE, a = 6371)
 }
 \arguments{
 \item{formula}{a formula indicating dependent and independent variables}

@@ -53,7 +53,7 @@
 #' @import data.table
 #' @export
 Derivate <- function(formula, data = NULL, order = c(1, 2), bc = "none",
-                     sphere = FALSE, a = 6731) {
+                     sphere = FALSE, a = 6371) {
     # Build dataframe
     mf <- match.call(expand.dots = F)
     mf[[1]] <- quote(model.frame)

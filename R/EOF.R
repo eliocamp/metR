@@ -73,12 +73,12 @@ EOF <- function(data, formula, value.var, n = 1) {
 
     right <- as.data.table(eof$v)
     pcomps <- 1:ncol(right)
-    colnames(right) <- pcomps
+    colnames(right) <- as.character(pcomps)
     right <- cbind(right, as.data.table(g$coldims))
     right <- data.table::melt(right, id.vars = names(g$coldims), variable = "PC")
 
     left <- as.data.table(eof$u)
-    colnames(left) <- pcomps
+    colnames(left) <- as.character(pcomps)
     left <- cbind(left, as.data.table(g$rowdims))
     left <- data.table::melt(left, id.vars = names(g$rowdims), variable = "PC")
 

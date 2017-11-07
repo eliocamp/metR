@@ -4,7 +4,7 @@
 \alias{EOF}
 \title{Empirical Orthogonal Function}
 \usage{
-EOF(data, formula, value.var, n = 1)
+EOF(data, formula, value.var = guess(data), n = 1)
 }
 \arguments{
 \item{data}{a data.frame}
@@ -14,7 +14,7 @@ the matrix that will be used in the SVD decomposition (see details)}
 
 \item{value.var}{name of the column whose values will be used}
 
-\item{n}{which singular values to return (if \code{NULL}, defaults to all)}
+\item{n}{which singular values to return (if \code{NULL}, returns all)}
 }
 \value{
 A list of 3 named elements containing tidy data.tables of the right and left

@@ -224,7 +224,7 @@ is.error <- function(x) inherits(x, "try-error")
     row.vars <- all.vars(formula[[2]])
     col.vars <- all.vars(formula[[3]])
 
-    g <- dcast(setDT(data), formula, value.var = value.var)
+    g <- data.table::dcast(setDT(data), formula, value.var = value.var)
 
     dims <- list()
     if (length(col.vars) > 1) {
@@ -245,4 +245,16 @@ is.error <- function(x) inherits(x, "try-error")
     return(list(matrix = as.matrix(g[, -seq_along(row.vars), with = F]),
                 coldims = dims,
                 rowdims = as.list(g[, row.vars, with = F])))
+}
+
+# from data.table
+guess <- function (x)
+{
+    if ("value" %chin% names(x))
+        return("value")
+    if ("(all)" %chin% names(x))
+        return("(all)")
+    var <- names(x)[ncol(x)]
+    message("Using '", var, "' as value column. Use 'value.var' to override")
+    return(var)
 }

@@ -7,7 +7,7 @@
 #' @param formula formula passed to \code{\link[data.table]{dcast}} to build
 #' the matrix that will be used in the SVD decomposition (see details)
 #' @param value.var name of the column whose values will be used
-#' @param n which singular values to return (if \code{NULL}, defaults to all)
+#' @param n which singular values to return (if \code{NULL}, returns all)
 #'
 #' @return
 #' A list of 3 named elements containing tidy data.tables of the right and left
@@ -58,7 +58,7 @@
 #' @family meteorology functions
 #' @export
 #' @import data.table
-EOF <- function(data, formula, value.var, n = 1) {
+EOF <- function(data, formula, value.var = guess(data), n = 1) {
     g <- .tidy2matrix(setDT(data), formula, value.var)
 
     if (is.null(n)) n <- min(ncol(g$matrix), nrow(g$matrix))
@@ -71,21 +71,20 @@ EOF <- function(data, formula, value.var, n = 1) {
         eof$d <- eof$d[1:max(n)]
     }
 
-    right <- as.data.table(eof$v)
-    pcomps <- 1:ncol(right)
+    right <- as.data.table(eof$v[, n])
+    pcomps <- n
     colnames(right) <- as.character(pcomps)
     right <- cbind(right, as.data.table(g$coldims))
     right <- data.table::melt(right, id.vars = names(g$coldims), variable = "PC")
 
-    left <- as.data.table(eof$u)
+    left <- as.data.table(eof$u[, n])
     colnames(left) <- as.character(pcomps)
     left <- cbind(left, as.data.table(g$rowdims))
     left <- data.table::melt(left, id.vars = names(g$rowdims), variable = "PC")
 
     v.g  <- norm(g$matrix, type = "F")
-    sdev <- data.table(PC = pcomps, sd = eof$d)
+    sdev <- data.table(PC = pcomps, sd = eof$d[n])
     sdev[, r.squared := sd^2/v.g^2]
 
     return(list(right = right, left = left, sdev = sdev))
 }
-

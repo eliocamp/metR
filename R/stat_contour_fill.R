@@ -1,45 +1,10 @@
-#' Filled 2d contours of a 3d surface
-#'
-#' While ggplot2's \code{\link[ggplot2]{stat_contour}} can plot nice contours, it
-#' doesn't work with the polygon geom. This stat makes some small manipulation
-#' of the data to ensure that all contours are closed and also computes a new
-#' aesthetic \code{int.level}, which differs from \code{level} (computed by
-#' [ggplot2::stat_contour]) in that represents
-#' the value of the \code{z} aesthetic *inside* the contour instead of at the edge.
-#'
-#' @inheritParams ggplot2::stat_contour
-#' @param exclude a numeric vector of levels that should be excluded from the
-#' contour calculation
-#'
-#' @section Computed variables:
-#' \describe{
-#'  \item{int.level}{value of the interior contour}
-#'  }
-#' @examples
-#' library(ggplot2)
-#' surface <- reshape2::melt(volcano)
-#' ggplot(surface, aes(Var1, Var2, z = value)) +
-#'   stat_contour_fill() +
-#'   geom_contour(color = "black", size = 0.1)
-#'
-#' # Plots only deviations from the mean.
-#' ggplot(surface, aes(Var1, Var2, z = as.numeric(scale(value)))) +
-#'   stat_contour_fill(complete = FALSE, exclude = 0)
-#'
-#'
-#' # If one uses level instead of int.level, one of the small
-#' # contours near the crater disapears
-#' ggplot(surface, aes(Var1, Var2, z = value)) +
-#'   stat_contour_fill(aes(fill = ..level..))
-#'
-#'
-#'
+#' @rdname geom_contour_fill
 #' @family ggplot2 helpers
 #' @export
 #' @import sp
 #' @import ggplot2
 stat_contour_fill <- function(mapping = NULL, data = NULL,
-                              geom = "polygon", position = "identity",
+                              geom = "ContourFill", position = "identity",
                               ...,
                               na.rm = FALSE,
                               exclude = NULL,
@@ -64,86 +29,79 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
 #' @import ggplot2
 #' @import scales
 StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
-                                    required_aes = c("x", "y", "z"),
-                                    default_aes = ggplot2::aes(fill = ..int.level..),
+    required_aes = c("x", "y", "z"),
+    default_aes = ggplot2::aes(fill = ..int.level..),
 
-                                    compute_group = function(data, scales, bins = NULL, binwidth = NULL,
-                                                             breaks = NULL, complete = TRUE,
-                                                             na.rm = FALSE, exclude = NULL) {
-                                        # If no parameters set, use pretty bins
-                                        if (is.null(bins) && is.null(binwidth) && is.null(breaks)) {
-                                            breaks <- pretty(range(data$z), 10)
-                                        }
-                                        # If provided, use bins to calculate binwidth
-                                        if (!is.null(bins)) {
-                                            binwidth <- diff(range(data$z)) / bins
-                                        }
-                                        # If necessary, compute breaks from binwidth
-                                        if (is.null(breaks)) {
-                                            breaks <- scales::fullseq(range(data$z), binwidth)
-                                        }
+    compute_group = function(data, scales, bins = NULL, binwidth = NULL,
+                             breaks = NULL, complete = TRUE, na.rm = FALSE,
+                             exclude = NULL) {
+        # If no parameters set, use pretty bins
+        if (is.null(bins) && is.null(binwidth) && is.null(breaks)) {
+            breaks <- pretty(range(data$z), 10)
+            } # If provided, use bins to calculate binwidth
+        if (!is.null(bins)) {
+            binwidth <- diff(range(data$z)) / bins
+            }
+        # If necessary, compute breaks from binwidth
+        if (is.null(breaks)) {
+            breaks <- scales::fullseq(range(data$z), binwidth)
+            }
+        breaks.keep <- breaks[!(breaks %in% exclude)]
 
-                                        breaks.keep <- breaks[!(breaks %in% exclude)]
+        dx <- abs(diff(subset(data, y == data$y[1])$x)[1])
+        dy <- abs(diff(subset(data, x == data$x[1])$y)[1])
 
-                                        dx <- abs(diff(subset(data, y == data$y[1])$x)[1])
-                                        dy <- abs(diff(subset(data, x == data$x[1])$y)[1])
+        #Extender para grilla rectangular.
+        range.data <- as.data.frame(sapply(data[c("x", "y", "z")], range))
 
-                                        #Extender para grilla rectangular.
-                                        range.data <- as.data.frame(sapply(data[c("x", "y", "z")], range))
+        extra <- rbind(expand.grid(y = c(range.data$y[2] + dy,
+                                         range.data$y[1] - dy),
+                                   x = unique(data$x)),
+                       expand.grid(y = c(unique(data$y), range.data$y[2] + dy,
+                                         range.data$y[1] - dy),
+                                   x = c(range.data$x[1] - dx, range.data$x[2] + dx)))
 
-                                        extra <- rbind(
-                                            expand.grid(y = c(range.data$y[2] + dy, range.data$y[1] - dy),
-                                                        x = unique(data$x)),
-                                            expand.grid(y = c(unique(data$y), range.data$y[2] + dy, range.data$y[1] - dy),
-                                                        x = c(range.data$x[1] - dx, range.data$x[2] + dx))
-                                        )
+        mean.z <- mean(data$z)
+        mean.level <- breaks[breaks %~% mean.z]
+        extra$z <- mean.z
 
-                                        mean.z <- mean(data$z)
-                                        mean.level <- breaks[breaks %~% mean.z]
-                                        extra$z <- mean.z
+        cur.group <- data$group[1]
 
-                                        cur.group <- data$group[1]
+        data2 <- rbind(data[c("x", "y", "z")], extra)
+        cont <- ggplot2:::contour_lines(data2, breaks.keep, complete = complete)
 
-                                        data2 <- rbind(data[c("x", "y", "z")], extra)
+        data.table::setDT(cont)
 
-                                        cont <- ggplot2:::contour_lines(data2, breaks.keep, complete = complete)
+        cont <- CorrectFill(cont, data2, breaks)
 
-                                        data.table::setDT(cont)
+        i <-  which(breaks.keep == mean.level)
+        correction <- (breaks.keep[i + sign(mean.z - mean.level)] - mean.level)/2
 
-                                        cont <- CorrectFill(cont, data2, breaks)
+        if (mean.level %in% breaks.keep & complete == TRUE) {
+            mean.cont  <- data.frame(
+                level = mean.level,
+                x = c(rep(range.data$x[1], 2), rep(range.data$x[2], 2)),
+                y = c(range.data$y[1], rep(range.data$y[2], 2), range.data$y[1]),
+                piece = max(cont$piece) + 1,
+                int.level = mean.level + correction)
+            mean.cont$group <- factor(paste(cur.group, sprintf("%03d", mean.cont$piece), sep = "-"))
+            cont <- rbind(cont, mean.cont)
+            }
 
+        areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][
+            , rank := frank(-area, ties.method = "random")]
+        areas <- areas[, head(.SD, 1), by = piece]
+        cont <- cont[areas, on = "piece"]
+        cont[, piece := rank]
+        cont[, group := factor(paste(cur.group, sprintf("%03d", piece), sep = "-"))]
 
-                                        i <-  which(breaks.keep == mean.level)
-                                        correction <- (breaks.keep[i + sign(mean.z - mean.level)] - mean.level)/2
+        cont$x[cont$x > range.data$x[2]] <- range.data$x[2]
+        cont$x[cont$x < range.data$x[1]] <- range.data$x[1]
+        cont$y[cont$y < range.data$y[1]] <- range.data$y[1]
+        cont$y[cont$y > range.data$y[2]] <- range.data$y[2]
 
-                                        if (mean.level %in% breaks.keep & complete == TRUE) {
-                                            mean.cont  <- data.frame(
-                                                level = mean.level,
-                                                x = c(rep(range.data$x[1], 2), rep(range.data$x[2], 2)),
-                                                y = c(range.data$y[1], rep(range.data$y[2], 2), range.data$y[1]),
-                                                piece = max(cont$piece) + 1,
-                                                int.level = mean.level + correction)
-
-                                            mean.cont$group <- factor(paste(cur.group, sprintf("%03d", mean.cont$piece), sep = "-"))
-                                            cont <- rbind(cont, mean.cont)
-                                        }
-
-                                        areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][
-                                            , rank := frank(-area, ties.method = "random")]
-                                        areas <- areas[, head(.SD, 1), by = piece]
-                                        cont <- cont[areas, on = "piece"]
-                                        cont[, piece := rank]
-                                        cont[, group := factor(paste(cur.group,
-                                                                     sprintf("%03d", piece), sep = "-"))]
-
-                                        cont$x[cont$x > range.data$x[2]] <- range.data$x[2]
-                                        cont$x[cont$x < range.data$x[1]] <- range.data$x[1]
-                                        cont$y[cont$y < range.data$y[1]] <- range.data$y[1]
-                                        cont$y[cont$y > range.data$y[2]] <- range.data$y[2]
-
-                                        cont
-                                    }
-
+        cont
+        }
 )
 
 

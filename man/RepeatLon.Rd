@@ -38,9 +38,10 @@ g \%+\% RepeatLon(aao[date == date[1]])
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{geom_arrow}}, \code{\link{reverselog_trans}},
+  \code{\link{geom_arrow}},
+  \code{\link{geom_contour_fill}},
+  \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
-  \code{\link{scale_longitude}},
-  \code{\link{stat_contour_fill}}
+  \code{\link{scale_longitude}}
 }
 \concept{ggplot2 helpers}

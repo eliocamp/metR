@@ -32,9 +32,35 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     required_aes = c("x", "y", "z"),
     default_aes = ggplot2::aes(fill = ..int.level..),
 
+    compute_layer = function(self, data, params, layout) {
+        ggplot2:::check_required_aesthetics(
+            self$required_aes,
+            c(names(data), names(params)),
+            ggplot2:::snake_class(self)
+            )
+
+        # Trim off extra parameters
+        params <- params[intersect(names(params), self$parameters())]
+
+        args <- c(list(data = quote(data), scales = quote(scales)), params)
+        plyr::ddply(data, "PANEL", function(data) {
+            scales <- layout$get_scales(data$PANEL[1])
+            tryCatch(do.call(self$compute_panel, args), error = function(e) {
+                warning("Computation failed in `", ggplot2:::snake_class(self), "()`:\n",
+                        e$message, call. = FALSE)
+                data.frame()
+            })
+        })
+    },
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = NULL, complete = TRUE, na.rm = FALSE,
                              exclude = NULL) {
+        data <- data[!(is.na(data$x) | is.na(data$y)), ]
+        if (na.rm) {
+            data <- data[!is.na(data$z), ]
+        } else {
+            data$z[is.na(data$z)] <- mean(data$z, na.rm = T)
+        }
         # If no parameters set, use pretty bins
         if (is.null(bins) && is.null(binwidth) && is.null(breaks)) {
             breaks <- pretty(range(data$z), 10)

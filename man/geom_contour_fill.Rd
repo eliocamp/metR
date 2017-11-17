@@ -102,12 +102,12 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{RepeatLon}}, \code{\link{geom_arrow}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
-  \code{\link{scale_longitude}}
+  \code{\link{scale_longitude}}, \code{\link{stat_na}}
 
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{RepeatLon}}, \code{\link{geom_arrow}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
-  \code{\link{scale_longitude}}
+  \code{\link{scale_longitude}}, \code{\link{stat_na}}
 }
 \concept{ggplot2 helpers}

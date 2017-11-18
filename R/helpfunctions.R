@@ -258,3 +258,8 @@ guess <- function (x)
     message("Using '", var, "' as value column. Use 'value.var' to override")
     return(var)
 }
+
+# from ggplot2
+`%||%` <- function(a, b) {
+    if (!is.null(a)) a else b
+}

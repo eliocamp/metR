@@ -91,9 +91,9 @@ g
 ```
 
 
-## geom_arrow
+## geom_vector
 
-Plotting arrows can be a pain, so `geom_arrow()` is a parametrization of `geom_segment()` by location and displacement in each direction. `min.mag` controls the minimum magnitude for an arrow to be drawn (useful for highlighting only areas of strong 'flow') and `skip = c(n, m)` draws only the nth arrow in the x direction and the mth arrown in the y direction (only meaningful for regular grids!).
+Plotting arrows can be a pain, so `geom_vector()` is a parametrization of `geom_segment()` by location and displacement in each direction. `min.mag` controls the minimum magnitude for an arrow to be drawn (useful for highlighting only areas of strong 'flow') and `skip = n` draws only the nth arrow in the x direction and the mth arrown in the y direction (only meaningful for regular grids!).
 
 ```{r,  fig.width = 7}
 nceptemperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat, 
@@ -103,7 +103,7 @@ nceptemperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat,
 
 ggplot(nceptemperature[lev == 500], aes(lon, lat)) +
     stat_contour_fill(aes(z = air.z)) +
-    geom_arrow(aes(dx = t.dx, dy = t.dy), skip = c(2, 1), scale = 5e5, min.mag = 2e-6,
+    geom_vector(aes(dx = t.dx, dy = t.dy), skip.x = 2, skip.y = 1, scale = 5e5, min.mag = 2e-6,
                arrow.size = 0.3) +
     scale_y_latitude(limits = c(-90, 0)) +
     scale_x_longitude()
@@ -111,7 +111,7 @@ ggplot(nceptemperature[lev == 500], aes(lon, lat)) +
 
 The parameters `scale`, `arrow.size` and `arrow.angle` modify the length of the segments, and the size and angle of the arrowheads. 
 
-There are (currently) many limitations of `geom_arrow()`:
+There are (currently) many limitations of `geom_vector()`:
 
 * When the x and y units of the plotting area are not in the same units as the displacement values (as in the example), there's a fair amount of manual tweaking needed to get things right. 
 
@@ -132,7 +132,7 @@ g <- ggplot(RepeatLon(nceptemperature[lev == 500]), aes(lon, lat)) +
     coord_map()
 
 g 
-g + geom_arrow(aes(dx = t.dx, dy = t.dy), skip = c(2, 2), scale = 5e5, min.mag = 2e-6,
+g + geom_vector(aes(dx = t.dx, dy = t.dy), skip = 2, scale = 5e5, min.mag = 2e-6,
                arrow.size = 0.3) 
 ```
 

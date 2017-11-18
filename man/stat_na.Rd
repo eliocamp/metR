@@ -7,14 +7,70 @@
 stat_na(mapping = NULL, data = NULL, geom = "tile",
   position = "identity", ..., show.legend = NA, inherit.aes = TRUE)
 }
-\description{
-Usefull for indicating or masking missing data. Ths stat just
+\arguments{
+\item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
+\code{\link[=aes_]{aes_()}}. If specified and \code{inherit.aes = TRUE} (the
+default), it is combined with the default mapping at the top level of the
+plot. You must supply \code{mapping} if there is no plot mapping.}
+
+\item{data}{The data to be displayed in this layer. There are three
+options:
+
+If \code{NULL}, the default, the data is inherited from the plot
+data as specified in the call to \code{\link[=ggplot]{ggplot()}}.
+
+A \code{data.frame}, or other object, will override the plot
+data. All objects will be fortified to produce a data frame. See
+\code{\link[=fortify]{fortify()}} for which variables will be created.
+
+A \code{function} will be called with a single argument,
+the plot data. The return value must be a \code{data.frame.}, and
+will be used as the layer data.}
+
+\item{geom}{The geometric object to use display the data}
+
+\item{position}{Position adjustment, either as a string, or the result of
+a call to a position adjustment function.}
+
+\item{...}{other arguments passed on to \code{\link[=layer]{layer()}}. These are
+often aesthetics, used to set an aesthetic to a fixed value, like
+\code{color = "red"} or \code{size = 3}. They may also be parameters
+to the paired geom/stat.}
+
+\item{show.legend}{logical. Should this layer be included in the legends?
+\code{NA}, the default, includes if any aesthetics are mapped.
+\code{FALSE} never includes, and \code{TRUE} always includes.
+It can also be a named logical vector to finely select the aesthetics to
+display.}
+
+\item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
+rather than combining with them. This is most useful for helper functions
+that define both data and aesthetics and shouldn't inherit behaviour from
+the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 }
+\description{
+Usefull for indicating or masking missing data. Ths stat subsets data where
+one variable is \code{NA}.
+}
+\section{Aesthetics}{
+
+\code{stat_na} understands the following aesthetics (required aesthetics are in bold)
+
+\itemize{
+\item \strong{x}
+\item \strong{y}
+\item \strong{na}
+\item \code{width}
+\item \code{height}
+}
+}
+
 \examples{
 library(ggplot2)
 surface <- reshape2::melt(volcano)
 surface <- within(surface, value[Var1 \%b\% c(20, 30) & Var2 \%b\% c(20, 30)] <- NA)
 surface[sample(1:nrow(surface), 100, replace = FALSE), 3] <- NA
+
 ggplot(surface, aes(Var1, Var2, z = value)) +
     geom_contour_fill() +
     stat_na(aes(na = value))
@@ -22,8 +78,8 @@ ggplot(surface, aes(Var1, Var2, z = value)) +
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{RepeatLon}}, \code{\link{geom_arrow}},
-  \code{\link{geom_contour_fill}},
+  \code{\link{RepeatLon}}, \code{\link{geom_contour_fill}},
+  \code{\link{geom_vector}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
   \code{\link{scale_longitude}}

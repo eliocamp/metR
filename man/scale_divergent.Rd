@@ -101,8 +101,8 @@ ggplot(surface, aes(Var1, Var2, z = value)) +
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{RepeatLon}}, \code{\link{geom_arrow}},
-  \code{\link{geom_contour_fill}},
+  \code{\link{RepeatLon}}, \code{\link{geom_contour_fill}},
+  \code{\link{geom_vector}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_longitude}}, \code{\link{stat_na}}
 }

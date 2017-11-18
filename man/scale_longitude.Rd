@@ -55,8 +55,8 @@ ggplot(aao[date == date[1]], aes(lon, lat, z = gh)) +
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{RepeatLon}}, \code{\link{geom_arrow}},
-  \code{\link{geom_contour_fill}},
+  \code{\link{RepeatLon}}, \code{\link{geom_contour_fill}},
+  \code{\link{geom_vector}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
   \code{\link{stat_na}}

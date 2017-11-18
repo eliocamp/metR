@@ -1,12 +1,26 @@
 #' Filter only NA values.
 #'
-#' Usefull for indicating or masking missing data. Ths stat just
+#' Usefull for indicating or masking missing data. Ths stat subsets data where
+#' one variable is `NA`.
+#' @inheritParams ggplot2::stat_identity
+#'
+#' @section Aesthetics:
+#' `stat_na` understands the following aesthetics (required aesthetics are in bold)
+#'
+#' \itemize{
+#' \item **x**
+#' \item **y**
+#' \item **na**
+#' \item `width`
+#' \item `height`
+#' }
 #'
 #' @examples
 #' library(ggplot2)
 #' surface <- reshape2::melt(volcano)
 #' surface <- within(surface, value[Var1 %b% c(20, 30) & Var2 %b% c(20, 30)] <- NA)
 #' surface[sample(1:nrow(surface), 100, replace = FALSE), 3] <- NA
+#'
 #' ggplot(surface, aes(Var1, Var2, z = value)) +
 #'     geom_contour_fill() +
 #'     stat_na(aes(na = value))
@@ -53,16 +67,13 @@ StatNa <- ggplot2::ggproto("StatNa", ggplot2::Stat,
                 data.frame()})
             })
         },
-    compute_group = function(data, scales) {
-        rx <- ggplot2::resolution(data$x, zero = FALSE)
-        ry <- ggplot2::resolution(data$y, zero = FALSE)
-        # print(rx)
+    compute_group = function(data, scales, width = NULL, height = NULL) {
+        data$width <- data$width %||% width %||% resolution(data$x, FALSE)
+        data$height <- data$height %||% height %||% resolution(data$y, FALSE)
 
         data <- data[!(is.na(data$x) | is.na(data$y)), ]
         data <- data[is.na(data$na), ]
-        data$width <- rx
-        data$height <- ry
+
         data
-        # dbug <<- data
     }
 )

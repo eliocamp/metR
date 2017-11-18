@@ -71,6 +71,22 @@ aesthetic \code{int.level}, which differs from \code{level} (computed by
 \link[ggplot2:gemom_contour]{ggplot2::gemom_contour}) in that represents
 the value of the \code{z} aesthetic \emph{inside} the contour instead of at the edge.
 }
+\section{Aesthetics}{
+
+\code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):
+
+\itemize{
+\item \code{\strong{x}}
+\item \code{\strong{y}}
+\item \code{alpha}
+\item \code{colour}
+\item \code{group}
+\item \code{linetype}
+\item \code{size}
+\item \code{weight}
+}
+}
+
 \section{Computed variables}{
 
 \describe{
@@ -99,13 +115,13 @@ ggplot(surface, aes(Var1, Var2, z = value)) +
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{RepeatLon}}, \code{\link{geom_arrow}},
+  \code{\link{RepeatLon}}, \code{\link{geom_vector}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
   \code{\link{scale_longitude}}, \code{\link{stat_na}}
 
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{RepeatLon}}, \code{\link{geom_arrow}},
+  \code{\link{RepeatLon}}, \code{\link{geom_vector}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
   \code{\link{scale_longitude}}, \code{\link{stat_na}}

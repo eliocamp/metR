@@ -11,10 +11,26 @@
 #' @param exclude a numeric vector of levels that should be excluded from the
 #' contour calculations
 #'
+#' @section Aesthetics:
+#' \code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):
+#'
+#' \itemize{
+#' \item \code{\strong{x}}
+#' \item \code{\strong{y}}
+#'  \item \code{alpha}
+#'  \item \code{colour}
+#'  \item \code{group}
+#'  \item \code{linetype}
+#'  \item \code{size}
+#'  \item \code{weight}
+#'}
+#'
+#'
 #' @section Computed variables:
 #' \describe{
 #'  \item{int.level}{value of the interior contour}
 #'  }
+#'
 #' @examples
 #' library(ggplot2)
 #' surface <- reshape2::melt(volcano)

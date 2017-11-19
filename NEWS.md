@@ -8,7 +8,9 @@
 - `EOF()` principal componets are numeric instead of "PC1", etc...
 - For consistency with `stat_contour()` created `geom_contour_fill()` which 
 works just like `stat_contour_fill()`. 
-- Adde `stat_na()` for easy masking of `NA` values. 
+- Added `stat_na()` for easy masking of `NA` values. 
+- `geom_arrow()` now is `geom_vector()` with better documentation and more 
+parameters. 
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

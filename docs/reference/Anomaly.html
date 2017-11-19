@@ -102,7 +102,7 @@
     <p>Saves keystrokes for computing anomalies.</p>
     
 
-    <pre class="usage"><span class='fu'>Anomaly</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>Anomaly</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -111,17 +111,16 @@
       <th>x</th>
       <td><p>numeric vector</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other arguments passed to <code>mean</code> such as <code>na.rm</code></p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A numeric vector of the same length as x with each value's distance to the
 mean.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Really just a very small wrapper around <code>scale</code> that returns a
-numeric vector and defaults to scale = FALSE.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -152,8 +151,6 @@ numeric vector and defaults to scale = FALSE.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

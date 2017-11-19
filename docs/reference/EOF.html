@@ -103,7 +103,7 @@
 Analysis or Empirical Orthogonal Functions).</p>
     
 
-    <pre class="usage"><span class='fu'>EOF</span>(<span class='no'>data</span>, <span class='no'>formula</span>, <span class='no'>value.var</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>EOF</span>(<span class='no'>data</span>, <span class='no'>formula</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='fu'>guess</span>(<span class='no'>data</span>), <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -123,7 +123,7 @@ the matrix that will be used in the SVD decomposition (see details)</p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>which singular values to return (if <code>NULL</code>, defaults to all)</p></td>
+      <td><p>which singular values to return (if <code>NULL</code>, returns all)</p></td>
     </tr>
     </table>
     
@@ -185,8 +185,8 @@ to set n to <code>NULL</code>. If the irba package is installed, EOF uses
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao.svd</span>$<span class='no'>right</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>date</span>, <span class='no'>value</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>()</div><div class='img'><img src='EOF-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># % of explained variance</span>
-<span class='no'>aao.svd</span>$<span class='no'>sdev</span></div><div class='output co'>#&gt;     PC       sd r.squared
-#&gt; 1: PC1 9295.148 0.2775804</div><div class='input'>
+<span class='no'>aao.svd</span>$<span class='no'>sdev</span></div><div class='output co'>#&gt;    PC       sd r.squared
+#&gt; 1:  1 9295.148 0.2775804</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

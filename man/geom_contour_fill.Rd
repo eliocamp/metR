@@ -68,7 +68,7 @@ While ggplot2's \code{\link[ggplot2]{geom_contour}} can plot nice contours, it
 doesn't work with the polygon geom. This stat makes some small manipulation
 of the data to ensure that all contours are closed and also computes a new
 aesthetic \code{int.level}, which differs from \code{level} (computed by
-\link[ggplot2:gemom_contour]{ggplot2::gemom_contour}) in that represents
+\link[ggplot2:geom_contour]{ggplot2::geom_contour}) in that represents
 the value of the \code{z} aesthetic \emph{inside} the contour instead of at the edge.
 }
 \section{Aesthetics}{
@@ -76,8 +76,8 @@ the value of the \code{z} aesthetic \emph{inside} the contour instead of at the 
 \code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):
 
 \itemize{
-\item \code{\strong{x}}
-\item \code{\strong{y}}
+\item \strong{x}
+\item \strong{y}
 \item \code{alpha}
 \item \code{colour}
 \item \code{group}

@@ -4,7 +4,7 @@
 #' doesn't work with the polygon geom. This stat makes some small manipulation
 #' of the data to ensure that all contours are closed and also computes a new
 #' aesthetic \code{int.level}, which differs from \code{level} (computed by
-#' [ggplot2::gemom_contour]) in that represents
+#' [ggplot2::geom_contour]) in that represents
 #' the value of the \code{z} aesthetic *inside* the contour instead of at the edge.
 #'
 #' @inheritParams ggplot2::geom_contour
@@ -15,8 +15,8 @@
 #' \code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):
 #'
 #' \itemize{
-#' \item \code{\strong{x}}
-#' \item \code{\strong{y}}
+#' \item \strong{x}
+#' \item \strong{y}
 #'  \item \code{alpha}
 #'  \item \code{colour}
 #'  \item \code{group}

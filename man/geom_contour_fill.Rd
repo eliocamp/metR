@@ -6,12 +6,13 @@
 \title{Filled 2d contours of a 3d surface}
 \usage{
 geom_contour_fill(mapping = NULL, data = NULL, stat = "ContourFill",
-  position = "identity", ..., na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+  position = "identity", ..., breaks = NULL, bins = NULL,
+  binwidth = NULL, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
 
 stat_contour_fill(mapping = NULL, data = NULL, geom = "ContourFill",
-  position = "identity", ..., na.rm = FALSE, exclude = NULL,
-  show.legend = NA, inherit.aes = TRUE)
+  position = "identity", ..., breaks = NULL, bins = NULL,
+  binwidth = NULL, na.rm = FALSE, exclude = NULL, show.legend = NA,
+  inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -43,6 +44,12 @@ a call to a position adjustment function.}
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{color = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
+
+\item{breaks}{numeric vector of breaks}
+
+\item{bins}{Number of evenly spaced breaks.}
+
+\item{binwidth}{Distance between breaks.}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}

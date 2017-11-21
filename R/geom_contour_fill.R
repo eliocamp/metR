@@ -8,6 +8,9 @@
 #' the value of the \code{z} aesthetic *inside* the contour instead of at the edge.
 #'
 #' @inheritParams ggplot2::geom_contour
+#' @param breaks numeric vector of breaks
+#' @param bins Number of evenly spaced breaks.
+#' @param binwidth Distance between breaks.
 #' @param exclude a numeric vector of levels that should be excluded from the
 #' contour calculations
 #'
@@ -56,6 +59,9 @@
 geom_contour_fill <- function(mapping = NULL, data = NULL,
                          stat = "ContourFill", position = "identity",
                          ...,
+                         breaks = NULL,
+                         bins = NULL,
+                         binwidth = NULL,
                          na.rm = FALSE,
                          show.legend = NA,
                          inherit.aes = TRUE) {
@@ -68,6 +74,9 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
         show.legend = show.legend,
         inherit.aes = inherit.aes,
         params = list(
+            breaks = breaks,
+            bins = bins,
+            binwidth = binwidth,
             na.rm = na.rm,
             ...
         )

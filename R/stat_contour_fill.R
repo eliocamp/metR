@@ -6,6 +6,9 @@
 stat_contour_fill <- function(mapping = NULL, data = NULL,
                               geom = "ContourFill", position = "identity",
                               ...,
+                              breaks = NULL,
+                              bins = NULL,
+                              binwidth = NULL,
                               na.rm = FALSE,
                               exclude = NULL,
                               show.legend = NA,
@@ -21,6 +24,9 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
         params = list(
             na.rm = na.rm,
             exclude = exclude,
+            breaks = breaks,
+            bins = bins,
+            binwidth = binwidth,
             ...
         )
     )

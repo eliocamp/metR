@@ -11,6 +11,7 @@ works just like `stat_contour_fill()`.
 - Added `stat_na()` for easy masking of `NA` values. 
 - `geom_arrow()` now is `geom_vector()` with better documentation and more 
 parameters. 
+- `ReadNetCDF()` now handles more date formats.
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

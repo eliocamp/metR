@@ -64,10 +64,13 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
     names(dims) <- ids
 
     if ("time" %in% names(dimensions)) {
+        requireNamespace("lubridate", quietly = TRUE)
         date.unit <- ncfile$dim$time$units
         date.unit <- strsplit(date.unit, " since ", fixed = TRUE)[[1]]
         date.fun <- get(paste0(date.unit[1]))
-        dimensions[["time"]] <- as.character(lubridate::ymd_hms(date.unit[2]) +
+        orders <- c("ymd HMS", "ymd HM")
+        dimensions[["time"]] <- as.character(lubridate::parse_date_time(date.unit[2],
+                                                                        orders) +
                                                  date.fun(dimensions[["time"]]))
     }
 

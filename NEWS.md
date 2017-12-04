@@ -12,6 +12,7 @@ works just like `stat_contour_fill()`.
 - `geom_arrow()` now is `geom_vector()` with better documentation and more 
 parameters. 
 - `ReadNetCDF()` now handles more date formats.
+- `geom_arrow()` is a new geom for arrows that preserve direction. 
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

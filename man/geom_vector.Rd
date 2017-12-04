@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_vector.R
 \name{geom_vector}
 \alias{geom_vector}
-\title{Arrows}
+\title{Vectors}
 \usage{
 geom_vector(mapping = NULL, data = NULL, stat = StatVector,
   position = "identity", ..., scale = 1, scale.x = scale,
@@ -98,9 +98,11 @@ g + coord_polar()
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{RepeatLon}}, \code{\link{geom_contour_fill}},
+  \code{\link{RepeatLon}}, \code{\link{geom_arrow}},
+  \code{\link{geom_contour_fill}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}}
+  \code{\link{scale_longitude}}, \code{\link{stat_filter}},
+  \code{\link{stat_na}}
 }
 \concept{ggplot2 helpers}

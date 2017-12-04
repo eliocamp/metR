@@ -1,4 +1,4 @@
-#' Arrows
+#' Vectors
 #'
 #' Parametrization of [ggplot2::geom_segment] by location and displacement that
 #' also defaults to drawing arrows at the end of the segment. Useful for plotting

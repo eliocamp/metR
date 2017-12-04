@@ -2,6 +2,7 @@
 #'
 #' Usefull for indicating or masking missing data. Ths stat subsets data where
 #' one variable is `NA`.
+#'
 #' @inheritParams ggplot2::stat_identity
 #'
 #' @section Aesthetics:
@@ -25,6 +26,7 @@
 #'     geom_contour_fill() +
 #'     stat_na(aes(na = value))
 #'
+#' @seealso [stat_filter] for a more general way of filtering data.
 #' @export
 #' @family ggplot2 helpers
 stat_na <- function(mapping = NULL, data = NULL,

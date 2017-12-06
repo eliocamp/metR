@@ -95,6 +95,18 @@ library(ggplot2)
 # Note that the segments respond to coordinate
 g + coord_polar()
 
+# Sverdrup transport
+library(data.table)
+b <- 10
+d <- 10
+grid <- as.data.table(expand.grid(x = seq(1, d, by = 0.5),
+                                  y = seq(1, b, by = 0.5)))
+grid[, My := -sin(pi*y/b)*pi/b]
+grid[, Mx := -pi^2/b^2*cos(pi*y/b)*(d - x)]
+
+ggplot(grid, aes(x, y)) +
+    geom_vector(aes(dx = Mx, dy = My))
+
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},

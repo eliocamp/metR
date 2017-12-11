@@ -1,21 +1,21 @@
 library(metR)
 
 context("")
-test_that("AssignSeason assigns season", {
-    expect_equal(as.character(AssignSeason(1)), "Verano")
-    expect_equal(as.character(AssignSeason(1, hemisphere = "n")),
+test_that("season assigns season", {
+    expect_equal(as.character(season(1)), "Verano")
+    expect_equal(as.character(season(1, hemisphere = "n")),
                  "Invierno")
-    expect_equal(as.character(AssignSeason(1, lang = "en")),
+    expect_equal(as.character(season(1, lang = "en")),
                  "Summer")
-    expect_equal(as.character(AssignSeason(c(1, 3))),
+    expect_equal(as.character(season(c(1, 3))),
                  c("Verano", "Oto\u00f1o"))
-    expect_equal(levels(AssignSeason(1)),
+    expect_equal(levels(season(1)),
                  c("Verano", "Oto\u00f1o", "Invierno", "Primavera"))
 })
 
 
 
-
+context("Derivate")
 test_that("Derivative works", {
     expect_equal({
         x <- 1:10
@@ -26,6 +26,29 @@ test_that("Derivative works", {
         data <- data.frame(x = 1:10, y = 1:10)
         Derivate(x ~ y, cyclical = FALSE)[2]
     }, 1)
+})
+test_that("Divergence returns divergence", {
+    expect_equal({
+        grid <- expand.grid(x = 1:10, y = 1:10)
+        grid$v <- rnorm(100)
+        grid$u <- rnorm(100)
+        Divergence(u + v ~ x + y, data = grid)
+    },
+    {
+        d <- Derivate(u + v ~ x + y, data = grid)
+        d$u.dx + d$v.dy})
+})
+
+test_that("Laplacian returns laplacian", {
+    expect_equal({
+        grid <- expand.grid(x = 1:10, y = 1:10)
+        grid$v <- rnorm(100)
+        grid$u <- rnorm(100)
+        Laplacian(u + v ~ x + y, data = grid)$u.lap
+    },
+    {
+        d <- Derivate(u + v ~ x + y, data = grid, order = 2)
+        d$u.ddx + d$u.ddy})
 })
 
 context("MaskLand")

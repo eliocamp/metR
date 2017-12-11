@@ -10,20 +10,25 @@
 #'
 #'
 #' @return
-#' If there is one independent variable, a numeric vector of the same length as
-#' the dependent variable.
-#' If there is two or more independent variables, a list containing the
-#' directional derivatives of the dependent variables.
+#' If there is one independent variable and one dependent variable, a numeric
+#' vector of the same length as the dependent variable.
+#' If there are two or more independent variables or two or more dependent variables,
+#' a list containing the directional derivatives of each dependent variables.
 #'
 #' @details
 #' Each element of the return vector is an estimation of \eqn{dx/dy} (or
 #' \eqn{d^2x/dy^2} if \code{order} = 2) by centerd finite differences. The first and
 #' last elements will be \code{NAs} unless cyclical boundary conditions are set
-#' in \code{bc}.
+#' with `cyclical = TRUE`.
 #'
-#' If \code{sphere} is \code{TRUE}, then the first two independent variables are
-#' assumed to be longitude and latitude (in that order) in degrees. Then, a
-#' correction is applied to the derivative so that they are in units of distance.
+#' If `sphere = TRUE`, then the first two independent variables are
+#' assumed to be longitude and latitude (**in that order**) in degrees. Then, a
+#' correction is applied to the derivative so that they are in the same units as
+#' `a`.
+#'
+#' `Laplacian()` and `Divergence()` are convenient wrappers that call `Derivate()`
+#' and make the appropiate sums. For `Divergence()`, `formula` must be of the form
+#' `vx + vy ~ x + y` (**in that order**).
 #'
 #' @examples
 #' theta <- seq(0, 360, length.out = 20)*pi/180
@@ -50,20 +55,33 @@
 #'
 #' @family meteorology functions
 #' @seealso \code{\link{DerivatePhysical}}
-#' @import data.table
+#' @import data.table Formula formula.tools
 #' @export
 Derivate <- function(formula, data = NULL, order = c(1, 2), cyclical = FALSE,
                      sphere = FALSE, a = 6371000) {
-    # Build data.frame
-    f <- as.character(formula)
-    ind.var <- eval(model.frame(formula = paste0("~", f[[3]]), data = data),
-                  parent.frame())
-    dep.var <- eval(model.frame(formula = paste0("~", f[[2]]), data = data),
-                     parent.frame())
-    data <- as.data.table(cbind(dep.var, ind.var))
+    #
+    # mf <- match.call(expand.dots = F)
+    # mf[[1]] <- quote(model.frame)
+    # m <- match(c("formula", "data"), names(mf))
+    # mf <- mf[c(1L, m)]
+    # mfdep <- mf
+    # mm <<- mfdep
+    # mfdep[[2]] <- eval(m[[2]], parent.frame())
+    # m <<- mfdep
+    # mfdep[[2]][[2]] <- NULL
+    # ind.var <- eval(mfdep, parent.frame())
+    # iv <<- ind.var
+    #
+    # mf[[2]][[3]] <- NULL
+    # dep.var <- eval(mf, parent.frame())
+    dep.names <- formula.tools::lhs.vars(formula)
+    ind.names <- formula.tools::rhs.vars(formula)
+    formula <- Formula::as.Formula(formula)
+    data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
 
-    dep.names <- colnames(data)[seq(ncol(dep.var))]
-    ind.names <- colnames(data)[-seq(ncol(dep.var))]
+    # data <- as.data.table(cbind(dep.var, ind.var))
+    # d1 <<- copy(data)
+
 
     # Order data.
     data[, id := 1:.N]    # for order.
@@ -133,10 +151,8 @@ Derivate <- function(formula, data = NULL, order = c(1, 2), cyclical = FALSE,
 #' @export
 Laplacian <- function(formula, data = NULL, cyclical = FALSE,
                       sphere = FALSE, a = 6371000) {
-    f <- as.character(formula)
-    dep.names <- strsplit(f[[2]], "+", fixed = TRUE)[[1]]
-    dep.names <- sub(" ", "", dep.names)
-    ind.names <- strsplit(f[[3]], "+", fixed = TRUE)[[1]]
+    dep.names <- formula.tools::lhs.vars(formula)
+    ind.names <- formula.tools::rhs.vars(formula)
     ndep <- length(dep.names)
     nind <- length(ind.names)
     lap.name <- paste0(dep.names, ".lap")
@@ -151,6 +167,22 @@ Laplacian <- function(formula, data = NULL, cyclical = FALSE,
     lap
 }
 
+#' @export
+#' @rdname Derivate
+Divergence <- function(formula, data = NULL, cyclical = FALSE,
+                       sphere = FALSE, a = 6371000) {
+    dep.names <- formula.tools::lhs.vars(formula)
+    ind.names <- formula.tools::rhs.vars(formula)
+    ndep <- length(dep.names)
+    nind <- length(ind.names)
+    div.name <- paste0(dep.names, "div")
+
+    der <- Derivate(formula = formula, data = data, cyclical = cyclical,
+                    sphere = sphere, a = a, order = 1)
+
+    div <- Reduce("+", der[c(1, 4)])
+    div
+}
 
 #' Zonal or meridional derivative
 #'
@@ -196,4 +228,10 @@ DerivatePhysical <- function(variable, lon, lat, order = c(1, 2),
                        cyclical = cyclical)/(a*cos(lat*pi/180))^order[1]
     }
     return(dv)
+}
+
+
+substitute_q <- function(x, env) {
+    call <- substitute(substitute(y, env), list(y = x))
+    eval(call)
 }

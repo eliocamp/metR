@@ -97,7 +97,7 @@ Plotting arrows can be a pain, so `geom_vector()` is a parametrization of `geom_
 
 ```{r,  fig.width = 7}
 nceptemperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat, 
-                                               bc = c("cyclic", "none"), 
+                                               cyclical = c(TRUE, FALSE), 
                                                sphere = T), 
                 by = lev]
 

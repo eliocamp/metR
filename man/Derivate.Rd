@@ -3,12 +3,16 @@
 \name{Derivate}
 \alias{Derivate}
 \alias{Laplacian}
+\alias{Divergence}
 \title{Derivate a discrete variable using finite differences}
 \usage{
 Derivate(formula, data = NULL, order = c(1, 2), cyclical = FALSE,
   sphere = FALSE, a = 6371000)
 
 Laplacian(formula, data = NULL, cyclical = FALSE, sphere = FALSE,
+  a = 6371000)
+
+Divergence(formula, data = NULL, cyclical = FALSE, sphere = FALSE,
   a = 6371000)
 }
 \arguments{
@@ -26,10 +30,10 @@ Laplacian(formula, data = NULL, cyclical = FALSE, sphere = FALSE,
 \item{a}{radius for use in spherical coordinates (defaults to Earth's raduis)}
 }
 \value{
-If there is one independent variable, a numeric vector of the same length as
-the dependent variable.
-If there is two or more independent variables, a list containing the
-directional derivatives of the dependent variables.
+If there is one independent variable and one dependent variable, a numeric
+vector of the same length as the dependent variable.
+If there are two or more independent variables or two or more dependent variables,
+a list containing the directional derivatives of each dependent variables.
 }
 \description{
 Derivate a discrete variable using finite differences
@@ -38,11 +42,16 @@ Derivate a discrete variable using finite differences
 Each element of the return vector is an estimation of \eqn{dx/dy} (or
 \eqn{d^2x/dy^2} if \code{order} = 2) by centerd finite differences. The first and
 last elements will be \code{NAs} unless cyclical boundary conditions are set
-in \code{bc}.
+with \code{cyclical = TRUE}.
 
-If \code{sphere} is \code{TRUE}, then the first two independent variables are
-assumed to be longitude and latitude (in that order) in degrees. Then, a
-correction is applied to the derivative so that they are in units of distance.
+If \code{sphere = TRUE}, then the first two independent variables are
+assumed to be longitude and latitude (\strong{in that order}) in degrees. Then, a
+correction is applied to the derivative so that they are in the same units as
+\code{a}.
+
+\code{Laplacian()} and \code{Divergence()} are convenient wrappers that call \code{Derivate()}
+and make the appropiate sums. For \code{Divergence()}, \code{formula} must be of the form
+\code{vx + vy ~ x + y} (\strong{in that order}).
 }
 \examples{
 theta <- seq(0, 360, length.out = 20)*pi/180

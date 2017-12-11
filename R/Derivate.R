@@ -53,35 +53,22 @@
 #'     geom_contour(aes(z = z)) +
 #'     geom_contour(aes(z = z.ddlon + z.ddlat), color = "red")
 #'
+#' The same as
+#' ggplot(variable, aes(lon, lat)) +
+#'     geom_contour(aes(z = z)) +
+#'     geom_contour(aes(z = Laplacian(z ~ lon + lat, cyclical = c(TRUE, FALSE))),
+#'                  color = "red")
+#'
 #' @family meteorology functions
 #' @seealso \code{\link{DerivatePhysical}}
 #' @import data.table Formula formula.tools
 #' @export
 Derivate <- function(formula, data = NULL, order = c(1, 2), cyclical = FALSE,
                      sphere = FALSE, a = 6371000) {
-    #
-    # mf <- match.call(expand.dots = F)
-    # mf[[1]] <- quote(model.frame)
-    # m <- match(c("formula", "data"), names(mf))
-    # mf <- mf[c(1L, m)]
-    # mfdep <- mf
-    # mm <<- mfdep
-    # mfdep[[2]] <- eval(m[[2]], parent.frame())
-    # m <<- mfdep
-    # mfdep[[2]][[2]] <- NULL
-    # ind.var <- eval(mfdep, parent.frame())
-    # iv <<- ind.var
-    #
-    # mf[[2]][[3]] <- NULL
-    # dep.var <- eval(mf, parent.frame())
     dep.names <- formula.tools::lhs.vars(formula)
     ind.names <- formula.tools::rhs.vars(formula)
     formula <- Formula::as.Formula(formula)
     data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
-
-    # data <- as.data.table(cbind(dep.var, ind.var))
-    # d1 <<- copy(data)
-
 
     # Order data.
     data[, id := 1:.N]    # for order.
@@ -164,7 +151,11 @@ Laplacian <- function(formula, data = NULL, cyclical = FALSE,
         Reduce("+", der[seq(x, length(der), by = ndep)])
     })
     names(lap) <- lap.name
-    lap
+    if(length(lap) == 1) {
+        return(lap[[1]])
+    } else {
+        return(lap)
+    }
 }
 
 #' @export

@@ -53,7 +53,7 @@
 #'     geom_contour(aes(z = z)) +
 #'     geom_contour(aes(z = z.ddlon + z.ddlat), color = "red")
 #'
-#' The same as
+#' # The same as
 #' ggplot(variable, aes(lon, lat)) +
 #'     geom_contour(aes(z = z)) +
 #'     geom_contour(aes(z = Laplacian(z ~ lon + lat, cyclical = c(TRUE, FALSE))),

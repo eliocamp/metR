@@ -148,7 +148,7 @@ map (the default), this means that the point is over land.</p>
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>tempdif</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='scale_longitude.html'>scale_y_level</a></span>() +
     <span class='fu'><a href='scale_longitude.html'>scale_x_latitude</a></span>() +
-    <span class='fu'><a href='scale_divergent.html'>scale_color_divergent</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 136 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='MaskLand-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='fu'><a href='scale_divergent.html'>scale_color_divergent</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 136 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='MaskLand-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Mean temperature in the USA</span>
 <span class='no'>usatemp</span> <span class='kw'>&lt;-</span> <span class='no'>nceptemperature</span>[, <span class='no'>usa</span> <span class='kw'>:=</span> <span class='fu'>MaskLand</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>mask</span> <span class='kw'>=</span> <span class='st'>"usa"</span>)][
     , <span class='fu'>.</span>(<span class='kw'>air</span> <span class='kw'>=</span> <span class='fu'>weighted.mean</span>(<span class='no'>air</span>, <span class='fu'>cos</span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>))), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>usa</span>, <span class='no'>lev</span>)][
@@ -157,7 +157,7 @@ map (the default), this means that the point is over land.</p>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>usatemp</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lev</span>, <span class='no'>air</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>() +
     <span class='fu'><a href='scale_longitude.html'>scale_x_level</a></span>() +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip'>coord_flip</a></span>()</div><div class='img'><img src='MaskLand-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_flip'>coord_flip</a></span>()</div><div class='img'><img src='MaskLand-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

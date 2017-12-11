@@ -47,7 +47,7 @@
 #' variable <- cbind(
 #'      variable,
 #'      as.data.frame(Derivate(z ~ lon + lat, data = variable,
-#'                             cyclical = c(TRUE, FALSE), order = 2)))
+#'                           cyclical = c(TRUE, FALSE), order = 2)))
 #' library(ggplot2)
 #' ggplot(variable, aes(lon, lat)) +
 #'     geom_contour(aes(z = z)) +
@@ -60,7 +60,6 @@
 #'                  color = "red")
 #'
 #' @family meteorology functions
-#' @seealso \code{\link{DerivatePhysical}}
 #' @import data.table Formula formula.tools
 #' @export
 Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE,
@@ -175,56 +174,4 @@ Divergence <- function(formula, data = NULL, cyclical = FALSE,
 
     div <- Reduce("+", der[c(1, 4)])
     div
-}
-
-#' Zonal or meridional derivative
-#'
-#' Derivates a variable in the zonal or meridional direction taking into account
-#' the size of the Earth.
-#'
-#' @inheritParams Derivate
-#' @param variable numeric vector of discrete values
-#' @param lon numeric vector of longitude (in degrees)
-#' @param lat numeric vector of latitude (in degrees)
-#'
-#' @details
-#' This function is useful when using gridded data in a longitude-latitude
-#' regular grid and one needs to compute zonal or meridional derivatives. If
-#' \code{lon} is of length 1, it computes the meridional derivative (\eqn{d/dy})
-#' at the given longitude. If \code{lat} is of length 1, then it computes
-#' the zonal derivative (\eqn{d/dx}) at the given latitude.
-#'
-#' @return
-#' A numeric vector of the same length as \code{variable}.
-#'
-#' @examples
-#' library(data.table)
-#' temp.derv <- nceptemperature[lev == 500,
-#'                               .(lat = lat, air.dy = DerivatePhysical(air,
-#'                                                       lon = lon, lat, cyclical = FALSE)),
-#'                 by = .(lev, lon)]
-#' library(ggplot2)
-#' ggplot(temp.derv, aes(lon, lat)) +
-#'     geom_contour(aes(z = air.dy, color = ..level..)) +
-#'     scale_color_divergent()
-#'
-#' @seealso \code{\link{Derivate}}
-#' @family meteorology functions
-#' @export
-DerivatePhysical <- function(variable, lon, lat, order = c(1, 2),
-                             cyclical = FALSE, a = 6731000) {
-    if (length(lon) == 1) {
-        dv <- .derv(variable, lat*pi/180, order = order[1],
-                    cyclical = cyclical)/a^order[1]
-    } else {
-        dv <- Derivate(variable, lon*pi/180, order = order[1],
-                       cyclical = cyclical)/(a*cos(lat*pi/180))^order[1]
-    }
-    return(dv)
-}
-
-
-substitute_q <- function(x, env) {
-    call <- substitute(substitute(y, env), list(y = x))
-    eval(call)
 }

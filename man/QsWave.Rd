@@ -42,8 +42,7 @@ represents the location (in radians) of the first maximum of each wave number.  
 the above mentioned sum but for only the selected wave numbers.
 }
 \seealso{
-Other meteorology functions: \code{\link{DerivatePhysical}},
-  \code{\link{Derivate}}, \code{\link{EOF}},
-  \code{\link{WaveFlux}}
+Other meteorology functions: \code{\link{Derivate}},
+  \code{\link{EOF}}, \code{\link{WaveFlux}}
 }
 \concept{meteorology functions}

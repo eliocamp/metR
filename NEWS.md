@@ -13,7 +13,9 @@ works just like `stat_contour_fill()`.
 parameters. 
 - `ReadNetCDF()` now handles more date formats.
 - `geom_arrow()` is a new geom for arrows that preserve direction. 
--  New functions `Laplacian()` and `Divercence()`. 
+- New functions `Laplacian()` and `Divercence()`. 
+- `DerivatePhysical()` is removed since it was made redundant by the extended
+functionality in `Derivate()`
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

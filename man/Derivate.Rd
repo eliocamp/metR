@@ -6,7 +6,7 @@
 \alias{Divergence}
 \title{Derivate a discrete variable using finite differences}
 \usage{
-Derivate(formula, data = NULL, order = c(1, 2), cyclical = FALSE,
+Derivate(formula, data = NULL, order = 1, cyclical = FALSE,
   sphere = FALSE, a = 6371000)
 
 Laplacian(formula, data = NULL, cyclical = FALSE, sphere = FALSE,
@@ -39,10 +39,9 @@ a list containing the directional derivatives of each dependent variables.
 Derivate a discrete variable using finite differences
 }
 \details{
-Each element of the return vector is an estimation of \eqn{dx/dy} (or
-\eqn{d^2x/dy^2} if \code{order} = 2) by centerd finite differences. The first and
-last elements will be \code{NAs} unless cyclical boundary conditions are set
-with \code{cyclical = TRUE}.
+Each element of the return vector is an estimation of
+\eqn{\frac{\partial^n x}{\partial y^{n}}}{d^nx/dy^n} by
+centerd finite differences.
 
 If \code{sphere = TRUE}, then the first two independent variables are
 assumed to be longitude and latitude (\strong{in that order}) in degrees. Then, a
@@ -68,9 +67,10 @@ points(theta, dx_finitediff, col = "red")
 variable <- expand.grid(lon = seq(0, 360, by = 3)[-1],
                         lat = seq(-90, 90, by = 3))
 variable$z <- with(variable, cos(lat*pi/180*3) + sin(lon*pi/180*2))
-variable <- cbind(variable,
-                  as.data.frame(Derivate(z ~ lon + lat, data = variable,
-                                        cyclical = c(TRUE, FALSE), order = 2)))
+variable <- cbind(
+     variable,
+     as.data.frame(Derivate(z ~ lon + lat, data = variable,
+                          cyclical = c(TRUE, FALSE), order = 2)))
 library(ggplot2)
 ggplot(variable, aes(lon, lat)) +
     geom_contour(aes(z = z)) +
@@ -84,10 +84,7 @@ ggplot(variable, aes(lon, lat)) +
 
 }
 \seealso{
-\code{\link{DerivatePhysical}}
-
-Other meteorology functions: \code{\link{DerivatePhysical}},
-  \code{\link{EOF}}, \code{\link{FitQsWave}},
-  \code{\link{WaveFlux}}
+Other meteorology functions: \code{\link{EOF}},
+  \code{\link{FitQsWave}}, \code{\link{WaveFlux}}
 }
 \concept{meteorology functions}

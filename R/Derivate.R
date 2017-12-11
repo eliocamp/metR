@@ -16,10 +16,9 @@
 #' a list containing the directional derivatives of each dependent variables.
 #'
 #' @details
-#' Each element of the return vector is an estimation of \eqn{dx/dy} (or
-#' \eqn{d^2x/dy^2} if \code{order} = 2) by centerd finite differences. The first and
-#' last elements will be \code{NAs} unless cyclical boundary conditions are set
-#' with `cyclical = TRUE`.
+#' Each element of the return vector is an estimation of
+#' \eqn{\frac{\partial^n x}{\partial y^{n}}}{d^nx/dy^n} by
+#' centerd finite differences.
 #'
 #' If `sphere = TRUE`, then the first two independent variables are
 #' assumed to be longitude and latitude (**in that order**) in degrees. Then, a
@@ -45,9 +44,10 @@
 #' variable <- expand.grid(lon = seq(0, 360, by = 3)[-1],
 #'                         lat = seq(-90, 90, by = 3))
 #' variable$z <- with(variable, cos(lat*pi/180*3) + sin(lon*pi/180*2))
-#' variable <- cbind(variable,
-#'                   as.data.frame(Derivate(z ~ lon + lat, data = variable,
-#'                                         cyclical = c(TRUE, FALSE), order = 2)))
+#' variable <- cbind(
+#'      variable,
+#'      as.data.frame(Derivate(z ~ lon + lat, data = variable,
+#'                             cyclical = c(TRUE, FALSE), order = 2)))
 #' library(ggplot2)
 #' ggplot(variable, aes(lon, lat)) +
 #'     geom_contour(aes(z = z)) +
@@ -63,7 +63,7 @@
 #' @seealso \code{\link{DerivatePhysical}}
 #' @import data.table Formula formula.tools
 #' @export
-Derivate <- function(formula, data = NULL, order = c(1, 2), cyclical = FALSE,
+Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE,
                      sphere = FALSE, a = 6371000) {
     dep.names <- formula.tools::lhs.vars(formula)
     ind.names <- formula.tools::rhs.vars(formula)
@@ -116,23 +116,25 @@ Derivate <- function(formula, data = NULL, order = c(1, 2), cyclical = FALSE,
 }
 
 
-.derv <- function(x, y, order = c(1, 2), cyclical = FALSE) {
+.derv <- function(x, y, order = 1, cyclical = FALSE) {
     N <- length(x)
-
     d <- y[2] - y[1]
-
-    if (order[1] == 1) {
+    if (order == 1) {
         dxdy <- (x[c(2:N, 1)] - x[c(N, 1:(N-1))])/(2*d)
-
-    } else if (order[1] == 2) {
+    } else if (order == 2) {
         dxdy <- (x[c(2:N, 1)] + x[c(N, 1:(N-1))] - 2*x)/d^2
+    } else {
+        dxdy <- .derv(.derv(x, y, order = 2, cyclical = cyclical),
+                      y, order = order - 2, cyclical = cyclical)
     }
+
     if (!cyclical) {
         dxdy[c(1, N)] <- NA
     }
 
     return(dxdy)
 }
+
 
 #' @rdname Derivate
 #' @export

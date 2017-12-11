@@ -4,6 +4,7 @@
 \alias{Derivate}
 \alias{Laplacian}
 \alias{Divergence}
+\alias{Vorticity}
 \title{Derivate a discrete variable using finite differences}
 \usage{
 Derivate(formula, data = NULL, order = 1, cyclical = FALSE,
@@ -13,6 +14,9 @@ Laplacian(formula, data = NULL, cyclical = FALSE, sphere = FALSE,
   a = 6371000)
 
 Divergence(formula, data = NULL, cyclical = FALSE, sphere = FALSE,
+  a = 6371000)
+
+Vorticity(formula, data = NULL, cyclical = FALSE, sphere = FALSE,
   a = 6371000)
 }
 \arguments{
@@ -48,9 +52,10 @@ assumed to be longitude and latitude (\strong{in that order}) in degrees. Then, 
 correction is applied to the derivative so that they are in the same units as
 \code{a}.
 
-\code{Laplacian()} and \code{Divergence()} are convenient wrappers that call \code{Derivate()}
-and make the appropiate sums. For \code{Divergence()}, \code{formula} must be of the form
-\code{vx + vy ~ x + y} (\strong{in that order}).
+\code{Laplacian()}, \code{Divergence()} and \code{Vorticity()} are convenient wrappers that
+call \code{Derivate()} and make the appropiate sums. For \code{Divergence()} and
+\code{Vorticity()}, \code{formula} must be of the form \code{vx + vy ~ x + y}
+(\strong{in that order}).
 }
 \examples{
 theta <- seq(0, 360, length.out = 20)*pi/180

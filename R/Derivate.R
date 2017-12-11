@@ -25,9 +25,10 @@
 #' correction is applied to the derivative so that they are in the same units as
 #' `a`.
 #'
-#' `Laplacian()` and `Divergence()` are convenient wrappers that call `Derivate()`
-#' and make the appropiate sums. For `Divergence()`, `formula` must be of the form
-#' `vx + vy ~ x + y` (**in that order**).
+#' `Laplacian()`, `Divergence()` and `Vorticity()` are convenient wrappers that
+#' call `Derivate()` and make the appropiate sums. For `Divergence()` and
+#' `Vorticity()`, `formula` must be of the form `vx + vy ~ x + y`
+#' (**in that order**).
 #'
 #' @examples
 #' theta <- seq(0, 360, length.out = 20)*pi/180
@@ -139,8 +140,6 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE,
 #' @export
 Laplacian <- function(formula, data = NULL, cyclical = FALSE,
                       sphere = FALSE, a = 6371000) {
-    dep.names <- formula.tools::lhs.vars(formula)
-    ind.names <- formula.tools::rhs.vars(formula)
     ndep <- length(dep.names)
     nind <- length(ind.names)
     lap.name <- paste0(dep.names, ".lap")
@@ -163,8 +162,6 @@ Laplacian <- function(formula, data = NULL, cyclical = FALSE,
 #' @rdname Derivate
 Divergence <- function(formula, data = NULL, cyclical = FALSE,
                        sphere = FALSE, a = 6371000) {
-    dep.names <- formula.tools::lhs.vars(formula)
-    ind.names <- formula.tools::rhs.vars(formula)
     ndep <- length(dep.names)
     nind <- length(ind.names)
     div.name <- paste0(dep.names, "div")
@@ -172,6 +169,20 @@ Divergence <- function(formula, data = NULL, cyclical = FALSE,
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
                     sphere = sphere, a = a, order = 1)
 
-    div <- Reduce("+", der[c(1, 4)])
+    div <- der[[1]] + der[[4]]
     div
+}
+
+#' @export
+#' @rdname Derivate
+Vorticity <- function(formula, data = NULL, cyclical = FALSE,
+                      sphere = FALSE, a = 6371000) {
+    ndep <- length(dep.names)
+    nind <- length(ind.names)
+
+    der <- Derivate(formula = formula, data = data, cyclical = cyclical,
+                    sphere = sphere, a = a, order = 1)
+
+    vort <- der[[2]] - der[[3]]
+    vort
 }

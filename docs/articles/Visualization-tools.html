@@ -75,7 +75,7 @@
       <h1>Visualization tools</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2017-11-18</h4>
+            <h4 class="date">2017-12-11</h4>
           </div>
 
     
@@ -149,7 +149,7 @@ g</code></pre></div>
 <a href="#geom_vector" class="anchor"></a>geom_vector</h2>
 <p>Plotting arrows can be a pain, so <code><a href="../reference/geom_vector.html">geom_vector()</a></code> is a parametrization of <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_segment">geom_segment()</a></code> by location and displacement in each direction. <code>min.mag</code> controls the minimum magnitude for an arrow to be drawn (useful for highlighting only areas of strong ‘flow’) and <code>skip = n</code> draws only the nth arrow in the x direction and the mth arrown in the y direction (only meaningful for regular grids!).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nceptemperature[, <span class="kw">c</span>(<span class="st">"t.dx"</span>, <span class="st">"t.dy"</span>) <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Derivate.html">Derivate</a></span>(air.z <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, 
-                                               <span class="dt">bc =</span> <span class="kw">c</span>(<span class="st">"cyclic"</span>, <span class="st">"none"</span>), 
+                                               <span class="dt">cyclical =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>), 
                                                <span class="dt">sphere =</span> T), 
                 by =<span class="st"> </span>lev]
 

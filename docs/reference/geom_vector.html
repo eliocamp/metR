@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Arrows — geom_vector • metR</title>
+<title>Vectors — geom_vector • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -95,7 +95,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Arrows</h1>
+    <h1>Vectors</h1>
     </div>
 
     
@@ -202,10 +202,12 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
-  <code><a href='RepeatLon.html'>RepeatLon</a></code>, <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
+  <code><a href='RepeatLon.html'>RepeatLon</a></code>, <code><a href='geom_arrow.html'>geom_arrow</a></code>,
+  <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
   <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
-  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code></p>
+  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_filter.html'>stat_filter</a></code>,
+  <code><a href='stat_na.html'>stat_na</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -225,6 +227,37 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
     <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='geom_vector-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Note that the segments respond to coordinate</span>
 <span class='no'>g</span> + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='img'><img src='geom_vector-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># Sverdrup transport</span>
+<span class='fu'>library</span>(<span class='no'>data.table</span>)
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
+<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
+<span class='no'>grid</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/as.data.table'>as.data.table</a></span>(<span class='fu'>expand.grid</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='no'>d</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>0.5</span>),
+                                  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='no'>b</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)))
+<span class='no'>grid</span>[, <span class='no'>My</span> <span class='kw'>:=</span> -<span class='fu'>sin</span>(<span class='no'>pi</span>*<span class='no'>y</span>/<span class='no'>b</span>)*<span class='no'>pi</span>/<span class='no'>b</span>]</div><div class='output co'>#&gt;         x  y            My
+#&gt;   1:  1.0  1 -9.708055e-02
+#&gt;   2:  1.5  1 -9.708055e-02
+#&gt;   3:  2.0  1 -9.708055e-02
+#&gt;   4:  2.5  1 -9.708055e-02
+#&gt;   5:  3.0  1 -9.708055e-02
+#&gt;  ---                      
+#&gt; 357:  8.0 10 -3.847341e-17
+#&gt; 358:  8.5 10 -3.847341e-17
+#&gt; 359:  9.0 10 -3.847341e-17
+#&gt; 360:  9.5 10 -3.847341e-17
+#&gt; 361: 10.0 10 -3.847341e-17</div><div class='input'><span class='no'>grid</span>[, <span class='no'>Mx</span> <span class='kw'>:=</span> -<span class='no'>pi</span>^<span class='fl'>2</span>/<span class='no'>b</span>^<span class='fl'>2</span>*<span class='fu'>cos</span>(<span class='no'>pi</span>*<span class='no'>y</span>/<span class='no'>b</span>)*(<span class='no'>d</span> - <span class='no'>x</span>)]</div><div class='output co'>#&gt;         x  y            My          Mx
+#&gt;   1:  1.0  1 -9.708055e-02 -0.84478964
+#&gt;   2:  1.5  1 -9.708055e-02 -0.79785688
+#&gt;   3:  2.0  1 -9.708055e-02 -0.75092413
+#&gt;   4:  2.5  1 -9.708055e-02 -0.70399137
+#&gt;   5:  3.0  1 -9.708055e-02 -0.65705861
+#&gt;  ---                                  
+#&gt; 357:  8.0 10 -3.847341e-17  0.19739209
+#&gt; 358:  8.5 10 -3.847341e-17  0.14804407
+#&gt; 359:  9.0 10 -3.847341e-17  0.09869604
+#&gt; 360:  9.5 10 -3.847341e-17  0.04934802
+#&gt; 361: 10.0 10 -3.847341e-17  0.00000000</div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>grid</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>x</span>, <span class='no'>y</span>)) +
+    <span class='fu'>geom_vector</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>Mx</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>My</span>))</div><div class='img'><img src='geom_vector-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -102,8 +102,14 @@
     <p>Derivate a discrete variable using finite differences</p>
     
 
-    <pre class="usage"><span class='fu'>Derivate</span>(<span class='no'>formula</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>), <span class='kw'>bc</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
-  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371</span>)</pre>
+    <pre class="usage"><span class='fu'>Derivate</span>(<span class='no'>formula</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>)
+
+<span class='fu'>Laplacian</span>(<span class='no'>formula</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>)
+
+<span class='fu'>Divergence</span>(<span class='no'>formula</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -121,8 +127,8 @@
       <td><p>order of the derivative</p></td>
     </tr>
     <tr>
-      <th>bc</th>
-      <td><p>boundary conditions for each independent variable</p></td>
+      <th>cyclical</th>
+      <td><p>logical vector of boundary condition for each independent variable</p></td>
     </tr>
     <tr>
       <th>sphere</th>
@@ -131,33 +137,34 @@
     </tr>
     <tr>
       <th>a</th>
-      <td><p>radius or the Earth in kilometers for use in spherical coordinates</p></td>
+      <td><p>radius for use in spherical coordinates (defaults to Earth's raduis)</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>If there is one independent variable, a numeric vector of the same length as
-the dependent variable.
-If there is two or more independent variables, a list containing the
-directional derivatives of the dependent variable.</p>
+    <p>If there is one independent variable and one dependent variable, a numeric
+vector of the same length as the dependent variable.
+If there are two or more independent variables or two or more dependent variables,
+a list containing the directional derivatives of each dependent variables.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Each element of the return vector is an estimation of \(dx/dy\) (or
-\(d^2x/dy^2\) if <code>order</code> = 2) by centerd finite differences. The first and
-last elements will be <code>NAs</code> unless cyclical boundary conditions are set
-in <code>bc</code>.</p>
-<p>If <code>sphere</code> is <code>TRUE</code>, then the first two independent variables are
-assumed to be longitude and latitude (in that order) in degrees. Then, a
-correction is applied to the derivative so that they are in units of distance.</p>
+    <p>Each element of the return vector is an estimation of
+\(\frac{\partial^n x}{\partial y^{n}}\) by
+centerd finite differences.</p>
+<p>If <code>sphere = TRUE</code>, then the first two independent variables are
+assumed to be longitude and latitude (<strong>in that order</strong>) in degrees. Then, a
+correction is applied to the derivative so that they are in the same units as
+<code>a</code>.
+    <code>Laplacian()</code> and <code>Divergence()</code> are convenient wrappers that call <code>Derivate()</code>
+and make the appropiate sums. For <code>Divergence()</code>, <code>formula</code> must be of the form
+<code>vx + vy ~ x + y</code> (<strong>in that order</strong>).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='DerivatePhysical.html'>DerivatePhysical</a></code></p>
-<p>Other meteorology functions: <code><a href='DerivatePhysical.html'>DerivatePhysical</a></code>,
-  <code><a href='EOF.html'>EOF</a></code>, <code><a href='QsWave.html'>FitQsWave</a></code>,
-  <code><a href='WaveFlux.html'>WaveFlux</a></code></p>
+    <p>Other meteorology functions: <code><a href='EOF.html'>EOF</a></code>,
+  <code><a href='QsWave.html'>FitQsWave</a></code>, <code><a href='WaveFlux.html'>WaveFlux</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -165,21 +172,27 @@ correction is applied to the derivative so that they are in units of distance.</
 <span class='no'>theta</span> <span class='kw'>&lt;-</span> <span class='no'>theta</span>[-<span class='fl'>1</span>]
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>cos</span>(<span class='no'>theta</span>)
 <span class='no'>dx_analytical</span> <span class='kw'>&lt;-</span> -<span class='fu'>sin</span>(<span class='no'>theta</span>)
-<span class='no'>dx_finitediff</span> <span class='kw'>&lt;-</span> <span class='fu'>Derivate</span>(<span class='no'>x</span> ~ <span class='no'>theta</span>, <span class='kw'>bc</span> <span class='kw'>=</span> <span class='st'>"cyclic"</span>)
+<span class='no'>dx_finitediff</span> <span class='kw'>&lt;-</span> <span class='fu'>Derivate</span>(<span class='no'>x</span> ~ <span class='no'>theta</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>plot</span>(<span class='no'>theta</span>, <span class='no'>dx_analytical</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)</div><div class='input'><span class='fu'>points</span>(<span class='no'>theta</span>, <span class='no'>dx_finitediff</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='Derivate-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Curvature (Laplacian)</span>
-<span class='co'># Note the different boundary conditions for each variable</span>
+<span class='co'># Note the different boundary conditions for each dimension</span>
 <span class='no'>variable</span> <span class='kw'>&lt;-</span> <span class='fu'>expand.grid</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>0</span>, <span class='fl'>360</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>3</span>)[-<span class='fl'>1</span>],
                         <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>90</span>, <span class='fl'>90</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>3</span>))
 <span class='no'>variable</span>$<span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='fu'>with</span>(<span class='no'>variable</span>, <span class='fu'>cos</span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>*<span class='fl'>3</span>) + <span class='fu'>sin</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>*<span class='fl'>2</span>))
-<span class='no'>variable</span> <span class='kw'>&lt;-</span> <span class='fu'>cbind</span>(<span class='no'>variable</span>,
-                  <span class='fu'>as.data.frame</span>(<span class='fu'>Derivate</span>(<span class='no'>z</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>variable</span>,
-                                        <span class='kw'>bc</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"cyclic"</span>, <span class='st'>"none"</span>), <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>2</span>)))
+<span class='no'>variable</span> <span class='kw'>&lt;-</span> <span class='fu'>cbind</span>(
+     <span class='no'>variable</span>,
+     <span class='fu'>as.data.frame</span>(<span class='fu'>Derivate</span>(<span class='no'>z</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>variable</span>,
+                          <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>), <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>2</span>)))
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>variable</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z</span>)) +
-     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z.ddlon</span> + <span class='no'>z.ddlat</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 240 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='Derivate-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z.ddlon</span> + <span class='no'>z.ddlat</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 240 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='Derivate-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># The same as</span>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>variable</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'>Laplacian</span>(<span class='no'>z</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>))),
+                 <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 240 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='Derivate-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

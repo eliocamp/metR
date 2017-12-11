@@ -108,12 +108,13 @@ the value of the <code>z</code> aesthetic <em>inside</em> the contour instead of
     
 
     <pre class="usage"><span class='fu'>geom_contour_fill</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"ContourFill"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>stat_contour_fill</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ContourFill"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -154,6 +155,18 @@ a call to a position adjustment function.</p></td>
 often aesthetics, used to set an aesthetic to a fixed value, like
 <code>color = "red"</code> or <code>size = 3</code>. They may also be parameters
 to the paired geom/stat.</p></td>
+    </tr>
+    <tr>
+      <th>breaks</th>
+      <td><p>numeric vector of breaks</p></td>
+    </tr>
+    <tr>
+      <th>bins</th>
+      <td><p>Number of evenly spaced breaks.</p></td>
+    </tr>
+    <tr>
+      <th>binwidth</th>
+      <td><p>Distance between breaks.</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
@@ -209,15 +222,19 @@ contour calculations</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
-  <code><a href='RepeatLon.html'>RepeatLon</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
+  <code><a href='RepeatLon.html'>RepeatLon</a></code>, <code><a href='geom_arrow.html'>geom_arrow</a></code>,
+  <code><a href='geom_vector.html'>geom_vector</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
   <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
-  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code></p>
+  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_filter.html'>stat_filter</a></code>,
+  <code><a href='stat_na.html'>stat_na</a></code></p>
 <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
-  <code><a href='RepeatLon.html'>RepeatLon</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
+  <code><a href='RepeatLon.html'>RepeatLon</a></code>, <code><a href='geom_arrow.html'>geom_arrow</a></code>,
+  <code><a href='geom_vector.html'>geom_vector</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
   <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
-  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code></p>
+  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_filter.html'>stat_filter</a></code>,
+  <code><a href='stat_na.html'>stat_na</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

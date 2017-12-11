@@ -4,8 +4,8 @@
 \alias{DerivatePhysical}
 \title{Zonal or meridional derivative}
 \usage{
-DerivatePhysical(variable, lon, lat, order = c(1, 2), bc = c("cyclic",
-  "none"), a = 6731)
+DerivatePhysical(variable, lon, lat, order = c(1, 2), cyclical = FALSE,
+  a = 6731000)
 }
 \arguments{
 \item{variable}{numeric vector of discrete values}
@@ -16,9 +16,9 @@ DerivatePhysical(variable, lon, lat, order = c(1, 2), bc = c("cyclic",
 
 \item{order}{order of the derivative}
 
-\item{bc}{boundary conditions}
+\item{cyclical}{logical vector of boundary condition for each independent variable}
 
-\item{a}{the radius of the earth in kilometers}
+\item{a}{radius for use in spherical coordinates (defaults to Earth's raduis)}
 }
 \value{
 A numeric vector of the same length as \code{variable}.
@@ -38,7 +38,7 @@ the zonal derivative (\eqn{d/dx}) at the given latitude.
 library(data.table)
 temp.derv <- nceptemperature[lev == 500,
                               .(lat = lat, air.dy = DerivatePhysical(air,
-                                                      lon = lon, lat, bc = "none")),
+                                                      lon = lon, lat, cyclical = FALSE)),
                 by = .(lev, lon)]
 library(ggplot2)
 ggplot(temp.derv, aes(lon, lat)) +

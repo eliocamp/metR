@@ -20,11 +20,11 @@ test_that("Derivative works", {
     expect_equal({
         x <- 1:10
         y <- 1:10
-        Derivate(x ~ y, bc = "none")[2]
+        Derivate(x ~ y, cyclical = FALSE)[2]
     }, 1)
     expect_equal({
         data <- data.frame(x = 1:10, y = 1:10)
-        Derivate(x ~ y, bc = "none")[2]
+        Derivate(x ~ y, cyclical = FALSE)[2]
     }, 1)
 })
 

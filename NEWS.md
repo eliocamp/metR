@@ -16,6 +16,7 @@ parameters.
 - New functions `Laplacian()`, `Divercence()` and `Vorticity()`
 - `DerivatePhysical()` is removed since it was made redundant by the extended
 functionality in `Derivate()`
+- New funtion `IdealGas()` for ideal gas calculations. 
 
 
 # meteoR 0.0.9100

@@ -8,16 +8,16 @@
 \title{Derivate a discrete variable using finite differences}
 \usage{
 Derivate(formula, data = NULL, order = 1, cyclical = FALSE,
+  fill = FALSE, sphere = FALSE, a = 6371000)
+
+Laplacian(formula, data = NULL, cyclical = FALSE, fill = FALSE,
   sphere = FALSE, a = 6371000)
 
-Laplacian(formula, data = NULL, cyclical = FALSE, sphere = FALSE,
-  a = 6371000)
+Divergence(formula, data = NULL, cyclical = FALSE, fill = FALSE,
+  sphere = FALSE, a = 6371000)
 
-Divergence(formula, data = NULL, cyclical = FALSE, sphere = FALSE,
-  a = 6371000)
-
-Vorticity(formula, data = NULL, cyclical = FALSE, sphere = FALSE,
-  a = 6371000)
+Vorticity(formula, data = NULL, cyclical = FALSE, fill = FALSE,
+  sphere = FALSE, a = 6371000)
 }
 \arguments{
 \item{formula}{a formula indicating dependent and independent variables}
@@ -27,6 +27,9 @@ Vorticity(formula, data = NULL, cyclical = FALSE, sphere = FALSE,
 \item{order}{order of the derivative}
 
 \item{cyclical}{logical vector of boundary condition for each independent variable}
+
+\item{fill}{logical indicating whether to fill values at the boundaries
+with forward and backwards differencing}
 
 \item{sphere}{logical indicating whether to use spherical coordinates
 (see details)}
@@ -51,6 +54,9 @@ If \code{sphere = TRUE}, then the first two independent variables are
 assumed to be longitude and latitude (\strong{in that order}) in degrees. Then, a
 correction is applied to the derivative so that they are in the same units as
 \code{a}.
+
+Using \code{fill = TRUE} will degrade the solution near the edges of a non-cyclical
+bondary. Use with caution.
 
 \code{Laplacian()}, \code{Divergence()} and \code{Vorticity()} are convenient wrappers that
 call \code{Derivate()} and make the appropiate sums. For \code{Divergence()} and

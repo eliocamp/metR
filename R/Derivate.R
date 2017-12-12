@@ -3,6 +3,8 @@
 #' @param formula a formula indicating dependent and independent variables
 #' @param order order of the derivative
 #' @param cyclical logical vector of boundary condition for each independent variable
+#' @param fill logical indicating whether to fill values at the boundaries
+#' with forward and backwards differencing
 #' @param data optional data.frame containing the variables
 #' @param sphere logical indicating whether to use spherical coordinates
 #' (see details)
@@ -24,6 +26,9 @@
 #' assumed to be longitude and latitude (**in that order**) in degrees. Then, a
 #' correction is applied to the derivative so that they are in the same units as
 #' `a`.
+#'
+#' Using `fill = TRUE` will degrade the solution near the edges of a non-cyclical
+#' bondary. Use with caution.
 #'
 #' `Laplacian()`, `Divergence()` and `Vorticity()` are convenient wrappers that
 #' call `Derivate()` and make the appropiate sums. For `Divergence()` and
@@ -63,7 +68,7 @@
 #' @family meteorology functions
 #' @import data.table Formula formula.tools
 #' @export
-Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE,
+Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = FALSE,
                      sphere = FALSE, a = 6371000) {
     dep.names <- formula.tools::lhs.vars(formula)
     ind.names <- formula.tools::rhs.vars(formula)
@@ -93,8 +98,8 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE,
         this.bc <- cyclical[v]
 
         data[, dernames[[v]] := lapply(seq(dernames[[1]]), function(x) {
-                        .derv(.SD[[x]], .SD[[this.var]], order = order[1],
-                              cyclical = this.bc)}),
+            .derv(.SD[[x]], .SD[[this.var]], order = order[1],
+                  cyclical = this.bc, fill = fill)}),
             by = c(ind.names[-v])]
     }
     data <- data[order(id)]
@@ -115,30 +120,36 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE,
     }
 }
 
-
-.derv <- function(x, y, order = 1, cyclical = FALSE) {
+.derv <- function(x, y, order = 1, cyclical = FALSE, fill = FALSE) {
     N <- length(x)
     d <- y[2] - y[1]
-    if (order == 1) {
-        dxdy <- (x[c(2:N, 1)] - x[c(N, 1:(N-1))])/(2*d)
-    } else if (order == 2) {
-        dxdy <- (x[c(2:N, 1)] + x[c(N, 1:(N-1))] - 2*x)/d^2
+    if (order >= 3) {
+        dxdy <- .derv(.derv(x, y, order = 2, cyclical = cyclical, fill = fill),
+                      y, order = order - 2, cyclical = cyclical, fill = fill)
     } else {
-        dxdy <- .derv(.derv(x, y, order = 2, cyclical = cyclical),
-                      y, order = order - 2, cyclical = cyclical)
-    }
+        if (order == 1) {
+            dxdy <- (x[c(2:N, 1)] - x[c(N, 1:(N-1))])/(2*d)
+        } else if (order == 2) {
+            dxdy <- (x[c(2:N, 1)] + x[c(N, 1:(N-1))] - 2*x)/d^2
+        }
+        if (!cyclical) {
+            if (!fill) {
+                dxdy[c(1, N)] <- NA
+            }
+            if (fill) {
+                dxdy[1] <- (-11/6*x[1] + 3*x[2] - 3/2*x[3] + 1/3*x[4])/d
+                dxdy[N] <- (11/6*x[N] - 3*x[N-1] + 3/2*x[N-2] - 1/3*x[N-3])/d
+            }
+        }
 
-    if (!cyclical) {
-        dxdy[c(1, N)] <- NA
     }
-
     return(dxdy)
 }
 
 
 #' @rdname Derivate
 #' @export
-Laplacian <- function(formula, data = NULL, cyclical = FALSE,
+Laplacian <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
                       sphere = FALSE, a = 6371000) {
     dep.names <- as.character(formula.tools::lhs(formula))
     dep.names <- dep.names[!grepl("+", dep.names, fixed = T)]
@@ -163,7 +174,7 @@ Laplacian <- function(formula, data = NULL, cyclical = FALSE,
 
 #' @export
 #' @rdname Derivate
-Divergence <- function(formula, data = NULL, cyclical = FALSE,
+Divergence <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
                        sphere = FALSE, a = 6371000) {
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
                     sphere = sphere, a = a, order = 1)
@@ -174,7 +185,7 @@ Divergence <- function(formula, data = NULL, cyclical = FALSE,
 
 #' @export
 #' @rdname Derivate
-Vorticity <- function(formula, data = NULL, cyclical = FALSE,
+Vorticity <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
                       sphere = FALSE, a = 6371000) {
     ndep <- length(dep.names)
     nind <- length(ind.names)

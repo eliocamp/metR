@@ -34,9 +34,9 @@ layer, as a string.}
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
 
-\item{direction}{Direction of rotation.}
+\item{direction}{Direction of rotation in degrees.}
 
-\item{start}{Starting angle for rotation in radians.}
+\item{start}{Starting angle for rotation in degrees.}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
@@ -63,7 +63,7 @@ transformation and different aspect ratios.
 }
 \details{
 Direction and start allows to work with different standards. For the
-meteorological direction, for example, use \code{direction = -1/4*pi}.
+meteorological standard, for example, use \code{star = -90} and \code{direction = -1}.
 }
 \section{Aesthetics}{
 

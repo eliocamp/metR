@@ -4,12 +4,12 @@
 #' transformation and different aspect ratios.
 #'
 #' @inheritParams ggplot2::geom_text
-#' @param direction Direction of rotation.
-#' @param start Starting angle for rotation in radians.
+#' @param direction Direction of rotation in degrees.
+#' @param start Starting angle for rotation in degrees.
 #'
 #' @details
 #' Direction and start allows to work with different standards. For the
-#' meteorological direction, for example, use `direction = -1/4*pi`.
+#' meteorological standard, for example, use `star = -90` and `direction = -1`.
 #'
 #' @section Aesthetics:
 #' `geom_vector` understands the following aesthetics (required aesthetics are in bold)

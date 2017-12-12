@@ -140,8 +140,11 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE,
 #' @export
 Laplacian <- function(formula, data = NULL, cyclical = FALSE,
                       sphere = FALSE, a = 6371000) {
+    dep.names <- as.character(formula.tools::lhs(formula))
+    dep.names <- dep.names[!grepl("+", dep.names, fixed = T)]
+
     ndep <- length(dep.names)
-    nind <- length(ind.names)
+
     lap.name <- paste0(dep.names, ".lap")
 
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
@@ -162,10 +165,6 @@ Laplacian <- function(formula, data = NULL, cyclical = FALSE,
 #' @rdname Derivate
 Divergence <- function(formula, data = NULL, cyclical = FALSE,
                        sphere = FALSE, a = 6371000) {
-    ndep <- length(dep.names)
-    nind <- length(ind.names)
-    div.name <- paste0(dep.names, "div")
-
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
                     sphere = sphere, a = a, order = 1)
 

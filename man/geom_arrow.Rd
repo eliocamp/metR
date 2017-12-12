@@ -61,6 +61,10 @@ to the paired geom/stat.}
 Unlinke \link{geom_vector}, \code{geom_arrow()} preserves direction in coordinate
 transformation and different aspect ratios.
 }
+\details{
+Direction and start allows to work with different standards. For the
+meteorological direction, for example, use \code{direction = -1/4*pi}.
+}
 \section{Aesthetics}{
 
 \code{geom_vector} understands the following aesthetics (required aesthetics are in bold)

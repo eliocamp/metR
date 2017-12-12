@@ -7,6 +7,10 @@
 #' @param direction Direction of rotation.
 #' @param start Starting angle for rotation in radians.
 #'
+#' @details
+#' Direction and start allows to work with different standards. For the
+#' meteorological direction, for example, use `direction = -1/4*pi`.
+#'
 #' @section Aesthetics:
 #' `geom_vector` understands the following aesthetics (required aesthetics are in bold)
 #'
@@ -36,8 +40,7 @@ geom_arrow <- function(mapping = NULL,
     mapping$size <- mapping$mag
     mapping$mag <- NULL
     mapping$label <- "\u27f6"
-    m <<- mapping
-
+geom
     layer(geom = GeomText,
           mapping = mapping,
           data = data,

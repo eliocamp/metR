@@ -90,6 +90,7 @@ ggplot(variable, aes(lon, lat)) +
 }
 \seealso{
 Other meteorology functions: \code{\link{EOF}},
-  \code{\link{FitQsWave}}, \code{\link{WaveFlux}}
+  \code{\link{FitQsWave}}, \code{\link{IdealGas}},
+  \code{\link{WaveFlux}}
 }
 \concept{meteorology functions}

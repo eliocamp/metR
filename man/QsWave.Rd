@@ -43,6 +43,7 @@ the above mentioned sum but for only the selected wave numbers.
 }
 \seealso{
 Other meteorology functions: \code{\link{Derivate}},
-  \code{\link{EOF}}, \code{\link{WaveFlux}}
+  \code{\link{EOF}}, \code{\link{IdealGas}},
+  \code{\link{WaveFlux}}
 }
 \concept{meteorology functions}

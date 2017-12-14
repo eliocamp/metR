@@ -40,7 +40,7 @@ geom_arrow <- function(mapping = NULL,
     mapping$size <- mapping$mag
     mapping$mag <- NULL
     mapping$label <- "\u27f6"
-geom
+
     layer(geom = GeomText,
           mapping = mapping,
           data = data,

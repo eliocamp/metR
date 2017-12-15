@@ -5,8 +5,12 @@
 \title{Arrows}
 \usage{
 geom_arrow(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", direction = 1, start = 0, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE, ...)
+  position = "identity", ..., start = 0, direction = 1, scale = 1,
+  min.mag = 0, skip = 0, skip.x = skip, skip.y = skip,
+  arrow.angle = 15, arrow.length = 0.2, arrow.ends = "last",
+  arrow.type = "open", arrow = grid::arrow(arrow.angle, unit(arrow.length,
+  "lines"), ends = arrow.ends, type = arrow.type), lineend = "butt",
+  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -34,9 +38,36 @@ layer, as a string.}
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
 
-\item{direction}{Direction of rotation in degrees.}
+\item{...}{other arguments passed on to \code{\link[=layer]{layer()}}. These are
+often aesthetics, used to set an aesthetic to a fixed value, like
+\code{color = "red"} or \code{size = 3}. They may also be parameters
+to the paired geom/stat.}
 
 \item{start}{Starting angle for rotation in degrees.}
+
+\item{direction}{Direction of rotation in degrees.}
+
+\item{scale}{multiplicative scales for adjusting the size of the vectors.}
+
+\item{min.mag}{minimum magnitude of the plotted vectors}
+
+\item{skip}{numeric specifying number of gridpoints not to draw in the x and y direction.}
+
+\item{skip.x}{numeric specifying number of gridpoints not to draw in the x and y direction.}
+
+\item{skip.y}{numeric specifying number of gridpoints not to draw in the x and y direction.}
+
+\item{arrow.angle}{parameters passed to \link[grid:arrow]{grid::arrow})}
+
+\item{arrow.length}{parameters passed to \link[grid:arrow]{grid::arrow})}
+
+\item{arrow.ends}{parameters passed to \link[grid:arrow]{grid::arrow})}
+
+\item{arrow.type}{parameters passed to \link[grid:arrow]{grid::arrow})}
+
+\item{arrow}{specification for arrow heads, as created by arrow().}
+
+\item{lineend}{Line end style (round, butt, square).}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
@@ -51,11 +82,6 @@ display.}
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
-
-\item{...}{other arguments passed on to \code{\link[=layer]{layer()}}. These are
-often aesthetics, used to set an aesthetic to a fixed value, like
-\code{color = "red"} or \code{size = 3}. They may also be parameters
-to the paired geom/stat.}
 }
 \description{
 Unlinke \link{geom_vector}, \code{geom_arrow()} preserves direction in coordinate
@@ -74,11 +100,27 @@ meteorological standard, for example, use \code{star = -90} and \code{direction 
 \item \strong{y}
 \item \strong{mag}
 \item \strong{angle}
-\item alpha
-\item colour
+\item \code{alpha}
+\item \code{colour}
+\item \code{linetype}
+\item \code{size}
+\item \code{lineend}
 }
 }
 
+\examples{
+field <- expand.grid(x = seq.Date(as.Date("2017-01-01"), as.Date("2017-01-31"), "2 days"),
+                     y = 1:10)
+field$u <- rnorm(nrow(field))
+field$v <- rnorm(nrow(field))
+field$V <- with(field, sqrt(u^2 + v^2))
+field$dir <- with(field, atan2(v, u))*180/pi
+library(ggplot2)
+ggplot(field, aes(x, y)) +
+    geom_arrow(aes(mag = V, angle = dir), color = "red",
+               scale = 0.05, start = 0)
+
+}
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{RepeatLon}}, \code{\link{geom_contour_fill}},

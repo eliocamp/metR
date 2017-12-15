@@ -96,7 +96,6 @@ StatVector <- ggplot2::ggproto("StatVector", ggplot2::Stat,
     compute_group = function(data, scales, scale.x = scale.x, scale.y = scale.y,
                              skip.x = skip.x, skip.y = skip.y,
                              min.mag = min.mag) {
-        gg <<- data
         min.mag <- data$min.mag %||% min.mag
 
         scale.x <- data$scale.x %||% data$scale %||% scale.x
@@ -105,8 +104,8 @@ StatVector <- ggplot2::ggproto("StatVector", ggplot2::Stat,
         data$xend = with(data, x + dx*abs(scale.x))
         data$yend = with(data, y + dy*abs(scale.y))
 
-        data <- subset(data, x %in% JumpBy(unique(data$x), skip.x + 1) &
-                           y %in% JumpBy(unique(data$y), skip.y + 1) &
+        data <- subset(data, x %in% JumpBy(unique(x), skip.x + 1) &
+                           y %in% JumpBy(unique(y), skip.y + 1) &
                            sqrt(dx^2 + dy^2) >= min.mag)
         data
         }

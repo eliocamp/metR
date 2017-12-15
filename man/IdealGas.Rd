@@ -36,6 +36,6 @@ IdealGas(1013*100, rho = 1.15) - 273.15
 \seealso{
 Other meteorology functions: \code{\link{Derivate}},
   \code{\link{EOF}}, \code{\link{FitQsWave}},
-  \code{\link{WaveFlux}}
+  \code{\link{GeostrophicWind}}, \code{\link{WaveFlux}}
 }
 \concept{meteorology functions}

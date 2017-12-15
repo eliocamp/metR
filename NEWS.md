@@ -18,6 +18,7 @@ parameters.
 functionality in `Derivate()`
 - New function `IdealGas()` for ideal gas calculations. 
 - New `stat_contourlabel()` for labeling contours. 
+- New function `GeostrophicWind()`.
 
 
 # meteoR 0.0.9100

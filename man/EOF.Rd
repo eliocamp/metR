@@ -69,7 +69,7 @@ aao.svd$sdev
 }
 \seealso{
 Other meteorology functions: \code{\link{Derivate}},
-  \code{\link{FitQsWave}}, \code{\link{IdealGas}},
-  \code{\link{WaveFlux}}
+  \code{\link{FitQsWave}}, \code{\link{GeostrophicWind}},
+  \code{\link{IdealGas}}, \code{\link{WaveFlux}}
 }
 \concept{meteorology functions}

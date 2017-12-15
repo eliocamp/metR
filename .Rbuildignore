@@ -9,3 +9,5 @@
 ^R/ReadCtl\.R$
 ^docs$
 ^_pkgdown\.yml$
+^inst/data_files$
+^guía_de_estilo\.md$

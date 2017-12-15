@@ -36,9 +36,9 @@ WaveFlux <- function(gh, u, v, lon, lat, lev) {
     # Derivadas
     dt[, `:=`(psi.dx  = Derivate(psi, lonrad),
               psi.dxx = Derivate(psi, lonrad, 2)), by = lat]
-    dt[, `:=`(psi.dy  = Derivate(psi, latrad, bc = "none"),
-              psi.dyy = Derivate(psi, latrad, 2, bc = "none"),
-              psi.dxy = Derivate(psi.dx, latrad, bc = "none")), by = lon]
+    dt[, `:=`(psi.dy  = Derivate(psi, latrad, cyclical = FALSE),
+              psi.dyy = Derivate(psi, latrad, 2, cyclical = FALSE),
+              psi.dxy = Derivate(psi.dx, latrad, cyclical = FALSE)), by = lon]
 
     # Cálculo del flujo (al fin!)
     flux <- dt[, {

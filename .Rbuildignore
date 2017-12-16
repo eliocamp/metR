@@ -11,3 +11,4 @@
 ^_pkgdown\.yml$
 ^inst/data_files$
 ^guía_de_estilo\.md$
+^codecov\.yml$

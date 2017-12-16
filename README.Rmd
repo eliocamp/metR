@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 
 # metR
 
-[![Build Status](https://travis-ci.org/eliocamp/metR.svg?branch=master)](https://travis-ci.org/eliocamp/metR)
+[![Build Status](https://travis-ci.org/eliocamp/metR.svg?branch=master)](https://travis-ci.org/eliocamp/metR) [![Coverage status](https://codecov.io/gh/eliocamp/metR//branch/master/graph/badge.svg)](https://codecov.io/github/eliocamp/metR/?branch=master)
 
 meteR packages several functions and utilities that make R better for hadling meteorological data in the tidy data paradigm. It's not intended to be the be-all and end-all and is (at least for now) mostly a packaging of assorted wrapers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since it's grown organically and for my own needs, do not expect a heavy emphasis on consistency across functions and do expect functions written with specific use cases in mind.  
 

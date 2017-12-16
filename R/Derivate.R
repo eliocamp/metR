@@ -8,7 +8,7 @@
 #' @param data optional data.frame containing the variables
 #' @param sphere logical indicating whether to use spherical coordinates
 #' (see details)
-#' @param a radius for use in spherical coordinates (defaults to Earth's raduis)
+#' @param a radius for use in spherical coordinates (defaults to Earth's radius)
 #'
 #'
 #' @return
@@ -20,7 +20,7 @@
 #' @details
 #' Each element of the return vector is an estimation of
 #' \eqn{\frac{\partial^n x}{\partial y^{n}}}{d^nx/dy^n} by
-#' centerd finite differences.
+#' centered finite differences.
 #'
 #' If `sphere = TRUE`, then the first two independent variables are
 #' assumed to be longitude and latitude (**in that order**) in degrees. Then, a
@@ -31,7 +31,7 @@
 #' bondary. Use with caution.
 #'
 #' `Laplacian()`, `Divergence()` and `Vorticity()` are convenient wrappers that
-#' call `Derivate()` and make the appropiate sums. For `Divergence()` and
+#' call `Derivate()` and make the appropriate sums. For `Divergence()` and
 #' `Vorticity()`, `formula` must be of the form `vx + vy ~ x + y`
 #' (**in that order**).
 #'

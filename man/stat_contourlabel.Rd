@@ -61,7 +61,7 @@ Draws labels on contours built with \link[ggplot2:stat_contour]{ggplot2::stat_co
 }
 \details{
 Is best used with a previous call to \link[ggplot2:stat_contour]{ggplot2::stat_contour} with the same
-paramters.
+parameters.
 }
 \section{Aesthetics}{
 

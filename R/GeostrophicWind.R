@@ -6,7 +6,7 @@
 #' @param lon longitude in degrees
 #' @param lat latitude in degrees
 #' @param cyclical boundary condition for longitude (see details)
-#' @param g aceleration of gravity
+#' @param g acceleration of gravity
 #'
 #' @details
 #' If `cyclical = "guess"` (the default) the function will try to guess if `lon`

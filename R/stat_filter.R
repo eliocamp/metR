@@ -1,8 +1,8 @@
 #' Filter values
 #'
 #' Removes values where `filter` evaluates to `FALSE`. Useful for showing only
-#' statistical significan values, or a interesting subset of the data without
-#' subsetting the data.
+#' statistical significant values, or a interesting subset of the data without
+#' manually subsetting the data.
 #'
 #' @inheritParams ggplot2::stat_identity
 #'

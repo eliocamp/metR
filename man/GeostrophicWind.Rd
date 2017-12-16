@@ -15,7 +15,7 @@ GeostrophicWind(gh, lon, lat, cyclical = "guess", g = 9.8)
 
 \item{cyclical}{boundary condition for longitude (see details)}
 
-\item{g}{aceleration of gravity}
+\item{g}{acceleration of gravity}
 }
 \value{
 A named list with vectors for the zonal and meridional component of geostrophic

@@ -1,6 +1,6 @@
 #' Filter only NA values.
 #'
-#' Usefull for indicating or masking missing data. Ths stat subsets data where
+#' Useful for indicating or masking missing data. This stat subsets data where
 #' one variable is `NA`.
 #'
 #' @inheritParams ggplot2::stat_identity

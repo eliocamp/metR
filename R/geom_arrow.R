@@ -1,6 +1,6 @@
 #' Arrows
 #'
-#' Unlinke [geom_vector], `geom_arrow()` preserves direction in coordinate
+#' Unlike [geom_vector], `geom_arrow()` preserves direction in coordinate
 #' transformation and different aspect ratios.
 #'
 #' @inheritParams geom_vector

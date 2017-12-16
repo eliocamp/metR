@@ -6,7 +6,7 @@
 #' @param a radius of the earth in kilometers
 #'
 #' @details
-#' All functions use the correct sideral day (24hs 56mins 4.091s) instead of
+#' All functions use the correct sidereal day (24hs 56mins 4.091s) instead of
 #' the incorrect solar day (24hs) for 0.3\% more precision and 1000\% more
 #' pedantry.
 #'

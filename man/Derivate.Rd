@@ -34,7 +34,7 @@ with forward and backwards differencing}
 \item{sphere}{logical indicating whether to use spherical coordinates
 (see details)}
 
-\item{a}{radius for use in spherical coordinates (defaults to Earth's raduis)}
+\item{a}{radius for use in spherical coordinates (defaults to Earth's radius)}
 }
 \value{
 If there is one independent variable and one dependent variable, a numeric
@@ -48,7 +48,7 @@ Derivate a discrete variable using finite differences
 \details{
 Each element of the return vector is an estimation of
 \eqn{\frac{\partial^n x}{\partial y^{n}}}{d^nx/dy^n} by
-centerd finite differences.
+centered finite differences.
 
 If \code{sphere = TRUE}, then the first two independent variables are
 assumed to be longitude and latitude (\strong{in that order}) in degrees. Then, a
@@ -59,7 +59,7 @@ Using \code{fill = TRUE} will degrade the solution near the edges of a non-cycli
 bondary. Use with caution.
 
 \code{Laplacian()}, \code{Divergence()} and \code{Vorticity()} are convenient wrappers that
-call \code{Derivate()} and make the appropiate sums. For \code{Divergence()} and
+call \code{Derivate()} and make the appropriate sums. For \code{Divergence()} and
 \code{Vorticity()}, \code{formula} must be of the form \code{vx + vy ~ x + y}
 (\strong{in that order}).
 }

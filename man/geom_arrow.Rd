@@ -84,7 +84,7 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 }
 \description{
-Unlinke \link{geom_vector}, \code{geom_arrow()} preserves direction in coordinate
+Unlike \link{geom_vector}, \code{geom_arrow()} preserves direction in coordinate
 transformation and different aspect ratios.
 }
 \details{

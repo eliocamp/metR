@@ -50,8 +50,8 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 }
 \description{
 Removes values where \code{filter} evaluates to \code{FALSE}. Useful for showing only
-statistical significan values, or a interesting subset of the data without
-subsetting the data.
+statistical significant values, or a interesting subset of the data without
+manually subsetting the data.
 }
 \section{Aesthetics}{
 

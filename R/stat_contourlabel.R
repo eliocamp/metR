@@ -8,7 +8,7 @@
 #'
 #' @details
 #' Is best used with a previous call to [ggplot2::stat_contour] with the same
-#' paramters.
+#' parameters.
 #'
 #' @examples
 #' library(ggplot2)

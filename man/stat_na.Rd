@@ -49,7 +49,7 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 }
 \description{
-Usefull for indicating or masking missing data. Ths stat subsets data where
+Useful for indicating or masking missing data. This stat subsets data where
 one variable is \code{NA}.
 }
 \section{Aesthetics}{

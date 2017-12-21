@@ -1,6 +1,6 @@
 Package: metR
 Type: Package
-Title: Tools for Better Analysis of Meteorological Fields
+Title: Tools for Easier Analysis of Meteorological Fields
 Version: 0.0.9101
 Authors@R: person("Elio", "Campitelli", email = "elio.campitelli@cima.fcen.uba.ar", role = c("cre", "aut"))
 Description: Many useful functions and extensions for dealing with 

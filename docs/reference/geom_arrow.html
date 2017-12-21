@@ -99,13 +99,17 @@
     </div>
 
     
-    <p>Unlinke <a href='geom_vector.html'>geom_vector</a>, <code>geom_arrow()</code> preserves direction in coordinate
+    <p>Unlike <a href='geom_vector.html'>geom_vector</a>, <code>geom_arrow()</code> preserves direction in coordinate
 transformation and different aspect ratios.</p>
     
 
     <pre class="usage"><span class='fu'>geom_arrow</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>min.mag</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>skip.x</span> <span class='kw'>=</span> <span class='no'>skip</span>, <span class='kw'>skip.y</span> <span class='kw'>=</span> <span class='no'>skip</span>,
+  <span class='kw'>arrow.angle</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>arrow.length</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>arrow.ends</span> <span class='kw'>=</span> <span class='st'>"last"</span>,
+  <span class='kw'>arrow.type</span> <span class='kw'>=</span> <span class='st'>"open"</span>, <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>arrow</a></span>(<span class='no'>arrow.angle</span>, <span class='fu'>unit</span>(<span class='no'>arrow.length</span>,
+  <span class='st'>"lines"</span>), <span class='kw'>ends</span> <span class='kw'>=</span> <span class='no'>arrow.ends</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='no'>arrow.type</span>), <span class='kw'>lineend</span> <span class='kw'>=</span> <span class='st'>"butt"</span>,
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -141,12 +145,63 @@ layer, as a string.</p></td>
 a call to a position adjustment function.</p></td>
     </tr>
     <tr>
-      <th>direction</th>
-      <td><p>Direction of rotation.</p></td>
+      <th>...</th>
+      <td><p>other arguments passed on to <code>layer()</code>. These are
+often aesthetics, used to set an aesthetic to a fixed value, like
+<code>color = "red"</code> or <code>size = 3</code>. They may also be parameters
+to the paired geom/stat.</p></td>
     </tr>
     <tr>
       <th>start</th>
-      <td><p>Starting angle for rotation in radians.</p></td>
+      <td><p>Starting angle for rotation in degrees.</p></td>
+    </tr>
+    <tr>
+      <th>direction</th>
+      <td><p>Direction of rotation in degrees.</p></td>
+    </tr>
+    <tr>
+      <th>scale</th>
+      <td><p>multiplicative scales for adjusting the size of the vectors.</p></td>
+    </tr>
+    <tr>
+      <th>min.mag</th>
+      <td><p>minimum magnitude of the plotted vectors</p></td>
+    </tr>
+    <tr>
+      <th>skip</th>
+      <td><p>numeric specifying number of gridpoints not to draw in the x and y direction.</p></td>
+    </tr>
+    <tr>
+      <th>skip.x</th>
+      <td><p>numeric specifying number of gridpoints not to draw in the x and y direction.</p></td>
+    </tr>
+    <tr>
+      <th>skip.y</th>
+      <td><p>numeric specifying number of gridpoints not to draw in the x and y direction.</p></td>
+    </tr>
+    <tr>
+      <th>arrow.angle</th>
+      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a>)</p></td>
+    </tr>
+    <tr>
+      <th>arrow.length</th>
+      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a>)</p></td>
+    </tr>
+    <tr>
+      <th>arrow.ends</th>
+      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a>)</p></td>
+    </tr>
+    <tr>
+      <th>arrow.type</th>
+      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a>)</p></td>
+    </tr>
+    <tr>
+      <th>arrow</th>
+      <td><p>specification for arrow heads, as created by arrow().</p></td>
+    </tr>
+    <tr>
+      <th>lineend</th>
+      <td><p>Line end style (round, butt, square).</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
@@ -168,14 +223,12 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. <code>borders()</code>.</p></td>
     </tr>
-    <tr>
-      <th>...</th>
-      <td><p>other arguments passed on to <code>layer()</code>. These are
-often aesthetics, used to set an aesthetic to a fixed value, like
-<code>color = "red"</code> or <code>size = 3</code>. They may also be parameters
-to the paired geom/stat.</p></td>
-    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Direction and start allows to work with different standards. For the
+meteorological standard, for example, use <code>star = -90</code> and <code>direction = -1</code>.</p>
     
     <h2 class="hasAnchor" id="aesthetics"><a class="anchor" href="#aesthetics"></a>Aesthetics</h2>
 
@@ -184,14 +237,18 @@ to the paired geom/stat.</p></td>
 <li><p><strong>y</strong></p></li>
 <li><p><strong>mag</strong></p></li>
 <li><p><strong>angle</strong></p></li>
-<li><p>alpha</p></li>
-<li><p>colour</p></li>
+<li><p><code>alpha</code></p></li>
+<li><p><code>colour</code></p></li>
+<li><p><code>linetype</code></p></li>
+<li><p><code>size</code></p></li>
+<li><p><code>lineend</code></p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
   <code><a href='RepeatLon.html'>RepeatLon</a></code>, <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
+  <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
   <code><a href='geom_vector.html'>geom_vector</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
   <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
@@ -199,16 +256,32 @@ to the paired geom/stat.</p></td>
   <code><a href='stat_na.html'>stat_na</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>field</span> <span class='kw'>&lt;-</span> <span class='fu'>expand.grid</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>seq.Date</span>(<span class='fu'>as.Date</span>(<span class='st'>"2017-01-01"</span>), <span class='fu'>as.Date</span>(<span class='st'>"2017-01-31"</span>), <span class='st'>"2 days"</span>),
+                     <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>)
+<span class='no'>field</span>$<span class='no'>u</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm</span>(<span class='fu'>nrow</span>(<span class='no'>field</span>))
+<span class='no'>field</span>$<span class='no'>v</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm</span>(<span class='fu'>nrow</span>(<span class='no'>field</span>))
+<span class='no'>field</span>$<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'>with</span>(<span class='no'>field</span>, <span class='fu'>sqrt</span>(<span class='no'>u</span>^<span class='fl'>2</span> + <span class='no'>v</span>^<span class='fl'>2</span>))
+<span class='no'>field</span>$<span class='no'>dir</span> <span class='kw'>&lt;-</span> <span class='fu'>with</span>(<span class='no'>field</span>, <span class='fu'>atan2</span>(<span class='no'>v</span>, <span class='no'>u</span>))*<span class='fl'>180</span>/<span class='no'>pi</span>
+<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>field</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>x</span>, <span class='no'>y</span>)) +
+    <span class='fu'>geom_arrow</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>mag</span> <span class='kw'>=</span> <span class='no'>V</span>, <span class='kw'>angle</span> <span class='kw'>=</span> <span class='no'>dir</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
+               <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='geom_arrow-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#aesthetics">Aesthetics</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

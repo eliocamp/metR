@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate wave-activity flux — WaveFlux • metR</title>
+<title>Calculate geostrophic winds — GeostrophicWind • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -95,14 +95,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate wave-activity flux</h1>
+    <h1>Calculate geostrophic winds</h1>
     </div>
 
     
-    <p>Calculate wave-activity flux</p>
+    <p>Geostrophic wind from a geopotential height field.</p>
     
 
-    <pre class="usage"><span class='fu'>WaveFlux</span>(<span class='no'>gh</span>, <span class='no'>u</span>, <span class='no'>v</span>, <span class='no'>lon</span>, <span class='no'>lat</span>, <span class='no'>lev</span>)</pre>
+    <pre class="usage"><span class='fu'>GeostrophicWind</span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='st'>"guess"</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='fl'>9.8</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -112,48 +112,59 @@
       <td><p>geopotential height</p></td>
     </tr>
     <tr>
-      <th>u</th>
-      <td><p>mean zonal velocity</p></td>
-    </tr>
-    <tr>
-      <th>v</th>
-      <td><p>mean meridional velocity</p></td>
-    </tr>
-    <tr>
       <th>lon</th>
-      <td><p>longitude (in degrees)</p></td>
+      <td><p>longitude in degrees</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>latitude (in degrees)</p></td>
+      <td><p>latitude in degrees</p></td>
     </tr>
     <tr>
-      <th>lev</th>
-      <td><p>pressure level (in hPa)</p></td>
+      <th>cyclical</th>
+      <td><p>boundary condition for longitude (see details)</p></td>
+    </tr>
+    <tr>
+      <th>g</th>
+      <td><p>acceleration of gravity</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list with elements: longitude, latitude, and the two horizontal components
-of the wave activity flux.</p>
+    <p>A named list with vectors for the zonal and meridional component of geostrophic
+wind.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Calculates Plum-like wave activity fluxes</p>
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Takaya, K. and H. Nakamura, 2001: A Formulation of a Phase-Independent Wave-Activity Flux for Stationary and Migratory Quasigeostrophic Eddies on a Zonally Varying Basic Flow. J. Atmos. Sci., 58, 608–627, <a href='https://doi.org/10.1175/1520-0469(2001)058&lt;0608:AFOAPI&gt;2.0.CO;2'>https://doi.org/10.1175/1520-0469(2001)058&lt;0608:AFOAPI&gt;2.0.CO;2</a> 
-Adapted from <a href='https://github.com/marisolosman/Reunion_Clima/blob/master/WAF/Calculo_WAF.ipynb'>https://github.com/marisolosman/Reunion_Clima/blob/master/WAF/Calculo_WAF.ipynb</a></p>
+    <p>If <code>cyclical = "guess"</code> (the default) the function will try to guess if <code>lon</code>
+covers the whole globe and set cyclical conditions accordingly. For more
+predictable results, set the boundary condition explicitly.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other meteorology functions: <code><a href='Derivate.html'>Derivate</a></code>,
   <code><a href='EOF.html'>EOF</a></code>, <code><a href='QsWave.html'>FitQsWave</a></code>,
-  <code><a href='GeostrophicWind.html'>GeostrophicWind</a></code>, <code><a href='IdealGas.html'>IdealGas</a></code></p>
+  <code><a href='IdealGas.html'>IdealGas</a></code>, <code><a href='WaveFlux.html'>WaveFlux</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/copy'>copy</a></span>(<span class='no'>aao</span>)
+<span class='no'>aao</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>], <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'>GeostrophicWind</span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]</div><div class='output co'>#&gt;           lon   lat lev       gh       date  u          v
+#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.0807091
+#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.5513294
+#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01 NA  0.0661829
+#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01 NA -0.2976979
+#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01 NA -0.7498781
+#&gt;     ---                                                  
+#&gt; 532220: 347.5 -90.0 700 2762.000 2000-12-01 NA         NA
+#&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 NA         NA
+#&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 NA         NA
+#&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 NA         NA
+#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 NA         NA</div><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh</span>)) +
+    <span class='fu'><a href='geom_vector.html'>geom_vector</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>u</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>v</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 288 rows containing non-finite values (stat_vector).</span></div><div class='img'><img src='GeostrophicWind-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -164,10 +175,10 @@ Adapted from <a href='https://github.com/marisolosman/Reunion_Clima/blob/master/
 
       <li><a href="#details">Details</a></li>
 
-      <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

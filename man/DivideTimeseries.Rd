@@ -40,7 +40,7 @@ DivideTimeseries(g, gdata$date, n = 2, "Date", "Max Temperature")
 Other ggplot2 helpers: \code{\link{RepeatLon}},
   \code{\link{geom_arrow}},
   \code{\link{geom_contour_fill}},
-  \code{\link{geom_text_contour}},
+  \code{\link{geom_label_contour}},
   \code{\link{geom_vector}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},

@@ -208,9 +208,9 @@ Between <- function(x, limits, include = c(TRUE, TRUE)) {
 #' @export
 JumpBy <- function(x, by, start = 1, fill = NULL) {
     if (!is.null(fill)) {
-        x[-seq(start, length(x), by = by)] <- fill
+        x[-seq.int(start, length(x), by = by)] <- fill
     } else {
-        x <- x[seq(start, length(x), by = by)]
+        x <- x[seq.int(start, length(x), by = by)]
     }
     return(x)
 }

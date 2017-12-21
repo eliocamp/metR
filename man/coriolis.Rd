@@ -11,14 +11,14 @@ coriolis(lat)
 
 f(lat)
 
-coriolis.dy(lat, a = 6371)
+coriolis.dy(lat, a = 6371000)
 
-f.dy(lat, a = 6371)
+f.dy(lat, a = 6371000)
 }
 \arguments{
 \item{lat}{latitude in degrees}
 
-\item{a}{radius of the earth in kilometers}
+\item{a}{radius of the earth}
 }
 \description{
 Coriolis and beta parameters by latitude.

@@ -3,7 +3,7 @@
 #' Coriolis and beta parameters by latitude.
 #'
 #' @param lat latitude in degrees
-#' @param a radius of the earth in kilometers
+#' @param a radius of the earth
 #'
 #' @details
 #' All functions use the correct sidereal day (24hs 56mins 4.091s) instead of
@@ -22,8 +22,7 @@ f <- coriolis
 
 #' @export
 #' @rdname  coriolis
-coriolis.dy <- function(lat, a = 6371) {
-    a <- a*1000
+coriolis.dy <- function(lat, a = 6371000) {
     2*.omega*cos(lat*pi/180)/a
 }
 

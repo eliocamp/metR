@@ -8,7 +8,7 @@
 #' should be the same value as the related \code{stat_contour} call.
 #' @param exclude a numeric vector of levels that should be excluded from the
 #' contour calculation
-#' @param ... other arguments passed to [ggplot2::scale_color_gradient2]
+#' @inheritParams ggplot2::scale_colour_gradient2
 #'
 #' @examples
 #' library(ggplot2)

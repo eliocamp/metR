@@ -3,19 +3,32 @@
 #' Draws labels on contours built with [ggplot2::stat_contour].
 #'
 #' @inheritParams ggplot2::geom_text
+#' @inheritParams ggplot2::geom_label
 #' @param min.size minimum number of points for a contour to be labeled.
 #' @param skip number of contours to skip
+#' @param rotate logical indicating wether to rotate text following the contour.
 #'
 #' @details
 #' Is best used with a previous call to [ggplot2::stat_contour] with the same
 #' parameters.
+#' Note that while `geom_text_contour()` can angle itself to follow the contour,
+#' this is not the case with `geom_label_contour()`.
 #'
 #' @examples
 #' library(ggplot2)
 #' v <- data.table::melt(volcano)
-#' ggplot(v, aes(Var1, Var2)) +
-#'    geom_contour(aes(z = value)) +
-#'    geom_text_contour(aes(z = value, label = ..level..), skip = 0)
+#' g <- ggplot(v, aes(Var1, Var2)) +
+#'        geom_contour(aes(z = value))
+#' g + geom_text_contour(aes(z = value, label = ..level..))
+#'
+#' # Small hack, best used with uniform background
+#' geom_label_contour2 <- function(...) {
+#'     list(geom_label_contour(fill = "white", label.r = unit(0, "lines"),
+#'                             label.padding = unit(0.04, "lines"), color = NA, ...),
+#'          geom_text_contour(..., rotate = FALSE))
+#' }
+#' g + geom_label_contour2(aes(z = value, label = ..level..)) +
+#'    theme_void()
 #'
 #' @section Aesthetics:
 #' \code{geom_text_contour} understands the following aesthetics (required aesthetics are in bold):
@@ -46,6 +59,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
                       ...,
                       min.size = 10,
                       skip = 1,
+                      rotate = TRUE,
                       parse = FALSE,
                       nudge_x = 0,
                       nudge_y = 0,
@@ -72,6 +86,8 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
         inherit.aes = inherit.aes,
         params = list(
             skip = skip,
+            min.size = min.size,
+            rotate = rotate,
             parse = parse,
             check_overlap = check_overlap,
             na.rm = na.rm,
@@ -101,9 +117,7 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
 
    draw_panel = function(data, panel_params, coord, parse = FALSE,
                          na.rm = FALSE, check_overlap = FALSE, min.size = 20,
-                         skip = 1) {
-       d1 <<- data
-
+                         skip = 1, rotate = TRUE) {
        data <- data.table::as.data.table(coord$transform(data, panel_params))
 
        breaks <- unique(data$level)
@@ -113,7 +127,7 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
        data[, N := .N, by = piece]
        data <- data[N >= min.size]
 
-       data[, angle := .cont.angle(x, y), by = piece]
+       if (rotate) data[, angle := .cont.angle(x, y), by = piece]
 
        data[, var := minvar(x, y), by = .(piece)]
        data <- data[var == T][, head(.SD, 1), by = piece]
@@ -124,10 +138,10 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
        }
 
        if (is.character(data$vjust)) {
-           data$vjust <- compute_just(data$vjust, data$y)
+           data$vjust <- ggplot2:::compute_just(data$vjust, data$y)
        }
        if (is.character(data$hjust)) {
-           data$hjust <- compute_just(data$hjust, data$x)
+           data$hjust <- ggplot2:::compute_just(data$hjust, data$x)
        }
 
        grid::textGrob(
@@ -162,8 +176,4 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
 }
 
 
-# geom_label_contour <- function(...) {
-#     list(stat_contourlabel(geom = "label", fill = "white", label.r = unit(0, "lines"),
-#                            label.padding = unit(0.04, "lines"), color = NA, ...),
-#          stat_contourlabel(...))
-# }
+

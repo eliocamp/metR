@@ -17,7 +17,7 @@ parameters.
 - `DerivatePhysical()` is removed since it was made redundant by the extended
 functionality in `Derivate()`
 - New function `IdealGas()` for ideal gas calculations. 
-- New `geom_text_contour()` for labeling contours. 
+- New `geom_text_contour()` and `geom_label_contour()` for labeling contours. 
 - New function `GeostrophicWind()`.
 
 

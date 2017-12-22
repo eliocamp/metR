@@ -187,8 +187,6 @@ Divergence <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
 #' @rdname Derivate
 Vorticity <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
                       sphere = FALSE, a = 6371000) {
-    ndep <- length(dep.names)
-    nind <- length(ind.names)
 
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
                     sphere = sphere, a = a, order = 1)

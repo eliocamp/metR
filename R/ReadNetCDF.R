@@ -48,7 +48,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
     if (is.null(varnames)) {
         names(vars) <- vars
     } else {
-        no.names <- sapply(varnames, nchar) == 0
+        no.names <- nchar(varnames) == 0
         names(vars)[no.names] <- vars[no.names]
     }
 
@@ -64,7 +64,6 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
     names(dims) <- ids
 
     if ("time" %in% names(dimensions)) {
-        requireNamespace("lubridate", quietly = TRUE)
         date.unit <- ncfile$dim$time$units
         date.unit <- strsplit(date.unit, " since ", fixed = TRUE)[[1]]
         date.fun <- get(paste0(date.unit[1]))
@@ -79,32 +78,38 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
         return(r)
     }
 
-    # Leo la primera variable para luego hacer melt y obtener el data.table
-    # al que luego le agrego las otras variables
-    var1 <- ncdf4::ncvar_get(ncfile, vars[1], collapse_degen = FALSE)
-    order <- ncfile$var[[vars[1]]]$dimids
-    dimensions <- dimensions[dims[as.character(order)]]
-    dimnames(var1) <- dimensions
+    # Leo las variables y las meto en una lista.
+    nc <- list()
+    for (v in seq_along(vars)) {
+        var1 <- ncdf4::ncvar_get(ncfile, vars[v], collapse_degen = FALSE)
+        order <- ncfile$var[[vars[1]]]$dimids
+        dimensions <- dimensions[dims[as.character(order)]]
+        dimnames(var1) <- dimensions
+        nc[[v]] <- var1
+    }
+
     if (out[1] == "array") {
         ncdf4::nc_close(ncfile)
-        return(var1)
+        return(nc)
     } else if (out[1] == "vector") {
         ncdf4::nc_close(ncfile)
-        return(c(var1))
+        nc <- lapply(1:length(nc), function(x) c(nc[[x]]))
+        names(nc) <- names(vars)
+        return(nc)
     } else {
-        nc <- data.table::melt(var1, varnames = names(dimensions), value.name = names(vars)[1])
-        data.table::setDT(nc)
+        nc.df <- data.table::melt(nc[[1]], varnames = names(dimensions), value.name = names(vars)[1])
+        data.table::setDT(nc.df)
 
         if ("time" %in% names(dimensions)) {
-            nc[, date := as.POSIXct(time[1]), by = time]
-            nc[, time := NULL]
+            nc.df[, date := lubridate::as_datetime(time[1]), by = time]
+            nc.df[, time := NULL]
         }
         if (length(vars) > 1) {
             # Otras variables.
-            nc[, c(names(vars[-1])) := lapply(vars[-1], ncdf4::ncvar_get, nc = ncfile)]
+            nc.df[, c(names(vars[-1])) := lapply(2:length(nc), function(x) c(nc[[x]]))]
         }
         # Dejemos todo prolijo antes de salir.
         ncdf4::nc_close(ncfile)
-        return(nc)
+        return(nc.df)
     }
 }

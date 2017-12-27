@@ -19,6 +19,7 @@ functionality in `Derivate()`
 - New function `IdealGas()` for ideal gas calculations. 
 - New `geom_text_contour()` and `geom_label_contour()` for labeling contours. 
 - New function `GeostrophicWind()`.
+- Fixed? werid bug with `ReadNetCDF()` and `as.POSIXct`.
 
 
 # meteoR 0.0.9100

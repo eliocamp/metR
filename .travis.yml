@@ -9,6 +9,7 @@ addons:
     packages:
       - libnetcdf-dev
       - netcdf-bin
+      - libudunits2-dev
 
 after_success:
   - Rscript -e 'covr::codecov()'

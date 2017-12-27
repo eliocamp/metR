@@ -122,7 +122,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
         for (v in seq_along(vars)[-first.var]) {
             this.dim <- names(dimnames(nc[[v]]))
             first.dim <- names(dimnames(nc[[first.var]]))
-            missing.dim <- this.dim[!(this.dim %in% first.dim)]
+            missing.dim <- first.dim[!(first.dim %in% this.dim)]
             nc.df[, c(names(vars[-first.var])) := lapply(seq_along(vars)[-first.var],
                                                          function(x) c(nc[[x]])),
                   by = c(missing.dim)]

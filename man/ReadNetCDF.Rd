@@ -26,6 +26,11 @@ that only one variable can be retrieved at a time with these formats.
 
 Finally, it can also be \code{vars}, in which case it returns a list with the name
 of the available variables and the dimensions of the spatiotemporal grid.
+
+When not all variables specified in \code{vars} have the same number of dimensions,
+the shorter variables will be recicled. E.g. if reading a 3D pressure field
+and a 2D surface temperature field, the latter will be turned into a 3D field
+with the same values in each missing dimension.
 }
 \description{
 Using the \code{\link[ncdf4]{ncdf4-package}} package, it reads an .nc file. The advantage

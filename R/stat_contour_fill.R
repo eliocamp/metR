@@ -101,8 +101,9 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
         data2 <- rbind(data[c("x", "y", "z")], extra)
         cont <- ggplot2:::contour_lines(data2, breaks.keep, complete = complete)
-
         data.table::setDT(cont)
+
+        if (length(cont) == 0) return(cont)
 
         cont <- CorrectFill(cont, data2, breaks)
 

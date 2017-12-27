@@ -35,7 +35,7 @@
 #'
 #' @export
 #' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
-#' @import data.table
+#' @import data.table udunits2
 ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array", "vars")) {
     ncfile <- ncdf4::nc_open(file)
 
@@ -64,13 +64,19 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
     names(dims) <- ids
 
     if ("time" %in% names(dimensions)) {
-        date.unit <- ncfile$dim$time$units
-        date.unit <- strsplit(date.unit, " since ", fixed = TRUE)[[1]]
-        date.fun <- get(paste0(date.unit[1]))
-        orders <- c("ymd HMS", "ymd HM")
-        dimensions[["time"]] <- as.character(lubridate::parse_date_time(date.unit[2],
-                                                                        orders) +
-                                                 date.fun(dimensions[["time"]]))
+        # date.unit <- ncfile$dim$time$units
+        # date.unit <- strsplit(date.unit, " since ", fixed = TRUE)[[1]]
+        # date.fun <- get(paste0(date.unit[1]))
+        # orders <- c("ymd HMS", "ymd HM")
+        # dimensions[["time"]] <- as.character(lubridate::parse_date_time(date.unit[2],
+        # orders) +
+        # date.fun(dimensions[["time"]]))
+        time <- udunits2::ud.convert(dimensions[["time"]],
+                                     ncfile$dim$time$units,
+                                     "seconds since 1970-01-01 00:00:00")
+        dimensions[["time"]] <- as.character(as.POSIXct(time, tz = "UTC",
+                                                        origin = "1970-01-01 00:00:00"))
+
     }
 
     if (out[1] == "vars") {
@@ -113,3 +119,5 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
         return(nc.df)
     }
 }
+
+

@@ -20,6 +20,7 @@ functionality in `Derivate()`
 - New `geom_text_contour()` and `geom_label_contour()` for labeling contours. 
 - New function `GeostrophicWind()`.
 - Fixed? werid bug with `ReadNetCDF()` and `as.POSIXct`.
+- `ReadNetCDF()` now supports timezones via de `udunits2` package.
 
 
 # meteoR 0.0.9100

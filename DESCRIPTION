@@ -29,6 +29,7 @@ Imports:
     scales,
     stringr,
     curl,
+    dunits2,
     Formula,
     formula.tools
 RoxygenNote: 6.0.1.9000

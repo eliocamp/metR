@@ -21,6 +21,11 @@
 #' Finally, it can also be `vars`, in which case it returns a list with the name
 #' of the available variables and the dimensions of the spatiotemporal grid.
 #'
+#' When not all variables specified in `vars` have the same number of dimensions,
+#' the shorter variables will be recicled. E.g. if reading a 3D pressure field
+#' and a 2D surface temperature field, the latter will be turned into a 3D field
+#' with the same values in each missing dimension.
+#'
 #' @examples
 #' \dontrun{
 #' file <- "file.nc"
@@ -86,11 +91,12 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
 
     # Leo las variables y las meto en una lista.
     nc <- list()
+    dim.length <- vector("numeric", length = length(vars))
     for (v in seq_along(vars)) {
         var1 <- ncdf4::ncvar_get(ncfile, vars[v], collapse_degen = FALSE)
-        order <- ncfile$var[[vars[1]]]$dimids
-        dimensions <- dimensions[dims[as.character(order)]]
-        dimnames(var1) <- dimensions
+        order <- ncfile$var[[vars[v]]]$dimids
+        dimnames(var1) <- dimensions[dims[as.character(order)]]
+        dim.length[v] <- length(order)
         nc[[v]] <- var1
     }
 
@@ -103,21 +109,27 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
         names(nc) <- names(vars)
         return(nc)
     } else {
-        nc.df <- data.table::melt(nc[[1]], varnames = names(dimensions), value.name = names(vars)[1])
+        first.var <- which.max(dim.length)
+        nc.df <- data.table::melt(nc[[first.var]], varnames = names(dimnames(nc[[first.var]])),
+                                  value.name = names(vars)[first.var])
         data.table::setDT(nc.df)
 
         if ("time" %in% names(dimensions)) {
             nc.df[, date := lubridate::as_datetime(time[1]), by = time]
             nc.df[, time := NULL]
         }
-        if (length(vars) > 1) {
-            # Otras variables.
-            nc.df[, c(names(vars[-1])) := lapply(2:length(nc), function(x) c(nc[[x]]))]
+
+        for (v in seq_along(vars)[-first.var]) {
+            missing.dim <- names(dimensions)[!(names(dimensions) %in% names(dimnames(nc[[v]])))]
+            nc.df[, c(names(vars[-first.var])) := lapply(seq_along(vars)[-first.var],
+                                                         function(x) c(nc[[x]])),
+                  by = c(missing.dim)]
         }
-        # Dejemos todo prolijo antes de salir.
-        ncdf4::nc_close(ncfile)
-        return(nc.df)
+
     }
+    # Dejemos todo prolijo antes de salir.
+    ncdf4::nc_close(ncfile)
+    return(nc.df)
 }
 
 

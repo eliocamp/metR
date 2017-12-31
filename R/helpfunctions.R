@@ -88,7 +88,7 @@ Mag <- function(x, y) {
 #' @details
 #' \code{\%~\%} can be thought as a "similar" operator. It's a fuzzy version of
 #' \code{\link{\%in\%}} in that returns \code{TRUE} for the element of \code{x}
-#' which is the closest to any element of \code{target}.
+#' which is the (first) closest to any element of \code{target}.
 #'
 #' \code{Similar} is a functional version of \code{\%~\%} that also has a
 #' \code{tol} parameter that indicates the maximum allowed tolerance.
@@ -128,7 +128,7 @@ Mag <- function(x, y) {
     r <- rep(FALSE, length(x))
     for (i in seq_along(target)) {
         y <- abs(x - target[i])
-        r <- r | (y == min(y))
+        r <- r | (seq_along(y) == which.min(y))
     }
     return(r)
 }
@@ -140,7 +140,7 @@ Similar <- function(x, target, tol = Inf) {
     if (is.null(tol)) tol <- NA
     for (i in seq_along(target)) {
         y <- abs(x - target[i])
-        r <- r | ((y == min(y)) & (is.na(tol) | y < abs(tol)))
+        r <- r | ((seq_along(y) == which.min(y)) & (is.na(tol) | y < abs(tol)))
     }
     return(r)
 }

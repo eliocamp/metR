@@ -79,7 +79,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             breaks <- scales::fullseq(range(data$z), binwidth)
             }
         breaks.keep <- breaks[!(breaks %in% exclude)]
-# br2 <<- breaks.keep
+br2 <<- breaks.keep
         dx <- abs(diff(subset(data, y == data$y[1])$x)[1])
         dy <- abs(diff(subset(data, x == data$x[1])$y)[1])
 
@@ -94,9 +94,9 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                    x = c(range.data$x[1] - dx, range.data$x[2] + dx)))
 
         mean.z <- mean(data$z)
-        # mz <<- mean.z
+ mz <<- mean.z
         mean.level <- breaks[breaks %~% mean.z]
-        # mm <<- mean.level
+ mm <<- mean.level
         extra$z <- mean.z
 
         cur.group <- data$group[1]
@@ -135,8 +135,9 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         cont[, group := factor(paste(cur.group, sprintf("%03d", piece), sep = "-"))]
 
 
-
         cont <- cont[int.level %between% range(breaks.keep)]
+        # cont[int.level > range(breaks.keep)[2], int.level := range.data$z[2]]
+        # cont[int.level < range(breaks.keep)[1], int.level := range.data$z[1]]
         # cc <<- cont
         cont
         }

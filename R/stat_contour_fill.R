@@ -79,13 +79,13 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             breaks <- scales::fullseq(range(data$z), binwidth)
             }
         breaks.keep <- breaks[!(breaks %in% exclude)]
-
+# br2 <<- breaks.keep
         dx <- abs(diff(subset(data, y == data$y[1])$x)[1])
         dy <- abs(diff(subset(data, x == data$x[1])$y)[1])
 
         #Extender para grilla rectangular.
         range.data <- as.data.frame(sapply(data[c("x", "y", "z")], range))
-
+# r2 <<- range.data
         extra <- rbind(expand.grid(y = c(range.data$y[2] + dy,
                                          range.data$y[1] - dy),
                                    x = unique(data$x)),
@@ -94,7 +94,9 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                    x = c(range.data$x[1] - dx, range.data$x[2] + dx)))
 
         mean.z <- mean(data$z)
+        # mz <<- mean.z
         mean.level <- breaks[breaks %~% mean.z]
+        # mm <<- mean.level
         extra$z <- mean.z
 
         cur.group <- data$group[1]
@@ -102,7 +104,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         data2 <- rbind(data[c("x", "y", "z")], extra)
         cont <- ggplot2:::contour_lines(data2, breaks.keep, complete = complete)
         data.table::setDT(cont)
-
+        ccc <- cont
         if (length(cont) == 0) return(cont)
 
         cont <- CorrectFill(cont, data2, breaks)
@@ -119,8 +121,12 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                 int.level = mean.level + correction)
             mean.cont$group <- factor(paste(cur.group, sprintf("%03d", mean.cont$piece), sep = "-"))
             cont <- rbind(cont, mean.cont)
-            }
-
+        }
+        # cc <<- copy(cont)
+        cont$x[cont$x > range.data$x[2]] <- range.data$x[2]
+        cont$x[cont$x < range.data$x[1]] <- range.data$x[1]
+        cont$y[cont$y < range.data$y[1]] <- range.data$y[1]
+        cont$y[cont$y > range.data$y[2]] <- range.data$y[2]
         areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][
             , rank := frank(-area, ties.method = "random")]
         areas <- areas[, head(.SD, 1), by = piece]
@@ -128,11 +134,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         cont[, piece := rank]
         cont[, group := factor(paste(cur.group, sprintf("%03d", piece), sep = "-"))]
 
-        cont$x[cont$x > range.data$x[2]] <- range.data$x[2]
-        cont$x[cont$x < range.data$x[1]] <- range.data$x[1]
-        cont$y[cont$y < range.data$y[1]] <- range.data$y[1]
-        cont$y[cont$y > range.data$y[2]] <- range.data$y[2]
 
+
+        cont <- cont[int.level %between% range(breaks.keep)]
+        # cc <<- cont
         cont
         }
 )

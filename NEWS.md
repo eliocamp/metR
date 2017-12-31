@@ -21,6 +21,7 @@ functionality in `Derivate()`
 - New function `GeostrophicWind()`.
 - Fixed? werid bug with `ReadNetCDF()` and `as.POSIXct`.
 - `ReadNetCDF()` now supports timezones via de `udunits2` package.
+- Fixed bad polygon ordering and extra polygon in `stat_contour_fill()`.
 
 
 # meteoR 0.0.9100

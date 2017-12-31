@@ -29,6 +29,7 @@
 #' @seealso [stat_filter] for a more general way of filtering data.
 #' @export
 #' @family ggplot2 helpers
+#' @importFrom plyr ddply
 stat_na <- function(mapping = NULL, data = NULL,
                               geom = "tile", position = "identity",
                               ...,

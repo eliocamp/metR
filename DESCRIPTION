@@ -31,7 +31,9 @@ Imports:
     curl,
     udunits2 ,
     Formula,
-    formula.tools
+    formula.tools,
+    plyr,
+    digest
 RoxygenNote: 6.0.1.9000
 Suggests: 
     knitr,

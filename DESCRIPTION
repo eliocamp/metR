@@ -17,6 +17,8 @@ Depends:
     R (>= 2.10)
 Imports:
     ggplot2,
+    gtable,
+    grid,
     data.table,
 	maps,
 	maptools,

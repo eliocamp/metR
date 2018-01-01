@@ -100,10 +100,15 @@ A guide object.
 A version of \link[ggplot2:guide_colourbar]{ggplot2::guide_colourbar} that displays discretized values and,
 by default, puts labels in between values.
 }
+\details{
+The default behaviour works fell for geom_contour_fill in which the colors
+represent the value between contour surfaces.
+
+`inside = TRUE`` works better for geom_tile where the color represents
+the value of the data and is very similar to gg\link[ggplot2:guide_legend]{ggplot2::guide_legend}.
+}
 \examples{
-# The default behaviour works fell for geom_contour_fill in which
-# the colors represent the value between contour surfaces. In this
-# example the lowest color represent area of the data with values
+# In this example the lowest color represent area of the data with values
 # between 80 and 100.
 library(ggplot2)
 binwidth <- 20
@@ -113,12 +118,15 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
     scale_fill_viridis_c(guide = guide_colourbar2(),
                          breaks = MakeBreaks(binwidth))
 
-# inside = TRUE works better for geom_tile where the color represents
-# the value of the data
+# Difference between guide_legend() and guide_colorbar2(inside = T)
 df <- reshape2::melt(outer(1:4, 1:4), varnames = c("X1", "X2"))
-ggplot(df, aes(X1, X2)) +
-    geom_tile(aes(fill = value))  +
-    scale_fill_viridis_c(guide = guide_colourbar2(inside = TRUE),
-                          breaks = MakeBreaks(3))
+g <- ggplot(df, aes(X1, X2)) +
+        geom_tile(aes(fill = value)) +
+        theme(legend.position = "bottom")
+
+# Tick labels are to the side
+g + scale_fill_viridis_c(guide = guide_legend())
+# Tick labels are at the bottom
+g + scale_fill_viridis_c(guide = guide_colourbar2(inside = TRUE))
 
 }

@@ -37,8 +37,8 @@ g <- ggplot(gdata, aes(date, max)) +
 DivideTimeseries(g, gdata$date, n = 2, "Date", "Max Temperature")
 }
 \seealso{
-Other ggplot2 helpers: \code{\link{RepeatLon}},
-  \code{\link{geom_arrow}},
+Other ggplot2 helpers: \code{\link{MakeBreaks}},
+  \code{\link{RepeatLon}}, \code{\link{geom_arrow}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},
   \code{\link{geom_vector}},

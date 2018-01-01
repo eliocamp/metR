@@ -33,7 +33,7 @@ Extended binary operators for easy subsetting.
 \details{
 \code{\%~\%} can be thought as a "similar" operator. It's a fuzzy version of
 \code{\link{\%in\%}} in that returns \code{TRUE} for the element of \code{x}
-which is the closest to any element of \code{target}.
+which is the (first) closest to any element of \code{target}.
 
 \code{Similar} is a functional version of \code{\%~\%} that also has a
 \code{tol} parameter that indicates the maximum allowed tolerance.

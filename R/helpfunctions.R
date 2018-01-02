@@ -127,8 +127,9 @@ Mag <- function(x, y) {
 `%~%` <- function(x, target) {
     r <- rep(FALSE, length(x))
     for (i in seq_along(target)) {
-        y <- abs(x - target[i])
-        r <- r | (seq_along(y) == which.min(y))
+        dif <- abs(x - target[i])
+        x.select <- x[which.min(dif)]
+        r <- r | (x == x.select)
     }
     return(r)
 }
@@ -139,8 +140,9 @@ Similar <- function(x, target, tol = Inf) {
     r <- rep(FALSE, length(x))
     if (is.null(tol)) tol <- NA
     for (i in seq_along(target)) {
-        y <- abs(x - target[i])
-        r <- r | ((seq_along(y) == which.min(y)) & (is.na(tol) | y < abs(tol)))
+        dif <- abs(x - target[i])
+        x.select <- x[which.min(dif)]
+        r <- r | (x == x.select & (is.na(tol) | y < abs(tol)))
     }
     return(r)
 }

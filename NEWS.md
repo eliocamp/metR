@@ -23,7 +23,7 @@ functionality in `Derivate()`
 - `ReadNetCDF()` now supports timezones via de `udunits2` package.
 - Fixed bad polygon ordering and extra polygon in `stat_contour_fill()`.
 - New function `MakeBreaks()`.
-- New guide. `guide_colorbar2` displays discretized values of a continuous color 
+- New guide. `guide_colorstrip` displays discretized values of a continuous color 
 or fill scale. 
 
 

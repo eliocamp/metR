@@ -110,7 +110,7 @@ guide_colourstrip <- function(
 
         # parameter
         available_aes = c("colour", "color", "fill"), ..., name = "colorbar"),
-        class = c("guide", "colorbar2", "colorbar")
+        class = c("guide", "colorstrip", "colorbar")
     )
 }
 
@@ -129,14 +129,14 @@ guide_colourstrip <- function(
 #' @export
 #' @rdname dont-document
 #' @keywords internal
-guide_train.colorbar2 <- function(guide, scale) {
+guide_train.colorstrip <- function(guide, scale) {
     # do nothing if scale are inappropriate
     if (length(intersect(scale$aesthetics, c("color", "colour", "fill"))) == 0) {
-        warning("colorbar2 guide needs colour or fill scales.")
+        warning("colorstrip guide needs colour or fill scales.")
         return(NULL)
     }
     if (scale$is_discrete()) {
-        warning("colorbar2 guide needs continuous scales.")
+        warning("colorstrip guide needs continuous scales.")
         return(NULL)
     }
 
@@ -188,7 +188,7 @@ guide_train.colorbar2 <- function(guide, scale) {
 
 #' @export
 #' @rdname guide_colourstrip
-guide_colorstip <- guide_colourstrip
+guide_colorstrip <- guide_colourstrip
 
 .inside <- function(x) {
     N <- length(x)

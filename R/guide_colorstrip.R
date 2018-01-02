@@ -114,20 +114,12 @@ guide_colourstrip <- function(
     )
 }
 
-#' Methods
-#'
-#' Documentation for functions that CRAN made me document. DO NOT USE.
-#'
-#' @param guide,scale things you shouldn't touch
-#'
-#' @examples
-#'
-#' print(rep("I will NOT use this functions", 100))
+#' Methods for guides
 #'
 #' @importFrom stats setNames
 #' @import gtable
 #' @export
-#' @rdname dont-document
+#' @rdname guide-methods
 #' @keywords internal
 guide_train.colorstrip <- function(guide, scale) {
     # do nothing if scale are inappropriate

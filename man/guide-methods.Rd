@@ -2,19 +2,11 @@
 % Please edit documentation in R/guide_colorstrip.R
 \name{guide_train.colorstrip}
 \alias{guide_train.colorstrip}
-\title{Methods}
+\title{Methods for guides}
 \usage{
 guide_train.colorstrip(guide, scale)
 }
-\arguments{
-\item{guide, scale}{things you shouldn't touch}
-}
 \description{
-Documentation for functions that CRAN made me document. DO NOT USE.
-}
-\examples{
-
-print(rep("I will NOT use this functions", 100))
-
+Methods for guides
 }
 \keyword{internal}

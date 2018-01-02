@@ -115,7 +115,7 @@ binwidth <- 20
 data(volcano)
 ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
     geom_contour_fill(binwidth = binwidth) +
-    scale_fill_viridis_c(guide = guide_colourstrip(),
+    scale_fill_continuous(guide = guide_colourstrip(),
                          breaks = MakeBreaks(binwidth))
 
 # Difference between guide_legend() and guide_colorbar2(inside = T)
@@ -125,8 +125,8 @@ g <- ggplot(df, aes(X1, X2)) +
         theme(legend.position = "bottom")
 
 # Tick labels are to the side
-g + scale_fill_viridis_c(guide = guide_legend())
+g + scale_fill_continuous(guide = guide_legend())
 # Tick labels are at the bottom
-g + scale_fill_viridis_c(guide = guide_colourstrip(inside = TRUE))
+g + scale_fill_continuous(guide = guide_colourstrip(inside = TRUE))
 
 }

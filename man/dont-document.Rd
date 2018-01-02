@@ -17,3 +17,4 @@ Documentation for functions that CRAN made me document. DO NOT USE.
 print(rep("I will NOT use this functions", 100))
 
 }
+\keyword{internal}

@@ -21,7 +21,7 @@
 #' data(volcano)
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
 #'     geom_contour_fill(binwidth = binwidth) +
-#'     scale_fill_viridis_c(guide = guide_colourbar2(),
+#'     scale_fill_viridis_c(guide = guide_colourstrip(),
 #'                          breaks = MakeBreaks(binwidth))
 #'
 #' # Difference between guide_legend() and guide_colorbar2(inside = T)
@@ -33,14 +33,14 @@
 #' # Tick labels are to the side
 #' g + scale_fill_viridis_c(guide = guide_legend())
 #' # Tick labels are at the bottom
-#' g + scale_fill_viridis_c(guide = guide_colourbar2(inside = TRUE))
+#' g + scale_fill_viridis_c(guide = guide_colourstrip(inside = TRUE))
 #'
 #' @return
 #' A guide object.
 #'
 #' @export
 #' @importFrom grid is.unit
-guide_colourbar2 <- function(
+guide_colourstrip <- function(
     # title
     title = waiver(),
     title.position = NULL,
@@ -131,11 +131,11 @@ guide_colourbar2 <- function(
 guide_train.colorbar2 <- function(guide, scale) {
     # do nothing if scale are inappropriate
     if (length(intersect(scale$aesthetics, c("color", "colour", "fill"))) == 0) {
-        warning("colorbar guide needs colour or fill scales.")
+        warning("colorbar2 guide needs colour or fill scales.")
         return(NULL)
     }
     if (scale$is_discrete()) {
-        warning("colorbar guide needs continuous scales.")
+        warning("colorbar2 guide needs continuous scales.")
         return(NULL)
     }
 
@@ -186,8 +186,8 @@ guide_train.colorbar2 <- function(guide, scale) {
 
 
 #' @export
-#' @rdname guide_colourbar2
-guide_colorbar2 <- guide_colourbar2
+#' @rdname guide_colourstrip
+guide_colorstip <- guide_colourstrip
 
 .inside <- function(x) {
     N <- length(x)

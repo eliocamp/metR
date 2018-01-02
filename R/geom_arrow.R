@@ -84,7 +84,7 @@ GeomArrow <- ggplot2::ggproto("GeomArrow", Geom,
   required_aes = c("x", "y", "mag", "angle"),
   default_aes = ggplot2::aes(color = "black", scale = 1, size = 0.5, min.mag = 0,
                              linetype = 1, alpha = NA),
-  draw_key = draw_key_path,
+  draw_key = ggplot2::draw_key_path,
   draw_panel = function(data, panel_scales, coord, skip.x = skip.x,
                         skip.y = skip.y, arrow = arrow, lineend = lineend,
                         start = start, direction = direction) {

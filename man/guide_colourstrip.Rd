@@ -2,7 +2,7 @@
 % Please edit documentation in R/guide_colorstrip.R
 \name{guide_colourstrip}
 \alias{guide_colourstrip}
-\alias{guide_colorstip}
+\alias{guide_colorstrip}
 \title{Discretized continuous color guide}
 \usage{
 guide_colourstrip(title = waiver(), title.position = NULL,
@@ -13,7 +13,7 @@ guide_colourstrip(title = waiver(), title.position = NULL,
   inside = FALSE, direction = NULL, default.unit = "line",
   reverse = FALSE, order = 0, ...)
 
-guide_colorstip(title = waiver(), title.position = NULL,
+guide_colorstrip(title = waiver(), title.position = NULL,
   title.theme = NULL, title.hjust = NULL, title.vjust = NULL,
   label = TRUE, label.position = NULL, label.theme = NULL,
   label.hjust = NULL, label.vjust = NULL, barwidth = NULL,

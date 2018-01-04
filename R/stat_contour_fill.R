@@ -62,6 +62,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              breaks = NULL, complete = TRUE, na.rm = FALSE,
                              exclude = NULL) {
         data <- data[!(is.na(data$x) | is.na(data$y)), ]
+# dd <<- data
         if (na.rm) {
             data <- data[!is.na(data$z), ]
         } else {
@@ -104,13 +105,15 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         data2 <- rbind(data[c("x", "y", "z")], extra)
         cont <- ggplot2:::contour_lines(data2, breaks.keep, complete = complete)
         data.table::setDT(cont)
-        ccc <- cont
+# ccc <- cont
         if (length(cont) == 0) return(cont)
 
         cont <- CorrectFill(cont, data2, breaks)
 
         i <-  which(breaks.keep == mean.level)
-        correction <- (breaks.keep[i + sign(mean.z - mean.level)] - mean.level)/2
+        correction <- sign(mean.z - mean.level)
+        if (correction == 0) correction <- 1
+        correction <- (breaks.keep[i + correction] - mean.level)/2
 
         if (mean.level %in% breaks.keep & complete == TRUE) {
             mean.cont  <- data.frame(
@@ -119,10 +122,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                 y = c(range.data$y[1], rep(range.data$y[2], 2), range.data$y[1]),
                 piece = max(cont$piece) + 1,
                 int.level = mean.level + correction)
-            mean.cont$group <- factor(paste(cur.group, sprintf("%03d", mean.cont$piece), sep = "-"))
+            mean.cont$group <- factor(paste("", sprintf("%03d", mean.cont$piece), sep = "-"))
             cont <- rbind(cont, mean.cont)
         }
-        # cc <<- copy(cont)
+# cc <<- copy(cont)
         cont$x[cont$x > range.data$x[2]] <- range.data$x[2]
         cont$x[cont$x < range.data$x[1]] <- range.data$x[1]
         cont$y[cont$y < range.data$y[1]] <- range.data$y[1]
@@ -136,9 +139,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
 
         cont <- cont[int.level %between% range(breaks.keep)]
-        # cont[int.level > range(breaks.keep)[2], int.level := range.data$z[2]]
-        # cont[int.level < range(breaks.keep)[1], int.level := range.data$z[1]]
-        # cc <<- cont
+# cc <<- cont
         cont
         }
 )

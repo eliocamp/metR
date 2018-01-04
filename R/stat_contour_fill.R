@@ -95,9 +95,9 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                    x = c(range.data$x[1] - dx, range.data$x[2] + dx)))
 
         mean.z <- mean(data$z)
- # mz <<- mean.z
+# mz <<- mean.z
         mean.level <- breaks[breaks %~% mean.z]
- # mm <<- mean.level
+# mm <<- mean.level
         extra$z <- mean.z
 
         cur.group <- data$group[1]
@@ -105,14 +105,14 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         data2 <- rbind(data[c("x", "y", "z")], extra)
         cont <- ggplot2:::contour_lines(data2, breaks.keep, complete = complete)
         data.table::setDT(cont)
-# ccc <- cont
+
         if (length(cont) == 0) return(cont)
 
         cont <- CorrectFill(cont, data2, breaks)
-
+# cc <<- copy(cont)
         i <-  which(breaks.keep == mean.level)
         correction <- sign(mean.z - mean.level)
-        if (correction == 0) correction <- 1
+        # if (correction == 0) correction <- 1
         correction <- (breaks.keep[i + correction] - mean.level)/2
 
         if (mean.level %in% breaks.keep & complete == TRUE) {
@@ -125,17 +125,21 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             mean.cont$group <- factor(paste("", sprintf("%03d", mean.cont$piece), sep = "-"))
             cont <- rbind(cont, mean.cont)
         }
-# cc <<- copy(cont)
+# ccc <<- copy(cont)
         cont$x[cont$x > range.data$x[2]] <- range.data$x[2]
         cont$x[cont$x < range.data$x[1]] <- range.data$x[1]
         cont$y[cont$y < range.data$y[1]] <- range.data$y[1]
         cont$y[cont$y > range.data$y[2]] <- range.data$y[2]
         areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][
-            , rank := frank(-area, ties.method = "random")]
-        areas <- areas[, head(.SD, 1), by = piece]
+            , rank := frank(-area, ties.method = "first")]
+
         cont <- cont[areas, on = "piece"]
+        area.back <- areas[piece == max(cont$piece), area]
+        if (any(areas[piece != max(cont$piece), area] == area.back)) {
+            cont <- cont[piece != max(cont$piece)]
+        }
         cont[, piece := rank]
-        cont[, group := factor(paste(cur.group, sprintf("%03d", piece), sep = "-"))]
+        cont[, group := factor(paste("", sprintf("%03d", piece), sep = "-"))]
 
 
         cont <- cont[int.level %between% range(breaks.keep)]

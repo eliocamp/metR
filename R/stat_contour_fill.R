@@ -112,7 +112,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 # cc <<- copy(cont)
         i <-  which(breaks.keep == mean.level)
         correction <- sign(mean.z - mean.level)
-        # if (correction == 0) correction <- 1
+        if (correction == 0) correction <- 1
         correction <- (breaks.keep[i + correction] - mean.level)/2
 
         if (mean.level %in% breaks.keep & complete == TRUE) {

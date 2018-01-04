@@ -105,8 +105,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         data2 <- rbind(data[c("x", "y", "z")], extra)
         cont <- ggplot2:::contour_lines(data2, breaks.keep, complete = complete)
         data.table::setDT(cont)
-
+# cont2 <<- copy(cont)
         if (length(cont) == 0) return(cont)
+
+        cont <- .join_contours(cont)
 
         cont <- CorrectFill(cont, data2, breaks)
 # cc <<- copy(cont)
@@ -125,11 +127,11 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             mean.cont$group <- factor(paste("", sprintf("%03d", mean.cont$piece), sep = "-"))
             cont <- rbind(cont, mean.cont)
         }
-# ccc <<- copy(cont)
         cont$x[cont$x > range.data$x[2]] <- range.data$x[2]
         cont$x[cont$x < range.data$x[1]] <- range.data$x[1]
         cont$y[cont$y < range.data$y[1]] <- range.data$y[1]
         cont$y[cont$y > range.data$y[2]] <- range.data$y[2]
+# ccc <<- copy(cont)
         areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][
             , rank := frank(-area, ties.method = "first")]
 
@@ -261,4 +263,46 @@ close_path <- function(x, y, range_x, range_y) {
     x[L + 1] <- x[1]
     y[L + 1] <- y[1]
     return(list(x = x, y = y))
+}
+
+
+.join_contours <- function(contours) {
+    #join small segments
+    # For now, lets asume that the problem occurs with only 1 contour.
+    # If the case arises that more than one contour is separated into pieces,
+    # it will be a problem for my future self.
+    # (Oh, hi, future self!)
+
+    contours[, close := is_closed(x, y), by = piece]
+    contours2 <- contours[close == FALSE][, close := NULL]
+    if (length(contours2) == 0) return(contours)
+    contours2[, first := (1 == 1:.N), by = piece]
+    pieces <- unique(contours2[, piece])
+
+    cont <- contours2[piece == pieces[1]]
+    p <- pieces[1]
+    for(i in seq_along(pieces)) {
+        last <- cont[, .(x = x[.N], y = y[.N])]
+        # search for next piece
+        next.point <- contours2[x == last$x & y == last$y & piece != p]
+        next.piece <- contours2[piece == next.point$piece]
+
+        if (next.piece$piece[1] == pieces[1]) break
+
+        cont <- rbindlist(list(cont, .reverse(next.piece, next.point)))
+        p <- next.piece[1, piece]
+    }
+    cont[, piece := max(contours$piece) + 1]
+    cont <- rbindlist(list(contours[close == TRUE], cont))
+    cont[, close := NULL]
+    cont
+}
+
+
+.reverse <- function(cont, point) {
+    if (identical(cont[1], point)) {
+        return(cont)
+    } else {
+        return(cont[.N:1])
+    }
 }

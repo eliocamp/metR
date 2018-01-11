@@ -44,6 +44,8 @@ GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution =
     # Check arguments
     if (min(resolution) < 1/60) stop("Resolution can't be smaller than 1 minute.")
     if (lat.north < lat.south) stop("lat.north can't be smaller than lat.south")
+    if (lon.west > lon.east) stop("lon.east can't be smaller than lon.west")
+
     if (any(c(lat.north, lat.south) < -90,
             c(lat.north, lat.south) > 90)) stop("Latitude must be between -90 and 90.")
 

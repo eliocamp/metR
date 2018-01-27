@@ -195,13 +195,13 @@ returns a matrix.</p>
 #&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01  5.677799  5.677799
 #&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01  5.023650        NA
 #&gt;   ---                                                        
-#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
-#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
-#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
+#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 76.620657        NA
+#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 76.620657        NA
+#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 76.620657        NA
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
 #&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657</div><div class='input'>
 <span class='no'>aao.full</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/as.data.table'>as.data.table</a></span>(<span class='fu'>ImputeEOF</span>(<span class='no'>aao</span>, <span class='no'>lon</span> ~ <span class='no'>lat</span>,  <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='st'>"gh.gap"</span>,
-                                    <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>))</div><div class='output co'>#&gt;  With 1 eof - convergence: TRUE With 2 eof - convergence: TRUE With 3 eof - convergence: TRUE With 4 eof - convergence: TRUE With 5 eof - convergence: TRUE With 6 eof - convergence: TRUE With 7 eof - convergence: FALSE</div><div class='input'>
+                                    <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>))</div><div class='output co'>#&gt;  With 1 eof - convergence: TRUE With 2 eof - convergence: TRUE With 3 eof - convergence: TRUE With 4 eof - convergence: TRUE With 5 eof - convergence: TRUE With 6 eof - convergence: FALSE</div><div class='input'>
 <span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='no'>aao</span>[<span class='no'>aao.full</span>[, <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>gh.impute</span> <span class='kw'>=</span> <span class='no'>gh.gap</span>)], <span class='kw'>on</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"lon"</span>, <span class='st'>"lat"</span>)]
 
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)

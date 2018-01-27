@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Divides long timeseries for better reading — DivideTimeseries • metR</title>
+<title>Make breaks for contours — MakeBreaks • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -95,50 +95,43 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Divides long timeseries for better reading</h1>
+    <h1>Make breaks for contours</h1>
     </div>
 
     
-    <p>Long timeseries can be compressed to the point of being unreadable when
-plotted on a page. This function takes a ggplot object of a timeseries and
-divides it into panels so that the time dimension gets stretched for better
-readability.</p>
+    <p>Essencially an export of the default way <a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>ggplot2::stat_contour</a> makes breaks,
+it's intended to use as the <code>breaks</code> argument of <a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>ggplot2::scale_color_continuous</a> or
+<a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_colour_continuous'>ggplot2::scale_fill_continuous</a>. This way, there's a one to one mapping
+between contours and breaks.</p>
     
 
-    <pre class="usage"><span class='fu'>DivideTimeseries</span>(<span class='no'>g</span>, <span class='no'>x</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"y"</span>)</pre>
+    <pre class="usage"><span class='fu'>MakeBreaks</span>(<span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>g</th>
-      <td><p>ggplot object</p></td>
+      <th>binwidth</th>
+      <td><p>width of breaks</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>The vector that was used in g for the x axis (must be of class Date)</p></td>
+      <th>bins</th>
+      <td><p>number of bins, used if <code>binwidth = NULL</code></p></td>
     </tr>
     <tr>
-      <th>n</th>
-      <td><p>Number of panels</p></td>
-    </tr>
-    <tr>
-      <th>xlab</th>
-      <td><p>x axis label</p></td>
-    </tr>
-    <tr>
-      <th>ylab</th>
-      <td><p>y axis label</p></td>
+      <th>exclude</th>
+      <td><p>a vector of breaks to exclude</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Draws a plot.</p>
+    <p>A function that takes a range as argument and returns a sequence of equally
+spaced intervals covering the range.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other ggplot2 helpers: <code><a href='MakeBreaks.html'>MakeBreaks</a></code>,
+    <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
   <code><a href='RepeatLon.html'>RepeatLon</a></code>, <code><a href='geom_arrow.html'>geom_arrow</a></code>,
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
@@ -150,14 +143,15 @@ readability.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'>library</span>(<span class='no'>data.table</span>)
-<span class='no'>gdata</span> <span class='kw'>&lt;-</span> <span class='no'>claris</span>[<span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>year</a></span>(<span class='no'>date</span>) <span class='kw'>==</span> <span class='fl'>2009</span>][<span class='no'>id</span> <span class='kw'>==</span> <span class='no'>id</span>[<span class='fl'>1</span>]]
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>gdata</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>date</span>, <span class='no'>max</span>)) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>() +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_smooth'>geom_smooth</a></span>() +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_date'>scale_x_date</a></span>(<span class='kw'>date_breaks</span> <span class='kw'>=</span> <span class='st'>"1 month"</span>, <span class='kw'>date_labels</span> <span class='kw'>=</span> <span class='st'>"%b"</span>)
-<span class='fu'>DivideTimeseries</span>(<span class='no'>g</span>, <span class='no'>gdata</span>$<span class='no'>date</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='st'>"Date"</span>, <span class='st'>"Max Temperature"</span>)</div><div class='output co'>#&gt; <span class='message'>`geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_smooth).</span></div><div class='output co'>#&gt; <span class='message'>`geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_smooth).</span></div><div class='output co'>#&gt; <span class='message'>`geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_smooth).</span></div><div class='img'><img src='DivideTimeseries-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
+    <pre class="examples"><div class='input'>
+<span class='no'>my_breaks</span> <span class='kw'>&lt;-</span> <span class='fu'>MakeBreaks</span>(<span class='fl'>10</span>)
+<span class='fu'>my_breaks</span>(<span class='fu'>range</span>(<span class='fl'>1</span>:<span class='fl'>100</span>))</div><div class='output co'>#&gt;  [1]   0  10  20  30  40  50  60  70  80  90 100</div><div class='input'>
+<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='no'>binwidth</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>), <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='no'>binwidth</span>) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_continuous</a></span>(<span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>MakeBreaks</span>(<span class='no'>binwidth</span>))</div><div class='img'><img src='MakeBreaks-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

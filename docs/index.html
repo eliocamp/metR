@@ -106,11 +106,14 @@ aao[, gh.t.w <span class="op">:</span><span class="er">=</span><span class="st">
 aao.svd &lt;-<span class="st"> </span><span class="kw"><a href="reference/EOF.html">EOF</a></span>(aao, lat <span class="op">+</span><span class="st"> </span>lon <span class="op">~</span><span class="st"> </span>date, <span class="dt">value.var =</span> <span class="st">"gh.t.w"</span>, <span class="dt">n =</span> <span class="dv">1</span>)
 
 <span class="co"># AAO field</span>
+binwidth &lt;-<span class="st"> </span><span class="fl">0.01</span>
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao.svd<span class="op">$</span>left, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> value)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="reference/geom_contour_fill.html">stat_contour_fill</a></span>() <span class="op">+</span><span class="st">    </span><span class="co"># filled contours!</span>
+<span class="st">    </span><span class="kw"><a href="reference/geom_contour_fill.html">stat_contour_fill</a></span>(<span class="dt">binwidth =</span> binwidth, <span class="dt">exclude =</span> <span class="dv">0</span>, <span class="dt">complete =</span> F) <span class="op">+</span><span class="st">    </span><span class="co"># filled contours!</span>
 <span class="st">    </span><span class="kw"><a href="reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="reference/scale_divergent.html">scale_fill_divergent</a></span>(<span class="dt">name =</span> <span class="st">"AAO pattern"</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw"><a href="reference/scale_divergent.html">scale_fill_divergent</a></span>(<span class="dt">name =</span> <span class="st">"AAO pattern"</span>, 
+                         <span class="dt">breaks =</span> <span class="kw"><a href="reference/MakeBreaks.html">MakeBreaks</a></span>(binwidth),
+                         <span class="dt">guide =</span> <span class="kw"><a href="reference/guide_colourstrip.html">guide_colorstrip</a></span>()) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</code></pre></div>
 <p><img src="README-field-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># AAO signal</span>

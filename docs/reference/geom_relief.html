@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filter only NA values. — stat_na • metR</title>
+<title>Relief Shading — geom_relief • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -95,16 +95,19 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filter only NA values.</h1>
+    <h1>Relief Shading</h1>
     </div>
 
     
-    <p>Useful for indicating or masking missing data. This stat subsets data where
-one variable is <code>NA</code>.</p>
+    <p><code>geom_relief()</code> simulates shading caused by relief. Can be useful when
+plotting topographic data because relief shading might give a more intuitive
+impression of the shape of the terrain than contour lines or mapping height
+to color.</p>
     
 
-    <pre class="usage"><span class='fu'>stat_na</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"tile"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>geom_relief</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>raster</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>interpolate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -130,8 +133,9 @@ the plot data. The return value must be a <code>data.frame.</code>, and
 will be used as the layer data.</p></td>
     </tr>
     <tr>
-      <th>geom</th>
-      <td><p>The geometric object to use display the data</p></td>
+      <th>stat</th>
+      <td><p>The statistical transformation to use on the data for this
+layer, as a string.</p></td>
     </tr>
     <tr>
       <th>position</th>
@@ -144,6 +148,21 @@ a call to a position adjustment function.</p></td>
 often aesthetics, used to set an aesthetic to a fixed value, like
 <code>color = "red"</code> or <code>size = 3</code>. They may also be parameters
 to the paired geom/stat.</p></td>
+    </tr>
+    <tr>
+      <th>raster</th>
+      <td><p>if <code>TRUE</code> (the default), uses <a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_tile'>ggplot2::geom_raster</a>,
+if <code>FALSE</code>, uses <a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_tile'>ggplot2::geom_tile</a>.</p></td>
+    </tr>
+    <tr>
+      <th>interpolate</th>
+      <td><p>If <code>TRUE</code> interpolate linearly, if <code>FALSE</code>
+(the default) don't interpolate.</p></td>
+    </tr>
+    <tr>
+      <th>na.rm</th>
+      <td><p>If <code>FALSE</code>, the default, missing values are removed with
+a warning. If <code>TRUE</code>, missing values are silently removed.</p></td>
     </tr>
     <tr>
       <th>show.legend</th>
@@ -162,39 +181,45 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>light</code> and <code>dark</code> must be valid colours determining the light and dark shading
+(defaults to "white" and "gray20", respectively). <code>sun.angle</code> is the angle,
+in degrees counterclockwise from 12 o' clock, from which the sun is shining
+(defaults to 60).</p>
+    
     <h2 class="hasAnchor" id="aesthetics"><a class="anchor" href="#aesthetics"></a>Aesthetics</h2>
 
-    <p><code>stat_na</code> understands the following aesthetics (required aesthetics are in bold)</p><ul>
+    <p><code>geom_relief</code> understands the following aesthetics (required aesthetics are in bold)</p><ul>
 <li><p><strong>x</strong></p></li>
 <li><p><strong>y</strong></p></li>
-<li><p><strong>na</strong></p></li>
-<li><p><code>width</code></p></li>
-<li><p><code>height</code></p></li>
+<li><p><strong>z</strong></p></li>
+<li><p><code>light</code></p></li>
+<li><p><code>dark</code></p></li>
+<li><p><code>sun.angle</code></p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='stat_filter.html'>stat_filter</a> for a more general way of filtering data.</p>
-<p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
+    <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
   <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='RepeatLon.html'>RepeatLon</a></code>,
   <code><a href='geom_arrow.html'>geom_arrow</a></code>,
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
-  <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
+  <code><a href='geom_vector.html'>geom_vector</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
   <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
-  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_filter.html'>stat_filter</a></code></p>
+  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_filter.html'>stat_filter</a></code>,
+  <code><a href='stat_na.html'>stat_na</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='no'>surface</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>)
-<span class='no'>surface</span> <span class='kw'>&lt;-</span> <span class='fu'>within</span>(<span class='no'>surface</span>, <span class='no'>value</span>[<span class='no'>Var1</span> <span class='kw'>%b%</span> <span class='fu'>c</span>(<span class='fl'>20</span>, <span class='fl'>30</span>) <span class='kw'>&amp;</span> <span class='no'>Var2</span> <span class='kw'>%b%</span> <span class='fu'>c</span>(<span class='fl'>20</span>, <span class='fl'>30</span>)] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>)
-<span class='no'>surface</span>[<span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='fu'>nrow</span>(<span class='no'>surface</span>), <span class='fl'>100</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>), <span class='fl'>3</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>surface</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-    <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span>() +
-    <span class='fu'>stat_na</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>na</span> <span class='kw'>=</span> <span class='no'>value</span>))</div><div class='img'><img src='stat_na-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
+      <span class='fu'>geom_relief</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>))</div><div class='img'><img src='geom_relief-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># If you're more of a moring person</span>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
+      <span class='fu'>geom_relief</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>), <span class='kw'>sun.angle</span> <span class='kw'>=</span> -<span class='fl'>60</span>)</div><div class='img'><img src='geom_relief-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -202,6 +227,8 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#aesthetics">Aesthetics</a></li>
 
       <li><a href="#see-also">See also</a></li>

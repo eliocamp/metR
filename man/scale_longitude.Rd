@@ -59,7 +59,7 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{geom_arrow}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},
-  \code{\link{geom_vector}},
+  \code{\link{geom_relief}}, \code{\link{geom_vector}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
   \code{\link{stat_filter}}, \code{\link{stat_na}}

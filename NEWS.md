@@ -26,6 +26,7 @@ functionality in `Derivate()`
 - New guide. `guide_colorstrip()` displays discretized values of a continuous color 
 or fill scale. 
 - Fix for unconnected contours in `stat_contour_fill()`
+- New `geom_relief()` for generating relief shading. 
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

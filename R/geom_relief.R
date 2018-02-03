@@ -132,7 +132,7 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", GeomTile,
 )
 
 .rgb2hex <- function(array) {
-    grDevices::rgb(array[, 1], array[, 3], array[, 3], maxColorValue = 255)
+    grDevices::rgb(array[, 1], array[, 2], array[, 3], maxColorValue = 255)
 }
 
 rect_to_poly <- function(xmin, xmax, ymin, ymax) {

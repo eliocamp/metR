@@ -5,7 +5,7 @@
 \title{Read NetCDF files.}
 \usage{
 ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array",
-  "vars"))
+  "vars"), subset = NULL)
 }
 \arguments{
 \item{file}{file to read from.}
@@ -14,15 +14,18 @@ ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array",
 \code{NULL}, then it read all the variables.}
 
 \item{out}{character indicating the type of output desired}
+
+\item{subset}{a named list a subseting vectors. See Details.}
 }
 \value{
 The return format is specified by \code{out}. It can be a data table in which each
 column is a variable and each row, an observation; an array with named
-dimensions; or a vector. Either of these two options are much faster than the
+dimensions; or a vector. Since it's possible to return multiple arrays or
+vectors (one for each variable), for consistency the return type is always a
+list. Either of these two options are much faster than the
 first since the most time consuming part is the melting of the array
 returned by \link[ncdf4:ncvar_get]{ncdf4::ncvar_get}. \code{out = "vector"} is particularly useful for
-adding new variables to an existing data frame with the same dimensions. Note
-that only one variable can be retrieved at a time with these formats.
+adding new variables to an existing data frame with the same dimensions.
 
 Finally, it can also be \code{vars}, in which case it returns a list with the name
 of the available variables and the dimensions of the spatiotemporal grid.
@@ -33,9 +36,16 @@ and a 2D surface temperature field, the latter will be turned into a 3D field
 with the same values in each missing dimension.
 }
 \description{
-Using the \code{\link[ncdf4]{ncdf4-package}} package, it reads an .nc file. The advantage
+Using the \code{\link[ncdf4]{ncdf4-package}} package, it reads a NetCDF file. The advantage
 over using \code{\link[ncdf4]{ncvar_get}} is that the output is a tidy data.table
 with proper dimensions.
+}
+\details{
+\code{subset} must be a named list for subsetting. Names must match dimensions
+specified in the NetCDF file and each element must be a vector of the same tipe
+of that dimension whose range will be use for subsetting. You don't need to
+provide and exact range that matches the actual gridpoints of the file; the
+closest gridpoint will be selected.
 }
 \examples{
 \dontrun{
@@ -46,7 +56,7 @@ variables <- ReadNetCDF(file, out = "vars")
 field <- ReadNetCDF(file, vars = c(var = variables$vars[1]))
 # Add a new variable.
 # ¡Make sure it's on the same exact grid!
-field[, var2 := ReadNerCDF(file2, out = "vector")]
+field[, var2 := ReadNerCDF(file2, out = "vector", subset = list(lat = 90:10))]
 }
 
 }

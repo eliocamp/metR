@@ -127,7 +127,7 @@ Mag <- function(x, y) {
 `%~%` <- function(x, target) {
     r <- rep(FALSE, length(x))
     for (i in seq_along(target)) {
-        dif <- abs(x - target[i])
+        dif <- abs(as.numeric(x - target[i]))
         x.select <- x[which.min(dif)]
         r <- r | (x == x.select)
     }
@@ -140,7 +140,7 @@ Similar <- function(x, target, tol = Inf) {
     r <- rep(FALSE, length(x))
     if (is.null(tol)) tol <- NA
     for (i in seq_along(target)) {
-        dif <- abs(x - target[i])
+        dif <- abs(as.numeric(x - target[i]))
         x.select <- x[which.min(dif)]
         r <- r | (x == x.select & (is.na(tol) | y < abs(tol)))
     }
@@ -272,5 +272,5 @@ if(getRversion() >= "2.15.1") {
            "ind.names", "inside", "int.level", "land", "latrad", "lon", "lonrad",
            "piece", "psi", "psi.dx", "psi.dxx", "psi.dxy", "psi.dy", "psi.dyy",
            "r.squared", "sd", "setTxtProgressBar", "time", "txtProgressBar",
-           "u.mean", "v.mean", "write.csv", "x", "y", "z", "."))
+           "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2"))
 }

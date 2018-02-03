@@ -99,13 +99,13 @@
     </div>
 
     
-    <p>Using the <code><a href='http://www.rdocumentation.org/packages/ncdf4/topics/ncdf4-package'>ncdf4-package</a></code> package, it reads an .nc file. The advantage
+    <p>Using the <code><a href='http://www.rdocumentation.org/packages/ncdf4/topics/ncdf4-package'>ncdf4-package</a></code> package, it reads a NetCDF file. The advantage
 over using <code><a href='http://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get'>ncvar_get</a></code> is that the output is a tidy data.table
 with proper dimensions.</p>
     
 
     <pre class="usage"><span class='fu'>ReadNetCDF</span>(<span class='no'>file</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"vector"</span>, <span class='st'>"array"</span>,
-  <span class='st'>"vars"</span>))</pre>
+  <span class='st'>"vars"</span>), <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -123,23 +123,36 @@ with proper dimensions.</p>
       <th>out</th>
       <td><p>character indicating the type of output desired</p></td>
     </tr>
+    <tr>
+      <th>subset</th>
+      <td><p>a named list a subseting vectors. See Details.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The return format is specified by <code>out</code>. It can be a data table in which each
 column is a variable and each row, an observation; an array with named
-dimensions; or a vector. Either of these two options are much faster than the
+dimensions; or a vector. Since it's possible to return multiple arrays or
+vectors (one for each variable), for consistency the return type is always a
+list. Either of these two options are much faster than the
 first since the most time consuming part is the melting of the array
 returned by <a href='http://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get'>ncdf4::ncvar_get</a>. <code>out = "vector"</code> is particularly useful for
-adding new variables to an existing data frame with the same dimensions. Note
-that only one variable can be retrieved at a time with these formats.</p>
+adding new variables to an existing data frame with the same dimensions.</p>
 <p>Finally, it can also be <code>vars</code>, in which case it returns a list with the name
 of the available variables and the dimensions of the spatiotemporal grid.</p>
 <p>When not all variables specified in <code>vars</code> have the same number of dimensions,
 the shorter variables will be recicled. E.g. if reading a 3D pressure field
 and a 2D surface temperature field, the latter will be turned into a 3D field
 with the same values in each missing dimension.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>subset</code> must be a named list for subsetting. Names must match dimensions
+specified in the NetCDF file and each element must be a vector of the same tipe
+of that dimension whose range will be use for subsetting. You don't need to
+provide and exact range that matches the actual gridpoints of the file; the
+closest gridpoint will be selected.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -151,7 +164,7 @@ with the same values in each missing dimension.</p>
 <span class='no'>field</span> <span class='kw'>&lt;-</span> <span class='fu'>ReadNetCDF</span>(<span class='no'>file</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>var</span> <span class='kw'>=</span> <span class='no'>variables</span>$<span class='no'>vars</span>[<span class='fl'>1</span>]))
 <span class='co'># Add a new variable.</span>
 <span class='co'># ¡Make sure it's on the same exact grid!</span>
-<span class='no'>field</span>[, <span class='no'>var2</span> <span class='kw'>:=</span> <span class='fu'>ReadNerCDF</span>(<span class='no'>file2</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"vector"</span>)]
+<span class='no'>field</span>[, <span class='no'>var2</span> <span class='kw'>:=</span> <span class='fu'>ReadNerCDF</span>(<span class='no'>file2</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"vector"</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>90</span>:<span class='fl'>10</span>))]
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
@@ -161,6 +174,8 @@ with the same values in each missing dimension.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

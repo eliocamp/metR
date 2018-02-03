@@ -63,7 +63,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
     ids <- vector()
     dimensions <- list()
     for (i in seq_along(dims)) {
-        dimensions[[dims[i]]] <- ncdf4::ncvar_get(ncfile, dims[i])
+        dimensions[[dims[i]]] <- ncfile$dim[[dims[i]]]$vals
         ids[i] <- ncfile$dim[[i]]$id
     }
     names(dims) <- ids
@@ -85,7 +85,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
     }
 
     if (out[1] == "vars") {
-        r <- list(vars = vars, dimensions = dimensions)
+        r <- list(vars = unname(vars), dimensions = dimensions)
         return(r)
     }
 
@@ -115,8 +115,9 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
         data.table::setDT(nc.df)
 
         if ("time" %in% names(dimensions)) {
-            nc.df[, date := lubridate::as_datetime(time[1]), by = time]
+            nc.df[, time2 := lubridate::as_datetime(time[1]), by = time]
             nc.df[, time := NULL]
+            setnames(nc.df, "time2", "time")
         }
 
         for (v in seq_along(vars)[-first.var]) {

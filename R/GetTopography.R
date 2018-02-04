@@ -52,20 +52,23 @@ GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution =
     # Check antimeridian crossing
     if (lon.west < 180 & lon.east > 180) {
         field.left <- GetTopography(lon.west, 180, lat.north, lat.south,
-                                    resolution, verbose, cache, file.dir)
+                                    resolution, cache, file.dir, verbose)
         field.right <- GetTopography(180 + d, lon.east, lat.north, lat.south,
-                                     resolution, verbose, cache, file.dir)
+                                     resolution, cache, file.dir, verbose)
         field <- rbind(field.left, field.right)
     } else {
         lon.west <- ConvertLongitude(lon.west, from = 360)
         lon.east <- ConvertLongitude(lon.east, from = 360)
-        # Check cache.
-        file <- file.path(file.dir,
-                          paste0(paste(lon.west, lon.east, lat.north, lat.south,
-                                       resolution[1], resolution[2], sep = "_"),
-                                 ".txt"))
-        files <- list.files(file.dir, full.names = TRUE)
 
+        if (cache == TRUE) {
+            # Check cache.
+            file.name <- paste0(digest::sha1(paste(lon.west, lon.east, lat.north, lat.south,
+                                                   resolution[1], resolution[2], sep = "_")),
+                                ".txt")
+            file <- file.path(file.dir, file.name)
+
+            files <- list.files(file.dir, full.names = TRUE)
+        }
         if (file %in% files & cache == TRUE) {
             if (verbose == TRUE) message("Fetching cached field.")
             field <- data.table::fread(file)[, -1]

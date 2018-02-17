@@ -128,9 +128,9 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
                       y, order = order - 2, cyclical = cyclical, fill = fill)
     } else {
         if (order == 1) {
-            dxdy <- (x[c(2:N, 1)] - x[c(N, 1:(N-1))])/(2*d)
+            dxdy <- (x[c(2:N, 1)] - x[c(N, 1:(N-1))])/(y[c(2:N, 1)] - y[c(N, 1:(N-1))])
         } else if (order == 2) {
-            dxdy <- (x[c(2:N, 1)] + x[c(N, 1:(N-1))] - 2*x)/d^2
+            dxdy <- (x[c(2:N, 1)] + x[c(N, 1:(N-1))] - 2*x)/(y[c(2:N, 1)] - y[c(N, 1:(N-1))])^2*4
         }
         if (!cyclical) {
             if (!fill) {

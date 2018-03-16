@@ -237,7 +237,7 @@ is.error <- function(x) inherits(x, "try-error")
 
     for (i in seq_along(col.vars)) {
         dims[[i]] <- JumpBy(cols, length(col.vars), start = i + length(row.vars))
-        if (class(data[[col.vars[i]]]) != "Date") {
+        if (!.is.somedate(data[[col.vars[i]]])) {
             dims[[i]] <- as(dims[[i]], class(data[[col.vars[i]]]))
         } else {
             dims[[i]] <- as.Date(dims[[i]])

@@ -1,23 +1,30 @@
-#' Make breaks for contours
+#' Functions for making breaks
 #'
-#' Essencially an export of the default way [ggplot2::stat_contour] makes breaks,
-#' it's intended to use as the `breaks` argument of [ggplot2::scale_color_continuous] or
-#' [ggplot2::scale_fill_continuous]. This way, there's a one to one mapping
-#' between contours and breaks.
+#' Functions that return functions suitable to use as the `breaks` argument in
+#' ggplot2's continuous scales.
 #'
 #' @param binwidth width of breaks
 #' @param bins number of bins, used if `binwidth = NULL`
 #' @param exclude a vector of breaks to exclude
+#' @param anchor anchor value
 #'
 #' @return
 #' A function that takes a range as argument and returns a sequence of equally
 #' spaced intervals covering the range.
+#'
+#' @details
+#' `MakeBreaks` is essencially an export of the default way
+#' [ggplot2::stat_contour] makes breaks.
+#'
+#' `AnchorBreaks` makes breaks starting from an `anchor` value and covering
+#' the range of the data acording to `binwidth`.
 #'
 #' @examples
 #'
 #' my_breaks <- MakeBreaks(10)
 #' my_breaks(range(1:100))
 #'
+#' # One to one mapping between contours and breaks
 #' library(ggplot2)
 #' binwidth <- 20
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
@@ -40,3 +47,16 @@ MakeBreaks <- function(binwidth = NULL, bins = 10, exclude = NULL) {
         }
     }
 }
+
+
+#' @rdname MakeBreaks
+#' @export
+#' @family ggplot2 helpers
+AnchorBreaks <- function(binwidth, anchor = 0) {
+    function(x) {
+        mult <- ceiling((x[1] - anchor)/binwidth)
+        start <- anchor + mult*binwidth
+        seq(start, x[2], binwidth)
+    }
+}
+

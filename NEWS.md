@@ -28,6 +28,7 @@ or fill scale.
 - Fix for unconnected contours in `stat_contour_fill()`
 - New `geom_relief()` for generating relief shading. 
 - `ReadNetCDF()` gains a `subset` argument for subseting data.  
+- `AnchorBreaks()` is a new way of generating breaks.
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

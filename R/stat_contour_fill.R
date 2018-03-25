@@ -62,7 +62,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              breaks = scales::fullseq, complete = TRUE, na.rm = FALSE,
                              exclude = NULL) {
         data <- data[!(is.na(data$x) | is.na(data$y)), ]
-# dd <<- data
+
         if (na.rm) {
             data <- data[!is.na(data$z), ]
         } else {
@@ -111,6 +111,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         # Calculate inner fill
         cont <- .inner_fill(cont, data, breaks)
 
+        # Add bounding contour, if necessary.
         i <-  which(breaks == mean.level)
         correction <- sign(mean.z - mean.level)
         if (correction == 0) correction <- 1

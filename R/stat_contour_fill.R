@@ -6,7 +6,7 @@
 stat_contour_fill <- function(mapping = NULL, data = NULL,
                               geom = "ContourFill", position = "identity",
                               ...,
-                              breaks = NULL,
+                              breaks = scales::fullseq,
                               bins = NULL,
                               binwidth = NULL,
                               na.rm = FALSE,
@@ -87,6 +87,9 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             breaks <- breaks(range(data$z), binwidth)
         }
 
+        b2 <<- breaks
+        d2 <<- data
+
         if (!is.null(exclude)) {
             warning("argumnet exclude is deprecated; use a function in breaks instead.",
                     call. = FALSE)
@@ -102,7 +105,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         data <- .expand_data(data)
 
         # Make contours
-        cont <- data.table::setDT(ggplot2:::contour_lines(data, breaks, complete = complete))
+        cont <- data.table::setDT(.contour_lines(data, breaks, complete = complete))
         if (length(cont) == 0) return(cont)
 
         # Ugly hack for joining disjointed contours

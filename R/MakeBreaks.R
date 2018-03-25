@@ -50,25 +50,15 @@ MakeBreaks <- function(binwidth = NULL, bins = 10, exclude = NULL) {
     }
 }
 
-
 #' @rdname MakeBreaks
 #' @export
-#' @family ggplot2 helpers
-AnchorBreaks <- function(anchor = 0, binwidth = NULL) {
+AnchorBreaks <- function(anchor = 0, binwidth = NULL, exclude = NULL) {
     function(x, binwidth2) {
         if (!is.null(binwidth)) binwidth2 <- binwidth
         mult <- ceiling((x[1] - anchor)/binwidth2)
         start <- anchor + mult*binwidth2
         b <- seq(start, x[2], binwidth2)
-    }
-}
-
-
-
-NoAnchor <- function(anchor = 0, exclude = anchor, binwidth = NULL) {
-    function(range, binwidth2) {
-        if (!is.null(binwidth)) binwidth2 <- binwidth
-        b <- AnchorBreaks(anchor, binwidth2)(range)
         b[!(b %in% exclude)]
     }
 }
+

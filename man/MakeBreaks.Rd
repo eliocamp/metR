@@ -3,11 +3,11 @@
 \name{MakeBreaks}
 \alias{MakeBreaks}
 \alias{AnchorBreaks}
-\title{Make breaks for contours}
+\title{Functions for making breaks}
 \usage{
 MakeBreaks(binwidth = NULL, bins = 10, exclude = NULL)
 
-AnchorBreaks(binwidth, anchor = 0)
+AnchorBreaks(anchor = 0, binwidth = NULL, exclude = NULL)
 }
 \arguments{
 \item{binwidth}{width of breaks}
@@ -15,42 +15,43 @@ AnchorBreaks(binwidth, anchor = 0)
 \item{bins}{number of bins, used if \code{binwidth = NULL}}
 
 \item{exclude}{a vector of breaks to exclude}
+
+\item{anchor}{anchor value}
 }
 \value{
-A function that takes a range as argument and returns a sequence of equally
-spaced intervals covering the range.
+A function that takes a range as argument and a binwidth as an optional argument
+and returns a sequence of equally spaced intervals covering the range.
 }
 \description{
-Essencially an export of the default way \link[ggplot2:stat_contour]{ggplot2::stat_contour} makes breaks,
-it's intended to use as the \code{breaks} argument of \link[ggplot2:scale_color_continuous]{ggplot2::scale_color_continuous} or
-\link[ggplot2:scale_fill_continuous]{ggplot2::scale_fill_continuous}. This way, there's a one to one mapping
-between contours and breaks.
+Functions that return functions suitable to use as the \code{breaks} argument in
+ggplot2's continuous scales and in \link{geom_contour_fill}.
+}
+\details{
+\code{MakeBreaks} is essencially an export of the default way
+\link[ggplot2:stat_contour]{ggplot2::stat_contour} makes breaks.
+
+\code{AnchorBreaks} makes breaks starting from an \code{anchor} value and covering
+the range of the data acording to \code{binwidth}.
 }
 \examples{
 
 my_breaks <- MakeBreaks(10)
-my_breaks(range(1:100))
+my_breaks(c(1, 100))
+my_breaks(c(1, 100), 20)  # optional new binwidth argument
 
+# One to one mapping between contours and breaks
 library(ggplot2)
 binwidth <- 20
 ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
     geom_contour(aes(color = ..level..), binwidth = binwidth) +
     scale_color_continuous(breaks = MakeBreaks(binwidth))
 
+
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{RepeatLon}}, \code{\link{geom_arrow}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_label_contour}},
-  \code{\link{geom_relief}}, \code{\link{geom_vector}},
-  \code{\link{reverselog_trans}},
-  \code{\link{scale_color_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_filter}},
-  \code{\link{stat_na}}
-
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{RepeatLon}}, \code{\link{geom_arrow}},
+  \code{\link{geom_contour2}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},
   \code{\link{geom_relief}}, \code{\link{geom_vector}},

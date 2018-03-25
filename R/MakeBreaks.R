@@ -1,7 +1,7 @@
 #' Functions for making breaks
 #'
 #' Functions that return functions suitable to use as the `breaks` argument in
-#' ggplot2's continuous scales.
+#' ggplot2's continuous scales and in [geom_contour_fill].
 #'
 #' @param binwidth width of breaks
 #' @param bins number of bins, used if `binwidth = NULL`
@@ -9,8 +9,8 @@
 #' @param anchor anchor value
 #'
 #' @return
-#' A function that takes a range as argument and returns a sequence of equally
-#' spaced intervals covering the range.
+#' A function that takes a range as argument and a binwidth as an optional argument
+#' and returns a sequence of equally spaced intervals covering the range.
 #'
 #' @details
 #' `MakeBreaks` is essencially an export of the default way
@@ -22,7 +22,8 @@
 #' @examples
 #'
 #' my_breaks <- MakeBreaks(10)
-#' my_breaks(range(1:100))
+#' my_breaks(c(1, 100))
+#' my_breaks(c(1, 100), 20)  # optional new binwidth argument
 #'
 #' # One to one mapping between contours and breaks
 #' library(ggplot2)
@@ -31,32 +32,33 @@
 #'     geom_contour(aes(color = ..level..), binwidth = binwidth) +
 #'     scale_color_continuous(breaks = MakeBreaks(binwidth))
 #'
+#'
 #' @export
 #' @family ggplot2 helpers
 MakeBreaks <- function(binwidth = NULL, bins = 10, exclude = NULL) {
-    # If no parameters set, use pretty bins
-    if (is.null(binwidth)) {
-        breaks <- function(range) {
+    function(range, binwidth2) {
+        if (!is.null(binwidth)) binwidth2 <- binwidth
+
+        # If no parameters set, use pretty bins
+        if (is.null(binwidth2)) {
             b <- pretty(range, bins)
-            b[!(b %in% exclude)]
-        }
-    } else {
-        breaks <- function(range) {
-            b <- scales::fullseq(range, binwidth)
+            return(b[!(b %in% exclude)])
+        } else {
+            b <- scales::fullseq(range, binwidth2)
             b[!(b %in% exclude)]
         }
     }
 }
 
-
 #' @rdname MakeBreaks
 #' @export
-#' @family ggplot2 helpers
-AnchorBreaks <- function(binwidth, anchor = 0) {
-    function(x) {
-        mult <- ceiling((x[1] - anchor)/binwidth)
-        start <- anchor + mult*binwidth
-        seq(start, x[2], binwidth)
+AnchorBreaks <- function(anchor = 0, binwidth = NULL, exclude = NULL) {
+    function(x, binwidth2) {
+        if (!is.null(binwidth)) binwidth2 <- binwidth
+        mult <- ceiling((x[1] - anchor)/binwidth2)
+        start <- anchor + mult*binwidth2
+        b <- seq(start, x[2], binwidth2)
+        b[!(b %in% exclude)]
     }
 }
 

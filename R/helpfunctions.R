@@ -272,5 +272,6 @@ if(getRversion() >= "2.15.1") {
            "ind.names", "inside", "int.level", "land", "latrad", "lon", "lonrad",
            "piece", "psi", "psi.dx", "psi.dxx", "psi.dxy", "psi.dy", "psi.dyy",
            "r.squared", "sd", "setTxtProgressBar", "time", "txtProgressBar",
-           "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2"))
+           "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2",
+           "group"))
 }

@@ -98,7 +98,7 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{MakeBreaks}}, \code{\link{RepeatLon}},
-  \code{\link{geom_arrow}},
+  \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},
   \code{\link{geom_vector}},

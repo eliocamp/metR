@@ -64,22 +64,11 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
 
       breaks <- breaks(range(data$z), binwidth)
     }
-      d <<- data
-      b <<- breaks
 
     .contour_lines(data, breaks, complete = complete)
     }
 )
 
-
-# v3d <- reshape2::melt(volcano)
-# names(v3d) <- c("x", "y", "z")
-#
-# breaks <- seq(95, 195, length.out = 10)
-# contours <- contourLines(v3d, breaks)
-# ggplot(contours, aes(x, y)) +
-#   geom_path() +
-#   facet_wrap(~piece)
 .contour_lines <- function(data, breaks, complete = FALSE) {
   z <- tapply(data$z, data[c("x", "y")], identity)
 

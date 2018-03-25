@@ -87,8 +87,6 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             breaks <- breaks(range(data$z), binwidth)
         }
 
-        b2 <<- breaks
-        d2 <<- data
 
         if (!is.null(exclude)) {
             warning("argumnet exclude is deprecated; use a function in breaks instead.",
@@ -163,13 +161,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
 .expand_data <- function(data) {
     dx <- ggplot2::resolution(subset(data, y == data$y[1])$x)
-    # dx <- abs(diff(subset(data, y == data$y[1])$x)[1])
     dy <- ggplot2::resolution(subset(data, x == data$x[1])$y)
-    # dy <- abs(diff(subset(data, x == data$x[1])$y)[1])
 
     #Extender para grilla rectangular.
     range.data <- as.data.frame(sapply(data[c("x", "y", "z")], range))
-    # r2 <<- range.data
     extra <- rbind(expand.grid(y = c(range.data$y[2] + dy,
                                      range.data$y[1] - dy),
                                x = unique(data$x)),

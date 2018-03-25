@@ -10,8 +10,7 @@
 works just like `stat_contour_fill()`. 
 - Added `stat_na()` for easy masking of `NA` values. 
 - `geom_arrow()` now is `geom_vector()` with better documentation and more 
-parameters. 
-- `geom_arrow()` is a new geom for arrows that preserve direction. 
+parameters and `geom_arrow()` is a new geom for arrows that preserve direction. 
 - `ReadNetCDF()` now handles more date formats.
 - New functions `Laplacian()`, `Divercence()` and `Vorticity()`
 - `DerivatePhysical()` is removed since it was made redundant by the extended
@@ -22,13 +21,16 @@ functionality in `Derivate()`
 - Fixed? werid bug with `ReadNetCDF()` and `as.POSIXct`.
 - `ReadNetCDF()` now supports timezones via de `udunits2` package.
 - Fixed bad polygon ordering and extra polygon in `stat_contour_fill()`.
-- New function `MakeBreaks()`.
+- New functions `MakeBreaks()` and `AnchorBreaks()`.
 - New guide. `guide_colorstrip()` displays discretized values of a continuous color 
 or fill scale. 
 - Fix for unconnected contours in `stat_contour_fill()`
 - New `geom_relief()` for generating relief shading. 
 - `ReadNetCDF()` gains a `subset` argument for subseting data.  
 - `AnchorBreaks()` is a new way of generating breaks.
+- New `geom_contour2()` that takes a function as argument in `breaks` and 
+`geom_contour_fill()` also does the same. 
+- New `stat_subset()` that makes subsetting data on the fly easier. 
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

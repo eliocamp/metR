@@ -59,6 +59,9 @@ StatSubset <- ggplot2::ggproto("StatSubset", ggplot2::Stat,
                            }
 )
 
+#' @rdname stat_subset
+#' @format NULL
+#' @usage NULL
 #' @export
 stat_filter <- function(...) {
     .Deprecated("stat_subset")

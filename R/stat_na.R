@@ -26,7 +26,7 @@
 #'     geom_contour_fill() +
 #'     stat_na(aes(na = value))
 #'
-#' @seealso [stat_filter] for a more general way of filtering data.
+#' @seealso [stat_subset] for a more general way of filtering data.
 #' @export
 #' @family ggplot2 helpers
 #' @importFrom plyr ddply

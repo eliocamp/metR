@@ -77,7 +77,7 @@ ggplot(surface, aes(Var1, Var2, z = value)) +
 
 }
 \seealso{
-\link{stat_filter} for a more general way of filtering data.
+\link{stat_subset} for a more general way of filtering data.
 
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{MakeBreaks}}, \code{\link{RepeatLon}},
@@ -87,6 +87,6 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{geom_relief}}, \code{\link{geom_vector}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_filter}}
+  \code{\link{scale_longitude}}, \code{\link{stat_subset}}
 }
 \concept{ggplot2 helpers}

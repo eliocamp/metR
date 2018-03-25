@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filter only NA values. — stat_na • metR</title>
+<title>Filter values — stat_subset • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -95,15 +95,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filter only NA values.</h1>
+    <h1>Filter values</h1>
     </div>
 
     
-    <p>Useful for indicating or masking missing data. This stat subsets data where
-one variable is <code>NA</code>.</p>
+    <p>Removes values where <code>subset</code> evaluates to <code>FALSE</code>. Useful for showing only
+statistical significant values, or a interesting subset of the data without
+manually subsetting the data.</p>
     
 
-    <pre class="usage"><span class='fu'>stat_na</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"tile"</span>,
+    <pre class="usage"><span class='fu'>stat_subset</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"point"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -164,17 +165,17 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
     
     <h2 class="hasAnchor" id="aesthetics"><a class="anchor" href="#aesthetics"></a>Aesthetics</h2>
 
-    <p><code>stat_na</code> understands the following aesthetics (required aesthetics are in bold)</p><ul>
+    <p><code>stat_subset</code> understands the following aesthetics (required aesthetics are in bold)</p><ul>
 <li><p><strong>x</strong></p></li>
 <li><p><strong>y</strong></p></li>
-<li><p><strong>na</strong></p></li>
+<li><p><strong>subset</strong></p></li>
 <li><p><code>width</code></p></li>
 <li><p><code>height</code></p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>stat_subset for a more general way of filtering data.</p>
+    <p><a href='stat_na.html'>stat_na</a> for a more specialized stat for filtering <code>NA</code> values.</p>
 <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
   <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='RepeatLon.html'>RepeatLon</a></code>,
   <code><a href='geom_arrow.html'>geom_arrow</a></code>, <code><a href='geom_contour2.html'>geom_contour2</a></code>,
@@ -183,18 +184,17 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
   <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
   <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
-  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code>stat_subset</code></p>
+  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='no'>surface</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>)
-<span class='no'>surface</span> <span class='kw'>&lt;-</span> <span class='fu'>within</span>(<span class='no'>surface</span>, <span class='no'>value</span>[<span class='no'>Var1</span> <span class='kw'>%b%</span> <span class='fu'>c</span>(<span class='fl'>20</span>, <span class='fl'>30</span>) <span class='kw'>&amp;</span> <span class='no'>Var2</span> <span class='kw'>%b%</span> <span class='fu'>c</span>(<span class='fl'>20</span>, <span class='fl'>30</span>)] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>)
-<span class='no'>surface</span>[<span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='fu'>nrow</span>(<span class='no'>surface</span>), <span class='fl'>100</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>), <span class='fl'>3</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>surface</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-    <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span>() +
-    <span class='fu'>stat_na</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>na</span> <span class='kw'>=</span> <span class='no'>value</span>))</div><div class='img'><img src='stat_na-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <pre class="examples"><div class='input'>
+<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/melt.data.table'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
+    <span class='fu'>stat_subset</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>value</span> <span class='kw'>&gt;=</span> <span class='fl'>150</span> <span class='kw'>&amp;</span> <span class='no'>value</span> <span class='kw'>&lt;=</span> <span class='fl'>160</span>),
+                <span class='kw'>shape</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
+#&gt; <span class='warning'>cannot coerce type 'closure' to vector of type 'double'</span></div><div class='img'><img src='stat_subset-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

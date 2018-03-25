@@ -152,13 +152,13 @@ from -180 to 180.</p>
 
     <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
   <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='RepeatLon.html'>RepeatLon</a></code>,
-  <code><a href='geom_arrow.html'>geom_arrow</a></code>,
+  <code><a href='geom_arrow.html'>geom_arrow</a></code>, <code><a href='geom_contour2.html'>geom_contour2</a></code>,
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
   <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
   <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
-  <code><a href='stat_filter.html'>stat_filter</a></code>, <code><a href='stat_na.html'>stat_na</a></code></p>
+  <code><a href='stat_na.html'>stat_na</a></code>, <code>stat_subset</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -166,7 +166,8 @@ from -180 to 180.</p>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>() +
     <span class='fu'>scale_x_longitude</span>() +
-    <span class='fu'>scale_y_latitude</span>()</div><div class='img'><img src='scale_longitude-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='fu'>scale_y_latitude</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
+#&gt; <span class='warning'>cannot coerce type 'closure' to vector of type 'double'</span></div><div class='output co'>#&gt; <span class='error'>Error in f(..., self = self): Breaks and labels are different lengths</span></div><div class='img'><img src='scale_longitude-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -117,9 +117,7 @@
 <li>For consistency with <code>stat_contour()</code> created <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> which works just like <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code>.</li>
 <li>Added <code><a href="../reference/stat_na.html">stat_na()</a></code> for easy masking of <code>NA</code> values.</li>
 <li>
-<code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> now is <code><a href="../reference/geom_vector.html">geom_vector()</a></code> with better documentation and more parameters.</li>
-<li>
-<code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> is a new geom for arrows that preserve direction.</li>
+<code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> now is <code><a href="../reference/geom_vector.html">geom_vector()</a></code> with better documentation and more parameters and <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> is a new geom for arrows that preserve direction.</li>
 <li>
 <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now handles more date formats.</li>
 <li>New functions <code><a href="../reference/Derivate.html">Laplacian()</a></code>, <code>Divercence()</code> and <code><a href="../reference/Derivate.html">Vorticity()</a></code>
@@ -134,13 +132,18 @@
 <li>
 <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now supports timezones via de <code>udunits2</code> package.</li>
 <li>Fixed bad polygon ordering and extra polygon in <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code>.</li>
-<li>New function <code><a href="../reference/MakeBreaks.html">MakeBreaks()</a></code>.</li>
+<li>New functions <code><a href="../reference/MakeBreaks.html">MakeBreaks()</a></code> and <code><a href="../reference/MakeBreaks.html">AnchorBreaks()</a></code>.</li>
 <li>New guide. <code><a href="../reference/guide_colourstrip.html">guide_colorstrip()</a></code> displays discretized values of a continuous color or fill scale.</li>
 <li>Fix for unconnected contours in <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code>
 </li>
 <li>New <code><a href="../reference/geom_relief.html">geom_relief()</a></code> for generating relief shading.</li>
 <li>
-<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> gains a <code>subset</code> argument for subseting data.</li>
+<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> gains a <code>subset</code> argument for subseting data.<br>
+</li>
+<li>
+<code><a href="../reference/MakeBreaks.html">AnchorBreaks()</a></code> is a new way of generating breaks.</li>
+<li>New <code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> that takes a function as argument in <code>breaks</code> and <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> also does the same.</li>
+<li>New <code>stat_subset()</code> that makes subsetting data on the fly easier.</li>
 </ul>
 </div>
     <div id="meteor-0-0-9100" class="section level1">

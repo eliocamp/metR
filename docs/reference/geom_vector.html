@@ -203,14 +203,14 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
 
     <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
   <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='RepeatLon.html'>RepeatLon</a></code>,
-  <code><a href='geom_arrow.html'>geom_arrow</a></code>,
+  <code><a href='geom_arrow.html'>geom_arrow</a></code>, <code><a href='geom_contour2.html'>geom_contour2</a></code>,
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
   <code><a href='geom_relief.html'>geom_relief</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
   <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
-  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_filter.html'>stat_filter</a></code>,
-  <code><a href='stat_na.html'>stat_na</a></code></p>
+  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code>,
+  <code>stat_subset</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -221,15 +221,15 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 (<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>speed</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'>geom_vector</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>vx</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>vy</span>), <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-    <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>skip.x</span> <span class='kw'>=</span> <span class='fl'>8</span>))</div><div class='img'><img src='geom_vector-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>skip.x</span> <span class='kw'>=</span> <span class='fl'>8</span>))</div><div class='img'><img src='geom_vector-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Every parameter (except skip) can be mapped to data.</span>
 <span class='co'># this can be usefull for masking vectors with a variable</span>
 <span class='co'># min.mag.</span>
  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>speed</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'>geom_vector</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>vx</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>vy</span>, <span class='kw'>scale.x</span> <span class='kw'>=</span> <span class='fl'>5</span>*<span class='fu'>cos</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>)),
-    <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='geom_vector-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='img'><img src='geom_vector-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Note that the segments respond to coordinate</span>
-<span class='no'>g</span> + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='img'><img src='geom_vector-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='no'>g</span> + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='img'><img src='geom_vector-7.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Sverdrup transport</span>
 <span class='fu'>library</span>(<span class='no'>data.table</span>)
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
@@ -260,7 +260,7 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
 #&gt; 360:  9.5 10 -3.847341e-17  0.04934802
 #&gt; 361: 10.0 10 -3.847341e-17  0.00000000</div><div class='input'>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>grid</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>x</span>, <span class='no'>y</span>)) +
-    <span class='fu'>geom_vector</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>Mx</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>My</span>))</div><div class='img'><img src='geom_vector-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='fu'>geom_vector</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>Mx</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>My</span>))</div><div class='img'><img src='geom_vector-8.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

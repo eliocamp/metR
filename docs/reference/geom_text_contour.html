@@ -248,13 +248,13 @@ this is not the case with <code>geom_label_contour()</code>.</p>
 
     <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
   <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='RepeatLon.html'>RepeatLon</a></code>,
-  <code><a href='geom_arrow.html'>geom_arrow</a></code>,
+  <code><a href='geom_arrow.html'>geom_arrow</a></code>, <code><a href='geom_contour2.html'>geom_contour2</a></code>,
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
   <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
-  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_filter.html'>stat_filter</a></code>,
-  <code><a href='stat_na.html'>stat_na</a></code></p>
+  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code>,
+  <code>stat_subset</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -262,7 +262,8 @@ this is not the case with <code>geom_label_contour()</code>.</p>
 <span class='no'>v</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/melt.data.table'>melt</a></span>(<span class='no'>volcano</span>)
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>v</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
        <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>))
-<span class='no'>g</span> + <span class='fu'>geom_text_contour</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>..level..</span>))</div><div class='img'><img src='geom_text_contour-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='no'>g</span> + <span class='fu'>geom_text_contour</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>..level..</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
+#&gt; <span class='warning'>cannot coerce type 'closure' to vector of type 'double'</span></div><div class='img'><img src='geom_text_contour-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Small hack, best used with uniform background</span>
 <span class='no'>geom_label_contour2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>...</span>) {
     <span class='fu'>list</span>(<span class='fu'>geom_label_contour</span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>label.r</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/reexports'>unit</a></span>(<span class='fl'>0</span>, <span class='st'>"lines"</span>),
@@ -270,7 +271,8 @@ this is not the case with <code>geom_label_contour()</code>.</p>
          <span class='fu'>geom_text_contour</span>(<span class='no'>...</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))
 }
 <span class='no'>g</span> + <span class='fu'>geom_label_contour2</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_void</a></span>()</div><div class='img'><img src='geom_text_contour-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_void</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
+#&gt; <span class='warning'>cannot coerce type 'closure' to vector of type 'double'</span></div><div class='img'><img src='geom_text_contour-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

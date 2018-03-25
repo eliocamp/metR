@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make breaks for contours — MakeBreaks • metR</title>
+<title>Functions for making breaks — MakeBreaks • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -95,17 +95,17 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make breaks for contours</h1>
+    <h1>Functions for making breaks</h1>
     </div>
 
     
-    <p>Essencially an export of the default way <a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>ggplot2::stat_contour</a> makes breaks,
-it's intended to use as the <code>breaks</code> argument of <a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>ggplot2::scale_color_continuous</a> or
-<a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_colour_continuous'>ggplot2::scale_fill_continuous</a>. This way, there's a one to one mapping
-between contours and breaks.</p>
+    <p>Functions that return functions suitable to use as the <code>breaks</code> argument in
+ggplot2's continuous scales and in <a href='geom_contour_fill.html'>geom_contour_fill</a>.</p>
     
 
-    <pre class="usage"><span class='fu'>MakeBreaks</span>(<span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>MakeBreaks</span>(<span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>AnchorBreaks</span>(<span class='kw'>anchor</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -122,35 +122,50 @@ between contours and breaks.</p>
       <th>exclude</th>
       <td><p>a vector of breaks to exclude</p></td>
     </tr>
+    <tr>
+      <th>anchor</th>
+      <td><p>anchor value</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A function that takes a range as argument and returns a sequence of equally
-spaced intervals covering the range.</p>
+    <p>A function that takes a range as argument and a binwidth as an optional argument
+and returns a sequence of equally spaced intervals covering the range.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>MakeBreaks</code> is essencially an export of the default way
+<a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>ggplot2::stat_contour</a> makes breaks.
+    <code>AnchorBreaks</code> makes breaks starting from an <code>anchor</code> value and covering
+the range of the data acording to <code>binwidth</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
   <code><a href='RepeatLon.html'>RepeatLon</a></code>, <code><a href='geom_arrow.html'>geom_arrow</a></code>,
+  <code><a href='geom_contour2.html'>geom_contour2</a></code>,
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
   <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
   <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
-  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_filter.html'>stat_filter</a></code>,
-  <code><a href='stat_na.html'>stat_na</a></code></p>
+  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code>,
+  <code>stat_subset</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='no'>my_breaks</span> <span class='kw'>&lt;-</span> <span class='fu'>MakeBreaks</span>(<span class='fl'>10</span>)
-<span class='fu'>my_breaks</span>(<span class='fu'>range</span>(<span class='fl'>1</span>:<span class='fl'>100</span>))</div><div class='output co'>#&gt;  [1]   0  10  20  30  40  50  60  70  80  90 100</div><div class='input'>
+<span class='fu'>my_breaks</span>(<span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>100</span>))</div><div class='output co'>#&gt;  [1]   0  10  20  30  40  50  60  70  80  90 100</div><div class='input'><span class='fu'>my_breaks</span>(<span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>100</span>), <span class='fl'>20</span>)  <span class='co'># optional new binwidth argument</span></div><div class='output co'>#&gt;  [1]   0  10  20  30  40  50  60  70  80  90 100</div><div class='input'>
+<span class='co'># One to one mapping between contours and breaks</span>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='no'>binwidth</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>), <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='no'>binwidth</span>) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_continuous</a></span>(<span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>MakeBreaks</span>(<span class='no'>binwidth</span>))</div><div class='img'><img src='MakeBreaks-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_continuous</a></span>(<span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>MakeBreaks</span>(<span class='no'>binwidth</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
+#&gt; <span class='warning'>cannot coerce type 'closure' to vector of type 'double'</span></div><div class='img'><img src='MakeBreaks-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -159,6 +174,8 @@ spaced intervals covering the range.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

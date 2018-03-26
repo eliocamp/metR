@@ -52,6 +52,8 @@
 #' @import data.table udunits2
 ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array", "vars"),
                        subset = NULL) {
+    dec <- getOption("OutDec")
+    options(OutDec = ".")
     ncfile <- ncdf4::nc_open(file)
 
     if (is.null(vars)) {
@@ -91,11 +93,11 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
                                      "seconds since 1970-01-01 00:00:00")
         dimensions[["time"]] <- as.character(as.POSIXct(time, tz = "UTC",
                                                         origin = "1970-01-01 00:00:00"))
-
     }
 
     if (out[1] == "vars") {
         r <- list(vars = unname(vars), dimensions = dimensions)
+        options(OutDec = dec)
         return(r)
     }
 
@@ -149,11 +151,13 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
 
     if (out[1] == "array") {
         ncdf4::nc_close(ncfile)
+        options(OutDec = dec)
         return(nc)
     } else if (out[1] == "vector") {
         ncdf4::nc_close(ncfile)
         nc <- lapply(1:length(nc), function(x) c(nc[[x]]))
         names(nc) <- names(vars)
+        options(OutDec = dec)
         return(nc)
     } else {
         first.var <- which.max(dim.length)
@@ -179,6 +183,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
     }
     # Dejemos todo prolijo antes de salir.
     ncdf4::nc_close(ncfile)
+    options(OutDec = dec)
     return(nc.df)
 }
 

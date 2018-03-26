@@ -66,7 +66,7 @@ EOF <- function(data, formula, value.var = guess(data), n = 1) {
 
     if (requireNamespace("irlba", quietly = TRUE)) {
         set.seed(42)
-        eof <- irlba::irlba(g$matrix, nv = max(n))
+        eof <- irlba::irlba(g$matrix, nv = max(n), nu = max(n))
     } else {
         eof <- svd(g$matrix, nu = max(n), nv = max(n))
         eof$d <- eof$d[1:max(n)]

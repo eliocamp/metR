@@ -24,35 +24,41 @@
 #'
 #' @examples
 #' library(data.table)
+#' data(aao)
 #' aao <- copy(aao)
 #' aao[, gh.t := Anomaly(gh), by = .(lat, lon)]
 #' aao <- aao[date == date[1]]
 #'
 #' # Add gaps to field
 #' aao[, gh.gap := gh.t]
+#' set.seed(42)
 #' aao[sample(1:.N, .N*0.3), gh.gap := NA]
 #'
-#' aao.full <- as.data.table(ImputeEOF(aao, lon ~ lat,  value.var = "gh.gap",
+#' aao.full <- as.data.table(ImputeEOF(aao, lat ~ lon,  value.var = "gh.gap",
 #'                                     verbose = TRUE, max.iter = 2000))
-#'
-#' aao <- aao[aao.full[, .(lon, lat, gh.impute = gh.gap)], on = c("lon", "lat")]
+#' aao.full <- aao[aao.full[, .(lon, lat, gh.impute = gh.gap)], on = c("lon", "lat")]
 #'
 #' library(ggplot2)
-#' ggplot(aao, aes(lon, lat)) +
+#' ggplot(aao.full, aes(lon, lat)) +
 #'     geom_contour(aes(z = gh.t), color = "black") +
 #'     geom_contour(aes(z = gh.impute))
 #'
-#' ggplot(aao[is.na(gh.gap)], aes(gh.t, gh.impute)) +
+#' ggplot(aao.full[is.na(gh.gap)], aes(gh.t, gh.impute)) +
 #'     geom_point()
 #'
 #' @import data.table
 #' @export
-ImputeEOF <- function(data, formula, value.var, max.eof = length(X),
+ImputeEOF <- function(data, formula, value.var, max.eof = NULL,
                       min.eof = 1, tol = 1e-4, max.iter = 10000,
                       validation = NULL, verbose = FALSE) {
     # Build matrix if necessary.
     if (is.matrix(data)) {
         X <- data
+        nas <- sum(is.na(data))
+        if (nas == 0) {
+            warning("data has no missing values")
+            return(data)
+        }
     } else if (is.data.frame(data)) {
         nas <- sum(is.na(data[[value.var]]))
         if (nas == 0) {
@@ -64,9 +70,9 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X),
     } else {
         stop("data argument must be matrix or data frame")
     }
-
+    if (is.null(max.eof)) max.eof <- min(ncol(X), nrow(X))
     gaps <- which(is.na(X))
-    if (length(gaps) == 0) return(X)
+    # if (length(gaps) == 0) return(X)
 
     if (is.null(validation)) {
         validation <- max(30, 0.1*length(X[-gaps]))
@@ -75,40 +81,36 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X),
     validation <- sample((1:length(X))[!1:length(X) %in% gaps],
                          validation)
 
-    eofs <- 0:max.eof
+    eofs <- c(0, min.eof:max.eof)
     X.rec <- X
     # First try, imput with mean or something. Rmse is infinite.
-    fill <- 0
+    fill <- mean(X[!is.na(X)])
     X.rec[c(gaps, validation)] <- fill
-    rmse <- Inf
+    rmse <- sqrt(mean((X[validation] - X.rec[validation])^2))
 
     for (i in 2:length(eofs)) {
         # After first guess, impute gaps and validation.
-        X.rec.temp <- try(.ImputeEOF1(X.rec, c(gaps, validation), eofs[i],
-                                      tol = tol, max.iter = max.iter,
-                                      verbose = verbose))
-        # If it doesn't converge, then rmse is infinite
-        if (is.error(X.rec.temp)) {
-            rmse <- c(rmse, Inf)
-        } else {
-            X.rec <- X.rec.temp
-            rmse <- c(rmse, sqrt(mean((X[validation] - X.rec[validation])^2)))
-        }
-        if (verbose == TRUE) {
-            cat("\r", "With", eofs[i], "eof - convergence:", !is.error(X.rec.temp))
-        }
+        X.rec <- .ImputeEOF1(X.rec, c(gaps, validation), eofs[i],
+                                  tol = tol, max.iter = max.iter,
+                                  verbose = verbose)
 
+        rmse <- c(rmse, sqrt(mean((X[validation] - X.rec[validation])^2)))
+
+        if (verbose == TRUE) {
+            cat("\r", "With", eofs[i], "eof")
+        }
 
         # Break the loop if we are over the minimum eof asked and, either
         # this rmse is greater than the previous one or current rmse is inf.
-        if (eofs[i] > min.eof & (rmse[i] > rmse[i - 1] | rmse[i] == Inf)) {
+        if (rmse[i - 1] - rmse[i] < tol) {
             break
         }
     }
     # Select best eof and make proper imputation.
     eof <- eofs[which.min(rmse)]
     X[gaps] <- fill
-    X.rec <- .ImputeEOF1(X, gaps, eof, tol = tol, max.iter = max.iter)
+    X.rec <- .ImputeEOF1(X, gaps, eof, tol = tol, max.iter = max.iter,
+                         verbose = verbose)
 
     if (is.data.frame(data)) {
         dimnames(X.rec) <- list(unlist(g$rowdims), unlist(g$coldims))
@@ -125,28 +127,24 @@ ImputeEOF <- function(data, formula, value.var, max.eof = length(X),
 .ImputeEOF1 <- function(X, X.na, n.eof, tol = 1e-4, max.iter = 10000, verbose = TRUE) {
     X.rec <- X
     v <- NULL
-    for (i in 1:max.iter) {
+    rmse <- Inf
+    prval <- NULL
+    for (i in 2:max.iter) {
         if (requireNamespace("irlba", quietly = TRUE)) {
-            prval <- irlba::irlba(X.rec, nv = n.eof, v = v)
+            set.seed(42)
+            prval <- irlba::irlba(X.rec, nv = n.eof)
         } else {
-            prval <- prval(X.rec, nu = n.eof, nv = n.eof)
+            prval <- base::svd(X.rec, nu = n.eof, nv = n.eof)
             prval$d <- prval$d[1:n.eof]
         }
         v <- prval$v
         R <- prval$u%*%diag(prval$d, nrow = n.eof)%*%t(v)
-        rmse <- sqrt(mean((R[X.na] - X.rec[X.na])^2))
+        rmse <- c(rmse, sqrt(mean((R[X.na] - X.rec[X.na])^2)))
 
-        X.rec[X.na] <- R[X.na]
-
-        if (rmse < tol) {
-            X[X.na] <- X.rec[X.na]
-            return(X)
+        if (rmse[i-1] - rmse[i] > tol) {
+            X.rec[X.na] <- R[X.na]
+        } else {
+            return(X.rec)
         }
     }
-    if (verbose == TRUE) {
-        stop(paste0("Algorithm failed to converge after ", max.iter, " iterations"))
-    } else {
-        stop()
-    }
-
 }

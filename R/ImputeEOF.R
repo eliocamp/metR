@@ -8,12 +8,14 @@
 #' imputation
 #' @param tol tolerance used for determining convergence
 #' @param max.iter maximum iterations allowed for the algorithm
-#' @param validation number of points to use in crossvalidation (defaults to
-#' 30 or 10\% of the non NA points)
+#' @param validation number of points to use in crossvalidation (defaults to the
+#' maximum of 30 or 10\% of the non NA points)
 #' @param verbose logical indicating whether to print progress
 #'
 #' @return
-#' A data table with imputed values.
+#' A vector of inputed values with attributes `eof`, which is the number of
+#' singular values used in the final inputation; and `rmse`, which is the Root
+#' Mean Square Error calculated from crossvalidation.
 #'
 #' @details
 #' If `data` is a matrix, the `formula` argument is ignored and the function
@@ -34,12 +36,11 @@
 #' set.seed(42)
 #' aao[sample(1:.N, .N*0.3), gh.gap := NA]
 #'
-#' aao.full <- as.data.table(ImputeEOF(aao, lat ~ lon,  value.var = "gh.gap",
-#'                                     verbose = TRUE, max.iter = 2000))
-#' aao.full <- aao[aao.full[, .(lon, lat, gh.impute = gh.gap)], on = c("lon", "lat")]
+#' aao[, gh.impute := ImputeEOF(.SD, lon ~ lat,  value.var = "gh.gap",
+#'                                     verbose = TRUE, max.iter = 2000)]
 #'
 #' library(ggplot2)
-#' ggplot(aao.full, aes(lon, lat)) +
+#' ggplot(aao, aes(lon, lat)) +
 #'     geom_contour(aes(z = gh.t), color = "black") +
 #'     geom_contour(aes(z = gh.impute))
 #'
@@ -66,6 +67,8 @@ ImputeEOF <- function(data, formula, value.var, max.eof = NULL,
             return(data)
         }
         g <- .tidy2matrix(data, formula, value.var)
+        data$id <- seq.int(1, nrow(data), by = 1)
+        id <- c(.tidy2matrix(data, formula, "id")$matrix)
         X <- g$matrix
     } else {
         stop("data argument must be matrix or data frame")
@@ -97,7 +100,7 @@ ImputeEOF <- function(data, formula, value.var, max.eof = NULL,
         rmse <- c(rmse, sqrt(mean((X[validation] - X.rec[validation])^2)))
 
         if (verbose == TRUE) {
-            cat("\r", "With", eofs[i], "eof")
+            cat("\r", "With", eofs[i], "eof - rmse = ", rmse[i])
         }
 
         # Break the loop if we are over the minimum eof asked and, either
@@ -113,9 +116,13 @@ ImputeEOF <- function(data, formula, value.var, max.eof = NULL,
                          verbose = verbose)
 
     if (is.data.frame(data)) {
-        dimnames(X.rec) <- list(unlist(g$rowdims), unlist(g$coldims))
-        names(dimnames(X.rec)) <- list(names(g$rowdims), names(g$coldims))
-        X.rec <- data.table::melt(X.rec, value.name = value.var)
+        X.rec <- c(X.rec)[order(id)]
+        # X.rec <- melt(X.rec, value.name = value.var)[value.var]
+        # id <- melt(id, value.name = "id")["id"]
+        # X.rec[id]
+        # dimnames(X.rec) <- list(unlist(g$rowdims), unlist(g$coldims))
+        # names(dimnames(X.rec)) <- list(names(g$rowdims), names(g$coldims))
+
     }
 
     attr(X.rec, "eof") <- eof

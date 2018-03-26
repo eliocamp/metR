@@ -227,27 +227,28 @@ is.error <- function(x) inherits(x, "try-error")
 
     g <- data.table::dcast(setDT(data), formula, value.var = value.var)
 
-    # dims <- list()
-    # if (length(col.vars) > 1) {
-    #     cols <- unlist(strsplit(colnames(g), split = "_"))
-    # } else {
-    #     cols <- colnames(g)
-    # }
-    #
-    # for (i in seq_along(col.vars)) {
-    #     dims[[i]] <- JumpBy(cols, length(col.vars), start = i + length(row.vars))
-    #     if (!.is.somedate(data[[col.vars[i]]])) {
-    #         dims[[i]] <- as(dims[[i]], class(data[[col.vars[i]]]))
-    #     } else {
-    #         dims[[i]] <- as.Date(dims[[i]])
-    #     }
-    # }
+    dims <- list()
+    if (length(col.vars) > 1) {
+        cols <- unlist(strsplit(colnames(g), split = "_"))
+    } else {
+        cols <- colnames(g)
+    }
 
-    coldims <- lapply(col.vars, function(x) {
-        u <- unique(data[[x]])
-        u <- u[order(u)]
-    })
-    dims <- as.list(expand.grid(coldims))
+    for (i in seq_along(col.vars)) {
+        dims[[i]] <- JumpBy(cols, length(col.vars), start = i + length(row.vars))
+        if (!.is.somedate(data[[col.vars[i]]])) {
+            dims[[i]] <- as(dims[[i]], class(data[[col.vars[i]]]))
+        } else {
+            dims[[i]] <- as.Date(dims[[i]])
+        }
+    }
+
+    # coldims <- lapply(col.vars, function(x) {
+    #     u <- unique(data[[x]])
+    #     u <- u[order(u)]
+    # })
+    # dims <- as.list(expand.grid(coldims))
+
     names(dims) <- col.vars
 
     return(list(matrix = as.matrix(g[, -seq_along(row.vars), with = F]),

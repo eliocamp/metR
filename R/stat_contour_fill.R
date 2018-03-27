@@ -139,7 +139,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         cont <- .order_fill(cont)
 
         # Sometimes there are extra contours.
-        cont <- cont[int.level %between% range(breaks)]
+        # cont <- cont[int.level %between% range(breaks)]
 
         cont
         }

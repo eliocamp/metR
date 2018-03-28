@@ -62,3 +62,15 @@ AnchorBreaks <- function(anchor = 0, binwidth = NULL, exclude = NULL) {
     }
 }
 
+
+# InScale <- function(fun, binwidith, ...) {
+#     function(range){
+#         fun(range, binwidth, ...)
+#     }
+# }
+#
+# InContour <- function(fun, ...) {
+#     function(range, binwidth) {
+#         fun(range, ...)
+#     }
+# }

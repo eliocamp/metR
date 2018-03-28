@@ -9,10 +9,9 @@
 #'
 #' @examples
 #' library(ggplot2)
-#' surface <- reshape2::melt(volcano)
-#' ggplot(surface, aes(Var1, Var2, z = value)) +
-#'   geom_contour(binwidth = 30, aes(color = ..level..)) +
-#'   scale_color_divergent()
+#' ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
+#'   geom_contour(aes(color = ..level..)) +
+#'   scale_color_divergent(midpoint = 130)
 #'
 #' @rdname scale_divergent
 #' @family ggplot2 helpers

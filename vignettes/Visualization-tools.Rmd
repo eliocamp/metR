@@ -244,7 +244,7 @@ g %+% RepeatLon(nceptemperature[lev == 300])    # change the data.
 ```
 
 
-# DivideTimeseries
+## DivideTimeseries
 
 This is another ugly kuldge that hopefully will be replaced by a new facetting function (as soon as I understand how they work). The idea is to divide a long timeseries in a series of shorter plots that are easier to interpret. 
 

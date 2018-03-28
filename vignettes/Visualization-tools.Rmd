@@ -2,7 +2,9 @@
 title: "Visualization tools"
 author: "Elio Campitelli"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+    rmarkdown::html_vignette:
+        fig_width: 7
 vignette: >
   %\VignetteIndexEntry{Visualization tools}
   %\VignetteEngine{knitr::rmarkdown}
@@ -10,13 +12,13 @@ vignette: >
 ---
 
 
-One of the "conceptual branches" of metR is the *visualization tools*. These are a set of functions that interface with [ggplot2](http://ggplot2.tidyverse.org/index.html) for easier and better plotting. 
+One of the "conceptual branches" of metR is the *visualization tools*. These are a set of functions that interface with [ggplot2](http://ggplot2.tidyverse.org/index.html) for easier and better plotting of meteorological (an other) fields. 
 
-## Scales
+# Scales
 
 Many meteorological fields are defined in a longitude×latitude×level grid, so metR includes scales for each dimension. These are glorified wrapers around `scale_*_continuous()` with sensible defaults and, in the case of `scale_*_level()`, the implementation of `reverselog_trans()`. 
 
-There's also `scale_*_divergent()` which are wrapers around `scale_*_gradient2()` but with sane default colors for positive and negative values -particularily useful for plotting anomaly values. 
+There are also `scale_color_divergent()` and `scale_fill_divergent()` which are wrapers around `scale_*_gradient2()` but with sane default colors for positive and negative values --particularily useful for plotting anomaly values. 
 
 To see how this scales work, let's visualize the vertical distribution of temperature anomalies from the zonal mean. 
 
@@ -28,72 +30,125 @@ nceptemperature <- copy(nceptemperature)
 nceptemperature[, air.z := Anomaly(air), by = .(lat, lev)]
 
 # Plot made with base ggplot
-g <- ggplot(nceptemperature[lon %~% 180], aes(lat, lev, z = air.z)) +
-    geom_contour(aes(color = ..level..))
-
-g
+(g <- ggplot(nceptemperature[lon %~% 180], aes(lat, lev, z = air.z)) +
+    geom_contour(aes(color = ..level..)))
 ```
 
-While this is fine, since pressure levels are roughly proportional to $\mathrm{e}^{-z}$ in meteorology we usually plot the vertical coordinate as $-\log(p)$. However, while ggplot2 has `scale_y_log10()` and `scale_y_reverse()`, they don't work together. metR defines a new transformation `reverselog_trans()` that can be used with any scale but that is the default for `scale_*_level()`. 
+While this is fine, since pressure levels are roughly proportional to $\mathrm{e}^{-z}$ in meteorology we usually plot the vertical coordinate as $-\log(p)$. However, while ggplot2 has `scale_y_log10()` and `scale_y_reverse()`, they don't work together. `metR` defines the new transformation `reverselog_trans()` that can be used with any scale but that is the default for `scale_*_level()`. 
 
-On the other hand, `scale_*_latitude()` (and `scale_*_longitude()`) not only sets `expand` to `c(0, 0)`, but also has a `ticks` argument that specifies the spacing of breaks. 
+On the other hand, `scale_*_latitude()` (and `scale_*_longitude()`) not only defaults `expand` to `c(0, 0)`, but also has a `ticks` argument that specifies the spacing of breaks between -90 and 90 in the case of `scale_*_latitude()`, and between 0 and 360 in the case of `scale_*_longitude()`.
 
 These scales default to printing no label, since usually the dimensions are understood by the shape of the plot.
 
 ```{r, fig.width = 7}
 g + 
-    scale_y_level() +
+    scale_y_level(limits = c(-90, 90)) +
     scale_x_latitude(ticks = 15) +
     scale_color_divergent()
 ```
 
-Note: `scale_*_longitude()` (currently)  assumes the data goes from 0° to 360° but puts labels between -180° and 180°. This very idiosyncratic choice stems from the fact that model output is usually in the [0; 360) range but it's easier to read maps in the (-180; 180] range. In the futre this may change. 
+Note: `scale_*_longitude()` (currently)  assumes the data goes from 0° to 360° but puts labels between -180° and 180°. This very idiosyncratic choice stems from the fact that model output is usually in the [0; 360) range but it's easier to read maps in the (-180; 180] range. This may change in the future. 
 
-## Geoms and stats
+# Geoms and stats
 
-metR implements one geom and one stat. 
+metR implements one geom and one stat. XXX
 
-### stat_contour_fill()
+## stat_contour_fill()
 
-In ggplot2, the 'canonical' way to get filled contours is by using `stat_contour()` with a `polygon` geom and mapping `fill` to `level`. This has tree important limitations. 
+In ggplot2, the 'canonical' way to get filled contours is by using `stat_contour()` with a `polygon` geom and mapping `fill` to `level` (see [this](https://github.com/tidyverse/ggplot2/issues/1066) issue), but this has tree important limitations. 
 
 * It doesn't work well for contours that end at the edges
 
-* External contours sometimes hide internal ones (small red contour in the figure)
+* External contours sometimes hide internal ones (small red contour in the figure below)
 
-* There's no distinction between contours with the same level but different internal values (blue contours in the figure)
+* There's no distinction between contours with the same level but different internal values (blue contours in the figure below)
 
 `stat_contour_fill()` makes some adjustments to the data and computes an aditional variable `int.level` (which is de defautl mapping for the `fill` aesthetic) that solve these problems.
 
-
 ```{r, fig.show='hold', fig.width = 3.3}
 breaks = seq(100, 200, by = 10)
-ggplot(melt(volcano), aes(Var1, Var2, z = value)) +
+v <- setDT(melt(volcano))
+ggplot(v, aes(Var1, Var2, z = value)) +
     stat_contour(aes(fill = ..level..), geom = "polygon", breaks = breaks) +
     geom_contour(color = "red", size = 0.2, breaks = 150) +
-    geom_contour(color = "blue", size = 0.2, breaks = 160)
+    geom_contour(color = "blue", size = 0.2, breaks = 160) +
+    guides(fill = "none")
 
-ggplot(melt(volcano), aes(Var1, Var2, z = value)) +
-    stat_contour_fill(breaks = breaks)
+ggplot(v, aes(Var1, Var2, z = value)) +
+    geom_contour_fill(breaks = breaks) +
+    guides(fill = "none")
 ```
 
-Neat, hu? :D It's important to note that this stat currently only works with rectangular grids and does not play well with missing values. 
+In the case of missing values, `geom_contour_fill()` defaults to imputing them with the mean, which returns somewhat correct closed contours around missing values. The user in encouraged to mask them with `stat_na()`, wich selects values that are `NA`.
+
+```{r}
+# Adding missing values
+v[, value.gap := value]
+set.seed(42)
+v[sample(1:.N, .N*0.3), value.gap := NA]
+
+ggplot(v, aes(Var1, Var2, z = value.gap)) +
+    geom_contour_fill(breaks = breaks) +
+    stat_na(aes(na = value.gap))
+```
 
 We can apply this to a more realistic dataset 
 
 ```{r,  fig.width = 7}
-g <- ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
-    stat_contour_fill(exclude = 0) +
+ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+    geom_contour_fill() +
     scale_fill_divergent() +
     scale_x_longitude() +
     scale_y_latitude()
-g
+```
+
+As an important note, this stat currently only works with rectangular grids.
+
+## geom_text_contour and geom_label_contour
+
+Labeling contours is also a problematic aspect of `ggplot2`. `geom_text_contour()` and `geom_label_contour()` can be use to automatically add text or labels to the flattest part of a contour. 
+
+```{r}
+ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+    geom_contour_fill() +
+    geom_contour(color = "black") +
+    geom_text_contour() +
+    scale_fill_divergent() +
+    scale_x_longitude() +
+    scale_y_latitude()
+```
+
+By default it labels every 2nd contour (this can be changed by the `skip` parameter) and it rotates to follow the angle of the contour (this is not available on `geom_label_contour()`). Since in some datasetss there can be very small contours that should not be labeled for clarity, the `min.size` argument specifies the minimum points a contour has to have in order to be labeled. 
+
+For more on the use of contours, see the Advance Contouring vignette (comming soon). 
+
+## stat_subset
+
+As a generalization of `stat_na()` shown above, `metR` also has `stat_subset()` which makes a subset of the data according to the `subset` aesthetic. This makes it possible to show only part of the data in one geom without needing to specify a `data` argument (specially usefull if the data being plotted is the result of a long pipe and not actually asigned to a data.frame). It has a somewhat limited use in that it cannot perform further statistical transformations of the data. 
+
+For example, it can be used if you have a correlation field and want to mark only the points with significant correlations:
+
+```{r}
+data(aao)    # geopotential height at 700hPa for the southern hemisphere. 
+
+ggplot(aao[, gh.base := gh[lon == 120 & lat == -50], by = date][
+           , .(correlation = cor(gh.base, gh)), 
+           by = .(lon, lat)],
+    aes(lon, lat, z = correlation)) +
+    geom_contour_fill(breaks = MakeBreaks(0.1)) +
+    stat_subset(aes(subset = correlation > 0.5),
+                geom = "point", size = 0.1) +
+    scale_fill_divergent() +
+    scale_x_longitude() +
+    scale_y_latitude()
 ```
 
 
 ## geom_vector
 
-Plotting arrows can be a pain, so `geom_vector()` is a parametrization of `geom_segment()` by location and displacement in each direction. `min.mag` controls the minimum magnitude for an arrow to be drawn (useful for highlighting only areas of strong 'flow') and `skip = n` draws only the nth arrow in the x direction and the mth arrown in the y direction (only meaningful for regular grids!).
+Plotting arrows can be a pain. Again, the 'canonical' way of plotting vectors is tu use `geom_segment()` and specify `x`, `y`, `xend` and `yend` aesthetics which can be a lot of typing when one has the data on location and displacement (or velocity). Instead, `metR`'s `geom_vector()` draw a line from points (x, y) to poins (x + dx, y + dy). It also has some usefull paramters like `min.mag`, which controls the minimum magnitude for an arrow to be drawn (useful for highlighting only areas of strong 'flow') and `skip`, which draws only the nth arrow in the x and y directions. 
+
+So, as an example, we can plot the temperature gradient like this:
 
 ```{r,  fig.width = 7}
 nceptemperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat, 
@@ -103,55 +158,106 @@ nceptemperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat,
 
 ggplot(nceptemperature[lev == 500], aes(lon, lat)) +
     stat_contour_fill(aes(z = air.z)) +
-    geom_vector(aes(dx = t.dx, dy = t.dy), skip.x = 2, skip.y = 1, scale = 5e5, min.mag = 2e-6,
+    geom_vector(aes(dx = t.dx, dy = t.dy), skip.x = 2, 
+                skip.y = 1, scale = 5e5, min.mag = 2e-6,
                arrow.size = 0.3) +
     scale_y_latitude(limits = c(-90, 0)) +
     scale_x_longitude()
 ```
 
-The parameters `scale`, `arrow.size` and `arrow.angle` modify the length of the segments, and the size and angle of the arrowheads. 
+The `scale` argument modifies the length of the segments, and the arguments `arrow.angle`, `arrow.length`, etc... control the shape of the arrowheads.
 
 There are (currently) many limitations of `geom_vector()`:
 
-* When the x and y units of the plotting area are not in the same units as the displacement values (as in the example), there's a fair amount of manual tweaking needed to get things right. 
+* When the x and y units of the plotting area are not in the same units as the displacement values (as in the example), there's a fair amount of guessing in the `scale` argument to get things right. 
 
 * Related to that, if there is no consistent way of comparing the displacement unit to the x or y units there is no garantee of accuracy. See how in the example the meridional magnitude is exagerated compared to the zonal magnitude. 
 
-* It breaks if any dimension is discrete or date/date_time. 
+* It breaks if any dimension is discrete or date/date_time because there is no consisten way of translating a continuous displacement into a discrete variable. 
 
 * It does not preserve direction under coordinate transformations, i.e wind coming from the south west will appear to come from the west south west if the x coordinate is stretched, but it will still be parallel to streamlines. 
 
-* Vectors that cross the dateline cause problems when using map proyections since they extend the data to values outside the bounds of the map. 
+## geom_arrow
 
-```{r, fig.show='hold', fig.width = 3.3, warning = FALSE}
-g <- ggplot(RepeatLon(nceptemperature[lev == 500]), aes(lon, lat)) +
+To solve the last two problems `metR` has `geom_arrow()` which works the same as `geom_vector()` but instead parametrizing vector by their magnitude and angle. 
+
+```{r}
+nceptemperature[, mag := Mag(t.dx, t.dy)][, angle := atan2(t.dy, t.dx)*180/pi]
+
+ggplot(nceptemperature[lev == 500], aes(lon, lat)) +
     stat_contour_fill(aes(z = air.z)) +
-    scale_y_latitude(limits = c(-80, 0)) +
-    scale_x_longitude() +
-    scale_fill_divergent(guide = "none") +
-    coord_map()
-
-g 
-g + geom_vector(aes(dx = t.dx, dy = t.dy), skip = 2, scale = 5e5, min.mag = 2e-6,
-               arrow.size = 0.3) 
+    geom_arrow(aes(mag = mag, angle = angle), skip.x = 2, 
+                skip.y = 1, scale = 5e3, min.mag = 2e-6) +
+    scale_y_latitude(limits = c(-90, 0)) +
+    scale_x_longitude()
 ```
 
+The `start` and  `direction` arguments adjust the behaviour of the arrows. This is useful for working with winds in the meteorological standard (in which 0° means wind from the North and 90° means wind from the East). 
 
+In contrast to `geom_vector()`, `geom_arrow()` **does** preserve direction under coordinate transforms. This means that, for example, an arrow at a 45° angle represents wind from the southwest regardless of the `x` and `y` scales (but note that this also means that it might not be parallel to the streamlines). For this reason this geom does work with discrete scales.
+
+
+# Other goodies
+
+## guide_colorstrip
+
+The use of `geom_contour()` and `geom_contour_fill()` generates a problem because those geoms implicitly discretize a continuous variable, but the default guide (`guide_colourbar()`) still show a continuous scale. This can be partially solved by using `ggplot`'s `guide_legend()`
+
+```{r}
+ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+    geom_contour2(aes(color = ..level..), breaks = MakeBreaks(2)) +
+    scale_color_divergent(guide = "legend",
+                         breaks = MakeBreaks(2)) +
+    scale_x_longitude() +
+    scale_y_latitude() + theme(legend.position = "bottom")
+```
+
+This has some limitations as can be seen above. First, in the case of `geom_contour()` the full color scale is replaced by lines. Second, it breaks down if the position of the legend is at the bottom. Finally, the listed colors are the ones mapped to the breaks, which can be a problem in the case of `geom_contour_fill()` in which the colors are actually the values *between* breaks. 
+
+All of these problems are solved in `guide_colorstrip()` as can be seen in the figure below. 
+```{r}
+ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+    geom_contour_fill(breaks = MakeBreaks(2)) +
+    scale_fill_divergent(guide = "colorstrip",
+                         breaks = MakeBreaks(2)) +
+    scale_x_longitude() +
+    scale_y_latitude() + theme(legend.position = "bottom")
+```
+
+By default, colors are mapped to the values *in between* breaks, so there's a one-to-one mapping between colors shown in the plot and in the guide. From an aesthetic standpoint, it's much closer to the `cbarn` command from `GrADS`, which a lot of atmospheric scientists are probably used to.  
 
 ## RepeatLon
 
-The function `RepeatLon()` is an ugly kludge to fix an issue when using polar coordinates in ggplot2. Contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.
+The function `RepeatLon()` is an ugly kludge to fix an issue when using polar coordinates in ggplot2 in which contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.
+
+See how in the figure on the left, contours that cross the 0° longitude mark are cut, but they join correctly in the figure on the right. 
 
 ```{r, fig.width = 3.3, fig.show = 'hold', warning = FALSE}
-g <- ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+(g <- ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour(binwidth = 1.5) +
     scale_fill_divergent() +
     scale_x_longitude() +
     scale_y_latitude(limits = c(-90, -20)) +
-    coord_polar()
+    coord_polar())
 
-g
+g %+% RepeatLon(nceptemperature[lev == 300])    # change the data. 
+```
 
-g %+% RepeatLon(nceptemperature[lev == 300]) 
+
+# DivideTimeseries
+
+This is another ugly kuldge that hopefully will be replaced by a new facetting function (as soon as I understand how they work). The idea is to divide a long timeseries in a series of shorter plots that are easier to interpret. 
+
+```{r}
+(g <- ggplot(aao[lon == 120 & lat == -50], aes(date, gh)) +
+     geom_line() +
+     geom_smooth(span = 0.3) +
+     scale_x_date(expand = c(0, 0))) 
+```
+
+In the above plot, the timeseries looks noisy and hard to understand since the lines are too steep. Dividing it into 2 facets makes is easier to see what's going on.
+
+```{r}
+DivideTimeseries(g, aao$date, n = 2, xlab = "date", ylab = "gh")
 ```
 

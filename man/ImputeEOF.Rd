@@ -5,7 +5,7 @@
 \title{Impute missing values}
 \usage{
 ImputeEOF(data, formula, value.var, max.eof = NULL, min.eof = 1,
-  tol = 1e-04, max.iter = 10000, validation = NULL, verbose = FALSE)
+  tol = 0.01, max.iter = 10000, validation = NULL, verbose = FALSE)
 }
 \arguments{
 \item{data}{a data.frame}

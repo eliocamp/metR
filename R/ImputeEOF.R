@@ -50,7 +50,7 @@
 #' @import data.table
 #' @export
 ImputeEOF <- function(data, formula, value.var, max.eof = NULL,
-                      min.eof = 1, tol = 1e-4, max.iter = 10000,
+                      min.eof = 1, tol = 1e-2, max.iter = 10000,
                       validation = NULL, verbose = FALSE) {
     # Build matrix if necessary.
     if (is.matrix(data)) {

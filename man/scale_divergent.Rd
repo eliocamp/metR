@@ -95,10 +95,6 @@ other values are deprecated.}
 
 \item{guide}{Type of legend. Use \code{"colourbar"} for continuous
 colour bar, or \code{"legend"} for discrete colour legend.}
-
-\item{binwidth}{deprecated}
-
-\item{exclude}{deprecated}
 }
 \description{
 Wrapper around ggplot's \code{\link[ggplot2]{scale_colour_gradient2}} with
@@ -106,10 +102,9 @@ inverted defaults of \code{high} and \code{low}.
 }
 \examples{
 library(ggplot2)
-surface <- reshape2::melt(volcano)
-ggplot(surface, aes(Var1, Var2, z = value)) +
-  geom_contour(binwidth = 30, aes(color = ..level..)) +
-  scale_color_divergent()
+ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
+  geom_contour(aes(color = ..level..)) +
+  scale_color_divergent(midpoint = 130)
 
 }
 \seealso{
@@ -119,6 +114,7 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},
   \code{\link{geom_relief}}, \code{\link{geom_vector}},
+  \code{\link{guide_colourstrip}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_longitude}}, \code{\link{stat_na}},
   \code{\link{stat_subset}}

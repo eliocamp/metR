@@ -5,13 +5,13 @@
 \alias{geom_text_contour}
 \title{Label contours}
 \usage{
-geom_label_contour(mapping = NULL, data = NULL, stat = "contour",
+geom_label_contour(mapping = NULL, data = NULL, stat = "text_contour",
   position = "identity", ..., min.size = 10, skip = 1, parse = FALSE,
   nudge_x = 0, nudge_y = 0, label.padding = unit(0.25, "lines"),
   label.r = unit(0.15, "lines"), label.size = 0.25, na.rm = FALSE,
   show.legend = NA, inherit.aes = TRUE)
 
-geom_text_contour(mapping = NULL, data = NULL, stat = "contour",
+geom_text_contour(mapping = NULL, data = NULL, stat = "text_contour",
   position = "identity", ..., min.size = 10, skip = 1, rotate = TRUE,
   parse = FALSE, nudge_x = 0, nudge_y = 0, check_overlap = FALSE,
   na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
@@ -138,6 +138,7 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_relief}}, \code{\link{geom_vector}},
+  \code{\link{guide_colourstrip}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
   \code{\link{scale_longitude}}, \code{\link{stat_na}},

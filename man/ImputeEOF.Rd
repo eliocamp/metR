@@ -60,7 +60,7 @@ ggplot(aao, aes(lon, lat)) +
     geom_contour(aes(z = gh.t), color = "black") +
     geom_contour(aes(z = gh.impute))
 
-ggplot(aao.full[is.na(gh.gap)], aes(gh.t, gh.impute)) +
+ggplot(aao[is.na(gh.gap)], aes(gh.t, gh.impute)) +
     geom_point()
 
 }

@@ -50,7 +50,7 @@ to the paired geom/stat.}
 
 \item{skip, skip.x, skip.y}{numeric specifying number of gridpoints not to draw in the x and y direction.}
 
-\item{arrow.length, arrow.angle, arrow.ends, arrow.type}{parameters passed to \link[grid:arrow]{grid::arrow})}
+\item{arrow.length, arrow.angle, arrow.ends, arrow.type}{parameters passed to \link[grid:arrow]{grid::arrow}}
 
 \item{arrow}{specification for arrow heads, as created by arrow().}
 
@@ -115,6 +115,7 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},
   \code{\link{geom_relief}},
+  \code{\link{guide_colourstrip}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
   \code{\link{scale_longitude}}, \code{\link{stat_na}},

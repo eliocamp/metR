@@ -105,7 +105,7 @@ The default behaviour works fell for geom_contour_fill in which the colors
 represent the value between contour surfaces.
 
 `inside = TRUE`` works better for geom_tile where the color represents
-the value of the data and is very similar to gg\link[ggplot2:guide_legend]{ggplot2::guide_legend}.
+the value of the data and is very similar to \link[ggplot2:guide_legend]{ggplot2::guide_legend}.
 }
 \examples{
 # In this example the lowest color represent area of the data with values
@@ -130,3 +130,16 @@ g + scale_fill_continuous(guide = guide_legend())
 g + scale_fill_continuous(guide = guide_colourstrip(inside = TRUE))
 
 }
+\seealso{
+Other ggplot2 helpers: \code{\link{DivideTimeseries}},
+  \code{\link{MakeBreaks}}, \code{\link{RepeatLon}},
+  \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
+  \code{\link{geom_contour_fill}},
+  \code{\link{geom_label_contour}},
+  \code{\link{geom_relief}}, \code{\link{geom_vector}},
+  \code{\link{reverselog_trans}},
+  \code{\link{scale_color_divergent}},
+  \code{\link{scale_longitude}}, \code{\link{stat_na}},
+  \code{\link{stat_subset}}
+}
+\concept{ggplot2 helpers}

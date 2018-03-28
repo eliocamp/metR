@@ -11,13 +11,19 @@
 \alias{scale_y_level}
 \title{Helpful scales for maps}
 \usage{
-scale_x_longitude(ticks = 60, name = "", expand = c(0, 0), ...)
+scale_x_longitude(ticks = 60, name = "", expand = c(0, 0),
+  breaks = seq(0, 360 - ticks, by = ticks),
+  labels = ConvertLongitude(breaks, 360), ...)
 
-scale_y_longitude(ticks = 60, name = "", expand = c(0, 0), ...)
+scale_y_longitude(ticks = 60, name = "", expand = c(0, 0),
+  breaks = seq(0, 360 - ticks, by = ticks),
+  labels = ConvertLongitude(breaks, 360), ...)
 
-scale_x_latitude(ticks = 30, name = "", expand = c(0, 0), ...)
+scale_x_latitude(ticks = 30, name = "", expand = c(0, 0),
+  breaks = seq(-90, 90, by = ticks), ...)
 
-scale_y_latitude(ticks = 30, name = "", expand = c(0, 0), ...)
+scale_y_latitude(ticks = 30, name = "", expand = c(0, 0),
+  breaks = seq(-90, 90, by = ticks), ...)
 
 scale_x_level(name = "", expand = c(0, 0), trans = "reverselog", ...)
 
@@ -26,20 +32,56 @@ scale_y_level(name = "", expand = c(0, 0), trans = "reverselog", ...)
 \arguments{
 \item{ticks}{spacing between breaks}
 
-\item{name}{name of the scale}
+\item{name}{The name of the scale. Used as axis or legend title. If
+\code{waiver()}, the default, the name of the scale is taken from the first
+mapping used for that aesthetic. If \code{NULL}, the legend title will be
+omitted.}
 
-\item{expand}{a numeric vector of length two giving multiplicative and
-additive expansion constants.}
+\item{expand}{Vector of range expansion constants used to add some
+padding around the data, to ensure that they are placed some distance
+away from the axes. Use the convenience function \code{\link[=expand_scale]{expand_scale()}}
+to generate the values for the \code{expand} argument. The defaults are to
+expand the scale by 5\% on each side for continuous variables, and by
+0.6 units on each side for discrete variables.}
 
-\item{...}{other arguments passed to \code{\link[ggplot2]{scale_x_continuous}}}
+\item{breaks}{One of:
+\itemize{
+\item \code{NULL} for no breaks
+\item \code{waiver()} for the default breaks computed by the
+transformation object
+\item A numeric vector of positions
+\item A function that takes the limits as input and returns breaks
+as output
+}}
 
-\item{trans}{either the name of a transformation object, or the object itself}
+\item{labels}{One of:
+\itemize{
+\item \code{NULL} for no labels
+\item \code{waiver()} for the default labels computed by the
+transformation object
+\item A character vector giving labels (must be same length as \code{breaks})
+\item A function that takes the breaks as input and returns labels
+as output
+}}
+
+\item{...}{Other arguments passed on to \code{scale_(x|y)_continuous}}
+
+\item{trans}{Either the name of a transformation object, or the
+object itself. Built-in transformations include "asn", "atanh",
+"boxcox", "exp", "identity", "log", "log10", "log1p", "log2",
+"logit", "probability", "probit", "reciprocal", "reverse" and "sqrt".
+
+A transformation object bundles together a transform, it's inverse,
+and methods for generating breaks and labels. Transformation objects
+are defined in the scales package, and are called \code{name_trans}, e.g.
+\code{\link[scales:boxcox_trans]{scales::boxcox_trans()}}. You can create your own
+transformation with \code{\link[scales:trans_new]{scales::trans_new()}}.}
 }
 \description{
 These functions are simple wrappers around
 \code{\link[ggplot2]{scale_x_continuous}} and
 \code{\link[ggplot2]{scale_y_continuous}} with
-helpful defaults for plotting longitude and latitude.
+helpful defaults for plotting longitude, latitude and pressure levels.
 }
 \details{
 scale_*_longitude assumes that your data is between 0 and 360 but labels it
@@ -60,6 +102,7 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},
   \code{\link{geom_relief}}, \code{\link{geom_vector}},
+  \code{\link{guide_colourstrip}},
   \code{\link{reverselog_trans}},
   \code{\link{scale_color_divergent}},
   \code{\link{stat_na}}, \code{\link{stat_subset}}

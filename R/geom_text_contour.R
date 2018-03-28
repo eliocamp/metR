@@ -54,7 +54,7 @@
 #' @import ggplot2 data.table
 #' @family ggplot2 helpers
 geom_text_contour <- function(mapping = NULL, data = NULL,
-                      stat = "contour",
+                      stat = "text_contour",
                       position = "identity",
                       ...,
                       min.size = 10,
@@ -174,6 +174,5 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
     angle <- ifelse(angle < -90, angle + 180, angle)
     angle
 }
-
 
 

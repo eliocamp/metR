@@ -1,7 +1,7 @@
 #' @rdname geom_text_contour
 #' @export
 geom_label_contour <- function(mapping = NULL, data = NULL,
-                       stat = "contour", position = "identity",
+                       stat = "text_contour", position = "identity",
                        ...,
                        min.size = 10,
                        skip = 1,

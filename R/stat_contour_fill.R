@@ -1,5 +1,4 @@
 #' @rdname geom_contour_fill
-#' @family ggplot2 helpers
 #' @export
 #' @import sp
 #' @import ggplot2

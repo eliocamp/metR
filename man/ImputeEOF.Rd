@@ -4,7 +4,7 @@
 \alias{ImputeEOF}
 \title{Impute missing values}
 \usage{
-ImputeEOF(data, formula, value.var, max.eof = length(X), min.eof = 1,
+ImputeEOF(data, formula, value.var, max.eof = NULL, min.eof = 1,
   tol = 1e-04, max.iter = 10000, validation = NULL, verbose = FALSE)
 }
 \arguments{
@@ -22,13 +22,15 @@ imputation}
 
 \item{max.iter}{maximum iterations allowed for the algorithm}
 
-\item{validation}{number of points to use in crossvalidation (defaults to
-30 or 10\% of the non NA points)}
+\item{validation}{number of points to use in crossvalidation (defaults to the
+maximum of 30 or 10\% of the non NA points)}
 
 \item{verbose}{logical indicating whether to print progress}
 }
 \value{
-A data table with imputed values.
+A vector of inputed values with attributes \code{eof}, which is the number of
+singular values used in the final inputation; and \code{rmse}, which is the Root
+Mean Square Error calculated from crossvalidation.
 }
 \description{
 Imputes missing values via Data Interpolating Empirical Orthogonal Functions
@@ -40,25 +42,25 @@ returns a matrix.
 }
 \examples{
 library(data.table)
+data(aao)
 aao <- copy(aao)
 aao[, gh.t := Anomaly(gh), by = .(lat, lon)]
 aao <- aao[date == date[1]]
 
 # Add gaps to field
 aao[, gh.gap := gh.t]
+set.seed(42)
 aao[sample(1:.N, .N*0.3), gh.gap := NA]
 
-aao.full <- as.data.table(ImputeEOF(aao, lon ~ lat,  value.var = "gh.gap",
-                                    verbose = TRUE, max.iter = 2000))
-
-aao <- aao[aao.full[, .(lon, lat, gh.impute = gh.gap)], on = c("lon", "lat")]
+aao[, gh.impute := ImputeEOF(.SD, lon ~ lat,  value.var = "gh.gap",
+                                    verbose = TRUE, max.iter = 2000)]
 
 library(ggplot2)
 ggplot(aao, aes(lon, lat)) +
     geom_contour(aes(z = gh.t), color = "black") +
     geom_contour(aes(z = gh.impute))
 
-ggplot(aao[is.na(gh.gap)], aes(gh.t, gh.impute)) +
+ggplot(aao.full[is.na(gh.gap)], aes(gh.t, gh.impute)) +
     geom_point()
 
 }

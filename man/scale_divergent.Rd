@@ -5,23 +5,15 @@
 \alias{scale_fill_divergent}
 \title{Divergent color scales}
 \usage{
-scale_color_divergent(low = scales::muted("blue"),
-  high = scales::muted("red"), binwidth = NA, exclude = NULL, ...)
+scale_color_divergent(..., low = scales::muted("blue"), mid = "white",
+  high = scales::muted("red"), midpoint = 0, space = "Lab",
+  na.value = "grey50", guide = "colourbar")
 
-scale_fill_divergent(low = scales::muted("blue"),
-  high = scales::muted("red"), binwidth = NA, exclude = NULL, ...)
+scale_fill_divergent(..., low = scales::muted("blue"), mid = "white",
+  high = scales::muted("red"), midpoint = 0, space = "Lab",
+  na.value = "grey50", guide = "colourbar")
 }
 \arguments{
-\item{low}{Colours for low and high ends of the gradient.}
-
-\item{high}{Colours for low and high ends of the gradient.}
-
-\item{binwidth}{optional binwidth for computing breaks. For best results,
-should be the same value as the related \code{stat_contour} call.}
-
-\item{exclude}{a numeric vector of levels that should be excluded from the
-contour calculation}
-
 \item{...}{Arguments passed on to \code{continuous_scale}
 \describe{
   \item{aesthetics}{The names of the aesthetics that this scale works with}
@@ -86,18 +78,38 @@ to generate the values for the \code{expand} argument. The defaults are to
 expand the scale by 5\% on each side for continuous variables, and by
 0.6 units on each side for discrete variables.}
 }}
+
+\item{low}{Colours for low and high ends of the gradient.}
+
+\item{mid}{colour for mid point}
+
+\item{high}{Colours for low and high ends of the gradient.}
+
+\item{midpoint}{The midpoint (in data value) of the diverging scale.
+Defaults to 0.}
+
+\item{space}{colour space in which to calculate gradient. Must be "Lab" -
+other values are deprecated.}
+
+\item{na.value}{Colour to use for missing values}
+
+\item{guide}{Type of legend. Use \code{"colourbar"} for continuous
+colour bar, or \code{"legend"} for discrete colour legend.}
+
+\item{binwidth}{deprecated}
+
+\item{exclude}{deprecated}
 }
 \description{
-Wrapper around ggplot's \code{\link[ggplot2]{scale_colour_gradient2}} with better defaults and
-automatic annotated breaks. It's main use it to label the same levels as
-the contours in a plot.
+Wrapper around ggplot's \code{\link[ggplot2]{scale_colour_gradient2}} with
+inverted defaults of \code{high} and \code{low}.
 }
 \examples{
 library(ggplot2)
 surface <- reshape2::melt(volcano)
 ggplot(surface, aes(Var1, Var2, z = value)) +
   geom_contour(binwidth = 30, aes(color = ..level..)) +
-  scale_color_divergent(binwidth = 30)
+  scale_color_divergent()
 
 }
 \seealso{

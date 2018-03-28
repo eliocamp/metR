@@ -48,6 +48,7 @@ to set n to \code{NULL}. If the irba package is installed, EOF uses
 # The Antarctic Oscillation is computed from the
 # monthly geopotential height anomalies weigthed by latitude.
 library(data.table)
+data(aao)
 aao <- copy(aao)
 aao[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
       by = .(lon, lat, month(date))]

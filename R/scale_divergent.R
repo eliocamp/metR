@@ -3,8 +3,6 @@
 #' Wrapper around ggplot's \code{\link[ggplot2]{scale_colour_gradient2}} with
 #' inverted defaults of `high` and `low`.
 #'
-#' @param binwidth deprecated
-#' @param exclude deprecated
 #' @inheritParams ggplot2::scale_colour_gradient2
 #'
 #' @examples

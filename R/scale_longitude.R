@@ -3,14 +3,10 @@
 #' These functions are simple wrappers around
 #' \code{\link[ggplot2]{scale_x_continuous}} and
 #' \code{\link[ggplot2]{scale_y_continuous}} with
-#' helpful defaults for plotting longitude and latitude.
+#' helpful defaults for plotting longitude, latitude and pressure levels.
 #'
+#' @inheritParams ggplot2::scale_x_continuous
 #' @param ticks spacing between breaks
-#' @param name name of the scale
-#' @param expand a numeric vector of length two giving multiplicative and
-#' additive expansion constants.
-#' @param trans either the name of a transformation object, or the object itself
-#' @param ... other arguments passed to \code{\link[ggplot2]{scale_x_continuous}}
 #'
 #' @details
 #' scale_*_longitude assumes that your data is between 0 and 360 but labels it

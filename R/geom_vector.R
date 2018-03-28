@@ -7,7 +7,7 @@
 #' @param scale,scale.x,scale.y multiplicative scales for adjusting the size of the vectors.
 #' @param min.mag minimum magnitude of the plotted vectors
 #' @param skip,skip.x,skip.y numeric specifying number of gridpoints not to draw in the x and y direction.
-#' @param arrow.length,arrow.angle,arrow.ends,arrow.type parameters passed to [grid::arrow])
+#' @param arrow.length,arrow.angle,arrow.ends,arrow.type parameters passed to [grid::arrow]
 #' @inheritParams ggplot2::geom_segment
 #'
 #' @examples

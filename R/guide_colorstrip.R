@@ -11,7 +11,7 @@
 #' represent the value between contour surfaces.
 #'
 #' `inside = TRUE`` works better for geom_tile where the color represents
-#' the value of the data and is very similar to gg[ggplot2::guide_legend].
+#' the value of the data and is very similar to [ggplot2::guide_legend].
 #'
 #' @examples
 #' # In this example the lowest color represent area of the data with values
@@ -37,7 +37,7 @@
 #'
 #' @return
 #' A guide object.
-#'
+#' @family ggplot2 helpers
 #' @export
 #' @importFrom grid is.unit
 guide_colourstrip <- function(

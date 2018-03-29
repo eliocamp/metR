@@ -5,7 +5,6 @@
 #' public access. Data availability is restricted to one year prior.
 #'
 #' @param date date vector of dates to fetch data
-#' @param source ignored for now
 #' @param bar logical object indicating whether to show a progress bar
 #'
 #' @return
@@ -14,8 +13,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' dates <- seq.Date(as.Date("2016-07-14"), as.Date("2017-07-14"), by = "1 day")
-#' data <- GetData(dates, bar = FALSE)    # long!
+#' dates <- seq.Date(today() - 30, today(), by = "1 day")
+#' data <- SMNData(dates, bar = FALSE)    # long!
 #'
 #' library(ggplot2)
 #' ggplot(subset(data, station == "BASE BELGRANO II"),
@@ -26,7 +25,7 @@
 #' @source https://ssl.smn.gob.ar/dpd/pron5d-calendario.php
 #' @export
 #' @import RCurl
-GetData <- function(date, source = "SMN", bar = FALSE) {
+SMNData <- function(date, bar = FALSE) {
     return.data <- data.frame()
     no_data <- vector()
 

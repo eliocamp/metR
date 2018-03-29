@@ -36,6 +36,7 @@ Adapted from \url{https://github.com/marisolosman/Reunion_Clima/blob/master/WAF/
 \seealso{
 Other meteorology functions: \code{\link{Derivate}},
   \code{\link{EOF}}, \code{\link{FitQsWave}},
-  \code{\link{GeostrophicWind}}, \code{\link{physics}}
+  \code{\link{GeostrophicWind}},
+  \code{\link{thermodynamics}}
 }
 \concept{meteorology functions}

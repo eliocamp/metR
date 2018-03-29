@@ -44,6 +44,6 @@ the above mentioned sum but for only the selected wave numbers.
 \seealso{
 Other meteorology functions: \code{\link{Derivate}},
   \code{\link{EOF}}, \code{\link{GeostrophicWind}},
-  \code{\link{WaveFlux}}, \code{\link{physics}}
+  \code{\link{WaveFlux}}, \code{\link{thermodynamics}}
 }
 \concept{meteorology functions}

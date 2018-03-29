@@ -28,10 +28,10 @@ reference:
   - title: Physics
     desc: functions related to physical processes
     contents:
+      - thermodynamics
       - coriolis
       - Derivate
       - GeostrophicWind
-      - IdealGas
       - season
       - WaveFlux
   - title: Data Manipulation

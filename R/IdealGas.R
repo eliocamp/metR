@@ -4,6 +4,7 @@
 #'
 #' @param p pressure
 #' @param t temperature
+#' @param tv virtual temperature
 #' @param td dewpoint
 #' @param rho density
 #' @param e vapour partial pressure
@@ -11,7 +12,7 @@
 #' @param w mixing ratio
 #' @param ws saturation mixing ratio
 #' @param R gas constant for air
-#' @param tita potential temperature
+#' @param theta potential temperature
 #' @param p0 refference pressure
 #' @param kappa ratio of dry air constant and specific heat capacity at constant pressure
 #' @param epsilon ratio of dry air constant and vapour constant
@@ -24,7 +25,7 @@
 #' ideal gas law \eqn{P=\rho R T}.
 #'
 #' `Adiabat` computes pressure, temperature or potential temperature according to
-#' the adiabatic relationship \eqn{\tita = T (P0/P)^\kappa}.
+#' the adiabatic relationship \eqn{\theta = T (P0/P)^\kappa}.
 #'
 #' `VirtualTemperature` computes pressure, temperature, vapour partial pressure or
 #' virtual temperature according to the virtual temperature definition
@@ -54,15 +55,16 @@
 #' IdealGas(1013*100, 20 + 273.15)
 #' IdealGas(1013*100, rho = 1.15) - 273.15
 #'
-#' (tita <- Adiabat(70000, 20 + 273.15))
-#' Adiabat(70000, tita = tita) - 273.15
+#' (theta <- Adiabat(70000, 20 + 273.15))
+#' Adiabat(70000, theta = theta) - 273.15
 #'
 #' # Relative humidity from T and Td
 #' t <- 25 + 273.15
 #' td <- 20 + 273.15
+#' p <- 1000000
 #' (rh <- ClausiusClapeyron(td)/ClausiusClapeyron(t))
 #'
-#' Mixing ratio
+#' # Mixing ratio
 #' ws <- MixingRatio(p, ClausiusClapeyron(t))
 #' w <- ws*rh
 #' DewPoint(p, w) - 273.15    # Recover Td
@@ -70,7 +72,7 @@
 #' @references
 #' http://www.atmo.arizona.edu/students/courselinks/fall11/atmo551a/ATMO_451a_551a_files/WaterVapor.pdf
 #'
-#' @name physics
+#' @name thermodynamics
 #' @export
 #' @family meteorology functions
 IdealGas <- function(p, t, rho, R = 287.058) {
@@ -87,23 +89,23 @@ IdealGas <- function(p, t, rho, R = 287.058) {
     }
 }
 
-#' @rdname physics
+#' @rdname thermodynamics
 #' @export
-Adiabat <- function(p, t, tita, p0 = 100000, kappa = 2/7) {
-    if (!hasArg(p) & hasArg(t) & hasArg(tita)) {
-        return(p0*(t/tita)^(1/kappa))
-    } else if (hasArg(p) & !hasArg(t) & hasArg(tita)) {
-        return(tita/(p0/p)^(kappa))
-    } else if (hasArg(p) & hasArg(t) & !hasArg(tita)) {
+Adiabat <- function(p, t, theta, p0 = 100000, kappa = 2/7) {
+    if (!hasArg(p) & hasArg(t) & hasArg(theta)) {
+        return(p0*(t/theta)^(1/kappa))
+    } else if (hasArg(p) & !hasArg(t) & hasArg(theta)) {
+        return(theta/(p0/p)^(kappa))
+    } else if (hasArg(p) & hasArg(t) & !hasArg(theta)) {
         return(t*(p0/p)^kappa)
-    } else if (hasArg(p) & hasArg(t) & hasArg(tita)) {
+    } else if (hasArg(p) & hasArg(t) & hasArg(theta)) {
         stop("Too many state variables.")
     } else {
         stop("Too few stat variables.")
     }
 }
 
-#' @rdname physics
+#' @rdname thermodynamics
 #' @export
 VirtualTemperature <- function(p, t, e, tv, epsilon = 0.622) {
     a <- 1 - epsilon
@@ -122,7 +124,7 @@ VirtualTemperature <- function(p, t, e, tv, epsilon = 0.622) {
     }
 }
 
-#' @rdname physics
+#' @rdname thermodynamics
 #' @export
 MixingRatio <- function(p, es, w, epsilon = 0.622) {
     if (hasArg(p) & !hasArg(w) & hasArg(es)) {
@@ -138,7 +140,7 @@ MixingRatio <- function(p, es, w, epsilon = 0.622) {
     }
 }
 
-#' @rdname physics
+#' @rdname thermodynamics
 #' @export
 ClausiusClapeyron <- function(t, es) {
     a <- 6.1094*100
@@ -151,15 +153,16 @@ ClausiusClapeyron <- function(t, es) {
     } else if (!hasArg(t) & hasArg(es)) {
         d <- log(es/a)
         return(d*c/b/(1 - d/b) + 273.15)
-    } else if (hasArg(r) & hasArg(es)) {
+    } else if (hasArg(t) & hasArg(es)) {
         stop("Too many state variables.")
     } else {
         stop("Too few stat variables.")
     }
 }
 
-#' @rdname physics
+#' @rdname thermodynamics
 #' @export
+#' @importFrom stats uniroot
 DewPoint <- function(p, ws, td, epsilon = 0.622) {
     if (hasArg(p) & hasArg(ws) & !hasArg(td)) {
     .dew <- function(td) {
@@ -179,15 +182,3 @@ DewPoint <- function(p, ws, td, epsilon = 0.622) {
         stop("Too few stat variables.")
     }
 }
-
-
-
-t <- 25 + 273.15
-td <- 20 + 273.15
-p <- 100000
-
-rh <- ClausiusClapeyron(td)/ClausiusClapeyron(t)
-ws <- MixingRatio(p, ClausiusClapeyron(t))
-w <- ws*rh
-
-DewPoint(p, w)

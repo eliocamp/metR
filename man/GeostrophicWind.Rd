@@ -41,6 +41,6 @@ ggplot(aao[date == date[1]], aes(lon, lat)) +
 \seealso{
 Other meteorology functions: \code{\link{Derivate}},
   \code{\link{EOF}}, \code{\link{FitQsWave}},
-  \code{\link{WaveFlux}}, \code{\link{physics}}
+  \code{\link{WaveFlux}}, \code{\link{thermodynamics}}
 }
 \concept{meteorology functions}

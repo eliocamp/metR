@@ -6,6 +6,7 @@
 #' @param t temperature
 #' @param rho density
 #' @param e vapour partial pressure
+#' @param w mixing ratio
 #' @param R gas constant for air
 #' @param tita potential temperature
 #' @param p0 refference pressure
@@ -16,11 +17,18 @@
 #' Each function returns the value of the missing state variable.
 #'
 #' @details
-#' `IdealGas` computes pressure, temperature or density of air acording to the
+#' `IdealGas` computes pressure, temperature or density of air according to the
 #' ideal gas law \eqn{P=\rho R T}.
 #'
-#' `Adiabat` computes pressure, temperature or potential temperature acording to
+#' `Adiabat` computes pressure, temperature or potential temperature according to
 #' the adiabatic relationship \eqn{\tita = T (P0/P)^\kappa}.
+#'
+#' `VirtualTemperature` computes pressure, temperature, vapour partial pressure or
+#' virtual temperature according to the virtual temperature definition
+#' \eqn{T(1 - e/P(1 - \epsilon))^{-1}}.
+#'
+#' `MixingRatio` computes pressure, vapour partial temperature, and mixing ratio
+#' according to \eqn{w = \epsilon e/(P - e)}.
 #'
 #' Is important to take note of the units in which each variable is provided.
 #' With the default values, pressure should be passed in Pascals, temperature and
@@ -28,7 +36,8 @@
 #' The result will be also in those units.
 #'
 #' The defaults value of the `R` and `kappa` parameters are correct for dry air,
-#' for the case of moist air, use [GasConstant] and [Cp] or [VirtualTemperature].
+#' for the case of moist air, use the virtual temperature instead of the actual
+#' temperature.
 #'
 #' @examples
 #' IdealGas(1013*100, 20 + 273.15)
@@ -86,6 +95,23 @@ VirtualTemperature <- function(p, t, e, tv, epsilon = 0.622) {
     } else if (hasArg(tv) & hasArg(p) & hasArg(t) & !hasArg(e)) {
         return(p/a*(1 - t/tv))
     } else if (hasArg(tv) & hasArg(p) & hasArg(t) & hasArg(e)) {
+        stop("Too many state variables.")
+    } else {
+        stop("Too few stat variables.")
+    }
+}
+
+#' @rdname physics
+#' @export
+#' @family meteorology functions
+MixingRatio <- function(p, e, w, epsilon = 0.622) {
+    if (hasArg(p) & !hasArg(w) & hasArg(e)) {
+        return(epsilon*(e/(p - e)))
+    } else if (!hasArg(p) & hasArg(w) & hasArg(e)) {
+        return(e/(w*epsilon) + e)
+    } else if (hasArg(p) & hasArg(w) & !hasArg(e)) {
+        return(p*w*epsilon/(1 + w*epsilon))
+    } else if (hasArg(p) & hasArg(w) & hasArg(e)) {
         stop("Too many state variables.")
     } else {
         stop("Too few stat variables.")

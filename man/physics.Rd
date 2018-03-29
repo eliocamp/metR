@@ -4,11 +4,17 @@
 \alias{physics}
 \alias{IdealGas}
 \alias{Adiabat}
+\alias{VirtualTemperature}
+\alias{MixingRatio}
 \title{Physical processes in the atmosphere}
 \usage{
 IdealGas(p, t, rho, R = 287.058)
 
 Adiabat(p, t, tita, p0 = 1e+05, kappa = 2/7)
+
+VirtualTemperature(p, t, e, tv, epsilon = 0.622)
+
+MixingRatio(p, e, w, epsilon = 0.622)
 }
 \arguments{
 \item{p}{pressure}
@@ -23,7 +29,13 @@ Adiabat(p, t, tita, p0 = 1e+05, kappa = 2/7)
 
 \item{p0}{refference pressure}
 
-\item{kappa}{ratio of dri air constant and specific heat capacity at constant pressure.}
+\item{kappa}{ratio of dry air constant and specific heat capacity at constant pressure}
+
+\item{e}{vapour partial pressure}
+
+\item{epsilon}{ratio of dry air constant and vapour constant}
+
+\item{w}{mixing ratio}
 }
 \value{
 Each function returns the value of the missing state variable.
@@ -32,11 +44,14 @@ Each function returns the value of the missing state variable.
 Functions related to common atmospheric processes.
 }
 \details{
-\code{IdealGas} computes pressure, temperature or density of air acording to the
+\code{IdealGas} computes pressure, temperature or density of air according to the
 ideal gas law \eqn{P=\rho R T}.
 
-\code{Adiabat} computes pressure, temperature or potential temperature acording to
+\code{Adiabat} computes pressure, temperature or potential temperature according to
 the adiabatic relationship \eqn{\tita = T (P0/P)^\kappa}.
+
+\code{VirtualTemperature} computes pressure, temperature, vapour partial pressure or
+virtual temperature according to the virtual temperature definition \eqn{T*(1 - e/P(1 - \epsilon))^{-1}}
 
 Is important to take note of the units in which each variable is provided.
 With the default values, pressure should be passed in Pascals, temperature and
@@ -56,6 +71,14 @@ Adiabat(70000, tita = tita) - 273.15
 
 }
 \seealso{
+Other meteorology functions: \code{\link{Derivate}},
+  \code{\link{EOF}}, \code{\link{FitQsWave}},
+  \code{\link{GeostrophicWind}}, \code{\link{WaveFlux}}
+
+Other meteorology functions: \code{\link{Derivate}},
+  \code{\link{EOF}}, \code{\link{FitQsWave}},
+  \code{\link{GeostrophicWind}}, \code{\link{WaveFlux}}
+
 Other meteorology functions: \code{\link{Derivate}},
   \code{\link{EOF}}, \code{\link{FitQsWave}},
   \code{\link{GeostrophicWind}}, \code{\link{WaveFlux}}

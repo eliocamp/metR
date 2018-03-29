@@ -5,10 +5,12 @@
 #' @param p pressure
 #' @param t temperature
 #' @param rho density
+#' @param e vapour partial pressure
 #' @param R gas constant for air
 #' @param tita potential temperature
 #' @param p0 refference pressure
-#' @param kappa ratio of dri air constant and specific heat capacity at constant pressure.
+#' @param kappa ratio of dry air constant and specific heat capacity at constant pressure
+#' @param epsilon ratio of dry air constant and vapour constant
 #'
 #' @return
 #' Each function returns the value of the missing state variable.
@@ -70,4 +72,22 @@ Adiabat <- function(p, t, tita, p0 = 100000, kappa = 2/7) {
     }
 }
 
-
+#' @rdname physics
+#' @export
+#' @family meteorology functions
+VirtualTemperature <- function(p, t, e, tv, epsilon = 0.622) {
+    a <- 1 - epsilon
+    if (!hasArg(tv) & hasArg(p) & hasArg(t) & hasArg(e)) {
+        return(t/(1 - e/p*a))
+    } else if (hasArg(tv) & hasArg(p) & !hasArg(t) & hasArg(e)) {
+        return(tv*(1 - e/p*a))
+    } else if (hasArg(tv) & !hasArg(p) & hasArg(t) & hasArg(e)) {
+        return(e*a/(1 - t/tv))
+    } else if (hasArg(tv) & hasArg(p) & hasArg(t) & !hasArg(e)) {
+        return(p/a*(1 - t/tv))
+    } else if (hasArg(tv) & hasArg(p) & hasArg(t) & hasArg(e)) {
+        stop("Too many state variables.")
+    } else {
+        stop("Too few stat variables.")
+    }
+}

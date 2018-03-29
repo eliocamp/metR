@@ -14,7 +14,7 @@
 #' @examples
 #' \dontrun{
 #' dates <- seq.Date(today() - 30, today(), by = "1 day")
-#' data <- SMNData(dates, bar = FALSE)    # long!
+#' data <- GetSMNData(dates, bar = FALSE)    # long!
 #'
 #' library(ggplot2)
 #' ggplot(subset(data, station == "BASE BELGRANO II"),
@@ -25,7 +25,7 @@
 #' @source https://ssl.smn.gob.ar/dpd/pron5d-calendario.php
 #' @export
 #' @import RCurl
-SMNData <- function(date, bar = FALSE) {
+GetSMNData <- function(date, bar = FALSE) {
     return.data <- data.frame()
     no_data <- vector()
 

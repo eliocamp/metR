@@ -16,8 +16,7 @@ reference:
       - stat_subset
       - stat_na
       - scale_longitude
-      - scale_level
-      - scale_divergent 
+      - scale_divergent
       - guide_colorstrip
       - reverselog_trans
   - title: ggplot2 helpers
@@ -44,8 +43,12 @@ reference:
       - ConvertLongitude
       - MaskLand
       - GetTopography
-      - ReadCtl
+#      - ReadCtl
       - ReadNetCDF
+      - GetSMNData
+      - aao
+      - claris
+      - nceptemperature
   - title: Helpers
     desc: other helpers
     contents:
@@ -55,4 +58,3 @@ reference:
       - Mag
       - JumpBy
 
-      

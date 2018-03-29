@@ -65,7 +65,7 @@ AnchorBreaks <- function(anchor = 0, binwidth = NULL, exclude = NULL) {
         if (!is.null(binwidth)) binwidth2 <- binwidth
         mult <- ceiling((x[1] - anchor)/binwidth2)
         start <- anchor + mult*binwidth2
-        b <- seq(start, x[2], binwidth2)
+        b <- seq(start - binwidth2, x[2] + binwidth2, binwidth2)
         b[!(b %in% exclude)]
     }
 }

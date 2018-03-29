@@ -14,7 +14,7 @@
 #' the value of the data and is very similar to [ggplot2::guide_legend].
 #'
 #' @examples
-#' # In this example the lowest color represent area of the data with values
+#' # In this example the lowest color represents an area of the data with values
 #' # between 80 and 100.
 #' library(ggplot2)
 #' binwidth <- 20
@@ -114,8 +114,8 @@ guide_colourstrip <- function(
     )
 }
 
-#' Methods for guides
-#'
+#' @usage NULL
+#' @format NULL
 #' @importFrom stats setNames
 #' @import gtable
 #' @export
@@ -143,12 +143,7 @@ guide_train.colorstrip <- function(guide, scale) {
         guide$nbin <- length(breaks)
         .bar <- breaks
     } else {
-        if (is.function(scale$breaks)) {
-            breaks <- scale$breaks(.limits)
-        } else {
-            breaks <- scale$get_breaks()
-        }
-
+        breaks <- .get_breaks(scale)
         .bar <- .inside(breaks[!is.na(breaks)])
         guide$nbin <- length(.bar)
     }
@@ -187,4 +182,30 @@ guide_colorstrip <- guide_colourstrip
     x1 <- x[-N] + diff(x)[-N]/2
     # x1[N] <- x[N]
     x1
+}
+
+
+
+.get_breaks = function(scale, limits = scale$get_limits()) {
+    if (scale$is_empty()) return(numeric())
+
+    # Limits in transformed space need to be converted back to data space
+    limits <- scale$trans$inverse(limits)
+
+    if (is.null(scale$breaks)) {
+        return(NULL)
+    } else if (identical(scale$breaks, NA)) {
+        stop("Invalid breaks specification. Use NULL, not NA")
+    } else if (zero_range(as.numeric(limits))) {
+        breaks <- limits[1]
+    } else if (ggplot2:::is.waive(scale$breaks)) {
+        breaks <- scale$trans$breaks(limits)
+    } else if (is.function(scale$breaks)) {
+        breaks <- scale$breaks(limits)
+    } else {
+        breaks <- scale$breaks
+    }
+
+    breaks <- scale$trans$transform(breaks)
+    breaks
 }

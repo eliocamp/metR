@@ -1,3 +1,58 @@
 template:
   params:
     bootswatch: flatly
+
+
+reference:
+  - title: ggplot2 extension
+    desc:  stats, geoms and other ggplot2 extensions
+    contents:
+      - geom_contour_fill
+      - geom_contour2
+      - geom_text_contour
+      - geom_vector
+      - geom_arrow
+      - geom_relief
+      - stat_subset
+      - stat_na
+      - scale_longitude
+      - scale_level
+      - scale_divergent 
+      - guide_colorstrip
+      - reverselog_trans
+  - title: ggplot2 helpers
+    desc: functions that help in plotting
+    contents:
+      - MakeBreaks
+      - RepeatLon
+      - DivideTimeseries
+  - title: Physics
+    desc: functions related to physical processes
+    contents:
+      - coriolis
+      - Derivate
+      - GeostrophicWind
+      - IdealGas
+      - season
+      - WaveFlux
+  - title: Data Manipulation
+    desc: get and manipulate data
+    contents:
+      - EOF
+      - ImputeEOF
+      - FitQsWave
+      - ConvertLongitude
+      - MaskLand
+      - GetTopography
+      - ReadCtl
+      - ReadNetCDF
+  - title: Helpers
+    desc: other helpers
+    contents:
+      - logic
+      - Anomaly
+      - Percentile
+      - Mag
+      - JumpBy
+
+      

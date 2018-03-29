@@ -18,13 +18,24 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Filled 2d contours of a 3d surface — geom_contour_fill" />
+
+<meta property="og:description" content="While ggplot2's geom_contour can plot nice contours, it
+doesn't work with the polygon geom. This stat makes some small manipulation
+of the data to ensure that all contours are closed and also computes a new
+aesthetic int.level, which differs from level (computed by
+ggplot2::geom_contour) in that represents
+the value of the z aesthetic inside the contour instead of at the edge." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +43,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,12 +60,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">metR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">metR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.9101</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -73,7 +90,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -85,6 +102,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -96,6 +114,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Filled 2d contours of a 3d surface</h1>
+    <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/R/geom_contour_fill.R'><code>R/geom_contour_fill.R</code></a>, <a href='https://github.com/eliocamp/metR/blob/master/R/stat_contour_fill.R'><code>R/stat_contour_fill.R</code></a></small>
     </div>
 
     
@@ -116,7 +135,7 @@ the value of the <code>z</code> aesthetic <em>inside</em> the contour instead of
   <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -201,7 +220,9 @@ contour calculations</p></td>
     
     <h2 class="hasAnchor" id="aesthetics"><a class="anchor" href="#aesthetics"></a>Aesthetics</h2>
 
-    <p><code>geom_contour_fill</code> understands the following aesthetics (required aesthetics are in bold):</p><ul>
+    
+    <p><code>geom_contour_fill</code> understands the following aesthetics (required aesthetics are in bold):</p>
+<ul>
 <li><p><strong>x</strong></p></li>
 <li><p><strong>y</strong></p></li>
 <li><p><code>alpha</code></p></li>
@@ -226,19 +247,11 @@ contour calculations</p></td>
   <code><a href='geom_arrow.html'>geom_arrow</a></code>, <code><a href='geom_contour2.html'>geom_contour2</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
   <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
+  <code><a href='guide_colourstrip.html'>guide_colourstrip</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
-  <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
+  <code>scale_divergent</code>,
   <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code>,
-  <code>stat_subset</code></p>
-<p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
-  <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='RepeatLon.html'>RepeatLon</a></code>,
-  <code><a href='geom_arrow.html'>geom_arrow</a></code>, <code><a href='geom_contour2.html'>geom_contour2</a></code>,
-  <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
-  <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
-  <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
-  <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
-  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code>,
-  <code>stat_subset</code></p>
+  <code><a href='stat_subset.html'>stat_subset</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -246,15 +259,14 @@ contour calculations</p></td>
 <span class='no'>surface</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>surface</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
   <span class='fu'>geom_contour_fill</span>() +
-  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
-#&gt; <span class='warning'>cannot coerce type 'closure' to vector of type 'double'</span></div><div class='img'><img src='geom_contour_fill-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)</div><div class='img'><img src='geom_contour_fill-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Plots only deviations from the mean.</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>surface</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'>as.numeric</span>(<span class='fu'>scale</span>(<span class='no'>value</span>)))) +
-  <span class='fu'>geom_contour_fill</span>(<span class='kw'>complete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: argumnet exclude is deprecated; use a function in breaks instead.</span></div><div class='img'><img src='geom_contour_fill-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+  <span class='fu'>geom_contour_fill</span>(<span class='kw'>complete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: argumnet exclude is deprecated; use a function in breaks instead.</span></div><div class='img'><img src='geom_contour_fill-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If one uses level instead of int.level, one of the small</span>
 <span class='co'># contours near the crater disapears</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>surface</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-  <span class='fu'>geom_contour_fill</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>..level..</span>))</div><div class='img'><img src='geom_contour_fill-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+  <span class='fu'>geom_contour_fill</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>..level..</span>))</div><div class='img'><img src='geom_contour_fill-3.png' alt='' width='700' height='433' /></div><div class='input'>
 
 
 </div></pre>
@@ -282,11 +294,14 @@ contour calculations</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

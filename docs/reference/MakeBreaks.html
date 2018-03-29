@@ -18,13 +18,20 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Functions for making breaks — MakeBreaks" />
+
+<meta property="og:description" content="Functions that return functions suitable to use as the breaks argument in
+ggplot2's continuous scales and in geom_contour_fill." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +39,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,12 +56,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">metR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">metR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.9101</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -73,7 +86,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -85,6 +98,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -96,6 +110,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Functions for making breaks</h1>
+    <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/R/MakeBreaks.R'><code>R/MakeBreaks.R</code></a></small>
     </div>
 
     
@@ -107,7 +122,7 @@ ggplot2's continuous scales and in <a href='geom_contour_fill.html'>geom_contour
 
 <span class='fu'>AnchorBreaks</span>(<span class='kw'>anchor</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -136,8 +151,8 @@ and returns a sequence of equally spaced intervals covering the range.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>MakeBreaks</code> is essencially an export of the default way
-<a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>ggplot2::stat_contour</a> makes breaks.
-    <code>AnchorBreaks</code> makes breaks starting from an <code>anchor</code> value and covering
+<a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>ggplot2::stat_contour</a> makes breaks.</p>
+<p><code>AnchorBreaks</code> makes breaks starting from an <code>anchor</code> value and covering
 the range of the data acording to <code>binwidth</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -148,10 +163,11 @@ the range of the data acording to <code>binwidth</code>.</p>
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
   <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
+  <code><a href='guide_colourstrip.html'>guide_colourstrip</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
-  <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
+  <code>scale_divergent</code>,
   <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code>,
-  <code>stat_subset</code></p>
+  <code><a href='stat_subset.html'>stat_subset</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -163,8 +179,7 @@ the range of the data acording to <code>binwidth</code>.</p>
 <span class='no'>binwidth</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>), <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='no'>binwidth</span>) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_continuous</a></span>(<span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>MakeBreaks</span>(<span class='no'>binwidth</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
-#&gt; <span class='warning'>cannot coerce type 'closure' to vector of type 'double'</span></div><div class='img'><img src='MakeBreaks-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_color_continuous</a></span>(<span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>MakeBreaks</span>(<span class='no'>binwidth</span>))</div><div class='img'><img src='MakeBreaks-1.png' alt='' width='700' height='433' /></div><div class='input'>
 
 </div></pre>
   </div>
@@ -191,11 +206,14 @@ the range of the data acording to <code>binwidth</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

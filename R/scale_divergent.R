@@ -11,7 +11,7 @@
 #'   geom_contour(aes(color = ..level..)) +
 #'   scale_color_divergent(midpoint = 130)
 #'
-#' @rdname scale_divergent
+#' @name scale_divergent
 #' @family ggplot2 helpers
 #' @export
 #' @import ggplot2 scales

@@ -18,13 +18,20 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Impute missing values — ImputeEOF" />
+
+<meta property="og:description" content="Imputes missing values via Data Interpolating Empirical Orthogonal Functions
+(DINEOF)." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +39,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,12 +56,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">metR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">metR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.9101</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -73,7 +86,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -85,6 +98,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -96,6 +110,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Impute missing values</h1>
+    <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/R/ImputeEOF.R'><code>R/ImputeEOF.R</code></a></small>
     </div>
 
     
@@ -103,10 +118,10 @@
 (DINEOF).</p>
     
 
-    <pre class="usage"><span class='fu'>ImputeEOF</span>(<span class='no'>data</span>, <span class='no'>formula</span>, <span class='no'>value.var</span>, <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='fu'>length</span>(<span class='no'>X</span>), <span class='kw'>min.eof</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>1e-04</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>validation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>ImputeEOF</span>(<span class='no'>data</span>, <span class='no'>formula</span>, <span class='no'>value.var</span>, <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>min.eof</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>validation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -137,8 +152,8 @@ imputation</p></td>
     </tr>
     <tr>
       <th>validation</th>
-      <td><p>number of points to use in crossvalidation (defaults to
-30 or 10% of the non NA points)</p></td>
+      <td><p>number of points to use in crossvalidation (defaults to the
+maximum of 30 or 10% of the non NA points)</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -148,7 +163,9 @@ imputation</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data table with imputed values.</p>
+    <p>A vector of inputed values with attributes <code>eof</code>, which is the number of
+singular values used in the final inputation; and <code>rmse</code>, which is the Root
+Mean Square Error calculated from crossvalidation.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -162,6 +179,7 @@ returns a matrix.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>data.table</span>)
+<span class='fu'>data</span>(<span class='no'>aao</span>)
 <span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/copy'>copy</a></span>(<span class='no'>aao</span>)
 <span class='no'>aao</span>[, <span class='no'>gh.t</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lon</span>)]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01   2.923688
@@ -188,30 +206,38 @@ returns a matrix.</p>
 #&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
 #&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657</div><div class='input'><span class='no'>aao</span>[<span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='no'>.N</span>, <span class='no'>.N</span>*<span class='fl'>0.3</span>), <span class='no'>gh.gap</span> <span class='kw'>:=</span> <span class='fl'>NA</span>]</div><div class='output co'>#&gt;         lon   lat lev       gh       date      gh.t    gh.gap
-#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01  2.923688  2.923688
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657</div><div class='input'><span class='fu'>set.seed</span>(<span class='fl'>42</span>)
+<span class='no'>aao</span>[<span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='no'>.N</span>, <span class='no'>.N</span>*<span class='fl'>0.3</span>), <span class='no'>gh.gap</span> <span class='kw'>:=</span> <span class='fl'>NA</span>]</div><div class='output co'>#&gt;         lon   lat lev       gh       date      gh.t    gh.gap
+#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01  2.923688        NA
 #&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01  3.552416        NA
 #&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01  4.996166  4.996166
 #&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01  5.677799  5.677799
-#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01  5.023650        NA
+#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01  5.023650  5.023650
 #&gt;   ---                                                        
-#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 76.620657        NA
-#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 76.620657        NA
-#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 76.620657        NA
+#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
+#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
+#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 76.620657 76.620657
 #&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657</div><div class='input'>
-<span class='no'>aao.full</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/as.data.table'>as.data.table</a></span>(<span class='fu'>ImputeEOF</span>(<span class='no'>aao</span>, <span class='no'>lon</span> ~ <span class='no'>lat</span>,  <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='st'>"gh.gap"</span>,
-                                    <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>))</div><div class='output co'>#&gt;  With 1 eof - convergence: TRUE With 2 eof - convergence: TRUE With 3 eof - convergence: TRUE With 4 eof - convergence: TRUE With 5 eof - convergence: TRUE With 6 eof - convergence: FALSE</div><div class='input'>
-<span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='no'>aao</span>[<span class='no'>aao.full</span>[, <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>gh.impute</span> <span class='kw'>=</span> <span class='no'>gh.gap</span>)], <span class='kw'>on</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"lon"</span>, <span class='st'>"lat"</span>)]
-
+<span class='no'>aao</span>[, <span class='no'>gh.impute</span> <span class='kw'>:=</span> <span class='fu'>ImputeEOF</span>(<span class='no'>.SD</span>, <span class='no'>lon</span> ~ <span class='no'>lat</span>,  <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='st'>"gh.gap"</span>,
+                                    <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>)]</div><div class='output co'>#&gt;  With 1 eof - rmse =  21.41401 With 2 eof - rmse =  15.81415 With 3 eof - rmse =  8.260116 With 4 eof - rmse =  6.590305 With 5 eof - rmse =  5.570247 With 6 eof - rmse =  4.313732 With 7 eof - rmse =  3.480214 With 8 eof - rmse =  2.867723 With 9 eof - rmse =  2.611819 With 10 eof - rmse =  2.397543 With 11 eof - rmse =  2.147165 With 12 eof - rmse =  2.006156 With 13 eof - rmse =  1.928291</div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt;  With 14 eof - rmse =  1.87197</div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt;  With 15 eof - rmse =  1.843622</div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt;  With 16 eof - rmse =  1.830752</div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt;  With 17 eof - rmse =  1.824442</div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: You're computing too large a percentage of total singular values, use a standard svd instead.</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date      gh.t    gh.gap gh.impute
+#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01  2.923688        NA 55.432290
+#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01  3.552416        NA 46.551251
+#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01  4.996166  4.996166  4.996166
+#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01  5.677799  5.677799  5.677799
+#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01  5.023650  5.023650  5.023650
+#&gt;   ---                                                                  
+#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657 76.620657
+#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 76.620657 76.620657 76.620657
+#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657 76.620657
+#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 76.620657 76.620657 76.620657
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 76.620657 76.620657 76.620657</div><div class='input'>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.impute</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
-#&gt; <span class='warning'>cannot coerce type 'closure' to vector of type 'double'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
-#&gt; <span class='warning'>cannot coerce type 'closure' to vector of type 'double'</span></div><div class='img'><img src='ImputeEOF-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.impute</span>))</div><div class='img'><img src='ImputeEOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>[<span class='fu'>is.na</span>(<span class='no'>gh.gap</span>)], <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>gh.t</span>, <span class='no'>gh.impute</span>)) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>()</div><div class='img'><img src='ImputeEOF-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>()</div><div class='img'><img src='ImputeEOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -237,11 +263,14 @@ returns a matrix.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

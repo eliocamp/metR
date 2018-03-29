@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Extended logical operators — logic" />
+
+<meta property="og:description" content="Extended binary operators for easy subsetting." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +38,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,12 +55,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">metR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">metR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.9101</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -73,7 +85,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -85,6 +97,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -96,6 +109,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Extended logical operators</h1>
+    <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/R/helpfunctions.R'><code>R/helpfunctions.R</code></a></small>
     </div>
 
     
@@ -110,7 +124,7 @@
 
 <span class='fu'>Between</span>(<span class='no'>x</span>, <span class='no'>limits</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>TRUE</span>, <span class='fl'>TRUE</span>))</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -136,13 +150,13 @@ the extreme bounds</p></td>
 
     <p><code>%~%</code> can be thought as a "similar" operator. It's a fuzzy version of
 <code>%in%</code> in that returns <code>TRUE</code> for the element of <code>x</code>
-which is the (first) closest to any element of <code>target</code>.
-    <code>Similar</code> is a functional version of <code>%~%</code> that also has a
-<code>tol</code> parameter that indicates the maximum allowed tolerance.
-    <code>%b%</code> can be thought as the "between" operator. It returns <code>TRUE</code>
+which is the (first) closest to any element of <code>target</code>.</p>
+<p><code>Similar</code> is a functional version of <code>%~%</code> that also has a
+<code>tol</code> parameter that indicates the maximum allowed tolerance.</p>
+<p><code>%b%</code> can be thought as the "between" operator. It returns <code>TRUE</code>
 for each element of <code>x</code> that is between the minimum and the maximum of
-<code>limits</code>.
-    <code>Between</code> is a functional version of <code>%b%</code> that also has an
+<code>limits</code>.</p>
+<p><code>Between</code> is a functional version of <code>%b%</code> that also has an
 <code>include</code> parameter that let's you test for <code>x &gt; lower &amp; x &lt; upper</code>.
 If it's a unitary vector, it will be recycled so that <code>include = TRUE</code> is
 equivalent to <code>include = c(TRUE, TRUE)</code>.</p>
@@ -169,8 +183,7 @@ implementation yet).</p>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>nceptemperature</span>[<span class='no'>lon</span> <span class='kw'>%~%</span> <span class='no'>cross.lon</span> <span class='kw'>&amp;</span> <span class='no'>lat</span> <span class='kw'>%b%</span> <span class='fu'>c</span>(-<span class='fl'>50</span>, <span class='fl'>50</span>)],
        <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lat</span>, <span class='no'>lev</span>)) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>air</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
-#&gt; <span class='warning'>cannot coerce type 'closure' to vector of type 'double'</span></div><div class='img'><img src='logic-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>air</span>))</div><div class='img'><img src='logic-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -196,11 +209,14 @@ implementation yet).</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

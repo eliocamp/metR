@@ -18,13 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Relief Shading — geom_relief" />
+
+<meta property="og:description" content="geom_relief() simulates shading caused by relief. Can be useful when
+plotting topographic data because relief shading might give a more intuitive
+impression of the shape of the terrain than contour lines or mapping height
+to color." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +41,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,12 +58,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">metR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">metR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.9101</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -73,7 +88,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -85,6 +100,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -96,6 +112,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Relief Shading</h1>
+    <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/R/geom_relief.R'><code>R/geom_relief.R</code></a></small>
     </div>
 
     
@@ -109,7 +126,7 @@ to color.</p>
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>raster</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>interpolate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -190,7 +207,9 @@ in degrees counterclockwise from 12 o' clock, from which the sun is shining
     
     <h2 class="hasAnchor" id="aesthetics"><a class="anchor" href="#aesthetics"></a>Aesthetics</h2>
 
-    <p><code>geom_relief</code> understands the following aesthetics (required aesthetics are in bold)</p><ul>
+    
+    <p><code>geom_relief</code> understands the following aesthetics (required aesthetics are in bold)</p>
+<ul>
 <li><p><strong>x</strong></p></li>
 <li><p><strong>y</strong></p></li>
 <li><p><strong>z</strong></p></li>
@@ -207,19 +226,20 @@ in degrees counterclockwise from 12 o' clock, from which the sun is shining
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
   <code><a href='geom_vector.html'>geom_vector</a></code>,
+  <code><a href='guide_colourstrip.html'>guide_colourstrip</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
-  <code><a href='scale_divergent.html'>scale_color_divergent</a></code>,
+  <code>scale_divergent</code>,
   <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code>,
-  <code>stat_subset</code></p>
+  <code><a href='stat_subset.html'>stat_subset</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
-      <span class='fu'>geom_relief</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>))</div><div class='img'><img src='geom_relief-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+      <span class='fu'>geom_relief</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>))</div><div class='img'><img src='geom_relief-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If you're more of a moring person</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
-      <span class='fu'>geom_relief</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>), <span class='kw'>sun.angle</span> <span class='kw'>=</span> -<span class='fl'>60</span>)</div><div class='img'><img src='geom_relief-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+      <span class='fu'>geom_relief</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>), <span class='kw'>sun.angle</span> <span class='kw'>=</span> -<span class='fl'>60</span>)</div><div class='img'><img src='geom_relief-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -245,11 +265,14 @@ in degrees counterclockwise from 12 o' clock, from which the sun is shining
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

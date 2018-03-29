@@ -196,7 +196,6 @@ The `start` and  `direction` arguments adjust the behaviour of the arrows. This 
 
 In contrast to `geom_vector()`, `geom_arrow()` **does** preserve direction under coordinate transforms. This means that, for example, an arrow at a 45° angle represents wind from the southwest regardless of the `x` and `y` scales (but note that this also means that it might not be parallel to the streamlines). For this reason this geom does work with discrete scales.
 
-
 # Other goodies
 
 ## guide_colorstrip
@@ -261,3 +260,11 @@ In the above plot, the timeseries looks noisy and hard to understand since the l
 DivideTimeseries(g, aao$date, n = 2, xlab = "date", ylab = "gh")
 ```
 
+## geom_relief
+
+This geom produces a shaded relief of the data. It doesn't really map the data per se, but it provides an intuitive representation of hills and valeys that can be used as a background for plotting actual data. 
+
+```{r}
+ggplot(v, aes(Var1, Var2)) +
+    geom_relief(aes(z = value))
+```

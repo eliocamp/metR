@@ -1,4 +1,4 @@
-#' Filter values
+#' Subset values
 #'
 #' Removes values where `subset` evaluates to `FALSE`. Useful for showing only
 #' statistical significant values, or a interesting subset of the data without

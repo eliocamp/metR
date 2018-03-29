@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Divergent color scales — scale_color_divergent • metR</title>
+<title>Divergent color scales — scale_divergent • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,20 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Divergent color scales — scale_divergent" />
+
+<meta property="og:description" content="Wrapper around ggplot's scale_colour_gradient2 with
+inverted defaults of high and low." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +39,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,12 +56,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">metR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">metR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.9101</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -73,7 +86,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -85,6 +98,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -96,41 +110,25 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Divergent color scales</h1>
+    <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/R/scale_divergent.R'><code>R/scale_divergent.R</code></a></small>
     </div>
 
     
-    <p>Wrapper around ggplot's <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_colour_gradient2</a></code> with better defaults and
-automatic annotated breaks. It's main use it to label the same levels as
-the contours in a plot.</p>
+    <p>Wrapper around ggplot's <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_colour_gradient2</a></code> with
+inverted defaults of <code>high</code> and <code>low</code>.</p>
     
 
-    <pre class="usage"><span class='fu'>scale_color_divergent</span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/scales/topics/muted'>muted</a></span>(<span class='st'>"blue"</span>),
-  <span class='kw'>high</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/scales/topics/muted'>muted</a></span>(<span class='st'>"red"</span>), <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>scale_color_divergent</span>(<span class='no'>...</span>, <span class='kw'>low</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/scales/topics/muted'>muted</a></span>(<span class='st'>"blue"</span>), <span class='kw'>mid</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
+  <span class='kw'>high</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/scales/topics/muted'>muted</a></span>(<span class='st'>"red"</span>), <span class='kw'>midpoint</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"Lab"</span>,
+  <span class='kw'>na.value</span> <span class='kw'>=</span> <span class='st'>"grey50"</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='st'>"colourbar"</span>)
 
-<span class='fu'>scale_fill_divergent</span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/scales/topics/muted'>muted</a></span>(<span class='st'>"blue"</span>),
-  <span class='kw'>high</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/scales/topics/muted'>muted</a></span>(<span class='st'>"red"</span>), <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>scale_fill_divergent</span>(<span class='no'>...</span>, <span class='kw'>low</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/scales/topics/muted'>muted</a></span>(<span class='st'>"blue"</span>), <span class='kw'>mid</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
+  <span class='kw'>high</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/scales/topics/muted'>muted</a></span>(<span class='st'>"red"</span>), <span class='kw'>midpoint</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"Lab"</span>,
+  <span class='kw'>na.value</span> <span class='kw'>=</span> <span class='st'>"grey50"</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='st'>"colourbar"</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>low</th>
-      <td><p>Colours for low and high ends of the gradient.</p></td>
-    </tr>
-    <tr>
-      <th>high</th>
-      <td><p>Colours for low and high ends of the gradient.</p></td>
-    </tr>
-    <tr>
-      <th>binwidth</th>
-      <td><p>optional binwidth for computing breaks. For best results,
-should be the same value as the related <code>stat_contour</code> call.</p></td>
-    </tr>
-    <tr>
-      <th>exclude</th>
-      <td><p>a numeric vector of levels that should be excluded from the
-contour calculation</p></td>
-    </tr>
     <tr>
       <th>...</th>
       <td><p>Arguments passed on to <code>continuous_scale</code></p><dl class='dl-horizontal'>
@@ -197,6 +195,37 @@ expand the scale by 5% on each side for continuous variables, and by
 0.6 units on each side for discrete variables.</p></dd>
 </dl></td>
     </tr>
+    <tr>
+      <th>low</th>
+      <td><p>Colours for low and high ends of the gradient.</p></td>
+    </tr>
+    <tr>
+      <th>mid</th>
+      <td><p>colour for mid point</p></td>
+    </tr>
+    <tr>
+      <th>high</th>
+      <td><p>Colours for low and high ends of the gradient.</p></td>
+    </tr>
+    <tr>
+      <th>midpoint</th>
+      <td><p>The midpoint (in data value) of the diverging scale.
+Defaults to 0.</p></td>
+    </tr>
+    <tr>
+      <th>space</th>
+      <td><p>colour space in which to calculate gradient. Must be "Lab" -
+other values are deprecated.</p></td>
+    </tr>
+    <tr>
+      <th>na.value</th>
+      <td><p>Colour to use for missing values</p></td>
+    </tr>
+    <tr>
+      <th>guide</th>
+      <td><p>Type of legend. Use <code>"colourbar"</code> for continuous
+colour bar, or <code>"legend"</code> for discrete colour legend.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -207,18 +236,17 @@ expand the scale by 5% on each side for continuous variables, and by
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
   <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
+  <code><a href='guide_colourstrip.html'>guide_colourstrip</a></code>,
   <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
   <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code>,
-  <code>stat_subset</code></p>
+  <code><a href='stat_subset.html'>stat_subset</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='no'>surface</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>surface</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-  <span class='fu'>scale_color_divergent</span>(<span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='fl'>30</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
-#&gt; <span class='warning'>cannot coerce type 'closure' to vector of type 'double'</span></div><div class='img'><img src='scale_divergent-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
+  <span class='fu'>scale_color_divergent</span>(<span class='kw'>midpoint</span> <span class='kw'>=</span> <span class='fl'>130</span>)</div><div class='img'><img src='scale_divergent-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -240,11 +268,14 @@ expand the scale by 5% on each side for continuous variables, and by
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

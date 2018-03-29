@@ -121,7 +121,7 @@ with proper dimensions.</p>
     
 
     <pre class="usage"><span class='fu'>ReadNetCDF</span>(<span class='no'>file</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"vector"</span>, <span class='st'>"array"</span>,
-  <span class='st'>"vars"</span>), <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='st'>"vars"</span>), <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,6 +142,10 @@ with proper dimensions.</p>
     <tr>
       <th>subset</th>
       <td><p>a named list a subseting vectors. See Details.</p></td>
+    </tr>
+    <tr>
+      <th>key</th>
+      <td><p>if <code>TRUE</code>, returns a data.table keyed by the dimensions of the data.</p></td>
     </tr>
     </table>
     

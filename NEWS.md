@@ -31,6 +31,7 @@ or fill scale.
 - New `geom_contour2()` that takes a function as argument in `breaks` and 
 `geom_contour_fill()` also does the same. 
 - New `stat_subset()` that makes subsetting data on the fly easier. 
+- `ReadNetCDF()` can return a keyed data.table. 
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

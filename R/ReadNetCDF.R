@@ -9,6 +9,7 @@
 #' \code{NULL}, then it read all the variables.
 #' @param out character indicating the type of output desired
 #' @param subset a named list a subseting vectors. See Details.
+#' @param key if `TRUE`, returns a data.table keyed by the dimensions of the data.
 #'
 #' @details
 #' `subset` must be a named list for subsetting. Names must match dimensions
@@ -51,7 +52,7 @@
 #' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
 #' @import data.table udunits2
 ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array", "vars"),
-                       subset = NULL) {
+                       subset = NULL, key = FALSE) {
     dec <- getOption("OutDec")
     options(OutDec = ".")
     ncfile <- ncdf4::nc_open(file)
@@ -168,7 +169,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
         if ("time" %in% names(dimensions)) {
             nc.df[, time2 := lubridate::as_datetime(time[1]), by = time]
             nc.df[, time := NULL]
-            setnames(nc.df, "time2", "time")
+            data.table::setnames(nc.df, "time2", "time")
         }
 
         for (v in seq_along(vars)[-first.var]) {
@@ -180,6 +181,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
                   by = c(missing.dim)]
         }
 
+        if (key == TRUE) data.table::setkeyv(nc.df, dims)
     }
     # Dejemos todo prolijo antes de salir.
     ncdf4::nc_close(ncfile)

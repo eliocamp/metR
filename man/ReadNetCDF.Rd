@@ -5,7 +5,7 @@
 \title{Read NetCDF files.}
 \usage{
 ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array",
-  "vars"), subset = NULL)
+  "vars"), subset = NULL, key = FALSE)
 }
 \arguments{
 \item{file}{file to read from.}
@@ -16,6 +16,8 @@ ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array",
 \item{out}{character indicating the type of output desired}
 
 \item{subset}{a named list a subseting vectors. See Details.}
+
+\item{key}{if \code{TRUE}, returns a data.table keyed by the dimensions of the data.}
 }
 \value{
 The return format is specified by \code{out}. It can be a data table in which each

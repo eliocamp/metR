@@ -2,6 +2,7 @@
 
 export("%b%")
 export("%~%")
+export(Adiabat)
 export(AnchorBreaks)
 export(Anomaly)
 export(AssignSeason)

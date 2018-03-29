@@ -15,7 +15,7 @@ parameters and `geom_arrow()` is a new geom for arrows that preserve direction.
 - New functions `Laplacian()`, `Divercence()` and `Vorticity()`
 - `DerivatePhysical()` is removed since it was made redundant by the extended
 functionality in `Derivate()`
-- New function `IdealGas()` for ideal gas calculations. 
+- New functions related to several physical processes (see ?physics).
 - New `geom_text_contour()` and `geom_label_contour()` for labeling contours. 
 - New function `GeostrophicWind()`.
 - Fixed? werid bug with `ReadNetCDF()` and `as.POSIXct`.

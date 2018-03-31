@@ -28,8 +28,9 @@
 <meta property="og:title" content="Get Meteorological data — GetSMNData" />
 
 <meta property="og:description" content="Downloads minimum and maximum temperature station data from
-Argentina's National Weather Service's
-public access. Data availability is restricted to one year prior." />
+Argentina's National Weather Service's public access. Data availability is not
+guaranteed so you are encouraged to check it on
+the website." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,11 +117,12 @@ public access. Data availability is restricted to one year prior." />
 
     
     <p>Downloads minimum and maximum temperature station data from
-Argentina's National Weather Service's
-public access. Data availability is restricted to one year prior.</p>
+Argentina's National Weather Service's public access. Data availability is not
+guaranteed so you are encouraged to check it on
+<a href='https://www.smn.gob.ar/descarga-de-datos'>the website</a>.</p>
     
 
-    <pre class="usage"><span class='fu'>GetSMNData</span>(<span class='no'>date</span>, <span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>GetSMNData</span>(<span class='no'>date</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"hourly"</span>, <span class='st'>"daily"</span>, <span class='st'>"radiation"</span>), <span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -128,6 +130,10 @@ public access. Data availability is restricted to one year prior.</p>
     <tr>
       <th>date</th>
       <td><p>date vector of dates to fetch data</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>type of data to retrieve</p></td>
     </tr>
     <tr>
       <th>bar</th>
@@ -141,18 +147,40 @@ public access. Data availability is restricted to one year prior.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a dataframe with daily minimum and maximum temperature for all available stations
-and each date.</p>
+    <p>For <code>type = "hourly"</code>, a data.frame with observations of</p><dl class='dl-horizontal'>
+<dt>date</dt><dd><p>date</p></dd>
+<dt>t</dt><dd><p>temperature in degrees celsius</p></dd>
+<dt>rh</dt><dd><p>relative humidity in %</p></dd>
+<dt>slp</dt><dd><p>sea level pressure in hPa</p></dd>
+<dt>dir</dt><dd><p>wind direction in clockwise degrees from 6 o'clock</p></dd>
+<dt>V</dt><dd><p>wind magnitude in m/s</p></dd>
+<dt>station</dt><dd><p>station name</p></dd>
+</dl>
+
+<p>For <code>type = "daily"</code>, a data.frame with observations of</p><dl class='dl-horizontal'>
+<dt>date</dt><dd><p>date</p></dd>
+<dt>tmax</dt><dd><p>maximum daily temperature in degrees celsius</p></dd>
+<dt>tmin</dt><dd><p>minimum daily temperature in degrees celsius</p></dd>
+<dt>station</dt><dd><p>station name</p></dd>
+</dl>
+
+<p>For <code>type = "radiation"</code>, a data.frame with observations of</p><dl class='dl-horizontal'>
+<dt>date</dt><dd><p>date</p></dd>
+<dt>global</dt><dd><p>global radiation in W/m^2</p></dd>
+<dt>diffuse</dt><dd><p>diffuse radiation in W/m^2</p></dd>
+<dt>station</dt><dd><p>station name</p></dd>
+</dl>
+
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>dates</span> <span class='kw'>&lt;-</span> <span class='fu'>seq.Date</span>(<span class='fu'>today</span>() - <span class='fl'>30</span>, <span class='fu'>today</span>(), <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"1 day"</span>)
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>GetSMNData</span>(<span class='no'>dates</span>, <span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)    <span class='co'># long!</span>
+<span class='no'>dates</span> <span class='kw'>&lt;-</span> <span class='fu'>seq.Date</span>(<span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/today.html'>today</a></span>() - <span class='fl'>30</span>, <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/today.html'>today</a></span>(), <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"1 day"</span>)
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>GetSMNData</span>(<span class='no'>dates</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"daily"</span>, <span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='fu'>subset</span>(<span class='no'>data</span>, <span class='no'>station</span> <span class='kw'>==</span> <span class='st'>"BASE BELGRANO II"</span>),
-       <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>date</span>, (<span class='no'>t.max</span> + <span class='no'>t.min</span>)/<span class='fl'>2</span>)) +
+       <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>date</span>, (<span class='no'>tmax</span> + <span class='no'>tmin</span>)/<span class='fl'>2</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>()
 <span class='co'># }</span><div class='input'>
 </div></pre>

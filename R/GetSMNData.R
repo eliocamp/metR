@@ -153,7 +153,7 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
 
     ush <- obs[, c(1, 4:5)]
     setnames(ush, c("date", "global", "diffuse"))
-    ush$staton <- "Ushuaia"
+    ush$station <- "Ushuaia"
 
     obs <- rbind(bs, ush)
     obs[, date := lubridate::as_datetime(date)]

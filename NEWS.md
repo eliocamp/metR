@@ -34,6 +34,7 @@ or fill scale.
 - `ReadNetCDF()` can return a keyed data.table. 
 - `FitQsWave()` and `BuildQsWave()` renamed to `FitWave()` and `BuildWave()`, 
 respectively.
+- `GetSMNData()` is updated to include the new SMN website and data types. 
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

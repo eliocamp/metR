@@ -32,6 +32,8 @@ or fill scale.
 `geom_contour_fill()` also does the same. 
 - New `stat_subset()` that makes subsetting data on the fly easier. 
 - `ReadNetCDF()` can return a keyed data.table. 
+- `FitQsWave()` and `BuildQsWave()` renamed to `FitWave()` and `BuildWave()`, 
+respectively.
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

@@ -2,6 +2,7 @@
 % Please edit documentation in R/guide_colorstrip.R
 \name{guide_colourstrip}
 \alias{guide_colourstrip}
+\alias{guide_train.colorstrip}
 \alias{guide_colorstrip}
 \title{Discretized continuous color guide}
 \usage{
@@ -108,7 +109,7 @@ represent the value between contour surfaces.
 the value of the data and is very similar to \link[ggplot2:guide_legend]{ggplot2::guide_legend}.
 }
 \examples{
-# In this example the lowest color represent area of the data with values
+# In this example the lowest color represents an area of the data with values
 # between 80 and 100.
 library(ggplot2)
 binwidth <- 20
@@ -143,3 +144,4 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{stat_subset}}
 }
 \concept{ggplot2 helpers}
+\keyword{internal}

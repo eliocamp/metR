@@ -112,7 +112,7 @@ http://www.atmo.arizona.edu/students/courselinks/fall11/atmo551a/ATMO_451a_551a_
 }
 \seealso{
 Other meteorology functions: \code{\link{Derivate}},
-  \code{\link{EOF}}, \code{\link{FitQsWave}},
+  \code{\link{EOF}}, \code{\link{FitWave}},
   \code{\link{GeostrophicWind}}, \code{\link{WaveFlux}}
 }
 \concept{meteorology functions}

@@ -39,7 +39,7 @@ reference:
     contents:
       - EOF
       - ImputeEOF
-      - FitQsWave
+      - waves
       - ConvertLongitude
       - MaskLand
       - GetTopography

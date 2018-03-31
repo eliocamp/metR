@@ -273,6 +273,10 @@ guess <- function (x)
 `%||%` <- function(a, b) {
     if (!is.null(a)) a else b
 }
+# from ggplot2
+is.waive <- function (x) {
+    inherits(x, "waiver")
+}
 
 if(getRversion() >= "2.15.1") {
     utils::globalVariables(

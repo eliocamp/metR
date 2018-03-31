@@ -119,7 +119,7 @@ guide_colourstrip <- function(
 #' @importFrom stats setNames
 #' @import gtable
 #' @export
-#' @rdname guide-methods
+#' @rdname guide_colourstrip
 #' @keywords internal
 guide_train.colorstrip <- function(guide, scale) {
     # do nothing if scale are inappropriate
@@ -198,7 +198,7 @@ guide_colorstrip <- guide_colourstrip
         stop("Invalid breaks specification. Use NULL, not NA")
     } else if (zero_range(as.numeric(limits))) {
         breaks <- limits[1]
-    } else if (ggplot2:::is.waive(scale$breaks)) {
+    } else if (is.waive(scale$breaks)) {
         breaks <- scale$trans$breaks(limits)
     } else if (is.function(scale$breaks)) {
         breaks <- scale$breaks(limits)

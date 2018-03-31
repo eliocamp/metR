@@ -97,5 +97,56 @@ GetSMNData <- function(date, type = c("hourly", "daily", "current", "radiation")
         obs$date <- lubridate::as_datetime(date)
         obs[, hour := NULL]
         obs
+    } else {
+        return(NULL)
     }
+}
+
+.smnobs <- function(date) {
+    file <- paste0("observaciones/obs",
+                   stringr::str_remove_all(as.character(as.Date(date)), "-"), ".txt")
+    url <- paste0("https://ssl.smn.gob.ar/dpd/descarga_opendata.php?file=", file)
+    obs <- readLines(url, warn = F)
+
+    if (obs[1] != paste0(file, "El archivo no existe.")) {
+        obs <- obs[4:length(obs)]
+        variables <- c("start", "date", "tmax", "tmin", "station")
+        charend <- c(1, 9, 15, 21, 101)
+
+        obs <- as.data.table(lapply(seq_along(variables)[-1], function(x) {
+            s <- stringr::str_squish(stringr::str_sub(obs, charend[x - 1], charend[x] -1))
+            if(variables[x] != "station") s <- as.numeric(s)
+            s
+        }))
+
+        setnames(obs, variables[-1])
+        obs <- obs[, -1]
+        obs <- obs[!is.na(date)]
+
+        obs$date <- date
+        obs
+    } else {
+        return(NULL)
+    }
+}
+
+.smnrad <- function(date) {
+    file <- paste0("radiacionsolar/radsolar",
+                   stringr::str_remove_all(as.character(as.Date(date)), "-"), ".txt")
+    url <- paste0("https://ssl.smn.gob.ar/dpd/descarga_opendata.php?file=", file)
+    obs <- fread(url, showProgress = FALSE)
+
+    if (nrow(obs) == 0) return(NULL)
+
+    bs <- obs[, 1:3]
+    setnames(bs, c("date", "global", "diffuse"))
+    bs[, station := "BsAs"]
+
+    ush <- obs[, c(1, 4:5)]
+    setnames(ush, c("date", "global", "diffuse"))
+    ush[, station := "Ushuaia"]
+
+    obs <- rbind(bs, ush)
+    obs[, date := lubridate::as_datetime(date)]
+    obs
 }

@@ -73,7 +73,7 @@
 #'     geom_contour(aes(z = gh.no12, color = ..level..)) +
 #'     coord_polar()
 #'
-#' @rdname waves
+#' @name waves
 #' @family meteorology functions
 #' @aliases BuildField FitWave
 #' @export

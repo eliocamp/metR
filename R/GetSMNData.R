@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' dates <- seq.Date(today() - 30, today(), by = "1 day")
+#' dates <- seq.Date(lubridate::today() - 30, lubridate::today(), by = "1 day")
 #' data <- GetSMNData(dates, bar = FALSE)    # long!
 #'
 #' library(ggplot2)
@@ -25,7 +25,7 @@
 #' @source https://ssl.smn.gob.ar/dpd/pron5d-calendario.php
 #' @export
 #' @import RCurl
-GetSMNData <- function(date, bar = FALSE) {
+GetSMNData <- function(date, type = c("hourly", "daily", "current", "radiation"),  bar = FALSE) {
     return.data <- data.frame()
     no_data <- vector()
 
@@ -68,4 +68,34 @@ GetSMNData <- function(date, bar = FALSE) {
     station <- as.character(stringr::str_sub(obs, 22))
     station <- stringr::str_trim(station)
     return(data.frame(t.max, t.min, station, stringsAsFactors = F))
+}
+
+
+
+.smnhourly <- function(date) {
+    file <- paste0("observaciones/datohorario",
+                   stringr::str_remove_all(as.character(as.Date(date)), "-"), ".txt")
+    url <- paste0("https://ssl.smn.gob.ar/dpd/descarga_opendata.php?file=", file)
+    obs <- readLines(url, warn = F)
+    if (obs[1] != paste0(file, "El archivo no existe.")) {
+        obs <- obs[3:length(obs)]
+        variables <- c("start", "date", "hour", "t", "rh", "slp", "dir", "V", "station")
+        charend <- c(1, 9, 15, 21, 26, 34, 39, 44, 101)
+
+        obs <- as.data.table(lapply(seq_along(variables)[-1], function(x) {
+            s <- stringr::str_squish(stringr::str_sub(obs, charend[x - 1], charend[x] -1))
+            if(variables[x] != "station") s <- as.numeric(s)
+            s
+        }))
+
+        setnames(obs, variables[-1])
+        obs <- obs[, -1]
+        obs <- obs[!is.na(hour)]
+
+        date <- lubridate::as_datetime(date, tz = "America/Argentina/Buenos_Aires")
+        lubridate::hour(date) <- obs$hour
+        obs$date <- lubridate::as_datetime(date)
+        obs[, hour := NULL]
+        obs
+    }
 }

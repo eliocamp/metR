@@ -6,7 +6,7 @@
 #' @param x a data.frame
 #' @param colname the name of the longitude-like column
 #' @param maxlon the value of the longitude-like column that the duplicated
-#' values should have.
+#' values should have. If `NULL`, defaults to max + resolution.
 #'
 #' @return
 #' A data.frame with the values corresponding to the minimum longitude
@@ -29,11 +29,12 @@
 #' @family ggplot2 helpers
 #' @export
 #' @import data.table
-RepeatLon <- function(x, colname = "lon", maxlon = 360) {
+RepeatLon <- function(x, colname = "lon", maxlon = NULL) {
     dt <- data.table::is.data.table(x)
     data.table::setDT(x)
     minlon <- x[, min(get(colname))]
     border <- x[get(colname) == minlon, ]
+    maxlon <- max(x[[colname]]) + ggplot2::resolution(x[[colname]])
     border[, c(colname) := maxlon]
     full <- rbind(x, border)
     if (dt == TRUE) {

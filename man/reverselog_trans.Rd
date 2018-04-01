@@ -28,7 +28,7 @@ ggplot(t, aes(p, t)) +
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{RepeatLon}},
+  \code{\link{MakeBreaks}}, \code{\link{RepeatCircular}},
   \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},

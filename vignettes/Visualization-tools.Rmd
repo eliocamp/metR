@@ -225,9 +225,9 @@ ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
 
 By default, colors are mapped to the values *in between* breaks, so there's a one-to-one mapping between colors shown in the plot and in the guide. From an aesthetic standpoint, it's much closer to the `cbarn` command from `GrADS`, which a lot of atmospheric scientists are probably used to.  
 
-## RepeatLon
+## RepeatCircular
 
-The function `RepeatLon()` is an ugly kludge to fix an issue when using polar coordinates in ggplot2 in which contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.
+The function `RepeatCircular()` is an ugly kludge to fix an issue when using polar coordinates in ggplot2 in which contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.
 
 See how in the figure on the left, contours that cross the 0° longitude mark are cut, but they join correctly in the figure on the right. 
 
@@ -239,7 +239,18 @@ See how in the figure on the left, contours that cross the 0° longitude mark ar
     scale_y_latitude(limits = c(-90, -20)) +
     coord_polar())
 
-g %+% RepeatLon(nceptemperature[lev == 300])    # change the data. 
+g %+% RepeatCircular(nceptemperature[lev == 300])    # change the data. 
+```
+
+This behaviour is now also implemented directly in `geom_contour2()` and `geom_contour_fill()`.
+
+```{r}
+ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+    geom_contour2(binwidth = 1.5, circular = "x") +
+    scale_fill_divergent() +
+    scale_x_longitude() +
+    scale_y_latitude(limits = c(-90, -20)) +
+    coord_polar()
 ```
 
 

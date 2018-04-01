@@ -128,11 +128,12 @@ the value of the <code>z</code> aesthetic <em>inside</em> the contour instead of
 
     <pre class="usage"><span class='fu'>geom_contour_fill</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"ContourFill"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>circular</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>stat_contour_fill</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ContourFill"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/scales/topics/fullseq'>fullseq</a></span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>circular</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -193,6 +194,11 @@ to the paired geom/stat.</p></td>
 a warning. If <code>TRUE</code>, missing values are silently removed.</p></td>
     </tr>
     <tr>
+      <th>circular</th>
+      <td><p>either NULL, "x" or "y" indicating which dimension is circular,
+if any.</p></td>
+    </tr>
+    <tr>
       <th>show.legend</th>
       <td><p>logical. Should this layer be included in the legends?
 <code>NA</code>, the default, includes if any aesthetics are mapped.
@@ -210,11 +216,6 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
     <tr>
       <th>geom</th>
       <td><p>The geometric object to use display the data</p></td>
-    </tr>
-    <tr>
-      <th>exclude</th>
-      <td><p>a numeric vector of levels that should be excluded from the
-contour calculations</p></td>
     </tr>
     </table>
     
@@ -243,7 +244,7 @@ contour calculations</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
-  <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='RepeatLon.html'>RepeatLon</a></code>,
+  <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='RepeatCircular.html'>RepeatCircular</a></code>,
   <code><a href='geom_arrow.html'>geom_arrow</a></code>, <code><a href='geom_contour2.html'>geom_contour2</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
   <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_vector.html'>geom_vector</a></code>,
@@ -262,7 +263,7 @@ contour calculations</p></td>
   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)</div><div class='img'><img src='geom_contour_fill-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Plots only deviations from the mean.</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>surface</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'>as.numeric</span>(<span class='fu'>scale</span>(<span class='no'>value</span>)))) +
-  <span class='fu'>geom_contour_fill</span>(<span class='kw'>complete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: argumnet exclude is deprecated; use a function in breaks instead.</span></div><div class='img'><img src='geom_contour_fill-2.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'>geom_contour_fill</span>(<span class='kw'>complete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown parameters: exclude</span></div><div class='img'><img src='geom_contour_fill-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If one uses level instead of int.level, one of the small</span>
 <span class='co'># contours near the crater disapears</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>surface</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +

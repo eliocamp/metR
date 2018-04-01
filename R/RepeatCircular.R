@@ -4,8 +4,8 @@
 #' cyclical data so the workaround is to copy the leftmost data to the right.
 #'
 #' @param x a data.frame
-#' @param colname the name of the longitude-like column
-#' @param maxlon the value of the longitude-like column that the duplicated
+#' @param circular the name of the circular dimension
+#' @param max the value of the longitude-like column that the duplicated
 #' values should have. If `NULL`, defaults to max + resolution.
 #'
 #' @return
@@ -24,18 +24,27 @@
 #' # This plot has problems in lon = 0
 #' g
 #'
-#' # But using RepeatLon solves it.
-#' g %+% RepeatLon(aao[date == date[1]])
+#' # But using RepeatCircular solves it.
+#' g %+% RepeatCircular(aao[date == date[1]])
+#'
+#' # The same behaviour is now implemented directly in geom_contour2
+#' ggplot(aao[date == date[1]], aes(lon, lat)) +
+#'     geom_contour2(aes(z = gh), circular = "x") +
+#'     coord_polar() +
+#'     ylim(c(-90, -10))
+#'
+#' @seealso geom_contour2
+#'
 #' @family ggplot2 helpers
 #' @export
 #' @import data.table
-RepeatLon <- function(x, colname = "lon", maxlon = NULL) {
+RepeatCircular <- function(x, circular = "lon", max = NULL) {
     dt <- data.table::is.data.table(x)
     data.table::setDT(x)
-    minlon <- x[, min(get(colname))]
-    border <- x[get(colname) == minlon, ]
-    maxlon <- max(x[[colname]]) + ggplot2::resolution(x[[colname]])
-    border[, c(colname) := maxlon]
+    minlon <- x[, min(get(circular))]
+    border <- x[get(circular) == minlon, ]
+    max <- max(x[[circular]]) + ggplot2::resolution(x[[circular]])
+    border[, c(circular) := max]
     full <- rbind(x, border)
     if (dt == TRUE) {
         return(full)
@@ -43,3 +52,4 @@ RepeatLon <- function(x, colname = "lon", maxlon = NULL) {
         return(setDF(full))
     }
 }
+

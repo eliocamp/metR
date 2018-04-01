@@ -7,12 +7,13 @@
 \usage{
 geom_contour2(mapping = NULL, data = NULL, stat = "contour2",
   position = "identity", ..., lineend = "butt", linejoin = "round",
-  linemitre = 1, breaks = scale::fullseq, bins = NULL, binwidth = NULL,
+  linemitre = 1, breaks = scales::fullseq, bins = NULL, binwidth = NULL,
   na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
 
 stat_contour2(mapping = NULL, data = NULL, geom = "contour",
   position = "identity", ..., breaks = scales::fullseq, bins = NULL,
-  binwidth = NULL, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+  binwidth = NULL, na.rm = FALSE, circular = NULL, show.legend = NA,
+  inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -77,6 +78,9 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
+
+\item{circular}{either NULL, "x" or "y" indicating which dimension is circular,
+if any.}
 }
 \description{
 A copy of \link[ggplot2:geom_contour]{ggplot2::geom_contour} that accepts a function as the \code{breaks}
@@ -114,7 +118,7 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{RepeatLon}},
+  \code{\link{MakeBreaks}}, \code{\link{RepeatCircular}},
   \code{\link{geom_arrow}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},

@@ -37,6 +37,7 @@ respectively.
 - `GetSMNData()` is updated to include the new SMN website and data types. 
 - `geom_contour2()` and `geom_contour_fill()` gain a `circular` argument to specify
 a circular dimension.
+- `RepeatCircular()` renamed to `RepeatCircular()`.
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

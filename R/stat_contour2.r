@@ -69,8 +69,8 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
       }
 
       if (!is.null(circular)) {
-          M <- max(data[[circular]]) + resolution(data[[circular]])
-          data <- RepeatLon(data, colname = circular, maxlon = M)
+          # M <- max(data[[circular]]) + resolution(data[[circular]])
+          data <- RepeatCircular(data, circular)
       }
       .contour_lines(data, breaks, complete = complete)
     }

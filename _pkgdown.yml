@@ -23,7 +23,7 @@ reference:
     desc: functions that help in plotting
     contents:
       - MakeBreaks
-      - RepeatLon
+      - RepeatCircular
       - DivideTimeseries
   - title: Physics
     desc: functions related to physical processes

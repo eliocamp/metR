@@ -272,10 +272,10 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <p>By default, colors are mapped to the values <em>in between</em> breaks, so there’s a one-to-one mapping between colors shown in the plot and in the guide. From an aesthetic standpoint, it’s much closer to the <code>cbarn</code> command from <code>GrADS</code>, which a lot of atmospheric scientists are probably used to.</p>
 </div>
-<div id="repeatlon" class="section level2">
+<div id="repeatcircular" class="section level2">
 <h2 class="hasAnchor">
-<a href="#repeatlon" class="anchor"></a>RepeatLon</h2>
-<p>The function <code><a href="../reference/RepeatLon.html">RepeatLon()</a></code> is an ugly kludge to fix an issue when using polar coordinates in ggplot2 in which contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.</p>
+<a href="#repeatcircular" class="anchor"></a>RepeatCircular</h2>
+<p>The function <code><a href="../reference/RepeatCircular.html">RepeatCircular()</a></code> is an ugly kludge to fix an issue when using polar coordinates in ggplot2 in which contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.</p>
 <p>See how in the figure on the left, contours that cross the 0° longitude mark are cut, but they join correctly in the figure on the right.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(nceptemperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> air.z)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour</a></span>(<span class="dt">binwidth =</span> <span class="fl">1.5</span>) <span class="op">+</span>
@@ -284,8 +284,17 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>())
 
-g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="../reference/RepeatLon.html">RepeatLon</a></span>(nceptemperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>])    <span class="co"># change the data. </span></code></pre></div>
+g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="../reference/RepeatCircular.html">RepeatCircular</a></span>(nceptemperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>])    <span class="co"># change the data. </span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-12-1.png" width="316.8"><img src="Visualization-tools_files/figure-html/unnamed-chunk-12-2.png" width="316.8"></p>
+<p>This behaviour is now also implemented directly in <code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> and <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(nceptemperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> air.z)) <span class="op">+</span>
+<span class="st">    </span><span class="kw"><a href="../reference/geom_contour2.html">geom_contour2</a></span>(<span class="dt">binwidth =</span> <span class="fl">1.5</span>, <span class="dt">circular =</span> <span class="st">"x"</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</code></pre></div>
+<pre><code>## Warning: Removed 6336 rows containing non-finite values (stat_contour2).</code></pre>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 </div>
 <div id="dividetimeseries" class="section level2">
 <h2 class="hasAnchor">
@@ -296,13 +305,13 @@ g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="
 <span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_smooth">geom_smooth</a></span>(<span class="dt">span =</span> <span class="fl">0.3</span>) <span class="op">+</span>
 <span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))) </code></pre></div>
 <pre><code>## `geom_smooth()` using method = 'loess' and formula 'y ~ x'</code></pre>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 <p>In the above plot, the timeseries looks noisy and hard to understand since the lines are too steep. Dividing it into 2 facets makes is easier to see what’s going on.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/DivideTimeseries.html">DivideTimeseries</a></span>(g, aao<span class="op">$</span>date, <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">xlab =</span> <span class="st">"date"</span>, <span class="dt">ylab =</span> <span class="st">"gh"</span>)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'</code></pre>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 </div>
 <div id="geom_relief" class="section level2">
 <h2 class="hasAnchor">
@@ -310,7 +319,7 @@ g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="
 <p>This geom produces a shaded relief of the data. It doesn’t really map the data per se, but it provides an intuitive representation of hills and valeys that can be used as a background for plotting actual data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(v, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(Var1, Var2)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_relief.html">geom_relief</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> value))</code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
 </div>
 </div>
 </div>
@@ -334,7 +343,7 @@ g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="
       <li>
 <a href="#other-goodies">Other goodies</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#guide_colorstrip">guide_colorstrip</a></li>
-      <li><a href="#repeatlon">RepeatLon</a></li>
+      <li><a href="#repeatcircular">RepeatCircular</a></li>
       <li><a href="#dividetimeseries">DivideTimeseries</a></li>
       <li><a href="#geom_relief">geom_relief</a></li>
       </ul>

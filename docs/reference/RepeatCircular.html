@@ -118,7 +118,7 @@ cyclical data so the workaround is to copy the leftmost data to the right." />
 cyclical data so the workaround is to copy the leftmost data to the right.</p>
     
 
-    <pre class="usage"><span class='fu'>RepeatCircular</span>(<span class='no'>x</span>, <span class='kw'>colname</span> <span class='kw'>=</span> <span class='st'>"lon"</span>, <span class='kw'>maxlon</span> <span class='kw'>=</span> <span class='fl'>360</span>)</pre>
+    <pre class="usage"><span class='fu'>RepeatCircular</span>(<span class='no'>x</span>, <span class='kw'>circular</span> <span class='kw'>=</span> <span class='st'>"lon"</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -128,13 +128,13 @@ cyclical data so the workaround is to copy the leftmost data to the right.</p>
       <td><p>a data.frame</p></td>
     </tr>
     <tr>
-      <th>colname</th>
-      <td><p>the name of the longitude-like column</p></td>
+      <th>circular</th>
+      <td><p>the name of the circular dimension</p></td>
     </tr>
     <tr>
-      <th>maxlon</th>
+      <th>max</th>
       <td><p>the value of the longitude-like column that the duplicated
-values should have.</p></td>
+values should have. If <code>NULL</code>, defaults to max + resolution.</p></td>
     </tr>
     </table>
     
@@ -145,7 +145,8 @@ repeated next to the maximum.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
+    <p>geom_contour2</p>
+<p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
   <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='geom_arrow.html'>geom_arrow</a></code>,
   <code><a href='geom_contour2.html'>geom_contour2</a></code>,
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
@@ -161,6 +162,7 @@ repeated next to the maximum.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'>library</span>(<span class='no'>data.table</span>)
+<span class='fu'>data</span>(<span class='no'>aao</span>)
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>() +
@@ -169,7 +171,13 @@ repeated next to the maximum.</p>
 <span class='co'># This plot has problems in lon = 0</span>
 <span class='no'>g</span></div><div class='img'><img src='RepeatCircular-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># But using RepeatCircular solves it.</span>
-<span class='no'>g</span> <span class='kw'>%+%</span> <span class='fu'>RepeatCircular</span>(<span class='no'>aao</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]])</div><div class='img'><img src='RepeatCircular-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>g</span> <span class='kw'>%+%</span> <span class='fu'>RepeatCircular</span>(<span class='no'>aao</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]])</div><div class='img'><img src='RepeatCircular-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># The same behaviour is now implemented directly in geom_contour2</span>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+    <span class='fu'><a href='geom_contour2.html'>geom_contour2</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh</span>), <span class='kw'>circular</span> <span class='kw'>=</span> <span class='st'>"x"</span>) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>() +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/lims'>ylim</a></span>(<span class='fu'>c</span>(-<span class='fl'>90</span>, -<span class='fl'>10</span>))</div><div class='img'><img src='RepeatCircular-3.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

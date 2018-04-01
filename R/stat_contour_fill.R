@@ -89,8 +89,8 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         # breaks.inner <- .inside(breaks)
 
         if (!is.null(circular)) {
-            M <- max(data[[circular]]) + resolution(data[[circular]])
-            data <- RepeatLon(data, colname = circular, maxlon = M)
+            # M <- max(data[[circular]]) + resolution(data[[circular]])
+            data <- RepeatCircular(data, circular)
         }
         mean.z <- mean(data$z)
         mean.level <- breaks[breaks %~% mean.z]

@@ -11,8 +11,8 @@
 #' @param breaks numeric vector of breaks
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
-#' @param exclude a numeric vector of levels that should be excluded from the
-#' contour calculations
+#' @param circular either NULL, "x" or "y" indicating which dimension is circular,
+#' if any.
 #'
 #' @section Aesthetics:
 #' \code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):
@@ -63,6 +63,7 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
                          bins = NULL,
                          binwidth = NULL,
                          na.rm = FALSE,
+                         circular = NULL,
                          show.legend = NA,
                          inherit.aes = TRUE) {
     ggplot2::layer(
@@ -78,6 +79,7 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
             bins = bins,
             binwidth = binwidth,
             na.rm = na.rm,
+            circular = circular,
             ...
         )
     )

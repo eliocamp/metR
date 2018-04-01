@@ -15,6 +15,7 @@
 #' @examples
 #' library(ggplot2)
 #' library(data.table)
+#' data(aao)
 #' g <- ggplot(aao[date == date[1]], aes(lon, lat)) +
 #'     geom_contour(aes(z = gh)) +
 #'     coord_polar() +

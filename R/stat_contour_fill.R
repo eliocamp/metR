@@ -9,7 +9,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               bins = NULL,
                               binwidth = NULL,
                               na.rm = FALSE,
-                              exclude = NULL,
+                              circular = NULL,
                               show.legend = NA,
                               inherit.aes = TRUE) {
     layer(
@@ -22,10 +22,10 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
         inherit.aes = inherit.aes,
         params = list(
             na.rm = na.rm,
-            exclude = exclude,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
+            circular = circular,
             ...
         )
     )
@@ -59,7 +59,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     },
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = scales::fullseq, complete = TRUE, na.rm = FALSE,
-                             exclude = NULL) {
+                             circular = NULL) {
         data <- data[!(is.na(data$x) | is.na(data$y)), ]
 
         if (na.rm) {
@@ -86,14 +86,12 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             breaks <- breaks(range(data$z), binwidth)
         }
 
-
-        if (!is.null(exclude)) {
-            warning("argumnet exclude is deprecated; use a function in breaks instead.",
-                    call. = FALSE)
-            breaks <- breaks[!(breaks %in% exclude)]
-        }
         # breaks.inner <- .inside(breaks)
 
+        if (!is.null(circular)) {
+            M <- max(data[[circular]]) + resolution(data[[circular]])
+            data <- RepeatLon(data, colname = circular, maxlon = M)
+        }
         mean.z <- mean(data$z)
         mean.level <- breaks[breaks %~% mean.z]
         range.data <- as.data.frame(sapply(data[c("x", "y", "z")], range))

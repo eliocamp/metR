@@ -5,6 +5,8 @@
 #'   and returns breaks as output
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
+#' @param circular either NULL, "x" or "y" indicating which dimension is circular,
+#' if any.
 #' @export
 #' @section Computed variables:
 #' \describe{
@@ -19,6 +21,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
                          bins = NULL,
                          binwidth = NULL,
                          na.rm = FALSE,
+                         circular = NULL,
                          show.legend = NA,
                          inherit.aes = TRUE) {
   layer(
@@ -34,6 +37,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
       breaks = breaks,
       bins = bins,
       binwidth = binwidth,
+      circular = circular,
       ...
     )
   )
@@ -45,26 +49,30 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
 
   compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                            breaks = scales::fullseq, complete = FALSE,
-                           na.rm = FALSE) {
-    # Check is.null(breaks) for backwards compatibility
-    if (is.null(breaks)) {
-      breaks <- scales::fullseq
-    }
-
-    if (is.function(breaks)) {
-      # If no parameters set, use pretty bins to calculate binwidth
-      if (is.null(bins) && is.null(binwidth)) {
-        binwidth <- diff(pretty(range(data$z), 10))[1]
-      }
-      # If provided, use bins to calculate binwidth
-      if (!is.null(bins)) {
-        binwidth <- diff(range(data$z)) / bins
+                           na.rm = FALSE, circular = NULL) {
+      # Check is.null(breaks) for backwards compatibility
+      if (is.null(breaks)) {
+          breaks <- scales::fullseq
       }
 
-      breaks <- breaks(range(data$z), binwidth)
-    }
+      if (is.function(breaks)) {
+          # If no parameters set, use pretty bins to calculate binwidth
+          if (is.null(bins) && is.null(binwidth)) {
+              binwidth <- diff(pretty(range(data$z), 10))[1]
+          }
+          # If provided, use bins to calculate binwidth
+          if (!is.null(bins)) {
+              binwidth <- diff(range(data$z)) / bins
+          }
 
-    .contour_lines(data, breaks, complete = complete)
+          breaks <- breaks(range(data$z), binwidth)
+      }
+
+      if (!is.null(circular)) {
+          M <- max(data[[circular]]) + resolution(data[[circular]])
+          data <- RepeatLon(data, colname = circular, maxlon = M)
+      }
+      .contour_lines(data, breaks, complete = complete)
     }
 )
 
@@ -109,3 +117,4 @@ StatTextContour <- ggplot2::ggproto("StatTextContour", StatContour2,
                                     required_aes = c("x", "y", "z"),
                                     default_aes = ggplot2::aes(order = ..level.., label = ..level..)
 )
+

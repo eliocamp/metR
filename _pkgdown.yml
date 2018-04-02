@@ -32,29 +32,32 @@ reference:
       - coriolis
       - Derivate
       - GeostrophicWind
-      - season
       - WaveFlux
   - title: Data Manipulation
     desc: get and manipulate data
     contents:
+      - ReadNetCDF
+      - MaskLand
+      - GetTopography
+      - GetSMNData
       - EOF
       - ImputeEOF
       - waves
-      - ConvertLongitude
-      - MaskLand
-      - GetTopography
 #      - ReadCtl
-      - ReadNetCDF
-      - GetSMNData
-      - aao
-      - claris
-      - nceptemperature
   - title: Helpers
     desc: other helpers
     contents:
       - logic
+      - season
       - Anomaly
       - Percentile
       - Mag
       - JumpBy
+      - ConvertLongitude
+    - title: Datasets
+      desc: sample datasets
+      contents:
+      - aao
+      - claris
+      - nceptemperature
 

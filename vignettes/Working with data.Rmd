@@ -1,0 +1,43 @@
+---
+title: "Working with data"
+author: "Elio Campitelli"
+date: "`r Sys.Date()`"
+output: 
+    rmarkdown::html_vignette:
+        fig_width: 7
+vignette: >
+  %\VignetteIndexEntry{Working with data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Data manipulation
+
+## Getting data
+
+ReadNetCDF + GetTopography + MaskLand + GetSMNData
+
+## Maths ?
+
+EOF + ImputeEOF + waves
+
+
+
+# Physics
+
+## Derivates
+
+Derivate + wrapers + GeostrophicWind + WaveFlux
+
+
+## Thermodynamics
+
+Adiabat, etc...
+

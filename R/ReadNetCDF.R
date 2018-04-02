@@ -133,8 +133,10 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
                 start[[s]] <- which(lubridate::as_datetime(d) %~% min(sub))
                 count[[s]] <- abs(which(lubridate::as_datetime(d) %~% max(sub) ) - start[[s]] )
             } else {
-                start[[s]] <- which(d %~% min(sub))
-                count[[s]] <- abs(which(d %~% max(sub)) - start[[s]])
+                start1 <- which(d %~% sub[1])
+                end <- which(d %~% sub[length(sub)])
+                start[[s]] <- min(start1, end)
+                count[[s]] <- abs(end - start1)
             }
 
             if(count[[s]] == 0) count[[s]] <- 1

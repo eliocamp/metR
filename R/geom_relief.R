@@ -79,6 +79,7 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", GeomTile,
             coords[, sun.angle := (sun.angle + 90)*pi/180]
             coords[, dx := .derv(z, x), by = y]
             coords[, dy := .derv(z, y), by = x]
+            coords <- coords[!is.na(dx) & !is.na(dy)]
 
             coords[, shade := (cos(atan2(-dy, -dx) - sun.angle) + 1)/2]
 

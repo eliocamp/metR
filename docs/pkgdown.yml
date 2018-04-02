@@ -3,4 +3,5 @@ pkgdown: 0.1.0.9000
 pkgdown_sha: cb70bf3abeac66cb969901ef5f9caeac9c2ab8cc
 articles:
   Visualization-tools: Visualization-tools.html
+  Working with data: Working with data.html
 

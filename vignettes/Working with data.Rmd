@@ -13,16 +13,108 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+    collapse = TRUE,
+    comment = "#>",
+    cache = FALSE
 )
 ```
 
+`metR` is (currently) geared towards datasets defined on a regular grid. 
+
+
 # Data manipulation
 
-## Getting data
+`metR` implements some functions to easily load data into R either from local files or from remote locations. 
 
-ReadNetCDF + GetTopography + MaskLand + GetSMNData
+## ReadNetCDF 
+
+The function `ReadNetCDF()` relies on the `ncdf4` package to read netCDF files with ease. It intelligently reads dimensions and data and returns a tidy `data.table` with optional keyed columns for faster processing afterwards. It can also return an `array` with named dimensions or a `vector`, for the case of adding new columns to an existing `data.table`.
+
+```{r}
+library(metR)
+library(data.table)
+
+# If out = "vars", returns information about the available variables and 
+# dimensions
+str(ReadNetCDF("nceptemperature.nc", out = "vars"))
+```
+
+Now that we know the name and the dimensions of the data, we can read it. `ReadNetCDF()` can also read only a (continuous) subset of the data.
+
+```{r}
+air <- ReadNetCDF("nceptemperature.nc", subset = list(lat = 90:0, level = 925))
+
+library(ggplot2)
+ggplot(air, aes(lon, lat)) +
+    geom_contour(aes(z = air, color = ..level..))
+```
+
+Since the most consumig part of reading the file is melting a multidimensinal array into a tidy `data.table`, if we wanted to add another variable to the same `data.table` we could save time by only returning a vector. **It is of the upmost importance that both variables are on the same exact grid**.
+
+```{r}
+air[, air2 := ReadNetCDF("nceptemperature.nc", out = "vector", 
+                         subset = list(lat = 90:0, level = 300))]
+
+ggplot(air, aes(lon, lat)) +
+    geom_contour(aes(z = air2, color = ..level..))
+```
+
+Because `ReadNetCDF()` can read multiple variables at the same time, the `out = "vector"` output will be actually return a `list` of vectors (which integrates seamlessly with the `data.table` syntax). If one of the variables has degenerate dimensions (dimensions of length 1) then it will be recicled. That means that if the same file has Sea Surface Temperatures (a 2D field) and Air Temperature (a 3D field), then the returned `data.table` fill have an observation of Air Temperature *and* Sea Surface Temperature for each vertical level. 
+
+The netCDF format is very flexible and this function has not been tested on every posible file so things may break in strange cases. If you have a file that cannot be read with this function, please [submit an issue](https://github.com/eliocamp/metR/issues). 
+
+## GetTopography 
+
+`GetTopography()` retrieves topographic data from the [ETOPO1 Global Relief Model](https://www.ngdc.noaa.gov/mgg/global/global.html) into a convenient tidy `data.table`. By defualt, it also stores a cached version. 
+
+As an example, let's look at a global relief map at 1/2° resolution with some ugly color palette. 
+
+```{r}
+world <- GetTopography(0, 360, 90, -90, resolution = 1/2)
+
+ggplot(world, aes(lon, lat)) +
+    geom_raster(aes(fill = h/1000)) +
+    geom_contour(aes(z = h), breaks = 0, color = "black", size = 0.5) +
+    coord_fixed(expand = FALSE) +
+    scale_fill_gradientn(colors = topo.colors(6)[c(1, 2, 3, 4, 6)], 
+                         values = scales::rescale(c(-11, 0, 0, 2, 7)),
+                         guide = "none") +
+    theme_void()
+```
+
+## MaskLand
+
+Related to this problem, `MaskLand()` returns a logical vector with `TRUE` if a point is over land. 
+
+```{r}
+air[, land := MaskLand(lon, lat)]
+
+ggplot(air, aes(lon, lat)) +
+    geom_tile(aes(fill = land)) +
+    coord_quickmap()
+```
+
+With this, we can compare mean temperature over land and over sea by latitude. 
+
+```{r}
+ggplot(air[, .(air = mean(air) - 273.15), by = .(lat, land)],
+       aes(lat, air)) +
+    geom_line(aes(color = land))
+
+```
+
+
+## GetSMNData
+
+Finally, `GetSMNData()` retrieves data from Argentina's National Weather Service's public access. This is a rapidly evolving project, and data availability is not guaranteed. Currently available data are hourly station data, daily station maximum and minimum temperature and global and diffuse radiation measured at Buenos Aires and Ushuaia. 
+
+```{r}
+rad <- GetSMNData(as.Date("2018-03-15") , type = "radiation")
+
+ggplot(rad, aes(date, global)) + 
+    geom_line(aes(color = station))
+```
+
 
 ## Maths ?
 

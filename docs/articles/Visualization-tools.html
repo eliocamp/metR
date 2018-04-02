@@ -54,6 +54,9 @@
 <li>
       <a href="../articles/Visualization-tools.html">Visualization tools</a>
     </li>
+    <li>
+      <a href="../articles/Working%20with%20data.html">Working with data</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -82,7 +85,7 @@
       <h1>Visualization tools</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2018-03-31</h4>
+            <h4 class="date">2018-04-02</h4>
       
       <small>Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Visualization-tools.Rmd"><code>vignettes/Visualization-tools.Rmd</code></a></small>
 
@@ -114,9 +117,9 @@ nceptemperature[, air.z <span class="op">:</span><span class="er">=</span><span 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_level</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">90</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_latitude</a></span>(<span class="dt">ticks =</span> <span class="dv">15</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_color_divergent</a></span>()</code></pre></div>
-<pre><code>## Warning in trans$transform(limits): NaNs produced</code></pre>
-<pre><code>## Warning: Removed 365 rows containing non-finite values (stat_contour).</code></pre>
+<span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_color_divergent</a></span>()
+<span class="co">#&gt; Warning in trans$transform(limits): NaNs produced</span>
+<span class="co">#&gt; Warning: Removed 365 rows containing non-finite values (stat_contour).</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 <p>Note: <code>scale_*_longitude()</code> (currently) assumes the data goes from 0° to 360° but puts labels between -180° and 180°. This very idiosyncratic choice stems from the fact that model output is usually in the [0; 360) range but it’s easier to read maps in the (-180; 180] range. This may change in the future.</p>
 </div>
@@ -215,10 +218,10 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
                 <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">scale =</span> <span class="fl">5e5</span>, <span class="dt">min.mag =</span> <span class="fl">2e-6</span>,
                <span class="dt">arrow.size =</span> <span class="fl">0.3</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>()</code></pre></div>
-<pre><code>## Warning: Ignoring unknown parameters: arrow.size</code></pre>
-<pre><code>## Warning: Removed 5328 rows containing non-finite values (stat_vector).</code></pre>
-<pre><code>## Warning: Removed 2 rows containing missing values (geom_segment).</code></pre>
+<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>()
+<span class="co">#&gt; Warning: Ignoring unknown parameters: arrow.size</span>
+<span class="co">#&gt; Warning: Removed 5328 rows containing non-finite values (stat_vector).</span>
+<span class="co">#&gt; Warning: Removed 2 rows containing missing values (geom_segment).</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <p>The <code>scale</code> argument modifies the length of the segments, and the arguments <code>arrow.angle</code>, <code>arrow.length</code>, etc… control the shape of the arrowheads.</p>
 <p>There are (currently) many limitations of <code><a href="../reference/geom_vector.html">geom_vector()</a></code>:</p>
@@ -240,8 +243,8 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <span class="st">    </span><span class="kw"><a href="../reference/geom_arrow.html">geom_arrow</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">mag =</span> mag, <span class="dt">angle =</span> angle), <span class="dt">skip.x =</span> <span class="dv">2</span>, 
                 <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">scale =</span> <span class="fl">5e3</span>, <span class="dt">min.mag =</span> <span class="fl">2e-6</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>()</code></pre></div>
-<pre><code>## Warning: Removed 5328 rows containing missing values (geom_arrow).</code></pre>
+<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>()
+<span class="co">#&gt; Warning: Removed 5328 rows containing missing values (geom_arrow).</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 <p>The <code>start</code> and <code>direction</code> arguments adjust the behaviour of the arrows. This is useful for working with winds in the meteorological standard (in which 0° means wind from the North and 90° means wind from the East).</p>
 <p>In contrast to <code><a href="../reference/geom_vector.html">geom_vector()</a></code>, <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> <strong>does</strong> preserve direction under coordinate transforms. This means that, for example, an arrow at a 45° angle represents wind from the southwest regardless of the <code>x</code> and <code>y</code> scales (but note that this also means that it might not be parallel to the streamlines). For this reason this geom does work with discrete scales.</p>
@@ -292,8 +295,8 @@ g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="
 <span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</code></pre></div>
-<pre><code>## Warning: Removed 6336 rows containing non-finite values (stat_contour2).</code></pre>
+<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()
+<span class="co">#&gt; Warning: Removed 6336 rows containing non-finite values (stat_contour2).</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 </div>
 <div id="dividetimeseries" class="section level2">
@@ -303,14 +306,14 @@ g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao[lon <span class="op">==</span><span class="st"> </span><span class="dv">120</span> <span class="op">&amp;</span><span class="st"> </span>lat <span class="op">==</span><span class="st"> </span><span class="op">-</span><span class="dv">50</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, gh)) <span class="op">+</span>
 <span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
 <span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_smooth">geom_smooth</a></span>(<span class="dt">span =</span> <span class="fl">0.3</span>) <span class="op">+</span>
-<span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))) </code></pre></div>
-<pre><code>## `geom_smooth()` using method = 'loess' and formula 'y ~ x'</code></pre>
+<span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))) 
+<span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 <p>In the above plot, the timeseries looks noisy and hard to understand since the lines are too steep. Dividing it into 2 facets makes is easier to see what’s going on.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/DivideTimeseries.html">DivideTimeseries</a></span>(g, aao<span class="op">$</span>date, <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">xlab =</span> <span class="st">"date"</span>, <span class="dt">ylab =</span> <span class="st">"gh"</span>)</code></pre></div>
-<pre><code>## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
-## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
-## `geom_smooth()` using method = 'loess' and formula 'y ~ x'</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/DivideTimeseries.html">DivideTimeseries</a></span>(g, aao<span class="op">$</span>date, <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">xlab =</span> <span class="st">"date"</span>, <span class="dt">ylab =</span> <span class="st">"gh"</span>)
+<span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span>
+<span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span>
+<span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 </div>
 <div id="geom_relief" class="section level2">

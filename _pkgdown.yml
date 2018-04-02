@@ -54,9 +54,9 @@ reference:
       - Mag
       - JumpBy
       - ConvertLongitude
-    - title: Datasets
-      desc: sample datasets
-      contents:
+  - title: Datasets
+    desc: sample datasets
+    contents:
       - aao
       - claris
       - nceptemperature

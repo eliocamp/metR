@@ -8,13 +8,10 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1) {
     # skip.y <- 1
     #
     force.fun <- function(x, y, field) {
-        force <- as.data.table(
-            suppressWarnings(akima::interpp(field$x, field$y, xo = x, yo = y, z = field$dx)))
-        colnames(force)[3] <- "dx"
-        dy <- as.data.table(
-            suppressWarnings(akima::interpp(field$x, field$y, xo = x, yo = y, z = field$dy)))
-        force$dy <- dy$z
-        return(force[, .(dx, dy)])
+        dx <- suppressWarnings(akima::interpp(field$x, field$y, xo = x, yo = y, z = field$dx)$z)
+        dy <- suppressWarnings(akima::interpp(field$x, field$y, xo = x, yo = y, z = field$dy)$z)
+
+        return(list(dx = dx, dy = dy))
     }
 
     field <- field[!is.na(dx) & !is.na(dy)]
@@ -23,7 +20,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1) {
     points <- points[dx + dy != 0]
     points <- subset(points,
                      x %in% JumpBy(unique(x), skip.x + 1) &
-                         y %in% JumpBy(unique(y), skip.y + 1))
+                     y %in% JumpBy(unique(y), skip.y + 1))
 
     rx <- ggplot2::resolution(points$x, zero = FALSE)
     ry <- ggplot2::resolution(points$y, zero = FALSE)
@@ -33,17 +30,18 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1) {
 
     range.x <- range(field$x)
     range.y <- range(field$y)
-    points <- points[x %between% range.x & y %between% range.y]
+    # points <- points[x %between% range.x & y %between% range.y]
 
     points[, point := 1:.N]
     points[, sim := 0]
-    # points[, c("dx", "dy") := force.fun(x, y, field)]
+    points[, c("dx", "dy") := force.fun(x, y, field)]
+    points <- points[!is.na(dx) & !is.na(dy)]
     points2 <- copy(points)
 
     for (s in 1:S) {
         points2[, c("x", "y", "sim") := .(x + dx*dt, y + dy*dt, s)]
-        points2 <- points2[x %between% range.x & y %between% range.y]
         points2[, c("dx", "dy") := force.fun(x, y, field)]
+        points2 <- points2[!is.na(dx) & !is.na(dy)]
         points <- rbind(points, points2)  # se puede optimizar prealocando
     }
     return(points)
@@ -71,7 +69,6 @@ dy <- function(dlat, dy, a = 6731000) {
 #
 # TODO:
 #    - alguna forma de determinar el dt y el S de manera automática
-#    - Ver qué pasa que algunas flechas tienen algo raro en el primer paso
 #    - soporte para coordenadas cíclicas
 #    - prealocar el data.frame
 #
@@ -97,7 +94,6 @@ dy <- function(dlat, dy, a = 6731000) {
 #            ggplot2::resolution(field$y, zero = FALSE))
 # dt <- res/M*0.5
 #
-#
 # points <- streamline(field, S = 20, dt = dt)
 #
 # ggplot(points, aes(x, y)) +
@@ -105,6 +101,3 @@ dy <- function(dlat, dy, a = 6731000) {
 #     geom_path(aes(group = point), arrow = grid::arrow(13, unit(0.3, "lines"))) +
 #     scale_fill_divergent(name = "GH") +
 #     coord_quickmap()
-
-
-

@@ -85,7 +85,7 @@ EOF <- function(data, formula, value.var = guess(data), n = 1) {
 
     v.g  <- norm(g$matrix, type = "F")
     sdev <- data.table(PC = pcomps, sd = eof$d[n])
-    sdev[, r.squared := sd^2/v.g^2]
+    sdev[, r2 := sd^2/v.g^2]
 
     return(list(right = right, left = left, sdev = sdev))
 }

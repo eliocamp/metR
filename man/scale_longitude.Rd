@@ -12,18 +12,16 @@
 \title{Helpful scales for maps}
 \usage{
 scale_x_longitude(ticks = 60, name = "", expand = c(0, 0),
-  breaks = seq(0, 360 - ticks, by = ticks),
-  labels = ConvertLongitude(breaks, 360), ...)
+  breaks = seq(0, 360 - ticks, by = ticks), labels = LonLabel(breaks), ...)
 
 scale_y_longitude(ticks = 60, name = "", expand = c(0, 0),
-  breaks = seq(0, 360 - ticks, by = ticks),
-  labels = ConvertLongitude(breaks, 360), ...)
+  breaks = seq(0, 360 - ticks, by = ticks), labels = LonLabel(breaks), ...)
 
 scale_x_latitude(ticks = 30, name = "", expand = c(0, 0),
-  breaks = seq(-90, 90, by = ticks), ...)
+  breaks = seq(-90, 90, by = ticks), labels = LatLabel(breaks), ...)
 
 scale_y_latitude(ticks = 30, name = "", expand = c(0, 0),
-  breaks = seq(-90, 90, by = ticks), ...)
+  breaks = seq(-90, 90, by = ticks), labels = LatLabel(breaks), ...)
 
 scale_x_level(name = "", expand = c(0, 0), trans = "reverselog", ...)
 
@@ -103,7 +101,7 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{geom_label_contour}},
   \code{\link{geom_relief}}, \code{\link{geom_vector}},
   \code{\link{guide_colourstrip}},
-  \code{\link{reverselog_trans}},
+  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
   \code{\link{scale_divergent}}, \code{\link{stat_na}},
   \code{\link{stat_subset}}
 }

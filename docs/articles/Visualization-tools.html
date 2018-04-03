@@ -115,11 +115,9 @@ nceptemperature[, air.z <span class="op">:</span><span class="er">=</span><span 
 <p>On the other hand, <code>scale_*_latitude()</code> (and <code>scale_*_longitude()</code>) not only defaults <code>expand</code> to <code>c(0, 0)</code>, but also has a <code>ticks</code> argument that specifies the spacing of breaks between -90 and 90 in the case of <code>scale_*_latitude()</code>, and between 0 and 360 in the case of <code>scale_*_longitude()</code>.</p>
 <p>These scales default to printing no label, since usually the dimensions are understood by the shape of the plot.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_level</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">90</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_latitude</a></span>(<span class="dt">ticks =</span> <span class="dv">15</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_color_divergent</a></span>()
-<span class="co">#&gt; Warning in trans$transform(limits): NaNs produced</span>
-<span class="co">#&gt; Warning: Removed 365 rows containing non-finite values (stat_contour).</span></code></pre></div>
+<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_level</a></span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_latitude</a></span>(<span class="dt">ticks =</span> <span class="dv">15</span>, <span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">90</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_color_divergent</a></span>()</code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 <p>Note: <code>scale_*_longitude()</code> (currently) assumes the data goes from 0° to 360° but puts labels between -180° and 180°. This very idiosyncratic choice stems from the fact that model output is usually in the [0; 360) range but it’s easier to read maps in the (-180; 180] range. This may change in the future.</p>
 </div>

@@ -34,7 +34,7 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{geom_label_contour}},
   \code{\link{geom_relief}}, \code{\link{geom_vector}},
   \code{\link{guide_colourstrip}},
-  \code{\link{scale_divergent}},
+  \code{\link{map_labels}}, \code{\link{scale_divergent}},
   \code{\link{scale_longitude}}, \code{\link{stat_na}},
   \code{\link{stat_subset}}
 }

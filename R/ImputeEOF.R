@@ -51,7 +51,7 @@
 #' @export
 ImputeEOF <- function(data, formula, value.var, max.eof = NULL,
                       min.eof = 1, tol = 1e-2, max.iter = 10000,
-                      validation = NULL, verbose = FALSE) {
+                      validation = NULL, verbose = interactive()) {
     # Build matrix if necessary.
     if (is.matrix(data)) {
         X <- data

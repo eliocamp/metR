@@ -1,4 +1,5 @@
-
+#' @importFrom stats rnorm
+#' @importFrom akima interpp
 streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1) {
     #
     # dt <- 0.2

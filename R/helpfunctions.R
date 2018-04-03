@@ -285,5 +285,5 @@ if(getRversion() >= "2.15.1") {
            "piece", "psi", "psi.dx", "psi.dxx", "psi.dxy", "psi.dy", "psi.dyy",
            "r.squared", "sd", "setTxtProgressBar", "time", "txtProgressBar",
            "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2",
-           "group"))
+           "group", "sim", "point"))
 }

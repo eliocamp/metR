@@ -38,6 +38,7 @@ respectively.
 - `geom_contour2()` and `geom_contour_fill()` gain a `circular` argument to specify
 a circular dimension.
 - `RepeatCircular()` renamed to `RepeatCircular()`.
+- `LonLabel()` and `LatLabel()` aid labeling latitude and longitude. 
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

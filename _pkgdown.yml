@@ -25,6 +25,7 @@ reference:
       - MakeBreaks
       - RepeatCircular
       - DivideTimeseries
+      - map_labels
   - title: Physics
     desc: functions related to physical processes
     contents:

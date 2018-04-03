@@ -40,14 +40,13 @@ aao.svd <- EOF(aao, lat + lon ~ date, value.var = "gh.t.w", n = 1)
 # AAO field
 binwidth <- 0.01
 ggplot(aao.svd$left, aes(lon, lat, z = value)) +
-    stat_contour_fill(binwidth = binwidth, exclude = 0, complete = F) +    # filled contours!
+    stat_contour_fill(binwidth = binwidth) +    # filled contours!
     scale_x_longitude() +
     scale_y_latitude(limits = c(-90, -20)) +
     scale_fill_divergent(name = "AAO pattern", 
                          breaks = MakeBreaks(binwidth),
                          guide = guide_colorstrip()) +
     coord_polar()
-#> Warning: argumnet exclude is deprecated; use a function in breaks instead.
 ```
 
 ![](README-field-1.png)

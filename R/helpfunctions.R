@@ -283,7 +283,7 @@ if(getRversion() >= "2.15.1") {
          c("as", "dep.names", "ecdf", "equal", "fft", "hasArg", "id",
            "ind.names", "inside", "int.level", "land", "latrad", "lon", "lonrad",
            "piece", "psi", "psi.dx", "psi.dxx", "psi.dxy", "psi.dy", "psi.dyy",
-           "r.squared", "sd", "setTxtProgressBar", "time", "txtProgressBar",
+           "r2", "sd", "setTxtProgressBar", "time", "txtProgressBar",
            "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2",
            "group", "sim", "point"))
 }

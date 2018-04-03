@@ -68,7 +68,7 @@ theta <- seq(0, 360, length.out = 20)*pi/180
 theta <- theta[-1]
 x <- cos(theta)
 dx_analytical <- -sin(theta)
-dx_finitediff <- Derivate(x ~ theta, cyclical = TRUE)
+dx_finitediff <- Derivate(x ~ theta, cyclical = TRUE)[[1]]
 
 plot(theta, dx_analytical, type = "l")
 points(theta, dx_finitediff, col = "red")

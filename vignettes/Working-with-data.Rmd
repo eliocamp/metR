@@ -10,43 +10,42 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
+  
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-    collapse = TRUE,
-    comment = "#>",
-    cache = FALSE
-)
+  knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  cache = FALSE
+  )
 ```
+  
 
-`metR` is (currently) geared towards datasets defined on a regular grid. 
-
-
-# Data manipulation
-
+# Getting data
+  
 `metR` implements some functions to easily load data into R either from local files or from remote locations. 
-
+  
 ## ReadNetCDF 
-
+  
 The function `ReadNetCDF()` relies on the `ncdf4` package to read netCDF files with ease. It intelligently reads dimensions and data and returns a tidy `data.table` with optional keyed columns for faster processing afterwards. It can also return an `array` with named dimensions or a `vector`, for the case of adding new columns to an existing `data.table`.
-
+  
 ```{r}
-library(metR)
-library(data.table)
-
-# If out = "vars", returns information about the available variables and 
-# dimensions
-str(ReadNetCDF("nceptemperature.nc", out = "vars"))
+  library(metR)
+  library(data.table)
+  library(ggplot2)
+  
+  # If out = "vars", returns information about the available variables and 
+  # dimensions
+  str(ReadNetCDF("nceptemperature.nc", out = "vars"))
 ```
-
+  
 Now that we know the name and the dimensions of the data, we can read it. `ReadNetCDF()` can also read only a (continuous) subset of the data.
-
+  
 ```{r}
-air <- ReadNetCDF("nceptemperature.nc", subset = list(lat = 90:0, level = 925))
+  air <- ReadNetCDF("nceptemperature.nc", subset = list(lat = 90:0, level = 925))
 
-library(ggplot2)
+
 ggplot(air, aes(lon, lat)) +
-    geom_contour(aes(z = air, color = ..level..))
+geom_contour(aes(z = air, color = ..level..))
 ```
 
 Since the most consumig part of reading the file is melting a multidimensinal array into a tidy `data.table`, if we wanted to add another variable to the same `data.table` we could save time by only returning a vector. **It is of the upmost importance that both variables are on the same exact grid**.
@@ -103,33 +102,166 @@ ggplot(air[, .(air = mean(air) - 273.15), by = .(lat, land)],
 
 ```
 
+The resolution of `MaskLand()` is, in principle, only limited by the polygons used as mask. Currently it can only use maps from the `maps` package (see `?maps::map`).
 
 ## GetSMNData
 
-Finally, `GetSMNData()` retrieves data from Argentina's National Weather Service's public access. This is a rapidly evolving project, and data availability is not guaranteed. Currently available data are hourly station data, daily station maximum and minimum temperature and global and diffuse radiation measured at Buenos Aires and Ushuaia. 
+Finally, `GetSMNData()` retrieves data from Argentina's National Weather Service's public access. This is a rapidly evolving project, and data availability is not guaranteed. Currently available data are hourly station data, daily station maximum and minimum temperature, and global and diffuse radiation measured at Buenos Aires and Ushuaia. 
 
 ```{r}
-rad <- GetSMNData(as.Date("2018-03-15") , type = "radiation")
+rad <- GetSMNData(as.Date("2018-03-15"), type = "radiation")
 
 ggplot(rad, aes(date, global)) + 
     geom_line(aes(color = station))
 ```
 
 
-## Maths ?
-
-EOF + ImputeEOF + waves
+# Manipulate data
 
 
+## EOF
+
+Empirical Orthogonal Functions (also known as Principal Component Analysis) is a widely use technique for dimensional reduction of large datasets. In R there are multiple packages that implement this methodology (in fact, base R has *two* functions) but, IMHO, they have akward interfaces that don't interact well with `data.table` (or `dplyr`) syntax. `metR`'s `EOF()` essentially performs a Singular Value Decomposition of the data and returns the U, V and D matrices in a tidy format. 
+
+```{r}
+data(aao)
+# Weigthed geopotential anomaly
+aao[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)), by = .(lon, lat, month(date))]
+
+eof <- EOF(aao, date ~ lon + lat, value.var = "gh.t.w", n = 1:2)
+str(eof)
+```
+
+The returned list of `data.table`s hold the right and left singular vectors, and the singular values asociated with them. There's no need to think about S or T mode, since both are calculated and returned. Always the right (left) singular vectors are fields defined with the dimensions on the right (left) hand of the formula. In this case, the right `data.table` holds spatial fields and the left `data.table` holds a timeseries. 
+
+If we invert the formula call, the result is identical (up to small numerical errors) but with the right and left singular vectors switched. 
+
+```{r}
+eof2 <- EOF(aao, lon + lat ~ date, value.var = "gh.t.w", n = 1:2)
+str(eof2)
+```
+
+```{r}
+sum(eof2$right$value - eof$left$value)
+```
+
+For completion, let's plot each Principal Component. 
+
+```{r}
+ggplot(eof$right, aes(lon, lat)) +
+    geom_contour_fill(aes(z = value), circular = "x", binwidth = 0.01) +
+    scale_fill_divergent() +
+    coord_polar() +
+    facet_wrap(~PC) 
+
+DivideTimeseries(
+    ggplot(eof$left, aes(date, value)) +
+        geom_line(aes(color = PC)) +
+        scale_x_date(expand = c(0, 0)), 
+    eof$left$date, n = 2, xlab = "date", ylab = "value")
+```
+
+Where the 1st Principal Component is clearly the [Antarctic Oscillation](http://www.cpc.ncep.noaa.gov/products/precip/CWlink/daily_ao_index/aao/aao.shtml) and the 2nd Principal Component looks like the Pacific–South American Pattern. 
+
+`EOF()` not only works for regular grids. 
+
+```{r}
+data(claris)            # station data of max and min temperature
+data(claris.stations)   # info and location for each station
+# As any other singular value decomposition, EOF() does not 
+# allow missing values
+claris[, max.t := Anomaly(max), by = .(yday(date), id)]
+claris[is.na(max.t), max.t := 0]
+
+eof <- EOF(claris, date ~ id, value.var = "max.t", 1:3)
+
+eof$right <- eof$right[claris.stations, on = "id"]   # join with geographical info
+
+ggplot(eof$right, aes(lon, lat)) + 
+    geom_point(aes(color = value, size = abs(value))) +
+    facet_wrap(~PC) +
+    scale_color_divergent() +
+    coord_quickmap()
+```
+
+## ImputeEOF
+
+As shown above, `EOF()` needs a complete data matrix. Imputing missing values is a huge problem on it's own with a lot of different algorithms. `metR` offers `ImputeEOF()`, which is an implementation of the [DINEOF](http://modb.oce.ulg.ac.be/mediawiki/index.php/DINEOF) algorithm for imputation of missing data. It's interface is similar to that of `EOF()` but it returns a vector of imputed values. 
+
+```{r}
+# reload claris with it's missing values
+data(claris)
+claris[, max.t := Anomaly(max, na.rm = T), by = .(yday(date), id)]
+
+claris[, imputed := ImputeEOF(.SD, date ~ id, value.var = "max.t")]
+str(claris)
+```
+
+The imputed vector is returned along with the Root Mean Square Error estimated from crossvalidation and the number of EOFs used in the imputation as attributes. In this case, with `r attr(claris$imputed, "eof")` EOFs the imputed values have an estimated rmse of `r round(attr(claris$imputed, "rmse"), 2)`.
 
 # Physics
 
 ## Derivates
 
-Derivate + wrapers + GeostrophicWind + WaveFlux
+Derivation is the bread and butter of the researcher so `Derivate()` offers a convenient interface for derivation using finite differences of multidimensional data. It has support for cyclical boundary conditions and for the special case of spherical coordinates (think: Earth).  
+
+```{r}
+aao[date == date[1],    # think: gh as a function of lon and lat
+    c("gh.dlon", "gh.dlat") := Derivate(gh ~ lon + lat, 
+                                        cyclical = c(TRUE, FALSE), 
+                                        sphere = TRUE)]
+
+
+ggplot(aao[date == date[1]], aes(lon, lat)) +
+    geom_contour_fill(aes(z = gh)) +
+    geom_vector(aes(dx = gh.dlon, dy = gh.dlat), skip = 2, 
+                scale = 3e4) +
+    coord_quickmap()
+```
+
+There are several wrapers around `Derivate()` to perform other common related operations, `Laplacian()`, `Divergence()` and `Vorticity()`. 
+
+## GeostrophicWind
+
+Finally, the function `GeostrophicWind()` computes geostrophic wind from geopotential height. 
+
+```{r}
+aao[date == date[1], c("u", "v") := GeostrophicWind(gh, lon, lat)]
+
+ggplot(aao[date == date[1]], aes(lon, lat)) +
+    geom_contour(aes(z = gh)) +
+    geom_vector(aes(dx = u, dy = v), skip.y = 1, skip.x = 2, scale = 1) +
+    coord_quickmap()
+```
 
 
 ## Thermodynamics
 
-Adiabat, etc...
+`metR` offers several functions related to thermodynamical processes in the atmosphere (see `?thermodynamics`). These are `IdealGas()`, `Adiabat()`, `VirtualTemperature()`, `MixingRatio()`, `ClausiusClapeyron()` and `DewPoint()`. Each function represents a different phisical relationship between variables and computes one of them from the others. 
 
+For example, `IdealGas()` uses the ideal gas law to compute pressure, temperature or density. 
+
+```{r}
+# Density of air at 20°C and 1030hPa.
+(rho <- IdealGas(1013*100, 20 + 273.15))
+
+# Of course, the temperature of air at that density 
+# and same pressure is 20°C.
+IdealGas(1013*100, rho = rho) - 273.15
+```
+
+Different variables can be derived by combining these functions. For example, it's easy to calculate relative humidity from data on temperature and dewpoint, then saturation mixing ratio from pressure and temperature and finally the actual mixing ratio.
+
+```{r}
+# Relative humidity from T and Td
+t <- 25 + 273.15
+td <- 20 + 273.15
+p <- 1000000
+(rh <- ClausiusClapeyron(td)/ClausiusClapeyron(t))
+
+# Mixing ratio
+ws <- MixingRatio(p, ClausiusClapeyron(t))
+(w <- ws*rh)
+```
+
+Of course, `w` can be also be computed by `DewPoint(p, td = td)` which gives essentially the same result: `r DewPoint(p, td = td)`. 

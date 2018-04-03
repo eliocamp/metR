@@ -202,6 +202,8 @@ The `start` and  `direction` arguments adjust the behaviour of the arrows. This 
 
 In contrast to `geom_vector()`, `geom_arrow()` **does** preserve direction under coordinate transforms. This means that, for example, an arrow at a 45° angle represents wind from the southwest regardless of the `x` and `y` scales (but note that this also means that it might not be parallel to the streamlines). For this reason this geom does work with discrete scales.
 
+Forthcomming is the implementation of streamlines :).
+
 # Other goodies
 
 ## guide_colorstrip

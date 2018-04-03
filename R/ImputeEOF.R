@@ -67,8 +67,9 @@ ImputeEOF <- function(data, formula, value.var, max.eof = NULL,
             return(data)
         }
         g <- .tidy2matrix(data, formula, value.var)
-        data$id <- seq.int(1, nrow(data), by = 1)
-        id <- c(.tidy2matrix(data, formula, "id")$matrix)
+        id.name <- digest::digest(data[, 1])
+        data[[id.name]] <- seq.int(1, nrow(data), by = 1)
+        id <- c(.tidy2matrix(data, formula, id.name)$matrix)
         X <- g$matrix
     } else {
         stop("data argument must be matrix or data frame")

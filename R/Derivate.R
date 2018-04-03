@@ -76,7 +76,9 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
     data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
 
     # Order data.
-    data[, id := 1:.N]    # for order.
+    id.name <- digest::digest(data[, 1])
+    data[[id.name]] <- seq.int(1, nrow(data), by = 1)
+    # data[, id := 1:.N]    # for order.
     setkeyv(data, ind.names)
 
     if (length(ind.names) > 1) {
@@ -102,7 +104,7 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
                   cyclical = this.bc, fill = fill)}),
             by = c(ind.names[-v])]
     }
-    data <- data[order(id)]
+    data <- data[order(data[[id.name]])]
 
     # Correction for spherical coordinates.
     if (sphere == TRUE) {

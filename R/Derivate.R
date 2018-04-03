@@ -77,7 +77,7 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
 
     # Order data.
     id.name <- digest::digest(data[, 1])
-    data[[id.name]] <- seq.int(1, nrow(data), by = 1)
+    data[, (id.name) := 1:.N]
     # data[, id := 1:.N]    # for order.
     setkeyv(data, ind.names)
 
@@ -115,11 +115,8 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
 
     data <- data[, unlist(dernames), with = FALSE]
 
-    if (length(unlist(dernames)) == 1) {
-        return(data[[1]])
-    } else {
-        return(as.list(data))
-    }
+    return(as.list(data))
+
 }
 
 .derv <- function(x, y, order = 1, cyclical = FALSE, fill = FALSE) {

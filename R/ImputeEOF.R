@@ -53,6 +53,7 @@ ImputeEOF <- function(data, formula, value.var, max.eof = NULL,
                       min.eof = 1, tol = 1e-2, max.iter = 10000,
                       validation = NULL, verbose = interactive()) {
     # Build matrix if necessary.
+    data <- copy(data)
     if (is.matrix(data)) {
         X <- data
         nas <- sum(is.na(data))
@@ -68,7 +69,7 @@ ImputeEOF <- function(data, formula, value.var, max.eof = NULL,
         }
         g <- .tidy2matrix(data, formula, value.var)
         id.name <- digest::digest(data[, 1])
-        data[[id.name]] <- seq.int(1, nrow(data), by = 1)
+        data[, (id.name) := 1:.N]
         id <- c(.tidy2matrix(data, formula, id.name)$matrix)
         X <- g$matrix
     } else {

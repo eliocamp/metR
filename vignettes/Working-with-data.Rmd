@@ -12,46 +12,47 @@ vignette: >
 ---
   
 ```{r setup, include = FALSE}
-  knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  cache = FALSE
-  )
+knitr::opts_chunk$set(
+collapse = TRUE,
+comment = "#>",
+cache = FALSE
+)
 ```
-  
+
 
 # Getting data
-  
+
 `metR` implements some functions to easily load data into R either from local files or from remote locations. 
-  
+
 ## ReadNetCDF 
-  
+
 The function `ReadNetCDF()` relies on the `ncdf4` package to read netCDF files with ease. It intelligently reads dimensions and data and returns a tidy `data.table` with optional keyed columns for faster processing afterwards. It can also return an `array` with named dimensions or a `vector`, for the case of adding new columns to an existing `data.table`.
-  
+
 ```{r}
-  library(metR)
-  library(data.table)
-  library(ggplot2)
-  
-  # If out = "vars", returns information about the available variables and 
-  # dimensions
-  str(ReadNetCDF("nceptemperature.nc", out = "vars"))
+library(metR)
+library(data.table)
+library(ggplot2)
+
+# If out = "vars", returns information about the available variables and 
+# dimensions
+file <- system.file("extdata", "nceptemperature.nc", package = "metR")
+str(ReadNetCDF(file, out = "vars"))
 ```
-  
+
 Now that we know the name and the dimensions of the data, we can read it. `ReadNetCDF()` can also read only a (continuous) subset of the data.
-  
+
 ```{r}
-  air <- ReadNetCDF("nceptemperature.nc", subset = list(lat = 90:0, level = 925))
+air <- ReadNetCDF(file, subset = list(lat = 90:0, level = 925))
 
 
 ggplot(air, aes(lon, lat)) +
-geom_contour(aes(z = air, color = ..level..))
+    geom_contour(aes(z = air, color = ..level..))
 ```
 
 Since the most consumig part of reading the file is melting a multidimensinal array into a tidy `data.table`, if we wanted to add another variable to the same `data.table` we could save time by only returning a vector. **It is of the upmost importance that both variables are on the same exact grid**.
 
 ```{r}
-air[, air2 := ReadNetCDF("nceptemperature.nc", out = "vector", 
+air[, air2 := ReadNetCDF(file, out = "vector",
                          subset = list(lat = 90:0, level = 300))]
 
 ggplot(air, aes(lon, lat)) +
@@ -99,7 +100,6 @@ With this, we can compare mean temperature over land and over sea by latitude.
 ggplot(air[, .(air = mean(air) - 273.15), by = .(lat, land)],
        aes(lat, air)) +
     geom_line(aes(color = land))
-
 ```
 
 The resolution of `MaskLand()` is, in principle, only limited by the polygons used as mask. Currently it can only use maps from the `maps` package (see `?maps::map`).

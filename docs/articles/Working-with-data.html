@@ -85,7 +85,7 @@
       <h1>Working with data</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2018-04-03</h4>
+            <h4 class="date">2018-04-04</h4>
       
       <small>Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Working-with-data.Rmd"><code>vignettes/Working-with-data.Rmd</code></a></small>
 
@@ -102,13 +102,14 @@
 <h2 class="hasAnchor">
 <a href="#readnetcdf" class="anchor"></a>ReadNetCDF</h2>
 <p>The function <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> relies on the <code>ncdf4</code> package to read netCDF files with ease. It intelligently reads dimensions and data and returns a tidy <code>data.table</code> with optional keyed columns for faster processing afterwards. It can also return an <code>array</code> with named dimensions or a <code>vector</code>, for the case of adding new columns to an existing <code>data.table</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">library</span>(metR)
-  <span class="kw">library</span>(data.table)
-  <span class="kw">library</span>(ggplot2)
-  
-  <span class="co"># If out = "vars", returns information about the available variables and </span>
-  <span class="co"># dimensions</span>
-  <span class="kw">str</span>(<span class="kw"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span>(<span class="st">"nceptemperature.nc"</span>, <span class="dt">out =</span> <span class="st">"vars"</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(metR)
+<span class="kw">library</span>(data.table)
+<span class="kw">library</span>(ggplot2)
+
+<span class="co"># If out = "vars", returns information about the available variables and </span>
+<span class="co"># dimensions</span>
+file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"nceptemperature.nc"</span>, <span class="dt">package =</span> <span class="st">"metR"</span>)
+<span class="kw">str</span>(<span class="kw"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span>(file, <span class="dt">out =</span> <span class="st">"vars"</span>))
 <span class="co">#&gt; List of 2</span>
 <span class="co">#&gt;  $ vars      : chr "air"</span>
 <span class="co">#&gt;  $ dimensions:List of 4</span>
@@ -117,14 +118,14 @@
 <span class="co">#&gt;   ..$ lat  : num [1:73(1d)] 90 87.5 85 82.5 80 77.5 75 72.5 70 67.5 ...</span>
 <span class="co">#&gt;   ..$ lon  : num [1:144(1d)] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span></code></pre></div>
 <p>Now that we know the name and the dimensions of the data, we can read it. <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> can also read only a (continuous) subset of the data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  air &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span>(<span class="st">"nceptemperature.nc"</span>, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">lat =</span> <span class="dv">90</span><span class="op">:</span><span class="dv">0</span>, <span class="dt">level =</span> <span class="dv">925</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">air &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span>(file, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">lat =</span> <span class="dv">90</span><span class="op">:</span><span class="dv">0</span>, <span class="dt">level =</span> <span class="dv">925</span>))
 
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(air, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> air, <span class="dt">color =</span> ..level..))</code></pre></div>
+<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> air, <span class="dt">color =</span> ..level..))</code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 <p>Since the most consumig part of reading the file is melting a multidimensinal array into a tidy <code>data.table</code>, if we wanted to add another variable to the same <code>data.table</code> we could save time by only returning a vector. <strong>It is of the upmost importance that both variables are on the same exact grid</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">air[, air2 <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span>(<span class="st">"nceptemperature.nc"</span>, <span class="dt">out =</span> <span class="st">"vector"</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">air[, air2 <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span>(file, <span class="dt">out =</span> <span class="st">"vector"</span>,
                          <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">lat =</span> <span class="dv">90</span><span class="op">:</span><span class="dv">0</span>, <span class="dt">level =</span> <span class="dv">300</span>))]
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(air, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>

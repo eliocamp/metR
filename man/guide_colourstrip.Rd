@@ -4,6 +4,7 @@
 \alias{guide_colourstrip}
 \alias{guide_train.colorstrip}
 \alias{guide_colorstrip}
+\alias{guide_gengrob.colorstrip}
 \title{Discretized continuous color guide}
 \usage{
 guide_colourstrip(title = waiver(), title.position = NULL,

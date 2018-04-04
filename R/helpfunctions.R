@@ -278,6 +278,49 @@ is.waive <- function (x) {
     inherits(x, "waiver")
 }
 
+element_render <- function(theme, element, ..., name = NULL) {
+
+    # Get the element from the theme, calculating inheritance
+    el <- ggplot2::calc_element(element, theme)
+    if (is.null(el)) {
+        message("Theme element ", element, " missing")
+        return(ggplot2::zeroGrob())
+    }
+
+    grob <- element_grob(el, ...)
+    ggname(paste(element, name, sep = "."), grob)
+}
+
+ggname <- function(prefix, grob) {
+    grob$name <- grid::grobName(grob, prefix)
+    grob
+}
+
+
+width_cm <- function(x) {
+    if (is.grob(x)) {
+        grid::convertWidth(grid::grobWidth(x), "cm", TRUE)
+    } else if (is.unit(x)) {
+        grid::convertWidth(x, "cm", TRUE)
+    } else if (is.list(x)) {
+        vapply(x, width_cm, numeric(1))
+    } else {
+        stop("Unknown input")
+    }
+}
+height_cm <- function(x) {
+    if (is.grob(x)) {
+        grid::convertHeight(grid::grobHeight(x), "cm", TRUE)
+    } else if (is.unit(x)) {
+        grid::convertHeight(x, "cm", TRUE)
+    } else if (is.list(x)) {
+        vapply(x, height_cm, numeric(1))
+    } else {
+        stop("Unknown input")
+    }
+}
+
+
 if(getRversion() >= "2.15.1") {
     utils::globalVariables(
          c("as", "dep.names", "ecdf", "equal", "fft", "hasArg", "id",

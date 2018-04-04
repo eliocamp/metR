@@ -98,11 +98,11 @@ StatVector <- ggplot2::ggproto("StatVector", ggplot2::Stat,
                              min.mag = min.mag) {
         min.mag <- data$min.mag %||% min.mag
 
-        scale.x <- data$scale.x %||% data$scale %||% scale.x
-        scale.y <- data$scale.y %||% data$scale %||% scale.y
+        scale.x <- abs(data$scale.x %||% data$scale %||% scale.x)
+        scale.y <- abs(data$scale.y %||% data$scale %||% scale.y)
 
-        data$xend = with(data, x + dx*abs(scale.x))
-        data$yend = with(data, y + dy*abs(scale.y))
+        data$xend = with(data, x + dx*scale.x)
+        data$yend = with(data, y + dy*scale.y)
 
         data <- subset(data, x %in% JumpBy(unique(x), skip.x + 1) &
                            y %in% JumpBy(unique(y), skip.y + 1) &

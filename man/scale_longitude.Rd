@@ -12,10 +12,12 @@
 \title{Helpful scales for maps}
 \usage{
 scale_x_longitude(ticks = 60, name = "", expand = c(0, 0),
-  breaks = seq(0, 360 - ticks, by = ticks), labels = LonLabel(breaks), ...)
+  breaks = seq(-180, 360 - ticks, by = ticks), labels = LonLabel(breaks),
+  ...)
 
 scale_y_longitude(ticks = 60, name = "", expand = c(0, 0),
-  breaks = seq(0, 360 - ticks, by = ticks), labels = LonLabel(breaks), ...)
+  breaks = seq(-180, 360 - ticks, by = ticks), labels = LonLabel(breaks),
+  ...)
 
 scale_x_latitude(ticks = 30, name = "", expand = c(0, 0),
   breaks = seq(-90, 90, by = ticks), labels = LatLabel(breaks), ...)
@@ -80,10 +82,6 @@ These functions are simple wrappers around
 \code{\link[ggplot2]{scale_x_continuous}} and
 \code{\link[ggplot2]{scale_y_continuous}} with
 helpful defaults for plotting longitude, latitude and pressure levels.
-}
-\details{
-scale_*_longitude assumes that your data is between 0 and 360 but labels it
-from -180 to 180.
 }
 \examples{
 library(ggplot2)

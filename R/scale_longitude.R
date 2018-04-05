@@ -8,9 +8,6 @@
 #' @inheritParams ggplot2::scale_x_continuous
 #' @param ticks spacing between breaks
 #'
-#' @details
-#' scale_*_longitude assumes that your data is between 0 and 360 but labels it
-#' from -180 to 180.
 #'
 #' @name scale_longitude
 #' @aliases scale_latitude
@@ -25,7 +22,7 @@
 #' @export
 #' @import ggplot2
 scale_x_longitude <- function(ticks = 60, name = "", expand = c(0, 0),
-                              breaks = seq(0, 360 - ticks, by = ticks),
+                              breaks = seq(-180, 360 - ticks, by = ticks),
                               labels = LonLabel(breaks),
                               ...) {
     ggplot2::scale_x_continuous(name = name, expand = expand,
@@ -38,7 +35,7 @@ scale_x_longitude <- function(ticks = 60, name = "", expand = c(0, 0),
 #' @export
 #' @import ggplot2
 scale_y_longitude <- function(ticks = 60, name = "", expand = c(0, 0),
-                              breaks = seq(0, 360 - ticks, by = ticks),
+                              breaks = seq(-180, 360 - ticks, by = ticks),
                               labels = LonLabel(breaks),
                               ...) {
     ggplot2::scale_y_continuous(name = name, expand = expand,
@@ -95,7 +92,7 @@ scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...
 #' Provide easy functions for adding suffixes to longitude and latitude for labeling
 #' maps.
 #'
-#' @param lon longitude in degrees between 0 and 360
+#' @param lon longitude in degrees
 #' @param lat latitude in degrees
 #' @param east,west,north,south text to append for each cuadrant
 #'
@@ -114,7 +111,7 @@ scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...
 #' @name map_labels
 #' @family ggplot2 helpers
 LonLabel <- function(lon, east = "\u00B0E", west = "\u00B0O") {
-    lon <- ConvertLongitude(lon)
+    lon <- ifelse(lon > 180, ConvertLongitude(lon), lon)
     newlon <- ifelse(lon < 0, paste0(abs(lon), west), paste0(lon, east))
     newlon[lon == 0] <- paste0(lon[lon == 0], "\u00B0")
     newlon[lon == 180] <- paste0(lon[lon == 180], "\u00B0")

@@ -11,7 +11,7 @@ LonLabel(lon, east = "°E", west = "°O")
 LatLabel(lat, north = "°N", south = "°S")
 }
 \arguments{
-\item{lon}{longitude in degrees between 0 and 360}
+\item{lon}{longitude in degrees}
 
 \item{east, west, north, south}{text to append for each cuadrant}
 

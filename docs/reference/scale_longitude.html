@@ -126,10 +126,12 @@ helpful defaults for plotting longitude, latitude and pressure levels.</p>
     
 
     <pre class="usage"><span class='fu'>scale_x_longitude</span>(<span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>),
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>0</span>, <span class='fl'>360</span> - <span class='no'>ticks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
+  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>180</span>, <span class='fl'>360</span> - <span class='no'>ticks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>),
+  <span class='no'>...</span>)
 
 <span class='fu'>scale_y_longitude</span>(<span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>),
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>0</span>, <span class='fl'>360</span> - <span class='no'>ticks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
+  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>180</span>, <span class='fl'>360</span> - <span class='no'>ticks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>),
+  <span class='no'>...</span>)
 
 <span class='fu'>scale_x_latitude</span>(<span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>),
   <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>90</span>, <span class='fl'>90</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LatLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
@@ -204,11 +206,6 @@ transformation with <code><a href='http://www.rdocumentation.org/packages/scales
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>scale_*_longitude assumes that your data is between 0 and 360 but labels it
-from -180 to 180.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
@@ -236,8 +233,6 @@ from -180 to 180.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

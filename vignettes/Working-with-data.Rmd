@@ -128,7 +128,7 @@ data(geopotential)
 # Weigthed geopotential anomaly
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)), by = .(lon, lat, month(date))]
 
-eof <- EOF(geopotential, date ~ lon + lat, value.var = "gh.t.w", n = 1:2)
+eof <- EOF(gh.t.w | date ~ lon + lat, data = geopotential, n = 1:2)
 str(eof)
 ```
 
@@ -137,7 +137,7 @@ The returned list of `data.table`s hold the right and left singular vectors, and
 If we invert the formula call, the result is identical (up to small numerical errors) but with the right and left singular vectors switched. 
 
 ```{r}
-eof2 <- EOF(geopotential, lon + lat ~ date, value.var = "gh.t.w", n = 1:2)
+eof2 <- EOF(gh.t.w | lon + lat ~ date, data = geopotential, n = 1:2)
 str(eof2)
 ```
 

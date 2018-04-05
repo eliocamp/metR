@@ -4,9 +4,8 @@
 #' Analysis or Empirical Orthogonal Functions).
 #'
 #' @param data a data.frame
-#' @param formula formula passed to \code{\link[data.table]{dcast}} to build
-#' the matrix that will be used in the SVD decomposition (see details)
-#' @param value.var name of the column whose values will be used
+#' @param formula a formula passed to \code{\link[data.table]{dcast}} to build
+#' the matrix that will be used in the SVD decomposition (see Details)
 #' @param n which singular values to return (if \code{NULL}, returns all)
 #'
 #' @return
@@ -15,9 +14,12 @@
 #'
 #' @details
 #' Singular values can be computed over matrices so \code{formula} denotes how
-#' to build a matrix from the data. It is a formula of the form LHS ~ RHS in
-#' which LHS represent the variables used to make the rows and RHS, the columns
-#' of the matrix. The result of LHS ~ RHS and RHS ~ LHS (ie, terms reversed)
+#' to build a matrix from the data. It is a formula of the form VAR | LHS ~ RHS
+#' in which VAR is the variable whose values will populate the matrix, and LHS
+#' represent the variables used to make the rows and RHS, the columns  of the matrix
+#' (the form LHS ~ RHS | VAR is also valid).
+#'
+#' The result of LHS ~ RHS and RHS ~ LHS (ie, terms reversed)
 #' is the same, with the exception that the order of the singular vector is
 #' reversed (right is left and left is right).
 #'
@@ -41,7 +43,8 @@
 #' geopotential <- copy(geopotential)
 #' geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
 #'       by = .(lon, lat, month(date))]
-#' aao.svd <- EOF(geopotential, lat + lon ~ date, value.var = "gh.t.w", n = 1)
+#'
+#' aao.svd <- EOF(gh.t.w | lat + lon ~ date, data = geopotential, n = 1)
 #'
 #' # AAO field
 #' library(ggplot2)
@@ -56,11 +59,28 @@
 #' # % of explained variance
 #' aao.svd$sdev
 #'
+#' # 1st eof for each month.
+#'
+#' aao2 <- geopotential[, EOF(gh.t.w | lat + lon ~ date, n = 1)$left, by = month(date)]
+#'
+#' ggplot(aao2, aes(lon, lat)) +
+#'     geom_contour(aes(z = value, color = ..level..)) +
+#'     facet_wrap(~ month)
+#'
 #' @family meteorology functions
 #' @export
 #' @import data.table
-EOF <- function(data, formula, value.var = guess(data), n = 1) {
-    g <- .tidy2matrix(setDT(data), formula, value.var)
+EOF <- function(formula, data = NULL, n = 1) {
+
+    f <- as.character(formula)
+    f <- stringr::str_split(f,"\\|", n = 2)[[1]]
+    dcast.formula <- as.formula(stringr::str_squish(f[stringr::str_detect(f, "~")]))
+    value.var <- stringr::str_squish(f[!stringr::str_detect(f, "~")])
+
+    formula <- Formula::as.Formula(formula)
+    data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
+
+    g <- .tidy2matrix(data, dcast.formula, value.var)
 
     if (is.null(n)) n <- min(ncol(g$matrix), nrow(g$matrix))
 

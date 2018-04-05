@@ -39,6 +39,7 @@ respectively.
 a circular dimension.
 - `RepeatCircular()` renamed to `RepeatCircular()`.
 - `LonLabel()` and `LatLabel()` aid labeling latitude and longitude. 
+- Changed interface of `EOF()` and `ImputeEOF()`.
 
 # meteoR 0.0.9100
 - Full (not perfect) documentation.

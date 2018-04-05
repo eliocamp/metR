@@ -173,7 +173,7 @@ data(claris.stations)   # info and location for each station
 claris[, max.t := Anomaly(max), by = .(yday(date), id)]
 claris[is.na(max.t), max.t := 0]
 
-eof <- EOF(claris, date ~ id, value.var = "max.t", 1:3)
+eof <- EOF(max.t | date ~ id, data = claris, 1:3)
 
 eof$right <- eof$right[claris.stations, on = "id"]   # join with geographical info
 
@@ -193,7 +193,7 @@ As shown above, `EOF()` needs a complete data matrix. Imputing missing values is
 data(claris)
 claris[, max.t := Anomaly(max, na.rm = T), by = .(yday(date), id)]
 
-claris[, imputed := ImputeEOF(.SD, date ~ id, value.var = "max.t")]
+claris[, imputed := ImputeEOF(max.t | date ~ id)]
 str(claris)
 ```
 

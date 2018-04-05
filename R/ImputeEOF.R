@@ -15,9 +15,15 @@
 #' @return
 #' A vector of inputed values with attributes `eof`, which is the number of
 #' singular values used in the final inputation; and `rmse`, which is the Root
-#' Mean Square Error calculated from crossvalidation.
+#' Mean Square Error estimated from crossvalidation.
 #'
 #' @details
+#' Singular values can be computed over matrices so `formula` denotes how
+#' to build a matrix from the data. It is a formula of the form VAR | LHS ~ RHS
+#' in which VAR is the variable whose values will populate the matrix, and LHS
+#' represent the variables used to make the rows and RHS, the columns  of the matrix
+#' (the form LHS ~ RHS | VAR is also valid).
+#'
 #' If `data` is a matrix, the `formula` argument is ignored and the function
 #' returns a matrix.
 #'
@@ -28,50 +34,67 @@
 #' library(data.table)
 #' data(geopotential)
 #' geopotential <- copy(geopotential)
-#' geopotential[, gh.t := Anomaly(gh), by = .(lat, lon)]
-#' geopotential <- geopotential[date == date[1]]
+#' geopotential[, gh.t := Anomaly(gh), by = .(lat, lon, month(date))]
+#' # geopotential <- geopotential[date == date[1]]
 #'
 #' # Add gaps to field
 #' geopotential[, gh.gap := gh.t]
 #' set.seed(42)
 #' geopotential[sample(1:.N, .N*0.3), gh.gap := NA]
 #'
-#' geopotential[, gh.impute := ImputeEOF(.SD, lon ~ lat,  value.var = "gh.gap",
-#'                                     verbose = TRUE, max.iter = 2000)]
+#' max.eof <- 10
+#' geopotential[, gh.impute := ImputeEOF(gh.gap | lat + lon ~ date, max.eof = max.eof,
+#'                                       verbose = TRUE, max.iter = 2000)]
 #'
 #' library(ggplot2)
-#' ggplot(geopotential, aes(lon, lat)) +
+#' ggplot(geopotential[date == date[1]], aes(lon, lat)) +
 #'     geom_contour(aes(z = gh.t), color = "black") +
 #'     geom_contour(aes(z = gh.impute))
 #'
-#' ggplot(geopotential[is.na(gh.gap)], aes(gh.t, gh.impute)) +
+#' # Scatterplot with a sample.
+#' na.sample <- geopotential[is.na(gh.gap)][sample(1:.N, .N*0.1)]
+#' ggplot(na.sample, aes(gh.t, gh.impute)) +
 #'     geom_point()
+#'
+#' # Estimated RMSE
+#' attr(geopotential$gh.impute, "rmse")
+#' # Real RMSE
+#' geopotential[is.na(gh.gap), sqrt(mean((gh.t - gh.impute)^2))]
+#'
 #'
 #' @import data.table
 #' @export
-ImputeEOF <- function(data, formula, value.var, max.eof = NULL,
+ImputeEOF <- function(formula, data = NULL, value.var, max.eof = NULL,
                       min.eof = 1, tol = 1e-2, max.iter = 10000,
                       validation = NULL, verbose = interactive()) {
     # Build matrix if necessary.
-    data <- copy(data)
-    if (is.matrix(data)) {
+
+    if (is.null(data) | is.data.frame(data)) {
+        f <- as.character(formula)
+        f <- stringr::str_split(f,"\\|", n = 2)[[1]]
+        dcast.formula <- as.formula(stringr::str_squish(f[stringr::str_detect(f, "~")]))
+        value.var <- stringr::str_squish(f[!stringr::str_detect(f, "~")])
+
+        formula <- Formula::as.Formula(formula)
+        data <- as.data.table(eval(quote(model.frame(formula, data  = data, na.action = NULL))))
+
+        nas <- sum(is.na(data[[value.var]]))
+        if (nas == 0) {
+            warning("data has no missing values")
+            return(data[[value.var]])
+        }
+        g <- .tidy2matrix(data, dcast.formula, value.var)
+        id.name <- digest::digest(data[, 1])
+        data[, (id.name) := 1:.N]
+        id <- c(.tidy2matrix(data, dcast.formula, id.name)$matrix)
+        X <- g$matrix
+    } else if (is.matrix(data)) {
         X <- data
         nas <- sum(is.na(data))
         if (nas == 0) {
             warning("data has no missing values")
             return(data)
         }
-    } else if (is.data.frame(data)) {
-        nas <- sum(is.na(data[[value.var]]))
-        if (nas == 0) {
-            warning("data has no missing values")
-            return(data)
-        }
-        g <- .tidy2matrix(data, formula, value.var)
-        id.name <- digest::digest(data[, 1])
-        data[, (id.name) := 1:.N]
-        id <- c(.tidy2matrix(data, formula, id.name)$matrix)
-        X <- g$matrix
     } else {
         stop("data argument must be matrix or data frame")
     }

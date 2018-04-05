@@ -4,17 +4,14 @@
 \alias{ImputeEOF}
 \title{Impute missing values}
 \usage{
-ImputeEOF(data, formula, value.var, max.eof = NULL, min.eof = 1,
-  tol = 0.01, max.iter = 10000, validation = NULL,
-  verbose = interactive())
+ImputeEOF(formula, data = NULL, max.eof = NULL, min.eof = 1, tol = 0.01,
+  max.iter = 10000, validation = NULL, verbose = interactive())
 }
 \arguments{
+\item{formula}{a formula passed to \code{\link[data.table]{dcast}} to build
+the matrix that will be used in the SVD decomposition (see Details)}
+
 \item{data}{a data.frame}
-
-\item{formula}{formula passed to \code{\link[data.table]{dcast}} to build
-the matrix that will be used in the SVD decomposition (see details)}
-
-\item{value.var}{name of the column whose values will be used}
 
 \item{max.eof, min.eof}{maximum and minimum number of singular values used for
 imputation}
@@ -31,13 +28,19 @@ maximum of 30 or 10\% of the non NA points)}
 \value{
 A vector of inputed values with attributes \code{eof}, which is the number of
 singular values used in the final inputation; and \code{rmse}, which is the Root
-Mean Square Error calculated from crossvalidation.
+Mean Square Error estimated from crossvalidation.
 }
 \description{
 Imputes missing values via Data Interpolating Empirical Orthogonal Functions
 (DINEOF).
 }
 \details{
+Singular values can be computed over matrices so \code{formula} denotes how
+to build a matrix from the data. It is a formula of the form VAR | LHS ~ RHS
+in which VAR is the variable whose values will populate the matrix, and LHS
+represent the variables used to make the rows and RHS, the columns  of the matrix
+(the form LHS ~ RHS | VAR is also valid).
+
 If \code{data} is a matrix, the \code{formula} argument is ignored and the function
 returns a matrix.
 }
@@ -45,24 +48,33 @@ returns a matrix.
 library(data.table)
 data(geopotential)
 geopotential <- copy(geopotential)
-geopotential[, gh.t := Anomaly(gh), by = .(lat, lon)]
-geopotential <- geopotential[date == date[1]]
+geopotential[, gh.t := Anomaly(gh), by = .(lat, lon, month(date))]
+# geopotential <- geopotential[date == date[1]]
 
 # Add gaps to field
 geopotential[, gh.gap := gh.t]
 set.seed(42)
 geopotential[sample(1:.N, .N*0.3), gh.gap := NA]
 
-geopotential[, gh.impute := ImputeEOF(.SD, lon ~ lat,  value.var = "gh.gap",
-                                    verbose = TRUE, max.iter = 2000)]
+max.eof <- 10
+geopotential[, gh.impute := ImputeEOF(gh.gap | lat + lon ~ date, max.eof = max.eof,
+                                      verbose = TRUE, max.iter = 2000)]
 
 library(ggplot2)
-ggplot(geopotential, aes(lon, lat)) +
+ggplot(geopotential[date == date[1]], aes(lon, lat)) +
     geom_contour(aes(z = gh.t), color = "black") +
     geom_contour(aes(z = gh.impute))
 
-ggplot(geopotential[is.na(gh.gap)], aes(gh.t, gh.impute)) +
+# Scatterplot with a sample.
+na.sample <- geopotential[is.na(gh.gap)][sample(1:.N, .N*0.1)]
+ggplot(na.sample, aes(gh.t, gh.impute)) +
     geom_point()
+
+# Estimated RMSE
+attr(geopotential$gh.impute, "rmse")
+# Real RMSE
+geopotential[is.na(gh.gap), sqrt(mean((gh.t - gh.impute)^2))]
+
 
 }
 \references{

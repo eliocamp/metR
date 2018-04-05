@@ -64,7 +64,8 @@
 #'
 #' @import data.table
 #' @export
-ImputeEOF <- function(formula, data = NULL, value.var, max.eof = NULL,
+#' @importFrom stats as.formula
+ImputeEOF <- function(formula, data = NULL, max.eof = NULL,
                       min.eof = 1, tol = 1e-2, max.iter = 10000,
                       validation = NULL, verbose = interactive()) {
     # Build matrix if necessary.
@@ -156,7 +157,7 @@ ImputeEOF <- function(formula, data = NULL, value.var, max.eof = NULL,
 }
 
 
-.ImputeEOF1 <- function(X, X.na, n.eof, tol = 1e-4, max.iter = 10000, verbose = TRUE) {
+.ImputeEOF1 <- function(X, X.na, n.eof, tol = 1e-2, max.iter = 10000, verbose = TRUE) {
     X.rec <- X
     v <- NULL
     rmse <- Inf

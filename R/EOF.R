@@ -70,6 +70,7 @@
 #' @family meteorology functions
 #' @export
 #' @import data.table
+#' @importFrom stats as.formula
 EOF <- function(formula, data = NULL, n = 1) {
 
     f <- as.character(formula)

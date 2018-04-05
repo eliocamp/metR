@@ -190,7 +190,7 @@ file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span cla
 <span class="co"># Weigthed geopotential anomaly</span>
 geopotential[, gh.t.w <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(gh)<span class="op">*</span><span class="kw">sqrt</span>(<span class="kw">cos</span>(lat<span class="op">*</span>pi<span class="op">/</span><span class="dv">180</span>)), by =<span class="st"> </span>.(lon, lat, <span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">month</a></span>(date))]
 
-eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(geopotential, date <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, <span class="dt">value.var =</span> <span class="st">"gh.t.w"</span>, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
+eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">|</span><span class="st"> </span>date <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
 <span class="kw">str</span>(eof)
 <span class="co">#&gt; List of 3</span>
 <span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:</span>
@@ -211,7 +211,7 @@ eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.htm
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></code></pre></div>
 <p>The returned list of <code>data.table</code>s hold the right and left singular vectors, and the singular values asociated with them. There’s no need to think about S or T mode, since both are calculated and returned. Always the right (left) singular vectors are fields defined with the dimensions on the right (left) hand of the formula. In this case, the right <code>data.table</code> holds spatial fields and the left <code>data.table</code> holds a timeseries.</p>
 <p>If we invert the formula call, the result is identical (up to small numerical errors) but with the right and left singular vectors switched.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eof2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(geopotential, lon <span class="op">+</span><span class="st"> </span>lat <span class="op">~</span><span class="st"> </span>date, <span class="dt">value.var =</span> <span class="st">"gh.t.w"</span>, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eof2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">|</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat <span class="op">~</span><span class="st"> </span>date, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
 <span class="kw">str</span>(eof2)
 <span class="co">#&gt; List of 3</span>
 <span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  264 obs. of  3 variables:</span>
@@ -255,7 +255,7 @@ eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.htm
 claris[, max.t <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(max), by =<span class="st"> </span>.(<span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">yday</a></span>(date), id)]
 claris[<span class="kw">is.na</span>(max.t), max.t <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="dv">0</span>]
 
-eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(claris, date <span class="op">~</span><span class="st"> </span>id, <span class="dt">value.var =</span> <span class="st">"max.t"</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)
+eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(max.t <span class="op">|</span><span class="st"> </span>date <span class="op">~</span><span class="st"> </span>id, <span class="dt">data =</span> claris, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)
 
 eof<span class="op">$</span>right &lt;-<span class="st"> </span>eof<span class="op">$</span>right[claris.stations, on =<span class="st"> "id"</span>]   <span class="co"># join with geographical info</span>
 
@@ -274,7 +274,7 @@ eof<span class="op">$</span>right &lt;-<span class="st"> </span>eof<span class="
 <span class="kw">data</span>(claris)
 claris[, max.t <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(max, <span class="dt">na.rm =</span> T), by =<span class="st"> </span>.(<span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">yday</a></span>(date), id)]
 
-claris[, imputed <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/ImputeEOF.html">ImputeEOF</a></span>(.SD, date <span class="op">~</span><span class="st"> </span>id, <span class="dt">value.var =</span> <span class="st">"max.t"</span>)]
+claris[, imputed <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/ImputeEOF.html">ImputeEOF</a></span>(max.t <span class="op">|</span><span class="st"> </span>date <span class="op">~</span><span class="st"> </span>id)]
 <span class="kw">str</span>(claris)
 <span class="co">#&gt; Classes 'data.table' and 'data.frame':   241128 obs. of  6 variables:</span>
 <span class="co">#&gt;  $ id     : int  10008 10008 10008 10008 10008 10008 10008 10008 10008 10008 ...</span>

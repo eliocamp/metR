@@ -4,15 +4,13 @@
 \alias{EOF}
 \title{Empirical Orthogonal Function}
 \usage{
-EOF(data, formula, value.var = guess(data), n = 1)
+EOF(formula, data = NULL, n = 1)
 }
 \arguments{
+\item{formula}{a formula passed to \code{\link[data.table]{dcast}} to build
+the matrix that will be used in the SVD decomposition (see Details)}
+
 \item{data}{a data.frame}
-
-\item{formula}{formula passed to \code{\link[data.table]{dcast}} to build
-the matrix that will be used in the SVD decomposition (see details)}
-
-\item{value.var}{name of the column whose values will be used}
 
 \item{n}{which singular values to return (if \code{NULL}, returns all)}
 }
@@ -26,9 +24,12 @@ Analysis or Empirical Orthogonal Functions).
 }
 \details{
 Singular values can be computed over matrices so \code{formula} denotes how
-to build a matrix from the data. It is a formula of the form LHS ~ RHS in
-which LHS represent the variables used to make the rows and RHS, the columns
-of the matrix. The result of LHS ~ RHS and RHS ~ LHS (ie, terms reversed)
+to build a matrix from the data. It is a formula of the form VAR | LHS ~ RHS
+in which VAR is the variable whose values will populate the matrix, and LHS
+represent the variables used to make the rows and RHS, the columns  of the matrix
+(the form LHS ~ RHS | VAR is also valid).
+
+The result of LHS ~ RHS and RHS ~ LHS (ie, terms reversed)
 is the same, with the exception that the order of the singular vector is
 reversed (right is left and left is right).
 
@@ -52,7 +53,8 @@ data(geopotential)
 geopotential <- copy(geopotential)
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
       by = .(lon, lat, month(date))]
-aao.svd <- EOF(geopotential, lat + lon ~ date, value.var = "gh.t.w", n = 1)
+
+aao.svd <- EOF(gh.t.w | lat + lon ~ date, data = geopotential, n = 1)
 
 # AAO field
 library(ggplot2)
@@ -66,6 +68,14 @@ ggplot(aao.svd$right, aes(date, value)) +
 
 # \% of explained variance
 aao.svd$sdev
+
+# 1st eof for each month.
+
+aao2 <- geopotential[, EOF(gh.t.w | lat + lon ~ date, n = 1)$left, by = month(date)]
+
+ggplot(aao2, aes(lon, lat)) +
+    geom_contour(aes(z = value, color = ..level..)) +
+    facet_wrap(~ month)
 
 }
 \seealso{

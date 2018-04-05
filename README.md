@@ -32,10 +32,10 @@ library(data.table)
 library(ggplot2)
 
 # Use Empirical Orthogonal Functions to compute the Antarctic Oscillation
-aao <- copy(aao)
-aao[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
+geopotential <- copy(geopotential)
+geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
       by = .(lon, lat, month(date))]
-aao.svd <- EOF(aao, lat + lon ~ date, value.var = "gh.t.w", n = 1)
+aao.svd <- EOF(gh.t.w | lat + lon ~ date, data = geopotential, n = 1)
 
 # AAO field
 binwidth <- 0.01

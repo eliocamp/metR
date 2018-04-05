@@ -10,4 +10,4 @@
 #'   \item{air}{air temperature in Kelvin}
 #' }
 #' @source \url{https://www.esrl.noaa.gov/psd/data/gridded/data.ncep.reanalysis.derived.pressure.html}
-"nceptemperature"
+"temperature"

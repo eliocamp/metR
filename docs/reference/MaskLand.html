@@ -153,11 +153,11 @@ map (the default), this means that the point is over land.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Make a sea-land mask</span>
-<span class='no'>mask</span> <span class='kw'>&lt;-</span> <span class='no'>nceptemperature</span>[<span class='no'>lev</span> <span class='kw'>==</span> <span class='fl'>1000</span>, <span class='fu'>.</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='no'>lon</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='no'>lat</span>, <span class='kw'>land</span> <span class='kw'>=</span> <span class='fu'>MaskLand</span>(<span class='no'>lon</span>, <span class='no'>lat</span>))]
-<span class='no'>nceptemperature</span> <span class='kw'>&lt;-</span> <span class='no'>nceptemperature</span>[<span class='no'>mask</span>, <span class='kw'>on</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"lon"</span>, <span class='st'>"lat"</span>)]
+<span class='no'>mask</span> <span class='kw'>&lt;-</span> <span class='no'>temperature</span>[<span class='no'>lev</span> <span class='kw'>==</span> <span class='fl'>1000</span>, <span class='fu'>.</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='no'>lon</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='no'>lat</span>, <span class='kw'>land</span> <span class='kw'>=</span> <span class='fu'>MaskLand</span>(<span class='no'>lon</span>, <span class='no'>lat</span>))]
+<span class='no'>temperature</span> <span class='kw'>&lt;-</span> <span class='no'>temperature</span>[<span class='no'>mask</span>, <span class='kw'>on</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"lon"</span>, <span class='st'>"lat"</span>)]
 
 <span class='co'># Take the temperature difference between land and ocean</span>
-<span class='no'>diftemp</span> <span class='kw'>&lt;-</span> <span class='no'>nceptemperature</span>[,
+<span class='no'>diftemp</span> <span class='kw'>&lt;-</span> <span class='no'>temperature</span>[,
           <span class='fu'>.</span>(<span class='kw'>tempdif</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>air</span>[<span class='no'>land</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>]) - <span class='fu'>mean</span>(<span class='no'>air</span>[<span class='no'>land</span> <span class='kw'>==</span> <span class='fl'>FALSE</span>])),
            <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lev</span>)]
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
@@ -167,7 +167,7 @@ map (the default), this means that the point is over land.</p>
     <span class='fu'><a href='scale_longitude.html'>scale_x_latitude</a></span>() +
     <span class='fu'><a href='scale_divergent.html'>scale_color_divergent</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 136 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='MaskLand-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Mean temperature in the USA</span>
-<span class='no'>usatemp</span> <span class='kw'>&lt;-</span> <span class='no'>nceptemperature</span>[, <span class='no'>usa</span> <span class='kw'>:=</span> <span class='fu'>MaskLand</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>mask</span> <span class='kw'>=</span> <span class='st'>"usa"</span>)][
+<span class='no'>usatemp</span> <span class='kw'>&lt;-</span> <span class='no'>temperature</span>[, <span class='no'>usa</span> <span class='kw'>:=</span> <span class='fu'>MaskLand</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>mask</span> <span class='kw'>=</span> <span class='st'>"usa"</span>)][
     , <span class='fu'>.</span>(<span class='kw'>air</span> <span class='kw'>=</span> <span class='fu'>weighted.mean</span>(<span class='no'>air</span>, <span class='fu'>cos</span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>))), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>usa</span>, <span class='no'>lev</span>)][
         <span class='no'>usa</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>]
 

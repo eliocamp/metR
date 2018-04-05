@@ -12,7 +12,7 @@
 #' @examples
 #' # Zonal temperature anomaly
 #' library(data.table)
-#' nceptemperature[, .(lon = lon, air.z = Anomaly(air)), by = .(lat, lev)]
+#' temperature[, .(lon = lon, air.z = Anomaly(air)), by = .(lat, lev)]
 #'
 #' @family utilities
 #' @export
@@ -117,7 +117,7 @@ Mag <- function(x, y) {
 #' # approximately 36W between 50S and 50N.
 #' cross.lon <- -34 + 360
 #' library(ggplot2)
-#' ggplot(nceptemperature[lon %~% cross.lon & lat %b% c(-50, 50)],
+#' ggplot(temperature[lon %~% cross.lon & lat %b% c(-50, 50)],
 #'        aes(lat, lev)) +
 #'     geom_contour(aes(z = air))
 #'

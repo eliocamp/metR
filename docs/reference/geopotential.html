@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Converts between longitude conventions — ConvertLongitude • metR</title>
+<title>Geopotential height — geopotential • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,10 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Converts between longitude conventions — ConvertLongitude" />
+<meta property="og:title" content="Geopotential height — geopotential" />
 
-<meta property="og:description" content="Converts longitude from [0, 360) to [-180, 180) and vice versa." />
+<meta property="og:description" content="Monthly geopotential field at 700hPa south of 20°S from January 1990 to
+December 2000." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -111,51 +112,41 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Converts between longitude conventions</h1>
-    <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/R/ConvertLongitude.R'><code>R/ConvertLongitude.R</code></a></small>
+    <h1>Geopotential height</h1>
+    <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/R/geopotential.R'><code>R/geopotential.R</code></a></small>
     </div>
 
     
-    <p>Converts longitude from [0, 360) to [-180, 180) and vice versa.</p>
+    <p>Monthly geopotential field at 700hPa south of 20°S from January 1990 to
+December 2000.</p>
     
 
-    <pre class="usage"><span class='fu'>ConvertLongitude</span>(<span class='no'>lon</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>360</span>, <span class='fl'>180</span>))</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>lon</th>
-      <td><p>numeric vector of longitude</p></td>
-    </tr>
-    <tr>
-      <th>from</th>
-      <td><p>numeric vector representing the convention of the input vector</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <pre class="usage"><span class='no'>geopotential</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A numeric vector the same length of lon.</p>
+    <p>A data.table with 53224 rows and 5 variables.</p><dl class='dl-horizontal'>
+<dt>lon</dt><dd><p>longitude in degrees</p></dd>
+<dt>lat</dt><dd><p>latitude in degrees</p></dd>
+<dt>lev</dt><dd><p>level in hPa</p></dd>
+<dt>gh</dt><dd><p>geopotential height in meters</p></dd>
+<dt>date</dt><dd><p>date</p></dd>
+</dl>
+    
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p><a href='https://www.esrl.noaa.gov/psd/data/gridded/data.ncep.reanalysis.derived.pressure.html'>https://www.esrl.noaa.gov/psd/data/gridded/data.ncep.reanalysis.derived.pressure.html</a></p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'>data</span>(<span class='no'>geopotential</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh</span>)) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>ConvertLongitude</span>(<span class='no'>lon</span>, <span class='fl'>360</span>)))</div><div class='img'><img src='ConvertLongitude-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#source">Source</a></li>
+          </ul>
 
   </div>
 </div>

@@ -58,7 +58,7 @@ reference:
   - title: Datasets
     desc: sample datasets
     contents:
-      - aao
+      - geopotential
       - claris
-      - nceptemperature
+      - temperature
 

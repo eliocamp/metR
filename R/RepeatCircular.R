@@ -15,8 +15,8 @@
 #' @examples
 #' library(ggplot2)
 #' library(data.table)
-#' data(aao)
-#' g <- ggplot(aao[date == date[1]], aes(lon, lat)) +
+#' data(geopotential)
+#' g <- ggplot(geopotential[date == date[1]], aes(lon, lat)) +
 #'     geom_contour(aes(z = gh)) +
 #'     coord_polar() +
 #'     ylim(c(-90, -10))
@@ -25,10 +25,10 @@
 #' g
 #'
 #' # But using RepeatCircular solves it.
-#' g %+% RepeatCircular(aao[date == date[1]])
+#' g %+% RepeatCircular(geopotential[date == date[1]])
 #'
 #' # The same behaviour is now implemented directly in geom_contour2
-#' ggplot(aao[date == date[1]], aes(lon, lat)) +
+#' ggplot(geopotential[date == date[1]], aes(lon, lat)) +
 #'     geom_contour2(aes(z = gh), circular = "x") +
 #'     coord_polar() +
 #'     ylim(c(-90, -10))

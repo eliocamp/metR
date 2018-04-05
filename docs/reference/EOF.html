@@ -179,9 +179,9 @@ to set n to <code>NULL</code>. If the irba package is installed, EOF uses
     <pre class="examples"><div class='input'><span class='co'># The Antarctic Oscillation is computed from the</span>
 <span class='co'># monthly geopotential height anomalies weigthed by latitude.</span>
 <span class='fu'>library</span>(<span class='no'>data.table</span>)
-<span class='fu'>data</span>(<span class='no'>aao</span>)
-<span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/copy'>copy</a></span>(<span class='no'>aao</span>)
-<span class='no'>aao</span>[, <span class='no'>gh.t.w</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>)*<span class='fu'>sqrt</span>(<span class='fu'>cos</span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>)),
+<span class='fu'>data</span>(<span class='no'>geopotential</span>)
+<span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/copy'>copy</a></span>(<span class='no'>geopotential</span>)
+<span class='no'>geopotential</span>[, <span class='no'>gh.t.w</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>)*<span class='fu'>sqrt</span>(<span class='fu'>cos</span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>)),
       <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>month</a></span>(<span class='no'>date</span>))]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t.w
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01 2.479552e-01
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01 1.685554e+00
@@ -193,7 +193,7 @@ to set n to <code>NULL</code>. If the irba package is installed, EOF uses
 #&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 5.045014e-07
 #&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 5.045014e-07
 #&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 5.045014e-07
-#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 5.045014e-07</div><div class='input'><span class='no'>aao.svd</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>aao</span>, <span class='no'>lat</span> + <span class='no'>lon</span> ~ <span class='no'>date</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='st'>"gh.t.w"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 5.045014e-07</div><div class='input'><span class='no'>aao.svd</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>geopotential</span>, <span class='no'>lat</span> + <span class='no'>lon</span> ~ <span class='no'>date</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='st'>"gh.t.w"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='co'># AAO field</span>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)

@@ -21,7 +21,7 @@ Saves keystrokes for computing anomalies.
 \examples{
 # Zonal temperature anomaly
 library(data.table)
-nceptemperature[, .(lon = lon, air.z = Anomaly(air)), by = .(lat, lev)]
+temperature[, .(lon = lon, air.z = Anomaly(air)), by = .(lat, lev)]
 
 }
 \seealso{

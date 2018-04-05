@@ -27,11 +27,11 @@ Creates a  mask
 \examples{
 
 # Make a sea-land mask
-mask <- nceptemperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon, lat))]
-nceptemperature <- nceptemperature[mask, on = c("lon", "lat")]
+mask <- temperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon, lat))]
+temperature <- temperature[mask, on = c("lon", "lat")]
 
 # Take the temperature difference between land and ocean
-diftemp <- nceptemperature[,
+diftemp <- temperature[,
           .(tempdif = mean(air[land == TRUE]) - mean(air[land == FALSE])),
            by = .(lat, lev)]
 library(ggplot2)
@@ -42,7 +42,7 @@ ggplot(diftemp, aes(lat, lev)) +
     scale_color_divergent()
 
 # Mean temperature in the USA
-usatemp <- nceptemperature[, usa := MaskLand(lon, lat, mask = "usa")][
+usatemp <- temperature[, usa := MaskLand(lon, lat, mask = "usa")][
     , .(air = weighted.mean(air, cos(lat*pi/180))), by = .(usa, lev)][
         usa == TRUE]
 

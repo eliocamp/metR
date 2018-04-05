@@ -84,8 +84,9 @@ These functions are simple wrappers around
 helpful defaults for plotting longitude, latitude and pressure levels.
 }
 \examples{
+data(geopotential)
 library(ggplot2)
-ggplot(aao[date == date[1]], aes(lon, lat, z = gh)) +
+ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
     geom_contour() +
     scale_x_longitude() +
     scale_y_latitude()

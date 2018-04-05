@@ -43,25 +43,25 @@ returns a matrix.
 }
 \examples{
 library(data.table)
-data(aao)
-aao <- copy(aao)
-aao[, gh.t := Anomaly(gh), by = .(lat, lon)]
-aao <- aao[date == date[1]]
+data(geopotential)
+geopotential <- copy(geopotential)
+geopotential[, gh.t := Anomaly(gh), by = .(lat, lon)]
+geopotential <- geopotential[date == date[1]]
 
 # Add gaps to field
-aao[, gh.gap := gh.t]
+geopotential[, gh.gap := gh.t]
 set.seed(42)
-aao[sample(1:.N, .N*0.3), gh.gap := NA]
+geopotential[sample(1:.N, .N*0.3), gh.gap := NA]
 
-aao[, gh.impute := ImputeEOF(.SD, lon ~ lat,  value.var = "gh.gap",
+geopotential[, gh.impute := ImputeEOF(.SD, lon ~ lat,  value.var = "gh.gap",
                                     verbose = TRUE, max.iter = 2000)]
 
 library(ggplot2)
-ggplot(aao, aes(lon, lat)) +
+ggplot(geopotential, aes(lon, lat)) +
     geom_contour(aes(z = gh.t), color = "black") +
     geom_contour(aes(z = gh.impute))
 
-ggplot(aao[is.na(gh.gap)], aes(gh.t, gh.impute)) +
+ggplot(geopotential[is.na(gh.gap)], aes(gh.t, gh.impute)) +
     geom_point()
 
 }

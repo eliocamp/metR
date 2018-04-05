@@ -9,7 +9,8 @@
 #'
 #' @examples
 #' library(ggplot2)
-#' ggplot(aao[date == date[1]], aes(lon, lat, z = gh)) +
+#' data(geopotential)
+#' ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
 #'     geom_contour(color = "black") +
 #'     geom_contour(aes(x = ConvertLongitude(lon, 360)))
 #'

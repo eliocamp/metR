@@ -30,10 +30,11 @@ covers the whole globe and set cyclical conditions accordingly. For more
 predictable results, set the boundary condition explicitly.
 }
 \examples{
-aao <- data.table::copy(aao)
-aao[date == date[1], c("u", "v") := GeostrophicWind(gh, lon, lat)]
+data(geopotential)
+geopotential <- data.table::copy(geopotential)
+geopotential[date == date[1], c("u", "v") := GeostrophicWind(gh, lon, lat)]
 library(ggplot2)
-ggplot(aao[date == date[1]], aes(lon, lat)) +
+ggplot(geopotential[date == date[1]], aes(lon, lat)) +
     geom_contour(aes(z = gh)) +
     geom_vector(aes(dx = u, dy = v), skip = 2)
 

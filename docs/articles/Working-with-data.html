@@ -108,7 +108,7 @@
 
 <span class="co"># If out = "vars", returns information about the available variables and </span>
 <span class="co"># dimensions</span>
-file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"nceptemperature.nc"</span>, <span class="dt">package =</span> <span class="st">"metR"</span>)
+file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"temperature.nc"</span>, <span class="dt">package =</span> <span class="st">"metR"</span>)
 <span class="kw">str</span>(<span class="kw"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span>(file, <span class="dt">out =</span> <span class="st">"vars"</span>))
 <span class="co">#&gt; List of 2</span>
 <span class="co">#&gt;  $ vars      : chr "air"</span>
@@ -186,11 +186,11 @@ file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span cla
 <h2 class="hasAnchor">
 <a href="#eof" class="anchor"></a>EOF</h2>
 <p>Empirical Orthogonal Functions (also known as Principal Component Analysis) is a widely use technique for dimensional reduction of large datasets. In R there are multiple packages that implement this methodology (in fact, base R has <em>two</em> functions) but, IMHO, they have akward interfaces that don’t interact well with <code>data.table</code> (or <code>dplyr</code>) syntax. <code>metR</code>’s <code><a href="../reference/EOF.html">EOF()</a></code> essentially performs a Singular Value Decomposition of the data and returns the U, V and D matrices in a tidy format.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(aao)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(geopotential)
 <span class="co"># Weigthed geopotential anomaly</span>
-aao[, gh.t.w <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(gh)<span class="op">*</span><span class="kw">sqrt</span>(<span class="kw">cos</span>(lat<span class="op">*</span>pi<span class="op">/</span><span class="dv">180</span>)), by =<span class="st"> </span>.(lon, lat, <span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">month</a></span>(date))]
+geopotential[, gh.t.w <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(gh)<span class="op">*</span><span class="kw">sqrt</span>(<span class="kw">cos</span>(lat<span class="op">*</span>pi<span class="op">/</span><span class="dv">180</span>)), by =<span class="st"> </span>.(lon, lat, <span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">month</a></span>(date))]
 
-eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(aao, date <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, <span class="dt">value.var =</span> <span class="st">"gh.t.w"</span>, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
+eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(geopotential, date <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, <span class="dt">value.var =</span> <span class="st">"gh.t.w"</span>, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
 <span class="kw">str</span>(eof)
 <span class="co">#&gt; List of 3</span>
 <span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:</span>
@@ -211,7 +211,7 @@ eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.htm
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></code></pre></div>
 <p>The returned list of <code>data.table</code>s hold the right and left singular vectors, and the singular values asociated with them. There’s no need to think about S or T mode, since both are calculated and returned. Always the right (left) singular vectors are fields defined with the dimensions on the right (left) hand of the formula. In this case, the right <code>data.table</code> holds spatial fields and the left <code>data.table</code> holds a timeseries.</p>
 <p>If we invert the formula call, the result is identical (up to small numerical errors) but with the right and left singular vectors switched.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eof2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(aao, lon <span class="op">+</span><span class="st"> </span>lat <span class="op">~</span><span class="st"> </span>date, <span class="dt">value.var =</span> <span class="st">"gh.t.w"</span>, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eof2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(geopotential, lon <span class="op">+</span><span class="st"> </span>lat <span class="op">~</span><span class="st"> </span>date, <span class="dt">value.var =</span> <span class="st">"gh.t.w"</span>, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
 <span class="kw">str</span>(eof2)
 <span class="co">#&gt; List of 3</span>
 <span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  264 obs. of  3 variables:</span>
@@ -296,13 +296,13 @@ claris[, imputed <span class="op">:</span><span class="er">=</span><span class="
 <h2 class="hasAnchor">
 <a href="#derivates" class="anchor"></a>Derivates</h2>
 <p>Derivation is the bread and butter of the researcher so <code><a href="../reference/Derivate.html">Derivate()</a></code> offers a convenient interface for derivation using finite differences of multidimensional data. It has support for cyclical boundary conditions and for the special case of spherical coordinates (think: Earth).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aao[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>],    <span class="co"># think: gh as a function of lon and lat</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>],    <span class="co"># think: gh as a function of lon and lat</span>
     <span class="kw">c</span>(<span class="st">"gh.dlon"</span>, <span class="st">"gh.dlat"</span>) <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Derivate.html">Derivate</a></span>(gh <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, 
                                         <span class="dt">cyclical =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>), 
                                         <span class="dt">sphere =</span> <span class="ot">TRUE</span>)]
 
 
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>]], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>]], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> gh)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_vector.html">geom_vector</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> gh.dlon, <span class="dt">dy =</span> gh.dlat), <span class="dt">skip =</span> <span class="dv">2</span>, 
                 <span class="dt">scale =</span> <span class="fl">3e4</span>) <span class="op">+</span>
@@ -315,9 +315,9 @@ claris[, imputed <span class="op">:</span><span class="er">=</span><span class="
 <h2 class="hasAnchor">
 <a href="#geostrophicwind" class="anchor"></a>GeostrophicWind</h2>
 <p>Finally, the function <code><a href="../reference/GeostrophicWind.html">GeostrophicWind()</a></code> computes geostrophic wind from geopotential height.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aao[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>], <span class="kw">c</span>(<span class="st">"u"</span>, <span class="st">"v"</span>) <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/GeostrophicWind.html">GeostrophicWind</a></span>(gh, lon, lat)]
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>], <span class="kw">c</span>(<span class="st">"u"</span>, <span class="st">"v"</span>) <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/GeostrophicWind.html">GeostrophicWind</a></span>(gh, lon, lat)]
 
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>]], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>]], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> gh)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_vector.html">geom_vector</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> u, <span class="dt">dy =</span> v), <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">skip.x =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_quickmap</a></span>()

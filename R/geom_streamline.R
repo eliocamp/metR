@@ -76,8 +76,8 @@ dy <- function(dlat, dy, a = 6731000) {
 # library(data.table)
 # library(ggplot2)
 #
-# data(aao)
-# v <- aao[date == date[1]]
+# data(geopotential)
+# v <- geopotential[date == date[1]]
 # v[, gh.z := Anomaly(gh), by = .(lat)]
 # v[, c("dx", "dy") := GeostrophicWind(gh.z, lon, lat)]
 #

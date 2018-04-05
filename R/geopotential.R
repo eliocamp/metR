@@ -13,4 +13,4 @@
 #'   \item{date}{date}
 #'   }
 #' @source \url{https://www.esrl.noaa.gov/psd/data/gridded/data.ncep.reanalysis.derived.pressure.html}
-"aao"
+"geopotential"

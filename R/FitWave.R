@@ -42,10 +42,10 @@
 #' of k vectors consisting of the reconstructed signal of each wavenumber.
 #'
 #' @examples
-#' data(aao)
+#' data(geopotential)
 #' library(data.table)
 #' # January mean of geopotential height
-#' jan <- aao[month(date) == 1, .(gh = mean(gh)), by = .(lon, lat)]
+#' jan <- geopotential[month(date) == 1, .(gh = mean(gh)), by = .(lon, lat)]
 #'
 #' # Stationary waves for each latitude
 #' jan.waves <- jan[, FitWave(gh, 1:4), by = .(lat)]

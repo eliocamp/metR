@@ -37,11 +37,11 @@
 #' # The Antarctic Oscillation is computed from the
 #' # monthly geopotential height anomalies weigthed by latitude.
 #' library(data.table)
-#' data(aao)
-#' aao <- copy(aao)
-#' aao[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
+#' data(geopotential)
+#' geopotential <- copy(geopotential)
+#' geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
 #'       by = .(lon, lat, month(date))]
-#' aao.svd <- EOF(aao, lat + lon ~ date, value.var = "gh.t.w", n = 1)
+#' aao.svd <- EOF(geopotential, lat + lon ~ date, value.var = "gh.t.w", n = 1)
 #'
 #' # AAO field
 #' library(ggplot2)

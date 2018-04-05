@@ -148,7 +148,7 @@ mean.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Zonal temperature anomaly</span>
 <span class='fu'>library</span>(<span class='no'>data.table</span>)
-<span class='no'>nceptemperature</span>[, <span class='fu'>.</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='no'>lon</span>, <span class='kw'>air.z</span> <span class='kw'>=</span> <span class='fu'>Anomaly</span>(<span class='no'>air</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lev</span>)]</div><div class='output co'>#&gt;         lat  lev   lon air.z
+<span class='no'>temperature</span>[, <span class='fu'>.</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='no'>lon</span>, <span class='kw'>air.z</span> <span class='kw'>=</span> <span class='fu'>Anomaly</span>(<span class='no'>air</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lev</span>)]</div><div class='output co'>#&gt;         lat  lev   lon air.z
 #&gt;      1:  90 1000   0.0     0
 #&gt;      2:  90 1000   2.5     0
 #&gt;      3:  90 1000   5.0     0

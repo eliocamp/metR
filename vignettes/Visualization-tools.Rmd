@@ -32,11 +32,11 @@ To see how this scales work, let's visualize the vertical distribution of temper
 library(metR)
 library(ggplot2)
 library(data.table)
-nceptemperature <- copy(nceptemperature)
-nceptemperature[, air.z := Anomaly(air), by = .(lat, lev)]
+temperature <- copy(temperature)
+temperature[, air.z := Anomaly(air), by = .(lat, lev)]
 
 # Plot made with base ggplot
-(g <- ggplot(nceptemperature[lon %~% 180], aes(lat, lev, z = air.z)) +
+(g <- ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
     geom_contour(aes(color = ..level..)))
 ```
 
@@ -101,7 +101,7 @@ ggplot(v, aes(Var1, Var2, z = value.gap)) +
 We can apply this to a more realistic dataset 
 
 ```{r,  fig.width = 7}
-ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     scale_fill_divergent() +
     scale_x_longitude() +
@@ -115,7 +115,7 @@ As an important note, this stat currently only works with rectangular grids.
 Labeling contours is also a problematic aspect of `ggplot2`. `geom_text_contour()` and `geom_label_contour()` can be use to automatically add text or labels to the flattest part of a contour. 
 
 ```{r}
-ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     geom_contour(color = "black") +
     geom_text_contour() +
@@ -135,9 +135,9 @@ As a generalization of `stat_na()` shown above, `metR` also has `stat_subset()` 
 For example, it can be used if you have a correlation field and want to mark only the points with significant correlations:
 
 ```{r}
-data(aao)    # geopotential height at 700hPa for the southern hemisphere. 
+data(geopotential)    # geopotential height at 700hPa for the southern hemisphere. 
 
-ggplot(aao[, gh.base := gh[lon == 120 & lat == -50], by = date][
+ggplot(geopotential[, gh.base := gh[lon == 120 & lat == -50], by = date][
            , .(correlation = cor(gh.base, gh)), 
            by = .(lon, lat)],
     aes(lon, lat, z = correlation)) +
@@ -157,12 +157,12 @@ Plotting arrows can be a pain. Again, the 'canonical' way of plotting vectors is
 So, as an example, we can plot the temperature gradient like this:
 
 ```{r,  fig.width = 7}
-nceptemperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat, 
+temperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat, 
                                                cyclical = c(TRUE, FALSE), 
                                                sphere = T), 
                 by = lev]
 
-ggplot(nceptemperature[lev == 500], aes(lon, lat)) +
+ggplot(temperature[lev == 500], aes(lon, lat)) +
     stat_contour_fill(aes(z = air.z)) +
     geom_vector(aes(dx = t.dx, dy = t.dy), skip.x = 2, 
                 skip.y = 1, scale = 5e5, min.mag = 2e-6,
@@ -188,9 +188,9 @@ There are (currently) many limitations of `geom_vector()`:
 To solve the last two problems `metR` has `geom_arrow()` which works the same as `geom_vector()` but instead parametrizing vector by their magnitude and angle. 
 
 ```{r}
-nceptemperature[, mag := Mag(t.dx, t.dy)][, angle := atan2(t.dy, t.dx)*180/pi]
+temperature[, mag := Mag(t.dx, t.dy)][, angle := atan2(t.dy, t.dx)*180/pi]
 
-ggplot(nceptemperature[lev == 500], aes(lon, lat)) +
+ggplot(temperature[lev == 500], aes(lon, lat)) +
     stat_contour_fill(aes(z = air.z)) +
     geom_arrow(aes(mag = mag, angle = angle), skip.x = 2, 
                 skip.y = 1, scale = 5e3, min.mag = 2e-6) +
@@ -211,7 +211,7 @@ Forthcomming is the implementation of streamlines :).
 The use of `geom_contour()` and `geom_contour_fill()` generates a problem because those geoms implicitly discretize a continuous variable, but the default guide (`guide_colourbar()`) still show a continuous scale. This can be partially solved by using `ggplot`'s `guide_legend()`
 
 ```{r}
-ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour2(aes(color = ..level..), breaks = MakeBreaks(2)) +
     scale_color_divergent(guide = "legend",
                          breaks = MakeBreaks(2)) +
@@ -223,7 +223,7 @@ This has some limitations as can be seen above. First, in the case of `geom_cont
 
 All of these problems are solved in `guide_colorstrip()` as can be seen in the figure below. 
 ```{r}
-ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill(breaks = MakeBreaks(2)) +
     scale_fill_divergent(guide = "colorstrip",
                          breaks = MakeBreaks(2)) +
@@ -240,20 +240,20 @@ The function `RepeatCircular()` is an ugly kludge to fix an issue when using pol
 See how in the figure on the left, contours that cross the 0° longitude mark are cut, but they join correctly in the figure on the right. 
 
 ```{r, fig.width = 3.3, fig.show = 'hold', warning = FALSE}
-(g <- ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+(g <- ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour(binwidth = 1.5) +
     scale_fill_divergent() +
     scale_x_longitude() +
     scale_y_latitude(limits = c(-90, -20)) +
     coord_polar())
 
-g %+% RepeatCircular(nceptemperature[lev == 300])    # change the data. 
+g %+% RepeatCircular(temperature[lev == 300])    # change the data. 
 ```
 
 This behaviour is now also implemented directly in `geom_contour2()` and `geom_contour_fill()`.
 
 ```{r}
-ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour2(binwidth = 1.5, circular = "x") +
     scale_fill_divergent() +
     scale_x_longitude() +
@@ -267,7 +267,7 @@ ggplot(nceptemperature[lev == 300], aes(lon, lat, z = air.z)) +
 This is another ugly kuldge that hopefully will be replaced by a new facetting function (as soon as I understand how they work). The idea is to divide a long timeseries in a series of shorter plots that are easier to interpret. 
 
 ```{r}
-(g <- ggplot(aao[lon == 120 & lat == -50], aes(date, gh)) +
+(g <- ggplot(geopotential[lon == 120 & lat == -50], aes(date, gh)) +
      geom_line() +
      geom_smooth(span = 0.3) +
      scale_x_date(expand = c(0, 0))) 
@@ -276,7 +276,7 @@ This is another ugly kuldge that hopefully will be replaced by a new facetting f
 In the above plot, the timeseries looks noisy and hard to understand since the lines are too steep. Dividing it into 2 facets makes is easier to see what's going on.
 
 ```{r}
-DivideTimeseries(g, aao$date, n = 2, xlab = "date", ylab = "gh")
+DivideTimeseries(g, geopotential$date, n = 2, xlab = "date", ylab = "gh")
 ```
 
 ## geom_relief

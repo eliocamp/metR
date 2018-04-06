@@ -1,13 +1,13 @@
 Package: metR
 Type: Package
 Title: Tools for Easier Analysis of Meteorological Fields
-Version: 0.0.9101
+Version: 0.1
 Authors@R: person("Elio", "Campitelli", email = "elio.campitelli@cima.fcen.uba.ar", role = c("cre", "aut"))
 Description: Many useful functions and extensions for dealing with 
     meteorological data in the tidy data framework. Extends ggplot2 for better
     plotting of scalar and vector fields and provides commonly used analysis 
     methods in the atmospheric sciences. 
-Date: 2017-10-04
+Date: 2018-04-06
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

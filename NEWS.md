@@ -1,4 +1,4 @@
-# metR 0.0.9101
+# metR 0.1
 - New function: `GetTopography()`
 - `ReadNetCDF()` now can output arrays and vectors.
 - Changed name. 

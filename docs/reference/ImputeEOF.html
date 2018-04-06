@@ -121,8 +121,9 @@
 (DINEOF).</p>
     
 
-    <pre class="usage"><span class='fu'>ImputeEOF</span>(<span class='no'>formula</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>min.eof</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
-  <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>validation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fu'>interactive</span>())</pre>
+    <pre class="usage"><span class='fu'>ImputeEOF</span>(<span class='no'>formula</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>min.eof</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>validation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fu'>interactive</span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,6 +132,10 @@
       <th>formula</th>
       <td><p>a formula passed to <code><a href='http://www.rdocumentation.org/packages/data.table/topics/dcast.data.table'>dcast</a></code> to build
 the matrix that will be used in the SVD decomposition (see Details)</p></td>
+    </tr>
+    <tr>
+      <th>value.var</th>
+      <td><p>optional name of the data column (see Details)</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -169,10 +174,14 @@ Mean Square Error estimated from crossvalidation.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Singular values can be computed over matrices so <code>formula</code> denotes how
-to build a matrix from the data. It is a formula of the form VAR | LHS ~ RHS
-in which VAR is the variable whose values will populate the matrix, and LHS
-represent the variables used to make the rows and RHS, the columns  of the matrix
-(the form LHS ~ RHS | VAR is also valid).</p>
+to build a matrix from the data. It is a formula of the form VAR ~ LEFT | RIGHT
+(see <a href='http://www.rdocumentation.org/packages/Formula/topics/Formula'>Formula::Formula</a>) in which VAR is the variable whose values will
+populate the matrix, and LEFT represent the variables used to make the rows
+and RIGHT, the columns of the matrix.
+Think it like "VAR <em>as a function</em> of LEFT <em>and</em> RIGHT".</p>
+<p>Alternatively, if <code>value.var</code> is not <code>NULL</code>, it's possible to use the
+(probably) more familiar <a href='http://www.rdocumentation.org/packages/data.table/topics/dcast.data.table'>data.table::dcast</a> formula interface. In that case,
+<code>data</code> must be provided.</p>
 <p>If <code>data</code> is a matrix, the <code>formula</code> argument is ignored and the function
 returns a matrix.</p>
     
@@ -196,8 +205,7 @@ returns a matrix.</p>
 #&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 64.4721236
 #&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 64.4721236
 #&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 64.4721236
-#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 64.4721236</div><div class='input'><span class='co'># geopotential &lt;- geopotential[date == date[1]]</span>
-
+#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 64.4721236</div><div class='input'>
 <span class='co'># Add gaps to field</span>
 <span class='no'>geopotential</span>[, <span class='no'>gh.gap</span> <span class='kw'>:=</span> <span class='no'>gh.t</span>]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  0.2579679  0.2579679
@@ -223,20 +231,20 @@ returns a matrix.</p>
 #&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 64.4721236         NA
 #&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236
 #&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 64.4721236         NA</div><div class='input'>
-<span class='no'>max.eof</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
-<span class='no'>geopotential</span>[, <span class='no'>gh.impute</span> <span class='kw'>:=</span> <span class='fu'>ImputeEOF</span>(<span class='no'>gh.gap</span> <span class='kw'>|</span> <span class='no'>lat</span> + <span class='no'>lon</span> ~ <span class='no'>date</span>, <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='no'>max.eof</span>,
-                                      <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>)]</div><div class='output co'>#&gt;  With 1 eof - rmse =  28.98096 With 2 eof - rmse =  26.32306 With 3 eof - rmse =  24.58819 With 4 eof - rmse =  23.02435 With 5 eof - rmse =  21.71424 With 6 eof - rmse =  20.63211 With 7 eof - rmse =  19.48147 With 8 eof - rmse =  18.55024 With 9 eof - rmse =  17.80859 With 10 eof - rmse =  17.04888</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap  gh.impute
+<span class='no'>max.eof</span> <span class='kw'>&lt;-</span> <span class='fl'>5</span>    <span class='co'># change to a higher value</span>
+<span class='no'>geopotential</span>[, <span class='no'>gh.impute</span> <span class='kw'>:=</span> <span class='fu'>ImputeEOF</span>(<span class='no'>gh.gap</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='no'>max.eof</span>,
+                                      <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>)]</div><div class='output co'>#&gt;  With 1 eof - rmse =  28.98096 With 2 eof - rmse =  26.34392 With 3 eof - rmse =  24.62 With 4 eof - rmse =  23.06794 With 5 eof - rmse =  21.79941</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap  gh.impute
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  0.2579679  0.2579679  0.2579679
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  1.7536177  1.7536177  1.7536177
 #&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  4.1993963  4.1993963  4.1993963
 #&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01  6.2462713  6.2462713  6.2462713
-#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01  7.5482955         NA  1.1357978
+#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01  7.5482955         NA  2.3721733
 #&gt;     ---                                                                     
 #&gt; 532220: 347.5 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236 64.4721236
 #&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236 64.4721236
-#&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 64.4721236         NA 63.4050010
+#&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 64.4721236         NA 60.3893312
 #&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236 64.4721236
-#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 64.4721236         NA 65.4582871</div><div class='input'>
+#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 64.4721236         NA 63.0619975</div><div class='input'>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
@@ -246,8 +254,8 @@ returns a matrix.</p>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>na.sample</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>gh.t</span>, <span class='no'>gh.impute</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>()</div><div class='img'><img src='ImputeEOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Estimated RMSE</span>
-<span class='fu'>attr</span>(<span class='no'>geopotential</span>$<span class='no'>gh.impute</span>, <span class='st'>"rmse"</span>)</div><div class='output co'>#&gt; [1] 17.04888</div><div class='input'><span class='co'># Real RMSE</span>
-<span class='no'>geopotential</span>[<span class='fu'>is.na</span>(<span class='no'>gh.gap</span>), <span class='fu'>sqrt</span>(<span class='fu'>mean</span>((<span class='no'>gh.t</span> - <span class='no'>gh.impute</span>)^<span class='fl'>2</span>))]</div><div class='output co'>#&gt; [1] 16.92079</div><div class='input'>
+<span class='fu'>attr</span>(<span class='no'>geopotential</span>$<span class='no'>gh.impute</span>, <span class='st'>"rmse"</span>)</div><div class='output co'>#&gt; [1] 21.79941</div><div class='input'><span class='co'># Real RMSE</span>
+<span class='no'>geopotential</span>[<span class='fu'>is.na</span>(<span class='no'>gh.gap</span>), <span class='fu'>sqrt</span>(<span class='fu'>mean</span>((<span class='no'>gh.t</span> - <span class='no'>gh.impute</span>)^<span class='fl'>2</span>))]</div><div class='output co'>#&gt; [1] 21.71992</div><div class='input'>
 
 </div></pre>
   </div>

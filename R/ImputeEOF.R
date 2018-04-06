@@ -18,11 +18,16 @@
 #' Mean Square Error estimated from crossvalidation.
 #'
 #' @details
-#' Singular values can be computed over matrices so `formula` denotes how
-#' to build a matrix from the data. It is a formula of the form VAR | LHS ~ RHS
-#' in which VAR is the variable whose values will populate the matrix, and LHS
-#' represent the variables used to make the rows and RHS, the columns  of the matrix
-#' (the form LHS ~ RHS | VAR is also valid).
+#' Singular values can be computed over matrices so \code{formula} denotes how
+#' to build a matrix from the data. It is a formula of the form VAR ~ LEFT | RIGHT
+#' (see [Formula::Formula]) in which VAR is the variable whose values will
+#' populate the matrix, and LEFT represent the variables used to make the rows
+#' and RIGHT, the columns of the matrix.
+#' Think it like "VAR *as a function* of LEFT *and* RIGHT".
+#'
+#' Alternatively, if `value.var` is not `NULL`, it's possible to use the
+#' (probably) more familiar [data.table::dcast] formula interface. In that case,
+#' `data` must be provided.
 #'
 #' If `data` is a matrix, the `formula` argument is ignored and the function
 #' returns a matrix.
@@ -35,15 +40,14 @@
 #' data(geopotential)
 #' geopotential <- copy(geopotential)
 #' geopotential[, gh.t := Anomaly(gh), by = .(lat, lon, month(date))]
-#' # geopotential <- geopotential[date == date[1]]
 #'
 #' # Add gaps to field
 #' geopotential[, gh.gap := gh.t]
 #' set.seed(42)
 #' geopotential[sample(1:.N, .N*0.3), gh.gap := NA]
 #'
-#' max.eof <- 10
-#' geopotential[, gh.impute := ImputeEOF(gh.gap | lat + lon ~ date, max.eof = max.eof,
+#' max.eof <- 5    # change to a higher value
+#' geopotential[, gh.impute := ImputeEOF(gh.gap ~ lat + lon | date, max.eof = max.eof,
 #'                                       verbose = TRUE, max.iter = 2000)]
 #'
 #' library(ggplot2)
@@ -65,19 +69,31 @@
 #' @import data.table
 #' @export
 #' @importFrom stats as.formula
-ImputeEOF <- function(formula, data = NULL, max.eof = NULL,
+ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
                       min.eof = 1, tol = 1e-2, max.iter = 10000,
                       validation = NULL, verbose = interactive()) {
     # Build matrix if necessary.
 
     if (is.null(data) | is.data.frame(data)) {
-        f <- as.character(formula)
-        f <- stringr::str_split(f,"\\|", n = 2)[[1]]
-        dcast.formula <- as.formula(stringr::str_squish(f[stringr::str_detect(f, "~")]))
-        value.var <- stringr::str_squish(f[!stringr::str_detect(f, "~")])
+        if (!is.null(value.var)) {
+            if (is.null(data)) stop("data must not be NULL if value.var is NULL", .call = FALSE)
+            data <- copy(data)
+            f <- as.character(formula)
+            f <- stringr::str_replace(f, "~", "\\|")
+            formula <- Formula::as.Formula(paste0(value.var, " ~ ", f))
+        }
 
-        formula <- Formula::as.Formula(formula)
-        data <- as.data.table(eval(quote(model.frame(formula, data  = data, na.action = NULL))))
+        if (is.null(data)) {
+            formula <- Formula::as.Formula(formula)
+            data <- as.data.table(eval(quote(model.frame(formula, data  = data, na.action = NULL))))
+        }
+
+        f <- as.character(formula)
+        f <- stringr::str_split(f,"~", n = 2)[[1]]
+        dcast.formula <- stringr::str_squish(f[stringr::str_detect(f, "\\|")])
+        dcast.formula <- as.formula(stringr::str_replace(dcast.formula, "\\|", "~"))
+
+        value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
 
         nas <- sum(is.na(data[[value.var]]))
         if (nas == 0) {
@@ -117,11 +133,14 @@ ImputeEOF <- function(formula, data = NULL, max.eof = NULL,
     X.rec[c(gaps, validation)] <- fill
     rmse <- sqrt(mean((X[validation] - X.rec[validation])^2))
 
+    prev <- NULL
     for (i in 2:length(eofs)) {
         # After first guess, impute gaps and validation.
         X.rec <- .ImputeEOF1(X.rec, c(gaps, validation), eofs[i],
                                   tol = tol, max.iter = max.iter,
-                                  verbose = verbose)
+                                  verbose = verbose, prev = prev)
+        prev <- X.rec$prval
+        X.rec <- X.rec$X.rec
 
         rmse <- c(rmse, sqrt(mean((X[validation] - X.rec[validation])^2)))
 
@@ -139,16 +158,10 @@ ImputeEOF <- function(formula, data = NULL, max.eof = NULL,
     eof <- eofs[which.min(rmse)]
     X[gaps] <- fill
     X.rec <- .ImputeEOF1(X, gaps, eof, tol = tol, max.iter = max.iter,
-                         verbose = verbose)
+                         verbose = verbose)$X.rec
 
     if (is.data.frame(data)) {
         X.rec <- c(X.rec)[order(id)]
-        # X.rec <- melt(X.rec, value.name = value.var)[value.var]
-        # id <- melt(id, value.name = "id")["id"]
-        # X.rec[id]
-        # dimnames(X.rec) <- list(unlist(g$rowdims), unlist(g$coldims))
-        # names(dimnames(X.rec)) <- list(names(g$rowdims), names(g$coldims))
-
     }
 
     attr(X.rec, "eof") <- eof
@@ -157,15 +170,14 @@ ImputeEOF <- function(formula, data = NULL, max.eof = NULL,
 }
 
 
-.ImputeEOF1 <- function(X, X.na, n.eof, tol = 1e-2, max.iter = 10000, verbose = TRUE) {
+.ImputeEOF1 <- function(X, X.na, n.eof, tol = 1e-2, max.iter = 10000, verbose = TRUE, prev = NULL) {
     X.rec <- X
     v <- NULL
     rmse <- Inf
-    prval <- NULL
     for (i in 2:max.iter) {
         if (requireNamespace("irlba", quietly = TRUE)) {
             set.seed(42)
-            prval <- irlba::irlba(X.rec, nv = n.eof)
+            prval <- irlba::irlba(X.rec, nv = n.eof, v = prev)
         } else {
             prval <- base::svd(X.rec, nu = n.eof, nv = n.eof)
             prval$d <- prval$d[1:n.eof]
@@ -177,7 +189,7 @@ ImputeEOF <- function(formula, data = NULL, max.eof = NULL,
         if (rmse[i-1] - rmse[i] > tol) {
             X.rec[X.na] <- R[X.na]
         } else {
-            return(X.rec)
+            return(list(X.rec = X.rec, prval = prval))
         }
     }
 }

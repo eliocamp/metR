@@ -128,37 +128,44 @@ data(geopotential)
 # Weigthed geopotential anomaly
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)), by = .(lon, lat, month(date))]
 
-eof <- EOF(gh.t.w | date ~ lon + lat, data = geopotential, n = 1:2)
+eof <- EOF(gh.t.w ~ date | lon + lat, data = geopotential, n = 1:2)
 str(eof)
 ```
 
 The returned list of `data.table`s hold the right and left singular vectors, and the singular values asociated with them. There's no need to think about S or T mode, since both are calculated and returned. Always the right (left) singular vectors are fields defined with the dimensions on the right (left) hand of the formula. In this case, the right `data.table` holds spatial fields and the left `data.table` holds a timeseries. 
 
-If we invert the formula call, the result is identical (up to small numerical errors) but with the right and left singular vectors switched. 
+If we invert the formula call, the result is identical (up to small numerical errors, maybe) but with the right and left singular vectors switched. 
 
 ```{r}
-eof2 <- EOF(gh.t.w | lon + lat ~ date, data = geopotential, n = 1:2)
+eof2 <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1:2)
 str(eof2)
 ```
 
 ```{r}
-sum(eof2$right$value - eof$left$value)
+sum(eof2$right$gh.t.w - eof$left$gh.t.w)
 ```
+
+Alternatively, `EOF()` also accepts the (probably) more familiar `dcast` interface.
+
+```{r}
+eof2 <- EOF(lon + lat ~ date, value.var = "gh.t.w", data = geopotential, n = 1:2)
+```
+
 
 For completion, let's plot each Principal Component. 
 
 ```{r}
 ggplot(eof$right, aes(lon, lat)) +
-    geom_contour_fill(aes(z = value), circular = "x", binwidth = 0.01) +
+    geom_contour_fill(aes(z = gh.t.w), circular = "x", binwidth = 0.01) +
     scale_fill_divergent() +
     coord_polar() +
     facet_wrap(~PC) 
 
 DivideTimeseries(
-    ggplot(eof$left, aes(date, value)) +
+    ggplot(eof$left, aes(date, gh.t.w)) +
         geom_line(aes(color = PC)) +
         scale_x_date(expand = c(0, 0)), 
-    eof$left$date, n = 2, xlab = "date", ylab = "value")
+    eof$left$date, n = 2, xlab = "date", ylab = "gh.t.w")
 ```
 
 Where the 1st Principal Component is clearly the [Antarctic Oscillation](http://www.cpc.ncep.noaa.gov/products/precip/CWlink/daily_ao_index/aao/aao.shtml) and the 2nd Principal Component looks like the Pacific–South American Pattern. 
@@ -173,12 +180,12 @@ data(claris.stations)   # info and location for each station
 claris[, max.t := Anomaly(max), by = .(yday(date), id)]
 claris[is.na(max.t), max.t := 0]
 
-eof <- EOF(max.t | date ~ id, data = claris, 1:3)
+eof <- EOF(max.t ~ date | id, data = claris, n = 1:3)
 
 eof$right <- eof$right[claris.stations, on = "id"]   # join with geographical info
 
 ggplot(eof$right, aes(lon, lat)) + 
-    geom_point(aes(color = value, size = abs(value))) +
+    geom_point(aes(color = max.t, size = abs(max.t))) +
     facet_wrap(~PC) +
     scale_color_divergent() +
     coord_quickmap()
@@ -193,7 +200,7 @@ As shown above, `EOF()` needs a complete data matrix. Imputing missing values is
 data(claris)
 claris[, max.t := Anomaly(max, na.rm = T), by = .(yday(date), id)]
 
-claris[, imputed := ImputeEOF(max.t | date ~ id)]
+claris[, imputed := ImputeEOF(max.t ~ date | id)]
 str(claris)
 ```
 

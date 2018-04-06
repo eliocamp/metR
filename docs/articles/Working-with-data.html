@@ -190,19 +190,19 @@ file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span cla
 <span class="co"># Weigthed geopotential anomaly</span>
 geopotential[, gh.t.w <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(gh)<span class="op">*</span><span class="kw">sqrt</span>(<span class="kw">cos</span>(lat<span class="op">*</span>pi<span class="op">/</span><span class="dv">180</span>)), by =<span class="st"> </span>.(lon, lat, <span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">month</a></span>(date))]
 
-eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">|</span><span class="st"> </span>date <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
+eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">~</span><span class="st"> </span>date <span class="op">|</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
 <span class="kw">str</span>(eof)
 <span class="co">#&gt; List of 3</span>
 <span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:</span>
-<span class="co">#&gt;   ..$ lon  : num [1:8064] 0 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt;   ..$ lat  : num [1:8064] -90 -87.5 -85 -82.5 -80 -77.5 -75 -72.5 -70 -67.5 ...</span>
-<span class="co">#&gt;   ..$ PC   : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="co">#&gt;   ..$ value: num [1:8064] 2.86e-10 6.78e-03 9.44e-03 1.23e-02 1.52e-02 ...</span>
+<span class="co">#&gt;   ..$ lon   : num [1:8064] 0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;   ..$ lat   : num [1:8064] -90 -87.5 -85 -82.5 -80 -77.5 -75 -72.5 -70 -67.5 ...</span>
+<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="co">#&gt;   ..$ gh.t.w: num [1:8064] 2.86e-10 6.78e-03 9.44e-03 1.23e-02 1.52e-02 ...</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  $ left :Classes 'data.table' and 'data.frame':  264 obs. of  3 variables:</span>
-<span class="co">#&gt;   ..$ date : Date[1:264], format: "1990-01-01" ...</span>
-<span class="co">#&gt;   ..$ PC   : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="co">#&gt;   ..$ value: num [1:264] 0.0668 -0.0897 -0.0198 0.1765 0.1711 ...</span>
+<span class="co">#&gt;   ..$ date  : Date[1:264], format: "1990-01-01" ...</span>
+<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="co">#&gt;   ..$ gh.t.w: num [1:264] 0.0668 -0.0897 -0.0198 0.1765 0.1711 ...</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  $ sdev :Classes 'data.table' and 'data.frame':  2 obs. of  3 variables:</span>
 <span class="co">#&gt;   ..$ PC: int [1:2] 1 2</span>
@@ -210,42 +210,44 @@ eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.htm
 <span class="co">#&gt;   ..$ r2: num [1:2] 0.278 0.118</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></code></pre></div>
 <p>The returned list of <code>data.table</code>s hold the right and left singular vectors, and the singular values asociated with them. There’s no need to think about S or T mode, since both are calculated and returned. Always the right (left) singular vectors are fields defined with the dimensions on the right (left) hand of the formula. In this case, the right <code>data.table</code> holds spatial fields and the left <code>data.table</code> holds a timeseries.</p>
-<p>If we invert the formula call, the result is identical (up to small numerical errors) but with the right and left singular vectors switched.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eof2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">|</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat <span class="op">~</span><span class="st"> </span>date, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
+<p>If we invert the formula call, the result is identical (up to small numerical errors, maybe) but with the right and left singular vectors switched.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eof2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">~</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span>lon <span class="op">|</span><span class="st"> </span>date, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)
 <span class="kw">str</span>(eof2)
 <span class="co">#&gt; List of 3</span>
 <span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  264 obs. of  3 variables:</span>
-<span class="co">#&gt;   ..$ date : Date[1:264], format: "1990-01-01" ...</span>
-<span class="co">#&gt;   ..$ PC   : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="co">#&gt;   ..$ value: num [1:264] -0.0668 0.0897 0.0198 -0.1765 -0.1711 ...</span>
+<span class="co">#&gt;   ..$ date  : Date[1:264], format: "1990-01-01" ...</span>
+<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="co">#&gt;   ..$ gh.t.w: num [1:264] -0.0668 0.0897 0.0198 -0.1765 -0.1711 ...</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  $ left :Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:</span>
-<span class="co">#&gt;   ..$ lon  : num [1:8064] 0 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt;   ..$ lat  : num [1:8064] -90 -87.5 -85 -82.5 -80 -77.5 -75 -72.5 -70 -67.5 ...</span>
-<span class="co">#&gt;   ..$ PC   : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="co">#&gt;   ..$ value: num [1:8064] -2.86e-10 -6.78e-03 -9.44e-03 -1.23e-02 -1.52e-02 ...</span>
+<span class="co">#&gt;   ..$ lat   : num [1:8064] -90 -90 -90 -90 -90 -90 -90 -90 -90 -90 ...</span>
+<span class="co">#&gt;   ..$ lon   : num [1:8064] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span>
+<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="co">#&gt;   ..$ gh.t.w: num [1:8064] -2.86e-10 -2.86e-10 -2.86e-10 -2.86e-10 -2.86e-10 ...</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  $ sdev :Classes 'data.table' and 'data.frame':  2 obs. of  3 variables:</span>
 <span class="co">#&gt;   ..$ PC: int [1:2] 1 2</span>
 <span class="co">#&gt;   ..$ sd: num [1:2] 9295 6056</span>
 <span class="co">#&gt;   ..$ r2: num [1:2] 0.278 0.118</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(eof2<span class="op">$</span>right<span class="op">$</span>value <span class="op">-</span><span class="st"> </span>eof<span class="op">$</span>left<span class="op">$</span>value)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(eof2<span class="op">$</span>right<span class="op">$</span>gh.t.w <span class="op">-</span><span class="st"> </span>eof<span class="op">$</span>left<span class="op">$</span>gh.t.w)
 <span class="co">#&gt; [1] -2.640671e-08</span></code></pre></div>
+<p>Alternatively, <code><a href="../reference/EOF.html">EOF()</a></code> also accepts the (probably) more familiar <code>dcast</code> interface.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eof2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(lon <span class="op">+</span><span class="st"> </span>lat <span class="op">~</span><span class="st"> </span>date, <span class="dt">value.var =</span> <span class="st">"gh.t.w"</span>, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</code></pre></div>
 <p>For completion, let’s plot each Principal Component.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(eof<span class="op">$</span>right, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> value), <span class="dt">circular =</span> <span class="st">"x"</span>, <span class="dt">binwidth =</span> <span class="fl">0.01</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> gh.t.w), <span class="dt">circular =</span> <span class="st">"x"</span>, <span class="dt">binwidth =</span> <span class="fl">0.01</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>PC) </code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="kw"><a href="../reference/DivideTimeseries.html">DivideTimeseries</a></span>(
-    <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(eof<span class="op">$</span>left, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, value)) <span class="op">+</span>
+    <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(eof<span class="op">$</span>left, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, gh.t.w)) <span class="op">+</span>
 <span class="st">        </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> PC)) <span class="op">+</span>
 <span class="st">        </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)), 
-    eof<span class="op">$</span>left<span class="op">$</span>date, <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">xlab =</span> <span class="st">"date"</span>, <span class="dt">ylab =</span> <span class="st">"value"</span>)</code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-11-2.png" width="672"></p>
+    eof<span class="op">$</span>left<span class="op">$</span>date, <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">xlab =</span> <span class="st">"date"</span>, <span class="dt">ylab =</span> <span class="st">"gh.t.w"</span>)</code></pre></div>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-12-2.png" width="672"></p>
 <p>Where the 1st Principal Component is clearly the <a href="http://www.cpc.ncep.noaa.gov/products/precip/CWlink/daily_ao_index/aao/aao.shtml">Antarctic Oscillation</a> and the 2nd Principal Component looks like the Pacific–South American Pattern.</p>
 <p><code><a href="../reference/EOF.html">EOF()</a></code> not only works for regular grids.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(claris)            <span class="co"># station data of max and min temperature</span>
@@ -255,16 +257,16 @@ eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.htm
 claris[, max.t <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(max), by =<span class="st"> </span>.(<span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">yday</a></span>(date), id)]
 claris[<span class="kw">is.na</span>(max.t), max.t <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="dv">0</span>]
 
-eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(max.t <span class="op">|</span><span class="st"> </span>date <span class="op">~</span><span class="st"> </span>id, <span class="dt">data =</span> claris, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)
+eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(max.t <span class="op">~</span><span class="st"> </span>date <span class="op">|</span><span class="st"> </span>id, <span class="dt">data =</span> claris, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)
 
 eof<span class="op">$</span>right &lt;-<span class="st"> </span>eof<span class="op">$</span>right[claris.stations, on =<span class="st"> "id"</span>]   <span class="co"># join with geographical info</span>
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(eof<span class="op">$</span>right, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> value, <span class="dt">size =</span> <span class="kw">abs</span>(value))) <span class="op">+</span>
+<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> max.t, <span class="dt">size =</span> <span class="kw">abs</span>(max.t))) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>PC) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_color_divergent</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_quickmap</a></span>()</code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 </div>
 <div id="imputeeof" class="section level2">
 <h2 class="hasAnchor">
@@ -274,7 +276,7 @@ eof<span class="op">$</span>right &lt;-<span class="st"> </span>eof<span class="
 <span class="kw">data</span>(claris)
 claris[, max.t <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(max, <span class="dt">na.rm =</span> T), by =<span class="st"> </span>.(<span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">yday</a></span>(date), id)]
 
-claris[, imputed <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/ImputeEOF.html">ImputeEOF</a></span>(max.t <span class="op">|</span><span class="st"> </span>date <span class="op">~</span><span class="st"> </span>id)]
+claris[, imputed <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/ImputeEOF.html">ImputeEOF</a></span>(max.t <span class="op">~</span><span class="st"> </span>date <span class="op">|</span><span class="st"> </span>id)]
 <span class="kw">str</span>(claris)
 <span class="co">#&gt; Classes 'data.table' and 'data.frame':   241128 obs. of  6 variables:</span>
 <span class="co">#&gt;  $ id     : int  10008 10008 10008 10008 10008 10008 10008 10008 10008 10008 ...</span>
@@ -284,9 +286,9 @@ claris[, imputed <span class="op">:</span><span class="er">=</span><span class="
 <span class="co">#&gt;  $ max.t  : num  NA NA 3.173 0.4 0.533 ...</span>
 <span class="co">#&gt;  $ imputed: atomic  2.936 1.936 3.173 0.4 0.533 ...</span>
 <span class="co">#&gt;   ..- attr(*, "eof")= num 6</span>
-<span class="co">#&gt;   ..- attr(*, "rmse")= num 1.94</span>
+<span class="co">#&gt;   ..- attr(*, "rmse")= num 1.92</span>
 <span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></code></pre></div>
-<p>The imputed vector is returned along with the Root Mean Square Error estimated from crossvalidation and the number of EOFs used in the imputation as attributes. In this case, with 6 EOFs the imputed values have an estimated rmse of 1.94.</p>
+<p>The imputed vector is returned along with the Root Mean Square Error estimated from crossvalidation and the number of EOFs used in the imputation as attributes. In this case, with 6 EOFs the imputed values have an estimated rmse of 1.92.</p>
 </div>
 </div>
 <div id="physics" class="section level1">
@@ -308,7 +310,7 @@ claris[, imputed <span class="op">:</span><span class="er">=</span><span class="
                 <span class="dt">scale =</span> <span class="fl">3e4</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_quickmap</a></span>()
 <span class="co">#&gt; Warning: Removed 288 rows containing non-finite values (stat_vector).</span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 <p>There are several wrapers around <code><a href="../reference/Derivate.html">Derivate()</a></code> to perform other common related operations, <code><a href="../reference/Derivate.html">Laplacian()</a></code>, <code><a href="../reference/Derivate.html">Divergence()</a></code> and <code><a href="../reference/Derivate.html">Vorticity()</a></code>.</p>
 </div>
 <div id="geostrophicwind" class="section level2">
@@ -322,7 +324,7 @@ claris[, imputed <span class="op">:</span><span class="er">=</span><span class="
 <span class="st">    </span><span class="kw"><a href="../reference/geom_vector.html">geom_vector</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> u, <span class="dt">dy =</span> v), <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">skip.x =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_quickmap</a></span>()
 <span class="co">#&gt; Warning: Removed 288 rows containing non-finite values (stat_vector).</span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
 </div>
 <div id="thermodynamics" class="section level2">
 <h2 class="hasAnchor">

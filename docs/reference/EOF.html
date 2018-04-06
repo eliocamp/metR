@@ -121,7 +121,7 @@ Analysis or Empirical Orthogonal Functions)." />
 Analysis or Empirical Orthogonal Functions).</p>
     
 
-    <pre class="usage"><span class='fu'>EOF</span>(<span class='no'>formula</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>EOF</span>(<span class='no'>formula</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,6 +130,10 @@ Analysis or Empirical Orthogonal Functions).</p>
       <th>formula</th>
       <td><p>a formula passed to <code><a href='http://www.rdocumentation.org/packages/data.table/topics/dcast.data.table'>dcast</a></code> to build
 the matrix that will be used in the SVD decomposition (see Details)</p></td>
+    </tr>
+    <tr>
+      <th>value.var</th>
+      <td><p>optional name of the data column (see Details)</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -149,11 +153,15 @@ singular vectors, and of their explained variance.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Singular values can be computed over matrices so <code>formula</code> denotes how
-to build a matrix from the data. It is a formula of the form VAR | LHS ~ RHS
-in which VAR is the variable whose values will populate the matrix, and LHS
-represent the variables used to make the rows and RHS, the columns  of the matrix
-(the form LHS ~ RHS | VAR is also valid).</p>
-<p>The result of LHS ~ RHS and RHS ~ LHS (ie, terms reversed)
+to build a matrix from the data. It is a formula of the form VAR ~ LEFT | RIGHT
+(see <a href='http://www.rdocumentation.org/packages/Formula/topics/Formula'>Formula::Formula</a>) in which VAR is the variable whose values will
+populate the matrix, and LEFT represent the variables used to make the rows
+and RIGHT, the columns of the matrix.
+Think it like "VAR <em>as a function</em> of LEFT <em>and</em> RIGHT".</p>
+<p>Alternatively, if <code>value.var</code> is not <code>NULL</code>, it's possible to use the
+(probably) more familiar <a href='http://www.rdocumentation.org/packages/data.table/topics/dcast.data.table'>data.table::dcast</a> formula interface. In that case,
+<code>data</code> must be provided.</p>
+<p>The result of VAR ~ LHS | RHS and VAR ~ RHS | LHS (ie, terms reversed)
 is the same, with the exception that the order of the singular vector is
 reversed (right is left and left is right).</p>
 <p>The variable combination used in this formula <em>must</em> identify
@@ -161,7 +169,7 @@ an unique value in a cell. For the time being, no error will be raised, but
 there will be a message from <code><a href='http://www.rdocumentation.org/packages/data.table/topics/dcast.data.table'>dcast</a></code>.</p>
 <p>In the result, the <code>right</code> and <code>left</code> singular vectors have a
 value for each singular value and each combination of the variables
-used in RHS and LHS of <code>formula</code>, respectively.</p>
+used in RIGHT and LEFT of <code>formula</code>, respectively.</p>
 <p>It is much faster to compute only some singular vectors, so is advisable not
 to set n to <code>NULL</code>. If the irba package is installed, EOF uses
 <a href='http://www.rdocumentation.org/packages/irlba/topics/irlba'>irlba::irlba</a> instead of <a href='http://www.rdocumentation.org/packages/base/topics/svd'>base::svd</a> since it's much faster.</p>
@@ -192,27 +200,28 @@ to set n to <code>NULL</code>. If the irba package is installed, EOF uses
 #&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 5.045014e-07
 #&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 5.045014e-07
 #&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 5.045014e-07</div><div class='input'>
-<span class='no'>aao.svd</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> <span class='kw'>|</span> <span class='no'>lat</span> + <span class='no'>lon</span> ~ <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='co'># AAO field</span>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao.svd</span>$<span class='no'>left</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>$<span class='no'>left</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='img'><img src='EOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># AAO signal</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao.svd</span>$<span class='no'>right</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>date</span>, <span class='no'>value</span>)) +
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>$<span class='no'>right</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>date</span>, <span class='no'>gh.t.w</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>()</div><div class='img'><img src='EOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># % of explained variance</span>
-<span class='no'>aao.svd</span>$<span class='no'>sdev</span></div><div class='output co'>#&gt;    PC       sd        r2
+<span class='no'>aao</span>$<span class='no'>sdev</span></div><div class='output co'>#&gt;    PC       sd        r2
 #&gt; 1:  1 9295.148 0.2775804</div><div class='input'>
 <span class='co'># 1st eof for each month.</span>
-
-<span class='no'>aao2</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> <span class='kw'>|</span> <span class='no'>lat</span> + <span class='no'>lon</span> ~ <span class='no'>date</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)$<span class='no'>left</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>month</a></span>(<span class='no'>date</span>)]
+<span class='no'>aao2</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)$<span class='no'>left</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>month</a></span>(<span class='no'>date</span>)]
 
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao2</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a></span>(~ <span class='no'>month</span>)</div><div class='img'><img src='EOF-3.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+<span class='co'># Alternative interface</span>
+
+<span class='no'>aao2</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>lon</span> + <span class='no'>lat</span> ~ <span class='no'>date</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='st'>"gh.t.w"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

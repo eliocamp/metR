@@ -35,11 +35,11 @@ library(ggplot2)
 geopotential <- copy(geopotential)
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
       by = .(lon, lat, month(date))]
-aao.svd <- EOF(gh.t.w | lat + lon ~ date, data = geopotential, n = 1)
+aao <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1)
 
 # AAO field
 binwidth <- 0.01
-ggplot(aao.svd$left, aes(lon, lat, z = value)) +
+ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
     stat_contour_fill(binwidth = binwidth) +    # filled contours!
     scale_x_longitude() +
     scale_y_latitude(limits = c(-90, -20)) +
@@ -53,11 +53,11 @@ ggplot(aao.svd$left, aes(lon, lat, z = value)) +
 
 ``` r
 # AAO signal
-g <- ggplot(aao.svd$right, aes(date, value)) +
+g <- ggplot(aao$right, aes(date, gh.t.w)) +
     geom_line() +
     geom_smooth(span = 0.4)
 
-DivideTimeseries(g, aao.svd$right$date, xlab = "Date", ylab = "AAO signal")
+DivideTimeseries(g, aao$right$date, xlab = "Date", ylab = "AAO signal")
 #> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 #> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 #> `geom_smooth()` using method = 'loess' and formula 'y ~ x'

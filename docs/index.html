@@ -116,11 +116,11 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 geopotential &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/copy">copy</a></span>(geopotential)
 geopotential[, gh.t.w <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="reference/Anomaly.html">Anomaly</a></span>(gh)<span class="op">*</span><span class="kw">sqrt</span>(<span class="kw">cos</span>(lat<span class="op">*</span>pi<span class="op">/</span><span class="dv">180</span>)),
       by =<span class="st"> </span>.(lon, lat, <span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">month</a></span>(date))]
-aao.svd &lt;-<span class="st"> </span><span class="kw"><a href="reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">|</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span>lon <span class="op">~</span><span class="st"> </span>date, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span>)
+aao &lt;-<span class="st"> </span><span class="kw"><a href="reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">~</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span>lon <span class="op">|</span><span class="st"> </span>date, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span>)
 
 <span class="co"># AAO field</span>
 binwidth &lt;-<span class="st"> </span><span class="fl">0.01</span>
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao.svd<span class="op">$</span>left, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> value)) <span class="op">+</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao<span class="op">$</span>left, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> gh.t.w)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="reference/geom_contour_fill.html">stat_contour_fill</a></span>(<span class="dt">binwidth =</span> binwidth) <span class="op">+</span><span class="st">    </span><span class="co"># filled contours!</span>
 <span class="st">    </span><span class="kw"><a href="reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
@@ -130,11 +130,11 @@ binwidth &lt;-<span class="st"> </span><span class="fl">0.01</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</code></pre></div>
 <p><img src="README-field-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># AAO signal</span>
-g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao.svd<span class="op">$</span>right, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, value)) <span class="op">+</span>
+g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao<span class="op">$</span>right, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, gh.t.w)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_smooth">geom_smooth</a></span>(<span class="dt">span =</span> <span class="fl">0.4</span>)
 
-<span class="kw"><a href="reference/DivideTimeseries.html">DivideTimeseries</a></span>(g, aao.svd<span class="op">$</span>right<span class="op">$</span>date, <span class="dt">xlab =</span> <span class="st">"Date"</span>, <span class="dt">ylab =</span> <span class="st">"AAO signal"</span>)
+<span class="kw"><a href="reference/DivideTimeseries.html">DivideTimeseries</a></span>(g, aao<span class="op">$</span>right<span class="op">$</span>date, <span class="dt">xlab =</span> <span class="st">"Date"</span>, <span class="dt">ylab =</span> <span class="st">"AAO signal"</span>)
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span>
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span>
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></code></pre></div>

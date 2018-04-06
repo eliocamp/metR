@@ -4,12 +4,15 @@
 \alias{ImputeEOF}
 \title{Impute missing values}
 \usage{
-ImputeEOF(formula, data = NULL, max.eof = NULL, min.eof = 1, tol = 0.01,
-  max.iter = 10000, validation = NULL, verbose = interactive())
+ImputeEOF(formula, value.var = NULL, data = NULL, max.eof = NULL,
+  min.eof = 1, tol = 0.01, max.iter = 10000, validation = NULL,
+  verbose = interactive())
 }
 \arguments{
 \item{formula}{a formula passed to \code{\link[data.table]{dcast}} to build
 the matrix that will be used in the SVD decomposition (see Details)}
+
+\item{value.var}{optional name of the data column (see Details)}
 
 \item{data}{a data.frame}
 
@@ -36,10 +39,15 @@ Imputes missing values via Data Interpolating Empirical Orthogonal Functions
 }
 \details{
 Singular values can be computed over matrices so \code{formula} denotes how
-to build a matrix from the data. It is a formula of the form VAR | LHS ~ RHS
-in which VAR is the variable whose values will populate the matrix, and LHS
-represent the variables used to make the rows and RHS, the columns  of the matrix
-(the form LHS ~ RHS | VAR is also valid).
+to build a matrix from the data. It is a formula of the form VAR ~ LEFT | RIGHT
+(see \link[Formula:Formula]{Formula::Formula}) in which VAR is the variable whose values will
+populate the matrix, and LEFT represent the variables used to make the rows
+and RIGHT, the columns of the matrix.
+Think it like "VAR \emph{as a function} of LEFT \emph{and} RIGHT".
+
+Alternatively, if \code{value.var} is not \code{NULL}, it's possible to use the
+(probably) more familiar \link[data.table:dcast]{data.table::dcast} formula interface. In that case,
+\code{data} must be provided.
 
 If \code{data} is a matrix, the \code{formula} argument is ignored and the function
 returns a matrix.
@@ -49,15 +57,14 @@ library(data.table)
 data(geopotential)
 geopotential <- copy(geopotential)
 geopotential[, gh.t := Anomaly(gh), by = .(lat, lon, month(date))]
-# geopotential <- geopotential[date == date[1]]
 
 # Add gaps to field
 geopotential[, gh.gap := gh.t]
 set.seed(42)
 geopotential[sample(1:.N, .N*0.3), gh.gap := NA]
 
-max.eof <- 10
-geopotential[, gh.impute := ImputeEOF(gh.gap | lat + lon ~ date, max.eof = max.eof,
+max.eof <- 5    # change to a higher value
+geopotential[, gh.impute := ImputeEOF(gh.gap ~ lat + lon | date, max.eof = max.eof,
                                       verbose = TRUE, max.iter = 2000)]
 
 library(ggplot2)

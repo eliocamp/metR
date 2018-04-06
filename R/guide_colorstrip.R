@@ -155,7 +155,7 @@ guide_train.colorstrip <- function(guide, scale) {
     }
 
     guide$bar <- data.frame(colour = scale$map(.bar), value = .bar,
-                                stringsAsFactors = FALSE)
+                            stringsAsFactors = FALSE)
 
     ticks <- as.data.frame(setNames(list(scale$map(breaks)), scale$aesthetics[1]))
     ticks$.value <- breaks

@@ -4,11 +4,13 @@
 \alias{EOF}
 \title{Empirical Orthogonal Function}
 \usage{
-EOF(formula, data = NULL, n = 1)
+EOF(formula, value.var = NULL, data = NULL, n = 1)
 }
 \arguments{
 \item{formula}{a formula passed to \code{\link[data.table]{dcast}} to build
 the matrix that will be used in the SVD decomposition (see Details)}
+
+\item{value.var}{optional name of the data column (see Details)}
 
 \item{data}{a data.frame}
 
@@ -24,12 +26,17 @@ Analysis or Empirical Orthogonal Functions).
 }
 \details{
 Singular values can be computed over matrices so \code{formula} denotes how
-to build a matrix from the data. It is a formula of the form VAR | LHS ~ RHS
-in which VAR is the variable whose values will populate the matrix, and LHS
-represent the variables used to make the rows and RHS, the columns  of the matrix
-(the form LHS ~ RHS | VAR is also valid).
+to build a matrix from the data. It is a formula of the form VAR ~ LEFT | RIGHT
+(see \link[Formula:Formula]{Formula::Formula}) in which VAR is the variable whose values will
+populate the matrix, and LEFT represent the variables used to make the rows
+and RIGHT, the columns of the matrix.
+Think it like "VAR \emph{as a function} of LEFT \emph{and} RIGHT".
 
-The result of LHS ~ RHS and RHS ~ LHS (ie, terms reversed)
+Alternatively, if \code{value.var} is not \code{NULL}, it's possible to use the
+(probably) more familiar \link[data.table:dcast]{data.table::dcast} formula interface. In that case,
+\code{data} must be provided.
+
+The result of VAR ~ LHS | RHS and VAR ~ RHS | LHS (ie, terms reversed)
 is the same, with the exception that the order of the singular vector is
 reversed (right is left and left is right).
 
@@ -39,7 +46,7 @@ there will be a message from \code{\link[data.table]{dcast}}.
 
 In the result, the \code{right} and \code{left} singular vectors have a
 value for each singular value and each combination of the variables
-used in RHS and LHS of \code{formula}, respectively.
+used in RIGHT and LEFT of \code{formula}, respectively.
 
 It is much faster to compute only some singular vectors, so is advisable not
 to set n to \code{NULL}. If the irba package is installed, EOF uses
@@ -54,28 +61,31 @@ geopotential <- copy(geopotential)
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
       by = .(lon, lat, month(date))]
 
-aao.svd <- EOF(gh.t.w | lat + lon ~ date, data = geopotential, n = 1)
+aao <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1)
 
 # AAO field
 library(ggplot2)
-ggplot(aao.svd$left, aes(lon, lat, z = value)) +
+ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
     geom_contour(aes(color = ..level..)) +
     coord_polar()
 
 # AAO signal
-ggplot(aao.svd$right, aes(date, value)) +
+ggplot(aao$right, aes(date, gh.t.w)) +
     geom_line()
 
 # \% of explained variance
-aao.svd$sdev
+aao$sdev
 
 # 1st eof for each month.
-
-aao2 <- geopotential[, EOF(gh.t.w | lat + lon ~ date, n = 1)$left, by = month(date)]
+aao2 <- geopotential[, EOF(gh.t.w ~ lat + lon | date, n = 1)$left, by = month(date)]
 
 ggplot(aao2, aes(lon, lat)) +
-    geom_contour(aes(z = value, color = ..level..)) +
+    geom_contour(aes(z = gh.t.w, color = ..level..)) +
     facet_wrap(~ month)
+
+# Alternative interface
+
+aao2 <- EOF(lon + lat ~ date, value.var = "gh.t.w", data = geopotential)
 
 }
 \seealso{

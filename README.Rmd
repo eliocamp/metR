@@ -36,6 +36,12 @@ You can install metR from github with:
 devtools::install_github("eliocamp/metR")
 ```
 
+You might need to install the netcdf and udunits2 libraries. On Ubuntu and it's derivatives this can be done by typing 
+
+```
+sudo apt install libnetcdf-dev netcdf-bin libudunits2-dev
+```
+
 ## Examples
 
 In this example we easily perform Principal Components Decomposition (EOF) on monthly geopotential height and plot it to get the Antarctic Oscillation. 

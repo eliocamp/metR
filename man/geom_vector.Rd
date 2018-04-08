@@ -7,8 +7,8 @@
 geom_vector(mapping = NULL, data = NULL, stat = StatVector,
   position = "identity", ..., scale = 1, scale.x = scale,
   scale.y = scale, min.mag = 0, skip = 0, skip.x = skip,
-  skip.y = skip, arrow.angle = 15, arrow.length = 0.2,
-  arrow.ends = "last", arrow.type = "open",
+  skip.y = skip, arrow.angle = 15, arrow.length = 0.5,
+  arrow.ends = "last", arrow.type = "closed",
   arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
   arrow.ends, type = arrow.type), lineend = "butt", na.rm = FALSE,
   show.legend = NA, inherit.aes = TRUE)
@@ -77,9 +77,10 @@ vector fields characterized by magnitude of the \code{x} and \code{y} components
 }
 \examples{
 speed <- expand.grid(lon = 1:360, lat = -90:0)
+set.seed(42)
 speed <- transform(speed,
-                   vx = 1,
-                   vy = 0.3)
+                   vx = rnorm(nrow(speed)),
+                   vy = rnorm(nrow(speed)))
 library(ggplot2)
 (g <- ggplot(speed, aes(lon, lat)) +
     geom_vector(aes(dx = vx, dy = vy), scale = 5,
@@ -90,7 +91,7 @@ library(ggplot2)
 # min.mag.
  ggplot(speed, aes(lon, lat)) +
     geom_vector(aes(dx = vx, dy = vy, scale.x = 5*cos(lon*pi/180)),
-    skip = 7)
+                skip = 7)
 
 # Note that the segments respond to coordinate
 g + coord_polar()

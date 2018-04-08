@@ -7,8 +7,8 @@
 geom_arrow(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", ..., start = 0, direction = 1, scale = 1,
   min.mag = 0, skip = 0, skip.x = skip, skip.y = skip,
-  arrow.angle = 15, arrow.length = 0.2, arrow.ends = "last",
-  arrow.type = "open", arrow = grid::arrow(arrow.angle, unit(arrow.length,
+  arrow.angle = 15, arrow.length = 0.5, arrow.ends = "last",
+  arrow.type = "closed", arrow = grid::arrow(arrow.angle, unit(arrow.length,
   "lines"), ends = arrow.ends, type = arrow.type), lineend = "butt",
   na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
 }
@@ -111,14 +111,14 @@ meteorological standard, for example, use \code{star = -90} and \code{direction 
 \examples{
 field <- expand.grid(x = seq.Date(as.Date("2017-01-01"), as.Date("2017-01-31"), "2 days"),
                      y = 1:10)
+set.seed(42)
 field$u <- rnorm(nrow(field))
 field$v <- rnorm(nrow(field))
 field$V <- with(field, sqrt(u^2 + v^2))
 field$dir <- with(field, atan2(v, u))*180/pi
 library(ggplot2)
 ggplot(field, aes(x, y)) +
-    geom_arrow(aes(mag = V, angle = dir), color = "red",
-               scale = 0.05, start = 0)
+    geom_arrow(aes(mag = V, angle = dir), scale = 0.05, start = 0)
 
 }
 \seealso{

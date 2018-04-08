@@ -12,9 +12,10 @@
 #'
 #' @examples
 #' speed <- expand.grid(lon = 1:360, lat = -90:0)
+#' set.seed(42)
 #' speed <- transform(speed,
-#'                    vx = 1,
-#'                    vy = 0.3)
+#'                    vx = rnorm(nrow(speed)),
+#'                    vy = rnorm(nrow(speed)))
 #' library(ggplot2)
 #' (g <- ggplot(speed, aes(lon, lat)) +
 #'     geom_vector(aes(dx = vx, dy = vy), scale = 5,
@@ -25,7 +26,7 @@
 #' # min.mag.
 #'  ggplot(speed, aes(lon, lat)) +
 #'     geom_vector(aes(dx = vx, dy = vy, scale.x = 5*cos(lon*pi/180)),
-#'     skip = 7)
+#'                 skip = 7)
 #'
 #' # Note that the segments respond to coordinate
 #' g + coord_polar()
@@ -57,9 +58,9 @@ geom_vector <- function(mapping = NULL, data = NULL,
                        skip.x = skip,
                        skip.y = skip,
                        arrow.angle = 15,
-                       arrow.length = 0.2,
+                       arrow.length = 0.5,
                        arrow.ends = "last",
-                       arrow.type = "open",
+                       arrow.type = "closed",
                        arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"),
                                            ends = arrow.ends, type = arrow.type),
                        lineend = "butt",
@@ -70,7 +71,7 @@ geom_vector <- function(mapping = NULL, data = NULL,
         data = data,
         mapping = mapping,
         stat = stat,
-        geom = GeomSegment,
+        geom = GeomVector,
         position = position,
         show.legend = show.legend,
         inherit.aes = inherit.aes,
@@ -88,7 +89,7 @@ geom_vector <- function(mapping = NULL, data = NULL,
     )
 }
 
-#' @import ggplot2
+
 StatVector <- ggplot2::ggproto("StatVector", ggplot2::Stat,
     required_aes = c("x", "y", "dx", "dy"),
     default_aes = ggplot2::aes(scale = 1, scale.x = scale, scale.y = scale, min.mag = 0),
@@ -109,4 +110,52 @@ StatVector <- ggplot2::ggproto("StatVector", ggplot2::Stat,
                            sqrt(dx^2 + dy^2) >= min.mag)
         data
         }
+)
+
+
+GeomVector <- ggproto("GeomSegment", ggplot2::GeomSegment,
+
+  draw_panel = function(data, panel_params, coord, arrow = NULL,
+                        lineend = "butt", linejoin = "round", na.rm = FALSE) {
+
+      data <- remove_missing(data, na.rm = na.rm,
+                             c("x", "y", "xend", "yend", "linetype", "size", "shape"),
+                             name = "geom_segment")
+      mag <- with(data, Mag(x - xend, y - yend))
+      mag <- mag/max(mag, na.rm = T)
+      arrow$length <- unit(as.numeric(arrow$length)*mag, attr(arrow$length, "unit"))
+
+      if (plyr::empty(data)) return(zeroGrob())
+
+      if (coord$is_linear()) {
+          coord <- coord$transform(data, panel_params)
+
+          return(segmentsGrob(coord$x, coord$y, coord$xend, coord$yend,
+                              default.units = "native",
+                              gp = gpar(
+                                  col = alpha(coord$colour, coord$alpha),
+                                  fill = alpha(coord$colour, coord$alpha),
+                                  lwd = coord$size * .pt,
+                                  lty = coord$linetype,
+                                  lineend = lineend,
+                                  linejoin = linejoin
+                              ),
+                              arrow = arrow
+          ))
+      }
+
+
+      data$group <- 1:nrow(data)
+      starts <- subset(data, select = c(-xend, -yend))
+      ends <- plyr::rename(subset(data, select = c(-x, -y)), c("xend" = "x", "yend" = "y"),
+                           warn_missing = FALSE)
+
+      pieces <- rbind(starts, ends)
+      pieces <- pieces[order(pieces$group),]
+
+      GeomPath$draw_panel(pieces, panel_params, coord, arrow = arrow,
+                          lineend = lineend)
+  },
+
+  draw_key = draw_key_path
 )

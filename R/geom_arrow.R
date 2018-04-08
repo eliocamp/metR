@@ -29,14 +29,14 @@
 #' @examples
 #' field <- expand.grid(x = seq.Date(as.Date("2017-01-01"), as.Date("2017-01-31"), "2 days"),
 #'                      y = 1:10)
+#' set.seed(42)
 #' field$u <- rnorm(nrow(field))
 #' field$v <- rnorm(nrow(field))
 #' field$V <- with(field, sqrt(u^2 + v^2))
 #' field$dir <- with(field, atan2(v, u))*180/pi
 #' library(ggplot2)
 #' ggplot(field, aes(x, y)) +
-#'     geom_arrow(aes(mag = V, angle = dir), color = "red",
-#'                scale = 0.05, start = 0)
+#'     geom_arrow(aes(mag = V, angle = dir), scale = 0.05, start = 0)
 #'
 #' @export
 #' @family ggplot2 helpers
@@ -51,9 +51,9 @@ geom_arrow <- function(mapping = NULL, data = NULL,
                        skip.x = skip,
                        skip.y = skip,
                        arrow.angle = 15,
-                       arrow.length = 0.2,
+                       arrow.length = 0.5,
                        arrow.ends = "last",
-                       arrow.type = "open",
+                       arrow.type = "closed",
                        arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"),
                                            ends = arrow.ends, type = arrow.type),
                        lineend = "butt",
@@ -80,6 +80,7 @@ geom_arrow <- function(mapping = NULL, data = NULL,
               ...)
     )
 }
+
 GeomArrow <- ggplot2::ggproto("GeomArrow", Geom,
   required_aes = c("x", "y", "mag", "angle"),
   default_aes = ggplot2::aes(color = "black", scale = 1, size = 0.5, min.mag = 0,
@@ -102,6 +103,9 @@ GeomArrow <- ggplot2::ggproto("GeomArrow", Geom,
                          grid::unit(coords$x, "npc") + grid::unit(coords$dx, "snpc"))
       yy <- grid::unit.c(grid::unit(coords$y, "npc"),
                          grid::unit(coords$y, "npc") + grid::unit(coords$dy, "snpc"))
+
+      mag <- with(coords, mag*scale/max(mag*scale, na.rm = T))
+      arrow$length <- unit(as.numeric(arrow$length)*mag, attr(arrow$length, "unit"))
 
       pol <- grid::polylineGrob(x = xx, y = yy,
                                 default.units = "npc",

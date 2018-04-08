@@ -1,3 +1,6 @@
+# metR 0.1.9000
+- Arrows in `geom_arrow()` and `geom_vector()` scale with vector magnitude. 
+
 # metR 0.1
 - New function: `GetTopography()`
 - `ReadNetCDF()` now can output arrays and vectors.

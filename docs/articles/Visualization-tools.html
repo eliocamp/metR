@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> • metR</title>
+<title>Visualization tools • metR</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Visualization tools">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Visualization-tools.html">UNKNOWN TITLE</a>
+      <a href="../articles/Visualization-tools.html">Visualization tools</a>
     </li>
     <li>
       <a href="../articles/Working-with-data.html">Working with data</a>
@@ -82,8 +82,10 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1></h1>
+      <h1>Visualization tools</h1>
+                        <h4 class="author">Elio Campitelli</h4>
             
+            <h4 class="date">2018-04-08</h4>
       
       <small>Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Visualization-tools.Rmd"><code>vignettes/Visualization-tools.Rmd</code></a></small>
 
@@ -92,43 +94,11 @@
     
     
 <div class="contents">
-<table class="table"><tbody>
-<tr class="odd">
-<td>title: “Visualization tools”</td>
-</tr>
-<tr class="even">
-<td>author: “Elio Campitelli”</td>
-</tr>
-<tr class="odd">
-<td>date: “2018-04-08”</td>
-</tr>
-<tr class="even">
-<td>output:</td>
-</tr>
-<tr class="odd">
-<td>rmarkdown::html_vignette:</td>
-</tr>
-<tr class="even">
-<td>fig_width: 7</td>
-</tr>
-<tr class="odd">
-<td>vignette: &gt;</td>
-</tr>
-<tr class="even">
-<td>%</td>
-</tr>
-<tr class="odd">
-<td>%</td>
-</tr>
-<tr class="even">
-<td>%</td>
-</tr>
-</tbody></table>
-<p>One of the “conceptual branches” of metR is the <em>visualization tools</em>. These are a set of functions that interface with <a href="http://ggplot2.tidyverse.org/index.html">ggplot2</a> for easier and better plotting of meteorological (an other) fields.</p>
+<p>One of the “conceptual branches” of <code>metR</code> is the <em>visualization tools</em>. These are a set of functions that interface with <a href="http://ggplot2.tidyverse.org/index.html">ggplot2</a> for easier and better plotting of meteorological (an other) fields.</p>
 <div id="scales" class="section level1">
 <h1 class="hasAnchor">
 <a href="#scales" class="anchor"></a>Scales</h1>
-<p>Many meteorological fields are defined in a longitude×latitude×level grid, so metR includes scales for each dimension. These are glorified wrapers around <code>scale_*_continuous()</code> with sensible defaults and, in the case of <code>scale_*_level()</code>, the implementation of <code><a href="../reference/reverselog_trans.html">reverselog_trans()</a></code>.</p>
+<p>Many meteorological fields are defined in a longitude×latitude×level grid, so <code>metR</code> includes scales for each dimension. These are glorified wrapers around <code>scale_*_continuous()</code> with sensible defaults and, in the case of <code>scale_*_level()</code>, the implementation of <code><a href="../reference/reverselog_trans.html">reverselog_trans()</a></code>.</p>
 <p>There are also <code><a href="../reference/scale_divergent.html">scale_color_divergent()</a></code> and <code><a href="../reference/scale_divergent.html">scale_fill_divergent()</a></code> which are wrapers around <code>scale_*_gradient2()</code> but with sane default colors for positive and negative values –particularily useful for plotting anomaly values.</p>
 <p>To see how this scales work, let’s visualize the vertical distribution of temperature anomalies from the zonal mean.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(metR)
@@ -154,7 +124,6 @@ temperature[, air.z <span class="op">:</span><span class="er">=</span><span clas
 <div id="geoms-and-stats" class="section level1">
 <h1 class="hasAnchor">
 <a href="#geoms-and-stats" class="anchor"></a>Geoms and stats</h1>
-<p>metR implements one geom and one stat. XXX</p>
 <div id="stat_contour_fill" class="section level2">
 <h2 class="hasAnchor">
 <a href="#stat_contour_fill" class="anchor"></a>stat_contour_fill()</h2>

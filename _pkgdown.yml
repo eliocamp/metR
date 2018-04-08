@@ -12,6 +12,7 @@ reference:
       - geom_text_contour
       - geom_vector
       - geom_arrow
+      - geom_streamline
       - geom_relief
       - stat_subset
       - stat_na
@@ -55,6 +56,7 @@ reference:
       - Mag
       - JumpBy
       - ConvertLongitude
+      - spherical
   - title: Datasets
     desc: sample datasets
     contents:

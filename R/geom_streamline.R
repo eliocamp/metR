@@ -334,4 +334,5 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     return(setDF(points[, .(x, y, group, sim)]))
 }
 
+#' @importFrom memoise memoise
 streamline.f <- memoise::memoise(streamline)

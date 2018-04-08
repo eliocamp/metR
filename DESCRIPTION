@@ -36,7 +36,8 @@ Imports:
     formula.tools,
     plyr,
     digest,
-    fields
+    fields,
+    memoise
 RoxygenNote: 6.0.1.9000
 Suggests: 
     knitr,

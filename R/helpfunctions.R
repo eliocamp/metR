@@ -330,3 +330,49 @@ if(getRversion() >= "2.15.1") {
            "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2",
            "group", "sim", "point"))
 }
+
+
+#' Transform between spherical coordinates and phisical coordinates
+#'
+#' Transform a longitude or latitude interval into the equivalent in meters depending
+#' on latitude.
+#'
+#' @param dx,dy interval in meters
+#' @param dlon,dlat interval in degrees
+#' @param lat latitude, in degrees
+#' @param a radius of the Earth
+#'
+#' @examples
+#'
+#' library(data.table)
+#' data(geopotential)
+#' geopotential <- geopotential[date == date[1]]
+#'
+#' # Geostrophic wind
+#' geopotential[, c("u", "v") := GeostrophicWind(gh, lon, lat)]  # in meters/second
+#' geopotential[, c("dlon", "dlat") := .(dlon(u, lat), dlat(v))] # in degrees/second
+#' geopotential[, c("u2", "v2") := .(dx(dlon, lat), dy(dlat))]   # again in degrees/second
+#'
+#' @name spherical
+#' @export
+dlon <- function(dx, lat, a = 6731000) {
+    return(dx/(a*cos(lat*pi/180))*180/pi)
+}
+
+#' @export
+#' @rdname spherical
+dlat <- function(dy, a = 6731000) {
+    return(dy/a*180/pi)
+}
+
+#' @export
+#' @rdname spherical
+dx <- function(dlon, lat, a = 6731000) {
+        return(dlon*pi/180*a*cos(lat*pi/180))
+}
+
+#' @export
+#' @rdname spherical
+dy <- function(dlat, a = 6731000) {
+        return(dlat*a*pi/180)
+}

@@ -6,15 +6,15 @@ output:
     rmarkdown::html_vignette:
         fig_width: 7
 vignette: >
-  %\VignetteIndexEntry{Visualization tools}
+%\VignetteIndexEntry{Visualization tools}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
----
-
-```{r setup, include = FALSE}
+  ---
+  
+  ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+collapse = TRUE,
+comment = "#>"
 )
 ```
 
@@ -37,7 +37,7 @@ temperature[, air.z := Anomaly(air), by = .(lat, lev)]
 
 # Plot made with base ggplot
 (g <- ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
-    geom_contour(aes(color = ..level..)))
+        geom_contour(aes(color = ..level..)))
 ```
 
 While this is fine, since pressure levels are roughly proportional to $\mathrm{e}^{-z}$ in meteorology we usually plot the vertical coordinate as $-\log(p)$. However, while ggplot2 has `scale_y_log10()` and `scale_y_reverse()`, they don't work together. `metR` defines the new transformation `reverselog_trans()` that can be used with any scale but that is the default for `scale_*_level()`. 
@@ -138,8 +138,8 @@ For example, it can be used if you have a correlation field and want to mark onl
 data(geopotential)    # geopotential height at 700hPa for the southern hemisphere. 
 
 ggplot(geopotential[, gh.base := gh[lon == 120 & lat == -50], by = date][
-           , .(correlation = cor(gh.base, gh)), 
-           by = .(lon, lat)],
+    , .(correlation = cor(gh.base, gh)), 
+    by = .(lon, lat)],
     aes(lon, lat, z = correlation)) +
     geom_contour_fill(breaks = MakeBreaks(0.1)) +
     stat_subset(aes(subset = correlation > 0.5),
@@ -158,15 +158,13 @@ So, as an example, we can plot the temperature gradient like this:
 
 ```{r,  fig.width = 7}
 temperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat, 
-                                               cyclical = c(TRUE, FALSE), 
-                                               sphere = T), 
-                by = lev]
+                                            cyclical = c(TRUE, FALSE)), 
+            by = lev]
 
 ggplot(temperature[lev == 500], aes(lon, lat)) +
     stat_contour_fill(aes(z = air.z)) +
     geom_vector(aes(dx = t.dx, dy = t.dy), skip.x = 2, 
-                skip.y = 1, scale = 5e5, min.mag = 2e-6,
-               arrow.size = 0.3) +
+                skip.y = 1, scale = 5, min.mag = 2e-1) +
     scale_y_latitude(limits = c(-90, 0)) +
     scale_x_longitude()
 ```
@@ -193,7 +191,7 @@ temperature[, mag := Mag(t.dx, t.dy)][, angle := atan2(t.dy, t.dx)*180/pi]
 ggplot(temperature[lev == 500], aes(lon, lat)) +
     stat_contour_fill(aes(z = air.z)) +
     geom_arrow(aes(mag = mag, angle = angle), skip.x = 2, 
-                skip.y = 1, scale = 5e3, min.mag = 2e-6) +
+               skip.y = 1, scale = 0.05, min.mag = 2e-1) +
     scale_y_latitude(limits = c(-90, 0)) +
     scale_x_longitude()
 ```
@@ -202,7 +200,27 @@ The `start` and  `direction` arguments adjust the behaviour of the arrows. This 
 
 In contrast to `geom_vector()`, `geom_arrow()` **does** preserve direction under coordinate transforms. This means that, for example, an arrow at a 45° angle represents wind from the southwest regardless of the `x` and `y` scales (but note that this also means that it might not be parallel to the streamlines). For this reason this geom does work with discrete scales.
 
-Forthcomming is the implementation of streamlines :).
+## geom_streamline
+
+Streamlines are paths tangential to a vector field and provide an intuitive way of visualizing vector fields. `geom_streamline()` computes streamlines via Euler integration. 
+
+```{r}
+(g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
+     stat_contour_fill(aes(z = air.z), circular = "x") +
+     geom_streamline(aes(dx = t.dy, dy = -t.dx), L = 10, res = 2,   
+                     arrow.length = 0.3, arrow.angle = 7) + 
+     scale_y_latitude(limits = c(-90, 0)) +
+     scale_x_longitude())
+```
+
+There are several parametres that control de feel of the result. `L` and `res` control the length and resolution, while the `skip` parameters change the amount of the streamlines. More in depth control over the simulation can be accomplished by the `S` and `dt` parameters. 
+
+Since streamlines imply a tight relationship between the vector field and the spatial dimensions, it's important that their units are compatible. A wind field in m/s in a lonitude-latitude grid should first be converted into degrees/s. The functions `dlon()` and `dlat()` are an easy way of doing this. This tight coupling also means that they are robuts to coordinate transformations. 
+
+```{r}
+g + coord_polar()
+```
+
 
 # Other goodies
 
@@ -214,7 +232,7 @@ The use of `geom_contour()` and `geom_contour_fill()` generates a problem becaus
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour2(aes(color = ..level..), breaks = MakeBreaks(2)) +
     scale_color_divergent(guide = "legend",
-                         breaks = MakeBreaks(2)) +
+                          breaks = MakeBreaks(2)) +
     scale_x_longitude() +
     scale_y_latitude() + theme(legend.position = "bottom")
 ```
@@ -241,11 +259,11 @@ See how in the figure on the left, contours that cross the 0° longitude mark ar
 
 ```{r, fig.width = 3.3, fig.show = 'hold', warning = FALSE}
 (g <- ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-    geom_contour(binwidth = 1.5) +
-    scale_fill_divergent() +
-    scale_x_longitude() +
-    scale_y_latitude(limits = c(-90, -20)) +
-    coord_polar())
+     geom_contour(binwidth = 1.5) +
+     scale_fill_divergent() +
+     scale_x_longitude() +
+     scale_y_latitude(limits = c(-90, -20)) +
+     coord_polar())
 
 g %+% RepeatCircular(temperature[lev == 300])    # change the data. 
 ```

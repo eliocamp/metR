@@ -1,5 +1,8 @@
 # metR 0.1.9000
 - Arrows in `geom_arrow()` and `geom_vector()` scale with vector magnitude. 
+- New geom `geom_sreamline()` for visualizing vector fields.
+- Utilities `dlon()`, `dlat()`, `dx()`, `dy()` for converting physical units into
+spherical units. 
 
 # metR 0.1
 - New function: `GetTopography()`
@@ -8,7 +11,7 @@
 - New website ([https://eliocamp.github.io/metR/](https://eliocamp.github.io/metR/)) with documentation. Thanks to `pkgdown`.
 - New functions: `coriolis()` and `coriolis.dy()`.
 - Faster `Anomaly()` (can't believe I did that).
-- `EOF()` principal componets are numeric instead of "PC1", etc...
+- `EOF()` principal components are numeric instead of "PC1", etc...
 - For consistency with `stat_contour()` created `geom_contour_fill()` which 
 works just like `stat_contour_fill()`. 
 - Added `stat_na()` for easy masking of `NA` values. 

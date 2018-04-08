@@ -113,12 +113,12 @@ StatVector <- ggplot2::ggproto("StatVector", ggplot2::Stat,
 )
 
 
-GeomVector <- ggproto("GeomSegment", ggplot2::GeomSegment,
+GeomVector <- ggplot2::ggproto("GeomSegment", ggplot2::GeomSegment,
 
   draw_panel = function(data, panel_params, coord, arrow = NULL,
                         lineend = "butt", linejoin = "round", na.rm = FALSE) {
 
-      data <- remove_missing(data, na.rm = na.rm,
+      data <- ggplot2::remove_missing(data, na.rm = na.rm,
                              c("x", "y", "xend", "yend", "linetype", "size", "shape"),
                              name = "geom_segment")
       mag <- with(data, Mag(x - xend, y - yend))

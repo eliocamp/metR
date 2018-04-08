@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Visualization tools • metR</title>
+<title> • metR</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Visualization tools">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Visualization-tools.html">Visualization tools</a>
+      <a href="../articles/Visualization-tools.html">UNKNOWN TITLE</a>
     </li>
     <li>
       <a href="../articles/Working-with-data.html">Working with data</a>
@@ -82,10 +82,8 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Visualization tools</h1>
-                        <h4 class="author">Elio Campitelli</h4>
+      <h1></h1>
             
-            <h4 class="date">2018-04-07</h4>
       
       <small>Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Visualization-tools.Rmd"><code>vignettes/Visualization-tools.Rmd</code></a></small>
 
@@ -94,6 +92,38 @@
     
     
 <div class="contents">
+<table class="table"><tbody>
+<tr class="odd">
+<td>title: “Visualization tools”</td>
+</tr>
+<tr class="even">
+<td>author: “Elio Campitelli”</td>
+</tr>
+<tr class="odd">
+<td>date: “2018-04-08”</td>
+</tr>
+<tr class="even">
+<td>output:</td>
+</tr>
+<tr class="odd">
+<td>rmarkdown::html_vignette:</td>
+</tr>
+<tr class="even">
+<td>fig_width: 7</td>
+</tr>
+<tr class="odd">
+<td>vignette: &gt;</td>
+</tr>
+<tr class="even">
+<td>%</td>
+</tr>
+<tr class="odd">
+<td>%</td>
+</tr>
+<tr class="even">
+<td>%</td>
+</tr>
+</tbody></table>
 <p>One of the “conceptual branches” of metR is the <em>visualization tools</em>. These are a set of functions that interface with <a href="http://ggplot2.tidyverse.org/index.html">ggplot2</a> for easier and better plotting of meteorological (an other) fields.</p>
 <div id="scales" class="section level1">
 <h1 class="hasAnchor">
@@ -109,7 +139,7 @@ temperature[, air.z <span class="op">:</span><span class="er">=</span><span clas
 
 <span class="co"># Plot made with base ggplot</span>
 (g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lon <span class="op">%~%</span><span class="st"> </span><span class="dv">180</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lat, lev, <span class="dt">z =</span> air.z)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> ..level..)))</code></pre></div>
+<span class="st">        </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> ..level..)))</code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-1-1.png" width="672"></p>
 <p>While this is fine, since pressure levels are roughly proportional to <span class="math inline">\(\mathrm{e}^{-z}\)</span> in meteorology we usually plot the vertical coordinate as <span class="math inline">\(-\log(p)\)</span>. However, while ggplot2 has <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_log10()</a></code> and <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_reverse()</a></code>, they don’t work together. <code>metR</code> defines the new transformation <code><a href="../reference/reverselog_trans.html">reverselog_trans()</a></code> that can be used with any scale but that is the default for <code>scale_*_level()</code>.</p>
 <p>On the other hand, <code>scale_*_latitude()</code> (and <code>scale_*_longitude()</code>) not only defaults <code>expand</code> to <code>c(0, 0)</code>, but also has a <code>ticks</code> argument that specifies the spacing of breaks between -90 and 90 in the case of <code>scale_*_latitude()</code>, and between 0 and 360 in the case of <code>scale_*_longitude()</code>.</p>
@@ -189,8 +219,8 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(geopotential)    <span class="co"># geopotential height at 700hPa for the southern hemisphere. </span>
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(geopotential[, gh.base <span class="op">:</span><span class="er">=</span><span class="st"> </span>gh[lon <span class="op">==</span><span class="st"> </span><span class="dv">120</span> <span class="op">&amp;</span><span class="st"> </span>lat <span class="op">==</span><span class="st"> </span><span class="op">-</span><span class="dv">50</span>], <span class="dt">by =</span> date][
-           , .(<span class="dt">correlation =</span> <span class="kw">cor</span>(gh.base, gh)), 
-           <span class="dt">by =</span> .(lon, lat)],
+    , .(<span class="dt">correlation =</span> <span class="kw">cor</span>(gh.base, gh)), 
+    <span class="dt">by =</span> .(lon, lat)],
     <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> correlation)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span>(<span class="dt">breaks =</span> <span class="kw"><a href="../reference/MakeBreaks.html">MakeBreaks</a></span>(<span class="fl">0.1</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/stat_subset.html">stat_subset</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">subset =</span> correlation <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>),
@@ -206,20 +236,17 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <p>Plotting arrows can be a pain. Again, the ‘canonical’ way of plotting vectors is tu use <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_segment">geom_segment()</a></code> and specify <code>x</code>, <code>y</code>, <code>xend</code> and <code>yend</code> aesthetics which can be a lot of typing when one has the data on location and displacement (or velocity). Instead, <code>metR</code>‘s <code><a href="../reference/geom_vector.html">geom_vector()</a></code> draw a line from points (x, y) to poins (x + dx, y + dy). It also has some usefull paramters like <code>min.mag</code>, which controls the minimum magnitude for an arrow to be drawn (useful for highlighting only areas of strong ’flow’) and <code>skip</code>, which draws only the nth arrow in the x and y directions.</p>
 <p>So, as an example, we can plot the temperature gradient like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temperature[, <span class="kw">c</span>(<span class="st">"t.dx"</span>, <span class="st">"t.dy"</span>) <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Derivate.html">Derivate</a></span>(air.z <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, 
-                                               <span class="dt">cyclical =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>), 
-                                               <span class="dt">sphere =</span> T), 
-                by =<span class="st"> </span>lev]
+                                            <span class="dt">cyclical =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)), 
+            by =<span class="st"> </span>lev]
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">500</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_contour_fill.html">stat_contour_fill</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> air.z)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_vector.html">geom_vector</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> t.dx, <span class="dt">dy =</span> t.dy), <span class="dt">skip.x =</span> <span class="dv">2</span>, 
-                <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">scale =</span> <span class="fl">5e5</span>, <span class="dt">min.mag =</span> <span class="fl">2e-6</span>,
-               <span class="dt">arrow.size =</span> <span class="fl">0.3</span>) <span class="op">+</span>
+                <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">scale =</span> <span class="dv">5</span>, <span class="dt">min.mag =</span> <span class="fl">2e-1</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>()
-<span class="co">#&gt; Warning: Ignoring unknown parameters: arrow.size</span>
 <span class="co">#&gt; Warning: Removed 5328 rows containing non-finite values (stat_vector).</span>
-<span class="co">#&gt; Warning: Removed 2 rows containing missing values (geom_segment).</span></code></pre></div>
+<span class="co">#&gt; Warning: Removed 4 rows containing missing values (geom_segment).</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <p>The <code>scale</code> argument modifies the length of the segments, and the arguments <code>arrow.angle</code>, <code>arrow.length</code>, etc… control the shape of the arrowheads.</p>
 <p>There are (currently) many limitations of <code><a href="../reference/geom_vector.html">geom_vector()</a></code>:</p>
@@ -239,14 +266,29 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">500</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_contour_fill.html">stat_contour_fill</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> air.z)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_arrow.html">geom_arrow</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">mag =</span> mag, <span class="dt">angle =</span> angle), <span class="dt">skip.x =</span> <span class="dv">2</span>, 
-                <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">scale =</span> <span class="fl">5e3</span>, <span class="dt">min.mag =</span> <span class="fl">2e-6</span>) <span class="op">+</span>
+               <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">scale =</span> <span class="fl">0.05</span>, <span class="dt">min.mag =</span> <span class="fl">2e-1</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>()
 <span class="co">#&gt; Warning: Removed 5328 rows containing missing values (geom_arrow).</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 <p>The <code>start</code> and <code>direction</code> arguments adjust the behaviour of the arrows. This is useful for working with winds in the meteorological standard (in which 0° means wind from the North and 90° means wind from the East).</p>
 <p>In contrast to <code><a href="../reference/geom_vector.html">geom_vector()</a></code>, <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> <strong>does</strong> preserve direction under coordinate transforms. This means that, for example, an arrow at a 45° angle represents wind from the southwest regardless of the <code>x</code> and <code>y</code> scales (but note that this also means that it might not be parallel to the streamlines). For this reason this geom does work with discrete scales.</p>
-<p>Forthcomming is the implementation of streamlines :).</p>
+</div>
+<div id="geom_streamline" class="section level2">
+<h2 class="hasAnchor">
+<a href="#geom_streamline" class="anchor"></a>geom_streamline</h2>
+<p>Streamlines are paths tangential to a vector field and provide an intuitive way of visualizing vector fields. <code><a href="../reference/geom_streamline.html">geom_streamline()</a></code> computes streamlines via Euler integration.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">500</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
+<span class="st">     </span><span class="kw"><a href="../reference/geom_contour_fill.html">stat_contour_fill</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> air.z), <span class="dt">circular =</span> <span class="st">"x"</span>) <span class="op">+</span>
+<span class="st">     </span><span class="kw"><a href="../reference/geom_streamline.html">geom_streamline</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> t.dy, <span class="dt">dy =</span> <span class="op">-</span>t.dx), <span class="dt">L =</span> <span class="dv">10</span>, <span class="dt">res =</span> <span class="dv">2</span>,   
+                     <span class="dt">arrow.length =</span> <span class="fl">0.3</span>, <span class="dt">arrow.angle =</span> <span class="dv">7</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>)) <span class="op">+</span>
+<span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>())</code></pre></div>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<p>There are several parametres that control de feel of the result. <code>L</code> and <code>res</code> control the length and resolution, while the <code>skip</code> parameters change the amount of the streamlines. More in depth control over the simulation can be accomplished by the <code>S</code> and <code>dt</code> parameters.</p>
+<p>Since streamlines imply a tight relationship between the vector field and the spatial dimensions, it’s important that their units are compatible. A wind field in m/s in a lonitude-latitude grid should first be converted into degrees/s. The functions <code><a href="../reference/spherical.html">dlon()</a></code> and <code><a href="../reference/spherical.html">dlat()</a></code> are an easy way of doing this. This tight coupling also means that they are robuts to coordinate transformations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</code></pre></div>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 </div>
 </div>
 <div id="other-goodies" class="section level1">
@@ -259,10 +301,10 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> air.z)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_contour2.html">geom_contour2</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> ..level..), <span class="dt">breaks =</span> <span class="kw"><a href="../reference/MakeBreaks.html">MakeBreaks</a></span>(<span class="dv">2</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_color_divergent</a></span>(<span class="dt">guide =</span> <span class="st">"legend"</span>,
-                         <span class="dt">breaks =</span> <span class="kw"><a href="../reference/MakeBreaks.html">MakeBreaks</a></span>(<span class="dv">2</span>)) <span class="op">+</span>
+                          <span class="dt">breaks =</span> <span class="kw"><a href="../reference/MakeBreaks.html">MakeBreaks</a></span>(<span class="dv">2</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
 <p>This has some limitations as can be seen above. First, in the case of <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour()</a></code> the full color scale is replaced by lines. Second, it breaks down if the position of the legend is at the bottom. Finally, the listed colors are the ones mapped to the breaks, which can be a problem in the case of <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> in which the colors are actually the values <em>between</em> breaks.</p>
 <p>All of these problems are solved in <code><a href="../reference/guide_colourstrip.html">guide_colorstrip()</a></code> as can be seen in the figure below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> air.z)) <span class="op">+</span>
@@ -271,7 +313,7 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
                          <span class="dt">breaks =</span> <span class="kw"><a href="../reference/MakeBreaks.html">MakeBreaks</a></span>(<span class="dv">2</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 <p>By default, colors are mapped to the values <em>in between</em> breaks, so there’s a one-to-one mapping between colors shown in the plot and in the guide. From an aesthetic standpoint, it’s much closer to the <code>cbarn</code> command from <code>GrADS</code>, which a lot of atmospheric scientists are probably used to.</p>
 </div>
 <div id="repeatcircular" class="section level2">
@@ -280,14 +322,14 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <p>The function <code><a href="../reference/RepeatCircular.html">RepeatCircular()</a></code> is an ugly kludge to fix an issue when using polar coordinates in ggplot2 in which contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.</p>
 <p>See how in the figure on the left, contours that cross the 0° longitude mark are cut, but they join correctly in the figure on the right.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> air.z)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour</a></span>(<span class="dt">binwidth =</span> <span class="fl">1.5</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>())
+<span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour</a></span>(<span class="dt">binwidth =</span> <span class="fl">1.5</span>) <span class="op">+</span>
+<span class="st">     </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span>
+<span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
+<span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
+<span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>())
 
 g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="../reference/RepeatCircular.html">RepeatCircular</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>])    <span class="co"># change the data. </span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-12-1.png" width="316.8"><img src="Visualization-tools_files/figure-html/unnamed-chunk-12-2.png" width="316.8"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-14-1.png" width="316.8"><img src="Visualization-tools_files/figure-html/unnamed-chunk-14-2.png" width="316.8"></p>
 <p>This behaviour is now also implemented directly in <code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> and <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> air.z)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_contour2.html">geom_contour2</a></span>(<span class="dt">binwidth =</span> <span class="fl">1.5</span>, <span class="dt">circular =</span> <span class="st">"x"</span>) <span class="op">+</span>
@@ -296,7 +338,7 @@ g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()
 <span class="co">#&gt; Warning: Removed 6336 rows containing non-finite values (stat_contour2).</span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 </div>
 <div id="dividetimeseries" class="section level2">
 <h2 class="hasAnchor">
@@ -307,13 +349,13 @@ g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="
 <span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_smooth">geom_smooth</a></span>(<span class="dt">span =</span> <span class="fl">0.3</span>) <span class="op">+</span>
 <span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_date">scale_x_date</a></span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))) 
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
 <p>In the above plot, the timeseries looks noisy and hard to understand since the lines are too steep. Dividing it into 2 facets makes is easier to see what’s going on.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/DivideTimeseries.html">DivideTimeseries</a></span>(g, geopotential<span class="op">$</span>date, <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">xlab =</span> <span class="st">"date"</span>, <span class="dt">ylab =</span> <span class="st">"gh"</span>)
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span>
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span>
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
 </div>
 <div id="geom_relief" class="section level2">
 <h2 class="hasAnchor">
@@ -321,7 +363,7 @@ g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="
 <p>This geom produces a shaded relief of the data. It doesn’t really map the data per se, but it provides an intuitive representation of hills and valeys that can be used as a background for plotting actual data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(v, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(Var1, Var2)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_relief.html">geom_relief</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> value))</code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
 </div>
 </div>
 </div>
@@ -340,6 +382,7 @@ g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="
       <li><a href="#stat_subset">stat_subset</a></li>
       <li><a href="#geom_vector">geom_vector</a></li>
       <li><a href="#geom_arrow">geom_arrow</a></li>
+      <li><a href="#geom_streamline">geom_streamline</a></li>
       </ul>
 </li>
       <li>

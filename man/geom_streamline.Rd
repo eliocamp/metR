@@ -8,7 +8,7 @@
 geom_streamline(mapping = NULL, data = NULL, stat = "streamline",
   position = "identity", ..., L = 5, res = 1, S = NULL, dt = NULL,
   skip = 1, skip.x = skip, skip.y = skip, n = NULL, nx = n, ny = n,
-  jitter = 1, jitter.x = jitter, jitter.y = jitter, arrow.angle = 10,
+  jitter = 1, jitter.x = jitter, jitter.y = jitter, arrow.angle = 6,
   arrow.length = 0.5, arrow.ends = "last", arrow.type = "closed",
   arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
   arrow.ends, type = arrow.type), lineend = "butt", na.rm = T,
@@ -17,7 +17,7 @@ geom_streamline(mapping = NULL, data = NULL, stat = "streamline",
 stat_streamline(mapping = NULL, data = NULL, geom = "streamline",
   position = "identity", ..., L = 5, res = 1, S = NULL, dt = NULL,
   skip = 1, skip.x = skip, skip.y = skip, n = NULL, nx = n, ny = n,
-  jitter = 1, jitter.x = jitter, jitter.y = jitter, arrow.angle = 10,
+  jitter = 1, jitter.x = jitter, jitter.y = jitter, arrow.angle = 6,
   arrow.length = 0.5, arrow.ends = "last", arrow.type = "closed",
   arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
   arrow.ends, type = arrow.type), lineend = "butt", na.rm = T,

@@ -28,7 +28,7 @@ You might need to install the netcdf and udunits2 libraries. On Ubuntu and it's 
 Examples
 --------
 
-In this example we easily perform Principal Components Decomposition (EOF) on monthly geopotential height and plot it to get the Antarctic Oscillation.
+In this example we easily perform Principal Components Decomposition (EOF) on monthly geopotential height, then compute the geostrophic wind associated with this field and plot the field with filled contours and the wind with streamlines.
 
 ``` r
 library(metR)
@@ -40,11 +40,14 @@ geopotential <- copy(geopotential)
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
       by = .(lon, lat, month(date))]
 aao <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1)
+aao$left[, c("u", "v") := GeostrophicWind(gh.t.w, lon, lat)]
 
 # AAO field
 binwidth <- 0.01
 ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
-    stat_contour_fill(binwidth = binwidth) +    # filled contours!
+    geom_contour_fill(binwidth = binwidth) +    # filled contours!
+    geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), arrow.angle = 7, 
+                    size = 0.4, L = 50, skip = 2) +
     scale_x_longitude() +
     scale_y_latitude(limits = c(-90, -20)) +
     scale_fill_divergent(name = "AAO pattern", 

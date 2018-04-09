@@ -6,6 +6,7 @@
 #'
 #' @inheritParams geom_vector
 #' @inheritParams ggplot2::stat_identity
+#' @inheritParams geom_contour2
 #' @param L, tipical length of a streamline in x and y units
 #' @param res, resolution parameter (higher numbers increases the resolution)
 #' @param S optional numeric number of timesteps for integration
@@ -237,7 +238,82 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
 
 GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
     default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = NA,
-                      group = group)
+                      group = group),
+    draw_panel = function(data, panel_params, coord, arrow = NULL,
+                          lineend = "butt", linejoin = "round", linemitre = 1,
+                          na.rm = FALSE) {
+        if (!anyDuplicated(data$group)) {
+            message_wrap("geom_path: Each group consists of only one observation. ",
+                         "Do you need to adjust the group aesthetic?")
+        }
+
+        # must be sorted on group
+        data <- data[order(data$group), , drop = FALSE]
+        munched <- coord_munch(coord, data, panel_params)
+
+        # Silently drop lines with less than two points, preserving order
+        rows <- stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
+        munched <- munched[rows >= 2, ]
+        if (nrow(munched) < 2) return(zeroGrob())
+
+        # Work out whether we should use lines or segments
+        attr <- plyr::ddply(munched, "group", function(df) {
+            linetype <- unique(df$linetype)
+            data.frame(
+                solid = identical(linetype, 1) || identical(linetype, "solid"),
+                constant = nrow(unique(df[, c("alpha", "colour","size", "linetype")])) == 1
+            )
+        })
+        solid_lines <- all(attr$solid)
+        constant <- all(attr$constant)
+        if (!solid_lines && !constant) {
+            stop("geom_path: If you are using dotted or dashed lines",
+                 ", colour, size and linetype must be constant over the line",
+                 call. = FALSE)
+        }
+
+        # Work out grouping variables for grobs
+        n <- nrow(munched)
+        group_diff <- munched$group[-1] != munched$group[-n]
+        start <- c(TRUE, group_diff)
+        end <-   c(group_diff, TRUE)
+
+        if (!constant) {
+            print(length(alpha(munched$colour, munched$alpha)[!end]))
+            segmentsGrob(
+                munched$x[!end], munched$y[!end], munched$x[!start], munched$y[!start],
+                default.units = "native", arrow = arrow,
+                gp = gpar(
+                    col = alpha(munched$colour, munched$alpha)[!end],
+                    fill = alpha(munched$colour, munched$alpha)[!end],
+                    lwd = munched$size[!end] * .pt,
+                    lty = munched$linetype[!end],
+                    lineend = lineend,
+                    linejoin = linejoin,
+                    linemitre = linemitre
+                )
+            )
+        } else {
+            id <- match(munched$group, unique(munched$group))
+
+            mult <- as.numeric(munched$end)[start]
+            arrow$length <- unit(as.numeric(arrow$length)*mult, attr(arrow$length, "unit"))
+
+            polylineGrob(
+                munched$x, munched$y, id = id,
+                default.units = "native", arrow = arrow,
+                gp = gpar(
+                    col = alpha(munched$colour, munched$alpha)[start],
+                    fill = alpha(munched$colour, munched$alpha)[start],
+                    lwd = munched$size[start] * .pt,
+                    lty = munched$linetype[start],
+                    lineend = lineend,
+                    linejoin = linejoin,
+                    linemitre = linemitre
+                )
+            )
+        }
+    }
 )
 
 
@@ -317,7 +393,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     points[, group := 1:.N]
     points[, piece := 1]
     points[, sim := 0]
-    # points[, end := TRUE]
+    points[, end := FALSE]
 
     points2 <- copy(points)
 
@@ -356,10 +432,17 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         #
         # prev <- now
     }
-    points[, group := interaction(group, piece)]
 
-    return(setDF(points[, .(x, y, group, sim)]))
+    # Me fijo si ese piece tiene el final.
+    # Esto luego va al geom que decide si ponerle flecha o no.
+    points[, end := sim == max(sim), by = group]
+    points[, group := interaction(group, piece)]
+    points[, end := as.logical(sum(end)), by = group]
+
+    return(setDF(points[, .(x, y, group, sim, end)]))
 }
+
+
 
 fold <- function(x, piece, range, circular = TRUE) {
     if (circular) {

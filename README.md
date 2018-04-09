@@ -34,7 +34,7 @@ In this example we easily perform Principal Components Decomposition (EOF) on mo
 library(metR)
 library(data.table)
 library(ggplot2)
-
+data(geopotential)
 # Use Empirical Orthogonal Functions to compute the Antarctic Oscillation
 geopotential <- copy(geopotential)
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
@@ -45,9 +45,9 @@ aao$left[, c("u", "v") := GeostrophicWind(gh.t.w, lon, lat)]
 # AAO field
 binwidth <- 0.01
 ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
-    geom_contour_fill(binwidth = binwidth) +    # filled contours!
-    geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), arrow.angle = 7, 
-                    size = 0.4, L = 50, skip = 2) +
+    geom_contour_fill(binwidth = binwidth, circular = "x") +    # filled contours!
+    geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), 
+                    size = 0.4, L = 80, skip = 3, circular = "x") +
     scale_x_longitude() +
     scale_y_latitude(limits = c(-90, -20)) +
     scale_fill_divergent(name = "AAO pattern", 

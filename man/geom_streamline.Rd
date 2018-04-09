@@ -7,21 +7,21 @@
 \usage{
 geom_streamline(mapping = NULL, data = NULL, stat = "streamline",
   position = "identity", ..., L = 5, res = 1, S = NULL, dt = NULL,
-  skip = 1, skip.x = skip, skip.y = skip, n = NULL, nx = n, ny = n,
-  jitter = 1, jitter.x = jitter, jitter.y = jitter, arrow.angle = 6,
-  arrow.length = 0.5, arrow.ends = "last", arrow.type = "closed",
-  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
-  arrow.ends, type = arrow.type), lineend = "butt", na.rm = T,
-  show.legend = NA, inherit.aes = TRUE)
+  circular = NULL, skip = 1, skip.x = skip, skip.y = skip, n = NULL,
+  nx = n, ny = n, jitter = 1, jitter.x = jitter, jitter.y = jitter,
+  arrow.angle = 6, arrow.length = 0.5, arrow.ends = "last",
+  arrow.type = "closed", arrow = grid::arrow(arrow.angle, unit(arrow.length,
+  "lines"), ends = arrow.ends, type = arrow.type), lineend = "butt",
+  na.rm = T, show.legend = NA, inherit.aes = TRUE)
 
 stat_streamline(mapping = NULL, data = NULL, geom = "streamline",
   position = "identity", ..., L = 5, res = 1, S = NULL, dt = NULL,
-  skip = 1, skip.x = skip, skip.y = skip, n = NULL, nx = n, ny = n,
-  jitter = 1, jitter.x = jitter, jitter.y = jitter, arrow.angle = 6,
-  arrow.length = 0.5, arrow.ends = "last", arrow.type = "closed",
-  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
-  arrow.ends, type = arrow.type), lineend = "butt", na.rm = T,
-  show.legend = NA, inherit.aes = TRUE)
+  circular = NULL, skip = 1, skip.x = skip, skip.y = skip, n = NULL,
+  nx = n, ny = n, jitter = 1, jitter.x = jitter, jitter.y = jitter,
+  arrow.angle = 6, arrow.length = 0.5, arrow.ends = "last",
+  arrow.type = "closed", arrow = grid::arrow(arrow.angle, unit(arrow.length,
+  "lines"), ends = arrow.ends, type = arrow.type), lineend = "butt",
+  na.rm = T, show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -61,6 +61,9 @@ to the paired geom/stat.}
 \item{S}{optional numeric number of timesteps for integration}
 
 \item{dt}{optional numeric size "timestep" for integration}
+
+\item{circular}{either NULL, "x" or "y" indicating which dimension is circular,
+if any.}
 
 \item{skip}{numeric specifying number of gridpoints not to draw in the x and y direction.}
 

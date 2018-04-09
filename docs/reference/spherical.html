@@ -158,52 +158,52 @@ on latitude.</p>
 <span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]]
 
 <span class='co'># Geostrophic wind</span>
-<span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]  <span class='co'># in meters/second</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date  u           v
-#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 NA -0.01522126
-#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.55132941
-#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 NA  0.06618290
-#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01 NA -0.29769785
-#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01 NA -0.74987810
-#&gt;   ---                                                   
-#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000
-#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000
-#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000
-#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000</div><div class='input'><span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"dlon"</span>, <span class='st'>"dlat"</span>) <span class='kw'>:=</span> <span class='fu'>.</span>(<span class='fu'>dlon</span>(<span class='no'>u</span>, <span class='no'>lat</span>), <span class='fu'>dlat</span>(<span class='no'>v</span>))] <span class='co'># in degrees/second</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date  u           v dlon          dlat
-#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 NA -0.01522126   NA -1.295667e-07
-#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.55132941   NA  4.693039e-06
-#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 NA  0.06618290   NA  5.633636e-07
-#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01 NA -0.29769785   NA -2.534071e-06
-#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01 NA -0.74987810   NA -6.383130e-06
-#&gt;   ---                                                                      
-#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00
-#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00
-#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00
-#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00</div><div class='input'><span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u2"</span>, <span class='st'>"v2"</span>) <span class='kw'>:=</span> <span class='fu'>.</span>(<span class='fu'>dx</span>(<span class='no'>dlon</span>, <span class='no'>lat</span>), <span class='fu'>dy</span>(<span class='no'>dlat</span>))]   <span class='co'># again in degrees/second</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date  u           v dlon          dlat u2
-#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 NA -0.01522126   NA -1.295667e-07 NA
-#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.55132941   NA  4.693039e-06 NA
-#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 NA  0.06618290   NA  5.633636e-07 NA
-#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01 NA -0.29769785   NA -2.534071e-06 NA
-#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01 NA -0.74987810   NA -6.383130e-06 NA
-#&gt;   ---                                                                         
-#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00 NA
-#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00 NA
-#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00 NA
-#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00 NA
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00 NA
-#&gt;                v2
-#&gt;    1: -0.01522126
-#&gt;    2:  0.55132941
-#&gt;    3:  0.06618290
-#&gt;    4: -0.29769785
-#&gt;    5: -0.74987810
-#&gt;   ---            
-#&gt; 4028:  0.00000000
-#&gt; 4029:  0.00000000
-#&gt; 4030:  0.00000000
-#&gt; 4031:  0.00000000
-#&gt; 4032:  0.00000000</div><div class='input'>
+<span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]  <span class='co'># in meters/second</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date  u          v
+#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.0807091
+#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.5513294
+#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 NA  0.0661829
+#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01 NA -0.2976979
+#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01 NA -0.7498781
+#&gt;   ---                                                  
+#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 NA  0.0000000
+#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 NA  0.0000000
+#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 NA  0.0000000
+#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 NA  0.0000000
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.0000000</div><div class='input'><span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"dlon"</span>, <span class='st'>"dlat"</span>) <span class='kw'>:=</span> <span class='fu'>.</span>(<span class='fu'>dlon</span>(<span class='no'>u</span>, <span class='no'>lat</span>), <span class='fu'>dlat</span>(<span class='no'>v</span>))] <span class='co'># in degrees/second</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date  u          v dlon          dlat
+#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.0807091   NA  9.199238e-06
+#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.5513294   NA  4.693039e-06
+#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 NA  0.0661829   NA  5.633636e-07
+#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01 NA -0.2976979   NA -2.534071e-06
+#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01 NA -0.7498781   NA -6.383130e-06
+#&gt;   ---                                                                     
+#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 NA  0.0000000   NA  0.000000e+00
+#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 NA  0.0000000   NA  0.000000e+00
+#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 NA  0.0000000   NA  0.000000e+00
+#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 NA  0.0000000   NA  0.000000e+00
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.0000000   NA  0.000000e+00</div><div class='input'><span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u2"</span>, <span class='st'>"v2"</span>) <span class='kw'>:=</span> <span class='fu'>.</span>(<span class='fu'>dx</span>(<span class='no'>dlon</span>, <span class='no'>lat</span>), <span class='fu'>dy</span>(<span class='no'>dlat</span>))]   <span class='co'># again in degrees/second</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date  u          v dlon          dlat u2
+#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.0807091   NA  9.199238e-06 NA
+#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.5513294   NA  4.693039e-06 NA
+#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 NA  0.0661829   NA  5.633636e-07 NA
+#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01 NA -0.2976979   NA -2.534071e-06 NA
+#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01 NA -0.7498781   NA -6.383130e-06 NA
+#&gt;   ---                                                                        
+#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 NA  0.0000000   NA  0.000000e+00 NA
+#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 NA  0.0000000   NA  0.000000e+00 NA
+#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 NA  0.0000000   NA  0.000000e+00 NA
+#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 NA  0.0000000   NA  0.000000e+00 NA
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.0000000   NA  0.000000e+00 NA
+#&gt;               v2
+#&gt;    1:  1.0807091
+#&gt;    2:  0.5513294
+#&gt;    3:  0.0661829
+#&gt;    4: -0.2976979
+#&gt;    5: -0.7498781
+#&gt;   ---           
+#&gt; 4028:  0.0000000
+#&gt; 4029:  0.0000000
+#&gt; 4030:  0.0000000
+#&gt; 4031:  0.0000000
+#&gt; 4032:  0.0000000</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

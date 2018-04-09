@@ -219,6 +219,19 @@ Since streamlines imply a tight relationship between the vector field and the sp
 g + coord_polar()
 ```
 
+`stat_streamline()` computes three useful variables. `step` is the integration step, and `dx` and `dy` are the components of the vector field at each point.
+
+```{r}
+ggplot(temperature[lev == 500], aes(lon, lat)) +
+    geom_streamline(aes(dx = t.dy, dy = -t.dx, size = ..step.., alpha = ..step..,
+                        color = sqrt(..dx..^2 + ..dy..^2)), arrow = NULL,
+                    L = 10, res = 2, circular = "x", lineend = "round") + 
+    scale_y_latitude(limits = c(-90, 0)) +
+    scale_x_longitude() +
+    scale_color_viridis_c(guide = "none") +
+    scale_size(range = c(0, 1), guide = "none") +
+    scale_alpha(guide = "none") 
+```
 
 # Other goodies
 

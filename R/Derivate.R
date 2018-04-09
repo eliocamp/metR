@@ -119,33 +119,6 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
 
 }
 
-.derv <- function(x, y, order = 1, cyclical = FALSE, fill = FALSE) {
-    N <- length(x)
-    d <- y[2] - y[1]
-    if (order >= 3) {
-        dxdy <- .derv(.derv(x, y, order = 2, cyclical = cyclical, fill = fill),
-                      y, order = order - 2, cyclical = cyclical, fill = fill)
-    } else {
-        if (order == 1) {
-            dxdy <- (x[c(2:N, 1)] - x[c(N, 1:(N-1))])/(y[c(2:N, 1)] - y[c(N, 1:(N-1))])
-        } else if (order == 2) {
-            dxdy <- (x[c(2:N, 1)] + x[c(N, 1:(N-1))] - 2*x)/(y[c(2:N, 1)] - y[c(N, 1:(N-1))])^2*4
-        }
-        if (!cyclical) {
-            if (!fill) {
-                dxdy[c(1, N)] <- NA
-            }
-            if (fill) {
-                dxdy[1] <- (-11/6*x[1] + 3*x[2] - 3/2*x[3] + 1/3*x[4])/d
-                dxdy[N] <- (11/6*x[N] - 3*x[N-1] + 3/2*x[N-2] - 1/3*x[N-3])/d
-            }
-        }
-
-    }
-    return(dxdy)
-}
-
-
 #' @rdname Derivate
 #' @export
 Laplacian <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
@@ -192,4 +165,31 @@ Vorticity <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
 
     vort <- der[[2]] - der[[3]]
     vort
+}
+
+
+.derv <- function(x, y, order = 1, cyclical = FALSE, fill = FALSE) {
+    N <- length(x)
+    d <- y[2] - y[1]
+    if (order >= 3) {
+        dxdy <- .derv(.derv(x, y, order = 2, cyclical = cyclical, fill = fill),
+                      y, order = order - 2, cyclical = cyclical, fill = fill)
+    } else {
+        if (order == 1) {
+            dxdy <- (x[c(2:N, 1)] - x[c(N, 1:(N-1))])/(2*d)
+        } else if (order == 2) {
+            dxdy <- (x[c(2:N, 1)] + x[c(N, 1:(N-1))] - 2*x)/(2*d)^2
+        }
+        if (!cyclical) {
+            if (!fill) {
+                dxdy[c(1, N)] <- NA
+            }
+            if (fill) {
+                dxdy[1] <- (-11/6*x[1] + 3*x[2] - 3/2*x[3] + 1/3*x[4])/d
+                dxdy[N] <- (11/6*x[N] - 3*x[N-1] + 3/2*x[N-2] - 1/3*x[N-3])/d
+            }
+        }
+
+    }
+    return(dxdy)
 }

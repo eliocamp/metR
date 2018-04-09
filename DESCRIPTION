@@ -45,6 +45,7 @@ Suggests:
     testthat,
     reshape2,
     irlba,
-    covr
+    covr,
+    viridis
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

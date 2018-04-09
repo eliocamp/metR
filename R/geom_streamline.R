@@ -100,6 +100,7 @@ geom_streamline <-  function(mapping = NULL, data = NULL,
                              res = 1,
                              S = NULL,
                              dt = NULL,
+                             circular = NULL,
                              skip = 1,
                              skip.x = skip,
                              skip.y = skip,
@@ -130,6 +131,7 @@ geom_streamline <-  function(mapping = NULL, data = NULL,
         params = list(
             L = L,
             res = res,
+            circular = circular,
             dt = dt,
             S = S,
             arrow = arrow,
@@ -155,6 +157,7 @@ stat_streamline <- function(mapping = NULL, data = NULL,
                             res = 1,
                             S = NULL,
                             dt = NULL,
+                            circular = NULL,
                             skip = 1,
                             skip.x = skip,
                             skip.y = skip,
@@ -187,6 +190,7 @@ stat_streamline <- function(mapping = NULL, data = NULL,
             res = res,
             dt = dt,
             S = S,
+            circular = circular,
             arrow = arrow,
             lineend = lineend,
             na.rm = na.rm,
@@ -219,12 +223,12 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
     },
     compute_group = function(data, scales, dt = 0.1, S = 3, skip.x = 1,
                              skip.y = 1, nx = 10, ny  = 10, jitter.x = 1,
-                             jitter.y = 1,
+                             jitter.y = 1, circular = NULL,
                              L = NULL, res = NULL) {
 
         data <- streamline.f(data, dt = dt, S = S, skip.x = skip.x,
                              skip.y = skip.y, nx = nx, ny = ny, jitter.x = jitter.x,
-                             jitter.y = jitter.y)
+                             jitter.y = jitter.y, circular = circular)
 
         return(data)
     }
@@ -240,9 +244,17 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
 #' @importFrom stats rnorm
 #' @importFrom fields interp.surface
 streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL,
-                       ny = NULL, jitter.x = 1, jitter.y = 1) {
-
+                       ny = NULL, jitter.x = 1, jitter.y = 1, circular = NULL) {
     field <- copy(as.data.table(field))
+    circ.x <- circ.y <- FALSE
+    if (!is.null(circular)) {
+        circ.x <- "x" %in% circular
+        circ.y <- "y" %in% circular
+    }
+
+    if (circ.x) field <- RepeatCircular(field, "x")
+    if (circ.y) field <- RepeatCircular(field, "y")
+
     field <- field[!is.na(dx) & !is.na(dy)]
 
     dx.field <- .tidy2matrix(field, x ~ y, value.var = "dx")
@@ -280,17 +292,32 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     set.seed(42)
     points[, x := x + rnorm(.N, 0, rx)*jitter.x]
     points[, y := y + rnorm(.N, 0, ry)*jitter.y]
-    points[, x := ifelse(x > range.x[2], range.x[2], x)]
-    points[, x := ifelse(x < range.x[1], range.x[1], x)]
 
-    points[, y := ifelse(y > range.y[2], range.y[2], y)]
-    points[, y := ifelse(y < range.y[1], range.y[1], y)]
+    points[, group := 1:.N]
+    points[, piece := 1]
+    points[, sim := 0]
 
+    # Muy poco elegante, pero bueno...
+    if (circ.x){
+        points[, x := fold(x, 1, range.x, circ.x)[[1]]]
+    } else {
+        points[, x := ifelse(x > range.x[2], range.x[2], x)]
+        points[, x := ifelse(x < range.x[1], range.x[1], x)]
+    }
+
+    if (circ.y){
+        points[, y := fold(y, 1, range.y, circ.y)[[1]]]
+    } else {
+        points[, y := ifelse(y > range.y[2], range.y[2], y)]
+        points[, y := ifelse(y < range.y[1], range.y[1], y)]
+    }
 
     points[, c("dx", "dy") := force.fun(x, y)]
     points <- points[dx + dy != 0 & !is.na(dx) & !is.na(dy)]
     points[, group := 1:.N]
+    points[, piece := 1]
     points[, sim := 0]
+    # points[, end := TRUE]
 
     points2 <- copy(points)
 
@@ -312,6 +339,8 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     # Integration
     for (s in 1:S) {
         points2[, c("x", "y", "sim") := .(x + dx*dt, y + dy*dt, s)]
+        points2[, c("x", "piece") := fold(x, piece, range.x, circ.x)]
+        points2[, c("y", "piece") := fold(y, piece, range.y, circ.y)]
         points2[, c("dx", "dy") := force.fun(x, y)]
         points2 <- points2[!is.na(dx) & !is.na(dy)]
         points <- rbindlist(list(points, points2)) # se puede optimizar prealocando
@@ -327,12 +356,27 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         #
         # prev <- now
     }
-
-    points <- as.data.table(points)
-
+    points[, group := interaction(group, piece)]
 
     return(setDF(points[, .(x, y, group, sim)]))
 }
+
+fold <- function(x, piece, range, circular = TRUE) {
+    if (circular) {
+        R <- diff(range)
+        piece <- ifelse(x > range[2], piece + 1, piece)
+        x <- ifelse(x > range[2], x - R, x)
+
+        piece <- ifelse(x < range[1], piece + 1, piece)
+        x <- ifelse(x < range[1], x + R, x)
+    } else {
+        x <- ifelse(x > range[2], NA, x)
+        x <- ifelse(x < range[1], NA, x)
+    }
+    return(list(x, piece))
+}
+
+
 
 #' @importFrom memoise memoise
 streamline.f <- memoise::memoise(streamline)

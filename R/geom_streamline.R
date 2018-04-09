@@ -56,6 +56,13 @@
 #' \item `size`
 #' }
 #'
+#' @section Computed variables:
+#' \describe{
+#'  \item{step}{step in the simulation}
+#'  \item{dx}{dx at each location of the streamline}
+#'  \item{dy}{dy at each location of the streamline}
+#'  }
+#'
 #' @examples
 #' library(data.table)
 #' library(ggplot2)
@@ -65,15 +72,27 @@
 #' geopotential[, gh.z := Anomaly(gh), by = .(lat)]
 #' geopotential[, c("u", "v") := GeostrophicWind(gh.z, lon, lat)]
 #'
-#' ggplot(geopotential, aes(lon, lat)) +
-#'     geom_contour(aes(z = gh.z)) +
-#'     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), L = 50)
+#' (g <- ggplot(geopotential, aes(lon, lat)) +
+#'     geom_contour2(aes(z = gh.z), circular = "x") +
+#'     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), L = 60, circular = "x"))
+#'
+#' # The circular parameter is particularly important for polar coordinates
+#' g + coord_polar()
 #'
 #' # If u and v are not converted into degrees/second, the resulting
 #' # streamlines have problems, specially near the pole.
 #' ggplot(geopotential, aes(lon, lat)) +
 #'     geom_contour(aes(z = gh.z)) +
 #'     geom_streamline(aes(dx = u, dy = v), L = 50)
+#'
+#' # The step variable can be mapped to size or alpha to
+#' # get cute "drops".
+#' ggplot(geopotential, aes(lon, lat)) +
+#'     #geom_contour2(aes(z = gh.z), circular = "x") +
+#'     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v), alpha = ..step..,
+#'                         color = sqrt(..dx..^2 + ..dy..^2), size = ..step..),
+#'                         L = 40, circular = "x", res = 2, arrow = NULL, lineend = "round") +
+#'     scale_size(range = c(0, 0.6))
 #'
 #' \dontrun{
 #' # Using topographic information to simulate "rivers" from slope
@@ -237,13 +256,12 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
 
 
 GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
-    default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = NA,
-                      group = group),
+    default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = NA),
     draw_panel = function(data, panel_params, coord, arrow = NULL,
                           lineend = "butt", linejoin = "round", linemitre = 1,
                           na.rm = FALSE) {
         if (!anyDuplicated(data$group)) {
-            message_wrap("geom_path: Each group consists of only one observation. ",
+            ggplot2::message_wrap("geom_path: Each group consists of only one observation. ",
                          "Do you need to adjust the group aesthetic?")
         }
 
@@ -279,7 +297,11 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
         end <-   c(group_diff, TRUE)
 
         if (!constant) {
-            print(length(alpha(munched$colour, munched$alpha)[!end]))
+            if (!is.null(arrow)) {
+                mult <- end & munched$end
+                mult <- mult[!start]
+                arrow$length <- unit(as.numeric(arrow$length)[1]*mult, attr(arrow$length, "unit"))
+            }
             segmentsGrob(
                 munched$x[!end], munched$y[!end], munched$x[!start], munched$y[!start],
                 default.units = "native", arrow = arrow,
@@ -296,9 +318,10 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
         } else {
             id <- match(munched$group, unique(munched$group))
 
-            mult <- as.numeric(munched$end)[start]
-            arrow$length <- unit(as.numeric(arrow$length)*mult, attr(arrow$length, "unit"))
-
+            if (!is.null(arrow)) {
+                mult <- as.numeric(munched$end)[start]
+                arrow$length <- unit(as.numeric(arrow$length)[1]*mult, attr(arrow$length, "unit"))
+            }
             polylineGrob(
                 munched$x, munched$y, id = id,
                 default.units = "native", arrow = arrow,
@@ -371,7 +394,8 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
 
     points[, group := 1:.N]
     points[, piece := 1]
-    points[, sim := 0]
+    points[, step := 0]
+    points[, end := FALSE]
 
     # Muy poco elegante, pero bueno...
     if (circ.x){
@@ -390,56 +414,62 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
 
     points[, c("dx", "dy") := force.fun(x, y)]
     points <- points[dx + dy != 0 & !is.na(dx) & !is.na(dy)]
-    points[, group := 1:.N]
-    points[, piece := 1]
-    points[, sim := 0]
-    points[, end := FALSE]
 
+pp <- copy(points)
+
+points <- copy(pp)
     points2 <- copy(points)
-
-    # points <- as.list(expand.grid(x = x, y = y))
-    # set.seed(42)
-    # N <- length(points$x)
-    # points$x <- with(points, x + rnorm(N, rx, rx))
-    # points$y <- with(points, y + rnorm(N, ry, ry))
-    #
-    # points[c("dx", "dy")] <- with(points, force.fun(x, y, field))
-    # keep <- with(points, dx + dy != 0 & !is.na(dy) & !is.na(dx))
-    # points <- lapply(points, function(o) o[keep])
-    # N <- length(points$x)
-    #
-    # points <- lapply(points, function(o) c(o, rep(NA, N*S)))
-    #
-    # prev <- 1:N
 
     # Integration
     for (s in 1:S) {
-        points2[, c("x", "y", "sim") := .(x + dx*dt, y + dy*dt, s)]
+        points2[, c("x", "y", "step") := .(x + dx*dt, y + dy*dt, s)]
         points2[, c("x", "piece") := fold(x, piece, range.x, circ.x)]
         points2[, c("y", "piece") := fold(y, piece, range.y, circ.y)]
         points2[, c("dx", "dy") := force.fun(x, y)]
         points2 <- points2[!is.na(dx) & !is.na(dy)]
         points <- rbindlist(list(points, points2)) # se puede optimizar prealocando
         points2 <- points2[dx + dy != 0]
+    }
 
-        # now <- (N*s + 1):(N*(s+1))
-        # points$x[now] <- with(points, x[prev] + dx[prev]*dt)
-        # points$y[now] <- with(points, y[prev] + dy[prev]*dt)
-        #
-        # f <- with(points, force.fun(x[now], y[now], field))
-        # points$dx[now] <- ifelse(is.na(f$dx), 0, f$dx)
-        # points$dy[now] <- ifelse(is.na(f$dy), 0, f$dy)
-        #
-        # prev <- now
+    # Empalmo los pieces que pasan de un lado
+    # al otro del dominio.
+    range.select <- function(sign, range) {
+        ifelse(sign == 1, range[2], range[1])
+    }
+
+    if (circ.x == TRUE) {
+        points[, change := c(sign(diff(x)), NA) != sign(dx), by = group]
+        points[is.na(change), change := FALSE]
+
+        extra <- points[change == TRUE]
+        extra <- rbind(extra, extra)
+        extra[, y := y + (range.select(sign(dx), range.x) - x)*dy/dx]
+        extra[, step := step + 0.5*c(1, -1)*sign(dx)]
+        extra[, x:= if (dx[1] < 0) range.x else range.x[2:1], by = .(group, piece)]
+        extra[, piece := piece + c(0, 1), by = .(group, piece)]
+        points <- rbind(points, extra)[order(step)]
+    }
+
+    if (circ.y == TRUE) {
+        points[, change := c(sign(diff(y)), NA) != sign(dy), by = group]
+        points[is.na(change), change := FALSE]
+
+        extra <- points[change == TRUE]
+        extra <- rbind(extra, extra)
+        extra[, x := x + (range.select(sign(dy), range.y) - y)*dx/dy]
+        extra[, step := step + 0.5*c(1, -1)*sign(dy)]
+        extra[, y := if (dy[1] < 0) range.y else range.y[2:1], by = .(group, piece)]
+        extra[, piece := piece + c(0, 1), by = .(group, piece)]
+        points <- rbind(points, extra)[order(step)]
     }
 
     # Me fijo si ese piece tiene el final.
     # Esto luego va al geom que decide si ponerle flecha o no.
-    points[, end := sim == max(sim), by = group]
+    points[, end := step == max(step), by = group]
     points[, group := interaction(group, piece)]
     points[, end := as.logical(sum(end)), by = group]
 
-    return(setDF(points[, .(x, y, group, sim, end)]))
+    return(setDF(points[, .(x, y, group, piece, step, end, dx, dy)]))
 }
 
 
@@ -463,3 +493,5 @@ fold <- function(x, piece, range, circular = TRUE) {
 
 #' @importFrom memoise memoise
 streamline.f <- memoise::memoise(streamline)
+
+

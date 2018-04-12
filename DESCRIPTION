@@ -46,6 +46,7 @@ Suggests:
     reshape2,
     irlba,
     covr,
-    viridis
+    viridis,
+    colorblindr
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

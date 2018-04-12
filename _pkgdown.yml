@@ -9,6 +9,7 @@ reference:
     contents:
       - geom_contour_fill
       - geom_contour2
+      - geom_contour_tanaka
       - geom_text_contour
       - geom_vector
       - geom_arrow

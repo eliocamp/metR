@@ -126,6 +126,19 @@ By default it labels every 2nd contour (this can be changed by the `skip` parame
 
 For more on the use of contours, see the Advance Contouring vignette (comming soon). 
 
+## geom_contour_tanaka
+
+Illuminated contours (aka Tanaka contours) use varying brightness and width to create an illusion of relief. This can help distinguishing between concave and convex areas (local minimums and maximums), specially in black and white plots or to make photocopy safe plots with divergent colour palettes, or to render a more aesthetically pleasing representation of topogaphy.
+
+```{r}
+(g <- ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
+     geom_contour_fill() +
+     geom_contour_tanaka() +
+     scale_fill_divergent() +
+     scale_x_longitude() +
+     scale_y_latitude())
+```
+
 ## stat_subset
 
 As a generalization of `stat_na()` shown above, `metR` also has `stat_subset()` which makes a subset of the data according to the `subset` aesthetic. This makes it possible to show only part of the data in one geom without needing to specify a `data` argument (specially usefull if the data being plotted is the result of a long pipe and not actually asigned to a data.frame). It has a somewhat limited use in that it cannot perform further statistical transformations of the data. 

@@ -1,7 +1,104 @@
-#' `light` and `dark` must be valid colours determining the light and dark shading
-#'  (defaults to "white" and "gray20", respectively). `sun.angle` is the angle,
-#'  in degrees counterclockwise from 12 o' clock, from which the sun is shining
-#'  (defaults to 60).
+#' Illuminated contours
+#'
+#' Illuminated contours (aka Tanaka contours) use varying brightness and width to
+#' create an illusion of relief. This can help distinguishing between concave and
+#' convex areas (local minimums and maximums), specially in black and white plots
+#' or to make photocopy safe plots with divergent colour palettes, or to render
+#' a more aesthetically pleasing representation of topogaphy.
+#'
+#' @inheritParams geom_contour2
+#' @inheritParams geom_relief
+#' @param sun.angle angle of the sun in degrees counterclockwise from 12 o' clock
+#' @param light,dark valid colour representing the light and dark shading
+#'
+#' @section Aesthetics:
+#' `geom_contour_tanaka` understands the following aesthetics (required aesthetics are in bold)
+#'
+#' \itemize{
+#' \item **x**
+#' \item **y**
+#' \item **z**
+#' \item \code{linetype}
+#' }
+#'
+#' @examples
+#' library(ggplot2)
+#' library(data.table)
+#' # A fresh look at the boring old volcano dataset
+#' ggplot(melt(volcano), aes(Var1, Var2)) +
+#'     geom_contour_fill(aes(z = value)) +
+#'     geom_contour_tanaka(aes(z = value), stat = "contour2") +
+#'     theme_void() +
+#'     scale_fill_viridis_c(guide = "none")
+#'
+#' data(geopotential)
+#' geo <- geopotential[date == unique(date)[4]]
+#' geo[, gh.z := Anomaly(gh), by = lat]
+#'
+#' # In a monochrome contour map, it's impossible to know which areas are
+#' # local maximums or minimums.
+#' ggplot(geo, aes(lon, lat)) +
+#'     geom_contour2(aes(z = gh.z), color = "black", circular = "x")
+#'
+#' # With tanaka contours, they are obvious.
+#' ggplot(geo, aes(lon, lat)) +
+#'     geom_contour_tanaka(aes(z = gh.z), dark = "black",
+#'                         circular = "x") +
+#'     scale_fill_divergent()
+#'
+#' # A good divergent color palette has the same luminosity for positive
+#' # and negative values.
+#' # devtools::install_github("wilkelab/cowplot")
+#' # install.packages("colorspace", repos = "http://R-Forge.R-project.org")
+#' # devtools::install_github("clauswilke/colorblindr")
+#' (g <- ggplot(geo, aes(lon, lat)) +
+#'     geom_contour_fill(aes(z = gh.z), circular = "x") +
+#'     scale_fill_divergent())
+#'
+#' # But that means that printed in grayscale (Desaturated), they are
+#' # indistinguishable.
+#' if (require(colorblindr)) cvd_grid(g)  # devtools
+#'
+#' # That problem is solved by adding tanaka contours.
+#' if (require(colorblindr)) cvd_grid(g + geom_contour_tanaka(aes(z = gh.z)))
+#'
+#' @export
+#' @import grid ggplot2 data.table
+geom_contour_tanaka <- function(mapping = NULL, data = NULL,
+                                stat = "Contour2", position = "identity",
+                                ...,
+                                breaks = NULL,
+                                bins = NULL,
+                                binwidth = NULL,
+                                sun.angle = 60,
+                                light = "white",
+                                dark = "gray20",
+                                na.rm = FALSE,
+                                circular = NULL,
+                                show.legend = NA,
+                                inherit.aes = TRUE) {
+    ggplot2::layer(
+        data = data,
+        mapping = mapping,
+        stat = stat,
+        geom = GeomContourTanaka,
+        position = position,
+        show.legend = show.legend,
+        inherit.aes = inherit.aes,
+        params = list(
+            breaks = breaks,
+            bins = bins,
+            binwidth = binwidth,
+            na.rm = na.rm,
+            circular = circular,
+            sun.angle = sun.angle,
+            light = light,
+            dark = dark,
+            ...
+        )
+    )
+}
+
 
 GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", GeomPath,
   draw_panel = function(data, panel_params, coord, arrow = NULL,
@@ -115,8 +212,6 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", GeomPath,
   }
 )
 
-
-
 .addpiece <- function(remove, piece) {
     cuts <- which(remove)
     if (length(remove) > max(cuts)) cuts <- c(cuts, length(remove)+1)
@@ -125,43 +220,4 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", GeomPath,
         piece[cuts[x]:(cuts[x+1]-1)] <- piece[cuts[x]:(cuts[x+1]-1)] + x - 1
     }))
 }
-
-geom_contour_tanaka <- function(mapping = NULL, data = NULL,
-                                stat = "Contour2", position = "identity",
-                                ...,
-                                breaks = NULL,
-                                bins = NULL,
-                                binwidth = NULL,
-                                sun.angle = 60,
-                                light = "white",
-                                dark = "gray20",
-                                na.rm = FALSE,
-                                circular = NULL,
-                                show.legend = NA,
-                                inherit.aes = TRUE) {
-    ggplot2::layer(
-        data = data,
-        mapping = mapping,
-        stat = stat,
-        geom = GeomContourTanaka,
-        position = position,
-        show.legend = show.legend,
-        inherit.aes = inherit.aes,
-        params = list(
-            breaks = breaks,
-            bins = bins,
-            binwidth = binwidth,
-            na.rm = na.rm,
-            circular = circular,
-            sun.angle = sun.angle,
-            light = light,
-            dark = dark,
-            ...
-        )
-    )
-}
-
-
-
-
 

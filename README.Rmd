@@ -26,7 +26,7 @@ Conceptually it's divided into *visualization tools* and *data tools*. The forme
 
 Currently metR is in developement and should only be used carefully (or better still, not at all). Functions do not generaly check arguments and do not print error messages. There are also few if any tests, so coverage is roughly 0%. 
 
- <sup>1</sup>handling data, Hadley style. 
+ <sup>1</sup>handling data, [Hadley](https://twitter.com/hadleywickham/) style. 
 
 ## Installation
 

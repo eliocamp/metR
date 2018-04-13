@@ -99,7 +99,7 @@ ggplot(melt(volcano), aes(Var1, Var2)) +
     geom_contour_fill(aes(z = value)) +
     geom_contour_tanaka(aes(z = value), stat = "contour2") +
     theme_void() +
-    scale_fill_viridis_c(guide = "none")
+    viridis::scale_fill_viridis(guide = "none")
 
 data(geopotential)
 geo <- geopotential[date == unique(date)[4]]

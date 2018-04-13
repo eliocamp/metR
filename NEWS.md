@@ -1,8 +1,10 @@
 # metR 0.1.9000
 - Arrows in `geom_arrow()` and `geom_vector()` scale with vector magnitude. 
-- New geom `geom_sreamline()` for visualizing vector fields.
-- Utilities `dlon()`, `dlat()`, `dx()`, `dy()` for converting physical units into
+- New geom `geom_streamline()` for visualizing vector fields.
+- Utilities `dlon()`, `dlat()`, `dx()`, `dy()` for converting physical units into 
 spherical units. 
+- New geom `geom_contour_tanaka()` that plots illuminated contours. 
+- New function `Interpolate()` for bilinear interpolation.
 
 # metR 0.1
 - New function: `GetTopography()`

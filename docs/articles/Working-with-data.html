@@ -290,6 +290,22 @@ claris[, imputed <span class="op">:</span><span class="er">=</span><span class="
 <span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></code></pre></div>
 <p>The imputed vector is returned along with the Root Mean Square Error estimated from crossvalidation and the number of EOFs used in the imputation as attributes. In this case, with 6 EOFs the imputed values have an estimated rmse of 1.92.</p>
 </div>
+<div id="interpolate" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interpolate" class="anchor"></a>Interpolate</h2>
+<p><code><a href="../reference/Interpolate.html">Interpolate()</a></code> is a convenient wrapper of <code><a href="http://www.rdocumentation.org/packages/fields/topics/interp.surface">fields::interp.surface()</a></code> that makes it work better inside <code>data.table</code>s. It can be used to a new grid or to add interpolated values to an existing grid. It’s easy to interpolate multiple values with the formula interface.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># new grid</span>
+x.out &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">360</span>, <span class="dt">by =</span> <span class="dv">10</span>)
+y.out &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>, <span class="dt">by =</span> <span class="dv">10</span>)
+
+interpolated &lt;-<span class="st"> </span>geopotential[, <span class="kw"><a href="../reference/Interpolate.html">Interpolate</a></span>(gh <span class="op">|</span><span class="st"> </span>gh.t.w <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, x.out, y.out), 
+                             by =<span class="st"> </span>date]</code></pre></div>
+<p>To add interpolated values to an existing <code>data.table</code> use <code>grid = FALSE</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">geopotential[, gh.new <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Interpolate.html">Interpolate</a></span>(gh <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, lon, lat, 
+                                     <span class="dt">data =</span> interpolated[date <span class="op">==</span><span class="st"> </span>d],
+                                     <span class="dt">grid =</span> <span class="ot">FALSE</span>)<span class="op">$</span>gh, 
+             by =<span class="st"> </span>.(<span class="dt">d =</span> date)]</code></pre></div>
+</div>
 </div>
 <div id="physics" class="section level1">
 <h1 class="hasAnchor">
@@ -310,7 +326,7 @@ claris[, imputed <span class="op">:</span><span class="er">=</span><span class="
                 <span class="dt">scale =</span> <span class="fl">3e4</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_quickmap</a></span>()
 <span class="co">#&gt; Warning: Removed 288 rows containing non-finite values (stat_vector).</span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
 <p>There are several wrapers around <code><a href="../reference/Derivate.html">Derivate()</a></code> to perform other common related operations, <code><a href="../reference/Derivate.html">Laplacian()</a></code>, <code><a href="../reference/Derivate.html">Divergence()</a></code> and <code><a href="../reference/Derivate.html">Vorticity()</a></code>.</p>
 </div>
 <div id="geostrophicwind" class="section level2">
@@ -324,7 +340,7 @@ claris[, imputed <span class="op">:</span><span class="er">=</span><span class="
 <span class="st">    </span><span class="kw"><a href="../reference/geom_vector.html">geom_vector</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> u, <span class="dt">dy =</span> v), <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">skip.x =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_quickmap</a></span>()
 <span class="co">#&gt; Warning: Removed 288 rows containing non-finite values (stat_vector).</span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
 </div>
 <div id="thermodynamics" class="section level2">
 <h2 class="hasAnchor">
@@ -374,6 +390,7 @@ ws &lt;-<span class="st"> </span><span class="kw"><a href="../reference/thermody
 <a href="#manipulate-data">Manipulate data</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#eof">EOF</a></li>
       <li><a href="#imputeeof">ImputeEOF</a></li>
+      <li><a href="#interpolate">Interpolate</a></li>
       </ul>
 </li>
       <li>

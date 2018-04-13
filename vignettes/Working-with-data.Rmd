@@ -118,7 +118,6 @@ ggplot(rad, aes(date, global)) +
 
 # Manipulate data
 
-
 ## EOF
 
 Empirical Orthogonal Functions (also known as Principal Component Analysis) is a widely use technique for dimensional reduction of large datasets. In R there are multiple packages that implement this methodology (in fact, base R has *two* functions) but, IMHO, they have akward interfaces that don't interact well with `data.table` (or `dplyr`) syntax. `metR`'s `EOF()` essentially performs a Singular Value Decomposition of the data and returns the U, V and D matrices in a tidy format. 
@@ -205,6 +204,28 @@ str(claris)
 ```
 
 The imputed vector is returned along with the Root Mean Square Error estimated from crossvalidation and the number of EOFs used in the imputation as attributes. In this case, with `r attr(claris$imputed, "eof")` EOFs the imputed values have an estimated rmse of `r round(attr(claris$imputed, "rmse"), 2)`.
+
+## Interpolate
+
+`Interpolate()` is a convenient wrapper of `fields::interp.surface()` that makes it work better inside `data.table`s. It can be used to a new grid or to add interpolated values to an existing grid. It's easy to interpolate multiple values with the formula interface.
+
+```{r}
+# new grid
+x.out <- seq(0, 360, by = 10)
+y.out <- seq(-90, 0, by = 10)
+
+interpolated <- geopotential[, Interpolate(gh | gh.t.w ~ lon + lat, x.out, y.out), 
+                             by = date]
+```
+
+To add interpolated values to an existing `data.table` use `grid = FALSE`. 
+
+```{r}
+geopotential[, gh.new := Interpolate(gh ~ lon + lat, lon, lat, 
+                                     data = interpolated[date == d],
+                                     grid = FALSE)$gh, 
+             by = .(d = date)]
+```
 
 # Physics
 

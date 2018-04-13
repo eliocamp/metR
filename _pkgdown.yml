@@ -45,6 +45,7 @@ reference:
       - GetSMNData
       - EOF
       - ImputeEOF
+      - Interpolate
       - waves
 #      - ReadCtl
   - title: Helpers

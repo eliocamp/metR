@@ -7,7 +7,8 @@
 geom_contour_tanaka(mapping = NULL, data = NULL, stat = "Contour2",
   position = "identity", ..., breaks = NULL, bins = NULL,
   binwidth = NULL, sun.angle = 60, light = "white", dark = "gray20",
-  na.rm = FALSE, circular = NULL, show.legend = NA, inherit.aes = TRUE)
+  range = c(0.01, 0.5), na.rm = FALSE, circular = NULL,
+  show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -55,6 +56,8 @@ and returns breaks as output
 
 \item{light, dark}{valid colour representing the light and dark shading}
 
+\item{range}{numeric vector of length 2 with the minimum and maximum size of lines}
+
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
 
@@ -97,7 +100,7 @@ library(data.table)
 # A fresh look at the boring old volcano dataset
 ggplot(melt(volcano), aes(Var1, Var2)) +
     geom_contour_fill(aes(z = value)) +
-    geom_contour_tanaka(aes(z = value), stat = "contour2") +
+    geom_contour_tanaka(aes(z = value)) +
     theme_void() +
     viridis::scale_fill_viridis(guide = "none")
 

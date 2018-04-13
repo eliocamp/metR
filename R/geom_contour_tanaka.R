@@ -10,6 +10,7 @@
 #' @inheritParams geom_relief
 #' @param sun.angle angle of the sun in degrees counterclockwise from 12 o' clock
 #' @param light,dark valid colour representing the light and dark shading
+#' @param range numeric vector of length 2 with the minimum and maximum size of lines
 #'
 #' @section Aesthetics:
 #' `geom_contour_tanaka` understands the following aesthetics (required aesthetics are in bold)
@@ -27,7 +28,7 @@
 #' # A fresh look at the boring old volcano dataset
 #' ggplot(melt(volcano), aes(Var1, Var2)) +
 #'     geom_contour_fill(aes(z = value)) +
-#'     geom_contour_tanaka(aes(z = value), stat = "contour2") +
+#'     geom_contour_tanaka(aes(z = value)) +
 #'     theme_void() +
 #'     viridis::scale_fill_viridis(guide = "none")
 #'
@@ -68,6 +69,7 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
                                 sun.angle = 60,
                                 light = "white",
                                 dark = "gray20",
+                                range = c(0.01, 0.5),
                                 na.rm = FALSE,
                                 circular = NULL,
                                 show.legend = NA,
@@ -89,6 +91,7 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
             sun.angle = sun.angle,
             light = light,
             dark = dark,
+            range = range,
             ...
         )
     )
@@ -114,8 +117,6 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", GeomPath,
 
       data[, dx := c(diff(x), 0), by = group]
       data[, dy := c(diff(y), 0), by = group]
-      # data[, remove := ifelse(dx == 0 | dx == 0, TRUE, FALSE)]
-      # data[, piece2 := .addpiece(remove, piece), by = group]
 
       munched <- coord_munch(coord, data, panel_params)
 
@@ -129,7 +130,6 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", GeomPath,
       munched[, dx := c(diff(x), 0), by = group]
       munched[, dy := c(diff(y), 0), by = group]
 
-      # munched[, delta := sign(int.level - level)]
       munched[, sun.angle := (sun.angle + 90)*pi/180]
       munched[, relative.angle := sun.angle - atan2(dy, dx)]
       munched[, shade := (sin(relative.angle))]
@@ -141,14 +141,7 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", GeomPath,
       munched[!is.na(shade),
               colour := .rgb2hex(grDevices::colorRamp(c(dark, light), space = "Lab")(shade)),
               by = .(dark, light)]
-
-      # munched[!is.na(size) & delta < 0,
-      #         colour := .rgb2hex(grDevices::colorRamp(c(light, dark), space = "Lab")(shade)),
-      #         by = .(dark, light)]
       munched[, size := scales::rescale(size, to = range)]
-
-    # munched[group == group[1], c("size") := .(0)]
-
 
       # Work out whether we should use lines or segments
       attr <- plyr::ddply(munched, "group", function(df) {

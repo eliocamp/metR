@@ -130,7 +130,8 @@ a more aesthetically pleasing representation of topogaphy.</p>
     <pre class="usage"><span class='fu'>geom_contour_tanaka</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"Contour2"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sun.angle</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>light</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>dark</span> <span class='kw'>=</span> <span class='st'>"gray20"</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>circular</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.01</span>, <span class='fl'>0.5</span>), <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>circular</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,6 +198,10 @@ and returns breaks as output</p></li>
       <td><p>valid colour representing the light and dark shading</p></td>
     </tr>
     <tr>
+      <th>range</th>
+      <td><p>numeric vector of length 2 with the minimum and maximum size of lines</p></td>
+    </tr>
+    <tr>
       <th>na.rm</th>
       <td><p>If <code>FALSE</code>, the default, missing values are removed with
 a warning. If <code>TRUE</code>, missing values are silently removed.</p></td>
@@ -241,7 +246,7 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
 <span class='co'># A fresh look at the boring old volcano dataset</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/melt.data.table'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
     <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-    <span class='fu'>geom_contour_tanaka</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>), <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"contour2"</span>) +
+    <span class='fu'>geom_contour_tanaka</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_void</a></span>() +
     <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/viridis/topics/scale_viridis'>scale_fill_viridis</a></span>(<span class='kw'>guide</span> <span class='kw'>=</span> <span class='st'>"none"</span>)</div><div class='img'><img src='geom_contour_tanaka-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'>data</span>(<span class='no'>geopotential</span>)

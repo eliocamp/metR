@@ -238,7 +238,7 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'>library</span>(<span class='no'>data.table</span>)
-<span class='co'># A new look at the old volcano dataset</span>
+<span class='co'># A fresh look at the boring old volcano dataset</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/melt.data.table'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
     <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
     <span class='fu'>geom_contour_tanaka</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>), <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"contour2"</span>) +
@@ -268,18 +268,14 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
                         <span class='kw'>circular</span> <span class='kw'>=</span> <span class='st'>"x"</span>) +
     <span class='fu'><a href='scale_divergent.html'>scale_fill_divergent</a></span>()</div><div class='img'><img src='geom_contour_tanaka-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># A good divergent color palette has the same luminosity for positive</span>
-<span class='co'># and negative values.</span>
-<span class='co'># devtools::install_github("wilkelab/cowplot")</span>
-<span class='co'># install.packages("colorspace", repos = "http://R-Forge.R-project.org")</span>
-<span class='co'># devtools::install_github("clauswilke/colorblindr")</span>
+<span class='co'># and negative values.But that means that printed in grayscale (Desaturated),</span>
+<span class='co'># they are indistinguishable.</span>
 (<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>geo</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.z</span>), <span class='kw'>circular</span> <span class='kw'>=</span> <span class='st'>"x"</span>) +
-    <span class='fu'><a href='scale_divergent.html'>scale_fill_divergent</a></span>())</div><div class='img'><img src='geom_contour_tanaka-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># But that means that printed in grayscale (Desaturated), they are</span>
-<span class='co'># indistinguishable.</span>
-<span class='kw'>if</span> (<span class='fu'>require</span>(<span class='no'>colorblindr</span>)) <span class='fu'><a href='http://www.rdocumentation.org/packages/colorblindr/topics/cvd_grid'>cvd_grid</a></span>(<span class='no'>g</span>)  <span class='co'># devtools</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: colorblindr</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: colorspace</span></div><div class='img'><img src='geom_contour_tanaka-5.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># That problem is solved by adding tanaka contours.</span>
-<span class='kw'>if</span> (<span class='fu'>require</span>(<span class='no'>colorblindr</span>)) <span class='fu'><a href='http://www.rdocumentation.org/packages/colorblindr/topics/cvd_grid'>cvd_grid</a></span>(<span class='no'>g</span> + <span class='fu'>geom_contour_tanaka</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.z</span>)))</div><div class='img'><img src='geom_contour_tanaka-6.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_fill_gradientn</a></span>(<span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"#767676"</span>, <span class='st'>"white"</span>, <span class='st'>"#484848"</span>),
+                         <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0.415</span>, <span class='fl'>1</span>)))</div><div class='img'><img src='geom_contour_tanaka-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Tanaka contours can solve this issue.</span>
+<span class='no'>g</span> + <span class='fu'>geom_contour_tanaka</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.z</span>))</div><div class='img'><img src='geom_contour_tanaka-5.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

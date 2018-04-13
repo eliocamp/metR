@@ -117,19 +117,14 @@ ggplot(geo, aes(lon, lat)) +
     scale_fill_divergent()
 
 # A good divergent color palette has the same luminosity for positive
-# and negative values.
-# devtools::install_github("wilkelab/cowplot")
-# install.packages("colorspace", repos = "http://R-Forge.R-project.org")
-# devtools::install_github("clauswilke/colorblindr")
+# and negative values.But that means that printed in grayscale (Desaturated),
+# they are indistinguishable.
 (g <- ggplot(geo, aes(lon, lat)) +
     geom_contour_fill(aes(z = gh.z), circular = "x") +
-    scale_fill_divergent())
+    scale_fill_gradientn(colours = c("#767676", "white", "#484848"),
+                         values = c(0, 0.415, 1)))
 
-# But that means that printed in grayscale (Desaturated), they are
-# indistinguishable.
-if (require(colorblindr)) cvd_grid(g)  # devtools
-
-# That problem is solved by adding tanaka contours.
-if (require(colorblindr)) cvd_grid(g + geom_contour_tanaka(aes(z = gh.z)))
+# Tanaka contours can solve this issue.
+g + geom_contour_tanaka(aes(z = gh.z))
 
 }

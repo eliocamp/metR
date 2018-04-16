@@ -5,6 +5,7 @@
 spherical units. 
 - New geom `geom_contour_tanaka()` that plots illuminated contours. 
 - New function `Interpolate()` for bilinear interpolation.
+- Fixed bug in `FitWave()` with wavenumber 0. Now it rerturns the mean. 
 
 # metR 0.1
 - New function: `GetTopography()`

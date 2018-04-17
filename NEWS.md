@@ -8,6 +8,8 @@ spherical units.
 - Fixed bug in `FitWave()` with wavenumber 0. Now it rerturns the mean. 
 - `FitWave()` runs slightly faster and `BuildField()` runs much faster. 
 - Removed `GeomContourFill` object since it was just a polygon. 
+- The results from `EOF()` now use factors instead of numbers to identify each
+PC
 
 # metR 0.1
 - New function: `GetTopography()`

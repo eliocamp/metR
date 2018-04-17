@@ -116,20 +116,23 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1) {
     }
 
     right <- as.data.table(eof$v[, n])
-    pcomps <- n
-    colnames(right) <- as.character(pcomps)
+    pcomps <- paste0("PC", n)
+    colnames(right) <- pcomps
     right <- cbind(right, as.data.table(g$coldims))
     right <- data.table::melt(right, id.vars = names(g$coldims), variable = "PC",
                               value.name = value.var)
+    right[, PC := factor(PC)]
 
     left <- as.data.table(eof$u[, n])
-    colnames(left) <- as.character(pcomps)
+    colnames(left) <- pcomps
     left <- cbind(left, as.data.table(g$rowdims))
     left <- data.table::melt(left, id.vars = names(g$rowdims), variable = "PC",
                              value.name = value.var)
+    left[, PC := factor(PC)]
 
     v.g  <- norm(g$matrix, type = "F")
     sdev <- data.table(PC = pcomps, sd = eof$d[n])
+    sdev[, PC := factor(PC)]
     sdev[, r2 := sd^2/v.g^2]
 
     return(list(right = right, left = left, sdev = sdev))

@@ -103,18 +103,18 @@ FitWave <- function(y, k = 1) {
 BuildField <- function(x, amplitude, phase, k,
                        wave = list(k = k, amplitude = amplitude, phase = phase),
                        sum = TRUE) {
-
-    field <- setDT(expand.grid(x = x, k = wave$k))
-    field <- field[wave, on = "k"]
-    field[, y := amplitude*cos((x - phase)*k), by = k]
-
     if (sum == TRUE) {
-        field <- field[, .(y = sum(y)), by = x]
-        return(field$y)
+        y <- lapply(seq_along(wave$k), function(i) wave$amplitude[i]*cos((x - wave$phase[i])*wave$k[i]))
+        y <- Reduce("+", y)
+        return(y)
     } else {
+        field <- setDT(expand.grid(x = x, k = wave$k))
+        field <- field[wave, on = "k"]
+        field[, y := amplitude*cos((x - phase)*k), by = k]
         return(as.list(field[, .(k, x, y)]))
     }
 }
+
 
 
 #' @format NULL

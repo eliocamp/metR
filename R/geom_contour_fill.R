@@ -70,7 +70,7 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
         data = data,
         mapping = mapping,
         stat = stat,
-        geom = GeomContourFill,
+        geom = GeomPolygon,
         position = position,
         show.legend = show.legend,
         inherit.aes = inherit.aes,
@@ -84,9 +84,3 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
         )
     )
 }
-
-
-GeomContourFill <- ggplot2::ggproto("GeomContourFill", GeomPolygon
-                       # default_aes = ggplot2::aes(weight = 1, colour = "NA", size = 0.5, linetype = 1,
-                       #                   alpha = NA, fill = int.level)
-                       )

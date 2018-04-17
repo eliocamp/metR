@@ -7,6 +7,7 @@ spherical units.
 - New function `Interpolate()` for bilinear interpolation.
 - Fixed bug in `FitWave()` with wavenumber 0. Now it rerturns the mean. 
 - `FitWave()` runs slightly faster and `BuildField()` runs much faster. 
+- Removed `GeomContourFill` object since it was just a polygon. 
 
 # metR 0.1
 - New function: `GetTopography()`

@@ -3,7 +3,7 @@
 #' @import sp
 #' @import ggplot2
 stat_contour_fill <- function(mapping = NULL, data = NULL,
-                              geom = "ContourFill", position = "identity",
+                              geom = "polygon", position = "identity",
                               ...,
                               breaks = scales::fullseq,
                               bins = NULL,

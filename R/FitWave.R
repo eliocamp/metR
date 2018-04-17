@@ -79,17 +79,20 @@
 #' @export
 FitWave <- function(y, k = 1) {
     f <- fft(y)
-    f <- f/length(f)
-    amp <- Mod(f)*2
-    amp[k == 0] <- mean(y)
+    l <- length(f)
+    f <- (f/l)[1:ceiling(l/2)]
+    amp <- Mod(f)
+    amp[-1] <- amp[-1]*2
+    # amp[1] <- mean(y)
     phase <- -Arg(f)
 
     # Hago que la fase esté entre 0 y 2/k*pi
     phase[phase < 0] <- phase[phase < 0] + 2*pi
     phase <- phase/(seq_along(phase) - 1)
-    phase[k == 0] <- 0
+    phase[1] <- 0
 
-    r <- amp^2/(2*sd(y)^2)
+    r <- amp^2/sum(amp[-1]^2)
+    r[1] <- 0
     k <- k + 1
 
     ret <- list(k - 1, amp[k], phase[k], r[k])

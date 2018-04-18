@@ -14,6 +14,7 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
 collapse = TRUE,
+message = FALSE,
 comment = "#>"
 )
 ```
@@ -232,7 +233,7 @@ Since streamlines imply a tight relationship between the vector field and the sp
 g + coord_polar()
 ```
 
-`stat_streamline()` computes three useful variables. `step` is the integration step, and `dx` and `dy` are the components of the vector field at each point.
+`stat_streamline()` computes three useful variables. `step` is the integration step, and `dx` and `dy` are the components of the vector field at each point. They can be used to visualize information about the field in each point, and to give a sense of direction without arrows. 
 
 ```{r}
 ggplot(temperature[lev == 500], aes(lon, lat)) +
@@ -243,8 +244,25 @@ ggplot(temperature[lev == 500], aes(lon, lat)) +
     scale_x_longitude() +
     viridis::scale_color_viridis(guide = "none") +
     scale_size(range = c(0, 1), guide = "none") +
-    scale_alpha(guide = "none") 
+    scale_alpha(guide = "none")
 ```
+
+`step` can also be mapped to the `frame` aesthetic used by `gganimate` to render animations. 
+
+```{r, interval = 0.2, fig.show = "animate"}
+g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
+    geom_streamline(aes(dx = t.dy, dy = -t.dx,
+                        frame = ..step.., cumulative = TRUE, 
+                        color = sqrt(..dx..^2 + ..dy..^2)), arrow = NULL,
+                    S = 10, res = 2, circular = "x", lineend = "round") + 
+    scale_y_latitude(limits = c(-90, 0)) +
+    scale_x_longitude() +
+    viridis::scale_color_viridis(guide = "none") +
+    scale_size(range = c(0, 1), guide = "none") +
+    scale_alpha(guide = "none")
+gganimate::gganimate(g, title_frame = FALSE)
+```
+
 
 # Other goodies
 

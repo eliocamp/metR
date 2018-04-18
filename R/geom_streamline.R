@@ -261,7 +261,7 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
                           lineend = "butt", linejoin = "round", linemitre = 1,
                           na.rm = FALSE) {
         if (!anyDuplicated(data$group)) {
-            ggplot2::message_wrap("geom_path: Each group consists of only one observation. ",
+            message_wrap("geom_path: Each group consists of only one observation. ",
                          "Do you need to adjust the group aesthetic?")
         }
 
@@ -415,9 +415,6 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     points[, c("dx", "dy") := force.fun(x, y)]
     points <- points[dx + dy != 0 & !is.na(dx) & !is.na(dy)]
 
-pp <- copy(points)
-
-points <- copy(pp)
     points2 <- copy(points)
 
     # Integration
@@ -437,6 +434,7 @@ points <- copy(pp)
         ifelse(sign == 1, range[2], range[1])
     }
 
+    points[, step2 := step]
     if (circ.x == TRUE) {
         points[, change := c(sign(diff(x)), NA) != sign(dx), by = group]
         points[is.na(change), change := FALSE]
@@ -444,11 +442,12 @@ points <- copy(pp)
         extra <- points[change == TRUE]
         extra <- rbind(extra, extra)
         extra[, y := y + (range.select(sign(dx), range.x) - x)*dy/dx]
-        extra[, step := step + 0.5*c(1, -1)*sign(dx)]
+        extra[, step2 := step2 + 0.5*c(1, -1)*sign(dx)]
         extra[, x:= if (dx[1] < 0) range.x else range.x[2:1], by = .(group, piece)]
         extra[, piece := piece + c(0, 1), by = .(group, piece)]
-        points <- rbind(points, extra)[order(step)]
+        points <- rbind(points, extra)[order(step2)]
     }
+
 
     if (circ.y == TRUE) {
         points[, change := c(sign(diff(y)), NA) != sign(dy), by = group]
@@ -457,10 +456,10 @@ points <- copy(pp)
         extra <- points[change == TRUE]
         extra <- rbind(extra, extra)
         extra[, x := x + (range.select(sign(dy), range.y) - y)*dx/dy]
-        extra[, step := step + 0.5*c(1, -1)*sign(dy)]
+        extra[, step2 := step2 + 0.5*c(1, -1)*sign(dy)]
         extra[, y := if (dy[1] < 0) range.y else range.y[2:1], by = .(group, piece)]
         extra[, piece := piece + c(0, 1), by = .(group, piece)]
-        points <- rbind(points, extra)[order(step)]
+        points <- rbind(points, extra)[order(step2)]
     }
 
     # Me fijo si ese piece tiene el final.

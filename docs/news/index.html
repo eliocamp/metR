@@ -123,6 +123,11 @@
 <li>Utilities <code><a href="../reference/spherical.html">dlon()</a></code>, <code><a href="../reference/spherical.html">dlat()</a></code>, <code><a href="../reference/spherical.html">dx()</a></code>, <code><a href="../reference/spherical.html">dy()</a></code> for converting physical units into spherical units.</li>
 <li>New geom <code><a href="../reference/geom_contour_tanaka.html">geom_contour_tanaka()</a></code> that plots illuminated contours.</li>
 <li>New function <code><a href="../reference/Interpolate.html">Interpolate()</a></code> for bilinear interpolation.</li>
+<li>Fixed bug in <code><a href="../reference/waves.html">FitWave()</a></code> with wavenumber 0. Now it rerturns the mean.</li>
+<li>
+<code><a href="../reference/waves.html">FitWave()</a></code> runs slightly faster and <code><a href="../reference/waves.html">BuildField()</a></code> runs much faster.</li>
+<li>Removed <code>GeomContourFill</code> object since it was just a polygon.</li>
+<li>The results from <code><a href="../reference/EOF.html">EOF()</a></code> now use factors instead of numbers to identify each PC</li>
 </ul>
 </div>
     <div id="metr-0-1" class="section level1">

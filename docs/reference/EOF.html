@@ -211,8 +211,8 @@ to set n to <code>NULL</code>. If the irba package is installed, EOF uses
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>$<span class='no'>right</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>date</span>, <span class='no'>gh.t.w</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>()</div><div class='img'><img src='EOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># % of explained variance</span>
-<span class='no'>aao</span>$<span class='no'>sdev</span></div><div class='output co'>#&gt;    PC       sd        r2
-#&gt; 1:  1 9295.148 0.2775804</div><div class='input'>
+<span class='no'>aao</span>$<span class='no'>sdev</span></div><div class='output co'>#&gt;     PC       sd        r2
+#&gt; 1: PC1 9295.148 0.2775804</div><div class='input'>
 <span class='co'># 1st eof for each month.</span>
 <span class='no'>aao2</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)$<span class='no'>left</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>month</a></span>(<span class='no'>date</span>)]
 

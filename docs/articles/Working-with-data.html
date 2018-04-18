@@ -85,7 +85,7 @@
       <h1>Working with data</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2018-04-13</h4>
+            <h4 class="date">2018-04-17</h4>
       
       <small>Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Working-with-data.Rmd"><code>vignettes/Working-with-data.Rmd</code></a></small>
 
@@ -196,16 +196,16 @@ eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.htm
 <span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:</span>
 <span class="co">#&gt;   ..$ lon   : num [1:8064] 0 0 0 0 0 0 0 0 0 0 ...</span>
 <span class="co">#&gt;   ..$ lat   : num [1:8064] -90 -87.5 -85 -82.5 -80 -77.5 -75 -72.5 -70 -67.5 ...</span>
-<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "PC1","PC2": 1 1 1 1 1 1 1 1 1 1 ...</span>
 <span class="co">#&gt;   ..$ gh.t.w: num [1:8064] 2.86e-10 6.78e-03 9.44e-03 1.23e-02 1.52e-02 ...</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  $ left :Classes 'data.table' and 'data.frame':  264 obs. of  3 variables:</span>
 <span class="co">#&gt;   ..$ date  : Date[1:264], format: "1990-01-01" ...</span>
-<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "PC1","PC2": 1 1 1 1 1 1 1 1 1 1 ...</span>
 <span class="co">#&gt;   ..$ gh.t.w: num [1:264] 0.0668 -0.0897 -0.0198 0.1765 0.1711 ...</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  $ sdev :Classes 'data.table' and 'data.frame':  2 obs. of  3 variables:</span>
-<span class="co">#&gt;   ..$ PC: int [1:2] 1 2</span>
+<span class="co">#&gt;   ..$ PC: Factor w/ 2 levels "PC1","PC2": 1 2</span>
 <span class="co">#&gt;   ..$ sd: num [1:2] 9295 6056</span>
 <span class="co">#&gt;   ..$ r2: num [1:2] 0.278 0.118</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></code></pre></div>
@@ -216,17 +216,17 @@ eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.htm
 <span class="co">#&gt; List of 3</span>
 <span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  264 obs. of  3 variables:</span>
 <span class="co">#&gt;   ..$ date  : Date[1:264], format: "1990-01-01" ...</span>
-<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "PC1","PC2": 1 1 1 1 1 1 1 1 1 1 ...</span>
 <span class="co">#&gt;   ..$ gh.t.w: num [1:264] -0.0668 0.0897 0.0198 -0.1765 -0.1711 ...</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  $ left :Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:</span>
 <span class="co">#&gt;   ..$ lat   : num [1:8064] -90 -90 -90 -90 -90 -90 -90 -90 -90 -90 ...</span>
 <span class="co">#&gt;   ..$ lon   : num [1:8064] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span>
-<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "PC1","PC2": 1 1 1 1 1 1 1 1 1 1 ...</span>
 <span class="co">#&gt;   ..$ gh.t.w: num [1:8064] -2.86e-10 -2.86e-10 -2.86e-10 -2.86e-10 -2.86e-10 ...</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  $ sdev :Classes 'data.table' and 'data.frame':  2 obs. of  3 variables:</span>
-<span class="co">#&gt;   ..$ PC: int [1:2] 1 2</span>
+<span class="co">#&gt;   ..$ PC: Factor w/ 2 levels "PC1","PC2": 1 2</span>
 <span class="co">#&gt;   ..$ sd: num [1:2] 9295 6056</span>
 <span class="co">#&gt;   ..$ r2: num [1:2] 0.278 0.118</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></code></pre></div>

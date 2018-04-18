@@ -443,6 +443,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         extra <- rbind(extra, extra)
         extra[, y := y + (range.select(sign(dx), range.x) - x)*dy/dx]
         extra[, step2 := step2 + 0.5*c(1, -1)*sign(dx)]
+        extra[, step := step + 1]
         extra[, x:= if (dx[1] < 0) range.x else range.x[2:1], by = .(group, piece)]
         extra[, piece := piece + c(0, 1), by = .(group, piece)]
         points <- rbind(points, extra)[order(step2)]
@@ -457,6 +458,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         extra <- rbind(extra, extra)
         extra[, x := x + (range.select(sign(dy), range.y) - y)*dx/dy]
         extra[, step2 := step2 + 0.5*c(1, -1)*sign(dy)]
+        extra[, step := step + 1]
         extra[, y := if (dy[1] < 0) range.y else range.y[2:1], by = .(group, piece)]
         extra[, piece := piece + c(0, 1), by = .(group, piece)]
         points <- rbind(points, extra)[order(step2)]

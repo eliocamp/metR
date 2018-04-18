@@ -381,5 +381,5 @@ if(getRversion() >= "2.15.1") {
           "r2", "sd", "setTxtProgressBar", "time", "txtProgressBar",
           "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2",
           "group", "step", "point", "change", "end", "level", "m", "rotate",
-          "x.d", "y.d"))
+          "x.d", "y.d", "PC", "step2"))
 }

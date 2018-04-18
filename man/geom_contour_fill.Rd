@@ -10,7 +10,7 @@ geom_contour_fill(mapping = NULL, data = NULL, stat = "ContourFill",
   binwidth = NULL, na.rm = FALSE, circular = NULL, show.legend = NA,
   inherit.aes = TRUE)
 
-stat_contour_fill(mapping = NULL, data = NULL, geom = "ContourFill",
+stat_contour_fill(mapping = NULL, data = NULL, geom = "polygon",
   position = "identity", ..., breaks = scales::fullseq, bins = NULL,
   binwidth = NULL, na.rm = FALSE, circular = NULL, show.legend = NA,
   inherit.aes = TRUE)

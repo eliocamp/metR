@@ -12,6 +12,10 @@ addons:
       - libudunits2-dev
       - ffmpeg
       - imagemagick
+before_install:
+    - sudo add-apt-repository ppa:mc3man/trusty-media -y
+    - sudo apt-get update -q
+    - sudo apt-get install ffmpeg gstreamer0.10-ffmpeg -y
 
 after_success:
   - Rscript -e 'covr::codecov()'

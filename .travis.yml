@@ -10,13 +10,6 @@ addons:
       - libnetcdf-dev
       - netcdf-bin
       - libudunits2-dev
-      - ffmpeg
-      - imagemagick
-before_install:
-    - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 && sudo apt-get update
-    - sudo add-apt-repository ppa:mc3man/trusty-media -y
-    - sudo apt-get update -q
-    - sudo apt-get install ffmpeg gstreamer0.10-ffmpeg -y
 
 after_success:
   - Rscript -e 'covr::codecov()'

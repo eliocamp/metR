@@ -260,7 +260,8 @@ g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
     viridis::scale_color_viridis(guide = "none") +
     scale_size(range = c(0, 1), guide = "none") +
     scale_alpha(guide = "none")
-gganimate::gganimate(g, title_frame = FALSE)
+
+if(require(gganimate)) gganimate(g, title_frame = FALSE)
 ```
 
 

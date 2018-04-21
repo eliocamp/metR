@@ -36,16 +36,16 @@
 #' field$dir <- with(field, atan2(v, u))*180/pi
 #' library(ggplot2)
 #' ggplot(field, aes(x, y)) +
-#'     geom_arrow(aes(mag = V, angle = dir), scale = 0.05, start = 0)
+#'     geom_arrow(aes(mag = V, angle = dir))
 #'
 #' @export
 #' @family ggplot2 helpers
 geom_arrow <- function(mapping = NULL, data = NULL,
-                       stat = "identity",
+                       stat = "arrow",
                        position = "identity", ...,
                        start = 0,
                        direction = 1,
-                       scale = 1,
+                       # scale = 1,
                        min.mag = 0,
                        skip = 0,
                        skip.x = skip,
@@ -73,7 +73,7 @@ geom_arrow <- function(mapping = NULL, data = NULL,
               arrow = arrow,
               lineend = lineend,
               na.rm = na.rm,
-              scale = scale,
+              # scale = scale,
               skip.x = skip.x,
               skip.y = skip.y,
               min.mag = min.mag,
@@ -82,29 +82,32 @@ geom_arrow <- function(mapping = NULL, data = NULL,
 }
 
 GeomArrow <- ggplot2::ggproto("GeomArrow", Geom,
-  required_aes = c("x", "y", "mag", "angle"),
-  default_aes = ggplot2::aes(color = "black", scale = 1, size = 0.5, min.mag = 0,
+  required_aes = c("x", "y"),
+  default_aes = ggplot2::aes(color = "black", size = 0.5, min.mag = 0,
                              linetype = 1, alpha = NA),
   draw_key = ggplot2::draw_key_path,
-  draw_panel = function(data, panel_scales, coord, skip.x = skip.x,
-                        skip.y = skip.y, arrow = arrow, lineend = lineend,
-                        start = start, direction = direction) {
+  draw_panel = function(data, panel_scales, coord,
+                        arrow = arrow, lineend = lineend,
+                        start = start, direction = direction,
+                        preserve.dir = TRUE) {
       coords <- coord$transform(data, panel_scales)
-      coords <- subset(coords,
-                       x %in% JumpBy(unique(x), skip.x + 1) &
-                           y %in% JumpBy(unique(y), skip.y + 1) &
-                           mag >= min.mag)
-      coords$angle <- start + coords$angle*sign(direction)
-      coords$dx <- with(coords, mag*cos(angle*pi/180)*scale)
-      coords$dy <- with(coords, mag*sin(angle*pi/180)*scale)
+      unit.delta <- "snpc"
+      if (preserve.dir == FALSE) {
+          coords$angle <- with(coords, atan2(yend - y, xend - x)*180/pi)
+          unit.delta <- "npc"
+      }
+
+      coords$dx <- with(coords, mag*cos(angle*pi/180))
+      coords$dy <- with(coords, mag*sin(angle*pi/180))
 
       # from https://stackoverflow.com/questions/47814998/how-to-make-segments-that-preserve-angles-in-different-aspect-ratios-in-ggplot2
       xx <- grid::unit.c(grid::unit(coords$x, "npc"),
-                         grid::unit(coords$x, "npc") + grid::unit(coords$dx, "snpc"))
+                         grid::unit(coords$x, "npc") + grid::unit(coords$dx, unit.delta))
       yy <- grid::unit.c(grid::unit(coords$y, "npc"),
-                         grid::unit(coords$y, "npc") + grid::unit(coords$dy, "snpc"))
+                         grid::unit(coords$y, "npc") + grid::unit(coords$dy, unit.delta))
 
-      mag <- with(coords, mag*scale/max(mag*scale, na.rm = T))
+
+      mag <- with(coords, mag/max(mag, na.rm = T))
       arrow$length <- unit(as.numeric(arrow$length)*mag, attr(arrow$length, "unit"))
 
       pol <- grid::polylineGrob(x = xx, y = yy,
@@ -119,3 +122,33 @@ GeomArrow <- ggplot2::ggproto("GeomArrow", Geom,
                                 id = rep(seq(nrow(coords)), 2))
       pol
   })
+
+
+StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
+    required_aes = c("x", "y"),
+    default_aes = ggplot2::aes(min.mag = 0, dx = NULL, dy = NULL,
+                               mag = NULL, angle = NULL),
+    compute_group = function(data, scales,
+                             skip.x = skip.x, skip.y = skip.y,
+                             min.mag = min.mag) {
+        min.mag <- data$min.mag %||% min.mag
+
+        if (is.null(data$mag) | is.null(data$angle)) {
+            if (is.null(data$dx) | is.null(data$dy)) stop("stat_arrow need dx, dy or mag angle (improve mesage!!)")
+            data$mag <- with(data, Mag(dx, dy))
+            data$angle <- with(data, atan2(dy, dx)*180/pi)
+        } else {
+            data$dx <- with(data, mag*cos(angle*pi/180))
+            data$dy <- with(data, mag*sin(angle*pi/180))
+        }
+
+        data <- subset(data, x %in% JumpBy(unique(x), skip.x + 1) &
+                             y %in% JumpBy(unique(y), skip.y + 1) &
+                             mag >= min.mag)
+
+        data$xend = with(data, x + dx)
+        data$yend = with(data, y + dy)
+        data
+
+    }
+)

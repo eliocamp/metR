@@ -10,6 +10,8 @@ spherical units.
 - Removed `GeomContourFill` object since it was just a polygon. 
 - The results from `EOF()` now use factors instead of numbers to identify each
 PC
+- New scale `scale_vector()` and guide `guide_vector()` for controlling and 
+communicating the scale of vectors. 
 
 # metR 0.1
 - New function: `GetTopography()`

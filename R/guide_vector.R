@@ -18,7 +18,7 @@ guide_vector <- function(# title
 
     # general
     direction = NULL,
-    default.unit = "line",
+    default.unit = "cm",
     override.aes = list(),
     nrow = NULL,
     ncol = NULL,
@@ -53,6 +53,7 @@ guide_vector <- function(# title
             # size of key
             keywidth = keywidth,
             keyheight = keyheight,
+            default.unit = default.unit,
 
             # general
             direction = direction,
@@ -74,7 +75,9 @@ guide_vector <- function(# title
 
 #' @export
 guide_train.vector <- function(guide, scale) {
-    breaks <- scale$get_breaks()
+    limits <- scale$get_limits()
+    limits[1] <- 0
+    breaks <- .get_breaks(scale, limits)
     if (length(breaks) == 0 || all(is.na(breaks))) {
         return()
     }
@@ -85,27 +88,15 @@ guide_train.vector <- function(guide, scale) {
     )
     key$.label <- scale$get_labels(breaks)
 
-    # Drop out-of-range values for continuous scale
-    # (should use scale$oob?)
-    if (!scale$is_discrete()) {
-        limits <- scale$get_limits()
-        noob <- !is.na(breaks) & limits[1] <= breaks & breaks <= limits[2]
-        key <- key[noob, , drop = FALSE]
-    }
-
-
     if (guide$reverse) key <- key[nrow(key):1, ]
+
+    guide$keywidth <- grid::unit(key[1, 1], guide$default.unit)
 
     guide$key <- key
     guide$hash <- with(
         guide,
         digest::digest(list(title, key$.label, direction, name))
     )
-
-
-    # Vector proper
-    limits <- scale$get_limits()
-
 
     guide
 }
@@ -318,7 +309,7 @@ guide_gengrob.vector <- function(guide, theme) {
             "top" = {
                 kl_widths <- pmax(label_widths, key_widths)
                 kl_heights <- utils::head(
-                    interleave(label_heights, vgap / 2, key_heights, vgap / 2),
+                    ggplot2:::interleave(label_heights, vgap / 2, key_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -332,7 +323,7 @@ guide_gengrob.vector <- function(guide, theme) {
             "bottom" = {
                 kl_widths <- pmax(label_widths, key_widths)
                 kl_heights <- utils::head(
-                    interleave(key_heights, vgap / 2, label_heights, vgap / 2),
+                    ggplot2:::interleave(key_heights, vgap / 2, label_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -345,11 +336,11 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "left" = {
                 kl_widths <- utils::head(
-                    interleave(label_widths, hgap / 2, key_widths, hgap / 2),
+                    ggplot2:::interleave(label_widths, hgap / 2, key_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    interleave(pmax(label_heights, key_heights), vgap / 2),
+                    ggplot2:::interleave(pmax(label_heights, key_heights), vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -362,11 +353,11 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "right" = {
                 kl_widths <- utils::head(
-                    interleave(key_widths, hgap / 2, label_widths, hgap / 2),
+                    ggplot2:::interleave(key_widths, hgap / 2, label_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    interleave(pmax(label_heights, key_heights), vgap / 2),
+                    ggplot2:::interleave(pmax(label_heights, key_heights), vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -382,11 +373,11 @@ guide_gengrob.vector <- function(guide, theme) {
             label.position,
             "top" = {
                 kl_widths <- utils::head(
-                    interleave(pmax(label_widths, key_widths), hgap/2),
+                    ggplot2:::interleave(pmax(label_widths, key_widths), hgap/2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    interleave(label_heights, vgap / 2, key_heights, vgap / 2),
+                    ggplot2:::interleave(label_heights, vgap / 2, key_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -399,11 +390,11 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "bottom" = {
                 kl_widths <- utils::head(
-                    interleave(pmax(label_widths, key_widths), hgap / 2),
+                    ggplot2:::interleave(pmax(label_widths, key_widths), hgap / 2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    interleave(key_heights, vgap / 2, label_heights, vgap / 2),
+                    ggplot2:::interleave(key_heights, vgap / 2, label_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -416,7 +407,7 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "left" = {
                 kl_widths <- utils::head(
-                    interleave(label_widths, hgap / 2, key_widths, hgap / 2),
+                    ggplot2:::interleave(label_widths, hgap / 2, key_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- pmax(key_heights, label_heights)
@@ -430,7 +421,7 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "right" = {
                 kl_widths <- utils::head(
-                    interleave(key_widths, hgap / 2, label_widths, hgap / 2),
+                    ggplot2:::interleave(key_widths, hgap / 2, label_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- pmax(key_heights, label_heights)

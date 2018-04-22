@@ -6,6 +6,8 @@
 #' @inheritParams geom_vector
 #' @param direction Direction of rotation in degrees.
 #' @param start Starting angle for rotation in degrees.
+#' @param pivot numeric indicating where to pivot the arrow where '0 means at the
+#' begining and 1 meanns at the end.
 #'
 #' @details
 #' Direction and start allows to work with different standards. For the
@@ -36,7 +38,8 @@
 #' field$dir <- with(field, atan2(v, u))*180/pi
 #' library(ggplot2)
 #' ggplot(field, aes(x, y)) +
-#'     geom_arrow(aes(mag = V, angle = dir))
+#'     geom_arrow(aes(mag = V, angle = dir)) +
+#'     scale_vector()
 #'
 #' @export
 #' @family ggplot2 helpers
@@ -45,6 +48,7 @@ geom_arrow <- function(mapping = NULL, data = NULL,
                        position = "identity", ...,
                        start = 0,
                        direction = 1,
+                       pivot = 0.5,
                        # scale = 1,
                        min.mag = 0,
                        skip = 0,
@@ -70,6 +74,7 @@ geom_arrow <- function(mapping = NULL, data = NULL,
           params = list(
               start = start,
               direction = direction,
+              pivot = pivot,
               arrow = arrow,
               lineend = lineend,
               na.rm = na.rm,
@@ -81,30 +86,73 @@ geom_arrow <- function(mapping = NULL, data = NULL,
     )
 }
 
+
+draw_key_vector <- function (data, params, size) {
+    data$linetype[is.na(data$linetype)] <- 0
+    grid::segmentsGrob(0.1, 0.5, 0.9, 0.5,
+                       gp = grid::gpar(col = alpha(data$colour, data$alpha),
+                                       lwd = data$size * .pt,
+                                       lty = data$linetype,
+                                       lineend = "butt"),
+                       arrow = params$arrow)
+}
+
+
 GeomArrow <- ggplot2::ggproto("GeomArrow", Geom,
   required_aes = c("x", "y"),
   default_aes = ggplot2::aes(color = "black", size = 0.5, min.mag = 0,
-                             linetype = 1, alpha = NA),
-  draw_key = ggplot2::draw_key_path,
+                             linetype = 1, alpha = NA, mag = 0,
+                             angle = 0),
+  draw_key =  draw_key_vector,
   draw_panel = function(data, panel_scales, coord,
                         arrow = arrow, lineend = lineend,
                         start = start, direction = direction,
-                        preserve.dir = TRUE) {
+                        preserve.dir = FALSE, pivot = 0.5) {
       coords <- coord$transform(data, panel_scales)
-      unit.delta <- "snpc"
+panel_scales <<- panel_scales
+d <<- data
+coords <<- coords
+coord <<- coord
+      full.width <- grid::convertWidth(grid::unit(1, "npc"), "cm", valueOnly = TRUE)
+
+      grid::convertX(grid::unit(1, "npc"), "native", valueOnly = TRUE)
+      full.height <- grid::convertHeight(grid::unit(1, "npc"), "cm", valueOnly = TRUE)
+
+
+print(full.height)
+print(full.width)
+
       if (preserve.dir == FALSE) {
-          coords$angle <- with(coords, atan2(yend - y, xend - x)*180/pi)
+          # coords$angle <- with(coords, atan2(yend - y, xend - x)*180/pi)
           unit.delta <- "npc"
+
+          coords$dx <- with(coords, grid::convertWidth(grid::unit(xend-x, "npc"), "cm", valueOnly = TRUE))
+          coords$dy <- with(coords, grid::convertHeight(grid::unit(yend-y, "npc"), "cm", valueOnly = TRUE))
+
+          coords$angle <- with(coords, atan2(dy, dx)*180/pi)
+          coords$dx <- with(coords, mag*cos(angle*pi/180))
+          coords$dy <- with(coords, mag*sin(angle*pi/180))
+
+          xx <- grid::unit.c(grid::unit(coords$x, "npc") - grid::unit(coords$dx*pivot, "cm"),
+                             grid::unit(coords$x, "npc") + grid::unit(coords$dx*pivot, "cm"))
+          yy <- grid::unit.c(grid::unit(coords$y, "npc") - grid::unit(coords$dy*(1 - pivot), "cm"),
+                             grid::unit(coords$y, "npc") + grid::unit(coords$dy*(1 - pivot), "cm"))
+#
+#           xx <- grid::unit.c(grid::unit(coords$x, "npc"),
+#                              grid::unit(coords$xend, "npc"))
+#           yy <- grid::unit.c(grid::unit(coords$y, "npc"),
+#                              grid::unit(coords$yend, "npc"))
+
+      } else {
+          unit.delta <- "snpc"
+          coords$dx <- with(coords, mag*cos(angle*pi/180))
+          coords$dy <- with(coords, mag*sin(angle*pi/180))
+          # from https://stackoverflow.com/questions/47814998/how-to-make-segments-that-preserve-angles-in-different-aspect-ratios-in-ggplot2
+          xx <- grid::unit.c(grid::unit(coords$x, "npc") - grid::unit(coords$dx*pivot, "cm"),
+                             grid::unit(coords$x, "npc") + grid::unit(coords$dx*(1 - pivot), "cm"))
+          yy <- grid::unit.c(grid::unit(coords$y, "npc") - grid::unit(coords$dy*pivot, "cm"),
+                             grid::unit(coords$y, "npc") + grid::unit(coords$dy*(1 - pivot), "cm"))
       }
-
-      coords$dx <- with(coords, mag*cos(angle*pi/180))
-      coords$dy <- with(coords, mag*sin(angle*pi/180))
-
-      # from https://stackoverflow.com/questions/47814998/how-to-make-segments-that-preserve-angles-in-different-aspect-ratios-in-ggplot2
-      xx <- grid::unit.c(grid::unit(coords$x, "npc"),
-                         grid::unit(coords$x, "npc") + grid::unit(coords$dx, unit.delta))
-      yy <- grid::unit.c(grid::unit(coords$y, "npc"),
-                         grid::unit(coords$y, "npc") + grid::unit(coords$dy, unit.delta))
 
 
       mag <- with(coords, mag/max(mag, na.rm = T))
@@ -146,8 +194,14 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
                              y %in% JumpBy(unique(y), skip.y + 1) &
                              mag >= min.mag)
 
+        # Pass x, y, xend, yend with different name so they're not
+        # scaled and geom has access to them.
         data$xend = with(data, x + dx)
         data$yend = with(data, y + dy)
+        data$xend.real = with(data, x + dx)
+        data$yend.real = with(data, y + dy)
+        data$x.real = with(data, x)
+        data$y.real = with(data, y)
         data
 
     }

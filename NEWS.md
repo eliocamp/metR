@@ -12,6 +12,8 @@ spherical units.
 PC
 - New scale `scale_vector()` and guide `guide_vector()` for controlling and 
 communicating the scale of vectors. 
+- `geom_arrow()` gains new `pivot` agument to control point of rotation and 
+`preserve.dir` to tell if angle should be preserved. 
 
 # metR 0.1
 - New function: `GetTopography()`

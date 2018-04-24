@@ -62,6 +62,13 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              circular = NULL) {
         data <- data[!(is.na(data$x) | is.na(data$y)), ]
 
+        z <- tapply(data$z, data[c("x", "y")], identity)
+
+        if (is.list(z)) {
+            stop("Contour requires single `z` at each combination of `x` and `y`.",
+                 call. = FALSE)
+        }
+
         if (na.rm) {
             data <- data[!is.na(data$z), ]
         } else {
@@ -101,7 +108,11 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
         # Make contours
         cont <- data.table::setDT(.contour_lines(data, breaks, complete = complete))
-        if (length(cont) == 0) return(cont)
+
+        if (length(cont) == 0) {
+            warning("Not possible to generate contour data", call. = FALSE)
+            return(data.frame())
+        }
 
         # Ugly hack for joining disjointed contours
         cont <- .join_contours(cont)

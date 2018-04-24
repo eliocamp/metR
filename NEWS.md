@@ -14,6 +14,8 @@ PC
 communicating the scale of vectors. 
 - `geom_arrow()` gains new `pivot` agument to control point of rotation and 
 `preserve.dir` to tell if angle should be preserved. 
+- `stat_contour_fill()` and `stat_contour2()` print a warning when no contours 
+can be made. 
 
 # metR 0.1
 - New function: `GetTopography()`

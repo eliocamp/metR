@@ -50,12 +50,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
   compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                            breaks = scales::fullseq, complete = FALSE,
                            na.rm = FALSE, circular = NULL) {
-      z <- tapply(data$z, data[c("x", "y")], identity)
 
-      if (is.list(z)) {
-          stop("Contour requires single `z` at each combination of `x` and `y`.",
-               call. = FALSE)
-      }
       # Check is.null(breaks) for backwards compatibility
       if (is.null(breaks)) {
           breaks <- scales::fullseq

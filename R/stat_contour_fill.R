@@ -62,13 +62,6 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              circular = NULL) {
         data <- data[!(is.na(data$x) | is.na(data$y)), ]
 
-        z <- tapply(data$z, data[c("x", "y")], identity)
-
-        if (is.list(z)) {
-            stop("Contour requires single `z` at each combination of `x` and `y`.",
-                 call. = FALSE)
-        }
-
         if (na.rm) {
             data <- data[!is.na(data$z), ]
         } else {

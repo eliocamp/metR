@@ -4,8 +4,8 @@
 \alias{geom_arrow}
 \title{Arrows}
 \usage{
-geom_arrow(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., start = 0, direction = 1, scale = 1,
+geom_arrow(mapping = NULL, data = NULL, stat = "arrow",
+  position = "identity", ..., start = 0, direction = 1, pivot = 0.5,
   min.mag = 0, skip = 0, skip.x = skip, skip.y = skip,
   arrow.angle = 15, arrow.length = 0.5, arrow.ends = "last",
   arrow.type = "closed", arrow = grid::arrow(arrow.angle, unit(arrow.length,
@@ -47,23 +47,31 @@ to the paired geom/stat.}
 
 \item{direction}{Direction of rotation in degrees.}
 
-\item{scale}{multiplicative scales for adjusting the size of the vectors.}
+\item{pivot}{numeric indicating where to pivot the arrow where '0 means at the
+begining and 1 meanns at the end.}
 
 \item{min.mag}{minimum magnitude of the plotted vectors}
 
-\item{skip}{numeric specifying number of gridpoints not to draw in the x and y direction.}
+\item{skip}{numeric specifying number of gridpoints not to draw
+in the x and y direction.}
 
-\item{skip.x}{numeric specifying number of gridpoints not to draw in the x and y direction.}
+\item{skip.x}{numeric specifying number of gridpoints not to draw
+in the x and y direction.}
 
-\item{skip.y}{numeric specifying number of gridpoints not to draw in the x and y direction.}
+\item{skip.y}{numeric specifying number of gridpoints not to draw
+in the x and y direction.}
 
-\item{arrow.angle}{parameters passed to \link[grid:arrow]{grid::arrow}}
+\item{arrow.angle}{parameters passed to
+\link[grid:arrow]{grid::arrow}}
 
-\item{arrow.length}{parameters passed to \link[grid:arrow]{grid::arrow}}
+\item{arrow.length}{parameters passed to
+\link[grid:arrow]{grid::arrow}}
 
-\item{arrow.ends}{parameters passed to \link[grid:arrow]{grid::arrow}}
+\item{arrow.ends}{parameters passed to
+\link[grid:arrow]{grid::arrow}}
 
-\item{arrow.type}{parameters passed to \link[grid:arrow]{grid::arrow}}
+\item{arrow.type}{parameters passed to
+\link[grid:arrow]{grid::arrow}}
 
 \item{arrow}{specification for arrow heads, as created by arrow().}
 
@@ -118,7 +126,8 @@ field$V <- with(field, sqrt(u^2 + v^2))
 field$dir <- with(field, atan2(v, u))*180/pi
 library(ggplot2)
 ggplot(field, aes(x, y)) +
-    geom_arrow(aes(mag = V, angle = dir), scale = 0.05, start = 0)
+    geom_arrow(aes(mag = V, angle = dir)) +
+    scale_mag()
 
 }
 \seealso{

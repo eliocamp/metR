@@ -72,7 +72,8 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", GeomTile,
     draw_panel = function(data, panel_scales, coord, raster, interpolate) {
 
         if (!coord$is_linear()) {
-           stop("non lineal coordinates are not implemented in GeomRelief", call. = FALSE)
+           stop("non lineal coordinates are not implemented in GeomRelief",
+                call. = FALSE)
         } else {
             coords <- as.data.table(coord$transform(data, panel_scales))
 
@@ -84,7 +85,8 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", GeomTile,
             coords[, shade := (cos(atan2(-dy, -dx) - sun.angle) + 1)/2]
 
             coords[is.na(shade), shade := 0]
-            coords[, fill := .rgb2hex(grDevices::colorRamp(c(dark, light), space = "Lab")(shade)),
+            coords[, fill := .rgb2hex(grDevices::colorRamp(c(dark, light),
+                                                           space = "Lab")(shade)),
                    by = .(dark, light)]
 
             if (raster == TRUE){
@@ -102,8 +104,10 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", GeomTile,
                 raster[cbind(nrow - y_pos, x_pos + 1)] <- alpha(coords$fill, coords$alpha)
 
                 # Figure out dimensions of raster on plot
-                x_rng <- c(min(coords$xmin, na.rm = TRUE), max(coords$xmax, na.rm = TRUE))
-                y_rng <- c(min(coords$ymin, na.rm = TRUE), max(coords$ymax, na.rm = TRUE))
+                x_rng <- c(min(coords$xmin, na.rm = TRUE),
+                           max(coords$xmax, na.rm = TRUE))
+                y_rng <- c(min(coords$ymin, na.rm = TRUE),
+                           max(coords$ymax, na.rm = TRUE))
 
                 grid::rasterGrob(raster,
                            x = mean(x_rng), y = mean(y_rng),

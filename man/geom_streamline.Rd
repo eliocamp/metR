@@ -12,7 +12,7 @@ geom_streamline(mapping = NULL, data = NULL, stat = "streamline",
   arrow.angle = 6, arrow.length = 0.5, arrow.ends = "last",
   arrow.type = "closed", arrow = grid::arrow(arrow.angle, unit(arrow.length,
   "lines"), ends = arrow.ends, type = arrow.type), lineend = "butt",
-  na.rm = T, show.legend = NA, inherit.aes = TRUE)
+  na.rm = TRUE, show.legend = NA, inherit.aes = TRUE)
 
 stat_streamline(mapping = NULL, data = NULL, geom = "streamline",
   position = "identity", ..., L = 5, res = 1, S = NULL, dt = NULL,
@@ -21,7 +21,7 @@ stat_streamline(mapping = NULL, data = NULL, geom = "streamline",
   arrow.angle = 6, arrow.length = 0.5, arrow.ends = "last",
   arrow.type = "closed", arrow = grid::arrow(arrow.angle, unit(arrow.length,
   "lines"), ends = arrow.ends, type = arrow.type), lineend = "butt",
-  na.rm = T, show.legend = NA, inherit.aes = TRUE)
+  na.rm = TRUE, show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -65,24 +65,31 @@ to the paired geom/stat.}
 \item{circular}{either NULL, "x" or "y" indicating which dimension is circular,
 if any.}
 
-\item{skip}{numeric specifying number of gridpoints not to draw in the x and y direction.}
+\item{skip}{numeric specifying number of gridpoints not to draw
+in the x and y direction.}
 
-\item{skip.x}{numeric specifying number of gridpoints not to draw in the x and y direction.}
+\item{skip.x}{numeric specifying number of gridpoints not to draw
+in the x and y direction.}
 
-\item{skip.y}{numeric specifying number of gridpoints not to draw in the x and y direction.}
+\item{skip.y}{numeric specifying number of gridpoints not to draw
+in the x and y direction.}
 
 \item{n, nx, ny}{optional numeric indicating the number of points to draw in the
 x and y direction (replaces \code{skip} if not \code{NULL})}
 
 \item{jitter, jitter.x, jitter.y}{ammount of jitter of the starting poits}
 
-\item{arrow.angle}{parameters passed to \link[grid:arrow]{grid::arrow}}
+\item{arrow.angle}{parameters passed to
+\link[grid:arrow]{grid::arrow}}
 
-\item{arrow.length}{parameters passed to \link[grid:arrow]{grid::arrow}}
+\item{arrow.length}{parameters passed to
+\link[grid:arrow]{grid::arrow}}
 
-\item{arrow.ends}{parameters passed to \link[grid:arrow]{grid::arrow}}
+\item{arrow.ends}{parameters passed to
+\link[grid:arrow]{grid::arrow}}
 
-\item{arrow.type}{parameters passed to \link[grid:arrow]{grid::arrow}}
+\item{arrow.type}{parameters passed to
+\link[grid:arrow]{grid::arrow}}
 
 \item{arrow}{specification for arrow heads, as created by arrow().}
 

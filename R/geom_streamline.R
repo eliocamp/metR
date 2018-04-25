@@ -137,7 +137,7 @@ geom_streamline <-  function(mapping = NULL, data = NULL,
                              arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"),
                                                  ends = arrow.ends, type = arrow.type),
                              lineend = "butt",
-                             na.rm = T,
+                             na.rm = TRUE,
                              show.legend = NA,
                              inherit.aes = TRUE) {
     ggplot2::layer(
@@ -194,7 +194,7 @@ stat_streamline <- function(mapping = NULL, data = NULL,
                             arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"),
                                                 ends = arrow.ends, type = arrow.type),
                             lineend = "butt",
-                            na.rm = T,
+                            na.rm = TRUE,
                             show.legend = NA,
                             inherit.aes = TRUE) {
     layer(
@@ -230,27 +230,33 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
     setup_params = function(data, params) {
 
         # M <- with(data, max(Mag(dx, dy), na.rm = T))
-        m <- with(data, mean(Mag(dx, dy), na.rm = T))  # No me gustaaaa
+        m <- with(data, mean(Mag(dx, dy), na.rm = TRUE))  # No me gustaaaa
         r <- min(ggplot2::resolution(data$x, zero = FALSE),
                  ggplot2::resolution(data$y, zero = FALSE))
 
         if (is.null(params$dt)) params$dt <- r/m/params$res
 
         if (is.null(params$S)) params$S <- ceiling(params$L/params$dt/m)
-        if (params$S == 1) warning("performing only 1 integration step, please consider increasing the resolution")
+        if (params$S == 1) {
+            warning("performing only 1 integration step, please consider increasing the resolution")
+        }
 
         return(params)
     },
     compute_group = function(data, scales, dt = 0.1, S = 3, skip.x = 1,
                              skip.y = 1, nx = 10, ny  = 10, jitter.x = 1,
-                             jitter.y = 1, circular = NULL,
+                             jitter.y = 1, circular = NULL, min.dist = 0,
                              L = NULL, res = NULL) {
 
         data <- streamline.f(data, dt = dt, S = S, skip.x = skip.x,
                              skip.y = skip.y, nx = nx, ny = ny, jitter.x = jitter.x,
                              jitter.y = jitter.y, circular = circular)
+d <<- data
+        distance <- data[, .(dx = diff(x), dy = diff(y)), by = line]
+        distance <- distance[, .(distance = sum(sqrt(dx^2 + dy^2))), by = line]
+        keep <- distance[distance >= min.dist, line]
 
-        return(data)
+        return(setDF(data[line %in% keep]))
     }
 )
 
@@ -320,7 +326,8 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
 
             if (!is.null(arrow)) {
                 mult <- as.numeric(munched$end)[start]
-                arrow$length <- unit(as.numeric(arrow$length)[1]*mult, attr(arrow$length, "unit"))
+                arrow$length <- unit(as.numeric(arrow$length)[1]*mult,
+                                     attr(arrow$length, "unit"))
             }
             polylineGrob(
                 munched$x, munched$y, id = id,
@@ -444,7 +451,8 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         extra[, y := y + (range.select(sign(dx), range.x) - x)*dy/dx]
         extra[, step2 := step2 + 0.5*c(1, -1)*sign(dx)]
         extra[, step := step + 1]
-        extra[, x:= if (dx[1] < 0) range.x else range.x[2:1], by = .(group, piece)]
+        extra[, x:= if (dx[1] < 0) range.x else range.x[2:1],
+              by = .(group, piece)]
         extra[, piece := piece + c(0, 1), by = .(group, piece)]
         points <- rbind(points, extra)[order(step2)]
     }
@@ -459,7 +467,8 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         extra[, x := x + (range.select(sign(dy), range.y) - y)*dx/dy]
         extra[, step2 := step2 + 0.5*c(1, -1)*sign(dy)]
         extra[, step := step + 1]
-        extra[, y := if (dy[1] < 0) range.y else range.y[2:1], by = .(group, piece)]
+        extra[, y := if (dy[1] < 0) range.y else range.y[2:1],
+              by = .(group, piece)]
         extra[, piece := piece + c(0, 1), by = .(group, piece)]
         points <- rbind(points, extra)[order(step2)]
     }
@@ -467,10 +476,11 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     # Me fijo si ese piece tiene el final.
     # Esto luego va al geom que decide si ponerle flecha o no.
     points[, end := step == max(step), by = group]
+    points[, line := group]
     points[, group := interaction(group, piece)]
     points[, end := as.logical(sum(end)), by = group]
 
-    return(setDF(points[, .(x, y, group, piece, step, end, dx, dy)]))
+    return(points[, .(x, y, group, piece, step, end, dx, dy, line)])
 }
 
 

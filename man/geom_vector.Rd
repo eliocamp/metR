@@ -44,13 +44,16 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 \code{color = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 
-\item{scale, scale.x, scale.y}{multiplicative scales for adjusting the size of the vectors.}
+\item{scale, scale.x, scale.y}{multiplicative scales for adjusting the size of
+the vectors.}
 
 \item{min.mag}{minimum magnitude of the plotted vectors}
 
-\item{skip, skip.x, skip.y}{numeric specifying number of gridpoints not to draw in the x and y direction.}
+\item{skip, skip.x, skip.y}{numeric specifying number of gridpoints not to draw
+in the x and y direction.}
 
-\item{arrow.length, arrow.angle, arrow.ends, arrow.type}{parameters passed to \link[grid:arrow]{grid::arrow}}
+\item{arrow.length, arrow.angle, arrow.ends, arrow.type}{parameters passed to
+\link[grid:arrow]{grid::arrow}}
 
 \item{arrow}{specification for arrow heads, as created by arrow().}
 

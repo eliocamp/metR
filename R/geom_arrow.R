@@ -39,7 +39,7 @@
 #' library(ggplot2)
 #' ggplot(field, aes(x, y)) +
 #'     geom_arrow(aes(mag = V, angle = dir)) +
-#'     scale_vector()
+#'     scale_mag()
 #'
 #' @export
 #' @family ggplot2 helpers
@@ -108,54 +108,77 @@ GeomArrow <- ggplot2::ggproto("GeomArrow", Geom,
                         arrow = arrow, lineend = lineend,
                         start = start, direction = direction,
                         preserve.dir = FALSE, pivot = 0.5) {
-      coords <- coord$transform(data, panel_scales)
-panel_scales <<- panel_scales
-d <<- data
-coords <<- coords
-coord <<- coord
-      full.width <- grid::convertWidth(grid::unit(1, "npc"), "cm", valueOnly = TRUE)
-
-      grid::convertX(grid::unit(1, "npc"), "native", valueOnly = TRUE)
-      full.height <- grid::convertHeight(grid::unit(1, "npc"), "cm", valueOnly = TRUE)
-
-
-print(full.height)
-print(full.width)
 
       if (preserve.dir == FALSE) {
-          # coords$angle <- with(coords, atan2(yend - y, xend - x)*180/pi)
-          unit.delta <- "npc"
+          if (!coord$is_linear()) {
 
-          coords$dx <- with(coords, grid::convertWidth(grid::unit(xend-x, "npc"), "cm", valueOnly = TRUE))
-          coords$dy <- with(coords, grid::convertHeight(grid::unit(yend-y, "npc"), "cm", valueOnly = TRUE))
-
-          coords$angle <- with(coords, atan2(dy, dx)*180/pi)
-          coords$dx <- with(coords, mag*cos(angle*pi/180))
-          coords$dy <- with(coords, mag*sin(angle*pi/180))
-
-          xx <- grid::unit.c(grid::unit(coords$x, "npc") - grid::unit(coords$dx*pivot, "cm"),
-                             grid::unit(coords$x, "npc") + grid::unit(coords$dx*pivot, "cm"))
-          yy <- grid::unit.c(grid::unit(coords$y, "npc") - grid::unit(coords$dy*(1 - pivot), "cm"),
-                             grid::unit(coords$y, "npc") + grid::unit(coords$dy*(1 - pivot), "cm"))
-#
-#           xx <- grid::unit.c(grid::unit(coords$x, "npc"),
-#                              grid::unit(coords$xend, "npc"))
-#           yy <- grid::unit.c(grid::unit(coords$y, "npc"),
-#                              grid::unit(coords$yend, "npc"))
-
+              # full.width <- grid::convertWidth(grid::unit(1, "npc"), "cm", valueOnly = TRUE)
+              # full.height <- grid::convertHeight(grid::unit(1, "npc"), "cm", valueOnly = TRUE)
+              # s <- mean(full.width, full.height)
+              #
+              # data$mag <- data$mag/s
+              # data$dx <- with(data, mag*cos(angle*pi/180))
+              # data$dy <- with(data, mag*sin(angle*pi/180))
+              # data$xend <- with(data, x + dx)
+              # data$yend <- with(data, y + dy)
+              #
+              stop("geom_arrow does not work with non-linear coordinates if preserve.dir = FALSE. Use geom_vector instead", call. = FALSE)
+              # data$group <- 1:nrow(data)
+              #
+              #
+              # starts <- subset(data, select = c(-xend, -yend))
+              # ends <- plyr::rename(subset(data, select = c(-x, -y)), c("xend" = "x", "yend" = "y"),
+              #                      warn_missing = FALSE)
+              #
+              # pieces <- rbind(starts, ends)
+              # pieces <- pieces[order(pieces$group),]
+              # mag <- with(data, mag/max(mag, na.rm = T))
+              #
+              # arrow$length <- unit(as.numeric(arrow$length)*mag, attr(arrow$length, "unit"))
+              #
+              # return(GeomPath$draw_panel(pieces, panel_scales, coord, arrow = arrow,
+              #                     lineend = lineend))
+          } else {
+              coords <- coord$transform(data, panel_scales)
+              # d <<- data
+              # coords <<- coords
+              # coord <<- coord
+              # panel_scales <<- panel_scales
+              aspect <- coord$aspect(panel_scales)
+              if (is.null(aspect)) {
+                  message("geom_arrow with preserve = FALSE works best with a fixed aspect ratio")
+                  delta.unit <- "npc"
+                  coords$angle <- with(coords, atan2(yend - y, xend - x)*180/pi)
+                  # Not really correct. convertWidth uses the dimensions of the
+                  # viewport, not of the plot area :(
+                  full.width <- grid::convertWidth(grid::unit(1, "npc"), "cm", valueOnly = TRUE)
+                  full.height <- grid::convertHeight(grid::unit(1, "npc"), "cm", valueOnly = TRUE)
+                  s <- mean(full.width, full.height)
+                  coords$mag <- coords$mag/s
+                  coords$dx <- with(coords, mag*cos(angle*pi/180))
+                  coords$dy <- with(coords, mag*sin(angle*pi/180))
+              } else {
+                  delta.unit <- "cm"
+                  coords$angle <- with(coords, atan2(dy*aspect, dx)*180/pi)
+                  coords$dx <- with(coords, mag*cos(angle*pi/180))
+                  coords$dy <- with(coords, mag*sin(angle*pi/180))
+              }
+          }
       } else {
-          unit.delta <- "snpc"
+          coords <- coord$transform(data, panel_scales)
+          delta.unit <- "cm"
           coords$dx <- with(coords, mag*cos(angle*pi/180))
           coords$dy <- with(coords, mag*sin(angle*pi/180))
-          # from https://stackoverflow.com/questions/47814998/how-to-make-segments-that-preserve-angles-in-different-aspect-ratios-in-ggplot2
-          xx <- grid::unit.c(grid::unit(coords$x, "npc") - grid::unit(coords$dx*pivot, "cm"),
-                             grid::unit(coords$x, "npc") + grid::unit(coords$dx*(1 - pivot), "cm"))
-          yy <- grid::unit.c(grid::unit(coords$y, "npc") - grid::unit(coords$dy*pivot, "cm"),
-                             grid::unit(coords$y, "npc") + grid::unit(coords$dy*(1 - pivot), "cm"))
       }
 
+      # from https://stackoverflow.com/questions/47814998/how-to-make-segments-that-preserve-angles-in-different-aspect-ratios-in-ggplot2
+      xx <- grid::unit.c(grid::unit(coords$x, "npc") - grid::unit(coords$dx*pivot, delta.unit),
+                         grid::unit(coords$x, "npc") + grid::unit(coords$dx*(1 - pivot), delta.unit))
+      yy <- grid::unit.c(grid::unit(coords$y, "npc") - grid::unit(coords$dy*pivot, delta.unit),
+                         grid::unit(coords$y, "npc") + grid::unit(coords$dy*(1 - pivot), delta.unit))
 
-      mag <- with(coords, mag/max(mag, na.rm = T))
+
+      mag <- with(coords, mag/max(mag, na.rm = TRUE))
       arrow$length <- unit(as.numeric(arrow$length)*mag, attr(arrow$length, "unit"))
 
       pol <- grid::polylineGrob(x = xx, y = yy,
@@ -182,7 +205,9 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
         min.mag <- data$min.mag %||% min.mag
 
         if (is.null(data$mag) | is.null(data$angle)) {
-            if (is.null(data$dx) | is.null(data$dy)) stop("stat_arrow need dx, dy or mag angle (improve mesage!!)")
+            if (is.null(data$dx) | is.null(data$dy)) {
+                stop("stat_arrow need dx, dy or mag angle (improve mesage!!)")
+            }
             data$mag <- with(data, Mag(dx, dy))
             data$angle <- with(data, atan2(dy, dx)*180/pi)
         } else {
@@ -196,12 +221,12 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
 
         # Pass x, y, xend, yend with different name so they're not
         # scaled and geom has access to them.
-        data$xend = with(data, x + dx)
-        data$yend = with(data, y + dy)
-        data$xend.real = with(data, x + dx)
-        data$yend.real = with(data, y + dy)
-        data$x.real = with(data, x)
-        data$y.real = with(data, y)
+        data$xend <- with(data, x + dx)
+        data$yend <- with(data, y + dy)
+        data$xend.real <- with(data, x + dx)
+        data$yend.real <- with(data, y + dy)
+        data$x.real <- with(data, x)
+        data$y.real <- with(data, y)
         data
 
     }

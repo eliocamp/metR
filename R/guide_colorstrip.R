@@ -265,12 +265,12 @@ guide_gengrob.colorstrip <- function(guide, theme) {
 
     # title
     grob.title <- ggname("guide.title",
-                                   ggplot2::element_grob(
-                                       guide$title.theme %||% calc_element("legend.title", theme),
-                                       label = guide$title,
-                                       hjust = guide$title.hjust %||% theme$legend.title.align %||% 0,
-                                       vjust = guide$title.vjust %||% 0.5
-                                   )
+                         ggplot2::element_grob(
+                             guide$title.theme %||% calc_element("legend.title", theme),
+                             label = guide$title,
+                             hjust = guide$title.hjust %||% theme$legend.title.align %||% 0,
+                             vjust = guide$title.vjust %||% 0.5
+                             )
     )
 
 
@@ -378,7 +378,7 @@ guide_gengrob.colorstrip <- function(guide, theme) {
                vps <- with(vps,
                            list(bar.row = bar.row + 2, bar.col = bar.col,
                                 label.row = label.row + 2, label.col = label.col,
-                                title.row = 1, title.col = 1:length(widths)))
+                                title.row = 1, title.col = seq_along(widths)))
            },
            "bottom" = {
                widths <- c(bl_widths, max(0, title_width.c - sum(bl_widths)))
@@ -386,7 +386,7 @@ guide_gengrob.colorstrip <- function(guide, theme) {
                vps <- with(vps,
                            list(bar.row = bar.row, bar.col = bar.col,
                                 label.row = label.row, label.col = label.col,
-                                title.row = length(heights), title.col = 1:length(widths)))
+                                title.row = length(heights), title.col = seq_along(widths)))
            },
            "left" = {
                widths <- c(title_width.c, hgap, bl_widths)
@@ -394,7 +394,7 @@ guide_gengrob.colorstrip <- function(guide, theme) {
                vps <- with(vps,
                            list(bar.row = bar.row, bar.col = bar.col + 2,
                                 label.row = label.row, label.col = label.col + 2,
-                                title.row = 1:length(heights), title.col = 1))
+                                title.row = seq_along(heights), title.col = 1))
            },
            "right" = {
                widths <- c(bl_widths, hgap, title_width.c)
@@ -402,7 +402,7 @@ guide_gengrob.colorstrip <- function(guide, theme) {
                vps <- with(vps,
                            list(bar.row = bar.row, bar.col = bar.col,
                                 label.row = label.row, label.col = label.col,
-                                title.row = 1:length(heights), title.col = length(widths)))
+                                title.row = seq_along(heights), title.col = length(widths)))
            })
 
     # background

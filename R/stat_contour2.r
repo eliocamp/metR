@@ -185,7 +185,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
 
 
 StatTextContour <- ggplot2::ggproto("StatTextContour", StatContour2,
-                                    required_aes = c("x", "y", "z"),
-                                    default_aes = ggplot2::aes(order = ..level.., label = ..level..)
+  required_aes = c("x", "y", "z"),
+  default_aes = ggplot2::aes(order = ..level.., label = ..level..)
 )
 

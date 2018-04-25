@@ -85,7 +85,7 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
     file <- paste0("observaciones/datohorario",
                    stringr::str_remove_all(as.character(date), "-"), ".txt")
     url <- paste0("https://ssl.smn.gob.ar/dpd/descarga_opendata.php?file=", file)
-    obs <- readLines(url, warn = F)
+    obs <- readLines(url, warn = FALSE)
     if (obs[1] != paste0(file, "El archivo no existe.")) {
         obs <- obs[3:length(obs)]
         variables <- c("start", "date", "hour", "t", "rh", "slp", "dir", "V", "station")
@@ -115,7 +115,7 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
     file <- paste0("observaciones/obs",
                    stringr::str_remove_all(as.character(as.Date(date)), "-"), ".txt")
     url <- paste0("https://ssl.smn.gob.ar/dpd/descarga_opendata.php?file=", file)
-    obs <- readLines(url, warn = F)
+    obs <- readLines(url, warn = FALSE)
 
     if (obs[1] != paste0(file, "El archivo no existe.")) {
         obs <- obs[4:length(obs)]

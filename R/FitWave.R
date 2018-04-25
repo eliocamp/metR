@@ -107,7 +107,8 @@ BuildField <- function(x, amplitude, phase, k,
                        wave = list(k = k, amplitude = amplitude, phase = phase),
                        sum = TRUE) {
     if (sum == TRUE) {
-        y <- lapply(seq_along(wave$k), function(i) wave$amplitude[i]*cos((x - wave$phase[i])*wave$k[i]))
+        y <- lapply(seq_along(wave$k),
+                    function(i) wave$amplitude[i]*cos((x - wave$phase[i])*wave$k[i]))
         y <- Reduce("+", y)
         return(y)
     } else {

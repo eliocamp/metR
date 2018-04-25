@@ -47,8 +47,8 @@
 MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
     # Chek arguments
     seamask <- maps::map(paste0("maps::", mask), fill = TRUE, col = "transparent",
-                         plot = F, wrap = wrap)
-    IDs <- sapply(strsplit(seamask$names, ":"), function(x) x[1])
+                         plot = FALSE, wrap = wrap)
+    IDs <- vapply(strsplit(seamask$names, ":"), function(x) x[1], "")
     proj <- sp::CRS("+proj=longlat +datum=WGS84")
     seamask <- maptools::map2SpatialPolygons(seamask, IDs = IDs, proj4string = proj)
 

@@ -70,7 +70,8 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
 {
     if (!missing(nudge_x) || !missing(nudge_y)) {
         if (!missing(position)) {
-            stop("Specify either `position` or `nudge_x`/`nudge_y`", call. = FALSE)
+            stop("Specify either `position` or `nudge_x`/`nudge_y`",
+                 call. = FALSE)
         }
 
         position <- position_nudge(nudge_x, nudge_y)
@@ -106,13 +107,14 @@ minvar <- function (x, y){
     squareSum <- avgGradient * avgGradient
     variance <- (squareSum - (avgGradient * avgGradient) / N / N)
     variance <- c(NA, NA, variance[3:(N-2)], NA, NA)
-    return(variance == min(variance, na.rm = T))
+    return(variance == min(variance, na.rm = TRUE))
 }
 
 GeomTextContour <- ggproto("GeomTextContour", Geom,
    required_aes = c("x", "y", "label"),
-   default_aes = ggplot2::aes(colour = "black", size = 3.88, angle = 0, hjust = 0.5,
-                     vjust = 0.5, alpha = NA, family = "", fontface = 1,
+   default_aes = ggplot2::aes(colour = "black", size = 3.88, angle = 0,
+                              hjust = 0.5, vjust = 0.5, alpha = NA, family = "",
+                              fontface = 1,
                      lineheight = 1.2),
 
    draw_panel = function(data, panel_params, coord, parse = FALSE,
@@ -130,7 +132,7 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
        if (rotate) data[, angle := .cont.angle(x, y), by = piece]
 
        data[, var := minvar(x, y), by = .(piece)]
-       data <- data[var == T][, head(.SD, 1), by = piece]
+       data <- data[var == TRUE][, head(.SD, 1), by = piece]
 
        lab <- data$label
        if (parse) {

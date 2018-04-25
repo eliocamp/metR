@@ -76,7 +76,8 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
 
     if (is.null(data) | is.data.frame(data)) {
         if (!is.null(value.var)) {
-            if (is.null(data)) stop("data must not be NULL if value.var is NULL", .call = FALSE)
+            if (is.null(data)) stop("data must not be NULL if value.var is NULL",
+                                    .call = FALSE)
             data <- copy(data)
             f <- as.character(formula)
             f <- stringr::str_replace(f, "~", "\\|")
@@ -85,7 +86,8 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
 
         if (is.null(data)) {
             formula <- Formula::as.Formula(formula)
-            data <- as.data.table(eval(quote(model.frame(formula, data  = data, na.action = NULL))))
+            data <- as.data.table(eval(quote(model.frame(formula, data  = data,
+                                                         na.action = NULL))))
         }
 
         f <- as.character(formula)
@@ -123,7 +125,7 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
         validation <- max(30, 0.1*length(X[-gaps]))
     }
     set.seed(42)    # let's get reproducible in here.
-    validation <- sample((1:length(X))[!1:length(X) %in% gaps],
+    validation <- sample(seq_along(X)[!seq_along(X) %in% gaps],
                          validation)
 
     eofs <- c(0, min.eof:max.eof)
@@ -170,7 +172,8 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
 }
 
 
-.ImputeEOF1 <- function(X, X.na, n.eof, tol = 1e-2, max.iter = 10000, verbose = TRUE, prev = NULL) {
+.ImputeEOF1 <- function(X, X.na, n.eof, tol = 1e-2, max.iter = 10000,
+                        verbose = TRUE, prev = NULL) {
     X.rec <- X
     v <- NULL
     rmse <- Inf

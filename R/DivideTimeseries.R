@@ -39,7 +39,7 @@ DivideTimeseries <- function(g, x, n = 2, xlab = "x", ylab = "y") {
     for (i in 1:n) {
         if (i == 1) {
             pl <- ggplot2::ggplot_gtable(ggplot2::ggplot_build(g))
-            leg <- which(sapply(pl$grobs, function(x) x$name) == "guide-box")
+            leg <- which(vapply(pl$grobs, function(x) x$name, "") == "guide-box")
             try(legend.new <- pl$grobs[[leg]])
         }
         pl <- g +

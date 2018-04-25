@@ -153,7 +153,7 @@ Similar <- function(x, target, tol = Inf) {
 #' @import data.table
 `%b%` <- function(x, limits) {
     # Operador "between"
-    if (requireNamespace("data.table", quietly = T)) {
+    if (requireNamespace("data.table", quietly = TRUE)) {
         ret <- data.table::between(x, min(limits), max(limits))
     } else {
         ret <- x >= min(limits) & x <= max(limits)
@@ -168,7 +168,7 @@ Between <- function(x, limits, include = c(TRUE, TRUE)) {
     # Operador "between"
     if (length(include) < 2) include <- rep(include[1], 2)
 
-    if (include[1] == include[2] & requireNamespace("data.table", quietly = T)) {
+    if (include[1] == include[2] & requireNamespace("data.table", quietly = TRUE)) {
         ret <- data.table::between(x, min(limits), max(limits),
                                    incbounds = include[1])
     } else {
@@ -251,9 +251,9 @@ is.error <- function(x) inherits(x, "try-error")
 
     names(dims) <- col.vars
 
-    return(list(matrix = as.matrix(g[, -seq_along(row.vars), with = F]),
+    return(list(matrix = as.matrix(g[, -seq_along(row.vars), with = FALSE]),
                 coldims = dims,
-                rowdims = as.list(g[, row.vars, with = F])))
+                rowdims = as.list(g[, row.vars, with = FALSE])))
 }
 
 

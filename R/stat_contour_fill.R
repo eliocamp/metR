@@ -51,21 +51,22 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         plyr::ddply(data, "PANEL", function(data) {
             scales <- layout$get_scales(data$PANEL[1])
             tryCatch(do.call(self$compute_panel, args), error = function(e) {
-                warning("Computation failed in `", ggplot2:::snake_class(self), "()`:\n",
+                warning("Computation failed in `", ggplot2:::snake_class(self),
+                        "()`:\n",
                         e$message, call. = FALSE)
                 data.frame()
             })
         })
     },
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
-                             breaks = scales::fullseq, complete = TRUE, na.rm = FALSE,
-                             circular = NULL) {
+                             breaks = scales::fullseq, complete = TRUE,
+                             na.rm = FALSE, circular = NULL) {
         data <- data[!(is.na(data$x) | is.na(data$y)), ]
 
         if (na.rm) {
             data <- data[!is.na(data$z), ]
         } else {
-            data$z[is.na(data$z)] <- mean(data$z, na.rm = T)
+            data$z[is.na(data$z)] <- mean(data$z, na.rm = TRUE)
         }
 
         # Check is.null(breaks) for backwards compatibility
@@ -94,7 +95,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         }
         mean.z <- mean(data$z)
         mean.level <- breaks[breaks %~% mean.z]
-        range.data <- as.data.frame(sapply(data[c("x", "y", "z")], range))
+        range.data <- as.data.frame(vapply(data[c("x", "y", "z")], range, c(1, 2)))
 
         # Expand data by 1 unit in all directions.
         data <- .expand_data(data)
@@ -161,7 +162,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     dy <- ggplot2::resolution(subset(data, x == data$x[1])$y)
 
     #Extender para grilla rectangular.
-    range.data <- as.data.frame(sapply(data[c("x", "y", "z")], range))
+    range.data <- as.data.frame(vapply(data[c("x", "y", "z")], range, c(1,2)))
     extra <- rbind(expand.grid(y = c(range.data$y[2] + dy,
                                      range.data$y[1] - dy),
                                x = unique(data$x)),

@@ -51,10 +51,12 @@
 #' @export
 #' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
 #' @import data.table udunits2
-ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array", "vars"),
+ReadNetCDF <- function(file, vars = NULL,
+                       out = c("data.frame", "vector", "array", "vars"),
                        subset = NULL, key = FALSE) {
     dec <- getOption("OutDec")
     options(OutDec = ".")
+    on.exit(options(OutDec = dec))
     ncfile <- ncdf4::nc_open(file)
 
     if (is.null(vars)) {
@@ -82,13 +84,6 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
     names(dims) <- ids
 
     if ("time" %in% names(dimensions)) {
-        # date.unit <- ncfile$dim$time$units
-        # date.unit <- strsplit(date.unit, " since ", fixed = TRUE)[[1]]
-        # date.fun <- get(paste0(date.unit[1]))
-        # orders <- c("ymd HMS", "ymd HM")
-        # dimensions[["time"]] <- as.character(lubridate::parse_date_time(date.unit[2],
-        # orders) +
-        # date.fun(dimensions[["time"]]))
         time <- udunits2::ud.convert(dimensions[["time"]],
                                      ncfile$dim$time$units,
                                      "seconds since 1970-01-01 00:00:00")
@@ -98,7 +93,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
 
     if (out[1] == "vars") {
         r <- list(vars = unname(vars), dimensions = dimensions)
-        options(OutDec = dec)
+        # options(OutDec = dec)
         return(r)
     }
 
@@ -154,13 +149,13 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
 
     if (out[1] == "array") {
         ncdf4::nc_close(ncfile)
-        options(OutDec = dec)
+        # options(OutDec = dec)
         return(nc)
     } else if (out[1] == "vector") {
         ncdf4::nc_close(ncfile)
-        nc <- lapply(1:length(nc), function(x) c(nc[[x]]))
+        nc <- lapply(seq_along(nc), function(x) c(nc[[x]]))
         names(nc) <- names(vars)
-        options(OutDec = dec)
+        # options(OutDec = dec)
         return(nc)
     } else {
         first.var <- which.max(dim.length)
@@ -187,7 +182,7 @@ ReadNetCDF <- function(file, vars = NULL, out = c("data.frame", "vector", "array
     }
     # Dejemos todo prolijo antes de salir.
     ncdf4::nc_close(ncfile)
-    options(OutDec = dec)
+    # options(OutDec = dec)
     return(nc.df)
 }
 

@@ -1,6 +1,6 @@
 ## Scale_magnitude?
 
-
+#' @export
 scale_mag <- function(length = 0.1,
                          max = waiver(),
                          default_unit = "lines", guide = "vector") {
@@ -31,7 +31,7 @@ no_censor <- function(x, range) {
 
 rescale_mag <- function(length, max) {
     function(x, from) {
-        if (is.waive(max)) max <- max(x, na.rm = T)
+        if (is.waive(max)) max <- max(x, na.rm = TRUE)
         scales::rescale(x, c(0, length), c(0, max))
     }
 }

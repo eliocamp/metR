@@ -1,7 +1,7 @@
 # http://cola.gmu.edu/grads/gadoc/descriptorfile.html
 # library(lubridate)
 # library(data.table)
-ReadCtl <- function(descriptor, hd.rm = T) {
+ReadCtl <- function(descriptor, hd.rm = TRUE) {
     components <- .ParseCTL(readLines(descriptor))
     # DSET can start with "^" (grib files are on the same dir as descriptor) or
     # can contain a full path.
@@ -15,8 +15,8 @@ ReadCtl <- function(descriptor, hd.rm = T) {
     components$DSET <- list(pattern = pattern, dir = dir)
 
     # Variables.
-    vars <- sapply(components$VARS, function(x) x[[1]])
-    vars.levs <- as.numeric(sapply(components$VARS, function(x) x[[2]]))
+    vars <- vapply(components$VARS, function(x) x[[1]], 1)
+    vars.levs <- as.numeric(vapply(components$VARS, function(x) x[[2]], 1))
 
     # Spatiotemporal grids.
     x.grid <- .GetSpatialGrid(components$XDEF)
@@ -25,7 +25,7 @@ ReadCtl <- function(descriptor, hd.rm = T) {
     t.grid <- .GetTimeGrid(components$TDEF)
 
     doParallel::registerDoParallel(4)
-    library(foreach)
+    loadNamespace("foreach")
     grid <- data.table::rbindlist(foreach(v = seq_along(vars)) %dopar% {
         if (vars.levs[v] != 0) {
             used.levs <- z.grid[1:vars.levs[v]]

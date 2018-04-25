@@ -16,7 +16,8 @@ geom_label_contour <- function(mapping = NULL, data = NULL,
                        inherit.aes = TRUE) {
     if (!missing(nudge_x) || !missing(nudge_y)) {
         if (!missing(position)) {
-            stop("Specify either `position` or `nudge_x`/`nudge_y`", call. = FALSE)
+            stop("Specify either `position` or `nudge_x`/`nudge_y`",
+                 call. = FALSE)
         }
 
         position <- position_nudge(nudge_x, nudge_y)
@@ -69,7 +70,7 @@ GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", Geom,
         data[, angle := .cont.angle(x, y), by = piece]
 
         data[, var := minvar(x, y), by = .(piece)]
-        data <- data[var == T][, head(.SD, 1), by = piece]
+        data <- data[var == TRUE][, head(.SD, 1), by = piece]
         lab <- data$label
         if (parse) {
             lab <- parse(text = as.character(lab))
@@ -82,7 +83,7 @@ GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", Geom,
             data$hjust <- ggplot2:::compute_just(data$hjust, data$x)
         }
 
-        grobs <- lapply(1:nrow(data), function(i) {
+        grobs <- lapply(seq_len(nrow(data)), function(i) {
             row <- data[i, , drop = FALSE]
             ggplot2:::labelGrob(lab[i],
                       x = unit(row$x, "native"),

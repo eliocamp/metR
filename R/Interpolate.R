@@ -46,14 +46,22 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE) {
     dep.names <- formula.tools::lhs.vars(formula)
     ind.names <- formula.tools::rhs.vars(formula)
     formula <- Formula::as.Formula(formula)
-    data <- as.data.table(eval(quote(model.frame(formula, data = data, na.action = NULL))))
+    data <- as.data.table(eval(quote(model.frame(formula, data = data,
+                                                 na.action = NULL))))
 
     if (grid == TRUE) {
-        if (length(unique(x.out)) != length(x.out)) stop('duplicate values on x.out. If x.out is a vector of locations, use grid = FALSE')
-        if (length(unique(y.out)) != length(y.out)) stop('duplicate values on y.out. If y.out is a vector of locations, use grid = FALSE')
+        if (length(unique(x.out)) != length(x.out)) {
+            stop('duplicate values on x.out. If x.out is a vector of locations, use grid = FALSE')
+        }
+        if (length(unique(y.out)) != length(y.out)) {
+            stop('duplicate values on y.out. If y.out is a vector of locations, use grid = FALSE')
+        }
         loc <- setDT(expand.grid(x.out = x.out, y.out = y.out))
     } else if (grid == FALSE) {
-        if (length(x.out) != length(y.out)) stop('x.out is not of the same length as y.out. If x.out and y.out define unique points on a regular grid, use grid = TRUE')
+        if (length(x.out) != length(y.out)) {
+            stop('x.out is not of the same length as y.out.
+                 If x.out and y.out define unique points on a regular grid, use grid = TRUE')
+        }
         loc <- data.table(x.out, y.out)
     } else {
         stop('wrong mode, choose either "grid" or "locations"')

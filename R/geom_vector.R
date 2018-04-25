@@ -4,10 +4,13 @@
 #' also defaults to drawing arrows at the end of the segment. Useful for plotting
 #' vector fields characterized by magnitude of the `x` and `y` components.
 #'
-#' @param scale,scale.x,scale.y multiplicative scales for adjusting the size of the vectors.
+#' @param scale,scale.x,scale.y multiplicative scales for adjusting the size of
+#' the vectors.
 #' @param min.mag minimum magnitude of the plotted vectors
-#' @param skip,skip.x,skip.y numeric specifying number of gridpoints not to draw in the x and y direction.
-#' @param arrow.length,arrow.angle,arrow.ends,arrow.type parameters passed to [grid::arrow]
+#' @param skip,skip.x,skip.y numeric specifying number of gridpoints not to draw
+#'  in the x and y direction.
+#' @param arrow.length,arrow.angle,arrow.ends,arrow.type parameters passed to
+#' [grid::arrow]
 #' @inheritParams ggplot2::geom_segment
 #'
 #' @examples
@@ -102,8 +105,8 @@ StatVector <- ggplot2::ggproto("StatVector", ggplot2::Stat,
         scale.x <- abs(data$scale.x %||% data$scale %||% scale.x)
         scale.y <- abs(data$scale.y %||% data$scale %||% scale.y)
 
-        data$xend = with(data, x + dx*scale.x)
-        data$yend = with(data, y + dy*scale.y)
+        data$xend <- with(data, x + dx*scale.x)
+        data$yend <- with(data, y + dy*scale.y)
 
         data <- subset(data, x %in% JumpBy(unique(x), skip.x + 1) &
                            y %in% JumpBy(unique(y), skip.y + 1) &
@@ -122,7 +125,7 @@ GeomVector <- ggplot2::ggproto("GeomSegment", ggplot2::GeomSegment,
                              c("x", "y", "xend", "yend", "linetype", "size", "shape"),
                              name = "geom_segment")
       mag <- with(data, Mag(x - xend, y - yend))
-      mag <- mag/max(mag, na.rm = T)
+      mag <- mag/max(mag, na.rm = TRUE)
       arrow$length <- unit(as.numeric(arrow$length)*mag, attr(arrow$length, "unit"))
 
       if (plyr::empty(data)) return(zeroGrob())
@@ -145,9 +148,10 @@ GeomVector <- ggplot2::ggproto("GeomSegment", ggplot2::GeomSegment,
       }
 
 
-      data$group <- 1:nrow(data)
+      data$group <- seq_len(nrow(data))
       starts <- subset(data, select = c(-xend, -yend))
-      ends <- plyr::rename(subset(data, select = c(-x, -y)), c("xend" = "x", "yend" = "y"),
+      ends <- plyr::rename(subset(data, select = c(-x, -y)),
+                           c("xend" = "x", "yend" = "y"),
                            warn_missing = FALSE)
 
       pieces <- rbind(starts, ends)

@@ -124,7 +124,7 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
 Laplacian <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
                       sphere = FALSE, a = 6371000) {
     dep.names <- as.character(formula.tools::lhs(formula))
-    dep.names <- dep.names[!grepl("+", dep.names, fixed = T)]
+    dep.names <- dep.names[!grepl("+", dep.names, fixed = TRUE)]
 
     ndep <- length(dep.names)
 

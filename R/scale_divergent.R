@@ -25,10 +25,15 @@ scale_color_divergent <- function(..., low = scales::muted("blue"), mid = "white
 #' @rdname scale_divergent
 #' @export
 #' @import ggplot2 scales
-scale_fill_divergent <- function(..., low = scales::muted("blue"), mid = "white",
-                                  high = scales::muted("red"), midpoint = 0, space = "Lab",
-                                  na.value = "grey50", guide = "colourbar") {
-    ggplot2::scale_fill_gradient2(..., low = low, high = high, mid = mid, midpoint = midpoint,
-                                   space = space, na.value = na.value, guide = guide)
+scale_fill_divergent <- function(..., low = scales::muted("blue"),
+                                 mid = "white",
+                                 high = scales::muted("red"),
+                                 midpoint = 0,
+                                 space = "Lab",
+                                 na.value = "grey50",
+                                 guide = "colourbar") {
+    ggplot2::scale_fill_gradient2(..., low = low, high = high, mid = mid,
+                                  midpoint = midpoint, space = space,
+                                  na.value = na.value, guide = guide)
 }
 

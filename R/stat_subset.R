@@ -50,13 +50,13 @@ stat_subset <- function(mapping = NULL, data = NULL,
 #' @import ggplot2
 #' @import scales
 StatSubset <- ggplot2::ggproto("StatSubset", ggplot2::Stat,
-                           required_aes = c("x", "y", "subset"),
-                           compute_group = function(data, scales, width = NULL, height = NULL) {
-                               data$width <- data$width %||% width %||% resolution(data$x, FALSE)
-                               data$height <- data$height %||% height %||% resolution(data$y, FALSE)
-                               data <- subset(data, subset == TRUE)
-                               data
-                           }
+  required_aes = c("x", "y", "subset"),
+  compute_group = function(data, scales, width = NULL, height = NULL) {
+      data$width <- data$width %||% width %||% resolution(data$x, FALSE)
+      data$height <- data$height %||% height %||% resolution(data$y, FALSE)
+      data <- subset(data, subset == TRUE)
+      data
+  }
 )
 
 #' @rdname stat_subset

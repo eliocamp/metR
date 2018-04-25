@@ -1,3 +1,4 @@
+#' @export
 guide_vector <- function(# title
     title = waiver(),
     title.position = NULL,
@@ -204,8 +205,6 @@ guide_gengrob.vector <- function(guide, theme) {
     } else {
         label.theme <- guide$label.theme %||% calc_element("legend.text", theme)
 
-        # label.theme in param of guide_legend() > theme$legend.text.align > default
-        # hjust/vjust in theme$legend.text and label.theme are ignored.
         hjust <- x <- guide$label.hjust %||% theme$legend.text.align %||%
             if (any(is.expression(guide$key$.label))) 1 else 0
         vjust <- y <- guide$label.vjust %||% 0.5
@@ -447,7 +446,7 @@ guide_gengrob.vector <- function(guide, theme) {
                    label.row = label.row + 2,
                    label.col = label.col
                )
-               vps.title.row = 1; vps.title.col = 1:length(widths)
+               vps.title.row = 1; vps.title.col = seq_along(widths)
            },
            "bottom" = {
                widths <- c(kl_widths, max(0, title_width - sum(kl_widths)))
@@ -459,7 +458,7 @@ guide_gengrob.vector <- function(guide, theme) {
                    label.row = label.row,
                    label.col = label.col
                )
-               vps.title.row = length(heights); vps.title.col = 1:length(widths)
+               vps.title.row = length(heights); vps.title.col = seq_along(widths)
            },
            "left" = {
                widths <- c(title_width, hgap, kl_widths)
@@ -471,7 +470,7 @@ guide_gengrob.vector <- function(guide, theme) {
                    label.row = label.row,
                    label.col = label.col + 2
                )
-               vps.title.row = 1:length(heights); vps.title.col = 1
+               vps.title.row = seq_along(heights); vps.title.col = 1
            },
            "right" = {
                widths <- c(kl_widths, hgap, title_width)
@@ -483,7 +482,7 @@ guide_gengrob.vector <- function(guide, theme) {
                    label.row = label.row,
                    label.col = label.col
                )
-               vps.title.row = 1:length(heights); vps.title.col = length(widths)
+               vps.title.row = seq_along(heights); vps.title.col = length(widths)
            })
 
     # grob for key

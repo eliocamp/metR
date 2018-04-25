@@ -41,6 +41,7 @@
 #' to set n to \code{NULL}. If the irba package is installed, EOF uses
 #' [irlba::irlba] instead of [base::svd] since it's much faster.
 #'
+#'
 #' @examples
 #' # The Antarctic Oscillation is computed from the
 #' # monthly geopotential height anomalies weigthed by latitude.
@@ -84,7 +85,8 @@
 EOF <- function(formula, value.var = NULL, data = NULL, n = 1) {
 
     if (!is.null(value.var)) {
-        if (is.null(data)) stop("data must not be NULL if value.var is NULL", .call = FALSE)
+        if (is.null(data)) stop("data must not be NULL if value.var is NULL",
+                                .call = FALSE)
         data <- copy(data)
         f <- as.character(formula)
         f <- stringr::str_replace(f, "~", "\\|")
@@ -107,9 +109,10 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1) {
 
     if (is.null(n)) n <- min(ncol(g$matrix), nrow(g$matrix))
 
+
     if (requireNamespace("irlba", quietly = TRUE)) {
         set.seed(42)
-        eof <- irlba::irlba(g$matrix, nv = max(n), nu = max(n))
+        eof <- irlba::irlba(g$matrix, nv = max(n), nu = max(n), rng = runif)
     } else {
         eof <- svd(g$matrix, nu = max(n), nv = max(n))
         eof$d <- eof$d[1:max(n)]

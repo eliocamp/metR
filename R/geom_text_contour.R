@@ -57,7 +57,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
                       stat = "text_contour",
                       position = "identity",
                       ...,
-                      min.size = 10,
+                      min.size = 5,
                       skip = 1,
                       rotate = TRUE,
                       parse = FALSE,
@@ -97,19 +97,6 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
     )
 }
 
-
-# from https://stackoverflow.com/questions/21868353/drawing-labels-on-flat-section-of-contour-lines-in-ggplot2
-minvar <- function (x, y){
-    N <- length(x)
-    xdiffs <- x[2:N] - x[1:(N-1)]
-    ydiffs <- y[2:N] - y[1:(N-1)]
-    avgGradient <- ydiffs/xdiffs
-    squareSum <- avgGradient * avgGradient
-    variance <- (squareSum - (avgGradient * avgGradient) / N / N)
-    variance <- c(NA, NA, variance[3:(N-2)], NA, NA)
-    return(variance == min(variance, na.rm = TRUE))
-}
-
 GeomTextContour <- ggproto("GeomTextContour", Geom,
    required_aes = c("x", "y", "label"),
    default_aes = ggplot2::aes(colour = "black", size = 3.88, angle = 0,
@@ -118,29 +105,13 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
 
    draw_panel = function(data, panel_params, coord, parse = FALSE,
                          na.rm = FALSE, check_overlap = FALSE, min.size = 20,
-                         skip = 1, rotate = TRUE) {
+                         skip = 1, rotate = TRUE, gap = NULL) {
        data <- data.table::as.data.table(coord$transform(data, panel_params))
 
-       breaks <- unique(data$level)
-       breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]
-       data <- data[level %in% breaks.cut]
-       data[, N := .N, by = piece]
+       # Get points of labels
+       data <- .label.position(data, min.size, skip, rotate)
 
-       data[, id := 1:.N, by = piece]
-       data.high <- data[, .(x = approx(id, x, n = length(x)*3)$y,
-                             y = approx(id, y, n = length(y)*3)$y), by = piece]
-       data <- data.high[data[, -c("x", "y")][, .SD[1], by = piece], on = "piece"]
-
-       data[, N := .N, by = piece]
-       data <- data[N >= min.size]
-
-       if (rotate == TRUE) data[, angle := .cont.angle(x, y), by = piece]
-
-       # Check if point has minimum variance
-       data[, var := minvar(x, y), by = .(piece)]
-       data[is.na(var), var := FALSE]
-       data <- data[var == TRUE][, head(.SD, 1), by = piece]
-
+       ## Original ggplot2 here.
        lab <- data$label
        if (parse) {
            lab <- parse(text = as.character(lab))
@@ -175,13 +146,64 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
 
 .cont.angle <- function(x, y) {
     N <- length(x)
-    dx <- x[c(2:N, 1)] - x[c(N, 1:(N-1))]
-    dy <- y[c(2:N, 1)] - y[c(N, 1:(N-1))]
+    dx <- c(NA, diff(x, 2), NA)
+    dy <- c(NA, diff(y, 2), NA)
     angle <- atan2(dy, dx)*180/pi
-    # angle <- ifelse(angle > 180, angle - 180, angle)
+    angle <- ifelse(angle > 180, angle - 180, angle)
     angle <- ifelse(angle > 90, angle - 180, angle)
     angle <- ifelse(angle < -90, angle + 180, angle)
     angle
 }
 
+.curvature <- function(x, y) {
+    attr(features::features(x, y), "fits")$d2
+}
 
+
+.label.position <- function(data, min.size, skip, rotate) {
+    data <- as.data.table(data)
+    breaks <- unique(data$level)
+    breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]
+    data <- data[level %in% breaks.cut]
+    data[, N := .N, by = piece]
+
+    # data[, id := 1:.N, by = piece]
+    # data.high <- data[, .(x = approx(id, x, n = length(x)*3)$y,
+    #                       y = approx(id, y, n = length(y)*3)$y), by = piece]
+    # data <- data.high[data[, -c("x", "y")][, .SD[1], by = piece], on = "piece"]
+
+    data[, N := .N, by = piece]
+    data <- data[N >= min.size]
+# print(rotate)
+    if (rotate == TRUE) {
+        data[, angle := .cont.angle(x, y), by = piece]
+    }
+
+    # Safety strip around the edges (10%)
+    safe <- c(0, 1) + 0.1*c(+1, -1)
+    data <- data[x %between% safe &
+                 y %between% safe]
+
+    # Check if point has minimum variance
+    data[, var := minvar(x, y), by = .(piece)]
+    # data[, curvature := .curvature(x, y), by = piece]
+    # data <- data[data[, .I[which.min(abs(curvature))], by = piece]$V1]
+
+    data[is.na(var), var := FALSE]
+    data <- data[var == TRUE][, head(.SD, 1), by = piece]
+
+    data
+}
+
+# from https://stackoverflow.com/questions/21868353/drawing-labels-on-flat-section-of-contour-lines-in-ggplot2
+minvar <- function (x, y){
+    N <- length(x)
+    xdiffs <- diff(x) #c(NA, x[3:N] - x[1:(N-2)], NA)
+    ydiffs <- diff(y) #c(NA, y[3:N] - y[1:(N-2)], NA)
+    avgGradient <- ydiffs/xdiffs
+    # variance <- avgGradient
+    squareSum <- avgGradient * avgGradient
+    variance <- (squareSum - (avgGradient * avgGradient) / N) / N
+    variance <- c(NA, variance[2:(N-1)], NA)
+    return(variance == min(variance, na.rm = TRUE))
+}

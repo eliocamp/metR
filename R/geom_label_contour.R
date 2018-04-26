@@ -57,20 +57,11 @@ GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", Geom,
                           label.padding = unit(0.25, "lines"),
                           label.r = unit(0.15, "lines"),
                           label.size = 0.25, min.size = 20,
-                          skip = 1) {
+                          skip = 1, gap = 0) {
         data <- data.table::as.data.table(coord$transform(data, panel_params))
 
-        breaks <- unique(data$level)
-        breaks.keep <- breaks[seq(1, length(breaks), by = skip + 1)]
-        data <- data[level %in% breaks.keep]
+        data <- .label.position(data, min.size, skip, rotate = FALSE)
 
-        data[, N := .N, by = piece]
-        data <- data[N >= min.size]
-
-        data[, angle := .cont.angle(x, y), by = piece]
-
-        data[, var := minvar(x, y), by = .(piece)]
-        data <- data[var == TRUE][, head(.SD, 1), by = piece]
         lab <- data$label
         if (parse) {
             lab <- parse(text = as.character(lab))

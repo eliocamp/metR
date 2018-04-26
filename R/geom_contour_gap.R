@@ -1,17 +1,36 @@
-geom_contour_ <- function(...) {
-    list(
-        geom_contour_gap(...),
-        geom_text_contour(...)
-    )
-}
-
-
-
+#' Contours with gaps for labeling
+#'
+#' Creates contours with gaps where labels can be put with [geom_text_contour]
+#' or [geom_label_contour].
+#'
+#' @inheritParams geom_contour2
+#' @inheritParams geom_text_contour
+#' @param gap half the size of the gap in points
+#'
+#' @examples
+#' library(ggplot2)
+#' ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
+#'     geom_contour_gap() +
+#'     geom_text_contour()
+#'
+#' # For a quick plots and to ensure that every parameter
+#' # is the same for both labels and contours, define your
+#' # own function
+#' geom_contour_labeled <- function(...) {
+#'     list(geom_contour_gap(...),
+#'          geom_text_contour(...))
+#' }
+#' ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
+#'     geom_contour_labeled()
+#'
+#' @export
+#' @family ggplot2 helpers
 geom_contour_gap <- function(mapping = NULL, data = NULL,
                              stat = "contour2",
                              position = "identity",
                              ...,
                              gap = 5,
+                             min.size = 5,
                              skip = 1,
                              breaks = scales::fullseq,
                              bins = NULL,
@@ -38,51 +57,42 @@ geom_contour_gap <- function(mapping = NULL, data = NULL,
             bins = bins,
             binwidth = binwidth,
             circular = circular,
+            min.size = min.size,
             ...
         )
     )
 }
 
-
+#' @rdname geom_contour_gap
+#' @usage NULL
+#' @format NULL
+#' @export
 GeomContourGap <- ggplot2::ggproto("GeomContourGap", GeomPath,
   draw_panel = function(data, panel_params, coord, arrow = NULL,
                         lineend = "butt", linejoin = "round", linemitre = 10,
-                        na.rm = FALSE, gap = 0, skip = 1) {
+                        na.rm = FALSE, gap = 0, skip = 1, min.size = 0, rotate = FALSE) {
       if (!anyDuplicated(data$group)) {
           message_wrap("geom_path: Each group consists of only one observation. ",
                        "Do you need to adjust the group aesthetic?")
       }
-
       # must be sorted on group
       data <- data[order(data$group), , drop = FALSE]
       data <- data.table::as.data.table(coord_munch(coord, data, panel_params))
+      if (gap > 0) {
+          # Check wich contours are labeled and where.
+          labels <- .label.position(data, min.size, skip, FALSE)
+          data <- labels[, .(x, y, cut = TRUE)][data, on = c("x", "y")]
+          data[is.na(cut), cut := FALSE]
 
-      breaks <- unique(data$level)
-      breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]
+          # Distance in points
+          data[, point := seq_len(.N), by = piece]
+          data[, d := Inf]
+          data[piece %in% labels$piece, d := as.numeric(point - point[cut == TRUE][1]), by = piece]
 
-
-      data[, id := 1:.N, by = piece]
-      data.high <- data[, .(x = approx(id, x, n = length(x)*3)$y,
-                            y = approx(id, y, n = length(y)*3)$y), by = piece]
-      data <- data.high[data[, -c("x", "y")][, .SD[1], by = piece], on = "piece"]
-
-      data[, N := .N, by = piece]
-      # Cut contours with labels.
-      data[, cut := level %in% breaks.cut & N > (gap + 3) ]
-
-      # Check if point has minimum variance
-      data[, var := minvar(x, y), by = .(piece)]
-      data[is.na(var), var := FALSE]
-
-      # Distance in points
-      data[, point := seq_len(.N), by = piece]
-      data[, d := point - point[var == TRUE][1], by = piece]
-
-
-      data[cut == TRUE, group := interaction(piece, sign(d))]
-
-      # Remove close points
-      data <- data[abs(d) > gap | !cut]
+          # Remove close points and regroup
+          data[piece %in% labels$piece, group := interaction(piece, sign(d))]
+          data <- data[abs(d) > gap | !(piece %in% labels$piece)]
+      }
 
       ## --- Original ggplot2 code below ----
 

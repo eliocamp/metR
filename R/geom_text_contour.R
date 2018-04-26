@@ -172,17 +172,17 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
     #                       y = approx(id, y, n = length(y)*3)$y), by = piece]
     # data <- data.high[data[, -c("x", "y")][, .SD[1], by = piece], on = "piece"]
 
+    # Safety strip around the edges (10%)
+    safe <- c(0, 1) + 0.1*c(+1, -1)
+    data <- data[x %between% safe &
+                     y %between% safe]
+
     data[, N := .N, by = piece]
     data <- data[N >= min.size]
 
     if (rotate == TRUE) {
         data[, angle := .cont.angle(x, y), by = piece]
     }
-
-    # Safety strip around the edges (10%)
-    safe <- c(0, 1) + 0.1*c(+1, -1)
-    data <- data[x %between% safe &
-                 y %between% safe]
 
     # Check if point has minimum variance
     data[, var := minvar(x, y), by = .(piece)]
@@ -197,13 +197,15 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
 
 # from https://stackoverflow.com/questions/21868353/drawing-labels-on-flat-section-of-contour-lines-in-ggplot2
 minvar <- function (x, y){
+    if (length(x) < 4) return(rep(FALSE, length(x)))
     N <- length(x)
-    xdiffs <- diff(x) #c(NA, x[3:N] - x[1:(N-2)], NA)
-    ydiffs <- diff(y) #c(NA, y[3:N] - y[1:(N-2)], NA)
+    xdiffs <- c(NA, diff(x)) #c(NA, x[3:N] - x[1:(N-2)], NA)
+    ydiffs <- c(NA, diff(y)) #c(NA, y[3:N] - y[1:(N-2)], NA)
     avgGradient <- ydiffs/xdiffs
-    # variance <- avgGradient
-    squareSum <- avgGradient * avgGradient
-    variance <- (squareSum - (avgGradient * avgGradient) / N) / N
+    variance <- abs(avgGradient)
+    # squareSum <- avgGradient * avgGradient
+    # variance <- (squareSum - (avgGradient * avgGradient) / N) / N
+    # change!! this causes problems if length(variance) < 4
     variance <- c(NA, variance[2:(N-1)], NA)
     return(variance == min(variance, na.rm = TRUE))
 }

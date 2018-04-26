@@ -24,36 +24,35 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
                          circular = NULL,
                          show.legend = NA,
                          inherit.aes = TRUE) {
-  layer(
-    data = data,
-    mapping = mapping,
-    stat = StatContour2,
-    geom = geom,
-    position = position,
-    show.legend = show.legend,
-    inherit.aes = inherit.aes,
-    params = list(
-      na.rm = na.rm,
-      breaks = breaks,
-      bins = bins,
-      binwidth = binwidth,
-      circular = circular,
-      ...
+    layer(
+        data = data,
+        mapping = mapping,
+        stat = StatContour2,
+        geom = geom,
+        position = position,
+        show.legend = show.legend,
+        inherit.aes = inherit.aes,
+        params = list(
+            na.rm = na.rm,
+            breaks = breaks,
+            bins = bins,
+            binwidth = binwidth,
+            circular = circular,
+            ...
+        )
     )
-  )
 }
 
 #' @rdname geom_contour2
 #' @usage NULL
 #' @format NULL
+#' @export
 StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
   required_aes = c("x", "y", "z"),
   default_aes = ggplot2::aes(order = ..level..),
-
   compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                            breaks = scales::fullseq, complete = FALSE,
                            na.rm = FALSE, circular = NULL) {
-
       # Check is.null(breaks) for backwards compatibility
       if (is.null(breaks)) {
           breaks <- scales::fullseq
@@ -85,7 +84,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
       contours <- .order_contour(contours, setDT(data))
 
       return(contours)
-    }
+  }
 )
 
 
@@ -134,7 +133,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
     y.axis[dy < 0, rotate := (sign(level - z) == sign(m))]
 
     rot.groups <- c(y.axis[rotate == TRUE]$group,
-                                 x.axis[rotate == TRUE]$group)
+                    x.axis[rotate == TRUE]$group)
 
     # rot.groups <- c(as.character(y.axis$group), as.character(x.axis$group))
 
@@ -151,20 +150,20 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
 }
 
 .contour_lines <- function(data, breaks, complete = FALSE) {
-  z <- tapply(data$z, data[c("x", "y")], identity)
+    z <- tapply(data$z, data[c("x", "y")], identity)
 
-  if (is.list(z)) {
-    stop("Contour requires single `z` at each combination of `x` and `y`.",
-         call. = FALSE)
-  }
+    if (is.list(z)) {
+        stop("Contour requires single `z` at each combination of `x` and `y`.",
+             call. = FALSE)
+    }
 
-  cl <- grDevices::contourLines(
-    x = sort(unique(data$x)), y = sort(unique(data$y)), z = z,
-    levels = breaks)
+    cl <- grDevices::contourLines(
+        x = sort(unique(data$x)), y = sort(unique(data$y)), z = z,
+        levels = breaks)
 
-  if (length(cl) == 0) {
-    warning("Not possible to generate contour data", call. = FALSE)
-    return(data.frame())
+    if (length(cl) == 0) {
+        warning("Not possible to generate contour data", call. = FALSE)
+        return(data.frame())
   }
 
   # Convert list of lists into single data frame

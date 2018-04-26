@@ -158,9 +158,6 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
     angle
 }
 
-.curvature <- function(x, y) {
-    attr(features::features(x, y), "fits")$d2
-}
 
 
 .label.position <- function(data, min.size, skip, rotate) {
@@ -177,7 +174,7 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
 
     data[, N := .N, by = piece]
     data <- data[N >= min.size]
-# print(rotate)
+
     if (rotate == TRUE) {
         data[, angle := .cont.angle(x, y), by = piece]
     }

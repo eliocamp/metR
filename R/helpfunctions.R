@@ -372,7 +372,8 @@ dy <- function(dlat, a = 6731000) {
         return(dlat*a*pi/180)
 }
 
-
+#' @importFrom stats line runif var
+#' @importFrom utils head
 if(getRversion() >= "2.15.1") {
     utils::globalVariables(
         c("as", "dep.names", "ecdf", "equal", "fft", "hasArg", "id",
@@ -381,5 +382,5 @@ if(getRversion() >= "2.15.1") {
           "r2", "sd", "setTxtProgressBar", "time", "txtProgressBar",
           "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2",
           "group", "step", "point", "change", "end", "level", "m", "rotate",
-          "x.d", "y.d", "PC", "step2"))
+          "x.d", "y.d", "PC", "step2", "runif", "N", "angle", "var", "head"))
 }

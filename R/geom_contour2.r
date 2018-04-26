@@ -4,6 +4,7 @@
 #' argument and makes gaps for labels
 #'
 #' @inheritParams ggplot2::geom_contour
+#' @inheritParams geom_text_contour
 #' @param gap half the size of the gap in points
 #'
 #' @section Aesthetics:
@@ -24,8 +25,7 @@
 #' library(ggplot2)
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 #'     geom_contour2(aes(z = value, color = ..level..),
-#'                   breaks = AnchorBreaks(130, binwidth = 11),
-#'                   gap = 3) +
+#'                   breaks = AnchorBreaks(130, binwidth = 11))
 #'
 #' ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
 #'     geom_contour2(aes(color = ..level..), gap = 6) +

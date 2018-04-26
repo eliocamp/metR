@@ -52,6 +52,10 @@ to the paired geom/stat.}
 
 \item{gap}{half the size of the gap in points}
 
+\item{min.size}{minimum number of points for a contour to be labeled.}
+
+\item{skip}{number of contours to skip}
+
 \item{lineend}{Line end style (round, butt, square)}
 
 \item{linejoin}{Line join style (round, mitre, bevel)}
@@ -119,8 +123,7 @@ argument and makes gaps for labels
 library(ggplot2)
 ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
     geom_contour2(aes(z = value, color = ..level..),
-                  breaks = AnchorBreaks(130, binwidth = 11),
-                  gap = 3) +
+                  breaks = AnchorBreaks(130, binwidth = 11))
 
 ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
     geom_contour2(aes(color = ..level..), gap = 6) +

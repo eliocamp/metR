@@ -114,8 +114,7 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
    required_aes = c("x", "y", "label"),
    default_aes = ggplot2::aes(colour = "black", size = 3.88, angle = 0,
                               hjust = 0.5, vjust = 0.5, alpha = NA, family = "",
-                              fontface = 1,
-                     lineheight = 1.2),
+                              fontface = 1, lineheight = 1.2),
 
    draw_panel = function(data, panel_params, coord, parse = FALSE,
                          na.rm = FALSE, check_overlap = FALSE, min.size = 20,
@@ -123,15 +122,23 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
        data <- data.table::as.data.table(coord$transform(data, panel_params))
 
        breaks <- unique(data$level)
-       breaks.keep <- breaks[seq(1, length(breaks), by = skip + 1)]
-       data <- data[level %in% breaks.keep]
+       breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]
+       data <- data[level %in% breaks.cut]
+       data[, N := .N, by = piece]
+
+       data[, id := 1:.N, by = piece]
+       data.high <- data[, .(x = approx(id, x, n = length(x)*3)$y,
+                             y = approx(id, y, n = length(y)*3)$y), by = piece]
+       data <- data.high[data[, -c("x", "y")][, .SD[1], by = piece], on = "piece"]
 
        data[, N := .N, by = piece]
        data <- data[N >= min.size]
 
-       if (rotate) data[, angle := .cont.angle(x, y), by = piece]
+       if (rotate == TRUE) data[, angle := .cont.angle(x, y), by = piece]
 
+       # Check if point has minimum variance
        data[, var := minvar(x, y), by = .(piece)]
+       data[is.na(var), var := FALSE]
        data <- data[var == TRUE][, head(.SD, 1), by = piece]
 
        lab <- data$label

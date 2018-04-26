@@ -16,6 +16,7 @@ communicating the scale of vectors.
 `preserve.dir` to tell if angle should be preserved. 
 - `stat_contour_fill()` and `stat_contour2()` print a warning when no contours 
 can be made.
+- `geom_contour2()` now has a `gap` parameter to add space for labels.
 
 # metR 0.1
 - New function: `GetTopography()`

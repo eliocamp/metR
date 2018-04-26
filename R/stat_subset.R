@@ -49,6 +49,9 @@ stat_subset <- function(mapping = NULL, data = NULL,
 
 #' @import ggplot2
 #' @import scales
+#' @rdname stat_subset
+#' @usage NULL
+#' @format NULL
 StatSubset <- ggplot2::ggproto("StatSubset", ggplot2::Stat,
   required_aes = c("x", "y", "subset"),
   compute_group = function(data, scales, width = NULL, height = NULL) {

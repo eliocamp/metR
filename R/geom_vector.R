@@ -92,7 +92,9 @@ geom_vector <- function(mapping = NULL, data = NULL,
     )
 }
 
-
+#' @rdname geom_vector
+#' @usage NULL
+#' @format NULL
 StatVector <- ggplot2::ggproto("StatVector", ggplot2::Stat,
     required_aes = c("x", "y", "dx", "dy"),
     default_aes = ggplot2::aes(scale = 1, scale.x = scale, scale.y = scale, min.mag = 0),

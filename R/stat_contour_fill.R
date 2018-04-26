@@ -33,6 +33,9 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
 
 #' @import ggplot2
 #' @import scales
+#' @rdname geom_contour_fill
+#' @usage NULL
+#' @format NULL
 StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     required_aes = c("x", "y", "z"),
     default_aes = ggplot2::aes(fill = ..int.level..),

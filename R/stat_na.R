@@ -51,6 +51,9 @@ stat_na <- function(mapping = NULL, data = NULL,
 
 #' @import ggplot2
 #' @import scales
+#' @rdname stat_na
+#' @usage NULL
+#' @format NULL
 StatNa <- ggplot2::ggproto("StatNa", ggplot2::Stat,
     required_aes = c("x", "y", "na"),
     # default_aes = ggplot2::aes(fill = ..int.level..),

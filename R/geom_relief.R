@@ -64,7 +64,9 @@ geom_relief <- function(mapping = NULL, data = NULL,
     )
 }
 
-
+#' @rdname geom_relief
+#' @usage NULL
+#' @format NULL
 GeomRelief <- ggplot2::ggproto("GeomRelief", GeomTile,
     required_aes = c("x", "y", "z"),
     default_aes = ggplot2::aes(color = NA, fill = "grey35", size = 0.5, linetype = 1,

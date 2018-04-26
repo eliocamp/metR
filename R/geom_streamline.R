@@ -225,6 +225,9 @@ stat_streamline <- function(mapping = NULL, data = NULL,
     )
 }
 
+#' @rdname geom_streamline
+#' @usage NULL
+#' @format NULL
 StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
     required_aes = c("x", "y", "dx", "dy"),
     setup_params = function(data, params) {
@@ -260,7 +263,9 @@ d <<- data
     }
 )
 
-
+#' @rdname geom_streamline
+#' @usage NULL
+#' @format NULL
 GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
     default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = NA),
     draw_panel = function(data, panel_params, coord, arrow = NULL,
@@ -291,7 +296,7 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
         solid_lines <- all(attr$solid)
         constant <- all(attr$constant)
         if (!solid_lines && !constant) {
-            stop("geom_path: If you are using dotted or dashed lines",
+            stop("geom_streamline: If you are using dotted or dashed lines",
                  ", colour, size and linetype must be constant over the line",
                  call. = FALSE)
         }
@@ -304,7 +309,7 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
 
         if (!constant) {
             if (!is.null(arrow)) {
-                mult <- end & munched$end
+                mult <- end&munched$end
                 mult <- mult[!start]
                 arrow$length <- unit(as.numeric(arrow$length)[1]*mult, attr(arrow$length, "unit"))
             }

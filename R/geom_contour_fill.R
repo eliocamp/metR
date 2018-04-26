@@ -50,8 +50,6 @@
 #' ggplot(surface, aes(Var1, Var2, z = value)) +
 #'   geom_contour_fill(aes(fill = ..level..))
 #'
-#'
-#'
 #' @family ggplot2 helpers
 #' @export
 #' @import sp

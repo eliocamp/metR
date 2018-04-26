@@ -44,6 +44,9 @@ geom_label_contour <- function(mapping = NULL, data = NULL,
     )
 }
 
+#' @rdname geom_text_contour
+#' @usage NULL
+#' @format NULL
 GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", Geom,
     required_aes = c("x", "y", "label"),
     default_aes = ggplot2::aes(

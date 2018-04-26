@@ -130,7 +130,7 @@ moves with the "flow".</p>
   <span class='kw'>arrow.angle</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>arrow.length</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>arrow.ends</span> <span class='kw'>=</span> <span class='st'>"last"</span>,
   <span class='kw'>arrow.type</span> <span class='kw'>=</span> <span class='st'>"closed"</span>, <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>arrow</a></span>(<span class='no'>arrow.angle</span>, <span class='fu'>unit</span>(<span class='no'>arrow.length</span>,
   <span class='st'>"lines"</span>), <span class='kw'>ends</span> <span class='kw'>=</span> <span class='no'>arrow.ends</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='no'>arrow.type</span>), <span class='kw'>lineend</span> <span class='kw'>=</span> <span class='st'>"butt"</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>stat_streamline</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"streamline"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -139,7 +139,7 @@ moves with the "flow".</p>
   <span class='kw'>arrow.angle</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>arrow.length</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>arrow.ends</span> <span class='kw'>=</span> <span class='st'>"last"</span>,
   <span class='kw'>arrow.type</span> <span class='kw'>=</span> <span class='st'>"closed"</span>, <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>arrow</a></span>(<span class='no'>arrow.angle</span>, <span class='fu'>unit</span>(<span class='no'>arrow.length</span>,
   <span class='st'>"lines"</span>), <span class='kw'>ends</span> <span class='kw'>=</span> <span class='no'>arrow.ends</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='no'>arrow.type</span>), <span class='kw'>lineend</span> <span class='kw'>=</span> <span class='st'>"butt"</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -204,15 +204,18 @@ if any.</p></td>
     </tr>
     <tr>
       <th>skip</th>
-      <td><p>numeric specifying number of gridpoints not to draw in the x and y direction.</p></td>
+      <td><p>numeric specifying number of gridpoints not to draw
+in the x and y direction.</p></td>
     </tr>
     <tr>
       <th>skip.x</th>
-      <td><p>numeric specifying number of gridpoints not to draw in the x and y direction.</p></td>
+      <td><p>numeric specifying number of gridpoints not to draw
+in the x and y direction.</p></td>
     </tr>
     <tr>
       <th>skip.y</th>
-      <td><p>numeric specifying number of gridpoints not to draw in the x and y direction.</p></td>
+      <td><p>numeric specifying number of gridpoints not to draw
+in the x and y direction.</p></td>
     </tr>
     <tr>
       <th>n, nx, ny</th>
@@ -225,19 +228,23 @@ x and y direction (replaces <code>skip</code> if not <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>arrow.angle</th>
-      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
+      <td><p>parameters passed to
+<a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
     </tr>
     <tr>
       <th>arrow.length</th>
-      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
+      <td><p>parameters passed to
+<a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
     </tr>
     <tr>
       <th>arrow.ends</th>
-      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
+      <td><p>parameters passed to
+<a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
     </tr>
     <tr>
       <th>arrow.type</th>
-      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
+      <td><p>parameters passed to
+<a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
     </tr>
     <tr>
       <th>arrow</th>

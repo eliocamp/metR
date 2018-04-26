@@ -85,7 +85,7 @@
       <h1>Working with data</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2018-04-18</h4>
+            <h4 class="date">2018-04-26</h4>
       
       <small>Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Working-with-data.Rmd"><code>vignettes/Working-with-data.Rmd</code></a></small>
 
@@ -217,13 +217,13 @@ eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.htm
 <span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  264 obs. of  3 variables:</span>
 <span class="co">#&gt;   ..$ date  : Date[1:264], format: "1990-01-01" ...</span>
 <span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "PC1","PC2": 1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="co">#&gt;   ..$ gh.t.w: num [1:264] -0.0668 0.0897 0.0198 -0.1765 -0.1711 ...</span>
+<span class="co">#&gt;   ..$ gh.t.w: num [1:264] 0.0668 -0.0897 -0.0198 0.1765 0.1711 ...</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  $ left :Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:</span>
 <span class="co">#&gt;   ..$ lat   : num [1:8064] -90 -90 -90 -90 -90 -90 -90 -90 -90 -90 ...</span>
 <span class="co">#&gt;   ..$ lon   : num [1:8064] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span>
 <span class="co">#&gt;   ..$ PC    : Factor w/ 2 levels "PC1","PC2": 1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="co">#&gt;   ..$ gh.t.w: num [1:8064] -2.86e-10 -2.86e-10 -2.86e-10 -2.86e-10 -2.86e-10 ...</span>
+<span class="co">#&gt;   ..$ gh.t.w: num [1:8064] 2.86e-10 2.86e-10 2.86e-10 2.86e-10 2.86e-10 ...</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  $ sdev :Classes 'data.table' and 'data.frame':  2 obs. of  3 variables:</span>
 <span class="co">#&gt;   ..$ PC: Factor w/ 2 levels "PC1","PC2": 1 2</span>
@@ -231,7 +231,7 @@ eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.htm
 <span class="co">#&gt;   ..$ r2: num [1:2] 0.278 0.118</span>
 <span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(eof2<span class="op">$</span>right<span class="op">$</span>gh.t.w <span class="op">-</span><span class="st"> </span>eof<span class="op">$</span>left<span class="op">$</span>gh.t.w)
-<span class="co">#&gt; [1] -2.640671e-08</span></code></pre></div>
+<span class="co">#&gt; [1] 2.644372e-07</span></code></pre></div>
 <p>Alternatively, <code><a href="../reference/EOF.html">EOF()</a></code> also accepts the (probably) more familiar <code>dcast</code> interface.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eof2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(lon <span class="op">+</span><span class="st"> </span>lat <span class="op">~</span><span class="st"> </span>date, <span class="dt">value.var =</span> <span class="st">"gh.t.w"</span>, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</code></pre></div>
 <p>For completion, let’s plot each Principal Component.</p>

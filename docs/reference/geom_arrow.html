@@ -121,8 +121,8 @@ transformation and different aspect ratios." />
 transformation and different aspect ratios.</p>
     
 
-    <pre class="usage"><span class='fu'>geom_arrow</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+    <pre class="usage"><span class='fu'>geom_arrow</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"arrow"</span>,
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>pivot</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
   <span class='kw'>min.mag</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>skip.x</span> <span class='kw'>=</span> <span class='no'>skip</span>, <span class='kw'>skip.y</span> <span class='kw'>=</span> <span class='no'>skip</span>,
   <span class='kw'>arrow.angle</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>arrow.length</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>arrow.ends</span> <span class='kw'>=</span> <span class='st'>"last"</span>,
   <span class='kw'>arrow.type</span> <span class='kw'>=</span> <span class='st'>"closed"</span>, <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>arrow</a></span>(<span class='no'>arrow.angle</span>, <span class='fu'>unit</span>(<span class='no'>arrow.length</span>,
@@ -178,8 +178,9 @@ to the paired geom/stat.</p></td>
       <td><p>Direction of rotation in degrees.</p></td>
     </tr>
     <tr>
-      <th>scale</th>
-      <td><p>multiplicative scales for adjusting the size of the vectors.</p></td>
+      <th>pivot</th>
+      <td><p>numeric indicating where to pivot the arrow where '0 means at the
+begining and 1 meanns at the end.</p></td>
     </tr>
     <tr>
       <th>min.mag</th>
@@ -187,31 +188,38 @@ to the paired geom/stat.</p></td>
     </tr>
     <tr>
       <th>skip</th>
-      <td><p>numeric specifying number of gridpoints not to draw in the x and y direction.</p></td>
+      <td><p>numeric specifying number of gridpoints not to draw
+in the x and y direction.</p></td>
     </tr>
     <tr>
       <th>skip.x</th>
-      <td><p>numeric specifying number of gridpoints not to draw in the x and y direction.</p></td>
+      <td><p>numeric specifying number of gridpoints not to draw
+in the x and y direction.</p></td>
     </tr>
     <tr>
       <th>skip.y</th>
-      <td><p>numeric specifying number of gridpoints not to draw in the x and y direction.</p></td>
+      <td><p>numeric specifying number of gridpoints not to draw
+in the x and y direction.</p></td>
     </tr>
     <tr>
       <th>arrow.angle</th>
-      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
+      <td><p>parameters passed to
+<a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
     </tr>
     <tr>
       <th>arrow.length</th>
-      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
+      <td><p>parameters passed to
+<a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
     </tr>
     <tr>
       <th>arrow.ends</th>
-      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
+      <td><p>parameters passed to
+<a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
     </tr>
     <tr>
       <th>arrow.type</th>
-      <td><p>parameters passed to <a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
+      <td><p>parameters passed to
+<a href='http://www.rdocumentation.org/packages/grid/topics/arrow'>grid::arrow</a></p></td>
     </tr>
     <tr>
       <th>arrow</th>
@@ -290,7 +298,8 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 <span class='no'>field</span>$<span class='no'>dir</span> <span class='kw'>&lt;-</span> <span class='fu'>with</span>(<span class='no'>field</span>, <span class='fu'>atan2</span>(<span class='no'>v</span>, <span class='no'>u</span>))*<span class='fl'>180</span>/<span class='no'>pi</span>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>field</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>x</span>, <span class='no'>y</span>)) +
-    <span class='fu'>geom_arrow</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>mag</span> <span class='kw'>=</span> <span class='no'>V</span>, <span class='kw'>angle</span> <span class='kw'>=</span> <span class='no'>dir</span>), <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='img'><img src='geom_arrow-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'>geom_arrow</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>mag</span> <span class='kw'>=</span> <span class='no'>V</span>, <span class='kw'>angle</span> <span class='kw'>=</span> <span class='no'>dir</span>)) +
+    <span class='fu'>scale_mag</span>()</div><div class='output co'>#&gt; <span class='message'>geom_arrow with preserve = FALSE works best with a fixed aspect ratio</span></div><div class='img'><img src='geom_arrow-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

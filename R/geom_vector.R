@@ -95,6 +95,7 @@ geom_vector <- function(mapping = NULL, data = NULL,
 #' @rdname geom_vector
 #' @usage NULL
 #' @format NULL
+#' @export
 StatVector <- ggplot2::ggproto("StatVector", ggplot2::Stat,
     required_aes = c("x", "y", "dx", "dy"),
     default_aes = ggplot2::aes(scale = 1, scale.x = scale, scale.y = scale, min.mag = 0),
@@ -117,7 +118,10 @@ StatVector <- ggplot2::ggproto("StatVector", ggplot2::Stat,
         }
 )
 
-
+#' @rdname geom_vector
+#' @usage NULL
+#' @format NULL
+#' @export
 GeomVector <- ggplot2::ggproto("GeomSegment", ggplot2::GeomSegment,
 
   draw_panel = function(data, panel_params, coord, arrow = NULL,

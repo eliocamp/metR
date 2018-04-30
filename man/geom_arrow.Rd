@@ -4,6 +4,7 @@
 \name{geom_arrow}
 \alias{geom_arrow}
 \alias{GeomArrow}
+\alias{StatArrow}
 \title{Arrows}
 \usage{
 geom_arrow(mapping = NULL, data = NULL, stat = "arrow",

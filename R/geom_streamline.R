@@ -228,6 +228,7 @@ stat_streamline <- function(mapping = NULL, data = NULL,
 #' @rdname geom_streamline
 #' @usage NULL
 #' @format NULL
+#' @export
 StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
     required_aes = c("x", "y", "dx", "dy"),
     setup_params = function(data, params) {
@@ -266,6 +267,7 @@ d <<- data
 #' @rdname geom_streamline
 #' @usage NULL
 #' @format NULL
+#' @export
 GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
     default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = NA),
     draw_panel = function(data, panel_params, coord, arrow = NULL,

@@ -4,6 +4,7 @@
 \name{geom_vector}
 \alias{geom_vector}
 \alias{StatVector}
+\alias{GeomVector}
 \title{Vectors}
 \usage{
 geom_vector(mapping = NULL, data = NULL, stat = StatVector,

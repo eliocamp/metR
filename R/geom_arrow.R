@@ -100,6 +100,7 @@ draw_key_vector <- function (data, params, size) {
 #' @rdname geom_arrow
 #' @usage NULL
 #' @format NULL
+#' @export
 GeomArrow <- ggplot2::ggproto("GeomArrow", Geom,
   required_aes = c("x", "y"),
   default_aes = ggplot2::aes(color = "black", size = 0.5, min.mag = 0,
@@ -196,7 +197,10 @@ GeomArrow <- ggplot2::ggproto("GeomArrow", Geom,
       pol
   })
 
-
+#' @rdname geom_arrow
+#' @usage NULL
+#' @format NULL
+#' @export
 StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
     required_aes = c("x", "y"),
     default_aes = ggplot2::aes(min.mag = 0, dx = NULL, dy = NULL,

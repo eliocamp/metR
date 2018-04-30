@@ -36,6 +36,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
 #' @rdname geom_contour_fill
 #' @usage NULL
 #' @format NULL
+#' @export
 StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     required_aes = c("x", "y", "z"),
     default_aes = ggplot2::aes(fill = ..int.level..),
@@ -126,8 +127,8 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         if (mean.level %in% breaks & complete == TRUE) {
             mean.cont  <- data.frame(
                 level = mean.level,
-                x = c(rep(range.data$x[1], 2), rep(range.data$x[2], 2)),
-                y = c(range.data$y[1], rep(range.data$y[2], 2), range.data$y[1]),
+                x = c(rep(range.data$x[1], 2), rep(range.data$x[2], 2), range.data$x[1]),
+                y = c(range.data$y[1], rep(range.data$y[2], 2), rep(range.data$y[1], 2)),
                 piece = max(cont$piece) + 1,
                 int.level = mean.level + correction)
             mean.cont$group <- factor(paste("", sprintf("%03d", mean.cont$piece), sep = "-"))

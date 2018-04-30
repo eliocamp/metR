@@ -100,6 +100,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
 #' @rdname geom_text_contour
 #' @usage NULL
 #' @format NULL
+#' @export
 GeomTextContour <- ggproto("GeomTextContour", Geom,
    required_aes = c("x", "y", "label"),
    default_aes = ggplot2::aes(colour = "black", size = 3.88, angle = 0,

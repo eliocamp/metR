@@ -258,7 +258,8 @@ geopotential[date == date[1], c("u", "v") := GeostrophicWind(gh, lon, lat)]
 
 ggplot(geopotential[date == date[1]], aes(lon, lat)) +
     geom_contour(aes(z = gh)) +
-    geom_vector(aes(dx = u, dy = v), skip.y = 1, skip.x = 2, scale = 1) +
+    geom_vector(aes(dx = dlon(u, lat), dy = dlat(v)), 
+                skip.y = 1, skip.x = 2, scale = 5e4) +
     coord_quickmap()
 ```
 

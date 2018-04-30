@@ -52,6 +52,7 @@ stat_subset <- function(mapping = NULL, data = NULL,
 #' @rdname stat_subset
 #' @usage NULL
 #' @format NULL
+#' @export
 StatSubset <- ggplot2::ggproto("StatSubset", ggplot2::Stat,
   required_aes = c("x", "y", "subset"),
   compute_group = function(data, scales, width = NULL, height = NULL) {

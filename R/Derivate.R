@@ -73,11 +73,8 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
     dep.names <- formula.tools::lhs.vars(formula)
     ind.names <- formula.tools::rhs.vars(formula)
 
-    if (!is.null(data)) {
-        data <- setDT(data)[, c(dep.names, ind.names), with = FALSE]
-    } else {
-        data <- as.data.table(mget(c(dep.names, ind.names), envir = environment(formula)))
-    }
+    formula <- Formula::as.Formula(formula)
+    data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
 
     if (length(ind.names) > 1) {
         if (length(cyclical) == 1) {
@@ -87,35 +84,27 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
         }
     }
 
-    dernames <- lapply(ind.names, FUN = function(x) {
-        paste0(dep.names, ".",
+    dernames <- lapply(dep.names, FUN = function(x) {
+        paste0(x, ".",
                paste0(rep("d", order[1]), collapse = ""),
-               x)
+               ind.names)
     })
-
-    # If there's only 1 independent variable, use this version
-    # with less overhead.
-    if (length(ind.names) == 1 & length(dep.names) == 1) {
-        data[, dernames[[1]] := .derv(get(dep.names[1]), get(ind.names[1]),
-                                      order = order[1],
-                                      cyclical = cyclical[1], fill = fill)]
-    } else {
-        for (v in seq_along(ind.names)) {
-            this.var <- ind.names[v]
-
-            data[, dernames[[v]] := lapply(dep.names, function(x) {
-                .derv(get(x), get(ind.names[v]),
-                      order = order[1],
-                      cyclical = cyclical[v], fill = fill)}),
-                by = c(ind.names[-v])]
-        }
+    coords <- lapply(ind.names, function(x) unique(data[[x]]))
+    for (v in seq_along(dep.names)) {
+        data.array <- array(data[[dep.names[v]]], dim = unlist(lapply(coords, length)))
+        s <- lapply(seq_along(coords), function(x) {
+            c(.derv.array(data.array, coords, x, order = order[1],
+                          cyclical = cyclical[x], fill = fill))
+        })
+        set(data, NULL, dernames[[v]], s)
     }
+
 
     # Correction for spherical coordinates.
     if (sphere == TRUE) {
         cosvar <- cos(data[, get(ind.names[2])]*pi/180)
-        data[, dernames[[1]] := get(dernames[[1]])*(180/pi/(a*cosvar))^order[1]]
-        data[, dernames[[2]] := get(dernames[[2]])*(180/pi/a)^order[1]]
+        data[, dernames[[1]][1] := get(dernames[[1]])*(180/pi/(a*cosvar))^order[1]]
+        data[, dernames[[1]][2] := get(dernames[[1]][2])*(180/pi/a)^order[1]]
     }
 
     data <- data[, unlist(dernames), with = FALSE]
@@ -123,23 +112,36 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
     return(as.list(data))
 }
 
+# Derivates multidimensional arrays.
+.derv.array <- function(X, coords, margin, order = 1, cyclical = FALSE, fill = FALSE) {
+    if (length(dim(X)) == 1) {
+        return(.derv(X, coords[[1]], order = order, cyclical = cyclical, fill = fill))
+    }
+    dims <- seq(dim(X))
+    coord <- coords[[margin]]
+    margins <- dims[!(dims %in% margin)]
+    f <- apply(X, margins, function(x) .derv(x, coord, order = order,
+                                             cyclical = cyclical, fill = fill))
+    f <- aperm(f, c(margin, margins))
+    return(f)
+}
+
+
 
 #' @rdname Derivate
 #' @export
 Laplacian <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
                       sphere = FALSE, a = 6371000) {
     dep.names <- as.character(formula.tools::lhs(formula))
-    dep.names <- dep.names[!grepl("+", dep.names, fixed = TRUE)]
-
+    dep.names <- dep.names[!grepl("+", as.character(dep.names), fixed = TRUE)]
     ndep <- length(dep.names)
-
     lap.name <- paste0(dep.names, ".lap")
 
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
                     sphere = sphere, a = a, order = 2)
 
     lap <- lapply(seq(ndep), FUN = function(x) {
-        Reduce("+", der[seq(x, length(der), by = ndep)])
+        Reduce("+", der[1:ndep + (x-1)*ndep])
     })
     names(lap) <- lap.name
     if(length(lap) == 1) {
@@ -168,7 +170,7 @@ Vorticity <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
                     sphere = sphere, a = a, order = 1)
 
-    vort <- der[[2]] - der[[3]]
+    vort <- -der[[2]] + der[[3]]
     vort
 }
 

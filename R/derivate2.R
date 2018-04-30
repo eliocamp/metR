@@ -1,13 +1,15 @@
-.Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = FALSE,
-                      sphere = FALSE, a = 6371000) {
+Derivate.old <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = FALSE,
+                     sphere = FALSE, a = 6371000) {
     dep.names <- formula.tools::lhs.vars(formula)
     ind.names <- formula.tools::rhs.vars(formula)
+    formula <- Formula::as.Formula(formula)
+    data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
 
-    if (!is.null(data)) {
-        data <- setDT(data)[, c(dep.names, ind.names), with = FALSE]
-    } else {
-        data <- as.data.table(mget(c(dep.names, ind.names), envir = environment(formula)))
-    }
+    # Order data.
+    id.name <- digest::digest(data[, 1])
+    data[, (id.name) := 1:.N]
+    # data[, id := 1:.N]    # for order.
+    setkeyv(data, ind.names)
 
     if (length(ind.names) > 1) {
         if (length(cyclical) == 1) {
@@ -17,21 +19,22 @@
         }
     }
 
-        dernames <- lapply(dep.names, FUN = function(x) {
-            paste0(x, ".",
-                   paste0(rep("d", order[1]), collapse = ""),
-                   ind.names)
-        })
-        coords <- lapply(ind.names, function(x) unique(data[[x]]))
-        for (v in seq_along(dep.names)) {
-            data.array <- array(data[[dep.names[v]]], dim = unlist(lapply(coords, length)))
-            s <- lapply(seq_along(coords), function(x) {
-                c(.derv.array(data.array, coords, x, order = order[1],
-                              cyclical = cyclical[x], fill = fill))
-            })
-            set(data, NULL, dernames[[v]], s)
-        }
+    dernames <- lapply(ind.names, FUN = function(x) {
+        paste0(dep.names, ".",
+               paste0(rep("d", order[1]), collapse = ""),
+               x)
+    })
 
+    for (v in seq_along(ind.names)) {
+        this.var <- ind.names[v]
+        this.bc <- cyclical[v]
+
+        data[, dernames[[v]] := lapply(seq(dernames[[1]]), function(x) {
+            .derv(.SD[[x]], .SD[[this.var]], order = order[1],
+                  cyclical = this.bc, fill = fill)}),
+            by = c(ind.names[-v])]
+    }
+    data <- data[order(data[[id.name]])]
 
     # Correction for spherical coordinates.
     if (sphere == TRUE) {
@@ -43,18 +46,5 @@
     data <- data[, unlist(dernames), with = FALSE]
 
     return(as.list(data))
-}
 
-# Derivates multidimensional arrays.
-.derv.array <- function(X, coords, margin, order = 1, cyclical = FALSE, fill = FALSE) {
-    if (is.vector(X)) {
-        return(.derv(X, coords[[1]], order = order, cyclical = cyclical, fill = fill))
-    }
-    dims <- seq(dim(X))
-    coord <- coords[[margin]]
-    margins <- dims[!(dims %in% margin)]
-    f <- apply(X, margins, function(x) .derv(x, coord, order = order,
-                                             cyclical = cyclical, fill = fill))
-    f <- aperm(f, c(margin, margins))
-    return(f)
 }

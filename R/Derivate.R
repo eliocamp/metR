@@ -72,14 +72,12 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
                      sphere = FALSE, a = 6371000) {
     dep.names <- formula.tools::lhs.vars(formula)
     ind.names <- formula.tools::rhs.vars(formula)
-    formula <- Formula::as.Formula(formula)
-    data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
 
-    # Order data.
-    id.name <- digest::digest(data[, 1])
-    data[, (id.name) := 1:.N]
-    # data[, id := 1:.N]    # for order.
-    setkeyv(data, ind.names)
+    if (!is.null(data)) {
+        data <- setDT(data)[, c(dep.names, ind.names), with = FALSE]
+    } else {
+        data <- as.data.table(mget(c(dep.names, ind.names), envir = environment(formula)))
+    }
 
     if (length(ind.names) > 1) {
         if (length(cyclical) == 1) {
@@ -95,16 +93,23 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
                x)
     })
 
-    for (v in seq_along(ind.names)) {
-        this.var <- ind.names[v]
-        this.bc <- cyclical[v]
+    # If there's only 1 independent variable, use this version
+    # with less overhead.
+    if (length(ind.names) == 1 & length(dep.names) == 1) {
+        data[, dernames[[1]] := .derv(get(dep.names[1]), get(ind.names[1]),
+                                      order = order[1],
+                                      cyclical = cyclical[1], fill = fill)]
+    } else {
+        for (v in seq_along(ind.names)) {
+            this.var <- ind.names[v]
 
-        data[, dernames[[v]] := lapply(seq(dernames[[1]]), function(x) {
-            .derv(.SD[[x]], .SD[[this.var]], order = order[1],
-                  cyclical = this.bc, fill = fill)}),
-            by = c(ind.names[-v])]
+            data[, dernames[[v]] := lapply(dep.names, function(x) {
+                .derv(get(x), get(ind.names[v]),
+                      order = order[1],
+                      cyclical = cyclical[v], fill = fill)}),
+                by = c(ind.names[-v])]
+        }
     }
-    data <- data[order(data[[id.name]])]
 
     # Correction for spherical coordinates.
     if (sphere == TRUE) {
@@ -116,8 +121,8 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
     data <- data[, unlist(dernames), with = FALSE]
 
     return(as.list(data))
-
 }
+
 
 #' @rdname Derivate
 #' @export

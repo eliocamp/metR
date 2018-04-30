@@ -107,12 +107,44 @@ GeomContour2 <- ggplot2::ggproto("GeomContour2", GeomPath,
 
           # Distance in points
           data[, point := seq_len(.N), by = piece]
-          data[, d := Inf]
           data[piece %in% labels$piece, d := as.numeric(point - point[cut == TRUE][1]), by = piece]
+          # data[is.na(d), d := max(d, na.rm = T), by = piece]
 
-          # Remove close points and regroup
-          data[piece %in% labels$piece, group := interaction(piece, sign(d))]
-          data <- data[abs(d) > gap | !(piece %in% labels$piece)]
+          if (gap != round(gap)) {
+              small.piece <- data[abs(d) <= ceiling(gap + 1) & !is.na(d)]
+              # Improve resolution at segments close to the gap
+              # res <- ceiling(1/(gap - floor(gap)))
+              # # res <- 10
+              # data.high <- small.piece[, .(x = approx(point, x, n = length(x)*res)$y,
+              #                              y = approx(point, y, n = length(y)*res)$y,
+              #                              point = approx(point, point, n = length(y)*res)$y,
+              #                              d = approx(point, d, n = length(point)*res)$y),
+              #                          by = piece]
+
+              ends <- c(-gap, gap)
+              data.high <- small.piece[, .(x = approx(d, x, xout = ends)$y,
+                                           y = approx(d, y, xout = ends)$y,
+                                           point = approx(d, point, xout = ends)$y,
+                                           d = approx(d, d, xout = ends)$y),
+                                       by = piece]
+              # Remove points
+              # data.high <- data.high[abs(d) > gap]
+              # Add other columns
+              data.high <- data.high[data[abs(d) < ceiling(gap) & !is.na(d)][
+                  , .(level, piece, colour, size, linetype, alpha, group)][
+                      , .SD[1], by = piece], on = "piece"]
+
+              # Merge, reorder and regroup
+              data <- rbind(data[abs(d) > ceiling(gap) | is.na(d),
+                                 .(x, y, level, piece, colour, size, linetype, alpha, point, d, group)],
+                            data.high)
+              data <- data[order(piece, point)]
+              data[piece %in% labels$piece, group := interaction(piece, sign(d))]
+          } else {
+              # Remove close points and regroup
+              data[piece %in% labels$piece, group := interaction(piece, sign(d))]
+              data <- data[abs(d) > gap | !(piece %in% labels$piece)]
+          }
       }
 
       ## --- Original ggplot2 code below ----

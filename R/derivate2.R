@@ -27,7 +27,7 @@
             data.array <- array(data[[dep.names[v]]], dim = unlist(lapply(coords, length)))
             s <- lapply(seq_along(coords), function(x) {
                 c(.derv.array(data.array, coords, x, order = order[1],
-                              cyclical = cyclical[1], fill = fill))
+                              cyclical = cyclical[x], fill = fill))
             })
             set(data, NULL, dernames[[v]], s)
         }
@@ -47,7 +47,7 @@
 
 # Derivates multidimensional arrays.
 .derv.array <- function(X, coords, margin, order = 1, cyclical = FALSE, fill = FALSE) {
-    if (is.vector(x)) {
+    if (is.vector(X)) {
         return(.derv(X, coords[[1]], order = order, cyclical = cyclical, fill = fill))
     }
     dims <- seq(dim(X))

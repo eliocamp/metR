@@ -90,7 +90,7 @@
 #' @export
 #' @import data.table
 #' @import Formula
-#' @importFrom stats as.formula
+#' @importFrom stats as.formula quantile
 EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975)) {
 
@@ -177,3 +177,4 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
 
     return(list(right = right, left = left, sdev = sdev))
 }
+

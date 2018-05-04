@@ -17,7 +17,8 @@ the matrix that will be used in the SVD decomposition (see Details)}
 
 \item{n}{which singular values to return (if \code{NULL}, returns all)}
 
-\item{B}{number of bootstrap samples used to estimate confidence intervals}
+\item{B}{number of bootstrap samples used to estimate confidence intervals.
+Ignored if <= 1.}
 
 \item{probs}{the probabilities of the lower and upper values of estiamted
 confidence intervals. If named, it's names will be used as column names.}

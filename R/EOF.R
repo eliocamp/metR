@@ -8,7 +8,8 @@
 #' the matrix that will be used in the SVD decomposition (see Details)
 #' @param value.var optional name of the data column (see Details)
 #' @param n which singular values to return (if \code{NULL}, returns all)
-#' @param B number of bootstrap samples used to estimate confidence intervals
+#' @param B number of bootstrap samples used to estimate confidence intervals.
+#' Ignored if <= 1.
 #' @param probs the probabilities of the lower and upper values of estiamted
 #' confidence intervals. If named, it's names will be used as column names.
 #'
@@ -170,12 +171,9 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
         se <- lapply(data.table::transpose(sdevs), quantile, probs = probs, names = FALSE)
         se <- data.table::transpose(se)
         # m <- unlist(lapply(data.table::transpose(sdevs), mean))
-    } else {
-        se <- NA
+        if (is.null(names(probs))) names(probs) <- scales::percent(probs)
+        sdev[, names(probs) := se]
     }
-    # sdev[, sd := m]
-    if (is.null(names(probs))) names(probs) <- scales::percent(probs)
-    sdev[, names(probs) := se]
 
     return(list(right = right, left = left, sdev = sdev))
 }

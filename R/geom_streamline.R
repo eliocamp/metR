@@ -413,14 +413,14 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
 
     # Muy poco elegante, pero bueno...
     if (circ.x){
-        points[, x := fold(x, 1, range.x, circ.x)[[1]]]
+        points[, x := .fold(x, 1, range.x, circ.x)[[1]]]
     } else {
         points[, x := ifelse(x > range.x[2], range.x[2], x)]
         points[, x := ifelse(x < range.x[1], range.x[1], x)]
     }
 
     if (circ.y){
-        points[, y := fold(y, 1, range.y, circ.y)[[1]]]
+        points[, y := .fold(y, 1, range.y, circ.y)[[1]]]
     } else {
         points[, y := ifelse(y > range.y[2], range.y[2], y)]
         points[, y := ifelse(y < range.y[1], range.y[1], y)]
@@ -434,8 +434,8 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     # Integration
     for (s in 1:S) {
         points2[, c("x", "y", "step") := .(x + dx*dt, y + dy*dt, s)]
-        points2[, c("x", "piece") := fold(x, piece, range.x, circ.x)]
-        points2[, c("y", "piece") := fold(y, piece, range.y, circ.y)]
+        points2[, c("x", "piece") := .fold(x, piece, range.x, circ.x)]
+        points2[, c("y", "piece") := .fold(y, piece, range.y, circ.y)]
         points2[, c("dx", "dy") := force.fun(x, y)]
         points2 <- points2[!is.na(dx) & !is.na(dy)]
         points <- rbindlist(list(points, points2)) # se puede optimizar prealocando
@@ -492,7 +492,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
 
 
 
-fold <- function(x, piece, range, circular = TRUE) {
+.fold <- function(x, piece, range, circular = TRUE) {
     if (circular) {
         R <- diff(range)
         piece <- ifelse(x > range[2], piece + 1, piece)

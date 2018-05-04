@@ -4,7 +4,8 @@
 \alias{EOF}
 \title{Empirical Orthogonal Function}
 \usage{
-EOF(formula, value.var = NULL, data = NULL, n = 1)
+EOF(formula, value.var = NULL, data = NULL, n = 1, B = 0,
+  probs = c(lower = 0.025, mid = 0.5, upper = 0.975))
 }
 \arguments{
 \item{formula}{a formula passed to \code{\link[data.table]{dcast}} to build
@@ -15,6 +16,11 @@ the matrix that will be used in the SVD decomposition (see Details)}
 \item{data}{a data.frame}
 
 \item{n}{which singular values to return (if \code{NULL}, returns all)}
+
+\item{B}{number of bootstrap samples used to estimate confidence intervals}
+
+\item{probs}{the probabilities of the lower and upper values of estiamted
+confidence intervals. If named, it's names will be used as column names.}
 }
 \value{
 A list of 3 named elements containing tidy data.tables of the right and left
@@ -51,6 +57,9 @@ used in RIGHT and LEFT of \code{formula}, respectively.
 It is much faster to compute only some singular vectors, so is advisable not
 to set n to \code{NULL}. If the irba package is installed, EOF uses
 \link[irlba:irlba]{irlba::irlba} instead of \link[base:svd]{base::svd} since it's much faster.
+
+The boostraping procedure follows Fisher et.al. (2016) and returns the
+standard deviation of each singular value.
 }
 \examples{
 # The Antarctic Oscillation is computed from the
@@ -61,7 +70,8 @@ geopotential <- copy(geopotential)
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
       by = .(lon, lat, month(date))]
 
-aao <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1)
+aao <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1,
+           B = 100, probs = c(lo2 = 0.1, hig = 0.9))
 
 # AAO field
 library(ggplot2)
@@ -73,7 +83,8 @@ ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
 ggplot(aao$right, aes(date, gh.t.w)) +
     geom_line()
 
-# \% of explained variance
+# standard deviation, \% of explained variance and
+# confidence intervals.
 aao$sdev
 
 # 1st eof for each month.
@@ -84,9 +95,11 @@ ggplot(aao2, aes(lon, lat)) +
     facet_wrap(~ month)
 
 # Alternative interface
-
 aao2 <- EOF(lon + lat ~ date, value.var = "gh.t.w", data = geopotential)
 
+}
+\references{
+Fisher, A., Caffo, B., Schwartz, B., & Zipunnikov, V. (2016). Fast, Exact Bootstrap Principal Component Analysis for p > 1 million. Journal of the American Statistical Association, 111(514), 846–860. http://doi.org/10.1080/01621459.2015.1062383
 }
 \seealso{
 Other meteorology functions: \code{\link{Derivate}},

@@ -19,6 +19,11 @@ can be made.
 - `geom_contour2()` now has a `gap` parameter to add space for labels.
 - `EOF()` now supports estimation of confidence intervals via bootstrap.
 - `geom_relief()` is MUCH faster now.
+- Contour calculations in `StatContour2` are 
+[memoised](https://github.com/r-lib/memoise) so they are
+only computed once even adding several layers with the same contours 
+(`geom_contour() + geom_text_contour()`) or running the same plot while tweaking
+it's appearance. 
 
 # metR 0.1
 - New function: `GetTopography()`

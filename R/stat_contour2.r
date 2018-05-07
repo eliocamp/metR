@@ -89,7 +89,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
 
 
 
-.order_contour <- function(contours, data) {
+.order_contour <- memoise::memoise(function(contours, data) {
     x.data <- unique(data$x)
     x.data <- x.data[order(x.data)]
     x.N <- length(x.data)
@@ -142,14 +142,14 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
 
     # Congratulations, your contours all have the same direction.
     return(contours)
-}
+})
 
 .second <- function(x, target) {
     tmp <- (x - target)
     x[order(abs(tmp))][2]
 }
 
-.contour_lines <- function(data, breaks, complete = FALSE) {
+.contour_lines <- memoise::memoise(function(data, breaks, complete = FALSE) {
     z <- tapply(data$z, data[c("x", "y")], identity)
 
     if (is.list(z)) {
@@ -182,7 +182,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
     piece = pieces,
     group = groups
   )
-}
+})
 
 #' @rdname geom_text_contour
 #' @usage NULL

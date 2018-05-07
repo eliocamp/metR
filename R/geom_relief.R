@@ -86,11 +86,11 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", GeomTile,
             coords <- coords[!is.na(dx) & !is.na(dy)]
 
             coords[, shade := (cos(atan2(-dy, -dx) - sun.angle) + 1)/2]
-
             coords[is.na(shade), shade := 0]
-            coords[, fill := .rgb2hex(grDevices::colorRamp(c(dark, light),
-                                                           space = "Lab")(shade)),
-                   by = .(dark, light)]
+
+            # shade.fun <- scales::colour_ramp(c(dark, light))
+            # coords$fill <- shade.fun(coords$shade)
+            coords[, fill := scales::colour_ramp(c(dark, light))(shade), by = .(light, dark)]
 
             if (raster == TRUE){
                 if (!inherits(coord, "CoordCartesian")) {

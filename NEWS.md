@@ -18,6 +18,7 @@ communicating the scale of vectors.
 can be made.
 - `geom_contour2()` now has a `gap` parameter to add space for labels.
 - `EOF()` now supports estimation of confidence intervals via bootstrap.
+- `geom_relief()` is MUCH faster now.
 
 # metR 0.1
 - New function: `GetTopography()`

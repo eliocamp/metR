@@ -122,7 +122,8 @@ Analysis or Empirical Orthogonal Functions).</p>
     
 
     <pre class="usage"><span class='fu'>EOF</span>(<span class='no'>formula</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0.025</span>, <span class='kw'>mid</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>0.975</span>), <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0.025</span>, <span class='kw'>mid</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>0.975</span>), <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,12 +155,26 @@ Ignored if &lt;= 1.</p></td>
       <td><p>the probabilities of the lower and upper values of estiamted
 confidence intervals. If named, it's names will be used as column names.</p></td>
     </tr>
+    <tr>
+      <th>rotate</th>
+      <td><p>if <code>TRUE</code>, scores and loadings will be rotated using varimax</p></td>
+    </tr>
+    <tr>
+      <th>suffix</th>
+      <td><p>character to name de principal components</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of 3 named elements containing tidy data.tables of the right and left
-singular vectors, and of their explained variance.</p>
+    
+<dl class='dl-horizontal'>
+<dt>left</dt><dd><p>data.table with left singular vectors</p></dd>
+<dt>right</dt><dd><p>data.table with right singular vectors</p></dd>
+<dt>sdev</dt><dd><p>data.table with singular values, their explained variance,
+and, optionally, cuantiles estimated via bootstrap</p></dd>
+</dl>
+
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -173,14 +188,12 @@ Think it like "VAR <em>as a function</em> of LEFT <em>and</em> RIGHT".</p>
 (probably) more familiar <a href='http://www.rdocumentation.org/packages/data.table/topics/dcast.data.table'>data.table::dcast</a> formula interface. In that case,
 <code>data</code> must be provided.</p>
 <p>The result of VAR ~ LHS | RHS and VAR ~ RHS | LHS (ie, terms reversed)
-is the same, with the exception that the order of the singular vector is
-reversed (right is left and left is right).</p>
+is the same.</p>
 <p>The variable combination used in this formula <em>must</em> identify
 an unique value in a cell. For the time being, no error will be raised, but
 there will be a message from <code><a href='http://www.rdocumentation.org/packages/data.table/topics/dcast.data.table'>dcast</a></code>.</p>
-<p>In the result, the <code>right</code> and <code>left</code> singular vectors have a
-value for each singular value and each combination of the variables
-used in RIGHT and LEFT of <code>formula</code>, respectively.</p>
+<p>In the result, the left and right vectors have dimensions of the LEFT and RIGHT
+part of the <code>formula</code>, respectively.</p>
 <p>It is much faster to compute only some singular vectors, so is advisable not
 to set n to <code>NULL</code>. If the irba package is installed, EOF uses
 <a href='http://www.rdocumentation.org/packages/irlba/topics/irlba'>irlba::irlba</a> instead of <a href='http://www.rdocumentation.org/packages/base/topics/svd'>base::svd</a> since it's much faster.</p>

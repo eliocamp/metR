@@ -121,7 +121,8 @@ Analysis or Empirical Orthogonal Functions)." />
 Analysis or Empirical Orthogonal Functions).</p>
     
 
-    <pre class="usage"><span class='fu'>EOF</span>(<span class='no'>formula</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>EOF</span>(<span class='no'>formula</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0.025</span>, <span class='kw'>mid</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>0.975</span>), <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,6 +143,16 @@ the matrix that will be used in the SVD decomposition (see Details)</p></td>
     <tr>
       <th>n</th>
       <td><p>which singular values to return (if <code>NULL</code>, returns all)</p></td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td><p>number of bootstrap samples used to estimate confidence intervals.
+Ignored if &lt;= 1.</p></td>
+    </tr>
+    <tr>
+      <th>probs</th>
+      <td><p>the probabilities of the lower and upper values of estiamted
+confidence intervals. If named, it's names will be used as column names.</p></td>
     </tr>
     </table>
     
@@ -173,6 +184,12 @@ used in RIGHT and LEFT of <code>formula</code>, respectively.</p>
 <p>It is much faster to compute only some singular vectors, so is advisable not
 to set n to <code>NULL</code>. If the irba package is installed, EOF uses
 <a href='http://www.rdocumentation.org/packages/irlba/topics/irlba'>irlba::irlba</a> instead of <a href='http://www.rdocumentation.org/packages/base/topics/svd'>base::svd</a> since it's much faster.</p>
+<p>The boostraping procedure follows Fisher et.al. (2016) and returns the
+standard deviation of each singular value.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Fisher, A., Caffo, B., Schwartz, B., &amp; Zipunnikov, V. (2016). Fast, Exact Bootstrap Principal Component Analysis for p &gt; 1 million. Journal of the American Statistical Association, 111(514), 846–860. http://doi.org/10.1080/01621459.2015.1062383</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -200,7 +217,8 @@ to set n to <code>NULL</code>. If the irba package is installed, EOF uses
 #&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 5.045014e-07
 #&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 5.045014e-07
 #&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 5.045014e-07</div><div class='input'>
-<span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+           <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>hig</span> <span class='kw'>=</span> <span class='fl'>0.9</span>))
 
 <span class='co'># AAO field</span>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
@@ -210,9 +228,10 @@ to set n to <code>NULL</code>. If the irba package is installed, EOF uses
 <span class='co'># AAO signal</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>aao</span>$<span class='no'>right</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>date</span>, <span class='no'>gh.t.w</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>()</div><div class='img'><img src='EOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># % of explained variance</span>
-<span class='no'>aao</span>$<span class='no'>sdev</span></div><div class='output co'>#&gt;     PC       sd        r2
-#&gt; 1: PC1 9295.148 0.2775804</div><div class='input'>
+<span class='co'># standard deviation, % of explained variance and</span>
+<span class='co'># confidence intervals.</span>
+<span class='no'>aao</span>$<span class='no'>sdev</span></div><div class='output co'>#&gt;     PC       sd        r2      low      hig
+#&gt; 1: PC1 9295.148 0.2775804 8589.921 10079.57</div><div class='input'>
 <span class='co'># 1st eof for each month.</span>
 <span class='no'>aao2</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)$<span class='no'>left</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>month</a></span>(<span class='no'>date</span>)]
 
@@ -220,7 +239,6 @@ to set n to <code>NULL</code>. If the irba package is installed, EOF uses
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a></span>(~ <span class='no'>month</span>)</div><div class='img'><img src='EOF-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Alternative interface</span>
-
 <span class='no'>aao2</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>lon</span> + <span class='no'>lat</span> ~ <span class='no'>date</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='st'>"gh.t.w"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -231,6 +249,8 @@ to set n to <code>NULL</code>. If the irba package is installed, EOF uses
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

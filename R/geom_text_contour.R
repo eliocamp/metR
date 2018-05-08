@@ -112,9 +112,14 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
                          skip = 1, rotate = TRUE, gap = NULL) {
        data <- data.table::as.data.table(coord$transform(data, panel_params))
 
+       min.size <- ceiling(min.size)
+       if (min.size %% 2 == 0) {
+           min.size <- min.size - 1
+       }
        # Get points of labels
        data <- .label.position(data, min.size, skip, rotate)
 
+       if (rotate == FALSE) data[, angle := 0]
        ## Original ggplot2 here.
        lab <- data$label
        if (parse) {
@@ -148,10 +153,12 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
 )
 
 
-.cont.angle <- function(x, y) {
+.cont.angle <- function(x, y, gap) {
     N <- length(x)
-    dx <- c(NA, diff(x, 2), NA)
-    dy <- c(NA, diff(y, 2), NA)
+    gap <- ceiling((gap-1)/2)
+    fill <- rep(NA, gap/2)
+    dx <- c(fill, diff(x, gap), fill)
+    dy <- c(fill, diff(y, gap), fill)
     angle <- atan2(dy, dx)*180/pi
     angle <- ifelse(angle > 180, angle - 180, angle)
     angle <- ifelse(angle > 90, angle - 180, angle)
@@ -159,19 +166,11 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
     angle
 }
 
-
-
 .label.position <- function(data, min.size, skip, rotate) {
     data <- as.data.table(data)
     breaks <- unique(data$level)
     breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]
     data <- data[level %in% breaks.cut]
-    data[, N := .N, by = piece]
-
-    # data[, id := 1:.N, by = piece]
-    # data.high <- data[, .(x = approx(id, x, n = length(x)*3)$y,
-    #                       y = approx(id, y, n = length(y)*3)$y), by = piece]
-    # data <- data.high[data[, -c("x", "y")][, .SD[1], by = piece], on = "piece"]
 
     # Safety strip around the edges (10%)
     safe <- c(0, 1) + 0.1*c(+1, -1)
@@ -181,19 +180,48 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
     data[, N := .N, by = piece]
     data <- data[N >= min.size]
 
-    if (rotate == TRUE) {
-        data[, angle := .cont.angle(x, y), by = piece]
-    }
+    # if (rotate == TRUE) {
+        data[, angle := .cont.angle(x, y, min.size), by = piece]
+    # }
 
     # Check if point has minimum variance
-    data[, var := minvar(x, y), by = .(piece)]
+    # data[, var := minvar(x, y), by = .(piece)]
     # data[, curvature := .curvature(x, y), by = piece]
     # data <- data[data[, .I[which.min(abs(curvature))], by = piece]$V1]
+    # data[is.na(var), var := FALSE]
+    # data <- data[var == TRUE][, head(.SD, 1), by = piece]
 
-    data[is.na(var), var := FALSE]
-    data <- data[var == TRUE][, head(.SD, 1), by = piece]
+    data[, min := straight(x, y, min.size), by = piece]
+    data <- data[min == TRUE]
+    data[, min := angle == min(angle, na.rm = T), by = piece]
 
-    data
+    return(data[min == TRUE, head(.SD, 1), by = piece])
+}
+
+straight <- function(x, y, gap) {
+    N <- length(x)
+    gap <- ceiling((gap-1)/2)
+    if (N < gap) {
+        gap <- N
+    }
+    if (is_closed(x, y)) {
+        x <- c(x[(N-gap):(N-1)], x, x[2:(gap+1)])
+        y <- c(y[(N-gap):(N-1)], y, y[2:(gap+1)])
+        var <- vapply((gap+1):(N+gap), function(i) {
+            dx <- diff(x[(i-gap):(i+gap)])
+            dy <- diff(y[(i-gap):(i+gap)])
+            a <- dy/dx
+            var(a)
+        }, FUN.VALUE = 1)
+    } else {
+        var <- c(rep(NA, gap), vapply((gap+1):(N-gap), function(i) {
+            dx <- diff(x[(i-gap):(i+gap)])
+            dy <- diff(y[(i-gap):(i+gap)])
+            a <- dy/dx
+            var(a)
+        }, FUN.VALUE = 1), rep(NA, gap))
+    }
+    return(var == min(var, na.rm = TRUE))
 }
 
 # from https://stackoverflow.com/questions/21868353/drawing-labels-on-flat-section-of-contour-lines-in-ggplot2

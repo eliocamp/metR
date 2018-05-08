@@ -30,7 +30,7 @@
 <meta property="og:description" content="geom_relief() simulates shading caused by relief. Can be useful when
 plotting topographic data because relief shading might give a more intuitive
 impression of the shape of the terrain than contour lines or mapping height
-to color." />
+to color. geom_shadow() projects shadows." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,19 +115,24 @@ to color." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Relief Shading</h1>
-    <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/R/geom_relief.R'><code>R/geom_relief.R</code></a></small>
+    <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/R/geom_relief.R'><code>R/geom_relief.R</code></a>, <a href='https://github.com/eliocamp/metR/blob/master/R/geom_shadow.R'><code>R/geom_shadow.R</code></a></small>
     </div>
 
     
     <p><code>geom_relief()</code> simulates shading caused by relief. Can be useful when
 plotting topographic data because relief shading might give a more intuitive
 impression of the shape of the terrain than contour lines or mapping height
-to color.</p>
+to color. <code>geom_shadow()</code> projects shadows.</p>
     
 
     <pre class="usage"><span class='fu'>geom_relief</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>raster</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>interpolate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>shadow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>geom_shadow</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>raster</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>interpolate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,6 +185,10 @@ if <code>FALSE</code>, uses <a href='http://www.rdocumentation.org/packages/ggpl
 (the default) don't interpolate.</p></td>
     </tr>
     <tr>
+      <th>shadow</th>
+      <td><p>if TRUE, adds also a layer of <code>geom_shadow()</code></p></td>
+    </tr>
+    <tr>
       <th>na.rm</th>
       <td><p>If <code>FALSE</code>, the default, missing values are removed with
 a warning. If <code>TRUE</code>, missing values are silently removed.</p></td>
@@ -199,19 +208,34 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. <code>borders()</code>.</p></td>
     </tr>
+    <tr>
+      <th>range</th>
+      <td><p>transparency range for shadows</p></td>
+    </tr>
+    <tr>
+      <th>skip</th>
+      <td><p>data points to skip when casting shadows</p></td>
+    </tr>
+    <tr>
+      <th>sun.angle</th>
+      <td><p>angle from which the sun is shining, in degrees
+counterclockwise from 12 o' clock</p></td>
+    </tr>
+    <tr>
+      <th>sun.altitude</th>
+      <td><p>altitude of the Sun above the horizon in degrees</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>light</code> and <code>dark</code> must be valid colours determining the light and dark shading
-(defaults to "white" and "gray20", respectively). <code>sun.angle</code> is the angle,
-in degrees counterclockwise from 12 o' clock, from which the sun is shining
-(defaults to 60).</p>
+(defaults to "white" and "gray20", respectively).</p>
     
     <h2 class="hasAnchor" id="aesthetics"><a class="anchor" href="#aesthetics"></a>Aesthetics</h2>
 
     
-    <p><code>geom_relief</code> understands the following aesthetics (required aesthetics are in bold)</p>
+    <p><code>geom_relief()</code> and <code>geom_shadow()</code> understands the following aesthetics (required aesthetics are in bold)</p>
 <ul>
 <li><p><strong>x</strong></p></li>
 <li><p><strong>y</strong></p></li>
@@ -243,6 +267,18 @@ in degrees counterclockwise from 12 o' clock, from which the sun is shining
 <span class='co'># If you're more of a moring person</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
       <span class='fu'>geom_relief</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>), <span class='kw'>sun.angle</span> <span class='kw'>=</span> -<span class='fl'>60</span>)</div><div class='img'><img src='geom_relief-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
+      <span class='fu'>geom_relief</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>), <span class='kw'>sun.angle</span> <span class='kw'>=</span> -<span class='fl'>60</span>, <span class='kw'>sun.altitude</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+                  <span class='kw'>shadow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='geom_relief-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># is the same as</span>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
+      <span class='fu'>geom_relief</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>), <span class='kw'>sun.angle</span> <span class='kw'>=</span> -<span class='fl'>60</span>) +
+      <span class='fu'>geom_shadow</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>), <span class='kw'>sun.angle</span> <span class='kw'>=</span> -<span class='fl'>60</span>, <span class='kw'>sun.altitude</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='geom_relief-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># The fill aesthetic works as a parameter for the shadow colour.</span>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
+      <span class='fu'>geom_relief</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>), <span class='kw'>sun.angle</span> <span class='kw'>=</span> -<span class='fl'>60</span>, <span class='kw'>sun.altitude</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+                  <span class='kw'>shadow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)</div><div class='img'><img src='geom_relief-5.png' alt='' width='700' height='433' /></div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

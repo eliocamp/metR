@@ -58,7 +58,7 @@
 #'       by = .(lon, lat, month(date))]
 #'
 #' aao <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1,
-#'            B = 100, probs = c(lo2 = 0.1, hig = 0.9))
+#'            B = 100, probs = c(low = 0.1, hig = 0.9))
 #'
 #' # AAO field
 #' library(ggplot2)
@@ -92,7 +92,8 @@
 #' @import Formula
 #' @importFrom stats as.formula quantile
 EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
-                probs = c(lower = 0.025, mid = 0.5, upper = 0.975)) {
+                probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
+                rotate = FALSE) {
 
     if (!is.null(value.var)) {
         if (is.null(data)) stop("data must not be NULL if value.var is NULL",
@@ -117,18 +118,53 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
 
     g <- .tidy2matrix(data, dcast.formula, value.var)
 
-    if (is.null(n)) n <- min(ncol(g$matrix), nrow(g$matrix))
+    if (is.null(n)) n <- min(ncol(g$matrix), nrow(g$matrix)) - 1
 
-
-    if (requireNamespace("irlba", quietly = TRUE)) {
+    if (requireNamespace("irlba", quietly = TRUE) &
+        max(n) < 0.5 *  min(ncol(g$matrix), nrow(g$matrix))) {
         eof <- irlba::irlba(g$matrix, nv = max(n), nu = max(n), rng = runif)
     } else {
         eof <- svd(g$matrix, nu = max(n), nv = max(n))
         eof$d <- eof$d[1:max(n)]
     }
 
-    right <- as.data.table(eof$v[, n])
+    # loadings <- t(with(eof, diag(d, ncol = max(n), nrow = max(n))%*%t(v)))/sqrt(nrow(g$matrix)-1)
+    # scores <- eof$u*sqrt(nrow(g$matrix) - 1)
+    #
+    # if (rotate == TRUE) {
+    #     R <- varimax(loadings, normalize = FALSE)
+    #     scores <- scores%*%R$rotmat
+    #     loadings <- R$loadings
+    #     class(loadings) <- "matrix"
+    # }
+
+    v.g  <- norm(g$matrix, type = "F")
+    # sdev <- apply(loadings, 2, sd)
+    r2 <- eof$d^2/v.g^2
+
     pcomps <- paste0("PC", n)
+
+    # loadigs <- as.data.table(loadings)
+    # colnames(loadings) <- pcomps
+    # loadings <- cbind(loadings, as.data.table(g$coldims))
+    # loadings <- data.table::melt(loadings, id.vars = names(g$coldims), variable = "PC",
+    #                           value.name = value.var)
+    # loadings[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
+    #
+    # scores <- as.data.table(scores)
+    # colnames(scores) <- pcomps
+    # scores <- cbind(scores, as.data.table(g$rowdims))
+    # scores <- data.table::melt(scores, id.vars = names(g$rowdims), variable = "PC",
+    #                            value.name = value.var)
+    # scores[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
+    #
+    # sdev <- data.table(PC = pcomps, sd = sdev)
+    # sdev[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
+    # sdev[, r2 := r2]
+
+
+    # Old nomenclature :\
+    right <- as.data.table(eof$v[, n])
     colnames(right) <- pcomps
     right <- cbind(right, as.data.table(g$coldims))
     right <- data.table::melt(right, id.vars = names(g$coldims), variable = "PC",
@@ -143,11 +179,12 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     left[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
 
     v.g  <- norm(g$matrix, type = "F")
-    sdev <- data.table(PC = pcomps, sd = eof$d[n])
+    r2 <- eof$d^2/v.g^2
+    sdev <- data.table(PC = pcomps, sd = eof$d)
     sdev[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
-    sdev[, r2 := sd^2/v.g^2]
+    sdev[, r2 := r2]
 
-    if (B > 1) {
+    if (B > 1 & rotate == FALSE) {
         tall <- dim(g$matrix)[1] > dim(g$matrix)[2]
         set.seed(42)
         if (!tall) {
@@ -160,17 +197,9 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
                 m <- diag(eof$d, nrow = max(n), ncol = max(n))%*%t(eof$v)[, Prow]
                 return(svd(m)$d)
             })
-        # } else {
-        #     p <- ncol(eof$u)
-        #     sdevs <- lapply(seq_len(B), function(x) {
-        #         Prow <- sample(seq_len(p), replace = TRUE)
-        #         m <- eof$u%*%diag(eof$d, nrow = max(n), ncol = max(n))[Prow, ]
-        #         return(svd(m)$d)
-        #     })
-        # }
+
         se <- lapply(data.table::transpose(sdevs), quantile, probs = probs, names = FALSE)
         se <- data.table::transpose(se)
-        # m <- unlist(lapply(data.table::transpose(sdevs), mean))
         if (is.null(names(probs))) names(probs) <- scales::percent(probs)
         sdev[, names(probs) := se]
     }

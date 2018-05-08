@@ -141,7 +141,7 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", GeomPath,
       munched[, dark := dark][, light := light]
 
       munched[!is.na(shade),
-              colour := .rgb2hex(grDevices::colorRamp(c(dark, light), space = "Lab")(shade)),
+              colour :=  scales::colour_ramp(c(dark, light))(shade),
               by = .(dark, light)]
       munched[, size := scales::rescale(size, to = range)]
 

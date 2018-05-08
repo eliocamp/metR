@@ -101,6 +101,10 @@ GeomContour2 <- ggplot2::ggproto("GeomContour2", GeomPath,
       data <- data.table::as.data.table(coord_munch(coord, data, panel_params))
       if (gap > 0) {
           # Check wich contours are labeled and where.
+          min.size <- ceiling(min.size)
+          if (min.size %% 2 == 0) {
+              min.size <- min.size - 1
+          }
           labels <- .label.position(data, min.size, skip, FALSE)
           data <- labels[, .(x, y, cut = TRUE)][data, on = c("x", "y")]
           data[is.na(cut), cut := FALSE]
@@ -109,9 +113,9 @@ GeomContour2 <- ggplot2::ggproto("GeomContour2", GeomPath,
           data[, point := seq_len(.N), by = piece]
           data[piece %in% labels$piece, d := as.numeric(point - point[cut == TRUE][1]), by = piece]
           # data[is.na(d), d := max(d, na.rm = T), by = piece]
-
+dd <<- copy(data)
           if (gap != round(gap)) {
-              small.piece <- data[abs(d) <= ceiling(gap + 1) & !is.na(d)]
+              small.piece <- data[abs(d) <= ceiling(gap) & !is.na(d)]
               # Improve resolution at segments close to the gap
               # res <- ceiling(1/(gap - floor(gap)))
               # # res <- 10

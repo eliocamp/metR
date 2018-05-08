@@ -85,7 +85,7 @@
       <h1>Visualization tools</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2018-04-26</h4>
+            <h4 class="date">2018-05-08</h4>
       
       <small>Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Visualization-tools.Rmd"><code>vignettes/Visualization-tools.Rmd</code></a></small>
 
@@ -175,7 +175,9 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <span class="st">    </span><span class="kw"><a href="../reference/geom_text_contour.html">geom_text_contour</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>()</code></pre></div>
+<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>()
+<span class="co">#&gt; Warning in min(angle, na.rm = T): no non-missing arguments to min;</span>
+<span class="co">#&gt; returning Inf</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 <p>By default it labels every 2nd contour (this can be changed by the <code>skip</code> parameter) and it rotates to follow the angle of the contour (this is not available on <code><a href="../reference/geom_text_contour.html">geom_label_contour()</a></code>). Since in some datasetss there can be very small contours that should not be labeled for clarity, the <code>min.size</code> argument specifies the minimum points a contour has to have in order to be labeled.</p>
 <p>Noticehow labels are drawn on top of contours? The problem is that <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour()</a></code> doesn’t know it’s being labeled; <code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> adresses this issue. As well as having the posibility of passing a function in the <code>breaks</code> argument, it has a <code>gap</code> parameter to add a gap where the labels should be (this works well as long as both geoms are calles with the same parameters).</p>
@@ -185,7 +187,12 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <span class="st">    </span><span class="kw"><a href="../reference/geom_text_contour.html">geom_text_contour</a></span>(<span class="dt">rotate =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>()</code></pre></div>
+<span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>()
+<span class="co">#&gt; Warning in min(angle, na.rm = T): no non-missing arguments to min;</span>
+<span class="co">#&gt; returning Inf</span>
+
+<span class="co">#&gt; Warning in min(angle, na.rm = T): no non-missing arguments to min;</span>
+<span class="co">#&gt; returning Inf</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 </div>
 <div id="geom_contour_tanaka" class="section level2">

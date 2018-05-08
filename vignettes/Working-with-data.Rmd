@@ -120,7 +120,7 @@ ggplot(rad, aes(date, global)) +
 
 ## EOF
 
-Empirical Orthogonal Functions (also known as Principal Component Analysis) is a widely use technique for dimensional reduction of large datasets. In R there are multiple packages that implement this methodology (in fact, base R has *two* functions) but, IMHO, they have akward interfaces that don't interact well with `data.table` (or `dplyr`) syntax. `metR`'s `EOF()` essentially performs a Singular Value Decomposition of the data and returns the U, V and D matrices in a tidy format. 
+Empirical Orthogonal Functions (also known as Principal Component Analysis) is a widely use technique for dimensional reduction of large datasets. In R there are multiple packages that implement this methodology (in fact, base R has *two* functions) but, IMHO, they have akward interfaces that don't interact well with `data.table` (or `dplyr`) syntax. `metR`'s `EOF()` essentially performs a Singular Value Decomposition of the data and returns the left and right singular vectors, and singular values in a tidy format.
 
 ```{r}
 data(geopotential)
@@ -131,25 +131,13 @@ eof <- EOF(gh.t.w ~ date | lon + lat, data = geopotential, n = 1:2)
 str(eof)
 ```
 
-The returned list of `data.table`s hold the right and left singular vectors, and the singular values asociated with them. There's no need to think about S or T mode, since both are calculated and returned. Always the right (left) singular vectors are fields defined with the dimensions on the right (left) hand of the formula. In this case, the right `data.table` holds spatial fields and the left `data.table` holds a timeseries. 
-
-If we invert the formula call, the result is identical (up to small numerical errors, maybe) but with the right and left singular vectors switched. 
-
-```{r}
-eof2 <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1:2)
-str(eof2)
-```
-
-```{r}
-sum(eof2$right$gh.t.w - eof$left$gh.t.w)
-```
+In the returned list of `data.table`s the left (right) singular vectors are fields defined with the dimensions on the left (right) hand of the formula. In this case, the right `data.table` holds spatial fields and the left `data.table` holds a timeseries. If the order of the right hand side and left hand side of the formula are reversed, and `rotate == FALSE`, then de result is the same. Rotation of the singular vectors is perform via `stats::varimax()` and perform from the (scaled) right singular vector. 
 
 Alternatively, `EOF()` also accepts the (probably) more familiar `dcast` interface.
 
 ```{r}
 eof2 <- EOF(lon + lat ~ date, value.var = "gh.t.w", data = geopotential, n = 1:2)
 ```
-
 
 For completion, let's plot each Principal Component. 
 

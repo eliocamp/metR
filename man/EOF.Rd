@@ -22,10 +22,16 @@ Ignored if <= 1.}
 
 \item{probs}{the probabilities of the lower and upper values of estiamted
 confidence intervals. If named, it's names will be used as column names.}
+
+\item{rotat}{if \code{TRUE}, scores and loadings will be rotated using \link{varimax}}
 }
 \value{
-A list of 3 named elements containing tidy data.tables of the right and left
-singular vectors, and of their explained variance.
+\describe{
+\item{left}{data.table with left singular vectors}
+\item{right}{data.table with right singular vectors}
+\item{sdev}{data.table with singular values, their explained variance,
+and, optionally, cuantiles estimated via bootstrap}
+}
 }
 \description{
 Computes Singular Value Decomposition (also known as Principal Components
@@ -44,16 +50,14 @@ Alternatively, if \code{value.var} is not \code{NULL}, it's possible to use the
 \code{data} must be provided.
 
 The result of VAR ~ LHS | RHS and VAR ~ RHS | LHS (ie, terms reversed)
-is the same, with the exception that the order of the singular vector is
-reversed (right is left and left is right).
+is the same.
 
 The variable combination used in this formula \emph{must} identify
 an unique value in a cell. For the time being, no error will be raised, but
 there will be a message from \code{\link[data.table]{dcast}}.
 
-In the result, the \code{right} and \code{left} singular vectors have a
-value for each singular value and each combination of the variables
-used in RIGHT and LEFT of \code{formula}, respectively.
+In the result, the left and right vectors have dimensions of the LEFT and RIGHT
+part of the \code{formula}, respectively.
 
 It is much faster to compute only some singular vectors, so is advisable not
 to set n to \code{NULL}. If the irba package is installed, EOF uses

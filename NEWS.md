@@ -18,6 +18,7 @@ communicating the scale of vectors.
 can be made.
 - `geom_contour2()` now has a `gap` parameter to add space for labels.
 - `EOF()` now supports estimation of confidence intervals via bootstrap.
+- `EOF()` supports varimax rotation. Rotated components are labeled accordingly. 
 - `geom_relief()` is MUCH faster now.
 - Contour calculations in `StatContour2` are 
 [memoised](https://github.com/r-lib/memoise) so they are

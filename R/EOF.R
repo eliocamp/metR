@@ -12,10 +12,15 @@
 #' Ignored if <= 1.
 #' @param probs the probabilities of the lower and upper values of estiamted
 #' confidence intervals. If named, it's names will be used as column names.
+#' @param rotat if `TRUE`, scores and loadings will be rotated using [varimax]
 #'
 #' @return
-#' A list of 3 named elements containing tidy data.tables of the right and left
-#' singular vectors, and of their explained variance.
+#' \describe{
+#'    \item{left}{data.table with left singular vectors}
+#'    \item{right}{data.table with right singular vectors}
+#'    \item{sdev}{data.table with singular values, their explained variance,
+#'    and, optionally, cuantiles estimated via bootstrap}
+#' }
 #'
 #' @details
 #' Singular values can be computed over matrices so \code{formula} denotes how
@@ -30,16 +35,14 @@
 #' `data` must be provided.
 #'
 #' The result of VAR ~ LHS | RHS and VAR ~ RHS | LHS (ie, terms reversed)
-#' is the same, with the exception that the order of the singular vector is
-#' reversed (right is left and left is right).
+#' is the same.
 #'
 #' The variable combination used in this formula *must* identify
 #' an unique value in a cell. For the time being, no error will be raised, but
 #' there will be a message from \code{\link[data.table]{dcast}}.
 #'
-#' In the result, the \code{right} and \code{left} singular vectors have a
-#' value for each singular value and each combination of the variables
-#' used in RIGHT and LEFT of \code{formula}, respectively.
+#' In the result, the left and right vectors have dimensions of the LEFT and RIGHT
+#' part of the `formula`, respectively.
 #'
 #' It is much faster to compute only some singular vectors, so is advisable not
 #' to set n to \code{NULL}. If the irba package is installed, EOF uses
@@ -118,38 +121,39 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
 
     g <- .tidy2matrix(data, dcast.formula, value.var)
 
-    if (is.null(n)) n <- min(ncol(g$matrix), nrow(g$matrix)) - 1
+    if (is.null(n)) n <- seq_len(min(ncol(g$matrix), nrow(g$matrix)))
 
     if (requireNamespace("irlba", quietly = TRUE) &
         max(n) < 0.5 *  min(ncol(g$matrix), nrow(g$matrix))) {
+        set.seed(42)
         eof <- irlba::irlba(g$matrix, nv = max(n), nu = max(n), rng = runif)
     } else {
         eof <- svd(g$matrix, nu = max(n), nv = max(n))
         eof$d <- eof$d[1:max(n)]
     }
-
-    # loadings <- t(with(eof, diag(d, ncol = max(n), nrow = max(n))%*%t(v)))/sqrt(nrow(g$matrix)-1)
-    # scores <- eof$u*sqrt(nrow(g$matrix) - 1)
-    #
-    # if (rotate == TRUE) {
-    #     R <- varimax(loadings, normalize = FALSE)
-    #     scores <- scores%*%R$rotmat
-    #     loadings <- R$loadings
-    #     class(loadings) <- "matrix"
-    # }
-
-    v.g  <- norm(g$matrix, type = "F")
-    # sdev <- apply(loadings, 2, sd)
-    r2 <- eof$d^2/v.g^2
-
     pcomps <- paste0("PC", n)
+    if (rotate == TRUE & max(n) > 1) {
+        # Rotation
+        eof$D <- diag(eof$d, ncol = max(n), nrow = max(n))
+        loadings <- t(with(eof, D%*%t(v)))
+        scores <- eof$u
+        R <- varimax(loadings, normalize = FALSE)
+        eof$u <- eof$u%*%R$rotmat
 
-    # loadigs <- as.data.table(loadings)
-    # colnames(loadings) <- pcomps
-    # loadings <- cbind(loadings, as.data.table(g$coldims))
-    # loadings <- data.table::melt(loadings, id.vars = names(g$coldims), variable = "PC",
-    #                           value.name = value.var)
-    # loadings[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
+        # Recover rotated V and D matrixs
+        loadings <- R$loadings
+        class(loadings) <- "matrix"
+        eof$d <- sqrt(apply(loadings, 2, function(x) sum(x^2)))
+        eof$v <- t(diag(1/eof$d)%*%t(loadings))
+        pcomps <- paste0("RC", n)
+    }
+
+    # loadings.dt <- as.data.table(loadings)
+    # colnames(loadings.dt) <- pcomps
+    # loadings.dt <- cbind(loadings.dt, as.data.table(g$coldims))
+    # loadings.dt <- data.table::melt(loadings.dt, id.vars = names(g$coldims), variable = "PC",
+    #                                 value.name = value.var)
+    # loadings.dt[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
     #
     # scores <- as.data.table(scores)
     # colnames(scores) <- pcomps
@@ -161,7 +165,6 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     # sdev <- data.table(PC = pcomps, sd = sdev)
     # sdev[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
     # sdev[, r2 := r2]
-
 
     # Old nomenclature :\
     right <- as.data.table(eof$v[, n])
@@ -184,19 +187,28 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     sdev[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
     sdev[, r2 := r2]
 
-    if (B > 1 & rotate == FALSE) {
+    if (B > 1) {
         tall <- dim(g$matrix)[1] > dim(g$matrix)[2]
         set.seed(42)
         if (!tall) {
             names(eof) <- c("d", "v", "u", "iter", "mprod")
         }
-        # if (tall) {
-            p <- nrow(eof$v)
-            sdevs <- lapply(seq_len(B), function(x) {
-                Prow <- sample(seq_len(p), replace = TRUE)
-                m <- diag(eof$d, nrow = max(n), ncol = max(n))%*%t(eof$v)[, Prow]
+        loadings <- with(eof, diag(d, ncol = max(n), nrow = max(n))%*%t(v))
+        p <- nrow(eof$v)
+        sdevs <- lapply(seq_len(B), function(x) {
+            Prow <- sample(seq_len(p), replace = TRUE)
+            m <- loadings[, Prow]
+            eof <- svd(m)
+            if (rotate == TRUE) {
+                loadings <- t(with(eof, diag(d, ncol = max(n), nrow = max(n))%*%t(v)))
+                R <- varimax(loadings, normalize = FALSE)
+                loadings <- R$loadings
+                class(loadings) <- "matrix"
+                return(sqrt(apply(loadings, 2, function(x) sum(x^2))))
+            } else {
                 return(svd(m)$d)
-            })
+            }
+        })
 
         se <- lapply(data.table::transpose(sdevs), quantile, probs = probs, names = FALSE)
         se <- data.table::transpose(se)

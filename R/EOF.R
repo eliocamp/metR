@@ -12,7 +12,8 @@
 #' Ignored if <= 1.
 #' @param probs the probabilities of the lower and upper values of estiamted
 #' confidence intervals. If named, it's names will be used as column names.
-#' @param rotat if `TRUE`, scores and loadings will be rotated using [varimax]
+#' @param rotate if `TRUE`, scores and loadings will be rotated using [varimax]
+#' @param suffix character to name de principal components
 #'
 #' @return
 #' \describe{
@@ -96,7 +97,7 @@
 #' @importFrom stats as.formula quantile
 EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
-                rotate = FALSE) {
+                rotate = FALSE, suffix = "PC") {
 
     if (!is.null(value.var)) {
         if (is.null(data)) stop("data must not be NULL if value.var is NULL",
@@ -131,7 +132,7 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
         eof <- svd(g$matrix, nu = max(n), nv = max(n))
         eof$d <- eof$d[1:max(n)]
     }
-    pcomps <- paste0("PC", n)
+    pcomps <- paste0(suffix, n)
     if (rotate == TRUE & max(n) > 1) {
         # Rotation
         eof$D <- diag(eof$d, ncol = max(n), nrow = max(n))
@@ -145,7 +146,6 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
         class(loadings) <- "matrix"
         eof$d <- sqrt(apply(loadings, 2, function(x) sum(x^2)))
         eof$v <- t(diag(1/eof$d)%*%t(loadings))
-        pcomps <- paste0("RC", n)
     }
 
     # loadings.dt <- as.data.table(loadings)

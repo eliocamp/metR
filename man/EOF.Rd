@@ -5,7 +5,8 @@
 \title{Empirical Orthogonal Function}
 \usage{
 EOF(formula, value.var = NULL, data = NULL, n = 1, B = 0,
-  probs = c(lower = 0.025, mid = 0.5, upper = 0.975), rotate = FALSE)
+  probs = c(lower = 0.025, mid = 0.5, upper = 0.975), rotate = FALSE,
+  suffix = "PC")
 }
 \arguments{
 \item{formula}{a formula passed to \code{\link[data.table]{dcast}} to build
@@ -23,7 +24,9 @@ Ignored if <= 1.}
 \item{probs}{the probabilities of the lower and upper values of estiamted
 confidence intervals. If named, it's names will be used as column names.}
 
-\item{rotat}{if \code{TRUE}, scores and loadings will be rotated using \link{varimax}}
+\item{rotate}{if \code{TRUE}, scores and loadings will be rotated using \link{varimax}}
+
+\item{suffix}{character to name de principal components}
 }
 \value{
 \describe{

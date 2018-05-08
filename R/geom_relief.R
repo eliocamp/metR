@@ -3,20 +3,24 @@
 #' `geom_relief()` simulates shading caused by relief. Can be useful when
 #' plotting topographic data because relief shading might give a more intuitive
 #' impression of the shape of the terrain than contour lines or mapping height
-#' to color.
+#' to color. `geom_shadow()` projects shadows.
 #'
 #' @inheritParams ggplot2::geom_tile
 #' @param raster if `TRUE` (the default), uses [ggplot2::geom_raster],
 #' if `FALSE`, uses [ggplot2::geom_tile].
+#' @param shadow if TRUE, adds also a layer of `geom_shadow()`
+#' @param sun.angle angle from which the sun is shining, in degrees
+#' counterclockwise from 12 o' clock
+#' @param sun.altitude altitude of the Sun above the horizon in degrees
+#' @param skip data points to skip when casting shadows
+#' @param range transparency range for shadows
 #'
 #' @details
 #' `light` and `dark` must be valid colours determining the light and dark shading
-#'  (defaults to "white" and "gray20", respectively). `sun.angle` is the angle,
-#'  in degrees counterclockwise from 12 o' clock, from which the sun is shining
-#'  (defaults to 60).
+#'  (defaults to "white" and "gray20", respectively).
 #'
 #'@section Aesthetics:
-#' `geom_relief` understands the following aesthetics (required aesthetics are in bold)
+#' `geom_relief()` and `geom_shadow()` understands the following aesthetics (required aesthetics are in bold)
 #'
 #' \itemize{
 #' \item **x**
@@ -36,6 +40,21 @@
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 #'       geom_relief(aes(z = value), sun.angle = -60)
 #'
+#' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
+#'       geom_relief(aes(z = value), sun.angle = -60, sun.altitude = 5,
+#'                   shadow = TRUE)
+#'
+#' # is the same as
+#' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
+#'       geom_relief(aes(z = value), sun.angle = -60) +
+#'       geom_shadow(aes(z = value), sun.angle = -60, sun.altitude = 5)
+#'
+#' # The fill aesthetic works as a parameter for the shadow colour.
+#' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
+#'       geom_relief(aes(z = value), sun.angle = -60, sun.altitude = 5,
+#'                   shadow = TRUE, fill = "blue")
+#'
+#'
 #' @family ggplot2 helpers
 #'
 #' @export
@@ -44,9 +63,45 @@ geom_relief <- function(mapping = NULL, data = NULL,
                         ...,
                         raster = TRUE,
                         interpolate = TRUE,
+                        shadow = FALSE,
                         na.rm = FALSE,
                         show.legend = NA,
                         inherit.aes = TRUE) {
+
+    if (shadow == TRUE){
+        list(ggplot2::layer(
+            data = data,
+            mapping = mapping,
+            stat = stat,
+            geom = GeomRelief,
+            position = position,
+            show.legend = show.legend,
+            inherit.aes = inherit.aes,
+            params = list(
+                raster = raster,
+                interpolate = interpolate,
+                na.rm = na.rm,
+                ...
+            )
+        ),
+        ggplot2::layer(
+            data = data,
+            mapping = mapping,
+            stat = stat,
+            geom = GeomShadow,
+            position = position,
+            show.legend = show.legend,
+            inherit.aes = inherit.aes,
+            params = list(
+                raster = raster,
+                interpolate = interpolate,
+                na.rm = na.rm,
+                ...
+            )
+        )
+    )
+    } else {
+
     ggplot2::layer(
         data = data,
         mapping = mapping,
@@ -62,6 +117,7 @@ geom_relief <- function(mapping = NULL, data = NULL,
             ...
         )
     )
+    }
 }
 
 #' @rdname geom_relief
@@ -72,7 +128,8 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", GeomTile,
     required_aes = c("x", "y", "z"),
     default_aes = ggplot2::aes(color = NA, fill = "grey35", size = 0.5, linetype = 1,
                       alpha = NA, light = "white", dark = "gray20", sun.angle = 60),
-    draw_panel = function(data, panel_scales, coord, raster, interpolate) {
+    draw_panel = function(data, panel_scales, coord, raster, interpolate,
+                          sun.altitude = NULL, skip = NULL, alpha.range = NULL) {
 
         if (!coord$is_linear()) {
            stop("non lineal coordinates are not implemented in GeomRelief",
@@ -81,8 +138,8 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", GeomTile,
             coords <- as.data.table(coord$transform(data, panel_scales))
 
             coords[, sun.angle := (sun.angle + 90)*pi/180]
-            coords[, dx := .derv(z, x), by = y]
-            coords[, dy := .derv(z, y), by = x]
+            coords[, dx := .derv(z, x, fill = TRUE), by = y]
+            coords[, dy := .derv(z, y, fill = TRUE), by = x]
             coords <- coords[!is.na(dx) & !is.na(dy)]
 
             coords[, shade := (cos(atan2(-dy, -dx) - sun.angle) + 1)/2]
@@ -90,7 +147,8 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", GeomTile,
 
             # shade.fun <- scales::colour_ramp(c(dark, light))
             # coords$fill <- shade.fun(coords$shade)
-            coords[, fill := scales::colour_ramp(c(dark, light))(shade), by = .(light, dark)]
+            coords[, fill := scales::colour_ramp(c(dark, light))(shade),
+                   by = .(light, dark)]
 
             if (raster == TRUE){
                 if (!inherits(coord, "CoordCartesian")) {
@@ -139,9 +197,6 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", GeomTile,
     }
 )
 
-.rgb2hex <- function(array) {
-    grDevices::rgb(array[, 1], array[, 2], array[, 3], maxColorValue = 255)
-}
 
 rect_to_poly <- function(xmin, xmax, ymin, ymax) {
     data.frame(

@@ -178,7 +178,7 @@ ReadNetCDF <- function(file, vars = NULL,
                   by = c(missing.dim)]
         }
 
-        if (key == TRUE) data.table::setkeyv(nc.df, dims)
+        if (key == TRUE) data.table::setkeyv(nc.df, names(dimnames(nc[[1]])))
     }
     # Dejemos todo prolijo antes de salir.
     ncdf4::nc_close(ncfile)

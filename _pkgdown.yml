@@ -47,6 +47,7 @@ reference:
       - ImputeEOF
       - Interpolate
       - waves
+      - FitLm
 #      - ReadCtl
   - title: Helpers
     desc: other helpers

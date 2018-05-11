@@ -4,6 +4,7 @@
 \alias{waves}
 \alias{FitWave}
 \alias{BuildField}
+\alias{FilterWave}
 \alias{FitQsWave}
 \alias{BuildQsField}
 \title{Fourier transform}
@@ -12,6 +13,8 @@ FitWave(y, k = 1)
 
 BuildField(x, amplitude, phase, k, wave = list(k = k, amplitude = amplitude,
   phase = phase), sum = TRUE)
+
+FilterWave(x, k, action = sign(k[k != 0][1]))
 }
 \arguments{
 \item{y}{numeric vector to transform}
@@ -27,6 +30,8 @@ BuildField(x, amplitude, phase, k, wave = list(k = k, amplitude = amplitude,
 \item{wave}{optional list output from \code{FitWave}}
 
 \item{sum}{wheter to perform the sum or not (see Details)}
+
+\item{action}{integer to disambiguate action for k = 0 (see Details)}
 }
 \value{
 \code{FitWaves} returns a a named list with components
@@ -44,6 +49,9 @@ vector if \code{sum} is \code{TRUE} or, instead, a list with components
 \item{x}{the vector of locations}
 \item{y}{the reconstructed signal of each wavenumber}
 }
+
+\code{FilterWave} returns a vector of the same length as \code{y}
+`
 }
 \description{
 Perform a fourier transform of the data and return the
@@ -61,6 +69,12 @@ For the case of k = 0 (the mean), phase is arbitrarily set to 0.
 selected wavenumbers. If \code{sum} is \code{TRUE} (the default) it performs the above
 mentioned sum and returns a single vector. If is \code{FALSE}, then it returns a list
 of k vectors consisting of the reconstructed signal of each wavenumber.
+
+\code{FilterWave} filters or removes wavenumbers specified in \code{k}. If \code{k} is positive,
+then the result is the reconstructed signal of \code{y} only for wavenumbers
+specified in \code{k}, if it's negative, is the signal of \code{y} minus the wavenumbers
+specified in \code{k}. The argument \code{action} must be be manually set to \code{-1} or \code{+1}
+if \code{k=0}.
 }
 \examples{
 data(geopotential)
@@ -93,6 +107,19 @@ jan[, gh.no12 := gh - BuildField(lon*pi/180, wave = FitWave(gh, 0:2)), by = .(la
 ggplot(RepeatCircular(jan), aes(lon, lat)) +
     geom_contour(aes(z = gh.no12, color = ..level..)) +
     coord_polar()
+
+# Much faster
+jan[, gh.no12 := FilterWave(gh, -2:0), by = .(lat)]
+ggplot(RepeatCircular(jan), aes(lon, lat)) +
+    geom_contour(aes(z = gh.no12, color = ..level..)) +
+    coord_polar()
+
+# Using positive numbers returns the field
+jan[, gh.only12 := FilterWave(gh, 2:1), by = .(lat)]
+ggplot(RepeatCircular(jan), aes(lon, lat)) +
+    geom_contour(aes(z = gh.only12, color = ..level..)) +
+    coord_polar()
+
 
 }
 \seealso{

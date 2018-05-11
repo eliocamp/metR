@@ -9,8 +9,9 @@
 \title{Relief Shading}
 \usage{
 geom_relief(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., raster = TRUE, interpolate = TRUE,
-  shadow = FALSE, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+  position = "identity", ..., sun.angle = 60, raster = TRUE,
+  interpolate = TRUE, shadow = FALSE, na.rm = FALSE, show.legend = NA,
+  inherit.aes = TRUE)
 
 geom_shadow(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", ..., range = c(0, 1), skip = 0, raster = TRUE,
@@ -48,6 +49,9 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 \code{color = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 
+\item{sun.angle}{angle from which the sun is shining, in degrees
+counterclockwise from 12 o' clock}
+
 \item{raster}{if \code{TRUE} (the default), uses \link[ggplot2:geom_raster]{ggplot2::geom_raster},
 if \code{FALSE}, uses \link[ggplot2:geom_tile]{ggplot2::geom_tile}.}
 
@@ -73,11 +77,6 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 \item{range}{transparency range for shadows}
 
 \item{skip}{data points to skip when casting shadows}
-
-\item{sun.angle}{angle from which the sun is shining, in degrees
-counterclockwise from 12 o' clock}
-
-\item{sun.altitude}{altitude of the Sun above the horizon in degrees}
 }
 \description{
 \code{geom_relief()} simulates shading caused by relief. Can be useful when

@@ -126,8 +126,9 @@ to color. <code>geom_shadow()</code> projects shadows.</p>
     
 
     <pre class="usage"><span class='fu'>geom_relief</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>raster</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>interpolate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>shadow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>sun.angle</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>raster</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>interpolate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>shadow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>geom_shadow</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>raster</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -175,6 +176,11 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 to the paired geom/stat.</p></td>
     </tr>
     <tr>
+      <th>sun.angle</th>
+      <td><p>angle from which the sun is shining, in degrees
+counterclockwise from 12 o' clock</p></td>
+    </tr>
+    <tr>
       <th>raster</th>
       <td><p>if <code>TRUE</code> (the default), uses <a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_tile'>ggplot2::geom_raster</a>,
 if <code>FALSE</code>, uses <a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_tile'>ggplot2::geom_tile</a>.</p></td>
@@ -215,15 +221,6 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
     <tr>
       <th>skip</th>
       <td><p>data points to skip when casting shadows</p></td>
-    </tr>
-    <tr>
-      <th>sun.angle</th>
-      <td><p>angle from which the sun is shining, in degrees
-counterclockwise from 12 o' clock</p></td>
-    </tr>
-    <tr>
-      <th>sun.altitude</th>
-      <td><p>altitude of the Sun above the horizon in degrees</p></td>
     </tr>
     </table>
     

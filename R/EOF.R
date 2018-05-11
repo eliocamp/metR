@@ -94,7 +94,7 @@
 #' @export
 #' @import data.table
 #' @import Formula
-#' @importFrom stats as.formula quantile
+#' @importFrom stats as.formula quantile varimax
 EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
                 rotate = FALSE, suffix = "PC") {

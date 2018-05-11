@@ -122,7 +122,9 @@
     <pre class="usage"><span class='fu'>FitWave</span>(<span class='no'>y</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='fu'>BuildField</span>(<span class='no'>x</span>, <span class='no'>amplitude</span>, <span class='no'>phase</span>, <span class='no'>k</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='no'>k</span>, <span class='kw'>amplitude</span> <span class='kw'>=</span> <span class='no'>amplitude</span>,
-  <span class='kw'>phase</span> <span class='kw'>=</span> <span class='no'>phase</span>), <span class='kw'>sum</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>phase</span> <span class='kw'>=</span> <span class='no'>phase</span>), <span class='kw'>sum</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>FilterWave</span>(<span class='no'>x</span>, <span class='no'>k</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='fu'>sign</span>(<span class='no'>k</span>[<span class='no'>k</span> <span class='kw'>!=</span> <span class='fl'>0</span>][<span class='fl'>1</span>]))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,6 +157,10 @@
       <th>sum</th>
       <td><p>wheter to perform the sum or not (see Details)</p></td>
     </tr>
+    <tr>
+      <th>action</th>
+      <td><p>integer to disambiguate action for k = 0 (see Details)</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -173,6 +179,8 @@ vector if <code>sum</code> is <code>TRUE</code> or, instead, a list with compone
 <dt>y</dt><dd><p>the reconstructed signal of each wavenumber</p></dd>
 </dl>
 
+<p><code>FilterWave</code> returns a vector of the same length as <code>y</code>
+`</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -187,6 +195,11 @@ For the case of k = 0 (the mean), phase is arbitrarily set to 0.</p>
 selected wavenumbers. If <code>sum</code> is <code>TRUE</code> (the default) it performs the above
 mentioned sum and returns a single vector. If is <code>FALSE</code>, then it returns a list
 of k vectors consisting of the reconstructed signal of each wavenumber.</p>
+<p><code>FilterWave</code> filters or removes wavenumbers specified in <code>k</code>. If <code>k</code> is positive,
+then the result is the reconstructed signal of <code>y</code> only for wavenumbers
+specified in <code>k</code>, if it's negative, is the signal of <code>y</code> minus the wavenumbers
+specified in <code>k</code>. The argument <code>action</code> must be be manually set to <code>-1</code> or <code>+1</code>
+if <code>k=0</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -253,6 +266,37 @@ of k vectors consisting of the reconstructed signal of each wavenumber.</p>
 #&gt; 4032: 357.5 -90.0 2706.443 0.000000  0.0000000</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='fu'><a href='RepeatCircular.html'>RepeatCircular</a></span>(<span class='no'>jan</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.no12</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='img'><img src='waves-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Much faster</span>
+<span class='no'>jan</span>[, <span class='no'>gh.no12</span> <span class='kw'>:=</span> <span class='fu'>FilterWave</span>(<span class='no'>gh</span>, -<span class='fl'>2</span>:<span class='fl'>0</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1    gh.no12
+#&gt;    1:   0.0 -22.5 3163.581 9.443341  6.5799303
+#&gt;    2:   2.5 -22.5 3160.762 9.420932  3.4553015
+#&gt;    3:   5.0 -22.5 3158.026 9.380589  0.4174548
+#&gt;    4:   7.5 -22.5 3156.076 9.322390 -1.8273141
+#&gt;    5:  10.0 -22.5 3155.548 9.246445 -2.6399566
+#&gt;   ---                                         
+#&gt; 4028: 347.5 -90.0 2706.443 0.000000  0.0000000
+#&gt; 4029: 350.0 -90.0 2706.443 0.000000  0.0000000
+#&gt; 4030: 352.5 -90.0 2706.443 0.000000  0.0000000
+#&gt; 4031: 355.0 -90.0 2706.443 0.000000  0.0000000
+#&gt; 4032: 357.5 -90.0 2706.443 0.000000  0.0000000</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='fu'><a href='RepeatCircular.html'>RepeatCircular</a></span>(<span class='no'>jan</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.no12</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='img'><img src='waves-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Using positive numbers returns the field</span>
+<span class='no'>jan</span>[, <span class='no'>gh.only12</span> <span class='kw'>:=</span> <span class='fu'>FilterWave</span>(<span class='no'>gh</span>, <span class='fl'>2</span>:<span class='fl'>1</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1    gh.no12 gh.only12
+#&gt;    1:   0.0 -22.5 3163.581 9.443341  6.5799303  7.373604
+#&gt;    2:   2.5 -22.5 3160.762 9.420932  3.4553015  7.680073
+#&gt;    3:   5.0 -22.5 3158.026 9.380589  0.4174548  7.981858
+#&gt;    4:   7.5 -22.5 3156.076 9.322390 -1.8273141  8.276431
+#&gt;    5:  10.0 -22.5 3155.548 9.246445 -2.6399566  8.561220
+#&gt;   ---                                                   
+#&gt; 4028: 347.5 -90.0 2706.443 0.000000  0.0000000  0.000000
+#&gt; 4029: 350.0 -90.0 2706.443 0.000000  0.0000000  0.000000
+#&gt; 4030: 352.5 -90.0 2706.443 0.000000  0.0000000  0.000000
+#&gt; 4031: 355.0 -90.0 2706.443 0.000000  0.0000000  0.000000
+#&gt; 4032: 357.5 -90.0 2706.443 0.000000  0.0000000  0.000000</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='fu'><a href='RepeatCircular.html'>RepeatCircular</a></span>(<span class='no'>jan</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.only12</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='img'><img src='waves-6.png' alt='' width='700' height='433' /></div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

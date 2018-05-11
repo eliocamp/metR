@@ -11,7 +11,6 @@
 #' @param shadow if TRUE, adds also a layer of `geom_shadow()`
 #' @param sun.angle angle from which the sun is shining, in degrees
 #' counterclockwise from 12 o' clock
-#' @param sun.altitude altitude of the Sun above the horizon in degrees
 #' @param skip data points to skip when casting shadows
 #' @param range transparency range for shadows
 #'
@@ -61,6 +60,7 @@
 geom_relief <- function(mapping = NULL, data = NULL,
                         stat = "identity", position = "identity",
                         ...,
+                        sun.angle = 60,
                         raster = TRUE,
                         interpolate = TRUE,
                         shadow = FALSE,
@@ -81,6 +81,7 @@ geom_relief <- function(mapping = NULL, data = NULL,
                 raster = raster,
                 interpolate = interpolate,
                 na.rm = na.rm,
+                sun.angle = sun.angle,
                 ...
             )
         ),

@@ -44,7 +44,7 @@
 #' mentioned sum and returns a single vector. If is `FALSE`, then it returns a list
 #' of k vectors consisting of the reconstructed signal of each wavenumber.
 #'
-#' `FilterWave` filters or removes wavenumbers specified in `k`. If `k`` is positive,
+#' `FilterWave` filters or removes wavenumbers specified in `k`. If `k` is positive,
 #' then the result is the reconstructed signal of `y` only for wavenumbers
 #' specified in `k`, if it's negative, is the signal of `y` minus the wavenumbers
 #' specified in `k`. The argument `action` must be be manually set to `-1` or `+1`
@@ -76,7 +76,6 @@
 #'     facet_wrap(~k) +
 #'     coord_polar()
 #'
-
 #' # Field with waves 0 to 2 filtered
 #' jan[, gh.no12 := gh - BuildField(lon*pi/180, wave = FitWave(gh, 0:2)), by = .(lat)]
 #' ggplot(RepeatCircular(jan), aes(lon, lat)) +

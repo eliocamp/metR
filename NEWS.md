@@ -26,6 +26,7 @@ only computed once even adding several layers with the same contours
 (`geom_contour() + geom_text_contour()`) or running the same plot while tweaking
 it's appearance.
 - New `geom_shadow()` for casting shadows in topographic maps.
+- New `FitLm()` for getting fast estimates of linear fits. 
 
 # metR 0.1
 - New function: `GetTopography()`

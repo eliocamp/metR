@@ -9,6 +9,7 @@
 #' @param phase numeric vector of phases
 #' @param wave optional list output from `FitWave`
 #' @param sum wheter to perform the sum or not (see Details)
+#' @param action integer to disambiguate action for k = 0 (see Details)
 #'
 #' @return
 #' `FitWaves` returns a a named list with components
@@ -27,6 +28,8 @@
 #'   \item{y}{the reconstructed signal of each wavenumber}
 #' }
 #'
+#' `FilterWave` returns a vector of the same length as `y`
+#' `
 #' @details
 #' `FitWave` uses [fft] to make a fourier transform of the
 #' data and then returns a list of parameters for each wave number kept.
@@ -40,6 +43,12 @@
 #' selected wavenumbers. If `sum` is `TRUE` (the default) it performs the above
 #' mentioned sum and returns a single vector. If is `FALSE`, then it returns a list
 #' of k vectors consisting of the reconstructed signal of each wavenumber.
+#'
+#' `FilterWave` filters or removes wavenumbers specified in `k`. If `k`` is positive,
+#' then the result is the reconstructed signal of `y` only for wavenumbers
+#' specified in `k`, if it's negative, is the signal of `y` minus the wavenumbers
+#' specified in `k`. The argument `action` must be be manually set to `-1` or `+1`
+#' if `k=0`.
 #'
 #' @examples
 #' data(geopotential)
@@ -67,11 +76,25 @@
 #'     facet_wrap(~k) +
 #'     coord_polar()
 #'
+
 #' # Field with waves 0 to 2 filtered
 #' jan[, gh.no12 := gh - BuildField(lon*pi/180, wave = FitWave(gh, 0:2)), by = .(lat)]
 #' ggplot(RepeatCircular(jan), aes(lon, lat)) +
 #'     geom_contour(aes(z = gh.no12, color = ..level..)) +
 #'     coord_polar()
+#'
+#' # Much faster
+#' jan[, gh.no12 := FilterWave(gh, -2:0), by = .(lat)]
+#' ggplot(RepeatCircular(jan), aes(lon, lat)) +
+#'     geom_contour(aes(z = gh.no12, color = ..level..)) +
+#'     coord_polar()
+#'
+#' # Using positive numbers returns the field
+#' jan[, gh.only12 := FilterWave(gh, 2:1), by = .(lat)]
+#' ggplot(RepeatCircular(jan), aes(lon, lat)) +
+#'     geom_contour(aes(z = gh.only12, color = ..level..)) +
+#'     coord_polar()
+#'
 #'
 #' @name waves
 #' @family meteorology functions
@@ -117,6 +140,20 @@ BuildField <- function(x, amplitude, phase, k,
         field[, y := amplitude*cos((x - phase)*k), by = k]
         return(as.list(field[, .(k, x, y)]))
     }
+}
+
+#' @rdname waves
+#' @export
+FilterWave <- function(x, k, action = sign(k[k != 0][1])) {
+    f <- fft(x)
+    # Need to remove the k+1 spots (because index 1 is k = 0)
+    # and the N - k + 1 because of symmetry.
+    k1 <- abs(k)
+    if (is.na(action)) action <- 1
+    k1 <- c(k1 + 1, length(x) - k1[k1 != 0] + 1)
+    index <- -action*k1
+    f[index] <- 0 + 0i
+    Re(fft(f, inverse = T))/length(x)
 }
 
 

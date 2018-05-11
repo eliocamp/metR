@@ -27,6 +27,7 @@ only computed once even adding several layers with the same contours
 it's appearance.
 - New `geom_shadow()` for casting shadows in topographic maps.
 - New `FitLm()` for getting fast estimates of linear fits. 
+- New `FilterWave()` for filtering waves. 
 
 # metR 0.1
 - New function: `GetTopography()`

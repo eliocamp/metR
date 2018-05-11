@@ -76,6 +76,11 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
     formula <- Formula::as.Formula(formula)
     data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
 
+    # id.name <- digest::digest(data[1, 1])
+    id.name <- "ff19bdd67ff5f59cdce2824074707d20"
+    set(data, NULL, id.name, 1:nrow(data))
+    setkeyv(data, ind.names[length(ind.names):1])
+
     if (length(ind.names) > 1) {
         if (length(cyclical) == 1) {
             cyclical <- rep(cyclical, length(ind.names))
@@ -90,6 +95,7 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
                ind.names)
     })
     coords <- lapply(ind.names, function(x) unique(data[[x]]))
+    # coords <- coords[length(coords):1]
     for (v in seq_along(dep.names)) {
         data.array <- array(data[[dep.names[v]]], dim = unlist(lapply(coords, length)))
         s <- lapply(seq_along(coords), function(x) {
@@ -98,6 +104,8 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
         })
         set(data, NULL, dernames[[v]], s)
     }
+    # data <- data[order(data[[id.name]])]
+    setkeyv(data, id.name)
 
 
     # Correction for spherical coordinates.
@@ -199,4 +207,21 @@ Vorticity <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
 
     }
     return(dxdy)
+}
+
+.get_order_dim <- function(data) {
+    setDT(data)
+    data <- copy(data)
+    dims <- colnames(data)
+    dimorder <- vector("character", length(dims))
+    d <- 1
+    while (ncol(data) > 1) {
+        difs <- lapply(data, function(x) diff(x[1:2]))
+        dimorder[d] <- dims[difs != 0]
+        data <- subset(data, get(dimorder[d]) == with(data[1, ], get(dimorder[d])))
+        set(data, NULL, dimorder[d], NULL)
+        d <- d + 1
+    }
+    dimorder[d] <- colnames(data)
+    return(dimorder)
 }

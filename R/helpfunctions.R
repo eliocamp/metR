@@ -251,9 +251,9 @@ is.error <- function(x) inherits(x, "try-error")
 
     names(dims) <- col.vars
 
-    return(list(matrix = as.matrix(g[, -seq_along(row.vars), with = FALSE]),
+    return(list(matrix = as.matrix(g)[, -seq_along(row.vars)],
                 coldims = dims,
-                rowdims = as.list(g[, row.vars, with = FALSE])))
+                rowdims = as.list(g)[row.vars]))
 }
 
 

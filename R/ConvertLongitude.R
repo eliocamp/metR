@@ -3,33 +3,64 @@
 #' Converts longitude from [0, 360) to [-180, 180) and vice versa.
 #'
 #' @param lon numeric vector of longitude
-#' @param from numeric vector representing the convention of the input vector
+#' @param group optional vector of groups (the same length as longitude)
+#' that will be split on the edges (see examples)
+#' @param from optional explicitly say from which convension to convert
 #'
-#' @return A numeric vector the same length of lon.
+#' @return If `group` is missing, a numeric vector the same length of lon.
+#' Else, a list with vectors `lon` and `group`.
 #'
 #' @examples
 #' library(ggplot2)
+#' lirbary(data.table)
 #' data(geopotential)
 #' ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
 #'     geom_contour(color = "black") +
-#'     geom_contour(aes(x = ConvertLongitude(lon, 360)))
+#'     geom_contour(aes(x = ConvertLongitude(lon)))
+#'
+#' map <- setDT(map_data("world"))
+#' map[, c("lon", "group2") := ConvertLongitude(long, group, from = 180)]
+#'
+#' ggplot(map, aes(lon, lat, group = group2)) +
+#'     geom_path()
 #'
 #' @export
-ConvertLongitude <- function(lon, from = c(360, 180)) {
-    # Pasa la longitud entre convenciones.
-    # Entra:
-    #   lon: un vector de longitudes
-    #   from: la convención desde la cual se convierte
-    #   (360 = 0:360, 180 = -180:180)
-    # Sale:
-    #   un vector con la longitud convertida a la otra convención.
-    # Ojo que no hay ningún chequeo de los argumentos. Si se pasa un vector
-    # en convención 0:360 y se le dice que está en -180:180, lo "convierte"
-    # igual y tira cualquier batata.
-    if (from[1] == 360) {
-        lon <- ifelse(lon <= 180, lon, lon - 360)
-    } else if (from[1] == 180) {
-        lon <- ifelse(lon < 0, lon + 360, lon)
+ConvertLongitude <- function(lon, group, from = waiver()) {
+    m <- min(lon)
+    if (m < -180) stop("lon lower than 180, not a valid longitude")
+
+    M <- max(lon)
+    if (M > 360) stop("lon greater than 360, not a valid longitude")
+
+    lon360 <- FALSE
+    lon180 <- FALSE
+
+    new.lon <- lon
+    if (is.waive(from) || from == 180) {
+        lon180 <- lon < 0
+        new.lon[lon180] <- new.lon[lon180] + 360
     }
-    return(lon)
+    if (is.waive(from) || from == 360) {
+        lon360 <- lon > 180
+        new.lon[lon360] <- new.lon[lon360] - 360
+    }
+
+    if (hasArg(group)) {
+        group[lon360 | lon180] <- paste0(group[lon360 | lon180], "_2")
+        return(list(lon = new.lon, group = group))
+    }
+
+    return(new.lon)
+}
+
+
+
+
+fold.circular <- function(x) {
+    r <- get.range(x)
+    dr <- diff(r)
+    x <- ifelse(x >= r[2] | x < r[1], x %% dr, x)
+    class(x) <- c(class(x), "circular")
+    x <- set.range(x, r)
+    x
 }

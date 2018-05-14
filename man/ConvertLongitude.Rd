@@ -4,24 +4,35 @@
 \alias{ConvertLongitude}
 \title{Converts between longitude conventions}
 \usage{
-ConvertLongitude(lon, from = c(360, 180))
+ConvertLongitude(lon, group, from = waiver())
 }
 \arguments{
 \item{lon}{numeric vector of longitude}
 
-\item{from}{numeric vector representing the convention of the input vector}
+\item{group}{optional vector of groups (the same length as longitude)
+that will be split on the edges (see examples)}
+
+\item{from}{optional explicitly say from which convension to convert}
 }
 \value{
-A numeric vector the same length of lon.
+If \code{group} is missing, a numeric vector the same length of lon.
+Else, a list with vectors \code{lon} and \code{group}.
 }
 \description{
 Converts longitude from [0, 360) to [-180, 180) and vice versa.
 }
 \examples{
 library(ggplot2)
+lirbary(data.table)
 data(geopotential)
 ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
     geom_contour(color = "black") +
-    geom_contour(aes(x = ConvertLongitude(lon, 360)))
+    geom_contour(aes(x = ConvertLongitude(lon)))
+
+map <- setDT(map_data("world"))
+map[, c("lon", "group2") := ConvertLongitude(long, group, from = 180)]
+
+ggplot(map, aes(lon, lat, group = group2)) +
+    geom_path()
 
 }

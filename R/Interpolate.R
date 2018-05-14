@@ -8,11 +8,12 @@
 #' @param data optional data.frame with the data
 #' @param grid logical indicating if x.out and y.out define a regular grid.
 #'
-#'
 #' @details
 #' `formula` must be of the form VAR1 | VAR2 ~ X + Y where VAR1, VAR2, etc...
 #' are the names of the variables to interpolate and X and Y the names of the
-#' x and y values, respectively.
+#' x and y values, respectively. It is also possible to pass only values of x,
+#' in which case, regular linear interpolation is performed and y.out, if exists,
+#' is ignored with a warning.
 #'
 #' If `grid = TRUE`, `x.out` and `y.out` must define the values of a regular
 #' grid. If `grid = FALSE`, they define the locations where to interpolate.
@@ -44,10 +45,33 @@
 #' @import data.table Formula formula.tools
 Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE) {
     dep.names <- formula.tools::lhs.vars(formula)
+    if (length(dep.names) == 0) stop("LHS of formula must have at least one variable")
+
     ind.names <- formula.tools::rhs.vars(formula)
+    if (length(ind.names) > 2) {
+        stop("RHS of formula must be of the form x + y")
+    }
+
     formula <- Formula::as.Formula(formula)
     data <- as.data.table(eval(quote(model.frame(formula, data = data,
                                                  na.action = NULL))))
+
+    # Accomodate 1D interpolation
+    if (length(ind.names) == 1) {
+        if (hasArg(y.out)) warning("Only 1 dimension in formula. Ignoring y.out.")
+
+        loc <- data.table(x.out = x.out)
+        colnames(loc) <- ind.names
+        alloc.col(loc, ncol(data))
+
+        for (v in seq_along(dep.names)) {
+            value.var <- dep.names[v]
+            set(loc, NULL, value.var, stats::approx(data[[ind.names]],
+                                                    data[[value.var]],
+                                                    xout = x.out)$y)
+        }
+        return(loc)
+    }
 
     if (grid == TRUE) {
         if (length(unique(x.out)) != length(x.out)) {
@@ -67,6 +91,7 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE) {
         stop('wrong mode, choose either "grid" or "locations"')
     }
     colnames(loc) <- ind.names
+    alloc.col(loc, ncol(data))
     dcast.formula <- as.formula(paste0(ind.names, collapse = " ~ "))
 
     for (v in seq_along(dep.names)) {
@@ -75,7 +100,7 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE) {
         data2 <- list(x = data2$rowdims[[1]],
                       y = data2$coldims[[1]],
                       z = data2$matrix)
-        loc[, (value.var) := fields::interp.surface(data2, as.matrix(loc))]
+        set(loc, NULL, value.var, fields::interp.surface(data2, as.matrix(loc)))
     }
 
     return(as.data.table(loc))

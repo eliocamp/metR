@@ -25,7 +25,9 @@ grid with bilinear interpolation.
 \details{
 \code{formula} must be of the form VAR1 | VAR2 ~ X + Y where VAR1, VAR2, etc...
 are the names of the variables to interpolate and X and Y the names of the
-x and y values, respectively.
+x and y values, respectively. It is also possible to pass only values of x,
+in which case, regular linear interpolation is performed and y.out, if exists,
+is ignored with a warning.
 
 If \code{grid = TRUE}, \code{x.out} and \code{y.out} must define the values of a regular
 grid. If \code{grid = FALSE}, they define the locations where to interpolate.

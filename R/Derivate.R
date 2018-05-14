@@ -74,7 +74,8 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
     ind.names <- formula.tools::rhs.vars(formula)
 
     formula <- Formula::as.Formula(formula)
-    data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
+    data <- as.data.table(eval(quote(model.frame(formula, data  = data,
+                                                 na.action = NULL))))
 
     # id.name <- digest::digest(data[1, 1])
     id.name <- "ff19bdd67ff5f59cdce2824074707d20"

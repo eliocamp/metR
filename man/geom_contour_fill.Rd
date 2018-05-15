@@ -80,6 +80,8 @@ of the data to ensure that all contours are closed and also computes a new
 aesthetic \code{int.level}, which differs from \code{level} (computed by
 \link[ggplot2:geom_contour]{ggplot2::geom_contour}) in that represents
 the value of the \code{z} aesthetic \emph{inside} the contour instead of at the edge.
+It also computes breaks globally instead of per panel, so that faceted plots
+have all the same binwidth.
 }
 \section{Aesthetics}{
 

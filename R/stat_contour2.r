@@ -50,26 +50,29 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
 StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
   required_aes = c("x", "y", "z"),
   default_aes = ggplot2::aes(order = ..level..),
+  setup_params = function(data, params) {
+      # Check is.null(breaks) for backwards compatibility
+      if (is.null(params$breaks)) {
+          params$breaks <- scales::fullseq
+      }
+
+      if (is.function(params$breaks)) {
+          # If no parameters set, use pretty bins to calculate binwidth
+          if (is.null(params$bins) && is.null(params$binwidth)) {
+              params$binwidth <- diff(pretty(range(data$z), 10))[1]
+          }
+          # If provided, use bins to calculate binwidth
+          if (!is.null(params$bins)) {
+              params$binwidth <- diff(range(data$z)) / params$bins
+          }
+
+          params$breaks <- params$breaks(range(data$z), params$binwidth)
+      }
+      return(params)
+  },
   compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                            breaks = scales::fullseq, complete = FALSE,
                            na.rm = FALSE, circular = NULL) {
-      # Check is.null(breaks) for backwards compatibility
-      if (is.null(breaks)) {
-          breaks <- scales::fullseq
-      }
-
-      if (is.function(breaks)) {
-          # If no parameters set, use pretty bins to calculate binwidth
-          if (is.null(bins) && is.null(binwidth)) {
-              binwidth <- diff(pretty(range(data$z), 10))[1]
-          }
-          # If provided, use bins to calculate binwidth
-          if (!is.null(bins)) {
-              binwidth <- diff(range(data$z)) / bins
-          }
-
-          breaks <- breaks(range(data$z), binwidth)
-      }
 
       if (!is.null(circular)) {
           # M <- max(data[[circular]]) + resolution(data[[circular]])

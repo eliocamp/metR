@@ -1,7 +1,8 @@
 #' 2d contours of a 3d surface
 #'
 #' A copy of [ggplot2::geom_contour] that accepts a function as the `breaks`
-#' argument and makes gaps for labels
+#' argument and makes gaps for labels and computes breaks globally instead of
+#' per panel.
 #'
 #' @inheritParams ggplot2::geom_contour
 #' @inheritParams geom_text_contour
@@ -113,7 +114,7 @@ GeomContour2 <- ggplot2::ggproto("GeomContour2", GeomPath,
           data[, point := seq_len(.N), by = piece]
           data[piece %in% labels$piece, d := as.numeric(point - point[cut == TRUE][1]), by = piece]
           # data[is.na(d), d := max(d, na.rm = T), by = piece]
-dd <<- copy(data)
+          #
           if (gap != round(gap)) {
               small.piece <- data[abs(d) <= ceiling(gap) & !is.na(d)]
               # Improve resolution at segments close to the gap

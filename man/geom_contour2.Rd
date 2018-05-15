@@ -94,7 +94,8 @@ if any.}
 }
 \description{
 A copy of \link[ggplot2:geom_contour]{ggplot2::geom_contour} that accepts a function as the \code{breaks}
-argument and makes gaps for labels
+argument and makes gaps for labels and computes breaks globally instead of
+per panel.
 }
 \section{Aesthetics}{
 

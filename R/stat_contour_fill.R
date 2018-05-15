@@ -40,7 +40,26 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
 StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     required_aes = c("x", "y", "z"),
     default_aes = ggplot2::aes(fill = ..int.level..),
+    setup_params = function(data, params) {
+        # Check is.null(breaks) for backwards compatibility
+        if (is.null(params$breaks)) {
+            params$breaks <- scales::fullseq
+        }
 
+        if (is.function(params$breaks)) {
+            # If no parameters set, use pretty bins to calculate binwidth
+            if (is.null(params$bins) && is.null(params$binwidth)) {
+                params$binwidth <- diff(pretty(range(data$z, na.rm = TRUE), 10))[1]
+            }
+            # If provided, use bins to calculate binwidth
+            if (!is.null(params$bins)) {
+                params$binwidth <- diff(range(data$z, na.rm = TRUE)) / params$bins
+            }
+
+            params$breaks <- params$breaks(range(data$z, na.rm = TRUE), params$binwidth)
+        }
+        return(params)
+    },
     compute_layer = function(self, data, params, layout) {
         ggplot2:::check_required_aesthetics(
             self$required_aes,
@@ -73,23 +92,23 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             data$z[is.na(data$z)] <- mean(data$z, na.rm = TRUE)
         }
 
-        # Check is.null(breaks) for backwards compatibility
-        if (is.null(breaks)) {
-            breaks <- scales::fullseq
-        }
-
-        if (is.function(breaks)) {
-            # If no parameters set, use pretty bins to calculate binwidth
-            if (is.null(bins) && is.null(binwidth)) {
-                binwidth <- diff(pretty(range(data$z), 10))[1]
-            }
-            # If provided, use bins to calculate binwidth
-            if (!is.null(bins)) {
-                binwidth <- diff(range(data$z)) / bins
-            }
-
-            breaks <- breaks(range(data$z), binwidth)
-        }
+        # # Check is.null(breaks) for backwards compatibility
+        # if (is.null(breaks)) {
+        #     breaks <- scales::fullseq
+        # }
+        #
+        # if (is.function(breaks)) {
+        #     # If no parameters set, use pretty bins to calculate binwidth
+        #     if (is.null(bins) && is.null(binwidth)) {
+        #         binwidth <- diff(pretty(range(data$z), 10))[1]
+        #     }
+        #     # If provided, use bins to calculate binwidth
+        #     if (!is.null(bins)) {
+        #         binwidth <- diff(range(data$z)) / bins
+        #     }
+        #
+        #     breaks <- breaks(range(data$z), binwidth)
+        # }
 
         # breaks.inner <- .inside(breaks)
 

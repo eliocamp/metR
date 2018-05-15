@@ -37,16 +37,12 @@
 #' @export
 #' @importFrom stats .lm.fit
 FitLm <- function(y, ..., se = FALSE) {
-    if (is.null(match.call(expand.dots = FALSE)$`...`)) {
-        X <- cbind(mean = 1, linear = seq_along(y))
-    } else {
-        X <- cbind(mean = 1, ...)
-    }
+    X <- cbind(mean = 1, ...)
     regressor <- dimnames(X)[[2]]
     real <- complete.cases(X) & !is.na(y)
 
     # If empty, reurn NA with a warning.
-    if (length(real) == length(y)) {
+    if (sum(!real) == length(y)) {
         warning("No complete cases, reurning NA")
         estimate <- rep(NA, length(regressor))
         if (se == TRUE) {
@@ -65,7 +61,7 @@ FitLm <- function(y, ..., se = FALSE) {
 
     if (se == TRUE) {
         sigma <- sum(a$residuals^2)/(nrow(X) - ncol(X))
-        se <- sqrt(diag(solve(t(X)%*%X)*sigma))
+        se <- sqrt(diag(chol2inv(chol(t(X)%*%X))*sigma))
         return(list(regressor = regressor,
                     estimate = estimate,
                     se = se))

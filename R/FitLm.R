@@ -15,6 +15,9 @@
 #'    \item{se}{standard error}
 #' }
 #'
+#' If there's no complete cases in the regression, `NA`s are returned with no
+#' warning.
+#'
 #' @examples
 #' # Linear trend with "signficant" areas shaded with points
 #' library(data.table)
@@ -43,7 +46,6 @@ FitLm <- function(y, ..., se = FALSE) {
 
     # If empty, reurn NA with a warning.
     if (sum(!real) == length(y)) {
-        warning("No complete cases, reurning NA")
         estimate <- rep(NA, length(regressor))
         if (se == TRUE) {
             se <- estimate

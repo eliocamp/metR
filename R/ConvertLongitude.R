@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' library(ggplot2)
-#' lirbary(data.table)
+#' library(data.table)
 #' data(geopotential)
 #' ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
 #'     geom_contour(color = "black") +

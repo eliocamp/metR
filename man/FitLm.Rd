@@ -25,10 +25,6 @@ a list with elements
 Computes a linear regression with \link[stats:.lm.fit]{stats::.lm.fit} and returns the estimate
 and, optionally, standard error for each regressor.
 }
-\details{
-This is a bare-bones implementation of linear regression (see \link[stats:.lm.fit]{stats::.lm.fit})
-that is designed to be as fast as possible. Missing values are not allowed.
-}
 \examples{
 # Linear trend with "signficant" areas shaded with points
 library(data.table)

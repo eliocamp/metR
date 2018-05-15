@@ -15,10 +15,6 @@
 #'    \item{se}{standard error}
 #' }
 #'
-#' @details
-#' This is a bare-bones implementation of linear regression (see [stats::.lm.fit])
-#' that is designed to be as fast as possible. Missing values are not allowed.
-#'
 #' @examples
 #' # Linear trend with "signficant" areas shaded with points
 #' library(data.table)
@@ -41,18 +37,40 @@
 #' @export
 #' @importFrom stats .lm.fit
 FitLm <- function(y, ..., se = FALSE) {
-    X <- cbind(mean = 1, ...)
+    if (is.null(match.call(expand.dots = FALSE)$`...`)) {
+        X <- cbind(mean = 1, linear = seq_along(y))
+    } else {
+        X <- cbind(mean = 1, ...)
+    }
     regressor <- dimnames(X)[[2]]
-    a <- .lm.fit(X, y)
-    estimate <- a$coefficients
+    real <- complete.cases(X) & !is.na(y)
+
+    # If empty, reurn NA with a warning.
+    if (length(real) == length(y)) {
+        warning("No complete cases, reurning NA")
+        estimate <- rep(NA, length(regressor))
+        if (se == TRUE) {
+            se <- estimate
+            return(list(regressor = regressor,
+                        estimate = estimate,
+                        se = se))
+        } else {
+            return(list(regressor = regressor,
+                        estimate = estimate))
+        }
+    } else {
+        a <- .lm.fit(X[real, ], y[real])
+        estimate <- a$coefficients
+    }
+
     if (se == TRUE) {
         sigma <- sum(a$residuals^2)/(nrow(X) - ncol(X))
         se <- sqrt(diag(solve(t(X)%*%X)*sigma))
-        return(list(regressor = dimnames(X)[[2]],
+        return(list(regressor = regressor,
                     estimate = estimate,
                     se = se))
     } else {
-        return(list(regressor = dimnames(X)[[2]],
+        return(list(regressor = regressor,
                     estimate = estimate))
     }
 }

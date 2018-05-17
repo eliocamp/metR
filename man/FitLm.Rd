@@ -20,6 +20,9 @@ a list with elements
 \item{estimate}{estiamte of the regression}
 \item{se}{standard error}
 }
+
+If there's no complete cases in the regression, \code{NA}s are returned with no
+warning.
 }
 \description{
 Computes a linear regression with \link[stats:.lm.fit]{stats::.lm.fit} and returns the estimate

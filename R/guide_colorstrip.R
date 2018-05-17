@@ -121,7 +121,7 @@ guide_colourstrip <- function(
 #' @export
 #' @rdname guide_colourstrip
 #' @keywords internal
-guide_train.colorstrip <- function(guide, scale) {
+guide_train.colorstrip <- function(guide, scale, aesthetic = NULL) {
     # do nothing if scale are inappropriate
     if (length(intersect(scale$aesthetics, c("color", "colour", "fill"))) == 0) {
         warning("colorstrip guide needs colour or fill scales.")

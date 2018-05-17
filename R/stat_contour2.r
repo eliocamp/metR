@@ -187,6 +187,20 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
   )
 })
 
+.contour_lines_irregular <- function(data, breaks, complete = FALSE) {
+
+    cl <- setDT(contoureR::getContourLines(
+        x = data$x, y = data$y, z = data$z, levels = breaks))
+
+    if (length(cl) == 0) {
+        warning("Not possible to generate contour data", call. = FALSE)
+        return(data.frame())
+    }
+    setnames(cl, c("z", "Group", "PID"), c("level", "group", "piece"))
+    return(cl)
+}
+
+
 #' @rdname geom_text_contour
 #' @usage NULL
 #' @format NULL

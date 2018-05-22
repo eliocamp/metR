@@ -57,9 +57,6 @@ to the paired geom/stat.}
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
 
-\item{circular}{either NULL, "x" or "y" indicating which dimension is circular,
-if any.}
-
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.
@@ -72,6 +69,8 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
+
+\item{xwrap, ywrap}{vector of length two used to wrap the circulad dimension.}
 }
 \description{
 While ggplot2's \code{\link[ggplot2]{geom_contour}} can plot nice contours, it
@@ -125,7 +124,7 @@ ggplot(surface, aes(Var1, Var2, z = value)) +
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{RepeatCircular}},
+  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
   \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
   \code{\link{geom_label_contour}},
   \code{\link{geom_relief}}, \code{\link{geom_streamline}},

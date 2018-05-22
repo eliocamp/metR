@@ -30,7 +30,7 @@ it's appearance.
 - New `FilterWave()` for filtering waves. 
 - Contour functions now compute breaks globaly (using all the data) instead of
 per panel. This means default intercomparabilty between facetwed plots. 
-- `RepeatCircular()` is deprecated in favour if `ExtendCircular()` which is more
+- `RepeatCircular()` is deprecated in favour if `WrapCircular()` which is more
 robust.
 - The way that `stat_contour2()` and `stat_contour_fill()` handle circular dimensions
 has changed. Now you need to use `xwrap`/`ywrap` to explicitly set the domain. This 

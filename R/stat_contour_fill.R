@@ -94,10 +94,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         }
 
         if (!is.null(xwrap)) {
-            data <- ExtendCircular(data, "x", xwrap)
+            data <- WrapCircular(data, "x", xwrap)
         }
         if (!is.null(ywrap)) {
-            data <- ExtendCircular(data, "y", ywrap)
+            data <- WrapCircular(data, "y", ywrap)
         }
 
         setDF(data)

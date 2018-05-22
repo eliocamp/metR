@@ -65,9 +65,6 @@ to the paired geom/stat.}
 
 \item{dt}{optional numeric size "timestep" for integration}
 
-\item{circular}{either NULL, "x" or "y" indicating which dimension is circular,
-if any.}
-
 \item{skip}{numeric specifying number of gridpoints not to draw
 in the x and y direction.}
 
@@ -222,7 +219,7 @@ ggplot(topo, aes(lon, lat)) +
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{RepeatCircular}},
+  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
   \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},

@@ -1,11 +1,11 @@
-#' Extend periodic data to any range
+#' Wrap periodic data to any range
 #'
 #' Periodic data can be defined only in one period and be extended to any arbitrary
 #' range.
 #'
 #' @param x a data.frame
 #' @param circular the name of the circular dimension
-#' @param range the range for the data to be extended to
+#' @param wrap the wrap for the data to be extended to
 #'
 #' @return
 #' A data.frame.
@@ -23,11 +23,11 @@
 #' g
 #'
 #' # But using RepeatCircular solves it.
-#' g %+% ExtendCircular(geopotential[date == date[1]], "lon", c(0, 360))
+#' g %+% WrapCircular(geopotential[date == date[1]], "lon", c(0, 360))
 #'
 #' # Aditionally data can be just repeatet to the right and
 #' # left
-#' ggplot(ExtendCircular(geopotential[date == date[1]], range = c(-180, 360 + 180)),
+#' ggplot(WrapCircular(geopotential[date == date[1]], wrap = c(-180, 360 + 180)),
 #'        aes(lon, lat)) +
 #'     geom_contour(aes(z = gh))
 #'
@@ -41,7 +41,7 @@
 #' @family ggplot2 helpers
 #' @export
 #' @import data.table
-ExtendCircular <- function(x, circular = "lon", range = c(0, 360)) {
+WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
     setDT(x)
     res <- ggplot2::resolution(x[[circular]])
     m <- min(x[[circular]])
@@ -49,8 +49,8 @@ ExtendCircular <- function(x, circular = "lon", range = c(0, 360)) {
 
     # How many steps form the left and right extremes
     # represent the range
-    right <- trunc((max(range) - M)/res)
-    left <- trunc((min(range) - m)/res)
+    right <- trunc((max(wrap) - M)/res)
+    left <- trunc((min(wrap) - m)/res)
 
     # New "grid"
     x.new <- seq(m + left*res, M + right*res, by = res)
@@ -74,7 +74,7 @@ ExtendCircular <- function(x, circular = "lon", range = c(0, 360)) {
 }
 
 #' @export
-#' @rdname ExtendCircular
+#' @rdname WrapCircular
 RepeatCircular <- function(x, circular = "lon", max = NULL) {
-    .Deprecated("ExtendCircular")
+    .Deprecated("WrapCircular")
 }

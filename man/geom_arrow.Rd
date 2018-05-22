@@ -135,7 +135,7 @@ ggplot(field, aes(x, y)) +
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{RepeatCircular}},
+  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
   \code{\link{geom_contour2}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},

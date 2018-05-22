@@ -89,8 +89,7 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
 
-\item{circular}{either NULL, "x" or "y" indicating which dimension is circular,
-if any.}
+\item{xwrap, ywrap}{vector of length two used to wrap the circulad dimension}
 }
 \description{
 A copy of \link[ggplot2:geom_contour]{ggplot2::geom_contour} that accepts a function as the \code{breaks}
@@ -143,7 +142,7 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{RepeatCircular}},
+  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
   \code{\link{geom_arrow}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},
@@ -156,7 +155,7 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{stat_subset}}
 
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{RepeatCircular}},
+  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
   \code{\link{geom_arrow}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},

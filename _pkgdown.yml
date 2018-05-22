@@ -25,7 +25,7 @@ reference:
     desc: functions that help in plotting
     contents:
       - MakeBreaks
-      - RepeatCircular
+      - WrapCircular
       - DivideTimeseries
       - map_labels
   - title: Physics

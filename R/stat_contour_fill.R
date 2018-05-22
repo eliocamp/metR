@@ -143,16 +143,28 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         if (correction == 0) correction <- 1
         correction <- (breaks[i + correction] - mean.level)/2
 
-        if (mean.level %in% breaks & complete == TRUE) {
-            mean.cont  <- data.frame(
-                level = mean.level,
-                x = c(rep(range.data$x[1], 2), rep(range.data$x[2], 2), range.data$x[1]),
-                y = c(range.data$y[1], rep(range.data$y[2], 2), rep(range.data$y[1], 2)),
-                piece = max(cont$piece) + 1,
-                int.level = mean.level + correction)
-            mean.cont$group <- factor(paste("", sprintf("%03d", mean.cont$piece), sep = "-"))
-            cont <- rbind(cont, mean.cont)
-        }
+        # Adds bounding contour
+        setDT(data)
+        Nx <- data.table::uniqueN(data$x)
+        Ny <- data.table::uniqueN(data$y)
+
+        x <- c(rep(range.data$x[1], Ny),
+               sort(data[y == range.data$y[2], x]),
+               rep(range.data$x[2], Ny),
+               sort(data[y == range.data$y[1], x], decreasing = TRUE))
+        y <- c(sort(data[x == range.data$x[1], y]),
+               rep(range.data$y[2], Nx),
+               sort(data[x == range.data$x[2], y], decreasing = TRUE),
+               rep(range.data$y[1], Nx))
+
+        mean.cont  <- data.frame(
+            level = mean.level,
+            x = x,
+            y = y,
+            piece = max(cont$piece) + 1,
+            int.level = mean.level + correction)
+        mean.cont$group <- factor(paste("", sprintf("%03d", mean.cont$piece), sep = "-"))
+        cont <- rbind(cont, mean.cont)
 
         # Move contours to range of original data
         cont$x[cont$x > range.data$x[2]] <- range.data$x[2]

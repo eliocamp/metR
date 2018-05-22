@@ -34,8 +34,7 @@
 #' # The same behaviour is now implemented directly in geom_contour2
 #' # and geom_contour_fill
 #' ggplot(geopotential[date == date[1]], aes(lon, lat)) +
-#'     geom_contour2(aes(z = gh), circular = "x") +
-#'     xlim(c(-180, 360+180))
+#'     geom_contour2(aes(z = gh), xwrap = c(-180, 360 + 180))
 #'
 #' @seealso geom_contour2
 #'

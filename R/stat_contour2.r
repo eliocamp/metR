@@ -5,8 +5,8 @@
 #'   and returns breaks as output
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
-#' @param circular either NULL, "x" or "y" indicating which dimension is circular,
-#' if any.
+#' @param xwrap,ywrap vector of length two used to wrap the circulad dimension
+#'
 #' @export
 #' @section Computed variables:
 #' \describe{
@@ -72,12 +72,16 @@ StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
   },
   compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                            breaks = scales::fullseq, complete = FALSE,
-                           na.rm = FALSE, circular = NULL) {
+                           na.rm = FALSE, circular = NULL, xwrap = NULL,
+                           ywrap = NULL) {
 
-      if (!is.null(circular)) {
-          # M <- max(data[[circular]]) + resolution(data[[circular]])
-          data <- RepeatCircular(data, circular)
+      if (!is.null(xwrap)) {
+          data <- ExtendCircular(data, "x", xwrap)
       }
+      if (!is.null(ywrap)) {
+          data <- ExtendCircular(data, "y", ywrap)
+      }
+      setDF(data)
       contours <- as.data.table(.contour_lines(data, breaks, complete = complete))
 
       if (length(contours) == 0) {

@@ -32,6 +32,9 @@ it's appearance.
 per panel. This means default intercomparabilty between facetwed plots. 
 - `RepeatCircular()` is deprecated in favour if `ExtendCircular()` which is more
 robust.
+- The way that `stat_contour2()` and `stat_contour_fill()` handle circular dimensions
+has changed. Now you need to use `xwrap`/`ywrap` to explicitly set the domain. This 
+makes the implementation more robust and also allow to easily wrap longitudes.
 
 # metR 0.1
 - New function: `GetTopography()`

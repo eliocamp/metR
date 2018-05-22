@@ -10,11 +10,11 @@
 #' have all the same binwidth.
 #'
 #' @inheritParams ggplot2::geom_contour
+#' @inheritParams geom_contour2
 #' @param breaks numeric vector of breaks
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
-#' @param circular either NULL, "x" or "y" indicating which dimension is circular,
-#' if any.
+#' @param xwrap,ywrap vector of length two used to wrap the circulad dimension.
 #'
 #' @section Aesthetics:
 #' \code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):

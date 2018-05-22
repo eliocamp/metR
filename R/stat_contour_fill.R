@@ -83,7 +83,8 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     },
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = scales::fullseq, complete = TRUE,
-                             na.rm = FALSE, circular = NULL) {
+                             na.rm = FALSE, circular = NULL, xwrap = NULL,
+                             ywrap = NULL) {
         data <- data[!(is.na(data$x) | is.na(data$y)), ]
 
         if (na.rm) {
@@ -92,30 +93,14 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             data$z[is.na(data$z)] <- mean(data$z, na.rm = TRUE)
         }
 
-        # # Check is.null(breaks) for backwards compatibility
-        # if (is.null(breaks)) {
-        #     breaks <- scales::fullseq
-        # }
-        #
-        # if (is.function(breaks)) {
-        #     # If no parameters set, use pretty bins to calculate binwidth
-        #     if (is.null(bins) && is.null(binwidth)) {
-        #         binwidth <- diff(pretty(range(data$z), 10))[1]
-        #     }
-        #     # If provided, use bins to calculate binwidth
-        #     if (!is.null(bins)) {
-        #         binwidth <- diff(range(data$z)) / bins
-        #     }
-        #
-        #     breaks <- breaks(range(data$z), binwidth)
-        # }
-
-        # breaks.inner <- .inside(breaks)
-
-        if (!is.null(circular)) {
-            # M <- max(data[[circular]]) + resolution(data[[circular]])
-            data <- RepeatCircular(data, circular)
+        if (!is.null(xwrap)) {
+            data <- ExtendCircular(data, "x", xwrap)
         }
+        if (!is.null(ywrap)) {
+            data <- ExtendCircular(data, "y", ywrap)
+        }
+
+        setDF(data)
         mean.z <- mean(data$z)
         mean.level <- breaks[breaks %~% mean.z]
         range.data <- as.data.frame(vapply(data[c("x", "y", "z")], range, c(1, 2)))

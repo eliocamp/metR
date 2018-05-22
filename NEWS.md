@@ -30,6 +30,8 @@ it's appearance.
 - New `FilterWave()` for filtering waves. 
 - Contour functions now compute breaks globaly (using all the data) instead of
 per panel. This means default intercomparabilty between facetwed plots. 
+- `RepeatCircular()` is deprecated in favour if `ExtendCircular()` which is more
+robust.
 
 # metR 0.1
 - New function: `GetTopography()`

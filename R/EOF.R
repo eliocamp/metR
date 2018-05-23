@@ -94,14 +94,15 @@
 #' @export
 #' @import data.table
 #' @import Formula
+#' @import formula.tools
+#' @import Matrix
 #' @importFrom stats as.formula quantile varimax
 EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
                 rotate = FALSE, suffix = "PC") {
 
     if (!is.null(value.var)) {
-        if (is.null(data)) stop("data must not be NULL if value.var is NULL",
-                                .call = FALSE)
+        if (is.null(data)) stop("data must not be NULL if value.var is NULL")
         data <- copy(data)
         f <- as.character(formula)
         f <- stringr::str_replace(f, "~", "\\|")
@@ -112,24 +113,34 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
         formula <- Formula::as.Formula(formula)
         data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
     }
+    data <- setDT(copy(data))
 
     f <- as.character(formula)
     f <- stringr::str_split(f,"~", n = 2)[[1]]
-    dcast.formula <- stringr::str_squish(f[stringr::str_detect(f, "\\|")])
-    dcast.formula <- as.formula(stringr::str_replace(dcast.formula, "\\|", "~"))
 
     value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
 
-    g <- .tidy2matrix(data, dcast.formula, value.var)
+    matrix.vars <- f[stringr::str_detect(f, "\\|")]
+    matrix.vars <- stringr::str_split(matrix.vars,"\\|", n = 2)[[1]]
 
-    if (is.null(n)) n <- seq_len(min(ncol(g$matrix), nrow(g$matrix)))
+    row.vars <- stringr::str_squish(stringr::str_split(matrix.vars[1], "\\+")[[1]])
+    col.vars <- stringr::str_squish(stringr::str_split(matrix.vars[2], "\\+")[[1]])
+
+    data[, row__ := as.integer(.GRP), by = c(row.vars)]
+    data[, col__ := as.integer(.GRP), by = c(col.vars)]
+
+    g <- Matrix::sparseMatrix(data$row__,
+                              data$col__,
+                              x = data[[value.var]])
+
+    if (is.null(n)) n <- seq_len(min(ncol(g), nrow(g)))
 
     if (requireNamespace("irlba", quietly = TRUE) &
-        max(n) < 0.5 *  min(ncol(g$matrix), nrow(g$matrix))) {
+        max(n) < 0.5 *  min(ncol(g), nrow(g))) {
         set.seed(42)
-        eof <- irlba::irlba(g$matrix, nv = max(n), nu = max(n), rng = runif)
+        eof <- irlba::irlba(g, nv = max(n), nu = max(n), rng = runif)
     } else {
-        eof <- svd(g$matrix, nu = max(n), nv = max(n))
+        eof <- svd(g, nu = max(n), nv = max(n))
         eof$d <- eof$d[1:max(n)]
     }
     pcomps <- paste0(suffix, n)
@@ -148,47 +159,30 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
         eof$v <- t(diag(1/eof$d)%*%t(loadings))
     }
 
-    # loadings.dt <- as.data.table(loadings)
-    # colnames(loadings.dt) <- pcomps
-    # loadings.dt <- cbind(loadings.dt, as.data.table(g$coldims))
-    # loadings.dt <- data.table::melt(loadings.dt, id.vars = names(g$coldims), variable = "PC",
-    #                                 value.name = value.var)
-    # loadings.dt[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
-    #
-    # scores <- as.data.table(scores)
-    # colnames(scores) <- pcomps
-    # scores <- cbind(scores, as.data.table(g$rowdims))
-    # scores <- data.table::melt(scores, id.vars = names(g$rowdims), variable = "PC",
-    #                            value.name = value.var)
-    # scores[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
-    #
-    # sdev <- data.table(PC = pcomps, sd = sdev)
-    # sdev[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
-    # sdev[, r2 := r2]
-
-    # Old nomenclature :\
+    # setDF(data)
     right <- as.data.table(eof$v[, n])
     colnames(right) <- pcomps
-    right <- cbind(right, as.data.table(g$coldims))
-    right <- data.table::melt(right, id.vars = names(g$coldims), variable = "PC",
+    right <- cbind(right, data[row__ == 1, (col.vars), with = FALSE])
+    right <- data.table::melt(right, id.vars = col.vars, variable = "PC",
                               value.name = value.var)
     right[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
 
     left <- as.data.table(eof$u[, n])
     colnames(left) <- pcomps
-    left <- cbind(left, as.data.table(g$rowdims))
-    left <- data.table::melt(left, id.vars = names(g$rowdims), variable = "PC",
+    left <- cbind(left, data[col__ == 1, (row.vars), with = FALSE])
+    left <- data.table::melt(left, id.vars = row.vars, variable = "PC",
                              value.name = value.var)
     left[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
 
-    v.g  <- norm(g$matrix, type = "F")
+    # setDT(data)
+    v.g  <- Matrix::norm(g, type = "F")
     r2 <- eof$d^2/v.g^2
     sdev <- data.table(PC = pcomps, sd = eof$d)
     sdev[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
     sdev[, r2 := r2]
 
     if (B > 1) {
-        tall <- dim(g$matrix)[1] > dim(g$matrix)[2]
+        tall <- dim(g)[1] > dim(g)[2]
         set.seed(42)
         if (!tall) {
             names(eof) <- c("d", "v", "u", "iter", "mprod")

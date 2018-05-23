@@ -302,7 +302,8 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     scale_fill_divergent(guide = "colorstrip",
                          breaks = MakeBreaks(2)) +
     scale_x_longitude() +
-    scale_y_latitude() + theme(legend.position = "bottom")
+    scale_y_latitude() + 
+    theme(legend.position = "bottom")
 ```
 
 By default, colors are mapped to the values *in between* breaks, so there's a one-to-one mapping between colors shown in the plot and in the guide. From an aesthetic standpoint, it's much closer to the `cbarn` command from `GrADS`, which a lot of atmospheric scientists are probably used to.  

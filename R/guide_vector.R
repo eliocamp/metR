@@ -554,4 +554,36 @@ guide_gengrob.vector <- function(guide, theme) {
     gt
 }
 
+
+# Generics ----------------------------------------------------------------
+
+#' S3 generics for guides.
+#'
+#' You will need to provide methods for these S3 generics if you want to
+#' create your own guide object. They are currently undocumented; use at
+#' your own risk!
+#'
+#' @param guide The guide object
+#' @keywords internal
+#' @name guide-exts
+NULL
+
+#' @export
+#' @rdname guide-exts
+guide_train <- function(guide, scale, aesthetic = NULL) UseMethod("guide_train")
+
+#' @export
+#' @rdname guide-exts
+guide_merge <- function(guide, new_guide) UseMethod("guide_merge")
+
+#' @export
+#' @rdname guide-exts
+guide_geom <- function(guide, layers, default_mapping) UseMethod("guide_geom")
+
+#' @export
+#' @rdname guide-exts
+guide_gengrob <- function(guide, theme) UseMethod("guide_gengrob")
+
+
 globalVariables(c("C", "R", "key.row", "key.col", "label.row", "label.col"))
+

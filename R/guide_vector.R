@@ -75,7 +75,7 @@ guide_vector <- function(# title
 }
 
 #' @export
-guide_train.vector <- function(guide, scale) {
+guide_train.vector <- function(guide, scale, output = NULL) {
     limits <- scale$get_limits()
     limits[1] <- 0
     breaks <- .get_breaks(scale, limits)

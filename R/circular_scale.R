@@ -27,7 +27,6 @@ circular_scale <- function(aesthetics, scale_name, palette, name = waiver(),
             palette = palette,
 
             transform_df = function(self, df) {
-                dr <<- df
                 print("b")
                 df },
 

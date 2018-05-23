@@ -9,7 +9,8 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               bins = NULL,
                               binwidth = NULL,
                               na.rm = FALSE,
-                              circular = NULL,
+                              xwrap = NULL,
+                              ywrap = NULL,
                               show.legend = NA,
                               inherit.aes = TRUE) {
     layer(
@@ -25,7 +26,8 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
-            circular = circular,
+            xwrap = xwrap,
+            ywrap = ywrap,
             ...
         )
     )

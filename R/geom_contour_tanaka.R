@@ -39,19 +39,19 @@
 #' # In a monochrome contour map, it's impossible to know which areas are
 #' # local maximums or minimums.
 #' ggplot(geo, aes(lon, lat)) +
-#'     geom_contour2(aes(z = gh.z), color = "black", circular = "x")
+#'     geom_contour2(aes(z = gh.z), color = "black", xwrap = c(0, 360))
 #'
 #' # With tanaka contours, they are obvious.
 #' ggplot(geo, aes(lon, lat)) +
 #'     geom_contour_tanaka(aes(z = gh.z), dark = "black",
-#'                         circular = "x") +
+#'                         xwrap = c(0, 360)) +
 #'     scale_fill_divergent()
 #'
 #' # A good divergent color palette has the same luminosity for positive
 #' # and negative values.But that means that printed in grayscale (Desaturated),
 #' # they are indistinguishable.
 #' (g <- ggplot(geo, aes(lon, lat)) +
-#'     geom_contour_fill(aes(z = gh.z), circular = "x") +
+#'     geom_contour_fill(aes(z = gh.z), xwrap = c(0, 360)) +
 #'     scale_fill_gradientn(colours = c("#767676", "white", "#484848"),
 #'                          values = c(0, 0.415, 1)))
 #'
@@ -71,7 +71,8 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
                                 dark = "gray20",
                                 range = c(0.01, 0.5),
                                 na.rm = FALSE,
-                                circular = NULL,
+                                xwrap = NULL,
+                                ywrap = NULL,
                                 show.legend = NA,
                                 inherit.aes = TRUE) {
     ggplot2::layer(
@@ -87,7 +88,8 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
             bins = bins,
             binwidth = binwidth,
             na.rm = na.rm,
-            circular = circular,
+            xwrap = xwrap,
+            ywrap = ywrap,
             sun.angle = sun.angle,
             light = light,
             dark = dark,

@@ -58,7 +58,7 @@ Note: `scale_*_longitude()` (currently)  assumes the data goes from 0° to 360°
 
 # Geoms and stats
 
-## stat_contour_fill()
+## geom_contour_fill()
 
 In ggplot2, the 'canonical' way to get filled contours is by using `stat_contour()` with a `polygon` geom and mapping `fill` to `level` (see [this](https://github.com/tidyverse/ggplot2/issues/1066) issue), but this has tree important limitations. 
 
@@ -68,7 +68,7 @@ In ggplot2, the 'canonical' way to get filled contours is by using `stat_contour
 
 * There's no distinction between contours with the same level but different internal values (blue contours in the figure below)
 
-`stat_contour_fill()` makes some adjustments to the data and computes an aditional variable `int.level` (which is de defautl mapping for the `fill` aesthetic) that solve these problems.
+`geom_contour_fill()` makes some adjustments to the data and computes an aditional variable `int.level` (which is de defautl mapping for the `fill` aesthetic) that solve these problems.
 
 ```{r, fig.show='hold', fig.width = 3.3}
 breaks = seq(100, 200, by = 10)
@@ -181,13 +181,13 @@ Plotting arrows can be a pain. Again, the 'canonical' way of plotting vectors is
 
 So, as an example, we can plot the temperature gradient like this:
 
-```{r,  fig.width = 7}
+```{r, fig.width = 7}
 temperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat, 
                                             cyclical = c(TRUE, FALSE)), 
             by = lev]
 
 ggplot(temperature[lev == 500], aes(lon, lat)) +
-    stat_contour_fill(aes(z = air.z)) +
+    geom_contour_fill(aes(z = air.z)) +
     geom_vector(aes(dx = t.dx, dy = t.dy), skip.x = 2, 
                 skip.y = 1, scale = 5, min.mag = 2e-1) +
     scale_y_latitude(limits = c(-90, 0)) +
@@ -214,7 +214,7 @@ To solve the last two problems `metR` has `geom_arrow()` which works the same as
 temperature[, mag := Mag(t.dx, t.dy)][, angle := atan2(t.dy, t.dx)*180/pi]
 
 ggplot(temperature[lev == 500], aes(lon, lat)) +
-    stat_contour_fill(aes(z = air.z)) +
+    geom_contour_fill(aes(z = air.z)) +
     geom_arrow(aes(mag = mag, angle = angle), skip.x = 2, 
                skip.y = 1, scale = 0.05, min.mag = 2e-1) +
     scale_y_latitude(limits = c(-90, 0)) +
@@ -231,7 +231,7 @@ Streamlines are paths tangential to a vector field and provide an intuitive way 
 
 ```{r}
 (g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
-     stat_contour_fill(aes(z = air.z), xwrap = c(0, 360)) +
+     geom_contour_fill(aes(z = air.z), xwrap = c(0, 360)) +
      geom_streamline(aes(dx = t.dy, dy = -t.dx), L = 10, res = 2,   
                      arrow.length = 0.3, xwrap = c(0, 360)) + 
      scale_y_latitude(limits = c(-90, 0)) +

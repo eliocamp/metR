@@ -73,8 +73,9 @@
 #' geopotential[, c("u", "v") := GeostrophicWind(gh.z, lon, lat)]
 #'
 #' (g <- ggplot(geopotential, aes(lon, lat)) +
-#'     geom_contour2(aes(z = gh.z), circular = "x") +
-#'     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), L = 60, circular = "x"))
+#'     geom_contour2(aes(z = gh.z), xwrap = c(0, 360)) +
+#'     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), L = 60,
+#'                     xwrap = c(0, 360)))
 #'
 #' # The circular parameter is particularly important for polar coordinates
 #' g + coord_polar()
@@ -91,7 +92,8 @@
 #' ggplot(geopotential, aes(lon, lat)) +
 #'     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v), alpha = ..step..,
 #'                         color = sqrt(..dx..^2 + ..dy..^2), size = ..step..),
-#'                         L = 40, circular = "x", res = 2, arrow = NULL, lineend = "round") +
+#'                         L = 40, xwrap = c(0, 360), res = 2, arrow = NULL,
+#'                         lineend = "round") +
 #'     scale_size(range = c(0, 0.6))
 #'
 #' \dontrun{
@@ -120,7 +122,8 @@ geom_streamline <-  function(mapping = NULL, data = NULL,
                              res = 1,
                              S = NULL,
                              dt = NULL,
-                             circular = NULL,
+                             xwrap = NULL,
+                             ywrap = NULL,
                              skip = 1,
                              skip.x = skip,
                              skip.y = skip,
@@ -151,7 +154,8 @@ geom_streamline <-  function(mapping = NULL, data = NULL,
         params = list(
             L = L,
             res = res,
-            circular = circular,
+            xwrap = xwrap,
+            ywrap = ywrap,
             dt = dt,
             S = S,
             arrow = arrow,
@@ -177,7 +181,8 @@ stat_streamline <- function(mapping = NULL, data = NULL,
                             res = 1,
                             S = NULL,
                             dt = NULL,
-                            circular = NULL,
+                            xwrap = NULL,
+                            ywrap = NULL,
                             skip = 1,
                             skip.x = skip,
                             skip.y = skip,
@@ -210,7 +215,8 @@ stat_streamline <- function(mapping = NULL, data = NULL,
             res = res,
             dt = dt,
             S = S,
-            circular = circular,
+            xwrap = xwrap,
+            ywrap = ywrap,
             arrow = arrow,
             lineend = lineend,
             na.rm = na.rm,
@@ -249,12 +255,13 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
     },
     compute_group = function(data, scales, dt = 0.1, S = 3, skip.x = 1,
                              skip.y = 1, nx = 10, ny  = 10, jitter.x = 1,
-                             jitter.y = 1, circular = NULL, min.dist = 0,
+                             jitter.y = 1, xwrap = NULL, ywrap = NULL,
+                             min.dist = 0,
                              L = NULL, res = NULL) {
 
         data <- streamline.f(data, dt = dt, S = S, skip.x = skip.x,
                              skip.y = skip.y, nx = nx, ny = ny, jitter.x = jitter.x,
-                             jitter.y = jitter.y, circular = circular)
+                             jitter.y = jitter.y, xwrap = xwrap, ywrap = ywrap)
 
         distance <- data[, .(dx = diff(x), dy = diff(y)), by = line]
         distance <- distance[, .(distance = sum(sqrt(dx^2 + dy^2))), by = line]
@@ -357,16 +364,15 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
 #' @importFrom stats rnorm
 #' @importFrom fields interp.surface
 streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL,
-                       ny = NULL, jitter.x = 1, jitter.y = 1, circular = NULL) {
+                       ny = NULL, jitter.x = 1, jitter.y = 1, xwrap = NULL,
+                       ywrap = NULL) {
     field <- copy(as.data.table(field))
-    circ.x <- circ.y <- FALSE
-    if (!is.null(circular)) {
-        circ.x <- "x" %in% circular
-        circ.y <- "y" %in% circular
-    }
 
-    if (circ.x) field <- RepeatCircular(field, "x")
-    if (circ.y) field <- RepeatCircular(field, "y")
+    circ.x <- !is.null(xwrap)
+    circ.y <- !is.null(ywrap)
+
+    if (circ.x) field <- WrapCircular(field, "x", xwrap)
+    if (circ.y) field <- WrapCircular(field, "y", ywrap)
 
     field <- field[!is.na(dx) & !is.na(dy)]
 

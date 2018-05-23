@@ -9,13 +9,13 @@
 \usage{
 geom_contour_fill(mapping = NULL, data = NULL, stat = "ContourFill",
   position = "identity", ..., breaks = NULL, bins = NULL,
-  binwidth = NULL, na.rm = FALSE, circular = NULL, show.legend = NA,
-  inherit.aes = TRUE)
+  binwidth = NULL, na.rm = FALSE, xwrap = NULL, ywrap = NULL,
+  show.legend = NA, inherit.aes = TRUE)
 
 stat_contour_fill(mapping = NULL, data = NULL, geom = "polygon",
   position = "identity", ..., breaks = scales::fullseq, bins = NULL,
-  binwidth = NULL, na.rm = FALSE, circular = NULL, show.legend = NA,
-  inherit.aes = TRUE)
+  binwidth = NULL, na.rm = FALSE, xwrap = NULL, ywrap = NULL,
+  show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -57,6 +57,8 @@ to the paired geom/stat.}
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
 
+\item{xwrap, ywrap}{vector of length two used to wrap the circulad dimension.}
+
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.
@@ -69,8 +71,6 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
-
-\item{xwrap, ywrap}{vector of length two used to wrap the circulad dimension.}
 }
 \description{
 While ggplot2's \code{\link[ggplot2]{geom_contour}} can plot nice contours, it

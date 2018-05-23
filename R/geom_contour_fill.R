@@ -63,7 +63,8 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
                          bins = NULL,
                          binwidth = NULL,
                          na.rm = FALSE,
-                         circular = NULL,
+                         xwrap = NULL,
+                         ywrap = NULL,
                          show.legend = NA,
                          inherit.aes = TRUE) {
     ggplot2::layer(
@@ -79,7 +80,8 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
             bins = bins,
             binwidth = binwidth,
             na.rm = na.rm,
-            circular = circular,
+            xwrap = xwrap,
+            ywrap = ywrap,
             ...
         )
     )

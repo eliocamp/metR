@@ -6,8 +6,6 @@
 \title{Wrap periodic data to any range}
 \usage{
 WrapCircular(x, circular = "lon", wrap = c(0, 360))
-
-RepeatCircular(x, circular = "lon", max = NULL)
 }
 \arguments{
 \item{x}{a data.frame}
@@ -35,7 +33,7 @@ g <- ggplot(geopotential[date == date[1]], aes(lon, lat)) +
 # This plot has problems in lon = 0
 g
 
-# But using RepeatCircular solves it.
+# But using WrapCircular solves it.
 g \%+\% WrapCircular(geopotential[date == date[1]], "lon", c(0, 360))
 
 # Aditionally data can be just repeatet to the right and

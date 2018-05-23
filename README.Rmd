@@ -62,9 +62,9 @@ aao$left[, c("u", "v") := GeostrophicWind(gh.t.w, lon, lat)]
 # AAO field
 binwidth <- 0.01
 ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
-    geom_contour_fill(binwidth = binwidth, circular = "x") +    # filled contours!
+    geom_contour_fill(binwidth = binwidth, xwrap = c(0, 360)) +    # filled contours!
     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), 
-                    size = 0.4, L = 80, skip = 3, circular = "x") +
+                    size = 0.4, L = 80, skip = 3, xwrap = c(0, 360)) +
     scale_x_longitude() +
     scale_y_latitude(limits = c(-90, -20)) +
     scale_fill_divergent(name = "AAO pattern", 

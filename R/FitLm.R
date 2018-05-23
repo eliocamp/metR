@@ -38,7 +38,7 @@
 #' }
 #'
 #' @export
-#' @importFrom stats .lm.fit
+#' @importFrom stats .lm.fit complete.cases
 FitLm <- function(y, ..., se = FALSE) {
     X <- cbind(mean = 1, ...)
     regressor <- dimnames(X)[[2]]

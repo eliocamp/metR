@@ -22,7 +22,7 @@
 #' # This plot has problems in lon = 0
 #' g
 #'
-#' # But using RepeatCircular solves it.
+#' # But using WrapCircular solves it.
 #' g %+% WrapCircular(geopotential[date == date[1]], "lon", c(0, 360))
 #'
 #' # Aditionally data can be just repeatet to the right and
@@ -73,8 +73,10 @@ WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
     return(y)
 }
 
-#' @export
 #' @rdname WrapCircular
+#' @usage NULL
+#' @format NULL
+#' @export
 RepeatCircular <- function(x, circular = "lon", max = NULL) {
     .Deprecated("WrapCircular")
 }

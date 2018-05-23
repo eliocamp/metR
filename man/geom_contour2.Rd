@@ -16,8 +16,8 @@ geom_contour2(mapping = NULL, data = NULL, stat = "contour2",
 
 stat_contour2(mapping = NULL, data = NULL, geom = "contour",
   position = "identity", ..., breaks = scales::fullseq, bins = NULL,
-  binwidth = NULL, na.rm = FALSE, circular = NULL, show.legend = NA,
-  inherit.aes = TRUE)
+  binwidth = NULL, na.rm = FALSE, xwrap = NULL, ywrap = NULL,
+  show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or

@@ -10,21 +10,23 @@
 \usage{
 geom_streamline(mapping = NULL, data = NULL, stat = "streamline",
   position = "identity", ..., L = 5, res = 1, S = NULL, dt = NULL,
-  circular = NULL, skip = 1, skip.x = skip, skip.y = skip, n = NULL,
-  nx = n, ny = n, jitter = 1, jitter.x = jitter, jitter.y = jitter,
-  arrow.angle = 6, arrow.length = 0.5, arrow.ends = "last",
-  arrow.type = "closed", arrow = grid::arrow(arrow.angle, unit(arrow.length,
-  "lines"), ends = arrow.ends, type = arrow.type), lineend = "butt",
-  na.rm = TRUE, show.legend = NA, inherit.aes = TRUE)
+  xwrap = NULL, ywrap = NULL, skip = 1, skip.x = skip, skip.y = skip,
+  n = NULL, nx = n, ny = n, jitter = 1, jitter.x = jitter,
+  jitter.y = jitter, arrow.angle = 6, arrow.length = 0.5,
+  arrow.ends = "last", arrow.type = "closed",
+  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
+  arrow.ends, type = arrow.type), lineend = "butt", na.rm = TRUE,
+  show.legend = NA, inherit.aes = TRUE)
 
 stat_streamline(mapping = NULL, data = NULL, geom = "streamline",
   position = "identity", ..., L = 5, res = 1, S = NULL, dt = NULL,
-  circular = NULL, skip = 1, skip.x = skip, skip.y = skip, n = NULL,
-  nx = n, ny = n, jitter = 1, jitter.x = jitter, jitter.y = jitter,
-  arrow.angle = 6, arrow.length = 0.5, arrow.ends = "last",
-  arrow.type = "closed", arrow = grid::arrow(arrow.angle, unit(arrow.length,
-  "lines"), ends = arrow.ends, type = arrow.type), lineend = "butt",
-  na.rm = TRUE, show.legend = NA, inherit.aes = TRUE)
+  xwrap = NULL, ywrap = NULL, skip = 1, skip.x = skip, skip.y = skip,
+  n = NULL, nx = n, ny = n, jitter = 1, jitter.x = jitter,
+  jitter.y = jitter, arrow.angle = 6, arrow.length = 0.5,
+  arrow.ends = "last", arrow.type = "closed",
+  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
+  arrow.ends, type = arrow.type), lineend = "butt", na.rm = TRUE,
+  show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -64,6 +66,10 @@ to the paired geom/stat.}
 \item{S}{optional numeric number of timesteps for integration}
 
 \item{dt}{optional numeric size "timestep" for integration}
+
+\item{xwrap}{vector of length two used to wrap the circulad dimension}
+
+\item{ywrap}{vector of length two used to wrap the circulad dimension}
 
 \item{skip}{numeric specifying number of gridpoints not to draw
 in the x and y direction.}
@@ -178,8 +184,9 @@ geopotential[, gh.z := Anomaly(gh), by = .(lat)]
 geopotential[, c("u", "v") := GeostrophicWind(gh.z, lon, lat)]
 
 (g <- ggplot(geopotential, aes(lon, lat)) +
-    geom_contour2(aes(z = gh.z), circular = "x") +
-    geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), L = 60, circular = "x"))
+    geom_contour2(aes(z = gh.z), xwrap = c(0, 360)) +
+    geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), L = 60,
+                    xwrap = c(0, 360)))
 
 # The circular parameter is particularly important for polar coordinates
 g + coord_polar()
@@ -196,7 +203,8 @@ ggplot(geopotential, aes(lon, lat)) +
 ggplot(geopotential, aes(lon, lat)) +
     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v), alpha = ..step..,
                         color = sqrt(..dx..^2 + ..dy..^2), size = ..step..),
-                        L = 40, circular = "x", res = 2, arrow = NULL, lineend = "round") +
+                        L = 40, xwrap = c(0, 360), res = 2, arrow = NULL,
+                        lineend = "round") +
     scale_size(range = c(0, 0.6))
 
 \dontrun{

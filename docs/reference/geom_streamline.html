@@ -176,7 +176,7 @@ a call to a position adjustment function.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other arguments passed on to <code>layer()</code>. These are
+      <td><p>Other arguments passed on to <code>layer()</code>. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 <code>color = "red"</code> or <code>size = 3</code>. They may also be parameters
 to the paired geom/stat.</p></td>
@@ -196,11 +196,6 @@ to the paired geom/stat.</p></td>
     <tr>
       <th>dt</th>
       <td><p>optional numeric size "timestep" for integration</p></td>
-    </tr>
-    <tr>
-      <th>circular</th>
-      <td><p>either NULL, "x" or "y" indicating which dimension is circular,
-if any.</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -331,7 +326,7 @@ regular grid, for now.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
-  <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='RepeatCircular.html'>RepeatCircular</a></code>,
+  <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='WrapCircular.html'>WrapCircular</a></code>,
   <code><a href='geom_arrow.html'>geom_arrow</a></code>, <code><a href='geom_contour2.html'>geom_contour2</a></code>,
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
@@ -374,9 +369,15 @@ regular grid, for now.</p>
 #&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.0000000</div><div class='input'>
 (<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>geopotential</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='geom_contour2.html'>geom_contour2</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.z</span>), <span class='kw'>circular</span> <span class='kw'>=</span> <span class='st'>"x"</span>) +
-    <span class='fu'>geom_streamline</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlon</a></span>(<span class='no'>u</span>, <span class='no'>lat</span>), <span class='kw'>dy</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlat</a></span>(<span class='no'>v</span>)), <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>circular</span> <span class='kw'>=</span> <span class='st'>"x"</span>))</div><div class='img'><img src='geom_streamline-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'>geom_streamline</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlon</a></span>(<span class='no'>u</span>, <span class='no'>lat</span>), <span class='kw'>dy</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlat</a></span>(<span class='no'>v</span>)), <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>circular</span> <span class='kw'>=</span> <span class='st'>"x"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'RepeatCircular' is deprecated.</span>
+#&gt; <span class='warning'>Use 'WrapCircular' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated")</span></div><div class='output co'>#&gt; <span class='warning'>Warning: is.na() applied to non-(list or vector) of type 'closure'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: is.na() applied to non-(list or vector) of type 'closure'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_streamline()`:</span>
+#&gt; <span class='warning'>Argument 'x' to 'setDT' should be a 'list', 'data.frame' or 'data.table'</span></div><div class='img'><img src='geom_streamline-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># The circular parameter is particularly important for polar coordinates</span>
-<span class='no'>g</span> + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='img'><img src='geom_streamline-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>g</span> + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: 'RepeatCircular' is deprecated.</span>
+#&gt; <span class='warning'>Use 'WrapCircular' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated")</span></div><div class='output co'>#&gt; <span class='warning'>Warning: is.na() applied to non-(list or vector) of type 'closure'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: is.na() applied to non-(list or vector) of type 'closure'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_streamline()`:</span>
+#&gt; <span class='warning'>Argument 'x' to 'setDT' should be a 'list', 'data.frame' or 'data.table'</span></div><div class='img'><img src='geom_streamline-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If u and v are not converted into degrees/second, the resulting</span>
 <span class='co'># streamlines have problems, specially near the pole.</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>geopotential</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
@@ -389,7 +390,10 @@ regular grid, for now.</p>
     <span class='fu'>geom_streamline</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlon</a></span>(<span class='no'>u</span>, <span class='no'>lat</span>), <span class='kw'>dy</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlat</a></span>(<span class='no'>v</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='no'>..step..</span>,
                         <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>sqrt</span>(<span class='no'>..dx..</span>^<span class='fl'>2</span> + <span class='no'>..dy..</span>^<span class='fl'>2</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='no'>..step..</span>),
                         <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>circular</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lineend</span> <span class='kw'>=</span> <span class='st'>"round"</span>) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_size'>scale_size</a></span>(<span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0.6</span>))</div><div class='img'><img src='geom_streamline-4.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_size'>scale_size</a></span>(<span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0.6</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'RepeatCircular' is deprecated.</span>
+#&gt; <span class='warning'>Use 'WrapCircular' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated")</span></div><div class='output co'>#&gt; <span class='warning'>Warning: is.na() applied to non-(list or vector) of type 'closure'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: is.na() applied to non-(list or vector) of type 'closure'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_streamline()`:</span>
+#&gt; <span class='warning'>Argument 'x' to 'setDT' should be a 'list', 'data.frame' or 'data.table'</span></div><div class='img'><img src='geom_streamline-4.png' alt='' width='700' height='433' /></div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='co'># Using topographic information to simulate "rivers" from slope</span>
 <span class='no'>topo</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GetTopography.html'>GetTopography</a></span>(<span class='fl'>295</span>, -<span class='fl'>55</span>+<span class='fl'>360</span>, -<span class='fl'>30</span>, -<span class='fl'>42</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>20</span>)  <span class='co'># needs internet!</span>

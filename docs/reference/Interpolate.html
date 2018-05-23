@@ -152,7 +152,9 @@ grid with bilinear interpolation.</p>
 
     <p><code>formula</code> must be of the form VAR1 | VAR2 ~ X + Y where VAR1, VAR2, etc...
 are the names of the variables to interpolate and X and Y the names of the
-x and y values, respectively.</p>
+x and y values, respectively. It is also possible to pass only values of x,
+in which case, regular linear interpolation is performed and y.out, if exists,
+is ignored with a warning.</p>
 <p>If <code>grid = TRUE</code>, <code>x.out</code> and <code>y.out</code> must define the values of a regular
 grid. If <code>grid = FALSE</code>, they define the locations where to interpolate.</p>
     

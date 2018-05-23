@@ -133,7 +133,16 @@ binwidth &lt;-<span class="st"> </span><span class="fl">0.01</span>
 <span class="st">    </span><span class="kw"><a href="reference/scale_divergent.html">scale_fill_divergent</a></span>(<span class="dt">name =</span> <span class="st">"AAO pattern"</span>, 
                          <span class="dt">breaks =</span> <span class="kw"><a href="reference/MakeBreaks.html">MakeBreaks</a></span>(binwidth),
                          <span class="dt">guide =</span> <span class="kw"><a href="reference/guide_colourstrip.html">guide_colorstrip</a></span>()) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</code></pre></div>
+<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()
+<span class="co">#&gt; Warning: 'RepeatCircular' is deprecated.</span>
+<span class="co">#&gt; Use 'WrapCircular' instead.</span>
+<span class="co">#&gt; See help("Deprecated")</span>
+<span class="co">#&gt; Warning in is.na(dx): is.na() applied to non-(list or vector) of type</span>
+<span class="co">#&gt; 'closure'</span>
+<span class="co">#&gt; Warning in is.na(dy): is.na() applied to non-(list or vector) of type</span>
+<span class="co">#&gt; 'closure'</span>
+<span class="co">#&gt; Warning: Computation failed in `stat_streamline()`:</span>
+<span class="co">#&gt; Argument 'x' to 'setDT' should be a 'list', 'data.frame' or 'data.table'</span></code></pre></div>
 <p><img src="README-field-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># AAO signal</span>
 g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao<span class="op">$</span>right, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, gh.t.w)) <span class="op">+</span>

@@ -164,7 +164,7 @@ a call to a position adjustment function.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other arguments passed on to <code>layer()</code>. These are
+      <td><p>Other arguments passed on to <code>layer()</code>. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 <code>color = "red"</code> or <code>size = 3</code>. They may also be parameters
 to the paired geom/stat.</p></td>
@@ -275,7 +275,7 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
-  <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='RepeatCircular.html'>RepeatCircular</a></code>,
+  <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='WrapCircular.html'>WrapCircular</a></code>,
   <code><a href='geom_contour2.html'>geom_contour2</a></code>,
   <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
   <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
@@ -299,7 +299,7 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>field</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>x</span>, <span class='no'>y</span>)) +
     <span class='fu'>geom_arrow</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>mag</span> <span class='kw'>=</span> <span class='no'>V</span>, <span class='kw'>angle</span> <span class='kw'>=</span> <span class='no'>dir</span>)) +
-    <span class='fu'>scale_mag</span>()</div><div class='output co'>#&gt; <span class='message'>geom_arrow with preserve = FALSE works best with a fixed aspect ratio</span></div><div class='img'><img src='geom_arrow-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'>scale_mag</span>()</div><div class='output co'>#&gt; <span class='message'>geom_arrow with preserve = FALSE works best with a fixed aspect ratio</span></div><div class='output co'>#&gt; <span class='error'>Error in guide_train.vector(guide, scale, output): unused argument (output)</span></div><div class='img'><img src='geom_arrow-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

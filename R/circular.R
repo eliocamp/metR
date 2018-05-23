@@ -13,11 +13,11 @@
     return(r)
 }
 
-circular <- function(x, range = NA) {
-    class(x) <- c(class(x), "circular")
-    x <- set.range(x, range)
-    fold(x)
-}
+# circular <- function(x, range = NA) {
+#     class(x) <- c(class(x), "circular")
+#     x <- set.range(x, range)
+#     # fold(x)
+# }
 
 # x <- circular(1:360, range = c(0, 360))
 

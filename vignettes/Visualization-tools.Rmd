@@ -231,9 +231,9 @@ Streamlines are paths tangential to a vector field and provide an intuitive way 
 
 ```{r}
 (g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
-     stat_contour_fill(aes(z = air.z), circular = "x") +
+     stat_contour_fill(aes(z = air.z), xwrap = c(0, 360)) +
      geom_streamline(aes(dx = t.dy, dy = -t.dx), L = 10, res = 2,   
-                     arrow.length = 0.3, circular = "x") + 
+                     arrow.length = 0.3, xwrap = c(0, 360)) + 
      scale_y_latitude(limits = c(-90, 0)) +
      scale_x_longitude())
 ```
@@ -252,7 +252,7 @@ g + coord_polar()
 ggplot(temperature[lev == 500], aes(lon, lat)) +
     geom_streamline(aes(dx = t.dy, dy = -t.dx, size = ..step.., alpha = ..step..,
                         color = sqrt(..dx..^2 + ..dy..^2)), arrow = NULL,
-                    L = 10, res = 2, circular = "x", lineend = "round") + 
+                    L = 10, res = 2, xwrap = c(0, 360), lineend = "round") + 
     scale_y_latitude(limits = c(-90, 0)) +
     scale_x_longitude() +
     viridis::scale_color_viridis(guide = "none") +
@@ -267,7 +267,7 @@ g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
     geom_streamline(aes(dx = t.dy, dy = -t.dx,
                         frame = ..step.., cumulative = TRUE, 
                         color = sqrt(..dx..^2 + ..dy..^2)), arrow = NULL,
-                    S = 10, res = 2, circular = "x", lineend = "round") + 
+                    S = 10, res = 2, xwrap = c(0, 360), lineend = "round") + 
     scale_y_latitude(limits = c(-90, 0)) +
     scale_x_longitude() +
     viridis::scale_color_viridis(guide = "none") +
@@ -307,9 +307,9 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
 
 By default, colors are mapped to the values *in between* breaks, so there's a one-to-one mapping between colors shown in the plot and in the guide. From an aesthetic standpoint, it's much closer to the `cbarn` command from `GrADS`, which a lot of atmospheric scientists are probably used to.  
 
-## RepeatCircular
+## WrapCircular
 
-The function `RepeatCircular()` is an ugly kludge to fix an issue when using polar coordinates in ggplot2 in which contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.
+The function `WrapCircular()` is an ugly kludge to fix an issue when using polar coordinates in ggplot2 in which contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.
 
 See how in the figure on the left, contours that cross the 0° longitude mark are cut, but they join correctly in the figure on the right. 
 
@@ -321,14 +321,15 @@ See how in the figure on the left, contours that cross the 0° longitude mark ar
      scale_y_latitude(limits = c(-90, -20)) +
      coord_polar())
 
-g %+% RepeatCircular(temperature[lev == 300])    # change the data. 
+g %+% WrapCircular(temperature[lev == 300], 
+                   wrap = c(0, 360))    # change the data. 
 ```
 
 This behaviour is now also implemented directly in `geom_contour2()` and `geom_contour_fill()`.
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-    geom_contour2(binwidth = 1.5, circular = "x") +
+    geom_contour2(binwidth = 1.5, xwrap = c(0, 360)) +
     scale_fill_divergent() +
     scale_x_longitude() +
     scale_y_latitude(limits = c(-90, -20)) +

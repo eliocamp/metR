@@ -119,7 +119,7 @@
     <p>Converts longitude from [0, 360) to [-180, 180) and vice versa.</p>
     
 
-    <pre class="usage"><span class='fu'>ConvertLongitude</span>(<span class='no'>lon</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>360</span>, <span class='fl'>180</span>))</pre>
+    <pre class="usage"><span class='fu'>ConvertLongitude</span>(<span class='no'>lon</span>, <span class='no'>group</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'>waiver</span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -129,22 +129,44 @@
       <td><p>numeric vector of longitude</p></td>
     </tr>
     <tr>
+      <th>group</th>
+      <td><p>optional vector of groups (the same length as longitude)
+that will be split on the edges (see examples)</p></td>
+    </tr>
+    <tr>
       <th>from</th>
-      <td><p>numeric vector representing the convention of the input vector</p></td>
+      <td><p>optional explicitly say from which convension to convert</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A numeric vector the same length of lon.</p>
+    <p>If <code>group</code> is missing, a numeric vector the same length of lon.
+Else, a list with vectors <code>lon</code> and <code>group</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='fu'>library</span>(<span class='no'>data.table</span>)
 <span class='fu'>data</span>(<span class='no'>geopotential</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>ConvertLongitude</span>(<span class='no'>lon</span>, <span class='fl'>360</span>)))</div><div class='img'><img src='ConvertLongitude-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>ConvertLongitude</span>(<span class='no'>lon</span>)))</div><div class='img'><img src='ConvertLongitude-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>map</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/setDT'>setDT</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/map_data'>map_data</a></span>(<span class='st'>"world"</span>))
+<span class='no'>map</span>[, <span class='fu'>c</span>(<span class='st'>"lon"</span>, <span class='st'>"group2"</span>) <span class='kw'>:=</span> <span class='fu'>ConvertLongitude</span>(<span class='no'>long</span>, <span class='no'>group</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fl'>180</span>)]</div><div class='output co'>#&gt;             long      lat group  order  region subregion       lon group2
+#&gt;     1: -69.89912 12.45200     1      1   Aruba      &lt;NA&gt; 290.10088    1_2
+#&gt;     2: -69.89571 12.42300     1      2   Aruba      &lt;NA&gt; 290.10429    1_2
+#&gt;     3: -69.94219 12.43853     1      3   Aruba      &lt;NA&gt; 290.05781    1_2
+#&gt;     4: -70.00415 12.50049     1      4   Aruba      &lt;NA&gt; 289.99585    1_2
+#&gt;     5: -70.06612 12.54697     1      5   Aruba      &lt;NA&gt; 289.93388    1_2
+#&gt;    ---                                                                   
+#&gt; 99334:  12.43838 41.90620  1627 100960 Vatican   enclave  12.43838   1627
+#&gt; 99335:  12.43057 41.90547  1627 100961 Vatican   enclave  12.43057   1627
+#&gt; 99336:  12.42754 41.90073  1627 100962 Vatican   enclave  12.42754   1627
+#&gt; 99337:  12.43057 41.89756  1627 100963 Vatican   enclave  12.43057   1627
+#&gt; 99338:  12.43916 41.89839  1627 100964 Vatican   enclave  12.43916   1627</div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>map</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>group2</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_path</a></span>()</div><div class='img'><img src='ConvertLongitude-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

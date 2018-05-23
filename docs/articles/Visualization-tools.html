@@ -85,7 +85,7 @@
       <h1>Visualization tools</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2018-05-11</h4>
+            <h4 class="date">2018-05-22</h4>
       
       <small>Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Visualization-tools.Rmd"><code>vignettes/Visualization-tools.Rmd</code></a></small>
 
@@ -277,11 +277,12 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <a href="#geom_streamline" class="anchor"></a>geom_streamline</h2>
 <p>Streamlines are paths tangential to a vector field and provide an intuitive way of visualizing vector fields. <code><a href="../reference/geom_streamline.html">geom_streamline()</a></code> computes streamlines via Euler integration.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">500</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
-<span class="st">     </span><span class="kw"><a href="../reference/geom_contour_fill.html">stat_contour_fill</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> air.z), <span class="dt">circular =</span> <span class="st">"x"</span>) <span class="op">+</span>
+<span class="st">     </span><span class="kw"><a href="../reference/geom_contour_fill.html">stat_contour_fill</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> air.z), <span class="dt">xwrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>)) <span class="op">+</span>
 <span class="st">     </span><span class="kw"><a href="../reference/geom_streamline.html">geom_streamline</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> t.dy, <span class="dt">dy =</span> <span class="op">-</span>t.dx), <span class="dt">L =</span> <span class="dv">10</span>, <span class="dt">res =</span> <span class="dv">2</span>,   
-                     <span class="dt">arrow.length =</span> <span class="fl">0.3</span>, <span class="dt">circular =</span> <span class="st">"x"</span>) <span class="op">+</span><span class="st"> </span>
+                     <span class="dt">arrow.length =</span> <span class="fl">0.3</span>, <span class="dt">xwrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>)) <span class="op">+</span><span class="st"> </span>
 <span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>)) <span class="op">+</span>
-<span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>())</code></pre></div>
+<span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>())
+<span class="co">#&gt; Warning: Ignoring unknown parameters: xwrap</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
 <p>There are several parametres that control de feel of the result. <code>L</code> and <code>res</code> control the length and resolution, while the <code>skip</code> parameters change the amount of the streamlines. More in depth control over the simulation can be accomplished by the <code>S</code> and <code>dt</code> parameters.</p>
 <p>Since streamlines imply a tight relationship between the vector field and the spatial dimensions, it’s important that their units are compatible. A wind field in m/s in a lonitude-latitude grid should first be converted into degrees/s. The functions <code><a href="../reference/spherical.html">dlon()</a></code> and <code><a href="../reference/spherical.html">dlat()</a></code> are an easy way of doing this. This tight coupling also means that they are robuts to coordinate transformations.</p>
@@ -291,24 +292,26 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">500</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_streamline.html">geom_streamline</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> t.dy, <span class="dt">dy =</span> <span class="op">-</span>t.dx, <span class="dt">size =</span> ..step.., <span class="dt">alpha =</span> ..step..,
                         <span class="dt">color =</span> <span class="kw">sqrt</span>(..dx..<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>..dy..<span class="op">^</span><span class="dv">2</span>)), <span class="dt">arrow =</span> <span class="ot">NULL</span>,
-                    <span class="dt">L =</span> <span class="dv">10</span>, <span class="dt">res =</span> <span class="dv">2</span>, <span class="dt">circular =</span> <span class="st">"x"</span>, <span class="dt">lineend =</span> <span class="st">"round"</span>) <span class="op">+</span><span class="st"> </span>
+                    <span class="dt">L =</span> <span class="dv">10</span>, <span class="dt">res =</span> <span class="dv">2</span>, <span class="dt">xwrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>), <span class="dt">lineend =</span> <span class="st">"round"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
 <span class="st">    </span>viridis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/viridis/topics/scale_viridis">scale_color_viridis</a></span>(<span class="dt">guide =</span> <span class="st">"none"</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_size">scale_size</a></span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">guide =</span> <span class="st">"none"</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_alpha">scale_alpha</a></span>(<span class="dt">guide =</span> <span class="st">"none"</span>)</code></pre></div>
+<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_alpha">scale_alpha</a></span>(<span class="dt">guide =</span> <span class="st">"none"</span>)
+<span class="co">#&gt; Warning: Ignoring unknown parameters: xwrap</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 <p><code>step</code> can also be mapped to the <code>frame</code> aesthetic used by <code>gganimate</code> to render animations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">500</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/geom_streamline.html">geom_streamline</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> t.dy, <span class="dt">dy =</span> <span class="op">-</span>t.dx,
                         <span class="dt">frame =</span> ..step.., <span class="dt">cumulative =</span> <span class="ot">TRUE</span>, 
                         <span class="dt">color =</span> <span class="kw">sqrt</span>(..dx..<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>..dy..<span class="op">^</span><span class="dv">2</span>)), <span class="dt">arrow =</span> <span class="ot">NULL</span>,
-                    <span class="dt">S =</span> <span class="dv">10</span>, <span class="dt">res =</span> <span class="dv">2</span>, <span class="dt">circular =</span> <span class="st">"x"</span>, <span class="dt">lineend =</span> <span class="st">"round"</span>) <span class="op">+</span><span class="st"> </span>
+                    <span class="dt">S =</span> <span class="dv">10</span>, <span class="dt">res =</span> <span class="dv">2</span>, <span class="dt">xwrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>), <span class="dt">lineend =</span> <span class="st">"round"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
 <span class="st">    </span>viridis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/viridis/topics/scale_viridis">scale_color_viridis</a></span>(<span class="dt">guide =</span> <span class="st">"none"</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_size">scale_size</a></span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">guide =</span> <span class="st">"none"</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_alpha">scale_alpha</a></span>(<span class="dt">guide =</span> <span class="st">"none"</span>)
+<span class="co">#&gt; Warning: Ignoring unknown parameters: xwrap</span>
 <span class="co">#&gt; Warning: Ignoring unknown aesthetics: frame, cumulative</span>
 
 <span class="cf">if</span>(<span class="kw">require</span>(gganimate)) <span class="kw"><a href="http://www.rdocumentation.org/packages/gganimate/topics/gganimate">gganimate</a></span>(g, <span class="dt">title_frame =</span> <span class="ot">FALSE</span>)</code></pre></div>
@@ -340,10 +343,10 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
 <p>By default, colors are mapped to the values <em>in between</em> breaks, so there’s a one-to-one mapping between colors shown in the plot and in the guide. From an aesthetic standpoint, it’s much closer to the <code>cbarn</code> command from <code>GrADS</code>, which a lot of atmospheric scientists are probably used to.</p>
 </div>
-<div id="repeatcircular" class="section level2">
+<div id="wrapcircular" class="section level2">
 <h2 class="hasAnchor">
-<a href="#repeatcircular" class="anchor"></a>RepeatCircular</h2>
-<p>The function <code><a href="../reference/RepeatCircular.html">RepeatCircular()</a></code> is an ugly kludge to fix an issue when using polar coordinates in ggplot2 in which contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.</p>
+<a href="#wrapcircular" class="anchor"></a>WrapCircular</h2>
+<p>The function <code><a href="../reference/WrapCircular.html">WrapCircular()</a></code> is an ugly kludge to fix an issue when using polar coordinates in ggplot2 in which contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.</p>
 <p>See how in the figure on the left, contours that cross the 0° longitude mark are cut, but they join correctly in the figure on the right.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> air.z)) <span class="op">+</span>
 <span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour</a></span>(<span class="dt">binwidth =</span> <span class="fl">1.5</span>) <span class="op">+</span>
@@ -352,11 +355,12 @@ v[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</sp
 <span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
 <span class="st">     </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>())
 
-g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="../reference/RepeatCircular.html">RepeatCircular</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>])    <span class="co"># change the data. </span></code></pre></div>
+g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="../reference/WrapCircular.html">WrapCircular</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>], 
+                   <span class="dt">wrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>))    <span class="co"># change the data. </span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-18-1.png" width="316.8"><img src="Visualization-tools_files/figure-html/unnamed-chunk-18-2.png" width="316.8"></p>
 <p>This behaviour is now also implemented directly in <code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> and <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> air.z)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="../reference/geom_contour2.html">geom_contour2</a></span>(<span class="dt">binwidth =</span> <span class="fl">1.5</span>, <span class="dt">circular =</span> <span class="st">"x"</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw"><a href="../reference/geom_contour2.html">geom_contour2</a></span>(<span class="dt">binwidth =</span> <span class="fl">1.5</span>, <span class="dt">xwrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
@@ -409,7 +413,7 @@ g <span class="op">%+%</span><span class="st"> </span><span class="kw"><a href="
       <li>
 <a href="#other-goodies">Other goodies</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#guide_colorstrip">guide_colorstrip</a></li>
-      <li><a href="#repeatcircular">RepeatCircular</a></li>
+      <li><a href="#wrapcircular">WrapCircular</a></li>
       <li><a href="#dividetimeseries">DivideTimeseries</a></li>
       <li><a href="#geom_relief">geom_relief</a></li>
       </ul>

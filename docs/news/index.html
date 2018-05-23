@@ -145,6 +145,10 @@
 <li>New <code><a href="../reference/geom_relief.html">geom_shadow()</a></code> for casting shadows in topographic maps.</li>
 <li>New <code><a href="../reference/FitLm.html">FitLm()</a></code> for getting fast estimates of linear fits.</li>
 <li>New <code><a href="../reference/waves.html">FilterWave()</a></code> for filtering waves.</li>
+<li>Contour functions now compute breaks globaly (using all the data) instead of per panel. This means default intercomparabilty between facetwed plots.</li>
+<li>
+<code><a href="../reference/WrapCircular.html">RepeatCircular()</a></code> is deprecated in favour if <code><a href="../reference/WrapCircular.html">WrapCircular()</a></code> which is more robust.</li>
+<li>The way that <code><a href="../reference/geom_contour2.html">stat_contour2()</a></code> and <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code> handle circular dimensions has changed. Now you need to use <code>xwrap</code>/<code>ywrap</code> to explicitly set the domain. This makes the implementation more robust and also allow to easily wrap longitudes.</li>
 </ul>
 </div>
     <div id="metr-0-1" class="section level1">
@@ -200,7 +204,7 @@
 <li>
 <code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> and <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> gain a <code>circular</code> argument to specify a circular dimension.</li>
 <li>
-<code><a href="../reference/RepeatCircular.html">RepeatCircular()</a></code> renamed to <code><a href="../reference/RepeatCircular.html">RepeatCircular()</a></code>.</li>
+<code><a href="../reference/WrapCircular.html">RepeatCircular()</a></code> renamed to <code><a href="../reference/WrapCircular.html">RepeatCircular()</a></code>.</li>
 <li>
 <code><a href="../reference/map_labels.html">LonLabel()</a></code> and <code><a href="../reference/map_labels.html">LatLabel()</a></code> aid labeling latitude and longitude.</li>
 <li>Changed interface of <code><a href="../reference/EOF.html">EOF()</a></code> and <code><a href="../reference/ImputeEOF.html">ImputeEOF()</a></code>.</li>

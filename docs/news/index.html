@@ -148,7 +148,7 @@
 <li>Contour functions now compute breaks globaly (using all the data) instead of per panel. This means default intercomparabilty between facetwed plots.</li>
 <li>
 <code><a href="../reference/WrapCircular.html">RepeatCircular()</a></code> is deprecated in favour if <code><a href="../reference/WrapCircular.html">WrapCircular()</a></code> which is more robust.</li>
-<li>The way that <code><a href="../reference/geom_contour2.html">stat_contour2()</a></code> and <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code> handle circular dimensions has changed. Now you need to use <code>xwrap</code>/<code>ywrap</code> to explicitly set the domain. This makes the implementation more robust and also allow to easily wrap longitudes.</li>
+<li>The way that <code><a href="../reference/geom_contour2.html">stat_contour2()</a></code>, <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code> and <code>geom_streamlines()</code> handle circular dimensions has changed. Now you need to use <code>xwrap</code>/<code>ywrap</code> to explicitly set the domain. This makes the implementation more robust and also allow to easily wrap to an arbitrary domain.</li>
 </ul>
 </div>
     <div id="metr-0-1" class="section level1">

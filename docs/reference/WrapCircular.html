@@ -121,9 +121,7 @@ range." />
 range.</p>
     
 
-    <pre class="usage"><span class='fu'>WrapCircular</span>(<span class='no'>x</span>, <span class='kw'>circular</span> <span class='kw'>=</span> <span class='st'>"lon"</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>))
-
-<span class='fu'>RepeatCircular</span>(<span class='no'>x</span>, <span class='kw'>circular</span> <span class='kw'>=</span> <span class='st'>"lon"</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>WrapCircular</span>(<span class='no'>x</span>, <span class='kw'>circular</span> <span class='kw'>=</span> <span class='st'>"lon"</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,7 +172,7 @@ range.</p>
 
 <span class='co'># This plot has problems in lon = 0</span>
 <span class='no'>g</span></div><div class='img'><img src='WrapCircular-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># But using RepeatCircular solves it.</span>
+<span class='co'># But using WrapCircular solves it.</span>
 <span class='no'>g</span> <span class='kw'>%+%</span> <span class='fu'>WrapCircular</span>(<span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='st'>"lon"</span>, <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>))</div><div class='img'><img src='WrapCircular-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Aditionally data can be just repeatet to the right and</span>
 <span class='co'># left</span>

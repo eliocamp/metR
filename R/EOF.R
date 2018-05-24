@@ -95,7 +95,7 @@
 #' @import data.table
 #' @import Formula
 #' @import formula.tools
-#' @import Matrix
+#' @importFrom Matrix sparseMatrix
 #' @importFrom stats as.formula quantile varimax
 EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
@@ -109,12 +109,6 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
         formula <- Formula::as.Formula(paste0(value.var, " ~ ", f))
     }
 
-    if (is.null(data)) {
-        formula <- Formula::as.Formula(formula)
-        data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
-    }
-    data <- setDT(copy(data))
-
     f <- as.character(formula)
     f <- stringr::str_split(f,"~", n = 2)[[1]]
 
@@ -125,6 +119,21 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
 
     row.vars <- stringr::str_squish(stringr::str_split(matrix.vars[1], "\\+")[[1]])
     col.vars <- stringr::str_squish(stringr::str_split(matrix.vars[2], "\\+")[[1]])
+
+    if (is.null(data)) {
+        formula <- Formula::as.Formula(formula)
+        data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
+    } else {
+        # Check if columns are indata
+        all.cols <- c(value.var, row.vars, col.vars)
+        missing.cols <- all.cols[!(all.cols %in% colnames(data))]
+        if (length(missing.cols) != 0) {
+            stop(paste0("Columns not found in data: ", paste0(missing.cols, collapse = ", ")))
+        }
+        data <- setDT(data)[, (all.cols), with = FALSE]
+    }
+
+    setDT(data)
 
     data[, row__ := .GRP, by = c(row.vars)]
     data[, col__ := .GRP, by = c(col.vars)]

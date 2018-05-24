@@ -126,11 +126,11 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     row.vars <- stringr::str_squish(stringr::str_split(matrix.vars[1], "\\+")[[1]])
     col.vars <- stringr::str_squish(stringr::str_split(matrix.vars[2], "\\+")[[1]])
 
-    data[, row__ := as.integer(.GRP), by = c(row.vars)]
-    data[, col__ := as.integer(.GRP), by = c(col.vars)]
+    data[, row__ := .GRP, by = c(row.vars)]
+    data[, col__ := .GRP, by = c(col.vars)]
 
-    g <- Matrix::sparseMatrix(data$row__,
-                              data$col__,
+    g <- Matrix::sparseMatrix(data[["row__"]],
+                              data[["col__"]],
                               x = data[[value.var]])
 
     if (is.null(n)) n <- seq_len(min(ncol(g), nrow(g)))

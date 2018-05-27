@@ -88,7 +88,6 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              na.rm = FALSE, circular = NULL, xwrap = NULL,
                              ywrap = NULL) {
         data <- data[!(is.na(data$x) | is.na(data$y)), ]
-
         if (na.rm) {
             data <- data[!is.na(data$z), ]
         } else {
@@ -263,11 +262,10 @@ area <- function(x, y) {
             points[, inside := IsInside(x, y, cur.piece$x, cur.piece$y)]
         }
 
-        correction <- (breaks[i + sign(points$z - level)] - level)/2
-
         # Change sign of correction if point is outside.
         corr.sign <- as.numeric(points$inside)*2 - 1
-        correction <- correction*corr.sign
+
+        correction <- (breaks[i + sign(points$z - level)*corr.sign] - level)/2
 
         cont[piece == p, int.level := level + correction]
     }

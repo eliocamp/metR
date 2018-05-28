@@ -55,22 +55,41 @@ Percentile <- function(x) {
 
 #' Magnitude of a vector
 #'
-#' Computes the magnitude of a vector.
+#' Computes the magnitude of a vector of any dimension.
 #'
-#' @param x,y numeric vectors of vector components
+#' @param ... numeric vectors of coordinates or list of coordinates
 #'
 #' @return
-#' A numeric vector the same length as x and y that is \eqn{\sqrt(x^2 + y^2)}.
+#' A numeric vector the same length as each elemenet of ...
+#' that is \eqn{\sqrt(x^2 + y^2 + ...)}.
 #'
 #' @details
 #' Helpful to save keystrokes and gain readability when computing wind
 #' (or any other vector quantity) magnitude.
 #'
+#' @examples
+#' Mag(10, 10)
+#' Mag(10, 10, 10, 10)
+#' Mag(list(10, 10, 10, 10))
+#'
+#' # There's no vector recicling!
+#' \dontrun{
+#' Mag(1, 1:2)
+#' }
+#'
 #' @family utilities
 #' @export
-Mag <- function(x, y) {
-    sqrt(x^2 + y^2)
+Mag <- function(...) {
+    coords <- list(...)
+    if (is.list(coords[[1]])) coords <- coords[[1]]
+    N <- lengths(coords, use.names = FALSE)
+    if (sum(N != N[1]) != 0) stop("all variables must have the same length")
+
+    coords <- lapply(coords, `^`, 2)
+    sqrt(Reduce(`+`, coords))
 }
+
+
 
 #' Extended logical operators
 #'
@@ -363,13 +382,13 @@ dlat <- function(dy, a = 6731000) {
 #' @export
 #' @rdname spherical
 dx <- function(dlon, lat, a = 6731000) {
-        return(dlon*pi/180*a*cos(lat*pi/180))
+    return(dlon*pi/180*a*cos(lat*pi/180))
 }
 
 #' @export
 #' @rdname spherical
 dy <- function(dlat, a = 6731000) {
-        return(dlat*a*pi/180)
+    return(dlat*a*pi/180)
 }
 
 #' @importFrom stats line runif var
@@ -384,3 +403,5 @@ if(getRversion() >= "2.15.1") {
           "group", "step", "point", "change", "end", "level", "m", "rotate",
           "x.d", "y.d", "PC", "step2", "runif", "N", "angle", "var", "head"))
 }
+
+

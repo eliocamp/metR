@@ -4,20 +4,32 @@
 \alias{Mag}
 \title{Magnitude of a vector}
 \usage{
-Mag(x, y)
+Mag(...)
 }
 \arguments{
-\item{x, y}{numeric vectors of vector components}
+\item{...}{numeric vectors of coordinates or list of coordinates}
 }
 \value{
-A numeric vector the same length as x and y that is \eqn{\sqrt(x^2 + y^2)}.
+A numeric vector the same length as each elemenet of ...
+that is \eqn{\sqrt(x^2 + y^2 + ...)}.
 }
 \description{
-Computes the magnitude of a vector.
+Computes the magnitude of a vector of any dimension.
 }
 \details{
 Helpful to save keystrokes and gain readability when computing wind
 (or any other vector quantity) magnitude.
+}
+\examples{
+Mag(10, 10)
+Mag(10, 10, 10, 10)
+Mag(list(10, 10, 10, 10))
+
+# There's no vector recicling!
+\dontrun{
+Mag(1, 1:2)
+}
+
 }
 \seealso{
 Other utilities: \code{\link{Anomaly}},

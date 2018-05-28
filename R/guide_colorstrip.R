@@ -244,14 +244,28 @@ guide_gengrob.colorstrip <- function(guide, theme) {
     grob.bar <-
             switch(guide$direction,
                    horizontal = {
-                       bx <- tic_pos.c[-length(tic_pos.c)]
-                       bw <- diff(tic_pos.c)
+                       if (guide$inside) {
+                           bx <- .inside(tic_pos.c)
+                           bx <- c(2*tic_pos.c[1] - bx[1], bx)
+                           bw <- c(diff(bx), 2*(tic_pos.c[length(tic_pos.c)] - bx[length(bx)]))
+                       } else {
+                           bx <- tic_pos.c[-length(tic_pos.c)]
+                           bw <- diff(tic_pos.c)
+                       }
+
                        grid::rectGrob(x = bx, y = 0, vjust = 0, hjust = 0, width = bw, height = barheight.c, default.units = "mm",
                                       gp = gpar(col = NA, fill = guide$bar$colour))
                    },
                    vertical = {
-                       by <- tic_pos.c[-length(tic_pos.c)]
-                       bh <- diff(tic_pos.c)
+                       if (guide$inside) {
+                           by <- .inside(tic_pos.c)
+                           by <- c(2*tic_pos.c[1] - by[1], by)
+                           bh <- c(diff(by), 2*(tic_pos.c[length(tic_pos.c)] - by[length(by)]))
+                       } else {
+                           by <- tic_pos.c[-length(tic_pos.c)]
+                           bh <- diff(tic_pos.c)
+                       }
+
                        grid::rectGrob(x = 0, y = by, vjust = 0, hjust = 0, width = barwidth.c, height = bh, default.units = "mm",
                                       gp = gpar(col = NA, fill = guide$bar$colour))
                    })

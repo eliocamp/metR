@@ -45,8 +45,8 @@ FitLm <- function(y, ..., se = FALSE) {
     real <- complete.cases(X) & !is.na(y)
 
     # If empty, reurn NA with a warning.
-    if (sum(!real) == length(y)) {
-        estimate <- rep(NA, length(regressor))
+    if (sum(real) < 2) {
+        estimate <- rep(NA_real_, length(regressor))
         if (se == TRUE) {
             se <- estimate
             return(list(regressor = regressor,
@@ -57,18 +57,24 @@ FitLm <- function(y, ..., se = FALSE) {
                         estimate = estimate))
         }
     } else {
-        a <- .lm.fit(X[real, ], y[real])
+        X <- X[real, ]
+        y <- y[real]
+        a <- .lm.fit(X, y)
         estimate <- a$coefficients
     }
 
     if (se == TRUE) {
-        sigma <- sum(a$residuals^2)/(nrow(X) - ncol(X))
-        se <- sqrt(diag(chol2inv(chol(t(X)%*%X))*sigma))
+        if (all(a$residuals == 0)) {
+            se <- NA_real_
+        } else {
+            sigma <- sum(a$residuals^2)/(nrow(X) - ncol(X))
+            se <- sqrt(diag(chol2inv(chol(t(X)%*%X)))*sigma)
+        }
         return(list(regressor = regressor,
                     estimate = estimate,
                     se = se))
     } else {
         return(list(regressor = regressor,
                     estimate = estimate))
-    }
+    }s
 }

@@ -83,7 +83,7 @@ Mag <- function(...) {
     coords <- list(...)
     if (is.list(coords[[1]])) coords <- coords[[1]]
     N <- lengths(coords, use.names = FALSE)
-    if (sum(N != N[1]) != 0) stop("all variables must have the same length")
+    if (any(N != N[1])) stop("all variables must have the same length")
 
     coords <- lapply(coords, `^`, 2)
     sqrt(Reduce(`+`, coords))
@@ -237,14 +237,18 @@ JumpBy <- function(x, by, start = 1, fill = NULL) {
 }
 
 
+seq_range <- function(x, by = ggplot2::resolution(x, zero = FALSE),...) {
+    r <- range(x)
+    seq.int(r[1], r[2], by = by, ...)
+}
 
 is.error <- function(x) inherits(x, "try-error")
 
-.tidy2matrix <- function(data, formula, value.var) {
+.tidy2matrix <- function(data, formula, value.var, ...) {
     row.vars <- all.vars(formula[[2]])
     col.vars <- all.vars(formula[[3]])
 
-    g <- data.table::dcast(setDT(data), formula, value.var = value.var)
+    g <- data.table::dcast(setDT(data), formula, value.var = value.var, ...)
 
     dims <- list()
     if (length(col.vars) > 1) {
@@ -344,6 +348,12 @@ message_wrap <- function(...) {
     wrapped <- strwrap(msg, width = getOption("width") - 2)
     message(paste0(wrapped, collapse = "\n"))
 }
+
+.seq_range <- function(x, by = ggplot2::resolution(x, zero = FALSE),...) {
+    r <- range(x)
+    seq.int(r[1], r[2], by = by, ...)
+}
+
 
 
 #' Transform between spherical coordinates and phisical coordinates

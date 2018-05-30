@@ -257,8 +257,10 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
                              skip.y = 1, nx = 10, ny  = 10, jitter.x = 1,
                              jitter.y = 1, xwrap = NULL, ywrap = NULL,
                              min.dist = 0,
-                             L = NULL, res = NULL) {
+                             L = NULL, res = NULL,
+                             no.cache = FALSE) {
 
+        if (no.cache == TRUE) memoise::forget(streamline.f)
         data <- streamline.f(data, dt = dt, S = S, skip.x = skip.x,
                              skip.y = skip.y, nx = nx, ny = ny, jitter.x = jitter.x,
                              jitter.y = jitter.y, xwrap = xwrap, ywrap = ywrap)
@@ -376,14 +378,33 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
 
     field <- field[!is.na(dx) & !is.na(dy)]
 
-    dx.field <- .tidy2matrix(field, x ~ y, value.var = "dx")
-    dx.field <- list(x = dx.field$rowdims[[1]],
-                     y =  dx.field$coldims[[1]],
-                     z =  dx.field$matrix)
-    dy.field <- .tidy2matrix(field, x ~ y, value.var = "dy")
-    dy.field <- list(x = dy.field$rowdims[[1]],
-                     y =  dy.field$coldims[[1]],
-                     z =  dy.field$matrix)
+
+
+    rx <- ggplot2::resolution(as.numeric(field$x), zero = FALSE)
+    ry <- ggplot2::resolution(as.numeric(field$y), zero = FALSE)
+
+    matrix <- Matrix::sparseMatrix(with(field, (x - min(x))/rx + 1),
+                                   with(field, (y - min(y))/ry + 1),
+                                   x = field[["dx"]])
+    dx.field <- list(x = seq_range(field$x, by = rx),
+                     y = seq_range(field$y, by = ry),
+                     z = matrix)
+
+    matrix <- Matrix::sparseMatrix(with(field, (x - min(x))/rx + 1),
+                                   with(field, (y - min(y))/ry + 1),
+                                   x = field[["dy"]])
+    dy.field <- list(x = seq_range(field$x, by = rx),
+                     y = seq_range(field$y, by = ry),
+                     z = matrix)
+
+    # dx.field <- .tidy2matrix(field, x ~ y, value.var = "dx")
+    # dx.field <- list(x = dx.field$rowdims[[1]],
+    #                  y =  dx.field$coldims[[1]],
+    #                  z =  dx.field$matrix)
+    # dy.field <- .tidy2matrix(field, x ~ y, value.var = "dy")
+    # dy.field <- list(x = dy.field$rowdims[[1]],
+    #                  y =  dy.field$coldims[[1]],
+    #                  z =  dy.field$matrix)
 
     force.fun <- function(x, y) {
         dx <- fields::interp.surface(dx.field, cbind(x, y))
@@ -394,19 +415,19 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     range.y <- range(field$y)
     # Build grid
     if (is.null(nx)) {
-        x <- JumpBy(unique(field$x), skip.x + 1)
+        xs <- JumpBy(unique(field$x), skip.x + 1)
     } else {
-        x <- seq(range.x[1], range.x[2], length.out = nx)
+        xs <- seq(range.x[1], range.x[2], length.out = nx)
     }
     if (is.null(ny)) {
-        y <- JumpBy(unique(field$y), skip.y + 1)
+        ys <- JumpBy(unique(field$y), skip.y + 1)
     } else {
-        y <- seq(range.y[1], range.y[2], length.out = ny)
+        ys <- seq(range.y[1], range.y[2], length.out = ny)
     }
     rx <- ggplot2::resolution(field$x, zero = FALSE)
     ry <- ggplot2::resolution(field$y, zero = FALSE)
 
-    points <- as.data.table(expand.grid(x = x, y = y))
+    points <- as.data.table(field[x %in% xs & y %in% ys, .(x = x, y = y)])
 
     set.seed(42)
     points[, x := x + rnorm(.N, 0, rx)*jitter.x]

@@ -15,8 +15,7 @@ vignette: >
 knitr::opts_chunk$set(
 collapse = TRUE,
 message = FALSE,
-comment = "#>"
-)
+comment = "#>")
 ```
 
 One of the "conceptual branches" of `metR` is the *visualization tools*. These are a set of functions that interface with [ggplot2](http://ggplot2.tidyverse.org/index.html) for easier and better plotting of meteorological (an other) fields. 

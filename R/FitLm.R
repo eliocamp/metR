@@ -49,9 +49,11 @@ FitLm <- function(y, ..., se = FALSE) {
         estimate <- rep(NA_real_, length(regressor))
         if (se == TRUE) {
             se <- estimate
+            df <- sum(real) - ncol(X)
             return(list(regressor = regressor,
                         estimate = estimate,
-                        se = se))
+                        se = se,
+                        df = df))
         } else {
             return(list(regressor = regressor,
                         estimate = estimate))
@@ -64,6 +66,7 @@ FitLm <- function(y, ..., se = FALSE) {
     }
 
     if (se == TRUE) {
+        df <- sum(real) - ncol(X)
         if (all(a$residuals == 0)) {
             se <- NA_real_
         } else {
@@ -72,9 +75,10 @@ FitLm <- function(y, ..., se = FALSE) {
         }
         return(list(regressor = regressor,
                     estimate = estimate,
-                    se = se))
+                    se = se,
+                    df = df))
     } else {
         return(list(regressor = regressor,
                     estimate = estimate))
-    }s
+    }
 }

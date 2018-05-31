@@ -378,8 +378,6 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
 
     field <- field[!is.na(dx) & !is.na(dy)]
 
-
-
     rx <- ggplot2::resolution(as.numeric(field$x), zero = FALSE)
     ry <- ggplot2::resolution(as.numeric(field$y), zero = FALSE)
 
@@ -397,15 +395,6 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
                      y = seq_range(field$y, by = ry),
                      z = matrix)
 
-    # dx.field <- .tidy2matrix(field, x ~ y, value.var = "dx")
-    # dx.field <- list(x = dx.field$rowdims[[1]],
-    #                  y =  dx.field$coldims[[1]],
-    #                  z =  dx.field$matrix)
-    # dy.field <- .tidy2matrix(field, x ~ y, value.var = "dy")
-    # dy.field <- list(x = dy.field$rowdims[[1]],
-    #                  y =  dy.field$coldims[[1]],
-    #                  z =  dy.field$matrix)
-
     force.fun <- function(x, y) {
         dx <- fields::interp.surface(dx.field, cbind(x, y))
         dy <- fields::interp.surface(dy.field, cbind(x, y))
@@ -415,12 +404,12 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     range.y <- range(field$y)
     # Build grid
     if (is.null(nx)) {
-        xs <- JumpBy(unique(field$x), skip.x + 1)
+        xs <- JumpBy(dx.field$x, skip.x + 1)
     } else {
         xs <- seq(range.x[1], range.x[2], length.out = nx)
     }
     if (is.null(ny)) {
-        ys <- JumpBy(unique(field$y), skip.y + 1)
+        ys <- JumpBy(dx.field$y, skip.y + 1)
     } else {
         ys <- seq(range.y[1], range.y[2], length.out = ny)
     }

@@ -111,9 +111,13 @@ StatVector <- ggplot2::ggproto("StatVector", ggplot2::Stat,
         data$xend <- with(data, x + dx*scale.x)
         data$yend <- with(data, y + dy*scale.y)
 
-        data <- subset(data, x %in% JumpBy(unique(x), skip.x + 1) &
-                           y %in% JumpBy(unique(y), skip.y + 1) &
-                           sqrt(dx^2 + dy^2) >= min.mag)
+        data <- subset(data, sqrt(dx^2 + dy^2) >= min.mag)
+        if (skip.x != 0) {
+            data <- subset(data, x %in% JumpBy(.seq_range(x), skip.x + 1))
+        }
+        if (skip.y != 0) {
+            data <- subset(data, y %in% JumpBy(.seq_range(y), skip.y + 1))
+        }
         data
         }
 )

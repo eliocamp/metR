@@ -13,6 +13,7 @@
 #'    \item{regressor}{the name of the regressor}
 #'    \item{estimate}{estiamte of the regression}
 #'    \item{se}{standard error}
+#'    \item{df}{degrees of freedom}
 #' }
 #'
 #' If there's no complete cases in the regression, `NA`s are returned with no

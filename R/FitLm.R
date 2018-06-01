@@ -42,14 +42,15 @@
 FitLm <- function(y, ..., se = FALSE) {
     X <- cbind(mean = 1, ...)
     regressor <- dimnames(X)[[2]]
-    real <- complete.cases(X) & !is.na(y)
+    remove <- which(!complete.cases(X) | is.na(y))
+    N <- length(y) - length(remove)
 
     # If empty, reurn NA with a warning.
-    if (sum(real) < 2) {
+    if (N < 2) {
         estimate <- rep(NA_real_, length(regressor))
         if (se == TRUE) {
             se <- estimate
-            df <- sum(real) - ncol(X)
+            df <- N - ncol(X)
             return(list(regressor = regressor,
                         estimate = estimate,
                         se = se,
@@ -59,14 +60,17 @@ FitLm <- function(y, ..., se = FALSE) {
                         estimate = estimate))
         }
     } else {
-        X <- X[real, ]
-        y <- y[real]
+        if (length(remove) > 0) {
+            X <- X[-remove, ]
+            y <- y[-remove]
+        }
+
         a <- .lm.fit(X, y)
         estimate <- a$coefficients
     }
 
     if (se == TRUE) {
-        df <- sum(real) - ncol(X)
+        df <- N - ncol(X)
         if (all(a$residuals == 0)) {
             se <- NA_real_
         } else {

@@ -16,9 +16,9 @@ FitLm(y, ..., se = FALSE)
 \value{
 a list with elements
 \describe{
-\item{regressor}{the name of the regressor}
+\item{term}{the name of the regressor}
 \item{estimate}{estiamte of the regression}
-\item{se}{standard error}
+\item{std.error}{standard error}
 \item{df}{degrees of freedom}
 }
 
@@ -39,12 +39,12 @@ system.time({
 
 ggplot(regr[regressor != "mean"], aes(lon, lat)) +
     geom_contour(aes(z = estimate, color = ..level..)) +
-    stat_subset(aes(subset = abs(estimate) > 2*se), size = 0.05)
+    stat_subset(aes(subset = abs(estimate) > 2*std.error), size = 0.05)
 
 # Using stats::lm() is much slower and with no names.
 \dontrun{
 system.time({
-  regr <- geopotential[, coef(lm(gh ~ date)), by = .(lon, lat)]
+  regr <- geopotential[, broom::tidy(lm(gh ~ date)), by = .(lon, lat)]
 })
 }
 

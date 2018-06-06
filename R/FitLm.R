@@ -10,9 +10,9 @@
 #' @return
 #' a list with elements
 #' \describe{
-#'    \item{regressor}{the name of the regressor}
+#'    \item{term}{the name of the regressor}
 #'    \item{estimate}{estiamte of the regression}
-#'    \item{se}{standard error}
+#'    \item{std.error}{standard error}
 #'    \item{df}{degrees of freedom}
 #' }
 #'
@@ -29,7 +29,7 @@
 #'
 #' ggplot(regr[regressor != "mean"], aes(lon, lat)) +
 #'     geom_contour(aes(z = estimate, color = ..level..)) +
-#'     stat_subset(aes(subset = abs(estimate) > 2*se), size = 0.05)
+#'     stat_subset(aes(subset = abs(estimate) > 2*std.error), size = 0.05)
 #'
 #' # Using stats::lm() is much slower and with no names.
 #' \dontrun{
@@ -41,23 +41,23 @@
 #' @export
 #' @importFrom stats .lm.fit complete.cases
 FitLm <- function(y, ..., se = FALSE) {
-    X <- cbind(mean = 1, ...)
-    regressor <- dimnames(X)[[2]]
+    X <- cbind(`(Intercept)` = 1, ...)
+    term <- dimnames(X)[[2]]
     remove <- which(!complete.cases(X) | is.na(y))
     N <- length(y) - length(remove)
 
     # If empty, reurn NA with a warning.
     if (N < 2) {
-        estimate <- rep(NA_real_, length(regressor))
+        estimate <- rep(NA_real_, length(term))
         if (se == TRUE) {
             se <- estimate
             df <- N - ncol(X)
-            return(list(regressor = regressor,
+            return(list(term = term,
                         estimate = estimate,
-                        se = se,
+                        std.error = se,
                         df = df))
         } else {
-            return(list(regressor = regressor,
+            return(list(term = term,
                         estimate = estimate))
         }
     } else {
@@ -78,12 +78,12 @@ FitLm <- function(y, ..., se = FALSE) {
             sigma <- sum(a$residuals^2)/(nrow(X) - ncol(X))
             se <- sqrt(diag(chol2inv(chol(t(X)%*%X)))*sigma)
         }
-        return(list(regressor = regressor,
+        return(list(term = term,
                     estimate = estimate,
-                    se = se,
+                    std.error = se,
                     df = df))
     } else {
-        return(list(regressor = regressor,
+        return(list(term = term,
                     estimate = estimate))
     }
 }

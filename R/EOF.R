@@ -137,21 +137,28 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
 
     data[, row__ := .GRP, by = c(row.vars)]
     data[, col__ := .GRP, by = c(col.vars)]
+    rowdims <- data[row__ == 1, (col.vars), with = FALSE]
+    coldims <- data[col__ == 1, (row.vars), with = FALSE]
 
-    g <- Matrix::sparseMatrix(data[["row__"]],
+    data <- Matrix::sparseMatrix(data[["row__"]],
                               data[["col__"]],
                               x = data[[value.var]])
 
-    if (is.null(n)) n <- seq_len(min(ncol(g), nrow(g)))
+    tall <- dim(data)[1] > dim(data)[2]
+    v.g  <- Matrix::norm(data, type = "F")
+
+    if (is.null(n)) n <- seq_len(min(ncol(data), nrow(data)))
 
     if (requireNamespace("irlba", quietly = TRUE) &
-        max(n) < 0.5 *  min(ncol(g), nrow(g))) {
+        max(n) < 0.5 *  min(ncol(data), nrow(data))) {
         set.seed(42)
-        eof <- irlba::irlba(g, nv = max(n), nu = max(n), rng = runif)
+        eof <- irlba::irlba(data, nv = max(n), nu = max(n), rng = runif)
     } else {
-        eof <- svd(g, nu = max(n), nv = max(n))
+        eof <- svd(data, nu = max(n), nv = max(n))
         eof$d <- eof$d[1:max(n)]
     }
+    remove(data)
+    gc()
     pcomps <- paste0(suffix, n)
     if (rotate == TRUE & max(n) > 1) {
         # Rotation
@@ -171,27 +178,27 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     # setDF(data)
     right <- as.data.table(eof$v[, n])
     colnames(right) <- pcomps
-    right <- cbind(right, data[row__ == 1, (col.vars), with = FALSE])
+
+    right <- cbind(right, rowdims)
     right <- data.table::melt(right, id.vars = col.vars, variable = "PC",
                               value.name = value.var)
     right[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
 
     left <- as.data.table(eof$u[, n])
     colnames(left) <- pcomps
-    left <- cbind(left, data[col__ == 1, (row.vars), with = FALSE])
+
+    left <- cbind(left, coldims)
     left <- data.table::melt(left, id.vars = row.vars, variable = "PC",
                              value.name = value.var)
     left[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
 
     # setDT(data)
-    v.g  <- Matrix::norm(g, type = "F")
     r2 <- eof$d^2/v.g^2
     sdev <- data.table(PC = pcomps, sd = eof$d)
     sdev[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
     sdev[, r2 := r2]
 
     if (B > 1) {
-        tall <- dim(g)[1] > dim(g)[2]
         set.seed(42)
         if (!tall) {
             names(eof) <- c("d", "v", "u", "iter", "mprod")

@@ -140,21 +140,21 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     rowdims <- data[row__ == 1, (col.vars), with = FALSE]
     coldims <- data[col__ == 1, (row.vars), with = FALSE]
 
-    data <- Matrix::sparseMatrix(data[["row__"]],
-                              data[["col__"]],
-                              x = data[[value.var]])
+    data.m <- matrix(nrow = max(data[["row__"]]),
+                     ncol = max(data[["col__"]]))
+    data.m[cbind(data[["row__"]], data[["col__"]])] <- data[[value.var]]
 
-    tall <- dim(data)[1] > dim(data)[2]
-    v.g  <- Matrix::norm(data, type = "F")
+    tall <- dim(data.m)[1] > dim(data.m)[2]
+    v.g  <- norm(abs(data.m), type = "F")
 
-    if (is.null(n)) n <- seq_len(min(ncol(data), nrow(data)))
+    if (is.null(n)) n <- seq_len(min(ncol(data.m), nrow(data.m)))
 
     if (requireNamespace("irlba", quietly = TRUE) &
-        max(n) < 0.5 *  min(ncol(data), nrow(data))) {
+        max(n) < 0.5 *  min(ncol(data.m), nrow(data.m))) {
         set.seed(42)
-        eof <- irlba::irlba(data, nv = max(n), nu = max(n), rng = runif)
+        eof <- irlba::irlba(data.m, nv = max(n), nu = max(n), rng = runif)
     } else {
-        eof <- svd(data, nu = max(n), nv = max(n))
+        eof <- svd(data.m, nu = max(n), nv = max(n))
         eof$d <- eof$d[1:max(n)]
     }
     remove(data)
@@ -176,20 +176,14 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     }
 
     # setDF(data)
-    right <- as.data.table(eof$v[, n])
-    colnames(right) <- pcomps
-
-    right <- cbind(right, rowdims)
-    right <- data.table::melt(right, id.vars = col.vars, variable = "PC",
-                              value.name = value.var)
+    right <- cbind(data.table(rep(pcomps, each = nrow(eof$v))), c(eof$v[, n]))
+    colnames(right) <- c(suffix, value.var)
+    right <- cbind(rowdims, right)
     right[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
 
-    left <- as.data.table(eof$u[, n])
-    colnames(left) <- pcomps
-
-    left <- cbind(left, coldims)
-    left <- data.table::melt(left, id.vars = row.vars, variable = "PC",
-                             value.name = value.var)
+    left <- cbind(data.table(rep(pcomps, each = nrow(eof$u))), c(eof$u[, n]))
+    colnames(left) <- c(suffix, value.var)
+    left <- cbind(coldims, left)
     left[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
 
     # setDT(data)
@@ -226,6 +220,10 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
         sdev[, names(probs) := se]
     }
 
-    return(list(right = right, left = left, sdev = sdev))
+
+    return(structure(list(right = right, left = left, sdev = sdev),
+                     class = c("eof", "list"),
+                     suffix = suffix,
+                     value.var = value.var))
 }
 

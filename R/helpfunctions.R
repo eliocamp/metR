@@ -247,38 +247,56 @@ is.error <- function(x) inherits(x, "try-error")
 .tidy2matrix <- function(data, formula, value.var, ...) {
     row.vars <- all.vars(formula[[2]])
     col.vars <- all.vars(formula[[3]])
+    setDT(data)
+    data[, row__ := .GRP, by = c(row.vars)]
+    data[, col__ := .GRP, by = c(col.vars)]
+    rowdims <- data[col__ == 1, (row.vars), with = FALSE]
+    coldims <- data[row__ == 1, (col.vars), with = FALSE]
 
-    g <- data.table::dcast(setDT(data), formula, value.var = value.var, ...)
+    data.m <- matrix(nrow = max(data[["row__"]]),
+                     ncol = max(data[["col__"]]))
+    data.m[cbind(data[["row__"]], data[["col__"]])] <- data[[value.var]]
 
-    dims <- list()
-    if (length(col.vars) > 1) {
-        cols <- unlist(strsplit(colnames(g), split = "_"))
-    } else {
-        cols <- colnames(g)
-    }
-
-    for (i in seq_along(col.vars)) {
-        dims[[i]] <- JumpBy(cols, length(col.vars), start = i + length(row.vars))
-        if (!.is.somedate(data[[col.vars[i]]])) {
-            dims[[i]] <- as(dims[[i]], class(data[[col.vars[i]]]))
-        } else {
-            dims[[i]] <- as.Date(dims[[i]])
-        }
-    }
-
-    # coldims <- lapply(col.vars, function(x) {
-    #     u <- unique(data[[x]])
-    #     u <- u[order(u)]
-    # })
-    # dims <- as.list(expand.grid(coldims))
-
-    names(dims) <- col.vars
-
-    setDF(g)
-    return(list(matrix = as.matrix(g[, -seq_along(row.vars)]),
-                coldims = dims,
-                rowdims = as.list(g)[row.vars]))
+    return(list(matrix = data.m,
+                coldims = coldims,
+                rowdims = rowdims))
 }
+
+# .tidy2matrix <- function(data, formula, value.var, ...) {
+#     row.vars <- all.vars(formula[[2]])
+#     col.vars <- all.vars(formula[[3]])
+#
+#     g <- data.table::dcast(setDT(data), formula, value.var = value.var, ...)
+#
+#     dims <- list()
+#     if (length(col.vars) > 1) {
+#         cols <- unlist(strsplit(colnames(g), split = "_"))
+#     } else {
+#         cols <- colnames(g)
+#     }
+#
+#     for (i in seq_along(col.vars)) {
+#         dims[[i]] <- JumpBy(cols, length(col.vars), start = i + length(row.vars))
+#         if (!.is.somedate(data[[col.vars[i]]])) {
+#             dims[[i]] <- as(dims[[i]], class(data[[col.vars[i]]]))
+#         } else {
+#             dims[[i]] <- as.Date(dims[[i]])
+#         }
+#     }
+#
+#     # coldims <- lapply(col.vars, function(x) {
+#     #     u <- unique(data[[x]])
+#     #     u <- u[order(u)]
+#     # })
+#     # dims <- as.list(expand.grid(coldims))
+#
+#     names(dims) <- col.vars
+#
+#     setDF(g)
+#     return(list(matrix = as.matrix(g[, -seq_along(row.vars)]),
+#                 coldims = as.data.table(dims),
+#                 rowdims = as.data.table(as.list(g)[row.vars])))
+# }
 
 # from data.table
 guess <- function (x)

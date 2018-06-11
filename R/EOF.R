@@ -134,27 +134,32 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     }
 
     setDT(data)
+    dcast.formula <- stringr::str_squish(f[stringr::str_detect(f, "\\|")])
+    dcast.formula <- as.formula(stringr::str_replace(dcast.formula, "\\|", "~"))
+    value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
 
-    data[, row__ := .GRP, by = c(row.vars)]
-    data[, col__ := .GRP, by = c(col.vars)]
-    rowdims <- data[row__ == 1, (col.vars), with = FALSE]
-    coldims <- data[col__ == 1, (row.vars), with = FALSE]
+    g <- .tidy2matrix(data, dcast.formula, value.var)
+#
+#     data[, row__ := .GRP, by = c(row.vars)]
+#     data[, col__ := .GRP, by = c(col.vars)]
+#     rowdims <- data[row__ == 1, (col.vars), with = FALSE]
+#     coldims <- data[col__ == 1, (row.vars), with = FALSE]
+#
+#     data.m <- matrix(nrow = max(data[["row__"]]),
+#                      ncol = max(data[["col__"]]))
+#     data.m[cbind(data[["row__"]], data[["col__"]])] <- data[[value.var]]
 
-    data.m <- matrix(nrow = max(data[["row__"]]),
-                     ncol = max(data[["col__"]]))
-    data.m[cbind(data[["row__"]], data[["col__"]])] <- data[[value.var]]
+    tall <- dim(g$matrix)[1] > dim(g$matrix)[2]
+    v.g  <- norm(abs(g$matrix), type = "F")
 
-    tall <- dim(data.m)[1] > dim(data.m)[2]
-    v.g  <- norm(abs(data.m), type = "F")
-
-    if (is.null(n)) n <- seq_len(min(ncol(data.m), nrow(data.m)))
+    if (is.null(n)) n <- seq_len(min(ncol(g$matrix), nrow(g$matrix)))
 
     if (requireNamespace("irlba", quietly = TRUE) &
-        max(n) < 0.5 *  min(ncol(data.m), nrow(data.m))) {
+        max(n) < 0.5 *  min(ncol(g$matrix), nrow(g$matrix))) {
         set.seed(42)
-        eof <- irlba::irlba(data.m, nv = max(n), nu = max(n), rng = runif)
+        eof <- irlba::irlba(g$matrix, nv = max(n), nu = max(n), rng = runif)
     } else {
-        eof <- svd(data.m, nu = max(n), nv = max(n))
+        eof <- svd(g$matrix, nu = max(n), nv = max(n))
         eof$d <- eof$d[1:max(n)]
     }
     remove(data)
@@ -178,12 +183,12 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     # setDF(data)
     right <- cbind(data.table(rep(pcomps, each = nrow(eof$v))), c(eof$v[, n]))
     colnames(right) <- c(suffix, value.var)
-    right <- cbind(rowdims, right)
+    right <- cbind(g$coldims, right)
     right[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
 
     left <- cbind(data.table(rep(pcomps, each = nrow(eof$u))), c(eof$u[, n]))
     colnames(left) <- c(suffix, value.var)
-    left <- cbind(coldims, left)
+    left <- cbind(g$rowdims, left)
     left[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
 
     # setDT(data)

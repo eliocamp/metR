@@ -26,6 +26,8 @@
 #'
 #' @export
 ConvertLongitude <- function(lon, group, from = waiver()) {
+    if (all(is.na(lon))) return(lon)
+
     m <- min(lon, na.rm = TRUE)
     if (m < -180) stop("lon lower than 180, not a valid longitude")
 

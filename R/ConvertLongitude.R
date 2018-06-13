@@ -26,10 +26,10 @@
 #'
 #' @export
 ConvertLongitude <- function(lon, group, from = waiver()) {
-    m <- min(lon)
+    m <- min(lon, na.rm = TRUE)
     if (m < -180) stop("lon lower than 180, not a valid longitude")
 
-    M <- max(lon)
+    M <- max(lon, na.rm = TRUE)
     if (M > 360) stop("lon greater than 360, not a valid longitude")
 
     lon360 <- FALSE

@@ -39,11 +39,11 @@ ConvertLongitude <- function(lon, group, from = waiver()) {
 
     new.lon <- lon
     if (is.waive(from) || from == 180) {
-        lon180 <- lon < 0
+        lon180 <- which(lon < 0)
         new.lon[lon180] <- new.lon[lon180] + 360
     }
     if (is.waive(from) || from == 360) {
-        lon360 <- lon > 180
+        lon360 <- which(lon > 180)
         new.lon[lon360] <- new.lon[lon360] - 360
     }
 

@@ -184,17 +184,18 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     right <- cbind(data.table(rep(pcomps, each = nrow(eof$v))), c(eof$v[, n]))
     colnames(right) <- c(suffix, value.var)
     right <- cbind(g$coldims, right)
-    right[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
+    right[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
 
     left <- cbind(data.table(rep(pcomps, each = nrow(eof$u))), c(eof$u[, n]))
     colnames(left) <- c(suffix, value.var)
     left <- cbind(g$rowdims, left)
-    left[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
+    left[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
 
     # setDT(data)
     r2 <- eof$d^2/v.g^2
-    sdev <- data.table(PC = pcomps, sd = eof$d)
-    sdev[, PC := factor(PC, levels = pcomps, ordered = TRUE)]
+    sdev <- data.table(pcomps, eof$d)
+    colnames(sdev) <- c(suffix, "sd")
+    sdev[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
     sdev[, r2 := r2]
 
     if (B > 1) {

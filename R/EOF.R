@@ -102,7 +102,12 @@
 #' @importFrom stats as.formula quantile varimax
 EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
-                rotate = FALSE, suffix = "PC", fill = NULL) {
+                rotate = FALSE, suffix = "PC", fill = 0) {
+    if (!is.null(fill)) {
+        if (!(is.na(fill) | is.null(fill) | is.finite(fill))) {
+            stop("fill must be numeric or NULL")
+        }
+    }
     if (!is.null(value.var)) {
         if (is.null(data)) stop("data must not be NULL if value.var is NULL")
         data <- copy(data)

@@ -147,14 +147,9 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
 
     g <- .tidy2matrix(data, dcast.formula, value.var, fill = fill)
 
-#     data[, row__ := .GRP, by = c(row.vars)]
-#     data[, col__ := .GRP, by = c(col.vars)]
-#     rowdims <- data[row__ == 1, (col.vars), with = FALSE]
-#     coldims <- data[col__ == 1, (row.vars), with = FALSE]
-#
-#     data.m <- matrix(nrow = max(data[["row__"]]),
-#                      ncol = max(data[["col__"]]))
-#     data.m[cbind(data[["row__"]], data[["col__"]])] <- data[[value.var]]
+    if (length(g$matrix) < nrow(data)) {
+        stop(paste("The formula ", as.character(formula), " does not identify an unique observation for each cell."))
+    }
 
     tall <- dim(g$matrix)[1] > dim(g$matrix)[2]
     v.g  <- norm(abs(g$matrix), type = "F")

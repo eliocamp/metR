@@ -39,7 +39,8 @@
 #' field$dir <- with(field, atan2(v, u))*180/pi
 #' library(ggplot2)
 #' ggplot(field, aes(x, y)) +
-#'     geom_arrow(aes(mag = V, angle = dir))
+#'     geom_arrow(aes(mag = V, angle = dir), preserve.dir = TRUE) +
+#'     scale_mag(length = 1)
 #'
 #' @export
 #' @family ggplot2 helpers

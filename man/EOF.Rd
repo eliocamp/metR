@@ -6,7 +6,7 @@
 \usage{
 EOF(formula, value.var = NULL, data = NULL, n = 1, B = 0,
   probs = c(lower = 0.025, mid = 0.5, upper = 0.975), rotate = FALSE,
-  suffix = "PC", fill = NULL)
+  suffix = "PC", fill = 0)
 }
 \arguments{
 \item{formula}{a formula passed to \code{\link[data.table]{dcast}} to build

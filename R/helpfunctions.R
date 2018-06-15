@@ -244,16 +244,22 @@ seq_range <- function(x, by = ggplot2::resolution(x, zero = FALSE),...) {
 
 is.error <- function(x) inherits(x, "try-error")
 
-.tidy2matrix <- function(data, formula, value.var, ...) {
+.tidy2matrix <- function(data, formula, value.var, fill = NULL, ...) {
     row.vars <- all.vars(formula[[2]])
     col.vars <- all.vars(formula[[3]])
-    setDT(data)
+    data <- as.data.table(data)
     data[, row__ := .GRP, by = c(row.vars)]
     data[, col__ := .GRP, by = c(col.vars)]
-    rowdims <- data[col__ == 1, (row.vars), with = FALSE]
-    coldims <- data[row__ == 1, (col.vars), with = FALSE]
+    if (is.null(fill)){
+        fill <- 0
+        rowdims <- data[col__ == 1, (row.vars), with = FALSE]
+        coldims <- data[row__ == 1, (col.vars), with = FALSE]
+    } else {
+        rowdims <- unique(data[, (row.vars), with = FALSE])
+        coldims <- unique(data[, (col.vars), with = FALSE])
+    }
 
-    data.m <- matrix(nrow = max(data[["row__"]]),
+    data.m <- matrix(fill[1], nrow = max(data[["row__"]]),
                      ncol = max(data[["col__"]]))
     data.m[cbind(data[["row__"]], data[["col__"]])] <- data[[value.var]]
 
@@ -261,6 +267,8 @@ is.error <- function(x) inherits(x, "try-error")
                 coldims = coldims,
                 rowdims = rowdims))
 }
+
+
 
 # .tidy2matrix <- function(data, formula, value.var, ...) {
 #     row.vars <- all.vars(formula[[2]])

@@ -35,7 +35,7 @@ robust.
 - The way that `stat_contour2()`, `stat_contour_fill()` and `geom_streamlines()`
 handle circular dimensions has changed. Now you need to use `xwrap`/`ywrap` to 
 explicitly set the domain. This makes the implementation more robust and also allow to easily wrap to an arbitrary domain.
-- `EOF()` now uses `Matrix::sparseMatrix()`, to speed up computations a little.
+- `EOF()` gains a `fill` argument for sparse-ish data. 
 
 # metR 0.1
 - New function: `GetTopography()`

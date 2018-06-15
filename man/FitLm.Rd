@@ -44,7 +44,7 @@ ggplot(regr[regressor != "mean"], aes(lon, lat)) +
 # Using stats::lm() is much slower and with no names.
 \dontrun{
 system.time({
-  regr <- geopotential[, broom::tidy(lm(gh ~ date)), by = .(lon, lat)]
+  regr <- geopotential[, coef(lm(gh ~ date)), by = .(lon, lat)]
 })
 }
 

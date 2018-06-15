@@ -14,6 +14,8 @@
 #' confidence intervals. If named, it's names will be used as column names.
 #' @param rotate if `TRUE`, scores and loadings will be rotated using [varimax]
 #' @param suffix character to name de principal components
+#' @param fill value to infill data not present in the data or `NULL` if the
+#' data is dense.
 #'
 #' @return
 #' \describe{
@@ -40,7 +42,8 @@
 #'
 #' The variable combination used in this formula *must* identify
 #' an unique value in a cell. For the time being, no error will be raised, but
-#' there will be a message from \code{\link[data.table]{dcast}}.
+#' there will be a message from \code{\link[data.table]{dcast}}. If not every
+#' combination is present in the data,
 #'
 #' In the result, the left and right vectors have dimensions of the LEFT and RIGHT
 #' part of the `formula`, respectively.
@@ -99,8 +102,7 @@
 #' @importFrom stats as.formula quantile varimax
 EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
-                rotate = FALSE, suffix = "PC") {
-
+                rotate = FALSE, suffix = "PC", fill = NULL) {
     if (!is.null(value.var)) {
         if (is.null(data)) stop("data must not be NULL if value.var is NULL")
         data <- copy(data)
@@ -138,8 +140,8 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     dcast.formula <- as.formula(stringr::str_replace(dcast.formula, "\\|", "~"))
     value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
 
-    g <- .tidy2matrix(data, dcast.formula, value.var)
-#
+    g <- .tidy2matrix(data, dcast.formula, value.var, fill = fill)
+
 #     data[, row__ := .GRP, by = c(row.vars)]
 #     data[, col__ := .GRP, by = c(col.vars)]
 #     rowdims <- data[row__ == 1, (col.vars), with = FALSE]
@@ -183,12 +185,12 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     # setDF(data)
     right <- cbind(data.table(rep(pcomps, each = nrow(eof$v))), c(eof$v[, n]))
     colnames(right) <- c(suffix, value.var)
-    right <- cbind(g$coldims, right)
+    right <- cbind(unique(g$coldims), right)
     right[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
 
     left <- cbind(data.table(rep(pcomps, each = nrow(eof$u))), c(eof$u[, n]))
     colnames(left) <- c(suffix, value.var)
-    left <- cbind(g$rowdims, left)
+    left <- cbind(unique(g$rowdims), left)
     left[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
 
     # setDT(data)

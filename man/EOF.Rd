@@ -6,7 +6,7 @@
 \usage{
 EOF(formula, value.var = NULL, data = NULL, n = 1, B = 0,
   probs = c(lower = 0.025, mid = 0.5, upper = 0.975), rotate = FALSE,
-  suffix = "PC")
+  suffix = "PC", fill = NULL)
 }
 \arguments{
 \item{formula}{a formula passed to \code{\link[data.table]{dcast}} to build
@@ -27,6 +27,9 @@ confidence intervals. If named, it's names will be used as column names.}
 \item{rotate}{if \code{TRUE}, scores and loadings will be rotated using \link{varimax}}
 
 \item{suffix}{character to name de principal components}
+
+\item{fill}{value to infill data not present in the data or \code{NULL} if the
+data is dense.}
 }
 \value{
 \describe{
@@ -57,7 +60,8 @@ is the same.
 
 The variable combination used in this formula \emph{must} identify
 an unique value in a cell. For the time being, no error will be raised, but
-there will be a message from \code{\link[data.table]{dcast}}.
+there will be a message from \code{\link[data.table]{dcast}}. If not every
+combination is present in the data,
 
 In the result, the left and right vectors have dimensions of the LEFT and RIGHT
 part of the \code{formula}, respectively.

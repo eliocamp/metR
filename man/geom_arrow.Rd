@@ -9,11 +9,12 @@
 \usage{
 geom_arrow(mapping = NULL, data = NULL, stat = "arrow",
   position = "identity", ..., start = 0, direction = 1, pivot = 0.5,
-  min.mag = 0, skip = 0, skip.x = skip, skip.y = skip,
-  arrow.angle = 15, arrow.length = 0.5, arrow.ends = "last",
-  arrow.type = "closed", arrow = grid::arrow(arrow.angle, unit(arrow.length,
-  "lines"), ends = arrow.ends, type = arrow.type), lineend = "butt",
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+  preserve.dir = FALSE, min.mag = 0, skip = 0, skip.x = skip,
+  skip.y = skip, arrow.angle = 15, arrow.length = 0.5,
+  arrow.ends = "last", arrow.type = "closed",
+  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
+  arrow.ends, type = arrow.type), lineend = "butt", na.rm = FALSE,
+  show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -52,6 +53,8 @@ to the paired geom/stat.}
 
 \item{pivot}{numeric indicating where to pivot the arrow where '0 means at the
 begining and 1 meanns at the end.}
+
+\item{preserve.dir}{logical whether to preserve direction or not}
 
 \item{min.mag}{minimum magnitude of the plotted vectors}
 
@@ -129,8 +132,7 @@ field$V <- with(field, sqrt(u^2 + v^2))
 field$dir <- with(field, atan2(v, u))*180/pi
 library(ggplot2)
 ggplot(field, aes(x, y)) +
-    geom_arrow(aes(mag = V, angle = dir)) +
-    scale_mag()
+    geom_arrow(aes(mag = V, angle = dir))
 
 }
 \seealso{

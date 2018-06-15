@@ -8,6 +8,7 @@
 #' @param start Starting angle for rotation in degrees.
 #' @param pivot numeric indicating where to pivot the arrow where '0 means at the
 #' begining and 1 meanns at the end.
+#' @param preserve.dir logical whether to preserve direction or not
 #'
 #' @details
 #' Direction and start allows to work with different standards. For the
@@ -38,8 +39,7 @@
 #' field$dir <- with(field, atan2(v, u))*180/pi
 #' library(ggplot2)
 #' ggplot(field, aes(x, y)) +
-#'     geom_arrow(aes(mag = V, angle = dir)) +
-#'     scale_mag()
+#'     geom_arrow(aes(mag = V, angle = dir))
 #'
 #' @export
 #' @family ggplot2 helpers
@@ -49,6 +49,7 @@ geom_arrow <- function(mapping = NULL, data = NULL,
                        start = 0,
                        direction = 1,
                        pivot = 0.5,
+                       preserve.dir = FALSE,
                        # scale = 1,
                        min.mag = 0,
                        skip = 0,
@@ -75,6 +76,7 @@ geom_arrow <- function(mapping = NULL, data = NULL,
               start = start,
               direction = direction,
               pivot = pivot,
+              preserve.dir = preserve.dir,
               arrow = arrow,
               lineend = lineend,
               na.rm = na.rm,
@@ -149,7 +151,7 @@ GeomArrow <- ggplot2::ggproto("GeomArrow", Geom,
               # panel_scales <<- panel_scales
               aspect <- coord$aspect(panel_scales)
               if (is.null(aspect)) {
-                  message("geom_arrow with preserve = FALSE works best with a fixed aspect ratio")
+                  message("geom_arrow with preserve.dir = FALSE works best with a fixed aspect ratio")
                   delta.unit <- "npc"
                   coords$angle <- with(coords, atan2(yend - y, xend - x)*180/pi)
                   # Not really correct. convertWidth uses the dimensions of the

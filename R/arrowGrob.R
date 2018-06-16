@@ -65,7 +65,6 @@ makeContent.vector <- function(x) {
     x$y <- unit.c(x$y - x$dy*x$pivot,
                         x$y + x$dy*(1 - x$pivot))
 
-
     x$cl <- "polyline"
     class(x)[1] <- "polyline"
     x

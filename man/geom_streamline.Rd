@@ -72,13 +72,13 @@ to the paired geom/stat.}
 \item{ywrap}{vector of length two used to wrap the circulad dimension}
 
 \item{skip}{numeric specifying number of gridpoints not to draw
-in the x and y direction.}
+in the x and y direction}
 
 \item{skip.x}{numeric specifying number of gridpoints not to draw
-in the x and y direction.}
+in the x and y direction}
 
 \item{skip.y}{numeric specifying number of gridpoints not to draw
-in the x and y direction.}
+in the x and y direction}
 
 \item{n, nx, ny}{optional numeric indicating the number of points to draw in the
 x and y direction (replaces \code{skip} if not \code{NULL})}
@@ -231,7 +231,7 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},
-  \code{\link{geom_relief}}, \code{\link{geom_vector}},
+  \code{\link{geom_relief}},
   \code{\link{guide_colourstrip}},
   \code{\link{map_labels}}, \code{\link{reverselog_trans}},
   \code{\link{scale_divergent}},

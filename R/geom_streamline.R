@@ -365,6 +365,7 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
 
 #' @importFrom stats rnorm
 #' @importFrom fields interp.surface
+#' @importFrom Matrix sparseMatrix
 streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL,
                        ny = NULL, jitter.x = 1, jitter.y = 1, xwrap = NULL,
                        ywrap = NULL) {

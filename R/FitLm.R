@@ -27,7 +27,7 @@
 #'   regr <- geopotential[, FitLm(gh, date, se = TRUE), by = .(lon, lat)]
 #' })
 #'
-#' ggplot(regr[regressor != "mean"], aes(lon, lat)) +
+#' ggplot(regr[term != "(intercept)"], aes(lon, lat)) +
 #'     geom_contour(aes(z = estimate, color = ..level..)) +
 #'     stat_subset(aes(subset = abs(estimate) > 2*std.error), size = 0.05)
 #'

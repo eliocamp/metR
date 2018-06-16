@@ -3,14 +3,24 @@
 \docType{data}
 \name{geom_arrow}
 \alias{geom_arrow}
+\alias{geom_vector}
 \alias{GeomArrow}
 \alias{StatArrow}
 \title{Arrows}
 \usage{
 geom_arrow(mapping = NULL, data = NULL, stat = "arrow",
-  position = "identity", ..., start = 0, direction = 1, pivot = 0.5,
-  preserve.dir = FALSE, min.mag = 0, skip = 0, skip.x = skip,
-  skip.y = skip, arrow.angle = 15, arrow.length = 0.5,
+  position = "identity", ..., start = 0, direction = c("ccw", "cw"),
+  pivot = 0.5, preserve.dir = TRUE, min.mag = 0, skip = 0,
+  skip.x = skip, skip.y = skip, arrow.angle = 15, arrow.length = 0.5,
+  arrow.ends = "last", arrow.type = "closed",
+  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
+  arrow.ends, type = arrow.type), lineend = "butt", na.rm = FALSE,
+  show.legend = NA, inherit.aes = TRUE)
+
+geom_vector(mapping = NULL, data = NULL, stat = "arrow",
+  position = "identity", ..., start = 0, direction = c("ccw", "cw"),
+  pivot = 0.5, preserve.dir = FALSE, min.mag = 0, skip = 0,
+  skip.x = skip, skip.y = skip, arrow.angle = 15, arrow.length = 0.5,
   arrow.ends = "last", arrow.type = "closed",
   arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
   arrow.ends, type = arrow.type), lineend = "butt", na.rm = FALSE,
@@ -47,36 +57,21 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 \code{color = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 
-\item{start}{Starting angle for rotation in degrees.}
+\item{start}{starting angle for rotation in degrees}
 
-\item{direction}{Direction of rotation in degrees.}
+\item{direction}{direction of rotation (counter-clockwise or clockwise)}
 
-\item{pivot}{numeric indicating where to pivot the arrow where '0 means at the
+\item{pivot}{numeric indicating where to pivot the arrow where 0 means at the
 begining and 1 meanns at the end.}
 
-\item{preserve.dir}{logical whether to preserve direction or not}
+\item{preserve.dir}{logical indicating whether to preserve direction or not}
 
-\item{min.mag}{minimum magnitude of the plotted vectors}
+\item{min.mag}{minimum magnitude for plotting vectors}
 
-\item{skip}{numeric specifying number of gridpoints not to draw
-in the x and y direction.}
+\item{skip, skip.x, skip.y}{numeric specifying number of gridpoints not to draw
+in the x and y direction}
 
-\item{skip.x}{numeric specifying number of gridpoints not to draw
-in the x and y direction.}
-
-\item{skip.y}{numeric specifying number of gridpoints not to draw
-in the x and y direction.}
-
-\item{arrow.angle}{parameters passed to
-\link[grid:arrow]{grid::arrow}}
-
-\item{arrow.length}{parameters passed to
-\link[grid:arrow]{grid::arrow}}
-
-\item{arrow.ends}{parameters passed to
-\link[grid:arrow]{grid::arrow}}
-
-\item{arrow.type}{parameters passed to
+\item{arrow.length, arrow.angle, arrow.ends, arrow.type}{parameters passed to
 \link[grid:arrow]{grid::arrow}}
 
 \item{arrow}{specification for arrow heads, as created by arrow().}
@@ -98,12 +93,14 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 }
 \description{
-Unlike \link{geom_vector}, \code{geom_arrow()} preserves direction in coordinate
-transformation and different aspect ratios.
+Parametrization of \link[ggplot2:geom_segment]{ggplot2::geom_segment} either by location and displacement
+or by magnitude and angle with default arrows. \code{geom_arrow()} is the same as
+\code{geom_vector()} but defaults to preserving the direction under coordinate
+transformation and different plot ratios.
 }
 \details{
 Direction and start allows to work with different standards. For the
-meteorological standard, for example, use \code{star = -90} and \code{direction = -1}.
+meteorological standard, for example, use \code{star = -90} and \code{direction = 1}.
 }
 \section{Aesthetics}{
 
@@ -124,16 +121,50 @@ meteorological standard, for example, use \code{star = -90} and \code{direction 
 \examples{
 library(data.table)
 library(ggplot2)
-data(geopotential)
 
+data(seals)
+# If the velocity components are in the same units as the axis,
+# geom_vector() (or geom_arrow(preserve.dir = TRUE)) might be a better option
+ggplot(seals, aes(long, lat)) +
+    geom_arrow(aes(dx = delta_long, dy = delta_lat), skip = 1, color = "red") +
+    geom_vector(aes(dx = delta_long, dy = delta_lat), skip = 1)
+
+data(geopotential)
 geopotential <- copy(geopotential)[date == date[1]]
 geopotential[, gh.z := Anomaly(gh), by = .(lat)]
 geopotential[, c("u", "v") := GeostrophicWind(gh.z, lon, lat)]
 
 (g <- ggplot(geopotential, aes(lon, lat)) +
-    geom_arrow(aes(dx = u, dy = v), skip.x = 3, skip.y = 2,
-               pivot = 0.5) +
-    scale_mag())
+    geom_arrow(aes(dx = dlon(u, lat), dy = dlat(v)), skip.x = 3, skip.y = 2,
+               color = "red") +
+    geom_vector(aes(dx = dlon(u, lat), dy = dlat(v)), skip.x = 3, skip.y = 2) +
+    scale_mag(length = 2, guide = "none"))
+
+# A dramatic illustration of the difference between arrow and vector
+g + coord_polar()
+
+# When plotting winds in a lat-lon grid, a good way to have both
+# the correct direction and an interpretable magnitude is to define
+# the angle by the longitud and latitude displacement and the magnitude
+# by the wind velocity. That way arrows are always parallel to streamlines
+# and their magnitude are in the correct units.
+ggplot(geopotential, aes(lon, lat)) +
+    geom_contour(aes(z = gh.z)) +
+    geom_vector(aes(angle = atan2(dlat(v), dlon(u, lat))*180/pi,
+                   mag = Mag(v, u)), skip = 1, pivot = 0.5) +
+    scale_mag()
+
+# Sverdrup transport
+library(data.table)
+b <- 10
+d <- 10
+grid <- as.data.table(expand.grid(x = seq(1, d, by = 0.5),
+                                  y = seq(1, b, by = 0.5)))
+grid[, My := -sin(pi*y/b)*pi/b]
+grid[, Mx := -pi^2/b^2*cos(pi*y/b)*(d - x)]
+
+ggplot(grid, aes(x, y)) +
+    geom_arrow(aes(dx = Mx, dy = My))
 
 }
 \seealso{
@@ -143,7 +174,6 @@ Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{geom_contour_fill}},
   \code{\link{geom_label_contour}},
   \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{geom_vector}},
   \code{\link{guide_colourstrip}},
   \code{\link{map_labels}}, \code{\link{reverselog_trans}},
   \code{\link{scale_divergent}},

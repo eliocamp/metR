@@ -174,55 +174,46 @@ ggplot(geopotential[, gh.base := gh[lon == 120 & lat == -50], by = date][
 ```
 
 
-## geom_vector
+## geom_vector and geom_arrow
 
-Plotting arrows can be a pain. Again, the 'canonical' way of plotting vectors is tu use `geom_segment()` and specify `x`, `y`, `xend` and `yend` aesthetics which can be a lot of typing when one has the data on location and displacement (or velocity). Instead, `metR`'s `geom_vector()` draw a line from points (x, y) to poins (x + dx, y + dy). It also has some usefull paramters like `min.mag`, which controls the minimum magnitude for an arrow to be drawn (useful for highlighting only areas of strong 'flow') and `skip`, which draws only the nth arrow in the x and y directions. 
+Plotting arrows can be a pain. Again, the 'canonical' way of plotting vectors is tu use `geom_segment()` and specify `x`, `y`, `xend` and `yend` aesthetics which can be a lot of typing when one has the data on location and displacement (or velocity). Instead, `metR`'s `geom_vector()` and `geom_arrow()` draw vectors defined by their lateral displacements (dx, dy) or their magnitude and angle. It also has some usefull paramters like `min.mag`, which controls the minimum magnitude for an arrow to be drawn (useful for highlighting only areas of strong 'flow') and `skip`, which draws only the nth arrow in the x and y directions. 
+
+Both geoms are essentially the same, except that `geom_arrow()` defaults to preserving direction in coordinate transformations and regardless of the plot aspect ratio. This is recomended if the arrows are ment to convey the direction of the flow in each point instead of being a description of the shape of the flow related to the plot coordinates. 
 
 So, as an example, we can plot the temperature gradient like this:
 
 ```{r, fig.width = 7}
-temperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat, 
+temperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat,
                                             cyclical = c(TRUE, FALSE)), 
             by = lev]
 
-ggplot(temperature[lev == 500], aes(lon, lat)) +
+(g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
     geom_contour_fill(aes(z = air.z)) +
     geom_vector(aes(dx = t.dx, dy = t.dy), skip.x = 2, 
-                skip.y = 1, scale = 5, min.mag = 2e-1) +
+                skip.y = 1) +
     scale_y_latitude(limits = c(-90, 0)) +
-    scale_x_longitude()
+    scale_x_longitude() +
+    scale_mag())
 ```
 
-The `scale` argument modifies the length of the segments, and the arguments `arrow.angle`, `arrow.length`, etc... control the shape of the arrowheads.
-
-There are (currently) many limitations of `geom_vector()`:
-
-* When the x and y units of the plotting area are not in the same units as the displacement values (as in the example), there's a fair amount of guessing in the `scale` argument to get things right. 
-
-* Related to that, if there is no consistent way of comparing the displacement unit to the x or y units there is no garantee of accuracy. See how in the example the meridional magnitude is exagerated compared to the zonal magnitude. 
-
-* It breaks if any dimension is discrete or date/date_time because there is no consisten way of translating a continuous displacement into a discrete variable. 
-
-* It does not preserve direction under coordinate transformations, i.e wind coming from the south west will appear to come from the west south west if the x coordinate is stretched, but it will still be parallel to streamlines. 
-
-## geom_arrow
-
-To solve the last two problems `metR` has `geom_arrow()` which works the same as `geom_vector()` but instead parametrizing vector by their magnitude and angle. 
+In the above example, t.dx and t.dy represent displacements in the same units as the x and y dimension, so using `geom_vector()` each arrow points perpendicular to the contours even if we change the coordinate system.
 
 ```{r}
-temperature[, mag := Mag(t.dx, t.dy)][, angle := atan2(t.dy, t.dx)*180/pi]
-
-ggplot(temperature[lev == 500], aes(lon, lat)) +
-    geom_contour_fill(aes(z = air.z)) +
-    geom_arrow(aes(mag = mag, angle = angle), skip.x = 2, 
-               skip.y = 1, scale = 0.05, min.mag = 2e-1) +
-    scale_y_latitude(limits = c(-90, 0)) +
-    scale_x_longitude()
+g + coord_polar()
 ```
 
-The `start` and  `direction` arguments adjust the behaviour of the arrows. This is useful for working with winds in the meteorological standard (in which 0° means wind from the North and 90° means wind from the East). 
+But if we want to plot how the (horizontal) direction changes with height it makes more sense to use `geom_arrow()` (or `geom_vector(preserve.dir = TRUE)`)
 
-In contrast to `geom_vector()`, `geom_arrow()` **does** preserve direction under coordinate transforms. This means that, for example, an arrow at a 45° angle represents wind from the southwest regardless of the `x` and `y` scales (but note that this also means that it might not be parallel to the streamlines). For this reason this geom does work with discrete scales.
+```{r}
+ggplot(temperature[lon %between% c(100, 200) & lat == -50], aes(lon, lev)) + 
+    geom_arrow(aes(dx = dx(t.dx, lat), dy = dy(t.dy)), skip = 1) +
+    scale_y_level() +
+    scale_mag()
+```
+
+In this case, an arrow at a 45° angle represents temperature gradient from the southwest regardless of the `x` and `y` scales. 
+
+The `start` and  `direction` arguments adjust the behaviour of the arrows. This is useful for working with winds in the meteorological standard (in which 0° means wind from the North and 90° means wind from the East). 
 
 ## geom_streamline
 

@@ -103,7 +103,8 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
             return(data[[value.var]])
         }
         g <- .tidy2matrix(data, dcast.formula, value.var)
-        id.name <- digest::digest(data[, 1])
+        # id.name <- digest::digest(data[, 1])
+        id.name <- "ff19bdd67ff5f59cdce2824074707d20"
         data[, (id.name) := 1:.N]
         id <- c(.tidy2matrix(data, dcast.formula, id.name)$matrix)
         X <- g$matrix

@@ -21,11 +21,17 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script>
 <script src="pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Guía de estilo" />
+
 
 
 <!-- mathjax -->
@@ -35,8 +41,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -105,7 +109,7 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="contents col-md-9">
     <div class="page-header">
       <h1>Guía de estilo</h1>
@@ -126,7 +130,7 @@ pp &lt;- precipitation    # se pueden usar abreviaciones meteorológicas claras
 # Mal
 precipitación
 precipitacion[, año := as.Date(fecha)]</code></pre>
-<p>Los nombres de <strong>variables</strong> son en minúscula y deben ser sustantivos lo más descriptivos posible (¡pensar unos segundos antes de nombrar!). Están formados por un descriptor de las variables que tiene adentro y una serie de sufijos separados por “.”. El descriptor y los sufijos pueden usar “_" para separar.</p>
+<p>Los nombres de <strong>variables</strong> son en minúscula y deben ser sustantivos lo más descriptivos posible (¡pensar unos segundos antes de nombrar!). Están formados por un descriptor de las variables que tiene adentro y una serie de sufijos separados por “.”. El descriptor y los sufijos pueden usar "_" para separar.</p>
 <p>El descriptor siempre va primero, seguido de los sufijos en orden de relevancia (usar el sentido común).</p>
 <pre class="{r}"><code># Bien.
 pp.ncep.l    # precipitación del modelo ncep en formato long

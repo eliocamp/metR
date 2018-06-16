@@ -8,8 +8,8 @@
 <title>Tools for Easier Analysis of Meteorological Fields • metR</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Tools for Easier Analysis of Meteorological Fields">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script><meta property="og:title" content="Tools for Easier Analysis of Meteorological Fields">
 <meta property="og:description" content="Many useful functions and extensions for dealing with 
     meteorological data in the tidy data framework. Extends ggplot2 for better
     plotting of scalar and vector fields and provides commonly used analysis 
@@ -21,7 +21,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -83,12 +83,11 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     
 
     
     
-<div class="contents">
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="metr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
@@ -102,8 +101,8 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install metR from github with:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"eliocamp/metR"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"eliocamp/metR"</span>)</a></code></pre></div>
 <p>You might need to install the netcdf and udunits2 libraries. On Ubuntu and it’s derivatives this can be done by typing</p>
 <pre><code>sudo apt install libnetcdf-dev netcdf-bin libudunits2-dev</code></pre>
 </div>
@@ -111,42 +110,41 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
 <p>In this example we easily perform Principal Components Decomposition (EOF) on monthly geopotential height, then compute the geostrophic wind associated with this field and plot the field with filled contours and the wind with streamlines.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(metR)
-<span class="kw">library</span>(data.table)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">data</span>(geopotential)
-<span class="co"># Use Empirical Orthogonal Functions to compute the Antarctic Oscillation</span>
-geopotential &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/copy">copy</a></span>(geopotential)
-geopotential[, gh.t.w <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="reference/Anomaly.html">Anomaly</a></span>(gh)<span class="op">*</span><span class="kw">sqrt</span>(<span class="kw">cos</span>(lat<span class="op">*</span>pi<span class="op">/</span><span class="dv">180</span>)),
-      by =<span class="st"> </span>.(lon, lat, <span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">month</a></span>(date))]
-aao &lt;-<span class="st"> </span><span class="kw"><a href="reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">~</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span>lon <span class="op">|</span><span class="st"> </span>date, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span>)
-aao<span class="op">$</span>left[, <span class="kw">c</span>(<span class="st">"u"</span>, <span class="st">"v"</span>) <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="reference/GeostrophicWind.html">GeostrophicWind</a></span>(gh.t.w, lon, lat)]
-
-<span class="co"># AAO field</span>
-binwidth &lt;-<span class="st"> </span><span class="fl">0.01</span>
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao<span class="op">$</span>left, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> gh.t.w)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="reference/geom_contour_fill.html">geom_contour_fill</a></span>(<span class="dt">binwidth =</span> binwidth, <span class="dt">xwrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>)) <span class="op">+</span><span class="st">    </span><span class="co"># filled contours!</span>
-<span class="st">    </span><span class="kw"><a href="reference/geom_streamline.html">geom_streamline</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> <span class="kw"><a href="reference/spherical.html">dlon</a></span>(u, lat), <span class="dt">dy =</span> <span class="kw"><a href="reference/spherical.html">dlat</a></span>(v)), 
-                    <span class="dt">size =</span> <span class="fl">0.4</span>, <span class="dt">L =</span> <span class="dv">80</span>, <span class="dt">skip =</span> <span class="dv">3</span>, <span class="dt">xwrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">20</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="reference/scale_divergent.html">scale_fill_divergent</a></span>(<span class="dt">name =</span> <span class="st">"AAO pattern"</span>, 
-                         <span class="dt">breaks =</span> <span class="kw"><a href="reference/MakeBreaks.html">MakeBreaks</a></span>(binwidth),
-                         <span class="dt">guide =</span> <span class="kw"><a href="reference/guide_colourstrip.html">guide_colorstrip</a></span>()) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</code></pre></div>
-<p><img src="README-field-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># AAO signal</span>
-g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao<span class="op">$</span>right, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, gh.t.w)) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_smooth">geom_smooth</a></span>(<span class="dt">span =</span> <span class="fl">0.4</span>)
-
-<span class="kw"><a href="reference/DivideTimeseries.html">DivideTimeseries</a></span>(g, aao<span class="op">$</span>right<span class="op">$</span>date, <span class="dt">xlab =</span> <span class="st">"Date"</span>, <span class="dt">ylab =</span> <span class="st">"AAO signal"</span>)
-<span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span>
-<span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span>
-<span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></code></pre></div>
-<p><img src="README-timeseries-1.png" width="672"></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(metR)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(data.table)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw">data</span>(geopotential)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># Use Empirical Orthogonal Functions to compute the Antarctic Oscillation</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">geopotential &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/copy">copy</a></span>(geopotential)</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">geopotential[, gh.t.w <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="reference/Anomaly.html">Anomaly</a></span>(gh)<span class="op">*</span><span class="kw">sqrt</span>(<span class="kw">cos</span>(lat<span class="op">*</span>pi<span class="op">/</span><span class="dv">180</span>)),</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">      by =<span class="st"> </span>.(lon, lat, <span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">month</a></span>(date))]</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">aao &lt;-<span class="st"> </span><span class="kw"><a href="reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">~</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span>lon <span class="op">|</span><span class="st"> </span>date, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">aao<span class="op">$</span>left[, <span class="kw">c</span>(<span class="st">"u"</span>, <span class="st">"v"</span>) <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="reference/GeostrophicWind.html">GeostrophicWind</a></span>(gh.t.w, lon, lat)]</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># AAO field</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">binwidth &lt;-<span class="st"> </span><span class="fl">0.01</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao<span class="op">$</span>left, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat, <span class="dt">z =</span> gh.t.w)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="st">    </span><span class="kw"><a href="reference/geom_contour_fill.html">geom_contour_fill</a></span>(<span class="dt">binwidth =</span> binwidth, <span class="dt">xwrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>)) <span class="op">+</span><span class="st">    </span><span class="co"># filled contours!</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="st">    </span><span class="kw"><a href="reference/geom_streamline.html">geom_streamline</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> <span class="kw"><a href="reference/spherical.html">dlon</a></span>(u, lat), <span class="dt">dy =</span> <span class="kw"><a href="reference/spherical.html">dlat</a></span>(v)), </a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">                    <span class="dt">size =</span> <span class="fl">0.4</span>, <span class="dt">L =</span> <span class="dv">80</span>, <span class="dt">skip =</span> <span class="dv">3</span>, <span class="dt">xwrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="st">    </span><span class="kw"><a href="reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="st">    </span><span class="kw"><a href="reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">-20</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="st">    </span><span class="kw"><a href="reference/scale_divergent.html">scale_fill_divergent</a></span>(<span class="dt">name =</span> <span class="st">"AAO pattern"</span>, </a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">                         <span class="dt">breaks =</span> <span class="kw"><a href="reference/MakeBreaks.html">MakeBreaks</a></span>(binwidth),</a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">                         <span class="dt">guide =</span> <span class="kw"><a href="reference/guide_colourstrip.html">guide_colorstrip</a></span>()) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</a></code></pre></div>
+<p><img src="README-field-1.png" width="700"></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># AAO signal</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">g &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao<span class="op">$</span>right, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, gh.t.w)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_smooth">geom_smooth</a></span>(<span class="dt">span =</span> <span class="fl">0.4</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw"><a href="reference/DivideTimeseries.html">DivideTimeseries</a></span>(g, aao<span class="op">$</span>right<span class="op">$</span>date, <span class="dt">xlab =</span> <span class="st">"Date"</span>, <span class="dt">ylab =</span> <span class="st">"AAO signal"</span>)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></a></code></pre></div>
+<p><img src="README-timeseries-1.png" width="700"></p>
 <p>You can read more in the vignettes (comming soon).</p>
-</div>
 </div>
 </div>
   </div>

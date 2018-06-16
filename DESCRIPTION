@@ -24,7 +24,6 @@ Imports:
 	maps,
 	maptools,
 	lubridate,
-    mapproj,
     ncdf4,
     gridExtra,
     sp,
@@ -38,7 +37,8 @@ Imports:
     plyr,
     digest,
     fields,
-    memoise
+    memoise,
+    Matrix
 RoxygenNote: 6.0.1.9000
 Suggests: 
     knitr,

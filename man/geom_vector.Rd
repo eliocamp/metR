@@ -82,6 +82,19 @@ also defaults to drawing arrows at the end of the segment. Useful for plotting
 vector fields characterized by magnitude of the \code{x} and \code{y} components.
 }
 \examples{
+library(data.table)
+library(ggplot2)
+data(geopotential)
+
+geopotential <- copy(geopotential)[date == date[1]]
+geopotential[, gh.z := Anomaly(gh), by = .(lat)]
+geopotential[, c("u", "v") := GeostrophicWind(gh.z, lon, lat)]
+
+(g <- ggplot(geopotential, aes(lon, lat)) +
+    geom_arrow(aes(dx = u, dy = v), skip.x = 3, skip.y = 2,
+               pivot = 0.5) +
+    scale_mag())
+
 speed <- expand.grid(lon = 1:360, lat = -90:0)
 set.seed(42)
 speed <- transform(speed,

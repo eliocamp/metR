@@ -112,8 +112,7 @@ meteorological standard, for example, use \code{star = -90} and \code{direction 
 \itemize{
 \item \strong{x}
 \item \strong{y}
-\item \strong{mag}
-\item \strong{angle}
+\item either \strong{mag} and \strong{angle}, or \strong{dx} and \strong{dy}
 \item \code{alpha}
 \item \code{colour}
 \item \code{linetype}
@@ -123,17 +122,18 @@ meteorological standard, for example, use \code{star = -90} and \code{direction 
 }
 
 \examples{
-field <- expand.grid(x = seq.Date(as.Date("2017-01-01"), as.Date("2017-01-31"), "2 days"),
-                     y = 1:10)
-set.seed(42)
-field$u <- rnorm(nrow(field))
-field$v <- rnorm(nrow(field))
-field$V <- with(field, sqrt(u^2 + v^2))
-field$dir <- with(field, atan2(v, u))*180/pi
+library(data.table)
 library(ggplot2)
-ggplot(field, aes(x, y)) +
-    geom_arrow(aes(mag = V, angle = dir), preserve.dir = TRUE) +
-    scale_mag(length = 1)
+data(geopotential)
+
+geopotential <- copy(geopotential)[date == date[1]]
+geopotential[, gh.z := Anomaly(gh), by = .(lat)]
+geopotential[, c("u", "v") := GeostrophicWind(gh.z, lon, lat)]
+
+(g <- ggplot(geopotential, aes(lon, lat)) +
+    geom_arrow(aes(dx = u, dy = v), skip.x = 3, skip.y = 2,
+               pivot = 0.5) +
+    scale_mag())
 
 }
 \seealso{

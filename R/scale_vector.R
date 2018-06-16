@@ -1,14 +1,15 @@
 ## Scale_magnitude?
 
 #' @export
-scale_mag <- function(length = 0.1,
+scale_mag <- function(name = waiver(), length = 1,
                          max = waiver(),
-                         default_unit = "lines", guide = "vector") {
+                         default_unit = "lines", guide = "vector", ...) {
     # if (!is.unit(length)) length <- ggplot2::unit(length, default_unit)
 
-    continuous_scale("mag",
+    ggplot2::continuous_scale("mag",
                      "mag",
                      identity,
+                     name = name,
                      breaks = vector_breaks(length, max),
                      oob = no_censor,
                      rescaler = rescale_mag(length, max),

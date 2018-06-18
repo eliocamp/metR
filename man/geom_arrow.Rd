@@ -127,6 +127,7 @@ data(seals)
 # geom_vector() (or geom_arrow(preserve.dir = TRUE)) might be a better option
 ggplot(seals, aes(long, lat)) +
     geom_arrow(aes(dx = delta_long, dy = delta_lat), skip = 1, color = "red") +
+    scale_mag()
     geom_vector(aes(dx = delta_long, dy = delta_lat), skip = 1)
 
 data(geopotential)

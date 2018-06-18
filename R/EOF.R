@@ -14,7 +14,7 @@
 #' confidence intervals. If named, it's names will be used as column names.
 #' @param rotate if `TRUE`, scores and loadings will be rotated using [varimax]
 #' @param suffix character to name de principal components
-#' @param fill value to infill data not present in the data or `NULL` if the
+#' @param fill value to infill implicit missing values or `NULL` if the
 #' data is dense.
 #'
 #' @return

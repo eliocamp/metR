@@ -28,7 +28,7 @@ confidence intervals. If named, it's names will be used as column names.}
 
 \item{suffix}{character to name de principal components}
 
-\item{fill}{value to infill data not present in the data or \code{NULL} if the
+\item{fill}{value to infill implicit missing values or \code{NULL} if the
 data is dense.}
 }
 \value{

@@ -13,7 +13,8 @@ scale_mag <- function(name = waiver(), length = 1,
                      breaks = vector_breaks(length, max),
                      oob = no_censor,
                      rescaler = rescale_mag(length, max),
-                     guide = guide
+                     guide = guide,
+                     ...
                      )
 }
 

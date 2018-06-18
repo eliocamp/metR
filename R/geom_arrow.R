@@ -44,6 +44,7 @@
 #' # geom_vector() (or geom_arrow(preserve.dir = TRUE)) might be a better option
 #' ggplot(seals, aes(long, lat)) +
 #'     geom_arrow(aes(dx = delta_long, dy = delta_lat), skip = 1, color = "red") +
+#'     scale_mag()
 #'     geom_vector(aes(dx = delta_long, dy = delta_lat), skip = 1)
 #'
 #' data(geopotential)
@@ -214,6 +215,7 @@ GeomArrow <- ggplot2::ggproto("GeomArrow", Geom,
 
       mag <- with(data, mag/max(mag, na.rm = TRUE))
       arrow$length <- unit(as.numeric(arrow$length)*mag, attr(arrow$length, "unit"))
+
       if (preserve.dir == FALSE) {
           # For non linear coords
           data$group <- seq(nrow(data))
@@ -274,12 +276,35 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
     required_aes = c("x", "y"),
     default_aes = ggplot2::aes(min.mag = 0, dx = NULL, dy = NULL,
                                mag = NULL, angle = NULL),
-    compute_group = function(data, scales,
+    compute_group = function(self, data, scales,
                              skip.x = skip.x, skip.y = skip.y,
                              min.mag = min.mag, start = 0, direction = -1,
-                             preserve.dir = TRUE) {
+                             preserve.dir = TRUE, ...) {
+        data
+    },
+    compute_panel = function(self, data, scales,
+                             skip.x = skip.x, skip.y = skip.y,
+                             min.mag = min.mag, start = 0, direction = -1,
+                             preserve.dir = TRUE, ...) {
+        if (plyr::empty(data)) return(data.frame())
+
+        groups <- split(data, data$group)
+        stats <- lapply(groups, function(group) {
+            self$compute_group(data = group, scales = scales, ...)
+        })
+
+        stats <- mapply(function(new, old) {
+            if (plyr::empty(new)) return(data.frame())
+            unique <- ggplot2:::uniquecols(old)
+            missing <- !(names(unique) %in% names(new))
+            cbind(
+                new,
+                unique[rep(1, nrow(new)), missing,drop = FALSE]
+            )
+        }, stats, groups, SIMPLIFY = FALSE)
+
+        data <- do.call(plyr::rbind.fill, stats)
         min.mag <- data$min.mag %||% min.mag
-        scales <<- scales
 
         # Warnings for good usage
         if (preserve.dir == FALSE) {
@@ -310,8 +335,8 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
             data$dy <- with(data, mag*sin(angle*pi/180))
         }
 
-        data <- subset(data, x %in% JumpBy(unique(x), skip.x + 1) &
-                             y %in% JumpBy(unique(y), skip.y + 1) &
+        data <- subset(data, x %in% JumpBy(sort(unique(x)), skip.x + 1) &
+                             y %in% JumpBy(sort(unique(y)), skip.y + 1) &
                              mag >= min.mag)
 
         data

@@ -48,7 +48,7 @@ geom_label_contour <- function(mapping = NULL, data = NULL,
 #' @usage NULL
 #' @format NULL
 #' @export
-GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", Geom,
+GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", ggplot2::Geom,
     required_aes = c("x", "y", "label"),
     default_aes = ggplot2::aes(
         colour = "black", fill = "white", size = 3.88, angle = 0,
@@ -105,5 +105,5 @@ GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", Geom,
         ggplot2:::ggname("geom_label_contour", grid::grobTree(children = grobs))
     },
 
-    draw_key = draw_key_label
+    draw_key = ggplot2::draw_key_label
 )

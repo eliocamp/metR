@@ -103,7 +103,7 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
 #' @usage NULL
 #' @format NULL
 #' @export
-GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", GeomPath,
+GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
   draw_panel = function(data, panel_params, coord, arrow = NULL,
                         lineend = "butt", linejoin = "round", linemitre = 1,
                         na.rm = FALSE, sun.angle = 60, light = "gray20", dark = "black",

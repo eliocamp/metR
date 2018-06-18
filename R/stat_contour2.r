@@ -49,7 +49,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
 #' @usage NULL
 #' @format NULL
 #' @export
-StatContour2 <- ggplot2::ggproto("StatContour2", Stat,
+StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
   required_aes = c("x", "y", "z"),
   default_aes = ggplot2::aes(order = ..level..),
   setup_params = function(data, params) {

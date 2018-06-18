@@ -101,7 +101,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
 #' @usage NULL
 #' @format NULL
 #' @export
-GeomTextContour <- ggproto("GeomTextContour", Geom,
+GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
    required_aes = c("x", "y", "label"),
    default_aes = ggplot2::aes(colour = "black", size = 3.88, angle = 0,
                               hjust = 0.5, vjust = 0.5, alpha = NA, family = "",
@@ -149,7 +149,7 @@ GeomTextContour <- ggproto("GeomTextContour", Geom,
        )
    },
 
-   draw_key = draw_key_text
+   draw_key = ggplot2::draw_key_text
 )
 
 

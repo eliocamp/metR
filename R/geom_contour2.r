@@ -88,7 +88,7 @@ geom_contour2 <- function(mapping = NULL, data = NULL,
 #' @usage NULL
 #' @format NULL
 #' @export
-GeomContour2 <- ggplot2::ggproto("GeomContour2", GeomPath,
+GeomContour2 <- ggplot2::ggproto("GeomContour2", ggplot2::GeomPath,
   draw_panel = function(data, panel_params, coord, arrow = NULL,
                         lineend = "butt", linejoin = "round", linemitre = 10,
                         na.rm = FALSE, gap = 0, skip = 1, min.size = 0,

@@ -13,6 +13,7 @@ arrowGrob <- function(x, y, angle, length, pivot, preserve.dir,
 }
 
 #' @importFrom grid convertX convertY unit.c
+#' @export
 makeContent.arrow2 <- function(x) {
 
     x$id <- rep(seq(length(x$x)), 2)
@@ -47,6 +48,7 @@ vectorGrob <- function(x, y, dx, dy, length, preserve.dir,
 }
 
 #' @importFrom grid convertX convertY convertWidth convertHeight unit.c
+#' @export
 makeContent.vector <- function(x) {
     x$id <- rep(seq(length(x$x)), 2)
     x$x <- convertX(x$x, 'mm')

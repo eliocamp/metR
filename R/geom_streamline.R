@@ -277,8 +277,9 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
 #' @usage NULL
 #' @format NULL
 #' @export
+#' @import ggplot2
 GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
-    default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = NA),
+    default_aes = ggplot2::aes(colour = "black", size = 0.5, linetype = 1, alpha = NA),
     draw_panel = function(data, panel_params, coord, arrow = NULL,
                           lineend = "butt", linejoin = "round", linemitre = 1,
                           na.rm = FALSE) {

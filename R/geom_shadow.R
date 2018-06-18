@@ -34,7 +34,7 @@ geom_shadow <- function(mapping = NULL, data = NULL,
 #' @usage NULL
 #' @format NULL
 #' @export
-GeomShadow <- ggplot2::ggproto("GeomShadow", GeomTile,
+GeomShadow <- ggplot2::ggproto("GeomShadow", ggplot2::GeomTile,
   required_aes = c("x", "y", "z"),
   default_aes = ggplot2::aes(color = NA, fill = "black", size = 0.5, linetype = 1,
                              sun.angle = 60, sun.altitude = 20),

@@ -228,7 +228,7 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     }
 
 
-    return(structure(list(right = right, left = left, sdev = sdev),
+    return(structure(list(left = left, right = right, sdev = sdev),
                      call = match.call(),
                      class = c("eof", "list"),
                      suffix = suffix,

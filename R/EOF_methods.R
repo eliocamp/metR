@@ -77,20 +77,34 @@ print.eof <- function(eof) {
     print(eof$sdev)
 }
 
+# #' @export
+# `[.eof` <- function(x, left, right, PC) {
+#     if (!missing(PC)) {
+#         x <- cut(x, PC)
+#     }
+#     if (!missing(left)) {
+#         left <- substitute(left)
+#         x$left <- x$left[eval(left), ]
+#     }
+#     if (!missing(right)) {
+#         right <- substitute(right)
+#         x$right <- x$right[eval(right), ]
+#     }
+#
+#     x
+# }
+
 #' @export
-`[.eof` <- function(x, left, right, PC) {
-    if (!missing(PC)) {
-        x <- cut(x, PC)
-    }
-    if (!missing(left)) {
-        left <- substitute(left)
-        x$left <- x$left[eval(left), ]
-    }
-    if (!missing(right)) {
-        right <- substitute(right)
-        x$right <- x$right[eval(right), ]
-    }
-
-    x
+summary.eof <- function(eof) {
+    cat("Importance of components:\n")
+    pc <- attr(eof, "suffix")
+    sdev <- eof$sdev[, .(PC = get(pc), sd, r2)]
+    sdev[, cum.r2 := cumsum(r2)]
+    cat("Component", "Explained variance", "Cumulative variance\n")
+    p <- lapply(seq_len(nrow(sdev)), function(x) {
+        cat(formatC(sdev[x, ]$PC, width = 7), "  ",
+            formatC(scales::percent(sdev[x, ]$r2), width = 18),
+            formatC(scales::percent(sdev[x, ]$cum.r2), width = 19))
+        cat("\n")
+    })
 }
-

@@ -16,22 +16,23 @@
 #' @aliases AssignSeason
 #' @export
 season <- function(month, hemisphere = c("south", "north"),
-                         lang = c("es", "en")) {
+                         lang = c("en", "es")) {
 
     if (.is.somedate(month)) month <- lubridate::month(month)
 
     hemisphere <- substr(tolower(hemisphere[[1]]), 1, 1)
     if (lang[1] == "en") {
-        sum <- "Summer"
-        win <- "Winter"
-        aut <- "Autumn"
-        spr <- "Spring"
+        sum <- "DJF" #"Summer"
+
     } else {
-        sum <- "Verano"
-        win <- "Invierno"
-        aut <- "Oto\u00f1o"
-        spr <- "Primavera"
+        sum <- "EJM" # "Verano"
+        # win <- "Invierno"
+        # aut <- "Oto\u00f1o"
+        # spr <- "Primavera"
     }
+    win <- "JJA" # "Winter"
+    aut <-  "MAM"#  "Autumn"
+    spr <- "SON" #"Spring"
     if (hemisphere == "s") {
         seasons <- c(sum, sum, rep(c(aut, win, spr), each = 3), sum)
     } else {

@@ -82,7 +82,7 @@ geopotential <- copy(geopotential)
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
       by = .(lon, lat, month(date))]
 
-aao <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1,
+aao <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1:2,
            B = 100, probs = c(low = 0.1, hig = 0.9))
 
 # AAO field

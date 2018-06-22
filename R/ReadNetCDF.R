@@ -74,7 +74,7 @@ ReadNetCDF <- function(file, vars = NULL,
 
     # Leo las dimensiones.
     dims <- names(ncfile$dim)
-    dims <- dims[dims != "nbnds"]
+    # dims <- dims[dims != "nbnds"]
     ids <- vector()
     dimensions <- list()
     for (i in seq_along(dims)) {

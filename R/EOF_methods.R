@@ -1,6 +1,7 @@
 ## Methos for EOF
 
 #' @export
+#' @importFrom base cut
 cut.eof <- function(eof, n) {
     var <- attr(eof, "suffix")
     value.var <- attr(eof, "value.var")
@@ -13,6 +14,7 @@ cut.eof <- function(eof, n) {
 }
 
 #' @export
+#' @importFrom stats screeplot
 screeplot.eof <- function(eof, n = "all") {
     var <- attr(eof, "suffix")
     r2 <- "r2"
@@ -22,11 +24,13 @@ screeplot.eof <- function(eof, n = "all") {
 }
 
 #' @export
+#' @importFrom ggplot2 autoplot
 autoplot.eof <- function(eof, n = "all") {
     screeplot(eof, n)
 }
 
 #' @export
+#' @importFrom stats predict
 predict.eof <- function(eof, n = NULL) {
     ` %>% ` <- magrittr::`%>%`
     if (!inherits(eof, "eof")) {
@@ -68,6 +72,7 @@ predict.eof <- function(eof, n = NULL) {
 
 
 #' @export
+#' @importFrom base print
 print.eof <- function(eof) {
     cat("left:\n")
     print(eof$left)
@@ -95,6 +100,7 @@ print.eof <- function(eof) {
 # }
 
 #' @export
+#' @importFrom base summary
 summary.eof <- function(eof) {
     cat("Importance of components:\n")
     pc <- attr(eof, "suffix")

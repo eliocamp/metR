@@ -25,7 +25,7 @@ season <- function(month, hemisphere = c("south", "north"),
         sum <- "DJF" #"Summer"
 
     } else {
-        sum <- "EJM" # "Verano"
+        sum <- "DEF" # "Verano"
         # win <- "Invierno"
         # aut <- "Oto\u00f1o"
         # spr <- "Primavera"

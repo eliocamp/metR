@@ -1,7 +1,6 @@
 ## Methos for EOF
 
 #' @export
-#' @importFrom base cut
 cut.eof <- function(eof, n) {
     var <- attr(eof, "suffix")
     value.var <- attr(eof, "value.var")
@@ -72,7 +71,6 @@ predict.eof <- function(eof, n = NULL) {
 
 
 #' @export
-#' @importFrom base print
 print.eof <- function(eof) {
     cat("left:\n")
     print(eof$left)
@@ -100,7 +98,6 @@ print.eof <- function(eof) {
 # }
 
 #' @export
-#' @importFrom base summary
 summary.eof <- function(eof) {
     cat("Importance of components:\n")
     pc <- attr(eof, "suffix")

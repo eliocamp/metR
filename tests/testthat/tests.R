@@ -2,15 +2,15 @@ library(metR)
 
 context("")
 test_that("season assigns season", {
-    expect_equal(as.character(season(1)), "Verano")
+    expect_equal(as.character(season(1)), "DJF")
     expect_equal(as.character(season(1, hemisphere = "n")),
-                 "Invierno")
-    expect_equal(as.character(season(1, lang = "en")),
-                 "Summer")
+                 "JJA")
+    expect_equal(as.character(season(1, lang = "es")),
+                 "DEF")
     expect_equal(as.character(season(c(1, 3))),
-                 c("Verano", "Oto\u00f1o"))
+                 c("DJF", "MAM"))
     expect_equal(levels(season(1)),
-                 c("Verano", "Oto\u00f1o", "Invierno", "Primavera"))
+                 c("DJF", "MAM", "JJA", "SON"))
 })
 
 

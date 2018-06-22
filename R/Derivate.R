@@ -194,7 +194,7 @@ Vorticity <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
         if (order == 1) {
             dxdy <- (x[c(2:N, 1)] - x[c(N, 1:(N-1))])/(2*d)
         } else if (order == 2) {
-            dxdy <- (x[c(2:N, 1)] + x[c(N, 1:(N-1))] - 2*x)/(2*d)^2
+            dxdy <- (x[c(2:N, 1)] + x[c(N, 1:(N-1))] - 2*x)/(d)^2
         }
         if (!cyclical) {
             if (!fill) {

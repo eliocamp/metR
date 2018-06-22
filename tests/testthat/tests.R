@@ -25,11 +25,24 @@ test_that("Derivative works", {
         x <- 1:10
         y <- x^2
         Derivate(y ~ x, order = 2, cyclical = FALSE)[[1]][2]
-    }, 0.5)
+    }, 2)
     expect_equal({
         data <- data.frame(x = 1:10, y = 1:10)
         Derivate(x ~ y, data = data, cyclical = FALSE)[[1]][2]
     }, 1)
+    expect_equal({
+        x <- 1:10
+        y <- x^3
+        Derivate(y ~ x, order = 3, cyclical = FALSE)[[1]][3]
+    }, 6)
+})
+
+test_that("Derivative fills edges", {
+    expect_equal({
+        x <- 1:10
+        y <- x^3
+        is.na(Derivate(y ~ x, order = 3, cyclical = FALSE, fill = TRUE)[[1]][1])
+    }, FALSE)
 })
 
 test_that("Derivative checks boundary conditions", {

@@ -1,10 +1,10 @@
 ## Methos for EOF
 
 #' @export
-cut.eof <- function(eof, n) {
-    var <- attr(eof, "suffix")
-    value.var <- attr(eof, "value.var")
-    return(structure(lapply(as.list(eof), function(x) {
+cut.eof <- function(x, n, ...) {
+    var <- attr(x, "suffix")
+    value.var <- attr(x, "value.var")
+    return(structure(lapply(as.list(x), function(x) {
         x[as.numeric(get(var)) %in% n]
     }),
     class = c("eof", "list"),
@@ -14,44 +14,44 @@ cut.eof <- function(eof, n) {
 
 #' @export
 #' @importFrom stats screeplot
-screeplot.eof <- function(eof, n = "all") {
+screeplot.eof <- function(x, npcs = "all", type = NULL, main = NULL, ...) {
     var <- attr(eof, "suffix")
     r2 <- "r2"
-    if (n[1] == "all") n <- as.numeric(unique(eof$sdev[[var]]))
-    ggplot(eof$sdev[as.numeric(get(var)) %in% n], aes_(as.name(var), as.name(r2))) +
+    if (npcs[1] == "all") npcs <- as.numeric(unique(eof$sdev[[var]]))
+    ggplot(eof$sdev[as.numeric(get(var)) %in% npcs], aes_(as.name(var), as.name(r2))) +
         geom_point()
 }
 
 #' @export
 #' @importFrom ggplot2 autoplot
-autoplot.eof <- function(eof, n = "all") {
-    screeplot(eof, n)
+autoplot.eof <- function(object, n = "all", ...) {
+    screeplot(object, n)
 }
 
 #' @export
 #' @importFrom stats predict
-predict.eof <- function(eof, n = NULL) {
+predict.eof <- function(object, n = NULL, ...) {
     ` %>% ` <- magrittr::`%>%`
-    if (!inherits(eof, "eof")) {
+    if (!inherits(object, "eof")) {
         stop("eof must be an EOF object")
     }
 
-    if(!is.null(n)) eof <- cut(eof, n)
+    if(!is.null(n)) object <- cut(object, n)
 
-    value.var <- attr(eof, "value.var")
-    pc <- attr(eof, "suffix")
+    value.var <- attr(object, "value.var")
+    pc <- attr(object, "suffix")
 
-    right.vars <- colnames(eof$right)[!(colnames(eof$right) %in% c(pc, value.var))]
+    right.vars <- colnames(object$right)[!(colnames(object$right) %in% c(pc, value.var))]
     right.formula <- as.formula(paste0(pc, " ~ ", paste0(right.vars, collapse = "+")))
 
-    right <- eof$right %>%
-        .[eof$sdev, on = pc] %>%
+    right <- object$right %>%
+        .[object$sdev, on = pc] %>%
         .[, (value.var) := get(value.var)*sd] %>%
-        metR:::.tidy2matrix(right.formula, value.var)
+        .tidy2matrix(right.formula, value.var)
 
-    left.vars <- colnames(eof$left)[!(colnames(eof$left) %in% c(pc, value.var))]
+    left.vars <- colnames(object$left)[!(colnames(object$left) %in% c(pc, value.var))]
     left.formula <- as.formula(paste0(pc, " ~ ", paste0(left.vars, collapse = "+")))
-    left <- metR:::.tidy2matrix(eof$left, left.formula, value.var)
+    left <- .tidy2matrix(object$left, left.formula, value.var)
 
     dt <- cbind(.extend.dt(left$coldims, each = nrow(right$coldims)),
                 .extend.dt(right$coldims, n = nrow(left$coldims)),
@@ -71,13 +71,13 @@ predict.eof <- function(eof, n = NULL) {
 
 
 #' @export
-print.eof <- function(eof) {
+print.eof <- function(x, ...) {
     cat("left:\n")
-    print(eof$left)
+    print(x$left)
     cat("\nright:\n")
-    print(eof$right)
+    print(x$right)
     cat("\nsdev:\n")
-    print(eof$sdev)
+    print(x$sdev)
 }
 
 # #' @export
@@ -98,10 +98,10 @@ print.eof <- function(eof) {
 # }
 
 #' @export
-summary.eof <- function(eof) {
+summary.eof <- function(object, ...) {
     cat("Importance of components:\n")
-    pc <- attr(eof, "suffix")
-    sdev <- eof$sdev[, .(PC = get(pc), sd, r2)]
+    pc <- attr(object, "suffix")
+    sdev <- object$sdev[, .(PC = get(pc), sd, r2)]
     sdev[, cum.r2 := cumsum(r2)]
     cat("Component", "Explained variance", "Cumulative variance\n")
     p <- lapply(seq_len(nrow(sdev)), function(x) {
@@ -110,4 +110,8 @@ summary.eof <- function(eof) {
             formatC(scales::percent(sdev[x, ]$cum.r2), width = 19))
         cat("\n")
     })
+}
+
+if(getRversion() >= "2.15.1") {
+    utils::globalVariables("cum.r2")
 }

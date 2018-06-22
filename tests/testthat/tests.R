@@ -14,7 +14,6 @@ test_that("season assigns season", {
 })
 
 
-
 context("Derivate")
 test_that("Derivative works", {
     expect_equal({
@@ -32,6 +31,27 @@ test_that("Derivative works", {
         Derivate(x ~ y, data = data, cyclical = FALSE)[[1]][2]
     }, 1)
 })
+
+test_that("Derivative checks boundary conditions", {
+    expect_error({
+        x <- 1:10
+        y <- 1:10
+        z <- 1:10
+        Derivate(x ~ y + z + x, cyclical = c(TRUE, FALSE))
+    })
+})
+
+test_that("Derivative uses spherical coords", {
+    expect_equal(Derivate(gh ~ lon + lat, geopotential[date == date[1]],
+                          sphere = TRUE),
+                 {
+                     g <- Derivate(gh ~ lon + lat, geopotential[date == date[1]])
+                     g[[1]] <- g[[1]]*180/pi/(6371000*cos(geopotential[date == date[1]]$lat*pi/180))
+                     g[[2]] <- g[[2]]*180/pi/6371000
+                     g
+                 })
+})
+
 test_that("Divergence returns divergence", {
     expect_equal({
         grid <- expand.grid(x = 1:10, y = 1:10)
@@ -55,6 +75,25 @@ test_that("Laplacian returns laplacian", {
         d <- Derivate(u + v ~ x + y, data = grid, order = 2)
         d$u.ddx + d$u.ddy})
 })
+
+test_that("Vorticity returns vorticidy", {
+    expect_equal({
+        grid <- expand.grid(x = 1:10, y = 1:10)
+    grid$v <- rnorm(100)
+    grid$u <- rnorm(100)
+    Vorticity(u + v ~ x + y, data = grid)
+    },
+    {
+        d <- Derivate(u + v ~ x + y, data = grid)
+        d$v.dx - d$u.dy
+    })
+})
+
+
+grid <- expand.grid(x = 1:10, y = 1:10)
+grid$v <- rnorm(100)
+grid$u <- rnorm(100)
+Divergence(u + v ~ x + y, data = grid)
 
 context("MaskLand")
 test_that("Water is still water", {

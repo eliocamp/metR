@@ -90,11 +90,6 @@ test_that("Vorticity returns vorticidy", {
 })
 
 
-grid <- expand.grid(x = 1:10, y = 1:10)
-grid$v <- rnorm(100)
-grid$u <- rnorm(100)
-Divergence(u + v ~ x + y, data = grid)
-
 context("MaskLand")
 test_that("Water is still water", {
     expect_equal(MaskLand(120, 14), FALSE)

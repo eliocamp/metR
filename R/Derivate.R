@@ -210,19 +210,19 @@ Vorticity <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
     return(dxdy)
 }
 
-.get_order_dim <- function(data) {
-    setDT(data)
-    data <- copy(data)
-    dims <- colnames(data)
-    dimorder <- vector("character", length(dims))
-    d <- 1
-    while (ncol(data) > 1) {
-        difs <- lapply(data, function(x) diff(x[1:2]))
-        dimorder[d] <- dims[difs != 0]
-        data <- subset(data, get(dimorder[d]) == with(data[1, ], get(dimorder[d])))
-        set(data, NULL, dimorder[d], NULL)
-        d <- d + 1
-    }
-    dimorder[d] <- colnames(data)
-    return(dimorder)
-}
+# .get_order_dim <- function(data) {
+#     setDT(data)
+#     data <- copy(data)
+#     dims <- colnames(data)
+#     dimorder <- vector("character", length(dims))
+#     d <- 1
+#     while (ncol(data) > 1) {
+#         difs <- lapply(data, function(x) diff(x[1:2]))
+#         dimorder[d] <- dims[difs != 0]
+#         data <- subset(data, get(dimorder[d]) == with(data[1, ], get(dimorder[d])))
+#         set(data, NULL, dimorder[d], NULL)
+#         d <- d + 1
+#     }
+#     dimorder[d] <- colnames(data)
+#     return(dimorder)
+# }

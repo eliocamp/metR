@@ -97,6 +97,7 @@ print.eof <- function(x, ...) {
 #     x
 # }
 
+#' @method summary eof
 #' @export
 summary.eof <- function(object, ...) {
     cat("Importance of components:\n")

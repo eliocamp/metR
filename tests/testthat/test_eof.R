@@ -45,7 +45,7 @@ test_that("EOF works inside data.table", {
 
 test_that("EOF rotates", {
     expect_identical(
-        round(EOF(gh ~ lon + lat | date, data = geopotential, rotate = TRUE)$sdev$sd),
-        2065185
+        round(EOF(gh ~ lon + lat | date, data = geopotential, n = 1:2, rotate = TRUE)$sdev$sd),
+        c(1934142, 724225)
         )
 })

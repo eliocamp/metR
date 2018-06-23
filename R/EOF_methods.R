@@ -15,10 +15,10 @@ cut.eof <- function(x, n, ...) {
 #' @export
 #' @importFrom stats screeplot
 screeplot.eof <- function(x, npcs = "all", type = NULL, main = NULL, ...) {
-    var <- attr(eof, "suffix")
+    var <- attr(x, "suffix")
     r2 <- "r2"
-    if (npcs[1] == "all") npcs <- as.numeric(unique(eof$sdev[[var]]))
-    ggplot(eof$sdev[as.numeric(get(var)) %in% npcs], aes_(as.name(var), as.name(r2))) +
+    if (npcs[1] == "all") npcs <- as.numeric(unique(x$sdev[[var]]))
+    ggplot(x$sdev[as.numeric(get(var)) %in% npcs], aes_(as.name(var), as.name(r2))) +
         geom_point()
 }
 

@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9001</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>season</span>(<span class='no'>month</span>, <span class='kw'>hemisphere</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"south"</span>, <span class='st'>"north"</span>), <span class='kw'>lang</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"es"</span>, <span class='st'>"en"</span>))</pre>
+    <pre class="usage"><span class='fu'>season</span>(<span class='no'>month</span>, <span class='kw'>hemisphere</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"south"</span>, <span class='st'>"north"</span>), <span class='kw'>lang</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"en"</span>, <span class='st'>"es"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,10 +152,10 @@ month.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>season</span>(<span class='fl'>1</span>, <span class='kw'>lang</span> <span class='kw'>=</span> <span class='st'>"en"</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='st'>"n"</span>)</div><div class='output co'>#&gt; [1] Winter
-#&gt; Levels: Summer Autumn Winter Spring</div><div class='input'><span class='fu'>season</span>(<span class='fl'>1</span>, <span class='kw'>lang</span> <span class='kw'>=</span> <span class='st'>"en"</span>)</div><div class='output co'>#&gt; [1] Summer
-#&gt; Levels: Summer Autumn Winter Spring</div><div class='input'><span class='fu'>season</span>(<span class='fu'>as.Date</span>(<span class='st'>"2017-01-01"</span>))</div><div class='output co'>#&gt; [1] Verano
-#&gt; Levels: Verano Otoño Invierno Primavera</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>season</span>(<span class='fl'>1</span>, <span class='kw'>lang</span> <span class='kw'>=</span> <span class='st'>"en"</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='st'>"n"</span>)</div><div class='output co'>#&gt; [1] JJA
+#&gt; Levels: DJF MAM JJA SON</div><div class='input'><span class='fu'>season</span>(<span class='fl'>1</span>, <span class='kw'>lang</span> <span class='kw'>=</span> <span class='st'>"en"</span>)</div><div class='output co'>#&gt; [1] DJF
+#&gt; Levels: DJF MAM JJA SON</div><div class='input'><span class='fu'>season</span>(<span class='fu'>as.Date</span>(<span class='st'>"2017-01-01"</span>))</div><div class='output co'>#&gt; [1] DJF
+#&gt; Levels: DJF MAM JJA SON</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

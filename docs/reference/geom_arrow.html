@@ -64,7 +64,7 @@ transformation and different plot ratios." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.9001</span>
       </span>
     </div>
 
@@ -295,7 +295,8 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 <span class='co'># geom_vector() (or geom_arrow(preserve.dir = TRUE)) might be a better option</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>seals</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>long</span>, <span class='no'>lat</span>)) +
     <span class='fu'>geom_arrow</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>delta_long</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>delta_lat</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
-    <span class='fu'>geom_vector</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>delta_long</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>delta_lat</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='geom_arrow-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'>geom_vector</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>delta_long</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>delta_lat</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
+    <span class='fu'>scale_mag</span>()</div><div class='img'><img src='geom_arrow-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'>data</span>(<span class='no'>geopotential</span>)
 <span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/copy'>copy</a></span>(<span class='no'>geopotential</span>)[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]]
 <span class='no'>geopotential</span>[, <span class='no'>gh.z</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date     gh.z

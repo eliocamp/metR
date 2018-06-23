@@ -49,3 +49,15 @@ test_that("EOF rotates", {
         c(1934142, 724225)
         )
 })
+
+test_that("EOF fails gracefully", {
+    expect_error(EOF(gh ~ lon + lat | date, data = geopotential, fill = "a"),
+                 "fill must be numeric or NULL")
+    expect_error(EOF(gh ~ lon1 + lat2 | date, data = geopotential),
+                 "Columns not found in data: lon1, lat2")
+    expect_error(EOF(lon1 + lat2 ~ date, value.var = "gh"),
+                 "data must not be NULL if value.var is not NULL")
+    expect_error(EOF(gh ~ lon | date, data = geopotential),
+                 "The formula  gh ~ lon | date  does not identify an unique observation for each cell.")
+})
+

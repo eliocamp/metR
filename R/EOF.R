@@ -108,7 +108,7 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
         }
     }
     if (!is.null(value.var)) {
-        if (is.null(data)) stop("data must not be NULL if value.var is NULL")
+        if (is.null(data)) stop("data must not be NULL if value.var is not NULL")
         data <- copy(data)
         f <- as.character(formula)
         f <- stringr::str_replace(f, "~", "\\|")

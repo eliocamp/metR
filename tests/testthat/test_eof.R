@@ -44,8 +44,8 @@ test_that("EOF works inside data.table", {
 
 
 test_that("EOF rotates", {
-    expect_known_hash(
-        EOF(gh ~ lon + lat | date, data = geopotential, rotate = TRUE),
-        hash =  "eb4d6f8a94"
+    expect_identical(
+        round(EOF(gh ~ lon + lat | date, data = geopotential, rotate = TRUE)$sdev$sd),
+        2065185
         )
 })

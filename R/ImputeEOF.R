@@ -76,8 +76,7 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
 
     if (is.null(data) | is.data.frame(data)) {
         if (!is.null(value.var)) {
-            if (is.null(data)) stop("data must not be NULL if value.var is NULL",
-                                    .call = FALSE)
+            if (is.null(data)) stop("data must not be NULL if value.var is not NULL")
             data <- copy(data)
             f <- as.character(formula)
             f <- stringr::str_replace(f, "~", "\\|")
@@ -107,6 +106,7 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
         id.name <- "ff19bdd67ff5f59cdce2824074707d20"
         data[, (id.name) := 1:.N]
         id <- c(.tidy2matrix(data, dcast.formula, id.name)$matrix)
+        data[, (id.name) := NULL]
         X <- g$matrix
     } else if (is.matrix(data)) {
         X <- data

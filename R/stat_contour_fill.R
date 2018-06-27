@@ -288,7 +288,7 @@ is_closed <- function(x, y) {
     (x[length(x)] == x[1]) & (y[length(x)] == y[1])
 }
 
-
+# nocov start
 close_path <- function(x, y, range_x, range_y) {
     L <- length(x)
     if ((x[1] == x[L] & x[1] %in% range_x) |
@@ -315,6 +315,7 @@ close_path <- function(x, y, range_x, range_y) {
     y[L + 1] <- y[1]
     return(list(x = x, y = y))
 }
+# nocov end
 
 
 .join_contours <- function(contours) {

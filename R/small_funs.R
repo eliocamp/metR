@@ -157,7 +157,7 @@ Similar <- function(x, target, tol = Inf) {
     for (i in seq_along(target)) {
         dif <- abs(as.numeric(x - target[i]))
         x.select <- x[which.min(dif)]
-        r <- r | (x == x.select & (is.na(tol) | y < abs(tol)))
+        r <- r | (x == x.select & (is.na(tol) | x.select < abs(tol)))
     }
     return(r)
 }

@@ -1,9 +1,4 @@
-seq_range <- function(x, by = ggplot2::resolution(x, zero = FALSE),...) {
-    r <- range(x)
-    seq.int(r[1], r[2], by = by, ...)
-}
-
-is.error <- function(x) inherits(x, "try-error")
+# nocov start
 
 .tidy2matrix <- function(data, formula, value.var, fill = NULL, ...) {
     row.vars <- all.vars(formula[[2]])
@@ -28,6 +23,15 @@ is.error <- function(x) inherits(x, "try-error")
                 coldims = coldims,
                 rowdims = rowdims))
 }
+
+
+seq_range <- function(x, by = ggplot2::resolution(x, zero = FALSE),...) {
+    r <- range(x)
+    seq.int(r[1], r[2], by = by, ...)
+}
+
+is.error <- function(x) inherits(x, "try-error")
+
 
 
 # from data.table
@@ -122,3 +126,4 @@ if(getRversion() >= "2.15.1") {
 
 
 `%>%` <- dplyr::`%>%`
+# nocov end

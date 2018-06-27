@@ -57,7 +57,7 @@ MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
 
     points <- sp::SpatialPoints(field.unique, proj4string = proj)
     field.unique[, land := unname(!is.na(sp::over(points, seamask)))]
-    field.unique[!((lat %b% c(-90, 90)) & (lon %b% wrap)), land := NA]
+    field.unique[!((lat %between% c(-90, 90)) & (lon %between% wrap)), land := NA]
 
     field <- field.unique[, .(lon, lat, land)][field, on = c("lon", "lat")]
 

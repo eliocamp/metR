@@ -70,7 +70,7 @@ one variable is \code{NA}.
 \examples{
 library(ggplot2)
 surface <- reshape2::melt(volcano)
-surface <- within(surface, value[Var1 \%b\% c(20, 30) & Var2 \%b\% c(20, 30)] <- NA)
+surface <- within(surface, value[Var1 \%between\% c(20, 30) & Var2 \%b\% c(20, 30)] <- NA)
 surface[sample(1:nrow(surface), 100, replace = FALSE), 3] <- NA
 
 ggplot(surface, aes(Var1, Var2, z = value)) +

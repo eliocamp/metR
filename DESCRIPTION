@@ -45,6 +45,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
+    vdiffr,
     reshape2,
     irlba,
     covr,

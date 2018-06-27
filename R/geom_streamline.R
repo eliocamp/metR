@@ -261,7 +261,7 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
                              no.cache = FALSE) {
 
         if (no.cache == TRUE) memoise::forget(streamline.f)
-        data <- streamline.f(data, dt = dt, S = S, skip.x = skip.x,
+        data <- streamline(data, dt = dt, S = S, skip.x = skip.x,
                              skip.y = skip.y, nx = nx, ny = ny, jitter.x = jitter.x,
                              jitter.y = jitter.y, xwrap = xwrap, ywrap = ywrap)
 
@@ -383,16 +383,12 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     rx <- ggplot2::resolution(as.numeric(field$x), zero = FALSE)
     ry <- ggplot2::resolution(as.numeric(field$y), zero = FALSE)
 
-    matrix <- Matrix::sparseMatrix(with(field, (x - min(x))/rx + 1),
-                                   with(field, (y - min(y))/ry + 1),
-                                   x = field[["dx"]])
+    matrix <- .tidy2matrix(field, x ~ y, value.var = "dx", fill = 0)$matrix
     dx.field <- list(x = seq_range(field$x, by = rx),
                      y = seq_range(field$y, by = ry),
                      z = matrix)
 
-    matrix <- Matrix::sparseMatrix(with(field, (x - min(x))/rx + 1),
-                                   with(field, (y - min(y))/ry + 1),
-                                   x = field[["dy"]])
+    matrix <- .tidy2matrix(field, x ~ y, value.var = "dy", fill = 0)$matrix
     dy.field <- list(x = seq_range(field$x, by = rx),
                      y = seq_range(field$y, by = ry),
                      z = matrix)
@@ -418,7 +414,12 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     rx <- ggplot2::resolution(field$x, zero = FALSE)
     ry <- ggplot2::resolution(field$y, zero = FALSE)
 
-    points <- as.data.table(field[x %in% xs & y %in% ys, .(x = x, y = y)])
+    if ((is.null(nx) && is.null(ny))) {
+        points <- as.data.table(field[x %in% xs & y %in% ys, .(x = x, y = y)])
+    } else {
+        points <- as.data.table(expand.grid(x = xs, y = ys))
+    }
+
 
     set.seed(42)
     points[, x := x + rnorm(.N, 0, rx)*jitter.x]
@@ -430,14 +431,14 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     points[, end := FALSE]
 
     # Muy poco elegante, pero bueno...
-    if (circ.x){
+    if (circ.x == TRUE){
         points[, x := .fold(x, 1, range.x, circ.x)[[1]]]
     } else {
         points[, x := ifelse(x > range.x[2], range.x[2], x)]
         points[, x := ifelse(x < range.x[1], range.x[1], x)]
     }
 
-    if (circ.y){
+    if (circ.y == TRUE){
         points[, y := .fold(y, 1, range.y, circ.y)[[1]]]
     } else {
         points[, y := ifelse(y > range.y[2], range.y[2], y)]
@@ -445,7 +446,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     }
 
     points[, c("dx", "dy") := force.fun(x, y)]
-    points <- points[dx + dy != 0 & !is.na(dx) & !is.na(dy)]
+    points <- points[abs(dx) + abs(dy) != 0 & !is.na(dx) & !is.na(dy)]
 
     points2 <- copy(points)
 
@@ -477,7 +478,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
             extra[, y := y + (range.select(sign(dx), range.x) - x)*dy/dx]
             extra[, step2 := step2 + 0.5*c(1, -1)*sign(dx)]
             extra[, step := step + 1]
-            extra[, x:= if (dx[1] < 0) range.x else range.x[2:1],
+            extra[, x := if (dx[1] < 0) range.x else range.x[2:1],
                   by = .(group, piece)]
             extra[, piece := piece + c(0, 1), by = .(group, piece)]
             points <- rbind(points, extra)[order(step2)]

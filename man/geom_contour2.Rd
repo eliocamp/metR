@@ -14,7 +14,7 @@ geom_contour2(mapping = NULL, data = NULL, stat = "contour2",
   breaks = scales::fullseq, bins = NULL, binwidth = NULL, na.rm = FALSE,
   show.legend = NA, inherit.aes = TRUE)
 
-stat_contour2(mapping = NULL, data = NULL, geom = "contour",
+stat_contour2(mapping = NULL, data = NULL, geom = "contour2",
   position = "identity", ..., breaks = scales::fullseq, bins = NULL,
   binwidth = NULL, na.rm = FALSE, xwrap = NULL, ywrap = NULL,
   show.legend = NA, inherit.aes = TRUE)

@@ -31,7 +31,7 @@ autoplot.eof <- function(object, n = "all", ...) {
 #' @export
 #' @importFrom stats predict
 predict.eof <- function(object, n = NULL, ...) {
-    ` %>% ` <- magrittr::`%>%`
+    ` %>% ` <- dplyr::`%>%`
     if (!inherits(object, "eof")) {
         stop("eof must be an EOF object")
     }

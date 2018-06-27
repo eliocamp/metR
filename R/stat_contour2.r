@@ -15,13 +15,13 @@
 #' @rdname geom_contour2
 #' @family ggplot2 helpers
 stat_contour2 <- function(mapping = NULL, data = NULL,
-                         geom = "contour", position = "identity",
-                         ...,
-                         breaks = scales::fullseq,
-                         bins = NULL,
-                         binwidth = NULL,
-                         na.rm = FALSE,
-                         xwrap = NULL,
+                          geom = "contour2", position = "identity",
+                          ...,
+                          breaks = scales::fullseq,
+                          bins = NULL,
+                          binwidth = NULL,
+                          na.rm = FALSE,
+                          xwrap = NULL,
                          ywrap = NULL,
                          show.legend = NA,
                          inherit.aes = TRUE) {

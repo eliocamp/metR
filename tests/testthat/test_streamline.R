@@ -1,21 +1,20 @@
 library(metR)
 library(ggplot2)
 library(data.table)
-# library(vdiffr)
+library(vdiffr)
 
 context("Streamline")
 geo <- geopotential[date == date[1]]
 geo[, c("u", "v") := GeostrophicWind(gh, lon, lat)]
 
+basic_geom_streamline <- ggplot(geo, aes(lon, lat)) +
+    geom_streamline(aes(dx = u, dy = v))
+basic_stat_streamline <- ggplot(geo, aes(lon, lat)) +
+    stat_streamline(aes(dx = u, dy = v))
+
 test_that("Streamline works", {
-    expect_equal(
-        nrow(ggplot_build(ggplot(geo, aes(lon, lat)) +
-                               geom_streamline(aes(dx = u, dy = v)))$data[[1]]),
-        3511)
-    expect_equal(
-        nrow(ggplot_build(ggplot(geo, aes(lon, lat)) +
-                              stat_streamline(aes(dx = u, dy = v)))$data[[1]]),
-        3511)
+    expect_doppelganger("streamline-base", basic_geom_streamline)
+    expect_doppelganger("streamline-base", basic_stat_streamline)
 })
 
 test_that("Streamline wraps in x amd y", {

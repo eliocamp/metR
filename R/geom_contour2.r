@@ -45,42 +45,42 @@
 #' @family ggplot2 helpers
 #' @export
 geom_contour2 <- function(mapping = NULL, data = NULL,
-                         stat = "contour2", position = "identity",
-                         ...,
-                         gap = 0,
-                         min.size = 5,
-                         skip = 1,
-                         lineend = "butt",
-                         linejoin = "round",
-                         linemitre = 1,
-                         breaks = scales::fullseq,
-                         bins = NULL,
-                         binwidth = NULL,
-                         na.rm = FALSE,
-                         show.legend = NA,
-                         inherit.aes = TRUE) {
-  layer(
-    data = data,
-    mapping = mapping,
-    stat = stat,
-    geom = GeomContour2,
-    position = position,
-    show.legend = show.legend,
-    inherit.aes = inherit.aes,
-    params = list(
-      lineend = lineend,
-      linejoin = linejoin,
-      linemitre = linemitre,
-      breaks = breaks,
-      bins = bins,
-      binwidth = binwidth,
-      na.rm = na.rm,
-      gap = gap,
-      min.size = min.size,
-      skip = skip,
-      ...
+                          stat = "contour2", position = "identity",
+                          ...,
+                          gap = 0,
+                          min.size = 5,
+                          skip = 1,
+                          lineend = "butt",
+                          linejoin = "round",
+                          linemitre = 1,
+                          breaks = scales::fullseq,
+                          bins = NULL,
+                          binwidth = NULL,
+                          na.rm = FALSE,
+                          show.legend = NA,
+                          inherit.aes = TRUE) {
+    layer(
+        data = data,
+        mapping = mapping,
+        stat = stat,
+        geom = GeomContour2,
+        position = position,
+        show.legend = show.legend,
+        inherit.aes = inherit.aes,
+        params = list(
+            lineend = lineend,
+            linejoin = linejoin,
+            linemitre = linemitre,
+            breaks = breaks,
+            bins = bins,
+            binwidth = binwidth,
+            na.rm = na.rm,
+            gap = gap,
+            min.size = min.size,
+            skip = skip,
+            ...
+        )
     )
-  )
 }
 
 
@@ -89,26 +89,26 @@ geom_contour2 <- function(mapping = NULL, data = NULL,
 #' @format NULL
 #' @export
 GeomContour2 <- ggplot2::ggproto("GeomContour2", ggplot2::GeomPath,
-  draw_panel = function(data, panel_params, coord, arrow = NULL,
-                        lineend = "butt", linejoin = "round", linemitre = 10,
-                        na.rm = FALSE, gap = 0, skip = 1, min.size = 0,
-                        rotate = FALSE) {
-      if (!anyDuplicated(data$group)) {
-          message_wrap("geom_path: Each group consists of only one observation. ",
-                       "Do you need to adjust the group aesthetic?")
-      }
-      # must be sorted on group
-      data <- data[order(data$group), , drop = FALSE]
-      data <- data.table::as.data.table(coord_munch(coord, data, panel_params))
-      if (gap > 0) {
-          # Check wich contours are labeled and where.
-          min.size <- ceiling(min.size)
-          if (min.size %% 2 == 0) {
-              min.size <- min.size - 1
-          }
-          labels <- .label.position(data, min.size, skip, FALSE)
-          data <- labels[, .(x, y, cut = TRUE)][data, on = c("x", "y")]
-          data[is.na(cut), cut := FALSE]
+                                 draw_panel = function(data, panel_params, coord, arrow = NULL,
+                                                       lineend = "butt", linejoin = "round", linemitre = 10,
+                                                       na.rm = FALSE, gap = 0, skip = 1, min.size = 0,
+                                                       rotate = FALSE) {
+                                     if (!anyDuplicated(data$group)) {
+                                         message_wrap("geom_path: Each group consists of only one observation. ",
+                                                      "Do you need to adjust the group aesthetic?")
+                                     }
+                                     # must be sorted on group
+                                     data <- data[order(data$group), , drop = FALSE]
+                                     data <- data.table::as.data.table(coord_munch(coord, data, panel_params))
+                                     if (gap > 0) {
+                                         # Check wich contours are labeled and where.
+                                         min.size <- ceiling(min.size)
+                                         if (min.size %% 2 == 0) {
+                                             min.size <- min.size - 1
+                                         }
+                                         labels <- .label.position(data, min.size, skip, FALSE)
+                                         data <- labels[, .(x, y, cut = TRUE)][data, on = c("x", "y")]
+                                         data[is.na(cut), cut := FALSE]
 
           # Distance in points
           data[, point := seq_len(.N), by = piece]

@@ -131,7 +131,7 @@ Mag <- function(...) {
 #' # approximately 36W between 50S and 50N.
 #' cross.lon <- -34 + 360
 #' library(ggplot2)
-#' ggplot(temperature[lon %~% cross.lon & lat %b% c(-50, 50)],
+#' ggplot(temperature[lon %~% cross.lon & lat %between% c(-50, 50)],
 #'        aes(lat, lev)) +
 #'     geom_contour(aes(z = air))
 #'

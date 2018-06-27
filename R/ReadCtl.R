@@ -1,6 +1,7 @@
 # http://cola.gmu.edu/grads/gadoc/descriptorfile.html
 # library(lubridate)
 # library(data.table)
+# nocov start
 ReadCtl <- function(descriptor, hd.rm = TRUE) {
     components <- .ParseCTL(readLines(descriptor))
     # DSET can start with "^" (grib files are on the same dir as descriptor) or
@@ -266,3 +267,4 @@ expand.grid.alt <- function(seq1,seq2) {
     cbind(rep.int(seq1, length(seq2)),
           c(t(matrix(rep.int(seq2, length(seq1)), nrow=length(seq2)))))
 }
+# nocov end

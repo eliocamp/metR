@@ -61,14 +61,14 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
       if (is.function(params$breaks)) {
           # If no parameters set, use pretty bins to calculate binwidth
           if (is.null(params$bins) && is.null(params$binwidth)) {
-              params$binwidth <- diff(pretty(range(data$z), 10))[1]
+              params$binwidth <- diff(pretty(range(data$z, na.rm = TRUE), 10))[1]
           }
           # If provided, use bins to calculate binwidth
           if (!is.null(params$bins)) {
-              params$binwidth <- diff(range(data$z)) / params$bins
+              params$binwidth <- diff(range(data$z, na.rm = TRUE)) / params$bins
           }
 
-          params$breaks <- params$breaks(range(data$z), params$binwidth)
+          params$breaks <- params$breaks(range(data$z, na.rm = TRUE), params$binwidth)
       }
       return(params)
   },

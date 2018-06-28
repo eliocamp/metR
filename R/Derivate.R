@@ -97,6 +97,7 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
     })
     coords <- lapply(ind.names, function(x) unique(data[[x]]))
     # coords <- coords[length(coords):1]
+
     for (v in seq_along(dep.names)) {
         data.array <- array(data[[dep.names[v]]], dim = unlist(lapply(coords, length)))
         s <- lapply(seq_along(coords), function(x) {
@@ -108,12 +109,13 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
     # data <- data[order(data[[id.name]])]
     setkeyv(data, id.name)
 
-
     # Correction for spherical coordinates.
     if (sphere == TRUE) {
         cosvar <- cos(data[, get(ind.names[2])]*pi/180)
-        data[, dernames[[1]][1] := get(dernames[[1]])*(180/pi/(a*cosvar))^order[1]]
-        data[, dernames[[1]][2] := get(dernames[[1]][2])*(180/pi/a)^order[1]]
+        for (var in seq_along(dernames)) {
+            data[, dernames[[var]][1] := get(dernames[[var]][1])*(180/pi/(a*cosvar))^order[1]]
+            data[, dernames[[var]][2] := get(dernames[[var]][2])*(180/pi/a)^order[1]]
+        }
     }
 
     data <- data[, unlist(dernames), with = FALSE]

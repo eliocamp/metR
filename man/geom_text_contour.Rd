@@ -11,7 +11,7 @@
 \title{Label contours}
 \usage{
 geom_label_contour(mapping = NULL, data = NULL, stat = "text_contour",
-  position = "identity", ..., min.size = 10, skip = 1, parse = FALSE,
+  position = "identity", ..., min.size = 5, skip = 1, parse = FALSE,
   nudge_x = 0, nudge_y = 0, label.padding = unit(0.25, "lines"),
   label.r = unit(0.15, "lines"), label.size = 0.25, na.rm = FALSE,
   show.legend = NA, inherit.aes = TRUE)

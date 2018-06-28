@@ -3,7 +3,7 @@
 geom_label_contour <- function(mapping = NULL, data = NULL,
                        stat = "text_contour", position = "identity",
                        ...,
-                       min.size = 10,
+                       min.size = 5,
                        skip = 1,
                        parse = FALSE,
                        nudge_x = 0,

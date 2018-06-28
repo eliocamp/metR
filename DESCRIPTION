@@ -39,7 +39,8 @@ Imports:
     digest,
     fields,
     memoise,
-    Matrix
+    Matrix,
+    shadowtext
 RoxygenNote: 6.0.1.9000
 Suggests: 
     knitr,

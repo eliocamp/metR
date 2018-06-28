@@ -38,6 +38,7 @@ explicitly set the domain. This makes the implementation more robust and also al
 - `EOF()` gains a `fill` argument for sparse-ish data. 
 - The `Between` operators are deprecated since they are already implemented in 
 `data.table`.
+- `geom_text_contour()` now has the ability of drawing a stroke arround text. 
 
 # metR 0.1
 - New function: `GetTopography()`

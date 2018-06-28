@@ -63,8 +63,13 @@ GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", ggplot2::Geom,
                           label.size = 0.25, min.size = 20,
                           skip = 1, gap = 0) {
         data <- data.table::as.data.table(coord$transform(data, panel_params))
-
-        data <- .label.position(data, min.size, skip, rotate = FALSE)
+        d2 <<- data
+        min.size <- ceiling(min.size)
+        if (min.size %% 2 == 0) {
+            min.size <- min.size - 1
+        }
+        # Get points of labels
+        data <- .label.position(copy(data), min.size, skip, rotate = FALSE)
 
         lab <- data$label
         if (parse) {

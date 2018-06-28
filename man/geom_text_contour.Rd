@@ -18,8 +18,9 @@ geom_label_contour(mapping = NULL, data = NULL, stat = "text_contour",
 
 geom_text_contour(mapping = NULL, data = NULL, stat = "text_contour",
   position = "identity", ..., min.size = 5, skip = 1, rotate = TRUE,
-  parse = FALSE, nudge_x = 0, nudge_y = 0, check_overlap = FALSE,
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+  parse = FALSE, nudge_x = 0, nudge_y = 0, stroke = 0,
+  stroke.color = "white", check_overlap = FALSE, na.rm = FALSE,
+  show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -87,6 +88,11 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
 \item{rotate}{logical indicating wether to rotate text following the contour.}
 
+\item{stroke}{numerical indicating width of stroke relative to the size of
+the text. Ignored if less than zero.}
+
+\item{stroke.color}{any valid color.}
+
 \item{check_overlap}{If \code{TRUE}, text that overlaps previous text in the
 same layer will not be plotted.}
 }
@@ -127,14 +133,7 @@ g <- ggplot(v, aes(Var1, Var2)) +
        geom_contour(aes(z = value))
 g + geom_text_contour(aes(z = value, label = ..level..))
 
-# Small hack, best used with uniform background
-geom_label_contour2 <- function(...) {
-    list(geom_label_contour(fill = "white", label.r = unit(0, "lines"),
-                            label.padding = unit(0.04, "lines"), color = NA, ...),
-         geom_text_contour(..., rotate = FALSE))
-}
-g + geom_label_contour2(aes(z = value, label = ..level..)) +
-   theme_void()
+g + geom_text_contour(aes(z = value, label = ..level..), stroke = 0.2)
 
 }
 \seealso{

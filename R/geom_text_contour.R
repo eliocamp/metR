@@ -7,6 +7,9 @@
 #' @param min.size minimum number of points for a contour to be labeled.
 #' @param skip number of contours to skip
 #' @param rotate logical indicating wether to rotate text following the contour.
+#' @param stroke numerical indicating width of stroke relative to the size of
+#' the text. Ignored if less than zero.
+#' @param stroke.color any valid color.
 #'
 #' @details
 #' Is best used with a previous call to [ggplot2::stat_contour] with the same
@@ -21,14 +24,7 @@
 #'        geom_contour(aes(z = value))
 #' g + geom_text_contour(aes(z = value, label = ..level..))
 #'
-#' # Small hack, best used with uniform background
-#' geom_label_contour2 <- function(...) {
-#'     list(geom_label_contour(fill = "white", label.r = unit(0, "lines"),
-#'                             label.padding = unit(0.04, "lines"), color = NA, ...),
-#'          geom_text_contour(..., rotate = FALSE))
-#' }
-#' g + geom_label_contour2(aes(z = value, label = ..level..)) +
-#'    theme_void()
+#' g + geom_text_contour(aes(z = value, label = ..level..), stroke = 0.2)
 #'
 #' @section Aesthetics:
 #' \code{geom_text_contour} understands the following aesthetics (required aesthetics are in bold):
@@ -63,6 +59,8 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
                       parse = FALSE,
                       nudge_x = 0,
                       nudge_y = 0,
+                      stroke = 0,
+                      stroke.color = "white",
                       check_overlap = FALSE,
                       na.rm = FALSE,
                       show.legend = NA,
@@ -91,6 +89,8 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
             rotate = rotate,
             parse = parse,
             check_overlap = check_overlap,
+            stroke = stroke,
+            stroke.color = stroke.color,
             na.rm = na.rm,
             ...
         )
@@ -101,6 +101,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
 #' @usage NULL
 #' @format NULL
 #' @export
+#' @importFrom shadowtext shadowtextGrob
 GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
    required_aes = c("x", "y", "label"),
    default_aes = ggplot2::aes(colour = "black", size = 3.88, angle = 0,
@@ -109,17 +110,19 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
 
    draw_panel = function(data, panel_params, coord, parse = FALSE,
                          na.rm = FALSE, check_overlap = FALSE, min.size = 20,
-                         skip = 1, rotate = TRUE, gap = NULL) {
+                         skip = 1, rotate = TRUE, gap = NULL,
+                         stroke = 0, stroke.color = "white") {
        data <- data.table::as.data.table(coord$transform(data, panel_params))
-
+       d1 <<- data
        min.size <- ceiling(min.size)
        if (min.size %% 2 == 0) {
            min.size <- min.size - 1
        }
        # Get points of labels
-       data <- .label.position(data, min.size, skip, rotate)
+       data <- .label.position(copy(data), min.size, skip, rotate)
 
        if (rotate == FALSE) data[, angle := 0]
+
        ## Original ggplot2 here.
        lab <- data$label
        if (parse) {
@@ -133,20 +136,40 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
            data$hjust <- ggplot2:::compute_just(data$hjust, data$x)
        }
 
-       grid::textGrob(
-           lab,
-           data$x, data$y, default.units = "native",
-           hjust = data$hjust, vjust = data$vjust,
-           rot = data$angle,
-           gp = grid::gpar(
-               col = alpha(data$colour, data$alpha),
-               fontsize = data$size * .pt,
-               fontfamily = data$family,
-               fontface = data$fontface,
-               lineheight = data$lineheight
-           ),
-           check.overlap = check_overlap
-       )
+       if (stroke > 0) {
+           shadowtext::shadowtextGrob(
+               lab,
+               data$x, data$y, default.units = "native",
+               hjust = data$hjust, vjust = data$vjust,
+               rot = data$angle,
+               gp = grid::gpar(
+                   col = alpha(data$colour, data$alpha),
+                   fontsize = data$size * .pt,
+                   fontfamily = data$family,
+                   fontface = data$fontface,
+                   lineheight = data$lineheight
+               ),
+               check.overlap = check_overlap,
+               bg.r = stroke,
+               bg.color = stroke.color
+           )
+       } else {
+           grid::textGrob(
+               lab,
+               data$x, data$y, default.units = "native",
+               hjust = data$hjust, vjust = data$vjust,
+               rot = data$angle,
+               gp = grid::gpar(
+                   col = alpha(data$colour, data$alpha),
+                   fontsize = data$size * .pt,
+                   fontfamily = data$family,
+                   fontface = data$fontface,
+                   lineheight = data$lineheight
+               ),
+               check.overlap = check_overlap
+           )
+       }
+
    },
 
    draw_key = ggplot2::draw_key_text

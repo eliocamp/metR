@@ -261,7 +261,7 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
                              no.cache = FALSE) {
 
         if (no.cache == TRUE) memoise::forget(streamline.f)
-        data <- streamline(data, dt = dt, S = S, skip.x = skip.x,
+        data <- streamline.f(data, dt = dt, S = S, skip.x = skip.x,
                              skip.y = skip.y, nx = nx, ny = ny, jitter.x = jitter.x,
                              jitter.y = jitter.y, xwrap = xwrap, ywrap = ywrap)
 

@@ -42,7 +42,9 @@
 #' @export
 #' @import data.table
 WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
-    setDT(x)
+    x <- as.data.table(x)
+    setorderv(x, circular)
+
     res <- ggplot2::resolution(x[[circular]])
     m <- min(x[[circular]])
     M <- max(x[[circular]])

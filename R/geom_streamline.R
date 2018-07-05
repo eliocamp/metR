@@ -8,6 +8,7 @@
 #' @inheritParams ggplot2::stat_identity
 #' @inheritParams geom_contour2
 #' @param L, tipical length of a streamline in x and y units
+#' @param min.L minimum length of segments to show
 #' @param res, resolution parameter (higher numbers increases the resolution)
 #' @param S optional numeric number of timesteps for integration
 #' @param dt optional numeric size "timestep" for integration
@@ -178,6 +179,7 @@ stat_streamline <- function(mapping = NULL, data = NULL,
                             geom = "streamline", position = "identity",
                             ...,
                             L = 5,
+                            min.L = 0,
                             res = 1,
                             S = NULL,
                             dt = NULL,
@@ -212,6 +214,7 @@ stat_streamline <- function(mapping = NULL, data = NULL,
         inherit.aes = inherit.aes,
         params = list(
             L = L,
+            min.L = min.L,
             res = res,
             dt = dt,
             S = S,
@@ -256,7 +259,7 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
     compute_group = function(data, scales, dt = 0.1, S = 3, skip.x = 1,
                              skip.y = 1, nx = 10, ny  = 10, jitter.x = 1,
                              jitter.y = 1, xwrap = NULL, ywrap = NULL,
-                             min.dist = 0,
+                             min.L = 0,
                              L = NULL, res = NULL,
                              no.cache = FALSE) {
 
@@ -267,7 +270,7 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
 
         distance <- data[, .(dx = diff(x), dy = diff(y)), by = line]
         distance <- distance[, .(distance = sum(sqrt(dx^2 + dy^2))), by = line]
-        keep <- distance[distance >= min.dist, line]
+        keep <- distance[distance >= min.L, line]
 
         return(setDF(data[line %in% keep]))
     }
@@ -384,15 +387,15 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     rx <- ggplot2::resolution(as.numeric(field$x), zero = FALSE)
     ry <- ggplot2::resolution(as.numeric(field$y), zero = FALSE)
 
-    matrix <- .tidy2matrix(field, x ~ y, value.var = "dx", fill = 0)$matrix
-    dx.field <- list(x = seq_range(field$x, by = rx),
-                     y = seq_range(field$y, by = ry),
-                     z = matrix)
+    matrix <- .tidy2matrix(field, x ~ y, value.var = "dx", fill = 0)
+    dx.field <- list(x = matrix$rowdims$x,
+                     y = matrix$coldims$y,
+                     z = matrix$matrix)
 
-    matrix <- .tidy2matrix(field, x ~ y, value.var = "dy", fill = 0)$matrix
-    dy.field <- list(x = seq_range(field$x, by = rx),
-                     y = seq_range(field$y, by = ry),
-                     z = matrix)
+    matrix <- .tidy2matrix(field, x ~ y, value.var = "dy", fill = 0)
+    dy.field <- list(x = matrix$rowdims$x,
+                     y = matrix$coldims$y,
+                     z = matrix$matrix)
 
     force.fun <- function(x, y) {
         dx <- fields::interp.surface(dx.field, cbind(x, y))
@@ -412,8 +415,6 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     } else {
         ys <- seq(range.y[1], range.y[2], length.out = ny)
     }
-    rx <- ggplot2::resolution(field$x, zero = FALSE)
-    ry <- ggplot2::resolution(field$y, zero = FALSE)
 
     if ((is.null(nx) && is.null(ny))) {
         points <- as.data.table(field[x %in% xs & y %in% ys, .(x = x, y = y)])

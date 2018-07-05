@@ -19,7 +19,9 @@ screeplot.eof <- function(x, npcs = "all", type = NULL, main = NULL, ...) {
     r2 <- "r2"
     if (npcs[1] == "all") npcs <- as.numeric(unique(x$sdev[[var]]))
     ggplot(x$sdev[as.numeric(get(var)) %in% npcs], aes_(as.name(var), as.name(r2))) +
-        geom_point()
+        geom_point() +
+        geom_line(aes_string(paste0("as.numeric(", var, ")"))) +
+        scale_y_continuous(name = expression(R^2))
 }
 
 #' @export

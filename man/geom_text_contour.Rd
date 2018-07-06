@@ -19,8 +19,8 @@ geom_label_contour(mapping = NULL, data = NULL, stat = "text_contour",
 geom_text_contour(mapping = NULL, data = NULL, stat = "text_contour",
   position = "identity", ..., min.size = 5, skip = 1, rotate = FALSE,
   parse = FALSE, nudge_x = 0, nudge_y = 0, stroke = 0,
-  stroke.color = "white", check_overlap = FALSE, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+  stroke.color = "white", check_overlap = FALSE, xwrap = NULL,
+  ywrap = NULL, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -95,6 +95,10 @@ the text. Ignored if less than zero.}
 
 \item{check_overlap}{If \code{TRUE}, text that overlaps previous text in the
 same layer will not be plotted.}
+
+\item{xwrap}{vector of length two used to wrap the circulad dimension}
+
+\item{ywrap}{vector of length two used to wrap the circulad dimension}
 }
 \description{
 Draws labels on contours built with \link[ggplot2:stat_contour]{ggplot2::stat_contour}.

@@ -9,10 +9,9 @@
 \title{2d contours of a 3d surface}
 \usage{
 geom_contour2(mapping = NULL, data = NULL, stat = "contour2",
-  position = "identity", ..., gap = 0, min.size = 5, skip = 1,
-  lineend = "butt", linejoin = "round", linemitre = 1,
-  breaks = scales::fullseq, bins = NULL, binwidth = NULL, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+  position = "identity", ..., lineend = "butt", linejoin = "round",
+  linemitre = 1, breaks = scales::fullseq, bins = NULL, binwidth = NULL,
+  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
 
 stat_contour2(mapping = NULL, data = NULL, geom = "contour2",
   position = "identity", ..., breaks = scales::fullseq, bins = NULL,
@@ -49,12 +48,6 @@ a call to a position adjustment function.}
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{color = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
-
-\item{gap}{half the size of the gap in points}
-
-\item{min.size}{minimum number of points for a contour to be labeled.}
-
-\item{skip}{number of contours to skip}
 
 \item{lineend}{Line end style (round, butt, square).}
 
@@ -124,20 +117,6 @@ library(ggplot2)
 ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
     geom_contour2(aes(z = value, color = ..level..),
                   breaks = AnchorBreaks(130, binwidth = 11))
-
-ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
-    geom_contour2(aes(color = ..level..), gap = 6) +
-    geom_text_contour()
-
-# For a quick plots and to ensure that every parameter
-# is the same for both labels and contours, define your
-# own function
-geom_contour_labeled <- function(..., gap = 5) {
-    list(geom_contour2(..., gap = gap),
-         geom_text_contour(...))
-}
-ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
-    geom_contour_labeled()
 
 }
 \seealso{

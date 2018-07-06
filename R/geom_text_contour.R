@@ -4,6 +4,7 @@
 #'
 #' @inheritParams ggplot2::geom_text
 #' @inheritParams ggplot2::geom_label
+#' @inheritParams geom_contour2
 #' @param min.size minimum number of points for a contour to be labeled.
 #' @param skip number of contours to skip
 #' @param rotate logical indicating wether to rotate text following the contour.
@@ -62,6 +63,8 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
                       stroke = 0,
                       stroke.color = "white",
                       check_overlap = FALSE,
+                      xwrap = NULL,
+                      ywrap = NULL,
                       na.rm = FALSE,
                       show.legend = NA,
                       inherit.aes = TRUE)
@@ -91,6 +94,8 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
             check_overlap = check_overlap,
             stroke = stroke,
             stroke.color = stroke.color,
+            xwrap = xwrap,
+            ywrap = ywrap,
             na.rm = na.rm,
             ...
         )
@@ -113,7 +118,6 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
                          skip = 1, rotate = FALSE, gap = NULL,
                          stroke = 0, stroke.color = "white") {
        data <- data.table::as.data.table(coord$transform(data, panel_params))
-       d1 <<- data
        min.size <- ceiling(min.size)
        if (min.size %% 2 == 0) {
            min.size <- min.size - 1

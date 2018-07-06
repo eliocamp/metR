@@ -22,9 +22,9 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
                           binwidth = NULL,
                           na.rm = FALSE,
                           xwrap = NULL,
-                         ywrap = NULL,
-                         show.legend = NA,
-                         inherit.aes = TRUE) {
+                          ywrap = NULL,
+                          show.legend = NA,
+                          inherit.aes = TRUE) {
     layer(
         data = data,
         mapping = mapping,

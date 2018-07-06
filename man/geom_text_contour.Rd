@@ -17,7 +17,7 @@ geom_label_contour(mapping = NULL, data = NULL, stat = "text_contour",
   show.legend = NA, inherit.aes = TRUE)
 
 geom_text_contour(mapping = NULL, data = NULL, stat = "text_contour",
-  position = "identity", ..., min.size = 5, skip = 1, rotate = TRUE,
+  position = "identity", ..., min.size = 5, skip = 1, rotate = FALSE,
   parse = FALSE, nudge_x = 0, nudge_y = 0, stroke = 0,
   stroke.color = "white", check_overlap = FALSE, na.rm = FALSE,
   show.legend = NA, inherit.aes = TRUE)

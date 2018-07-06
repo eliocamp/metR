@@ -55,7 +55,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
                       ...,
                       min.size = 5,
                       skip = 1,
-                      rotate = TRUE,
+                      rotate = FALSE,
                       parse = FALSE,
                       nudge_x = 0,
                       nudge_y = 0,
@@ -110,7 +110,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
 
    draw_panel = function(data, panel_params, coord, parse = FALSE,
                          na.rm = FALSE, check_overlap = FALSE, min.size = 20,
-                         skip = 1, rotate = TRUE, gap = NULL,
+                         skip = 1, rotate = FALSE, gap = NULL,
                          stroke = 0, stroke.color = "white") {
        data <- data.table::as.data.table(coord$transform(data, panel_params))
        d1 <<- data

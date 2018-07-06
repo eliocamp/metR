@@ -124,13 +124,13 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
 
 By default it labels every 2nd contour (this can be changed by the `skip` parameter) and it rotates to follow the angle of the contour (this is not available on `geom_label_contour()`). Since in some datasetss there can be very small contours that should not be labeled for clarity, the `min.size` argument specifies the minimum points a contour has to have in order to be labeled. 
 
-Noticehow labels are drawn on top of contours? The problem is that `geom_contour()` doesn't know it's being labeled; `geom_contour2()` adresses this issue. As well as having the posibility of passing a function in the `breaks` argument, it has a `gap` parameter to add a gap where the labels should be (this works well as long as both geoms are calles with the same parameters).
+Noticehow labels are drawn on top of contours? The problem is that `geom_contour()` doesn't know it's being labeled; `geom_text_contour()` adresses this issue by allowing you to draw a stroke arround the text.
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
-    geom_contour2(color = "black", gap = 2) +
-    geom_text_contour(rotate = FALSE) +
+    geom_contour2(color = "black") +
+    geom_text_contour(stroke = 0.2) +
     scale_fill_divergent() +
     scale_x_longitude() +
     scale_y_latitude()

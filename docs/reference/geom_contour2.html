@@ -131,12 +131,11 @@ per panel.</p>
     </div>
 
     <pre class="usage"><span class='fu'>geom_contour2</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"contour2"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>min.size</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>lineend</span> <span class='kw'>=</span> <span class='st'>"butt"</span>, <span class='kw'>linejoin</span> <span class='kw'>=</span> <span class='st'>"round"</span>, <span class='kw'>linemitre</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/scales/topics/fullseq'>fullseq</a></span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>lineend</span> <span class='kw'>=</span> <span class='st'>"butt"</span>, <span class='kw'>linejoin</span> <span class='kw'>=</span> <span class='st'>"round"</span>,
+  <span class='kw'>linemitre</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/scales/topics/fullseq'>fullseq</a></span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>stat_contour2</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"contour"</span>,
+<span class='fu'>stat_contour2</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"contour2"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/scales/topics/fullseq'>fullseq</a></span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ywrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
@@ -180,18 +179,6 @@ a call to a position adjustment function.</p></td>
 often aesthetics, used to set an aesthetic to a fixed value, like
 <code>color = "red"</code> or <code>size = 3</code>. They may also be parameters
 to the paired geom/stat.</p></td>
-    </tr>
-    <tr>
-      <th>gap</th>
-      <td><p>half the size of the gap in points</p></td>
-    </tr>
-    <tr>
-      <th>min.size</th>
-      <td><p>minimum number of points for a contour to be labeled.</p></td>
-    </tr>
-    <tr>
-      <th>skip</th>
-      <td><p>number of contours to skip</p></td>
     </tr>
     <tr>
       <th>lineend</th>
@@ -304,18 +291,6 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
     <span class='fu'>geom_contour2</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>),
                   <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='MakeBreaks.html'>AnchorBreaks</a></span>(<span class='fl'>130</span>, <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='fl'>11</span>))</div><div class='img'><img src='geom_contour2-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh</span>)) +
-    <span class='fu'>geom_contour2</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>), <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>6</span>) +
-    <span class='fu'><a href='geom_text_contour.html'>geom_text_contour</a></span>()</div><div class='img'><img src='geom_contour2-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># For a quick plots and to ensure that every parameter</span>
-<span class='co'># is the same for both labels and contours, define your</span>
-<span class='co'># own function</span>
-<span class='no'>geom_contour_labeled</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>...</span>, <span class='no'>gap</span> <span class='kw'>=</span> <span class='fl'>5</span>) {
-    <span class='fu'>list</span>(<span class='fu'>geom_contour2</span>(<span class='no'>...</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='no'>gap</span>),
-         <span class='fu'><a href='geom_text_contour.html'>geom_text_contour</a></span>(<span class='no'>...</span>))
-}
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-    <span class='fu'>geom_contour_labeled</span>()</div><div class='img'><img src='geom_contour2-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

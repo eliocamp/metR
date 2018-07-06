@@ -127,15 +127,16 @@
     </div>
 
     <pre class="usage"><span class='fu'>geom_label_contour</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"text_contour"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>min.size</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>parse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>min.size</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>parse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>nudge_x</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>nudge_y</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>label.padding</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>0.25</span>, <span class='st'>"lines"</span>),
   <span class='kw'>label.r</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>0.15</span>, <span class='st'>"lines"</span>), <span class='kw'>label.size</span> <span class='kw'>=</span> <span class='fl'>0.25</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>geom_text_contour</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"text_contour"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>min.size</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>parse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>nudge_x</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>nudge_y</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>check_overlap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>min.size</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>parse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>nudge_x</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>nudge_y</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>stroke</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>stroke.color</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>check_overlap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ywrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -237,9 +238,26 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
       <td><p>logical indicating wether to rotate text following the contour.</p></td>
     </tr>
     <tr>
+      <th>stroke</th>
+      <td><p>numerical indicating width of stroke relative to the size of
+the text. Ignored if less than zero.</p></td>
+    </tr>
+    <tr>
+      <th>stroke.color</th>
+      <td><p>any valid color.</p></td>
+    </tr>
+    <tr>
       <th>check_overlap</th>
       <td><p>If <code>TRUE</code>, text that overlaps previous text in the
 same layer will not be plotted.</p></td>
+    </tr>
+    <tr>
+      <th>xwrap</th>
+      <td><p>vector of length two used to wrap the circulad dimension</p></td>
+    </tr>
+    <tr>
+      <th>ywrap</th>
+      <td><p>vector of length two used to wrap the circulad dimension</p></td>
     </tr>
     </table>
     
@@ -290,14 +308,7 @@ this is not the case with <code>geom_label_contour()</code>.</p>
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>v</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
        <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>))
 <span class='no'>g</span> + <span class='fu'>geom_text_contour</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>..level..</span>))</div><div class='img'><img src='geom_text_contour-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Small hack, best used with uniform background</span>
-<span class='no'>geom_label_contour2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>...</span>) {
-    <span class='fu'>list</span>(<span class='fu'>geom_label_contour</span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>label.r</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/reexports'>unit</a></span>(<span class='fl'>0</span>, <span class='st'>"lines"</span>),
-                            <span class='kw'>label.padding</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/reexports'>unit</a></span>(<span class='fl'>0.04</span>, <span class='st'>"lines"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>),
-         <span class='fu'>geom_text_contour</span>(<span class='no'>...</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))
-}
-<span class='no'>g</span> + <span class='fu'>geom_label_contour2</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-   <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_void</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Supplied 33 items to be assigned to group 1 of size 34 in column 'angle' (recycled leaving remainder of 1 items).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Supplied 221 items to be assigned to group 2 of size 222 in column 'angle' (recycled leaving remainder of 1 items).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Supplied 244 items to be assigned to group 3 of size 245 in column 'angle' (recycled leaving remainder of 1 items).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Supplied 164 items to be assigned to group 4 of size 165 in column 'angle' (recycled leaving remainder of 1 items).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Supplied 30 items to be assigned to group 5 of size 31 in column 'angle' (recycled leaving remainder of 1 items).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Supplied 104 items to be assigned to group 6 of size 105 in column 'angle' (recycled leaving remainder of 1 items).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Supplied 14 items to be assigned to group 7 of size 15 in column 'angle' (recycled leaving remainder of 1 items).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='img'><img src='geom_text_contour-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>g</span> + <span class='fu'>geom_text_contour</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>..level..</span>), <span class='kw'>stroke</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='img'><img src='geom_text_contour-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

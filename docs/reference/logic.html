@@ -116,7 +116,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Extended logical operators</h1>
-    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/helpfunctions.R'><code>R/helpfunctions.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/small_funs.R'><code>R/small_funs.R</code></a></small>
     <div class="hidden name"><code>logic.Rd</code></div>
     </div>
 
@@ -170,7 +170,7 @@ for each element of <code>x</code> that is between the minimum and the maximum o
 <code>include</code> parameter that let's you test for <code>x &gt; lower &amp; x &lt; upper</code>.
 If it's a unitary vector, it will be recycled so that <code>include = TRUE</code> is
 equivalent to <code>include = c(TRUE, TRUE)</code>.</p>
-<p>It's important to note that data.table already has a
+<p>It's important to note that <a href='http://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table</a> already has a
 <code><a href='http://www.rdocumentation.org/packages/data.table/topics/between'>between</a></code> function optimized with c code, so these
 functions use that implementation if data.table is installed (except for the
 case of <code>include[1] != include[2]</code>, for which data.table has no
@@ -191,7 +191,8 @@ implementation yet).</p>
 <span class='co'># approximately 36W between 50S and 50N.</span>
 <span class='no'>cross.lon</span> <span class='kw'>&lt;-</span> -<span class='fl'>34</span> + <span class='fl'>360</span>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>temperature</span>[<span class='no'>lon</span> <span class='kw'>%~%</span> <span class='no'>cross.lon</span> <span class='kw'>&amp;</span> <span class='no'>lat</span> <span class='kw'>%b%</span> <span class='fu'>c</span>(-<span class='fl'>50</span>, <span class='fl'>50</span>)],
+<span class='fu'>library</span>(<span class='no'>data.table</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>temperature</span>[<span class='no'>lon</span> <span class='kw'>%~%</span> <span class='no'>cross.lon</span> <span class='kw'>&amp;</span> <span class='no'>lat</span> <span class='kw'>%between%</span> <span class='fu'>c</span>(-<span class='fl'>50</span>, <span class='fl'>50</span>)],
        <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lat</span>, <span class='no'>lev</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>air</span>))</div><div class='img'><img src='logic-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>

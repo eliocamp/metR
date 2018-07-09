@@ -99,6 +99,8 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 
 
 .order_contour <- memoise::memoise(function(contours, data) {
+    data <- copy(data)
+    contours <- copy(contours)
     x.data <- unique(data$x)
     x.data <- x.data[order(x.data)]
     x.N <- length(x.data)

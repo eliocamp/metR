@@ -1,15 +1,12 @@
 #' @importFrom grid grob
-arrowGrob <- function(x, y, angle, length, pivot, preserve.dir,
-                      default.units = "npc", ...) {
-    # angle en grados matemático 0 a 260
+arrowGrob <- function(x, y, angle, length, pivot, default.units = "npc", ...) {
+    # angle en grados matemático 0 a 360
     # length en alguna unidad.
     # pivot 0 a 1.
     x <- .unit_ifnot(x, default.units)
     y <- .unit_ifnot(y, default.units)
 
-    grob(x = x, y = y, angle = angle, length = length, pivot = pivot,
-         preserve.dir = preserve.dir, ..., cl = "arrow2")
-
+    grob(x = x, y = y, angle = angle, length = length, pivot = pivot, ..., cl = "arrow2")
 }
 
 #' @importFrom grid convertX convertY unit.c

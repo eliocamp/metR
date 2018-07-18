@@ -6,3 +6,5 @@ R/mejora_fillcontour\.R
 inst/doc
 
 inst/data_files/
+
+docs/*

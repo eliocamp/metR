@@ -9,11 +9,11 @@
 \title{Streamlines}
 \usage{
 geom_streamline(mapping = NULL, data = NULL, stat = "streamline",
-  position = "identity", ..., L = 5, res = 1, S = NULL, dt = NULL,
-  xwrap = NULL, ywrap = NULL, skip = 1, skip.x = skip, skip.y = skip,
-  n = NULL, nx = n, ny = n, jitter = 1, jitter.x = jitter,
-  jitter.y = jitter, arrow.angle = 6, arrow.length = 0.5,
-  arrow.ends = "last", arrow.type = "closed",
+  position = "identity", ..., L = 5, min.L = 0, res = 1, S = NULL,
+  dt = NULL, xwrap = NULL, ywrap = NULL, skip = 1, skip.x = skip,
+  skip.y = skip, n = NULL, nx = n, ny = n, jitter = 1,
+  jitter.x = jitter, jitter.y = jitter, arrow.angle = 6,
+  arrow.length = 0.5, arrow.ends = "last", arrow.type = "closed",
   arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
   arrow.ends, type = arrow.type), lineend = "butt", na.rm = TRUE,
   show.legend = NA, inherit.aes = TRUE)
@@ -60,6 +60,8 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 to the paired geom/stat.}
 
 \item{L, }{tipical length of a streamline in x and y units}
+
+\item{min.L}{minimum length of segments to show}
 
 \item{res, }{resolution parameter (higher numbers increases the resolution)}
 
@@ -116,8 +118,6 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
-
-\item{min.L}{minimum length of segments to show}
 }
 \description{
 Streamlines are paths that are always tangential to a vector field. In the

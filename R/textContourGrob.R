@@ -1,11 +1,11 @@
 # from shadowtext
 #' @importFrom grid gList gTree
 shadowtext <- function(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
-                        just = "centre", hjust = NULL, vjust = NULL,
-                        dx = 0, dy = 0,
-                        check.overlap = FALSE,
-                        default.units = "npc", name = NULL, gp = gpar(col = "white"),
-                        vp = NULL, bg.color = "black", bg.r = 0.1) {
+                       just = "centre", hjust = NULL, vjust = NULL,
+                       dx = 0, dy = 0,
+                       check.overlap = FALSE,
+                       default.units = "npc", name = NULL, gp = gpar(col = "white"),
+                       vp = NULL, bg.color = "black", bg.r = 0.1) {
     upperGrob <- textContourGrob(label = label, x = x, y = y, just = just,
                                  hjust = hjust, vjust = vjust,
                                  dx = dx, dy = dy,
@@ -18,20 +18,24 @@ shadowtext <- function(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     theta <- seq(pi/8, 2 * pi, length.out = 16)
     char <- substring(label[1], 1, 1)
     r <- bg.r[1]
-    bgList <- lapply(theta, function(i) {
-        if (!is.unit(x))
-            x <- unit(x, default.units)
-        if (!is.unit(y))
-            y <- unit(y, default.units)
-        x <- x + unit(cos(i) * r, "strwidth", data = char)
-        y <- y + unit(sin(i) * r, "strheight", data = char)
-        textContourGrob(label = label, x = x, y = y, just = just, hjust = hjust,
-                        vjust = vjust,
-                        dx = dx, dy = dy,
-                        default.units = default.units,
-                        check.overlap = check.overlap, name = name, gp = gp,
-                        vp = vp)
-    })
+    if (r != 0) {
+        bgList <- lapply(theta, function(i) {
+            if (!is.unit(x))
+                x <- unit(x, default.units)
+            if (!is.unit(y))
+                y <- unit(y, default.units)
+            x <- x + unit(cos(i) * r, "strwidth", data = char)
+            y <- y + unit(sin(i) * r, "strheight", data = char)
+            textContourGrob(label = label, x = x, y = y, just = just, hjust = hjust,
+                            vjust = vjust,
+                            dx = dx, dy = dy,
+                            default.units = default.units,
+                            check.overlap = check.overlap, name = name, gp = gp,
+                            vp = vp)
+        })
+    } else {
+        bgList <- list()
+    }
     bgGrob <- do.call(gList, bgList)
     grobs <- gList(bgGrob, upperGrob)
     gTree(children = grobs)

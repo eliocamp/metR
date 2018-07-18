@@ -275,16 +275,16 @@ the value of the data and is very similar to <a href='http://www.rdocumentation.
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other ggplot2 helpers: <code>DivideTimeseries</code>,
-  <code>MakeBreaks</code>, <code>WrapCircular</code>,
-  <code>geom_arrow</code>, <code>geom_contour2</code>,
-  <code>geom_contour_fill</code>,
-  <code>geom_label_contour</code>,
-  <code>geom_relief</code>, <code>geom_streamline</code>,
-  <code>map_labels</code>, <code>reverselog_trans</code>,
-  <code>scale_divergent</code>,
-  <code>scale_longitude</code>, <code>stat_na</code>,
-  <code>stat_subset</code></p></div>
+    <div class='dont-index'><p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
+  <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='WrapCircular.html'>WrapCircular</a></code>,
+  <code><a href='geom_arrow.html'>geom_arrow</a></code>, <code><a href='geom_contour2.html'>geom_contour2</a></code>,
+  <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
+  <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
+  <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_streamline.html'>geom_streamline</a></code>,
+  <code><a href='map_labels.html'>map_labels</a></code>, <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
+  <code><a href='scale_divergent.html'>scale_divergent</a></code>,
+  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code>,
+  <code><a href='stat_subset.html'>stat_subset</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -294,9 +294,9 @@ the value of the data and is very similar to <a href='http://www.rdocumentation.
 <span class='no'>binwidth</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
 <span class='fu'>data</span>(<span class='no'>volcano</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-    <span class='fu'>geom_contour_fill</span>(<span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='no'>binwidth</span>) +
+    <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span>(<span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='no'>binwidth</span>) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_colour_continuous'>scale_fill_continuous</a></span>(<span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'>guide_colourstrip</span>(),
-                         <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>MakeBreaks</span>(<span class='no'>binwidth</span>))</div><div class='img'><img src='guide_colourstrip-1.png' alt='' width='700' height='433' /></div><div class='input'>
+                         <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='MakeBreaks.html'>MakeBreaks</a></span>(<span class='no'>binwidth</span>))</div><div class='img'><img src='guide_colourstrip-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Difference between guide_legend() and guide_colorbar2(inside = T)</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='fu'>outer</span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='fl'>1</span>:<span class='fl'>4</span>), <span class='kw'>varnames</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"X1"</span>, <span class='st'>"X2"</span>))
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>df</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>X1</span>, <span class='no'>X2</span>)) +

@@ -316,7 +316,7 @@ jittered by an amount proportional to the resolution of the data and the
 <code>jitter.x</code> and <code>jitter.y</code> parameters.</p>
 <p>It might be important that the units of the vector field are compatible to the units
 of the x and y dimensions. For example, passing <code>dx</code> and <code>dy</code> in m/s on a
-longitude-latitude grid will might misleading results (see spherical).</p>
+longitude-latitude grid will might misleading results (see <a href='spherical.html'>spherical</a>).</p>
 <p>Missing values are not permited and the field must be defined on a
 regular grid, for now.</p>
     
@@ -346,17 +346,17 @@ regular grid, for now.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other ggplot2 helpers: <code>DivideTimeseries</code>,
-  <code>MakeBreaks</code>, <code>WrapCircular</code>,
-  <code>geom_arrow</code>, <code>geom_contour2</code>,
-  <code>geom_contour_fill</code>,
-  <code>geom_label_contour</code>,
-  <code>geom_relief</code>,
-  <code>guide_colourstrip</code>,
-  <code>map_labels</code>, <code>reverselog_trans</code>,
-  <code>scale_divergent</code>,
-  <code>scale_longitude</code>, <code>stat_na</code>,
-  <code>stat_subset</code></p></div>
+    <div class='dont-index'><p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
+  <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='WrapCircular.html'>WrapCircular</a></code>,
+  <code><a href='geom_arrow.html'>geom_arrow</a></code>, <code><a href='geom_contour2.html'>geom_contour2</a></code>,
+  <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
+  <code><a href='geom_text_contour.html'>geom_label_contour</a></code>,
+  <code><a href='geom_relief.html'>geom_relief</a></code>,
+  <code><a href='guide_colourstrip.html'>guide_colourstrip</a></code>,
+  <code><a href='map_labels.html'>map_labels</a></code>, <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
+  <code><a href='scale_divergent.html'>scale_divergent</a></code>,
+  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code>,
+  <code><a href='stat_subset.html'>stat_subset</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -365,7 +365,7 @@ regular grid, for now.</p>
 <span class='fu'>data</span>(<span class='no'>geopotential</span>)
 
 <span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/copy'>copy</a></span>(<span class='no'>geopotential</span>)[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]]
-<span class='no'>geopotential</span>[, <span class='no'>gh.z</span> <span class='kw'>:=</span> <span class='fu'>Anomaly</span>(<span class='no'>gh</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date     gh.z
+<span class='no'>geopotential</span>[, <span class='no'>gh.z</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date     gh.z
 #&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 13.67219
 #&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 12.34968
 #&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 12.05939
@@ -376,7 +376,7 @@ regular grid, for now.</p>
 #&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01  0.00000
 #&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01  0.00000
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01  0.00000
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01  0.00000</div><div class='input'><span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'>GeostrophicWind</span>(<span class='no'>gh.z</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date     gh.z  u          v
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01  0.00000</div><div class='input'><span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span>(<span class='no'>gh.z</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date     gh.z  u          v
 #&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 13.67219 NA  1.0807091
 #&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 12.34968 NA  0.5513294
 #&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 12.05939 NA  0.0661829
@@ -389,8 +389,8 @@ regular grid, for now.</p>
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.0000000
 #&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.0000000</div><div class='input'>
 (<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>geopotential</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'>geom_contour2</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.z</span>), <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>)) +
-    <span class='fu'>geom_streamline</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='fu'>dlon</span>(<span class='no'>u</span>, <span class='no'>lat</span>), <span class='kw'>dy</span> <span class='kw'>=</span> <span class='fu'>dlat</span>(<span class='no'>v</span>)), <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>60</span>,
+    <span class='fu'><a href='geom_contour2.html'>geom_contour2</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.z</span>), <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>)) +
+    <span class='fu'>geom_streamline</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlon</a></span>(<span class='no'>u</span>, <span class='no'>lat</span>), <span class='kw'>dy</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlat</a></span>(<span class='no'>v</span>)), <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>60</span>,
                     <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>)))</div><div class='img'><img src='geom_streamline-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># The circular parameter is particularly important for polar coordinates</span>
 <span class='no'>g</span> + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='img'><img src='geom_streamline-2.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -403,22 +403,22 @@ regular grid, for now.</p>
 <span class='co'># get cute "drops". It's important to note that ..dx.. (the calculated variable)</span>
 <span class='co'># is NOT the same as dx (from the data).</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>geopotential</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'>geom_streamline</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='fu'>dlon</span>(<span class='no'>u</span>, <span class='no'>lat</span>), <span class='kw'>dy</span> <span class='kw'>=</span> <span class='fu'>dlat</span>(<span class='no'>v</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='no'>..step..</span>,
+    <span class='fu'>geom_streamline</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlon</a></span>(<span class='no'>u</span>, <span class='no'>lat</span>), <span class='kw'>dy</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlat</a></span>(<span class='no'>v</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='no'>..step..</span>,
                         <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>sqrt</span>(<span class='no'>..dx..</span>^<span class='fl'>2</span> + <span class='no'>..dy..</span>^<span class='fl'>2</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='no'>..step..</span>),
                         <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>), <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
                         <span class='kw'>lineend</span> <span class='kw'>=</span> <span class='st'>"round"</span>) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_size'>scale_size</a></span>(<span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0.6</span>))</div><div class='img'><img src='geom_streamline-4.png' alt='' width='700' height='433' /></div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='co'># Using topographic information to simulate "rivers" from slope</span>
-<span class='no'>topo</span> <span class='kw'>&lt;-</span> <span class='fu'>GetTopography</span>(<span class='fl'>295</span>, -<span class='fl'>55</span>+<span class='fl'>360</span>, -<span class='fl'>30</span>, -<span class='fl'>42</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>20</span>)  <span class='co'># needs internet!</span>
-<span class='no'>topo</span>[, <span class='fu'>c</span>(<span class='st'>"dx"</span>, <span class='st'>"dy"</span>) <span class='kw'>:=</span> <span class='fu'>Derivate</span>(<span class='no'>h</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>)]
+<span class='no'>topo</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GetTopography.html'>GetTopography</a></span>(<span class='fl'>295</span>, -<span class='fl'>55</span>+<span class='fl'>360</span>, -<span class='fl'>30</span>, -<span class='fl'>42</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>20</span>)  <span class='co'># needs internet!</span>
+<span class='no'>topo</span>[, <span class='fu'>c</span>(<span class='st'>"dx"</span>, <span class='st'>"dy"</span>) <span class='kw'>:=</span> <span class='fu'><a href='Derivate.html'>Derivate</a></span>(<span class='no'>h</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>)]
 <span class='no'>topo</span>[<span class='no'>h</span> <span class='kw'>&lt;=</span> <span class='fl'>0</span>, <span class='fu'>c</span>(<span class='st'>"dx"</span>, <span class='st'>"dy"</span>) <span class='kw'>:=</span> <span class='fl'>0</span>]
 
 <span class='co'># See how in this example the integration step is too coarse in the</span>
 <span class='co'># western montanous region where the slope is much higher than in the</span>
 <span class='co'># flatlands of La Pampa at in the east.</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>topo</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'>geom_relief</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>h</span>), <span class='kw'>interpolate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>topo</span>[<span class='no'>h</span> <span class='kw'>&gt;=</span> <span class='fl'>0</span>]) +
+    <span class='fu'><a href='geom_relief.html'>geom_relief</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>h</span>), <span class='kw'>interpolate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>topo</span>[<span class='no'>h</span> <span class='kw'>&gt;=</span> <span class='fl'>0</span>]) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>h</span>), <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
     <span class='fu'>geom_streamline</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> -<span class='no'>dx</span>, <span class='kw'>dy</span> <span class='kw'>=</span> -<span class='no'>dy</span>), <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
                     <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#4658BD"</span>) +

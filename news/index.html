@@ -120,99 +120,99 @@
 <h1 class="page-header">
 <a href="#metr-0-1-9000" class="anchor"></a>metR 0.1.9000</h1>
 <ul>
-<li>Arrows in <code>geom_arrow()</code> and <code>geom_vector()</code> scale with vector magnitude.</li>
-<li>New geom <code>geom_streamline()</code> for visualizing vector fields.</li>
-<li>Utilities <code>dlon()</code>, <code>dlat()</code>, <code>dx()</code>, <code>dy()</code> for converting physical units into spherical units.</li>
-<li>New geom <code>geom_contour_tanaka()</code> that plots illuminated contours.</li>
-<li>New function <code>Interpolate()</code> for bilinear interpolation.</li>
-<li>Fixed bug in <code>FitWave()</code> with wavenumber 0. Now it rerturns the mean.</li>
+<li>Arrows in <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> and <code><a href="../reference/geom_arrow.html">geom_vector()</a></code> scale with vector magnitude.</li>
+<li>New geom <code><a href="../reference/geom_streamline.html">geom_streamline()</a></code> for visualizing vector fields.</li>
+<li>Utilities <code><a href="../reference/spherical.html">dlon()</a></code>, <code><a href="../reference/spherical.html">dlat()</a></code>, <code><a href="../reference/spherical.html">dx()</a></code>, <code><a href="../reference/spherical.html">dy()</a></code> for converting physical units into spherical units.</li>
+<li>New geom <code><a href="../reference/geom_contour_tanaka.html">geom_contour_tanaka()</a></code> that plots illuminated contours.</li>
+<li>New function <code><a href="../reference/Interpolate.html">Interpolate()</a></code> for bilinear interpolation.</li>
+<li>Fixed bug in <code><a href="../reference/waves.html">FitWave()</a></code> with wavenumber 0. Now it rerturns the mean.</li>
 <li>
-<code>FitWave()</code> runs slightly faster and <code>BuildField()</code> runs much faster.</li>
+<code><a href="../reference/waves.html">FitWave()</a></code> runs slightly faster and <code><a href="../reference/waves.html">BuildField()</a></code> runs much faster.</li>
 <li>Removed <code>GeomContourFill</code> object since it was just a polygon.</li>
-<li>The results from <code>EOF()</code> now use factors instead of numbers to identify each PC</li>
+<li>The results from <code><a href="../reference/EOF.html">EOF()</a></code> now use factors instead of numbers to identify each PC</li>
 <li>New scale <code>scale_vector()</code> and guide <code>guide_vector()</code> for controlling and communicating the scale of vectors.</li>
 <li>
-<code>geom_arrow()</code> gains new <code>pivot</code> agument to control point of rotation and <code>preserve.dir</code> to tell if angle should be preserved.</li>
+<code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> gains new <code>pivot</code> agument to control point of rotation and <code>preserve.dir</code> to tell if angle should be preserved.</li>
 <li>
-<code>stat_contour_fill()</code> and <code>stat_contour2()</code> print a warning when no contours can be made.</li>
+<code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code> and <code><a href="../reference/geom_contour2.html">stat_contour2()</a></code> print a warning when no contours can be made.</li>
 <li>
-<code>EOF()</code> now supports estimation of confidence intervals via bootstrap.</li>
+<code><a href="../reference/EOF.html">EOF()</a></code> now supports estimation of confidence intervals via bootstrap.</li>
 <li>
-<code>EOF()</code> supports varimax rotation. Rotated components are labeled accordingly.</li>
+<code><a href="../reference/EOF.html">EOF()</a></code> supports varimax rotation. Rotated components are labeled accordingly.</li>
 <li>
-<code>geom_relief()</code> is MUCH faster now.</li>
+<code><a href="../reference/geom_relief.html">geom_relief()</a></code> is MUCH faster now.</li>
 <li>Contour calculations in <code>StatContour2</code> are <a href="https://github.com/r-lib/memoise">memoised</a> so they are only computed once even adding several layers with the same contours (<code>geom_contour() + geom_text_contour()</code>) or running the same plot while tweaking it’s appearance.</li>
-<li>New <code>geom_shadow()</code> for casting shadows in topographic maps.</li>
-<li>New <code>FitLm()</code> for getting fast estimates of linear fits.</li>
-<li>New <code>FilterWave()</code> for filtering waves.</li>
+<li>New <code><a href="../reference/geom_relief.html">geom_shadow()</a></code> for casting shadows in topographic maps.</li>
+<li>New <code><a href="../reference/FitLm.html">FitLm()</a></code> for getting fast estimates of linear fits.</li>
+<li>New <code><a href="../reference/waves.html">FilterWave()</a></code> for filtering waves.</li>
 <li>Contour functions now compute breaks globaly (using all the data) instead of per panel. This means default intercomparabilty between facetwed plots.</li>
 <li>
-<code>RepeatCircular()</code> is deprecated in favour if <code>WrapCircular()</code> which is more robust.</li>
-<li>The way that <code>stat_contour2()</code>, <code>stat_contour_fill()</code> and <code>geom_streamlines()</code> handle circular dimensions has changed. Now you need to use <code>xwrap</code>/<code>ywrap</code> to explicitly set the domain. This makes the implementation more robust and also allow to easily wrap to an arbitrary domain.</li>
+<code><a href="../reference/WrapCircular.html">RepeatCircular()</a></code> is deprecated in favour if <code><a href="../reference/WrapCircular.html">WrapCircular()</a></code> which is more robust.</li>
+<li>The way that <code><a href="../reference/geom_contour2.html">stat_contour2()</a></code>, <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code> and <code>geom_streamlines()</code> handle circular dimensions has changed. Now you need to use <code>xwrap</code>/<code>ywrap</code> to explicitly set the domain. This makes the implementation more robust and also allow to easily wrap to an arbitrary domain.</li>
 <li>
-<code>EOF()</code> gains a <code>fill</code> argument for sparse-ish data.</li>
+<code><a href="../reference/EOF.html">EOF()</a></code> gains a <code>fill</code> argument for sparse-ish data.</li>
 <li>The <code>Between</code> operators are deprecated since they are already implemented in <code>data.table</code>.</li>
 <li>
-<code>geom_text_contour()</code> now has the ability of drawing a stroke arround text.</li>
+<code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> now has the ability of drawing a stroke arround text.</li>
 </ul>
 </div>
     <div id="metr-0-1" class="section level1">
 <h1 class="page-header">
 <a href="#metr-0-1" class="anchor"></a>metR 0.1</h1>
 <ul>
-<li>New function: <code>GetTopography()</code>
+<li>New function: <code><a href="../reference/GetTopography.html">GetTopography()</a></code>
 </li>
 <li>
-<code>ReadNetCDF()</code> now can output arrays and vectors.</li>
+<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now can output arrays and vectors.</li>
 <li>Changed name.</li>
 <li>New website (<a href="https://eliocamp.github.io/metR/" class="uri">https://eliocamp.github.io/metR/</a>) with documentation. Thanks to <code>pkgdown</code>.</li>
-<li>New functions: <code>coriolis()</code> and <code>coriolis.dy()</code>.</li>
-<li>Faster <code>Anomaly()</code> (can’t believe I did that).</li>
+<li>New functions: <code><a href="../reference/coriolis.html">coriolis()</a></code> and <code><a href="../reference/coriolis.html">coriolis.dy()</a></code>.</li>
+<li>Faster <code><a href="../reference/Anomaly.html">Anomaly()</a></code> (can’t believe I did that).</li>
 <li>
-<code>EOF()</code> principal components are numeric instead of “PC1”, etc…</li>
-<li>For consistency with <code>stat_contour()</code> created <code>geom_contour_fill()</code> which works just like <code>stat_contour_fill()</code>.</li>
-<li>Added <code>stat_na()</code> for easy masking of <code>NA</code> values.</li>
+<code><a href="../reference/EOF.html">EOF()</a></code> principal components are numeric instead of “PC1”, etc…</li>
+<li>For consistency with <code>stat_contour()</code> created <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> which works just like <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code>.</li>
+<li>Added <code><a href="../reference/stat_na.html">stat_na()</a></code> for easy masking of <code>NA</code> values.</li>
 <li>
-<code>geom_arrow()</code> now is <code>geom_vector()</code> with better documentation and more parameters and <code>geom_arrow()</code> is a new geom for arrows that preserve direction.</li>
+<code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> now is <code><a href="../reference/geom_arrow.html">geom_vector()</a></code> with better documentation and more parameters and <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> is a new geom for arrows that preserve direction.</li>
 <li>
-<code>ReadNetCDF()</code> now handles more date formats.</li>
-<li>New functions <code>Laplacian()</code>, <code>Divercence()</code> and <code>Vorticity()</code>
+<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now handles more date formats.</li>
+<li>New functions <code><a href="../reference/Derivate.html">Laplacian()</a></code>, <code>Divercence()</code> and <code><a href="../reference/Derivate.html">Vorticity()</a></code>
 </li>
 <li>
-<code>DerivatePhysical()</code> is removed since it was made redundant by the extended functionality in <code>Derivate()</code>
+<code>DerivatePhysical()</code> is removed since it was made redundant by the extended functionality in <code><a href="../reference/Derivate.html">Derivate()</a></code>
 </li>
 <li>New functions related to several physical processes (see ?physics).</li>
-<li>New <code>geom_text_contour()</code> and <code>geom_label_contour()</code> for labeling contours.</li>
-<li>New function <code>GeostrophicWind()</code>.</li>
-<li>Fixed? werid bug with <code>ReadNetCDF()</code> and <code>as.POSIXct</code>.</li>
+<li>New <code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> and <code><a href="../reference/geom_text_contour.html">geom_label_contour()</a></code> for labeling contours.</li>
+<li>New function <code><a href="../reference/GeostrophicWind.html">GeostrophicWind()</a></code>.</li>
+<li>Fixed? werid bug with <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> and <code>as.POSIXct</code>.</li>
 <li>
-<code>ReadNetCDF()</code> now supports timezones via de <code>udunits2</code> package.</li>
-<li>Fixed bad polygon ordering and extra polygon in <code>stat_contour_fill()</code>.</li>
-<li>New functions <code>MakeBreaks()</code> and <code>AnchorBreaks()</code>.</li>
-<li>New guide. <code>guide_colorstrip()</code> displays discretized values of a continuous color or fill scale.</li>
-<li>Fix for unconnected contours in <code>stat_contour_fill()</code>
+<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now supports timezones via de <code>udunits2</code> package.</li>
+<li>Fixed bad polygon ordering and extra polygon in <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code>.</li>
+<li>New functions <code><a href="../reference/MakeBreaks.html">MakeBreaks()</a></code> and <code><a href="../reference/MakeBreaks.html">AnchorBreaks()</a></code>.</li>
+<li>New guide. <code><a href="../reference/guide_colourstrip.html">guide_colorstrip()</a></code> displays discretized values of a continuous color or fill scale.</li>
+<li>Fix for unconnected contours in <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code>
 </li>
-<li>New <code>geom_relief()</code> for generating relief shading.</li>
+<li>New <code><a href="../reference/geom_relief.html">geom_relief()</a></code> for generating relief shading.</li>
 <li>
-<code>ReadNetCDF()</code> gains a <code>subset</code> argument for subseting data.<br>
+<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> gains a <code>subset</code> argument for subseting data.<br>
 </li>
 <li>
-<code>AnchorBreaks()</code> is a new way of generating breaks.</li>
-<li>New <code>geom_contour2()</code> that takes a function as argument in <code>breaks</code> and <code>geom_contour_fill()</code> also does the same.</li>
-<li>New <code>stat_subset()</code> that makes subsetting data on the fly easier.</li>
+<code><a href="../reference/MakeBreaks.html">AnchorBreaks()</a></code> is a new way of generating breaks.</li>
+<li>New <code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> that takes a function as argument in <code>breaks</code> and <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> also does the same.</li>
+<li>New <code><a href="../reference/stat_subset.html">stat_subset()</a></code> that makes subsetting data on the fly easier.</li>
 <li>
-<code>ReadNetCDF()</code> can return a keyed data.table.</li>
+<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> can return a keyed data.table.</li>
 <li>
-<code>FitQsWave()</code> and <code>BuildQsWave()</code> renamed to <code>FitWave()</code> and <code>BuildWave()</code>, respectively.</li>
+<code><a href="../reference/waves.html">FitQsWave()</a></code> and <code>BuildQsWave()</code> renamed to <code><a href="../reference/waves.html">FitWave()</a></code> and <code>BuildWave()</code>, respectively.</li>
 <li>
-<code>GetSMNData()</code> is updated to include the new SMN website and data types.</li>
+<code><a href="../reference/GetSMNData.html">GetSMNData()</a></code> is updated to include the new SMN website and data types.</li>
 <li>
-<code>geom_contour2()</code> and <code>geom_contour_fill()</code> gain a <code>circular</code> argument to specify a circular dimension.</li>
+<code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> and <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> gain a <code>circular</code> argument to specify a circular dimension.</li>
 <li>
-<code>RepeatCircular()</code> renamed to <code>RepeatCircular()</code>.</li>
+<code><a href="../reference/WrapCircular.html">RepeatCircular()</a></code> renamed to <code><a href="../reference/WrapCircular.html">RepeatCircular()</a></code>.</li>
 <li>
-<code>LonLabel()</code> and <code>LatLabel()</code> aid labeling latitude and longitude.</li>
-<li>Changed interface of <code>EOF()</code> and <code>ImputeEOF()</code>.</li>
+<code><a href="../reference/map_labels.html">LonLabel()</a></code> and <code><a href="../reference/map_labels.html">LatLabel()</a></code> aid labeling latitude and longitude.</li>
+<li>Changed interface of <code><a href="../reference/EOF.html">EOF()</a></code> and <code><a href="../reference/ImputeEOF.html">ImputeEOF()</a></code>.</li>
 </ul>
 </div>
     <div id="meteor-0-0-9100" class="section level1">

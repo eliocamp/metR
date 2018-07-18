@@ -219,9 +219,9 @@ standard deviation of each singular value.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other meteorology functions: <code>Derivate</code>,
-  <code>GeostrophicWind</code>, <code>WaveFlux</code>,
-  <code>thermodynamics</code>, <code>waves</code></p></div>
+    <div class='dont-index'><p>Other meteorology functions: <code><a href='Derivate.html'>Derivate</a></code>,
+  <code><a href='GeostrophicWind.html'>GeostrophicWind</a></code>, <code><a href='WaveFlux.html'>WaveFlux</a></code>,
+  <code><a href='thermodynamics.html'>thermodynamics</a></code>, <code><a href='waves.html'>waves</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -230,7 +230,7 @@ standard deviation of each singular value.</p>
 <span class='fu'>library</span>(<span class='no'>data.table</span>)
 <span class='fu'>data</span>(<span class='no'>geopotential</span>)
 <span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/copy'>copy</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geopotential</span>[, <span class='no'>gh.t.w</span> <span class='kw'>:=</span> <span class='fu'>Anomaly</span>(<span class='no'>gh</span>)*<span class='fu'>sqrt</span>(<span class='fu'>cos</span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>)),
+<span class='no'>geopotential</span>[, <span class='no'>gh.t.w</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>)*<span class='fu'>sqrt</span>(<span class='fu'>cos</span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>)),
       <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>month</a></span>(<span class='no'>date</span>))]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t.w
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01 2.479552e-01
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01 1.685554e+00

@@ -192,7 +192,7 @@ grid. If <code>grid = FALSE</code>, they define the locations where to interpola
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01       NA
 #&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01       NA</div><div class='input'>
 <span class='co'># Interpolate multiple values</span>
-<span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'>GeostrophicWind</span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date   gh.new  u          v
+<span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date   gh.new  u          v
 #&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01       NA NA  1.0807091
 #&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01       NA NA  0.5513294
 #&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01       NA NA  0.0661829

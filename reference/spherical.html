@@ -165,7 +165,7 @@ on latitude.</p>
 <span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]]
 
 <span class='co'># Geostrophic wind</span>
-<span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'>GeostrophicWind</span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]  <span class='co'># in meters/second</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date  u          v
+<span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]  <span class='co'># in meters/second</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date  u          v
 #&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.0807091
 #&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.5513294
 #&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 NA  0.0661829

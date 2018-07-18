@@ -12,11 +12,11 @@ scale_mag <- function(name = waiver(),
                       ...) {
     # if (!is.unit(length)) length <- ggplot2::unit(length, default_unit)
     # if (is.waive(breaks)) {
-        if (is.waive(max)) {
-            breaks <- function(range) return(range[2])
-        } else {
-            breaks <- function(range) return(max)
-        }
+    if (is.waive(max)) {
+        breaks <- function(range) return(range[2])
+    } else {
+        breaks <- function(range) return(max)
+    }
     # }
 
     # default_unit <- formals(guide)$default_unit
@@ -24,17 +24,17 @@ scale_mag <- function(name = waiver(),
     # guide <- guide_vector(default )
 
     ggplot2::continuous_scale("mag",
-                     "mag",
-                     identity,
-                     name = name,
-                     breaks = waiver(),
-                     labels = labels,
-                     limits = NULL,
-                     rescaler = rescale_mag(max_size, max),
-                     oob = no_censor,
-                     guide = guide,
-                     ...
-                     )
+                              "mag",
+                              identity,
+                              name = name,
+                              breaks = waiver(),
+                              labels = labels,
+                              limits = NULL,
+                              rescaler = rescale_mag(max_size, max),
+                              oob = no_censor,
+                              guide = guide,
+                              ...
+    )
 }
 
 # scale_type.mag <- function(x) "vector"

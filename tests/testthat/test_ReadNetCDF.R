@@ -16,7 +16,7 @@ test_that("subsetting works", {
 test_that("naming works", {
     expect_true({
         t <- ReadNetCDF(file,
-                                vars = c(air2 = "air"))
+                        vars = c(air2 = "air"))
         "air2" %in% colnames(t)})
 })
 

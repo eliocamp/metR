@@ -11,13 +11,13 @@ scale_mag <- function(name = waiver(),
                       guide = guide_vector(default.unit = default_unit),
                       ...) {
     # if (!is.unit(length)) length <- ggplot2::unit(length, default_unit)
-    if (is.waive(breaks)) {
+    # if (is.waive(breaks)) {
         if (is.waive(max)) {
             breaks <- function(range) return(range[2])
         } else {
             breaks <- function(range) return(max)
         }
-    }
+    # }
 
     # default_unit <- formals(guide)$default_unit
     # max_size <- units::con

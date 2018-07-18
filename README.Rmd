@@ -7,9 +7,9 @@ output: github_document
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
     cache = FALSE,
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-"
+    collapse = TRUE,
+    comment = "#>",
+    fig.path = "README-"
 )
 ```
 
@@ -33,7 +33,7 @@ Currently metR is in developement and should only be used carefully (or better s
 
 You can install metR from github with:
 
-```{r gh-installation}
+```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("eliocamp/metR")
 ```

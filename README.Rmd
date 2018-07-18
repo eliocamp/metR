@@ -33,7 +33,7 @@ Currently metR is in developement and should only be used carefully (or better s
 
 You can install metR from github with:
 
-```{r gh-installation, eval = FALSE}
+```{r gh-installation}
 # install.packages("devtools")
 devtools::install_github("eliocamp/metR")
 ```

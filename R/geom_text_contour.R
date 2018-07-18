@@ -23,9 +23,9 @@
 #' v <- data.table::melt(volcano)
 #' g <- ggplot(v, aes(Var1, Var2)) +
 #'        geom_contour(aes(z = value))
-#' g + geom_text_contour(aes(z = value, label = ..level..))
+#' g + geom_text_contour(aes(z = value))
 #'
-#' g + geom_text_contour(aes(z = value, label = ..level..), stroke = 0.2)
+#' g + geom_text_contour(aes(z = value), stroke = 0.2)
 #'
 #' @section Aesthetics:
 #' \code{geom_text_contour} understands the following aesthetics (required aesthetics are in bold):
@@ -124,9 +124,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
        }
        # Get points of labels
        data <- .label.position(copy(data), min.size, skip, rotate)
-
-       if (rotate == FALSE) data[, angle := 0]
-
+d <<- copy(data)
        ## Original ggplot2 here.
        lab <- data$label
        if (parse) {
@@ -140,41 +138,21 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
            data$hjust <- ggplot2:::compute_just(data$hjust, data$x)
        }
 
-       # if (stroke > 0) {
-       #     shadowtext::shadowtextGrob(
-       #         lab,
-       #         data$x, data$y, default.units = "native",
-       #         hjust = data$hjust, vjust = data$vjust,
-       #         rot = data$angle,
-       #         gp = grid::gpar(
-       #             col = alpha(data$colour, data$alpha),
-       #             fontsize = data$size * .pt,
-       #             fontfamily = data$family,
-       #             fontface = data$fontface,
-       #             lineheight = data$lineheight
-       #         ),
-       #         check.overlap = check_overlap,
-       #         bg.r = stroke,
-       #         bg.color = stroke.color
-       #     )
-       # } else {
-           shadowtext(
-               lab,
-               data$x, data$y, default.units = "native",
-               hjust = data$hjust, vjust = data$vjust,
-               dx = data$dx, dy = data$dy,
-               bg.r = stroke, bg.color = stroke.color,
-               # rot = data$angle,
-               gp = grid::gpar(
-                   col = alpha(data$colour, data$alpha),
-                   fontsize = data$size * .pt,
-                   fontfamily = data$family,
-                   fontface = data$fontface,
-                   lineheight = data$lineheight
-               ),
-               check.overlap = check_overlap
-           )
-       # }
+       shadowtext(
+           lab,
+           data$x, data$y, default.units = "native",
+           hjust = data$hjust, vjust = data$vjust,
+           dx = data$dx, dy = data$dy,
+           bg.r = stroke, bg.color = stroke.color,
+           gp = grid::gpar(
+               col = alpha(data$colour, data$alpha),
+               fontsize = data$size * .pt,
+               fontfamily = data$family,
+               fontface = data$fontface,
+               lineheight = data$lineheight
+           ),
+           check.overlap = check_overlap
+       )
 
    },
 
@@ -200,9 +178,9 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
     breaks <- unique(data$level)
     breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]
     data <- data[level %in% breaks.cut]
-    data[, id := seq_len(.N), by = group]
+    data[, id := seq_len(.N), by = piece]
     data[, c("dx", "dy") := .(.derv(x, id), .derv(y, id)),
-         by = .(group)]
+         by = .(piece)]
 
     # Safety strip around the edges (10%)
     safe <- c(0, 1) + 0.1*c(+1, -1)
@@ -227,7 +205,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
     # data <- data[min == TRUE]
     # data[, min := angle == min(angle, na.rm = T), by = piece]
     # data[, min := atan2(dy, dx) == min(atan2(dy, dx), na.rm = TRUE), by = piece]
-
+    data <- data[!is.na(dx + dy)]
     if (rotate == FALSE) data[, c("dx", "dy") := .(0, 0)]
 
     return(data[min == TRUE, head(.SD, 1), by = piece])

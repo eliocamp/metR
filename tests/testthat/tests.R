@@ -1,5 +1,6 @@
 library(metR)
 
+
 context("season")
 test_that("season assigns season", {
     expect_equal(as.character(season(1)), "DJF")

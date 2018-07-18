@@ -2,7 +2,7 @@
 
 #' @export
 scale_mag <- function(name = waiver(),
-                      breaks = waiver(),
+                      # breaks = waiver(),
                       labels = waiver(),
                       # limits = NULL,
                       max_size = 1,
@@ -27,7 +27,7 @@ scale_mag <- function(name = waiver(),
                      "mag",
                      identity,
                      name = name,
-                     breaks = breaks,
+                     breaks = waiver(),
                      labels = labels,
                      limits = NULL,
                      rescaler = rescale_mag(max_size, max),

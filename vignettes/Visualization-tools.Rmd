@@ -250,23 +250,6 @@ ggplot(temperature[lev == 500], aes(lon, lat)) +
     scale_alpha(guide = "none")
 ```
 
-`step` can also be mapped to the `frame` aesthetic used by `gganimate` to render animations. 
-
-```{r, interval = 0.2, fig.show = "animate"}
-g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
-    geom_streamline(aes(dx = t.dy, dy = -t.dx,
-                        frame = ..step.., cumulative = TRUE, 
-                        color = sqrt(..dx..^2 + ..dy..^2)), arrow = NULL,
-                    S = 10, res = 2, xwrap = c(0, 360), lineend = "round") + 
-    scale_y_latitude(limits = c(-90, 0)) +
-    scale_x_longitude() +
-    viridis::scale_color_viridis(guide = "none") +
-    scale_size(range = c(0, 1), guide = "none") +
-    scale_alpha(guide = "none")
-
-if(require(gganimate)) gganimate(g, title_frame = FALSE)
-```
-
 
 # Other goodies
 

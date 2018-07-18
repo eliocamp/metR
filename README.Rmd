@@ -6,6 +6,7 @@ output: github_document
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
+    cache = FALSE,
   collapse = TRUE,
   comment = "#>",
   fig.path = "README-"

@@ -112,6 +112,7 @@ scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...
 #' @name map_labels
 #' @family ggplot2 helpers
 LonLabel <- function(lon, east = "\u00B0E", west = "\u00B0O") {
+    lon <- as.numeric(lon)
     lon <- ifelse(lon > 180, ConvertLongitude(lon), lon)
     newlon <- ifelse(lon < 0, paste0(abs(lon), west), paste0(lon, east))
     newlon[lon == 0] <- paste0(lon[lon == 0], "\u00B0")
@@ -122,6 +123,7 @@ LonLabel <- function(lon, east = "\u00B0E", west = "\u00B0O") {
 #' @export
 #' @rdname map_labels
 LatLabel <- function(lat, north = "\u00B0N", south = "\u00B0S") {
+    lat <- as.numeric(lat)
     newlat <- ifelse(lat < 0, paste0(abs(lat), south), paste0(lat, north))
     newlat[lat == 0] <- paste0(lat[lat == 0], "\u00B0")
     return(newlat)

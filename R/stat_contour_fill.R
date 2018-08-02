@@ -87,7 +87,20 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              breaks = scales::fullseq, complete = TRUE,
                              na.rm = FALSE, circular = NULL, xwrap = NULL,
                              ywrap = NULL) {
+        setDT(data)
         data <- data[!(is.na(data$x) | is.na(data$y)), ]
+
+        # Check if is a complete grid
+        nx <- data[, uniqueN(x), by = y]$V1
+        ny <- data[, uniqueN(y), by = x]$V1
+
+        complete.grid <- abs(max(nx) - min(nx)) == 0 & abs(max(ny) - min(ny)) == 0
+
+        if (complete.grid == FALSE) {
+            warning("data must be a complete regular grid. You might want to use tidyr::complete(data, x, y).", call. = FALSE)
+            return(data.frame())
+        }
+
         if (na.rm) {
             data <- data[!is.na(data$z), ]
         } else {
@@ -103,12 +116,12 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
         setDF(data)
         mean.z <- mean(data$z)
+        # mean.z <- min(breaks) - 100*resolution(breaks, zero = FALSE)
         mean.level <- breaks[breaks %~% mean.z]
         range.data <- as.data.frame(vapply(data[c("x", "y", "z")], range, c(1, 2)))
 
         # Expand data by 1 unit in all directions.
         data <- .expand_data(data)
-
         # Make contours
         cont <- data.table::setDT(.contour_lines(data, breaks, complete = complete))
 
@@ -192,6 +205,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                x = c(range.data$x[1] - dx, range.data$x[2] + dx)))
 
     extra$z <- mean(data$z)
+    # extra$z <- min(data$z) - 100
 
     rbind(data[c("x", "y", "z")], extra)
 }
@@ -337,6 +351,7 @@ close_path <- function(x, y, range_x, range_y) {
         last <- cont[, .(x = x[.N], y = y[.N])]
         # search for next piece
         next.point <- contours2[x == last$x & y == last$y & piece != p]
+        # if (nrow(next.point) == 0) break
         next.piece <- contours2[piece == next.point$piece]
 
         if (next.piece$piece[1] == pieces[1]) break

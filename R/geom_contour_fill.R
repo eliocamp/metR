@@ -14,7 +14,20 @@
 #' @param breaks numeric vector of breaks
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
+#' @param na.fill How to fill missing values.
+#'    - `FALSE` for leting the computation fail with no interpolation
+#'    - `TRUE` for imputing missing values with [akima::interpp]
+#'    - A numeric value for constant imputation
+#'    - A function that takes a vector and returns a numeric (e.g. `mean`)
 #' @param xwrap,ywrap vector of length two used to wrap the circulad dimension.
+#'
+#'
+#' @details
+#'
+#' Since the data must be a complete regular grid `na.fill` controls how to impute
+#' missing values. The default (`NULL`) doesn't impute and fails.
+#' `"interpolate"` uses bivariate spline interpolation with [akima::interpp]. If
+#' it is a numeric value, it imputes
 #'
 #' @section Aesthetics:
 #' \code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):
@@ -58,7 +71,8 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
                          breaks = NULL,
                          bins = NULL,
                          binwidth = NULL,
-                         na.rm = FALSE,
+                         # na.rm = FALSE,
+                         na.fill = FALSE,
                          xwrap = NULL,
                          ywrap = NULL,
                          show.legend = NA,
@@ -75,7 +89,8 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
-            na.rm = na.rm,
+            na.rm = FALSE,
+            na.fill = na.fill,
             xwrap = xwrap,
             ywrap = ywrap,
             ...

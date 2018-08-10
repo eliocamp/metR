@@ -8,7 +8,8 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               breaks = scales::fullseq,
                               bins = NULL,
                               binwidth = NULL,
-                              na.rm = FALSE,
+                              # na.rm = FALSE,
+                              na.fill = FALSE,
                               xwrap = NULL,
                               ywrap = NULL,
                               show.legend = NA,
@@ -22,7 +23,8 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
         show.legend = show.legend,
         inherit.aes = inherit.aes,
         params = list(
-            na.rm = na.rm,
+            na.rm = FALSE,
+            na.fill = na.fill,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
@@ -47,7 +49,6 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         if (is.null(params$breaks)) {
             params$breaks <- scales::fullseq
         }
-
         if (is.function(params$breaks)) {
             # If no parameters set, use pretty bins to calculate binwidth
             if (is.null(params$bins) && is.null(params$binwidth)) {
@@ -85,10 +86,9 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     },
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = scales::fullseq, complete = TRUE,
-                             na.rm = FALSE, circular = NULL, xwrap = NULL,
-                             ywrap = NULL) {
+                             na.rm = FALSE, xwrap = NULL,
+                             ywrap = NULL, na.fill = FALSE) {
         setDT(data)
-        data <- data[!(is.na(data$x) | is.na(data$y)), ]
 
         # Check if is a complete grid
         nx <- data[, uniqueN(x), by = y]$V1
@@ -97,15 +97,40 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         complete.grid <- abs(max(nx) - min(nx)) == 0 & abs(max(ny) - min(ny)) == 0
 
         if (complete.grid == FALSE) {
-            warning("data must be a complete regular grid. You might want to use tidyr::complete(data, x, y).", call. = FALSE)
-            return(data.frame())
+            if (complete == FALSE) {
+                warning("data must be a complete regular grid", call. = FALSE)
+                return(data.frame())
+            } else {
+                data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+            }
         }
 
-        if (na.rm) {
-            data <- data[!is.na(data$z), ]
-        } else {
-            data$z[is.na(data$z)] <- mean(data$z, na.rm = TRUE)
+        nas <- nrow(data[is.na(z)])
+        if (nas != 0) {
+            if (na.fill == TRUE) {
+                data[is.na(z), z := c(suppressWarnings(akima::interpp(data[is.finite(z),]$x,
+                                                                      data[is.finite(z),]$y,
+                                                                      data[is.finite(z),]$z,
+                                                                      xo = x, yo = y, linear = FALSE,
+                                                                      extrap = TRUE))$z)]
+            } else if (is.numeric(na.fill)) {
+                data[is.na(z), z := na.fill[1]]
+            } else if (is.function(na.fill)) {
+                z.fill <- data[is.finite(z), na.fill(z)]
+                data[is.na(z), z := z.fill]
+            } else {
+                warning("data must not have missing values. Use na.fill = TRUE or impute them before plotting.", call. = FALSE)
+                return(data.frame())
+            }
         }
+
+
+
+        # if (na.rm) {
+        #     data <- data[!is.na(data$z), ]
+        # } else {
+        #     data$z[is.na(data$z)] <- mean(data$z, na.rm = TRUE)
+        # }
 
         if (!is.null(xwrap)) {
             data <- WrapCircular(data, "x", xwrap)

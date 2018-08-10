@@ -59,7 +59,7 @@ Note: `scale_*_longitude()` (currently)  assumes the data goes from 0° to 360°
 
 ## geom_contour_fill()
 
-In ggplot2, the 'canonical' way to get filled contours is by using `stat_contour()` with a `polygon` geom and mapping `fill` to `level` (see [this](https://github.com/tidyverse/ggplot2/issues/1066) issue), but this has tree important limitations. 
+In ggplot2, the 'canonical' way to get filled contours is by using `stat_contour()` with a `polygon` geom and mapping `fill` to `level` (see [this](https://github.com/tidyverse/ggplot2/issues/1066) issue), but this has three important limitations. 
 
 * It doesn't work well for contours that end at the edges
 
@@ -83,7 +83,7 @@ ggplot(v, aes(Var1, Var2, z = value)) +
     guides(fill = "none")
 ```
 
-In the case of missing values, `geom_contour_fill()` defaults to imputing them with the mean, which returns somewhat correct closed contours around missing values. The user is encouraged to mask them with `stat_na()`, wich selects values that are `NA`.
+In principle, `geom_contour_fill()` needs a full regular grid with no missing values and by default with fail if otherwise. However, with the `na.fill` parameter you can have some control over the imputaton of `NA`s. Setting it to `"interpolate"` will impute missing values with spiline bivariate interpolation. Other optins are passing a constant numeric value or a function that takes the vector of values and return one value (like `mean`).
 
 ```{r}
 # Adding missing values
@@ -92,8 +92,8 @@ set.seed(42)
 v[sample(1:.N, .N*0.3), value.gap := NA]
 
 ggplot(v, aes(Var1, Var2, z = value.gap)) +
-    geom_contour_fill(breaks = breaks) +
-    stat_na(aes(na = value.gap))
+    geom_contour_fill(breaks = breaks, na.fill = TRUE) +
+    geom_point(data = v[is.na(value.gap)], size = 0.1, alpha = 0.5)
 ```
 
 We can apply this to a more realistic dataset 

@@ -10,13 +10,13 @@
 \usage{
 geom_relief(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", ..., sun.angle = 60, raster = TRUE,
-  interpolate = TRUE, shadow = FALSE, na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+  interpolate = TRUE, shadow = FALSE, na.rm = FALSE,
+  show.legend = NA, inherit.aes = TRUE)
 
 geom_shadow(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., range = c(0, 1), skip = 0, raster = TRUE,
-  interpolate = TRUE, na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+  position = "identity", ..., range = c(0, 1), skip = 0,
+  raster = TRUE, interpolate = TRUE, na.rm = FALSE,
+  show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or

@@ -10,8 +10,9 @@
 \usage{
 geom_contour2(mapping = NULL, data = NULL, stat = "contour2",
   position = "identity", ..., lineend = "butt", linejoin = "round",
-  linemitre = 1, breaks = scales::fullseq, bins = NULL, binwidth = NULL,
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+  linemitre = 1, breaks = scales::fullseq, bins = NULL,
+  binwidth = NULL, na.rm = FALSE, show.legend = NA,
+  inherit.aes = TRUE)
 
 stat_contour2(mapping = NULL, data = NULL, geom = "contour2",
   position = "identity", ..., breaks = scales::fullseq, bins = NULL,

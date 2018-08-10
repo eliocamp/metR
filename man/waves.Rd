@@ -11,8 +11,8 @@
 \usage{
 FitWave(y, k = 1)
 
-BuildField(x, amplitude, phase, k, wave = list(k = k, amplitude = amplitude,
-  phase = phase), sum = TRUE)
+BuildField(x, amplitude, phase, k, wave = list(k = k, amplitude =
+  amplitude, phase = phase), sum = TRUE)
 
 FilterWave(x, k, action = sign(k[k != 0][1]))
 }

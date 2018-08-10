@@ -11,17 +11,17 @@ guide_colourstrip(title = waiver(), title.position = NULL,
   title.theme = NULL, title.hjust = NULL, title.vjust = NULL,
   label = TRUE, label.position = NULL, label.theme = NULL,
   label.hjust = NULL, label.vjust = NULL, barwidth = NULL,
-  barheight = NULL, ticks = FALSE, draw.ulim = TRUE, draw.llim = TRUE,
-  inside = FALSE, direction = NULL, default.unit = "line",
-  reverse = FALSE, order = 0, ...)
+  barheight = NULL, ticks = FALSE, draw.ulim = TRUE,
+  draw.llim = TRUE, inside = FALSE, direction = NULL,
+  default.unit = "line", reverse = FALSE, order = 0, ...)
 
 guide_colorstrip(title = waiver(), title.position = NULL,
   title.theme = NULL, title.hjust = NULL, title.vjust = NULL,
   label = TRUE, label.position = NULL, label.theme = NULL,
   label.hjust = NULL, label.vjust = NULL, barwidth = NULL,
-  barheight = NULL, ticks = FALSE, draw.ulim = TRUE, draw.llim = TRUE,
-  inside = FALSE, direction = NULL, default.unit = "line",
-  reverse = FALSE, order = 0, ...)
+  barheight = NULL, ticks = FALSE, draw.ulim = TRUE,
+  draw.llim = TRUE, inside = FALSE, direction = NULL,
+  default.unit = "line", reverse = FALSE, order = 0, ...)
 }
 \arguments{
 \item{title}{A character string or expression indicating a title of guide.

@@ -9,24 +9,26 @@
 \title{Streamlines}
 \usage{
 geom_streamline(mapping = NULL, data = NULL, stat = "streamline",
-  position = "identity", ..., L = 5, min.L = 0, res = 1, S = NULL,
-  dt = NULL, xwrap = NULL, ywrap = NULL, skip = 1, skip.x = skip,
-  skip.y = skip, n = NULL, nx = n, ny = n, jitter = 1,
-  jitter.x = jitter, jitter.y = jitter, arrow.angle = 6,
-  arrow.length = 0.5, arrow.ends = "last", arrow.type = "closed",
-  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
-  arrow.ends, type = arrow.type), lineend = "butt", na.rm = TRUE,
-  show.legend = NA, inherit.aes = TRUE)
+  position = "identity", ..., L = 5, min.L = 0, res = 1,
+  S = NULL, dt = NULL, xwrap = NULL, ywrap = NULL, skip = 1,
+  skip.x = skip, skip.y = skip, n = NULL, nx = n, ny = n,
+  jitter = 1, jitter.x = jitter, jitter.y = jitter,
+  arrow.angle = 6, arrow.length = 0.5, arrow.ends = "last",
+  arrow.type = "closed", arrow = grid::arrow(arrow.angle,
+  unit(arrow.length, "lines"), ends = arrow.ends, type = arrow.type),
+  lineend = "butt", na.rm = TRUE, show.legend = NA,
+  inherit.aes = TRUE)
 
 stat_streamline(mapping = NULL, data = NULL, geom = "streamline",
-  position = "identity", ..., L = 5, min.L = 0, res = 1, S = NULL,
-  dt = NULL, xwrap = NULL, ywrap = NULL, skip = 1, skip.x = skip,
-  skip.y = skip, n = NULL, nx = n, ny = n, jitter = 1,
-  jitter.x = jitter, jitter.y = jitter, arrow.angle = 6,
-  arrow.length = 0.5, arrow.ends = "last", arrow.type = "closed",
-  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
-  arrow.ends, type = arrow.type), lineend = "butt", na.rm = TRUE,
-  show.legend = NA, inherit.aes = TRUE)
+  position = "identity", ..., L = 5, min.L = 0, res = 1,
+  S = NULL, dt = NULL, xwrap = NULL, ywrap = NULL, skip = 1,
+  skip.x = skip, skip.y = skip, n = NULL, nx = n, ny = n,
+  jitter = 1, jitter.x = jitter, jitter.y = jitter,
+  arrow.angle = 6, arrow.length = 0.5, arrow.ends = "last",
+  arrow.type = "closed", arrow = grid::arrow(arrow.angle,
+  unit(arrow.length, "lines"), ends = arrow.ends, type = arrow.type),
+  lineend = "butt", na.rm = TRUE, show.legend = NA,
+  inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or

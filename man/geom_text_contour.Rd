@@ -10,17 +10,19 @@
 \alias{StatTextContour}
 \title{Label contours}
 \usage{
-geom_label_contour(mapping = NULL, data = NULL, stat = "text_contour",
-  position = "identity", ..., min.size = 5, skip = 1, parse = FALSE,
-  nudge_x = 0, nudge_y = 0, label.padding = unit(0.25, "lines"),
-  label.r = unit(0.15, "lines"), label.size = 0.25, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+geom_label_contour(mapping = NULL, data = NULL,
+  stat = "text_contour", position = "identity", ..., min.size = 5,
+  skip = 1, parse = FALSE, nudge_x = 0, nudge_y = 0,
+  label.padding = unit(0.25, "lines"), label.r = unit(0.15, "lines"),
+  label.size = 0.25, na.rm = FALSE, show.legend = NA,
+  inherit.aes = TRUE)
 
 geom_text_contour(mapping = NULL, data = NULL, stat = "text_contour",
-  position = "identity", ..., min.size = 5, skip = 1, rotate = TRUE,
-  parse = FALSE, nudge_x = 0, nudge_y = 0, stroke = 0,
-  stroke.color = "white", check_overlap = FALSE, xwrap = NULL,
-  ywrap = NULL, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+  position = "identity", ..., min.size = 5, skip = 1,
+  rotate = TRUE, parse = FALSE, nudge_x = 0, nudge_y = 0,
+  stroke = 0, stroke.color = "white", check_overlap = FALSE,
+  xwrap = NULL, ywrap = NULL, na.rm = FALSE, show.legend = NA,
+  inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -135,9 +137,9 @@ library(ggplot2)
 v <- data.table::melt(volcano)
 g <- ggplot(v, aes(Var1, Var2)) +
        geom_contour(aes(z = value))
-g + geom_text_contour(aes(z = value, label = ..level..))
+g + geom_text_contour(aes(z = value))
 
-g + geom_text_contour(aes(z = value, label = ..level..), stroke = 0.2)
+g + geom_text_contour(aes(z = value), stroke = 0.2)
 
 }
 \seealso{

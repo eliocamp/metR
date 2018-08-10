@@ -12,12 +12,12 @@
 \title{Helpful scales for maps}
 \usage{
 scale_x_longitude(ticks = 60, name = "", expand = c(0, 0),
-  breaks = seq(-180, 360 - ticks, by = ticks), labels = LonLabel(breaks),
-  ...)
+  breaks = seq(-180, 360 - ticks, by = ticks),
+  labels = LonLabel(breaks), ...)
 
 scale_y_longitude(ticks = 60, name = "", expand = c(0, 0),
-  breaks = seq(-180, 360 - ticks, by = ticks), labels = LonLabel(breaks),
-  ...)
+  breaks = seq(-180, 360 - ticks, by = ticks),
+  labels = LonLabel(breaks), ...)
 
 scale_x_latitude(ticks = 30, name = "", expand = c(0, 0),
   breaks = seq(-90, 90, by = ticks), labels = LatLabel(breaks), ...)
@@ -32,7 +32,7 @@ scale_y_level(name = "", expand = c(0, 0), trans = "reverselog", ...)
 \arguments{
 \item{ticks}{spacing between breaks}
 
-\item{name}{The name of the scale. Used as axis or legend title. If
+\item{name}{The name of the scale. Used as the axis or legend title. If
 \code{waiver()}, the default, the name of the scale is taken from the first
 mapping used for that aesthetic. If \code{NULL}, the legend title will be
 omitted.}
@@ -64,7 +64,7 @@ transformation object
 as output
 }}
 
-\item{...}{Other arguments passed on to \code{scale_(x|y)_continuous}}
+\item{...}{Other arguments passed on to \code{scale_(x|y)_continuous()}}
 
 \item{trans}{Either the name of a transformation object, or the
 object itself. Built-in transformations include "asn", "atanh",

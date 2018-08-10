@@ -9,12 +9,12 @@
 \usage{
 geom_contour_fill(mapping = NULL, data = NULL, stat = "ContourFill",
   position = "identity", ..., breaks = NULL, bins = NULL,
-  binwidth = NULL, na.rm = FALSE, xwrap = NULL, ywrap = NULL,
+  binwidth = NULL, na.fill = FALSE, xwrap = NULL, ywrap = NULL,
   show.legend = NA, inherit.aes = TRUE)
 
 stat_contour_fill(mapping = NULL, data = NULL, geom = "polygon",
   position = "identity", ..., breaks = scales::fullseq, bins = NULL,
-  binwidth = NULL, na.rm = FALSE, xwrap = NULL, ywrap = NULL,
+  binwidth = NULL, na.fill = FALSE, xwrap = NULL, ywrap = NULL,
   show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
@@ -54,8 +54,13 @@ to the paired geom/stat.}
 
 \item{binwidth}{Distance between breaks.}
 
-\item{na.rm}{If \code{FALSE}, the default, missing values are removed with
-a warning. If \code{TRUE}, missing values are silently removed.}
+\item{na.fill}{How to fill missing values.
+\itemize{
+\item \code{FALSE} for leting the computation fail with no interpolation
+\item \code{TRUE} for imputing missing values with \link[akima:interpp]{akima::interpp}
+\item A numeric value for constant imputation
+\item A function that takes a vector and returns a numeric (e.g. \code{mean})
+}}
 
 \item{xwrap, ywrap}{vector of length two used to wrap the circulad dimension.}
 
@@ -81,6 +86,12 @@ aesthetic \code{int.level}, which differs from \code{level} (computed by
 the value of the \code{z} aesthetic \emph{inside} the contour instead of at the edge.
 It also computes breaks globally instead of per panel, so that faceted plots
 have all the same binwidth.
+}
+\details{
+Since the data must be a complete regular grid \code{na.fill} controls how to impute
+missing values. The default (\code{NULL}) doesn't impute and fails.
+\code{"interpolate"} uses bivariate spline interpolation with \link[akima:interpp]{akima::interpp}. If
+it is a numeric value, it imputes
 }
 \section{Aesthetics}{
 

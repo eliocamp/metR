@@ -133,12 +133,12 @@ helpful defaults for plotting longitude, latitude and pressure levels.</p>
     </div>
 
     <pre class="usage"><span class='fu'>scale_x_longitude</span>(<span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>),
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>180</span>, <span class='fl'>360</span> - <span class='no'>ticks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>),
-  <span class='no'>...</span>)
+  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>180</span>, <span class='fl'>360</span> - <span class='no'>ticks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>),
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
 
 <span class='fu'>scale_y_longitude</span>(<span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>),
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>180</span>, <span class='fl'>360</span> - <span class='no'>ticks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>),
-  <span class='no'>...</span>)
+  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>180</span>, <span class='fl'>360</span> - <span class='no'>ticks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>),
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
 
 <span class='fu'>scale_x_latitude</span>(<span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>),
   <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>90</span>, <span class='fl'>90</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LatLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
@@ -159,7 +159,7 @@ helpful defaults for plotting longitude, latitude and pressure levels.</p>
     </tr>
     <tr>
       <th>name</th>
-      <td><p>The name of the scale. Used as axis or legend title. If
+      <td><p>The name of the scale. Used as the axis or legend title. If
 <code>waiver()</code>, the default, the name of the scale is taken from the first
 mapping used for that aesthetic. If <code>NULL</code>, the legend title will be
 omitted.</p></td>
@@ -197,7 +197,7 @@ as output</p></li>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other arguments passed on to <code>scale_(x|y)_continuous</code></p></td>
+      <td><p>Other arguments passed on to <code>scale_(x|y)_continuous()</code></p></td>
     </tr>
     <tr>
       <th>trans</th>

@@ -83,17 +83,17 @@ ggplot(v, aes(Var1, Var2, z = value)) +
     guides(fill = "none")
 ```
 
-In principle, `geom_contour_fill()` needs a full regular grid with no missing values and by default with fail if otherwise. However, with the `na.fill` parameter you can have some control over the imputaton of `NA`s. Setting it to `"interpolate"` will impute missing values with spiline bivariate interpolation. Other optins are passing a constant numeric value or a function that takes the vector of values and return one value (like `mean`).
+In principle, `geom_contour_fill()` needs a full regular grid with no missing values and by default with fail if otherwise. However it can automatically impute missing values. With the `na.fill` parameter you can have some control over the imputaton of `NA`s. Setting it to `TRUE` (the default) will impute missing values with spiline bivariate interpolation. Other optins are passing a constant numeric value or a function that takes the vector of values and return one value (like `mean`).
 
 ```{r}
 # Adding missing values
 v[, value.gap := value]
-set.seed(42)
+set.seed(42)  # For reproducibility
 v[sample(1:.N, .N*0.3), value.gap := NA]
 
 ggplot(v, aes(Var1, Var2, z = value.gap)) +
     geom_contour_fill(breaks = breaks, na.fill = TRUE) +
-    geom_point(data = v[is.na(value.gap)], size = 0.1, alpha = 0.5)
+    geom_point(data = v[is.na(value.gap)], size = 0.1, alpha = 0.3)
 ```
 
 We can apply this to a more realistic dataset 

@@ -88,13 +88,14 @@ In principle, `geom_contour_fill()` needs a full regular grid with no missing va
 ```{r}
 # Adding missing values
 v[, value.gap := value]
-set.seed(42)  # For reproducibility
-v[sample(1:.N, .N*0.3), value.gap := NA]
+v[(Var1 - 40)^2 + (Var2 - 35)^2 < 50, value.gap := NA]
 
 ggplot(v, aes(Var1, Var2, z = value.gap)) +
     geom_contour_fill(breaks = breaks, na.fill = TRUE) +
     geom_point(data = v[is.na(value.gap)], size = 0.1, alpha = 0.3)
 ```
+
+It's probably good practice to mask missing values with `geom_raster()`. See `stat_subset()` for a quick way of selecting missing values.
 
 We can apply this to a more realistic dataset 
 
@@ -154,7 +155,7 @@ For more on the use of contours, see the Advance Contouring vignette (comming so
 
 ## stat_subset
 
-As a generalization of `stat_na()` shown above, `metR` also has `stat_subset()` which makes a subset of the data according to the `subset` aesthetic. This makes it possible to show only part of the data in one geom without needing to specify a `data` argument (specially usefull if the data being plotted is the result of a long pipe and not actually asigned to a data.frame). It has a somewhat limited use in that it cannot perform further statistical transformations of the data. 
+`metR` also has `stat_subset()` which makes a subset of the data according to the `subset` aesthetic. This makes it possible to show only part of the data in one geom without needing to specify a `data` argument (specially usefull if the data being plotted is the result of a long pipe and not actually asigned to a data.frame). It has a somewhat limited use in that it cannot perform further statistical transformations of the data. 
 
 For example, it can be used if you have a correlation field and want to mark only the points with significant correlations:
 
@@ -173,6 +174,14 @@ ggplot(geopotential[, gh.base := gh[lon == 120 & lat == -50], by = date][
     scale_y_latitude()
 ```
 
+Another posible use it to quickly mask missing values.
+
+```{r}
+ggplot(v, aes(Var1, Var2, z = value.gap)) +
+    geom_contour_fill(breaks = breaks, na.fill = TRUE) +
+    stat_subset(aes(subset = is.na(value.gap)), geom = "raster", 
+                fill = "#EBEBEB")
+```
 
 ## geom_vector and geom_arrow
 

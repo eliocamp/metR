@@ -113,13 +113,6 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             return(data.frame())
         }
 
-
-        # if (na.rm) {
-        #     data <- data[!is.na(data$z), ]
-        # } else {
-        #     data$z[is.na(data$z)] <- mean(data$z, na.rm = TRUE)
-        # }
-
         if (!is.null(xwrap)) {
             data <- WrapCircular(data, "x", xwrap)
         }

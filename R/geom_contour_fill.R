@@ -21,14 +21,6 @@
 #'    - A function that takes a vector and returns a numeric (e.g. `mean`)
 #' @param xwrap,ywrap vector of length two used to wrap the circulad dimension.
 #'
-#'
-#' @details
-#'
-#' Since the data must be a complete regular grid `na.fill` controls how to impute
-#' missing values. The default (`NULL`) doesn't impute and fails.
-#' `"interpolate"` uses bivariate spline interpolation with [akima::interpp]. If
-#' it is a numeric value, it imputes
-#'
 #' @section Aesthetics:
 #' \code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):
 #'
@@ -72,7 +64,7 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
                          bins = NULL,
                          binwidth = NULL,
                          # na.rm = FALSE,
-                         na.fill = FALSE,
+                         na.fill = TRUE,
                          xwrap = NULL,
                          ywrap = NULL,
                          show.legend = NA,

@@ -1,4 +1,5 @@
 #' @inheritParams ggplot2::stat_identity
+#' @inheritParams geom_contour_fill
 #' @param breaks One of:
 #'   - A numeric vector of breaks
 #'   - A function that takes the range of the data and binwidth as input
@@ -21,6 +22,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
                           bins = NULL,
                           binwidth = NULL,
                           na.rm = FALSE,
+                          na.fill = TRUE,
                           xwrap = NULL,
                           ywrap = NULL,
                           show.legend = NA,
@@ -35,6 +37,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
         inherit.aes = inherit.aes,
         params = list(
             na.rm = na.rm,
+            na.fill = na.fill,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
@@ -72,10 +75,47 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
       }
       return(params)
   },
+  compute_layer = function(self, data, params, layout) {
+      ggplot2:::check_required_aesthetics(
+          self$required_aes,
+          c(names(data), names(params)),
+          ggplot2:::snake_class(self)
+      )
+
+      # Trim off extra parameters
+      params <- params[intersect(names(params), self$parameters())]
+
+      args <- c(list(data = quote(data), scales = quote(scales)), params)
+      plyr::ddply(data, "PANEL", function(data) {
+          scales <- layout$get_scales(data$PANEL[1])
+          tryCatch(do.call(self$compute_panel, args), error = function(e) {
+              warning("Computation failed in `", ggplot2:::snake_class(self),
+                      "()`:\n",
+                      e$message, call. = FALSE)
+              data.frame()
+          })
+      })
+  },
   compute_group = function(data, scales, bins = NULL, binwidth = NULL,
-                           breaks = scales::fullseq, complete = FALSE,
+                           breaks = scales::fullseq, complete = TRUE,
                            na.rm = FALSE, circular = NULL, xwrap = NULL,
-                           ywrap = NULL) {
+                           ywrap = NULL, na.fill = TRUE) {
+      setDT(data)
+      nx <- data[, uniqueN(x), by = y]$V1
+      ny <- data[, uniqueN(y), by = x]$V1
+
+      complete.grid <- abs(max(nx) - min(nx)) == 0 & abs(max(ny) - min(ny)) == 0
+
+      if (complete.grid == FALSE) {
+          if (complete == FALSE) {
+              warning("data must be a complete regular grid", call. = FALSE)
+              return(data.frame())
+          } else {
+              data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+          }
+      }
+
+      data <- .impute_data(data, na.fill)
 
       if (!is.null(xwrap)) {
           data <- WrapCircular(data, "x", xwrap)

@@ -9,7 +9,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               bins = NULL,
                               binwidth = NULL,
                               # na.rm = FALSE,
-                              na.fill = FALSE,
+                              na.fill = TRUE,
                               xwrap = NULL,
                               ywrap = NULL,
                               show.legend = NA,
@@ -87,7 +87,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = scales::fullseq, complete = TRUE,
                              na.rm = FALSE, xwrap = NULL,
-                             ywrap = NULL, na.fill = FALSE) {
+                             ywrap = NULL, na.fill = TRUE) {
         setDT(data)
 
         # Check if is a complete grid
@@ -105,25 +105,13 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             }
         }
 
+        data <- .impute_data(data, na.fill)
+
         nas <- nrow(data[is.na(z)])
         if (nas != 0) {
-            if (na.fill == TRUE) {
-                data[is.na(z), z := c(suppressWarnings(akima::interpp(data[is.finite(z),]$x,
-                                                                      data[is.finite(z),]$y,
-                                                                      data[is.finite(z),]$z,
-                                                                      xo = x, yo = y, linear = FALSE,
-                                                                      extrap = TRUE))$z)]
-            } else if (is.numeric(na.fill)) {
-                data[is.na(z), z := na.fill[1]]
-            } else if (is.function(na.fill)) {
-                z.fill <- data[is.finite(z), na.fill(z)]
-                data[is.na(z), z := z.fill]
-            } else {
-                warning("data must not have missing values. Use na.fill = TRUE or impute them before plotting.", call. = FALSE)
-                return(data.frame())
-            }
+            warning("data must not have missing values. Use na.fill = TRUE or impute them before plotting.", call. = FALSE)
+            return(data.frame())
         }
-
 
 
         # if (na.rm) {
@@ -201,6 +189,28 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         cont
         }
 )
+
+.impute_data <- function(data, na.fill = TRUE) {
+    nas <- nrow(data[is.na(z)])
+    if (nas != 0) {
+        if (na.fill == TRUE) {
+            warning("imputing missing values", call. = FALSE)
+            data[is.na(z), z := c(suppressWarnings(akima::interpp(data[is.finite(z),]$x,
+                                                                  data[is.finite(z),]$y,
+                                                                  data[is.finite(z),]$z,
+                                                                  xo = x, yo = y, linear = FALSE,
+                                                                  extrap = TRUE))$z)]
+        } else if (is.numeric(na.fill)) {
+            warning("imputing missing values", call. = FALSE)
+            data[is.na(z), z := na.fill[1]]
+        } else if (is.function(na.fill)) {
+            warning("imputing missing values", call. = FALSE)
+            z.fill <- data[is.finite(z), na.fill(z)]
+            data[is.na(z), z := z.fill]
+        }
+    }
+    return(data)
+}
 
 .order_fill <- function(cont) {
     areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][

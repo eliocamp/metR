@@ -39,7 +39,8 @@ Imports:
     digest,
     fields,
     memoise,
-    Matrix
+    Matrix,
+    akima
 RoxygenNote: 6.1.0
 Suggests: 
     knitr,

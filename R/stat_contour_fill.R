@@ -89,6 +89,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              na.rm = FALSE, xwrap = NULL,
                              ywrap = NULL, na.fill = TRUE) {
         setDT(data)
+        data <- data[!(is.na(y) | is.na(x)), ]
 
         # Check if is a complete grid
         nx <- data[, uniqueN(x), by = y]$V1

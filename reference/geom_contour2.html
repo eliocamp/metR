@@ -133,13 +133,13 @@ per panel.</p>
     <pre class="usage"><span class='fu'>geom_contour2</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"contour2"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>lineend</span> <span class='kw'>=</span> <span class='st'>"butt"</span>, <span class='kw'>linejoin</span> <span class='kw'>=</span> <span class='st'>"round"</span>,
   <span class='kw'>linemitre</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/scales/topics/fullseq'>fullseq</a></span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>na.fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>stat_contour2</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"contour2"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/scales/topics/fullseq'>fullseq</a></span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ywrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>na.fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ywrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,6 +213,15 @@ and returns breaks as output</p></li>
       <th>na.rm</th>
       <td><p>If <code>FALSE</code>, the default, missing values are removed with
 a warning. If <code>TRUE</code>, missing values are silently removed.</p></td>
+    </tr>
+    <tr>
+      <th>na.fill</th>
+      <td><p>How to fill missing values.</p><ul>
+<li><p><code>FALSE</code> for leting the computation fail with no interpolation</p></li>
+<li><p><code>TRUE</code> for imputing missing values with <a href='http://www.rdocumentation.org/packages/akima/topics/interpp'>akima::interpp</a></p></li>
+<li><p>A numeric value for constant imputation</p></li>
+<li><p>A function that takes a vector and returns a numeric (e.g. <code>mean</code>)</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>show.legend</th>

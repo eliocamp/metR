@@ -38,7 +38,7 @@ geom_contour2 <- function(mapping = NULL, data = NULL,
                           bins = NULL,
                           binwidth = NULL,
                           na.rm = FALSE,
-                          na.fill = TRUE,
+                          na.fill = FALSE,
                           show.legend = NA,
                           inherit.aes = TRUE) {
     dots <- list(...)

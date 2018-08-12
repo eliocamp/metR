@@ -11,12 +11,12 @@
 geom_contour2(mapping = NULL, data = NULL, stat = "contour2",
   position = "identity", ..., lineend = "butt", linejoin = "round",
   linemitre = 1, breaks = scales::fullseq, bins = NULL,
-  binwidth = NULL, na.rm = FALSE, na.fill = TRUE, show.legend = NA,
-  inherit.aes = TRUE)
+  binwidth = NULL, na.rm = FALSE, na.fill = FALSE,
+  show.legend = NA, inherit.aes = TRUE)
 
 stat_contour2(mapping = NULL, data = NULL, geom = "contour2",
   position = "identity", ..., breaks = scales::fullseq, bins = NULL,
-  binwidth = NULL, na.rm = FALSE, na.fill = TRUE, xwrap = NULL,
+  binwidth = NULL, na.rm = FALSE, na.fill = FALSE, xwrap = NULL,
   ywrap = NULL, show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{

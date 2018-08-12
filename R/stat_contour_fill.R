@@ -9,7 +9,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               bins = NULL,
                               binwidth = NULL,
                               # na.rm = FALSE,
-                              na.fill = TRUE,
+                              na.fill = FALSE,
                               xwrap = NULL,
                               ywrap = NULL,
                               show.legend = NA,
@@ -87,7 +87,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = scales::fullseq, complete = TRUE,
                              na.rm = FALSE, xwrap = NULL,
-                             ywrap = NULL, na.fill = TRUE) {
+                             ywrap = NULL, na.fill = FALSE) {
         setDT(data)
         data <- data[!(is.na(y) | is.na(x)), ]
 

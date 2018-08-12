@@ -9,12 +9,12 @@
 \usage{
 geom_contour_fill(mapping = NULL, data = NULL, stat = "ContourFill",
   position = "identity", ..., breaks = NULL, bins = NULL,
-  binwidth = NULL, na.fill = TRUE, xwrap = NULL, ywrap = NULL,
+  binwidth = NULL, na.fill = FALSE, xwrap = NULL, ywrap = NULL,
   show.legend = NA, inherit.aes = TRUE)
 
 stat_contour_fill(mapping = NULL, data = NULL, geom = "polygon",
   position = "identity", ..., breaks = scales::fullseq, bins = NULL,
-  binwidth = NULL, na.fill = TRUE, xwrap = NULL, ywrap = NULL,
+  binwidth = NULL, na.fill = FALSE, xwrap = NULL, ywrap = NULL,
   show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{

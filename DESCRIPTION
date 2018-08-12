@@ -25,14 +25,12 @@ Imports:
 	maps,
 	maptools,
 	lubridate,
-    ncdf4,
     gridExtra,
     sp,
     RCurl,
     scales,
     stringr,
-    curl,
-    udunits2 ,
+    curl ,
     Formula,
     formula.tools,
     plyr,
@@ -51,7 +49,9 @@ Suggests:
     irlba,
     covr,
     viridis,
-    pkgdown
+    pkgdown,
+    udunits2,
+    ncdf4
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 Remotes: tidyverse/ggplot2

@@ -54,6 +54,20 @@
 ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array", "vars"),
                        subset = NULL, key = FALSE) {
+    ncdf4.available <- requireNamespace("ncdf4", quietly = TRUE)
+    udunits2.available <- requireNamespace("udunits2", quietly = TRUE)
+    if (!ncdf4.available & !udunits2.available) {
+        stop("ReadNetCDF needs packages 'ncdf4' and 'udunits2'. Install them with 'install.packages(c(\"ncdf4\", \"udunits2\"))'")
+    }
+
+    if (!ncdf4.available) {
+        stop("ReadNetCDF needs package'ncdf4'. Install it with 'install.packages(\"ncdf4\")'")
+    }
+
+    if (!udunits2.available) {
+        stop("ReadNetCDF needs package 'udunits2'. Install it with 'install.packages(\"udunits2\")'")
+    }
+
     dec <- getOption("OutDec")
     options(OutDec = ".")
     on.exit(options(OutDec = dec))

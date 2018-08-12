@@ -36,7 +36,7 @@ You can install metR from github with:
 devtools::install_github("eliocamp/metR")
 ```
 
-You might need to install the netcdf and udunits2 libraries. On Ubuntu and it's derivatives this can be done by typing 
+If you need to read netcdf files, you might need to install the netcdf and udunits2 libraries. On Ubuntu and it's derivatives this can be done by typing 
 
 ```
 sudo apt install libnetcdf-dev netcdf-bin libudunits2-dev

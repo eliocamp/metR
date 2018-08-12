@@ -93,10 +93,9 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#metr" class="anchor"></a>metR</h1></div>
 
-<p>meteR packages several functions and utilities that make R better for hadling<sup>1</sup> meteorological data in the tidy data paradigm. It’s not intended to be the be-all and end-all and is (at least for now) mostly a packaging of assorted wrapers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since it’s grown organically and for my own needs, do not expect a heavy emphasis on consistency across functions and do expect functions written with specific use cases in mind.</p>
+<p>meteR packages several functions and utilities that make R better for handling meteorological data in the tidy data paradigm. It’s not intended to be the be-all and end-all and is (at least for now) mostly a packaging of assorted wrapers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since it’s grown organically and for my own needs, do not expect a heavy emphasis on consistency across functions and do expect functions written with specific use cases in mind.</p>
 <p>Conceptually it’s divided into <em>visualization tools</em> and <em>data tools</em>. The former are geoms, stats and scales that help with plotting using <a href="http://ggplot2.tidyverse.org/index.html">ggplot2</a>, such as <code><a href="reference/geom_contour_fill.html">stat_contour_fill()</a></code> or <code><a href="reference/scale_longitude.html">scale_y_level()</a></code>, while the later are functions for common data processing tools in the atmospheric sciences, such as <code><a href="reference/Derivate.html">Derivate()</a></code> or <code><a href="reference/EOF.html">EOF()</a></code>; these are implemented to work in the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> paradigm, but also work with regular data frames.</p>
 <p>Currently metR is in developement and should only be used carefully (or better still, not at all). Functions do not generaly check arguments and do not print error messages. There are also few if any tests, so coverage is roughly 0%.</p>
-<p><sup>1</sup>handling data, <a href="https://twitter.com/hadleywickham/">Hadley</a> style.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>

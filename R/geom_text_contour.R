@@ -116,7 +116,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
    draw_panel = function(data, panel_params, coord, parse = FALSE,
                          na.rm = FALSE, check_overlap = FALSE, min.size = 20,
                          skip = 1, rotate = FALSE, gap = NULL,
-                         stroke = 0, stroke.color = "white") {
+                         stroke = 0, stroke.colour = "white") {
        data <- data.table::as.data.table(coord$transform(data, panel_params))
        min.size <- ceiling(min.size)
        if (min.size %% 2 == 0) {
@@ -143,7 +143,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
            data$x, data$y, default.units = "native",
            hjust = data$hjust, vjust = data$vjust,
            dx = data$dx, dy = data$dy,
-           bg.r = stroke, bg.color = stroke.color,
+           bg.r = stroke, bg.color = stroke.colour,
            gp = grid::gpar(
                col = alpha(data$colour, data$alpha),
                fontsize = data$size * .pt,

@@ -38,6 +38,7 @@ explicitly set the domain. This makes the implementation more robust and also al
 - The `Between` operators are deprecated since they are already implemented in 
 `data.table`.
 - `geom_text_contour()` now has the ability of drawing a stroke arround text. 
+- `geom_contour_fill()` now can impute missing values with bivariate interpolation. 
 
 # metR 0.1
 - New function: `GetTopography()`

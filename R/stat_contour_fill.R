@@ -141,7 +141,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         cont <- .join_contours(cont)
 
         # Calculate inner fill
-        cont <- .inner_fill(cont, data, breaks)
+        cont <- .inner_fill.m(cont, data, breaks)
 
         # Add bounding contour, if necessary.
         i <-  which(breaks == mean.level)
@@ -315,6 +315,7 @@ area <- function(x, y) {
     return(cont)
 }
 
+.inner_fill.m <- memoise::memoise( .inner_fill)
 
 Closest <- function(x, target, sign = c(1, -1)) {
     tmp <- (x - target)*sign[1]

@@ -133,7 +133,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
           warning("Not possible to generate contour data", call. = FALSE)
           return(data.frame())
       }
-      contours <- .order_contour(contours, setDT(data))
+      contours <- .order_contour.m(contours, setDT(data))
 
       return(contours)
   }
@@ -141,7 +141,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 
 
 
-.order_contour <- memoise::memoise(function(contours, data) {
+.order_contour <- function(contours, data) {
     data <- copy(data)
     contours <- copy(contours)
     x.data <- unique(data$x)
@@ -196,7 +196,9 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 
     # Congratulations, your contours all have the same direction.
     return(contours)
-})
+}
+
+.order_contour.m <- memoise::memoise(.order_contour)
 
 .second <- function(x, target) {
     tmp <- (x - target)

@@ -23,7 +23,7 @@
 #' @export
 #' @import ggplot2
 scale_x_longitude <- function(ticks = 60, name = "", expand = c(0, 0),
-                              breaks = seq(-180, 360 - ticks, by = ticks),
+                              breaks = seq(0, 360 - ticks, by = ticks),
                               labels = LonLabel(breaks),
                               ...) {
     ggplot2::scale_x_continuous(name = name, expand = expand,
@@ -36,7 +36,7 @@ scale_x_longitude <- function(ticks = 60, name = "", expand = c(0, 0),
 #' @export
 #' @import ggplot2
 scale_y_longitude <- function(ticks = 60, name = "", expand = c(0, 0),
-                              breaks = seq(-180, 360 - ticks, by = ticks),
+                              breaks = seq(0, 360 - ticks, by = ticks),
                               labels = LonLabel(breaks),
                               ...) {
     ggplot2::scale_y_continuous(name = name, expand = expand,

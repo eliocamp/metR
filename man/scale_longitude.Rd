@@ -11,38 +11,31 @@
 \alias{scale_y_level}
 \title{Helpful scales for maps}
 \usage{
-scale_x_longitude(ticks = 60, name = "", expand = c(0, 0),
-  breaks = seq(-180, 360 - ticks, by = ticks),
-  labels = LonLabel(breaks), ...)
+scale_x_longitude(name = "", ticks = 30, breaks = seq(0, 360, by =
+  ticks), expand = c(0, 0), labels = LonLabel(breaks),
+  trans = "lon180", ...)
 
-scale_y_longitude(ticks = 60, name = "", expand = c(0, 0),
-  breaks = seq(-180, 360 - ticks, by = ticks),
-  labels = LonLabel(breaks), ...)
+scale_y_longitude(name = "", ticks = 60, breaks = seq(-180, 360, by =
+  ticks), expand = c(0, 0), labels = LonLabel(breaks),
+  trans = "lon180", ...)
 
-scale_x_latitude(ticks = 30, name = "", expand = c(0, 0),
-  breaks = seq(-90, 90, by = ticks), labels = LatLabel(breaks), ...)
+scale_x_latitude(name = "", ticks = 30, breaks = seq(-90, 90, by =
+  ticks), expand = c(0, 0), labels = LatLabel(breaks), ...)
 
-scale_y_latitude(ticks = 30, name = "", expand = c(0, 0),
-  breaks = seq(-90, 90, by = ticks), labels = LatLabel(breaks), ...)
+scale_y_latitude(name = "", ticks = 30, breaks = seq(-90, 90, by =
+  ticks), expand = c(0, 0), labels = LatLabel(breaks), ...)
 
 scale_x_level(name = "", expand = c(0, 0), trans = "reverselog", ...)
 
 scale_y_level(name = "", expand = c(0, 0), trans = "reverselog", ...)
 }
 \arguments{
-\item{ticks}{spacing between breaks}
-
 \item{name}{The name of the scale. Used as the axis or legend title. If
 \code{waiver()}, the default, the name of the scale is taken from the first
 mapping used for that aesthetic. If \code{NULL}, the legend title will be
 omitted.}
 
-\item{expand}{Vector of range expansion constants used to add some
-padding around the data, to ensure that they are placed some distance
-away from the axes. Use the convenience function \code{\link[=expand_scale]{expand_scale()}}
-to generate the values for the \code{expand} argument. The defaults are to
-expand the scale by 5\% on each side for continuous variables, and by
-0.6 units on each side for discrete variables.}
+\item{ticks}{spacing between breaks}
 
 \item{breaks}{One of:
 \itemize{
@@ -54,6 +47,13 @@ transformation object
 as output
 }}
 
+\item{expand}{Vector of range expansion constants used to add some
+padding around the data, to ensure that they are placed some distance
+away from the axes. Use the convenience function \code{\link[=expand_scale]{expand_scale()}}
+to generate the values for the \code{expand} argument. The defaults are to
+expand the scale by 5\% on each side for continuous variables, and by
+0.6 units on each side for discrete variables.}
+
 \item{labels}{One of:
 \itemize{
 \item \code{NULL} for no labels
@@ -63,8 +63,6 @@ transformation object
 \item A function that takes the breaks as input and returns labels
 as output
 }}
-
-\item{...}{Other arguments passed on to \code{scale_(x|y)_continuous()}}
 
 \item{trans}{Either the name of a transformation object, or the
 object itself. Built-in transformations include "asn", "atanh",
@@ -76,6 +74,8 @@ and methods for generating breaks and labels. Transformation objects
 are defined in the scales package, and are called \code{name_trans}, e.g.
 \code{\link[scales:boxcox_trans]{scales::boxcox_trans()}}. You can create your own
 transformation with \code{\link[scales:trans_new]{scales::trans_new()}}.}
+
+\item{...}{Other arguments passed on to \code{scale_(x|y)_continuous()}}
 }
 \description{
 These functions are simple wrappers around

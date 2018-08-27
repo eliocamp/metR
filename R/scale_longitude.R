@@ -22,22 +22,28 @@
 #' @family ggplot2 helpers
 #' @export
 #' @import ggplot2
-scale_x_longitude <- function(ticks = 60, name = "", expand = c(0, 0),
-                              breaks = seq(0, 360 - ticks, by = ticks),
+scale_x_longitude <- function(name = "", ticks = 30,
+                              breaks = seq(0, 360, by = ticks),
+                              expand = c(0, 0),
                               labels = LonLabel(breaks),
+                              trans = "lon180",
                               ...) {
+    labels = waiver()
     ggplot2::scale_x_continuous(name = name, expand = expand,
                                 breaks = breaks,
                                 labels = labels,
+                                trans = trans,
                                 ...)
 }
 
 #' @rdname scale_longitude
 #' @export
 #' @import ggplot2
-scale_y_longitude <- function(ticks = 60, name = "", expand = c(0, 0),
-                              breaks = seq(0, 360 - ticks, by = ticks),
+scale_y_longitude <- function(name = "", ticks = 60,
+                              breaks = seq(-180, 360, by = ticks),
+                              expand = c(0, 0),
                               labels = LonLabel(breaks),
+                              trans = "lon180",
                               ...) {
     ggplot2::scale_y_continuous(name = name, expand = expand,
                        breaks = breaks,
@@ -49,8 +55,9 @@ scale_y_longitude <- function(ticks = 60, name = "", expand = c(0, 0),
 #' @rdname scale_longitude
 #' @export
 #' @import ggplot2
-scale_x_latitude <- function(ticks = 30, name = "", expand = c(0, 0),
+scale_x_latitude <- function(name = "", ticks = 30,
                              breaks = seq(-90, 90, by = ticks),
+                             expand = c(0, 0),
                              labels = LatLabel(breaks), ...) {
     ggplot2::scale_x_continuous(name = name, expand = expand,
                                 breaks = breaks, labels = labels,
@@ -60,8 +67,9 @@ scale_x_latitude <- function(ticks = 30, name = "", expand = c(0, 0),
 #' @rdname scale_longitude
 #' @export
 #' @import ggplot2
-scale_y_latitude <- function(ticks = 30, name = "", expand = c(0, 0),
+scale_y_latitude <- function(name = "", ticks = 30,
                              breaks = seq(-90, 90, by = ticks),
+                             expand = c(0, 0),
                              labels = LatLabel(breaks), ...) {
     ggplot2::scale_y_continuous(name = name, expand = expand,
                        breaks = breaks, labels = labels,

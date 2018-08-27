@@ -53,7 +53,7 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 }
 \description{
 Removes values where \code{subset} evaluates to \code{FALSE}. Useful for showing only
-statistical significant values, or a interesting subset of the data without
+statistical significant values, or an interesting subset of the data without
 manually subsetting the data.
 }
 \section{Aesthetics}{

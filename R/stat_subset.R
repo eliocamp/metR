@@ -1,7 +1,7 @@
 #' Subset values
 #'
 #' Removes values where `subset` evaluates to `FALSE`. Useful for showing only
-#' statistical significant values, or a interesting subset of the data without
+#' statistical significant values, or an interesting subset of the data without
 #' manually subsetting the data.
 #'
 #' @inheritParams ggplot2::stat_identity

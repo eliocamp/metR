@@ -300,7 +300,7 @@ See how in the figure on the left, contours that cross the 0° longitude mark ar
 (g <- ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
      geom_contour(binwidth = 1.5) +
      scale_fill_divergent() +
-     scale_x_longitude() +
+     scale_x_longitude(labels = waiver(), trans = "lon180") +
      scale_y_latitude(limits = c(-90, -20)) +
      coord_polar())
 
@@ -314,7 +314,7 @@ This behaviour is now also implemented directly in `geom_contour2()` and `geom_c
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour2(binwidth = 1.5, xwrap = c(0, 360)) +
     scale_fill_divergent() +
-    scale_x_longitude() +
+    scale_x_longitude(labels = waiver()) +
     scale_y_latitude(limits = c(-90, -20)) +
     coord_polar()
 ```

@@ -75,8 +75,8 @@ surface <- within(surface, value[Var1 \%between\% c(20, 30) & Var2 \%between\% c
 surface[sample(1:nrow(surface), 100, replace = FALSE), 3] <- NA
 
 ggplot(surface, aes(Var1, Var2, z = value)) +
-    geom_contour_fill() +
-    stat_na(aes(na = value))
+    geom_contour_fill(na.fill = TRUE) +
+    stat_na(aes(na = value), geom = "tile")
 
 }
 \seealso{

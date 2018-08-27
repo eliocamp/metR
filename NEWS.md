@@ -39,6 +39,10 @@ explicitly set the domain. This makes the implementation more robust and also al
 `data.table`.
 - `geom_text_contour()` now has the ability of drawing a stroke arround text. 
 - `geom_contour_fill()` now can impute missing values with bivariate interpolation. 
+- New transformations `lon_trans()` for converting to and from longitude conventions
+in `scale_x_longitude()`.
+- `BuildField()` actually renamed `BuildWave()` (which should've happen in the previous
+release acording to this News)
 
 # metR 0.1
 - New function: `GetTopography()`

@@ -20,7 +20,7 @@
 #'   \item{r2}{explained variance of each wavenumber}
 #' }
 #'
-#' `BuildField` returns a vector of the same length of x with the reconstructed
+#' `BuildWave` returns a vector of the same length of x with the reconstructed
 #' vector if `sum` is `TRUE` or, instead, a list with components
 #' \describe{
 #'   \item{k}{wavenumbers}
@@ -39,7 +39,7 @@
 #' represents the location (in radians) of the first maximum of each wave number.
 #' For the case of k = 0 (the mean), phase is arbitrarily set to 0.
 #'
-#' `BuildField` is `FitWave`'s inverse. It reconstructs the original data for
+#' `BuildWave` is `FitWave`'s inverse. It reconstructs the original data for
 #' selected wavenumbers. If `sum` is `TRUE` (the default) it performs the above
 #' mentioned sum and returns a single vector. If is `FALSE`, then it returns a list
 #' of k vectors consisting of the reconstructed signal of each wavenumber.
@@ -63,13 +63,13 @@
 #'     geom_line()
 #'
 #' # Build field of wavenumber 1
-#' jan[, gh.1 := BuildField(lon*pi/180, wave = FitWave(gh, 1)), by = .(lat)]
+#' jan[, gh.1 := BuildWave(lon*pi/180, wave = FitWave(gh, 1)), by = .(lat)]
 #' ggplot(WrapCircular(jan), aes(lon, lat)) +
 #'     geom_contour(aes(z = gh.1, color = ..level..)) +
 #'     coord_polar()
 #'
 #' # Build fields of wavenumber 1 and 2
-#' waves <- jan[, BuildField(lon*pi/180, wave = FitWave(gh, 1:2), sum = FALSE), by = .(lat)]
+#' waves <- jan[, BuildWave(lon*pi/180, wave = FitWave(gh, 1:2), sum = FALSE), by = .(lat)]
 #' waves[, lon := x*180/pi]
 #' ggplot(WrapCircular(waves), aes(lon, lat)) +
 #'     geom_contour(aes(z = y, color = ..level..)) +
@@ -77,7 +77,7 @@
 #'     coord_polar()
 #'
 #' # Field with waves 0 to 2 filtered
-#' jan[, gh.no12 := gh - BuildField(lon*pi/180, wave = FitWave(gh, 0:2)), by = .(lat)]
+#' jan[, gh.no12 := gh - BuildWave(lon*pi/180, wave = FitWave(gh, 0:2)), by = .(lat)]
 #' ggplot(WrapCircular(jan, wrap = c(0, 360)), aes(lon, lat)) +
 #'     geom_contour(aes(z = gh.no12, color = ..level..)) +
 #'     coord_polar()
@@ -97,7 +97,7 @@
 #'
 #' @name waves
 #' @family meteorology functions
-#' @aliases BuildField FitWave
+#' @aliases BuildWave FitWave
 #' @export
 FitWave <- function(y, k = 1) {
     f <- fft(y)
@@ -125,7 +125,7 @@ FitWave <- function(y, k = 1) {
 
 #' @rdname waves
 #' @export
-BuildField <- function(x, amplitude, phase, k,
+BuildWave <- function(x, amplitude, phase, k,
                        wave = list(k = k, amplitude = amplitude, phase = phase),
                        sum = TRUE) {
     if (sum == TRUE) {
@@ -170,7 +170,7 @@ FitQsWave <- function(y, k = 1) {
 #' @rdname waves
 #' @export
 BuildQsField <- function(x, amplitude, phase, k, wave) {
-    .Deprecated("BuildField")
+    .Deprecated("BuildWave")
 }
 
 

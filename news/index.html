@@ -127,7 +127,7 @@
 <li>New function <code><a href="../reference/Interpolate.html">Interpolate()</a></code> for bilinear interpolation.</li>
 <li>Fixed bug in <code><a href="../reference/waves.html">FitWave()</a></code> with wavenumber 0. Now it rerturns the mean.</li>
 <li>
-<code><a href="../reference/waves.html">FitWave()</a></code> runs slightly faster and <code><a href="../reference/waves.html">BuildField()</a></code> runs much faster.</li>
+<code><a href="../reference/waves.html">FitWave()</a></code> runs slightly faster and <code>BuildField()</code> runs much faster.</li>
 <li>Removed <code>GeomContourFill</code> object since it was just a polygon.</li>
 <li>The results from <code><a href="../reference/EOF.html">EOF()</a></code> now use factors instead of numbers to identify each PC</li>
 <li>New scale <code>scale_vector()</code> and guide <code>guide_vector()</code> for controlling and communicating the scale of vectors.</li>
@@ -156,6 +156,9 @@
 <code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> now has the ability of drawing a stroke arround text.</li>
 <li>
 <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> now can impute missing values with bivariate interpolation.</li>
+<li>New transformations <code><a href="../reference/lon_trans.html">lon_trans()</a></code> for converting to and from longitude conventions in <code><a href="../reference/scale_longitude.html">scale_x_longitude()</a></code>.</li>
+<li>
+<code>BuildField()</code> actually renamed <code><a href="../reference/waves.html">BuildWave()</a></code> (which should’ve happen in the previous release acording to this News)</li>
 </ul>
 </div>
     <div id="metr-0-1" class="section level1">
@@ -205,7 +208,7 @@
 <li>
 <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> can return a keyed data.table.</li>
 <li>
-<code><a href="../reference/waves.html">FitQsWave()</a></code> and <code>BuildQsWave()</code> renamed to <code><a href="../reference/waves.html">FitWave()</a></code> and <code>BuildWave()</code>, respectively.</li>
+<code><a href="../reference/waves.html">FitQsWave()</a></code> and <code>BuildQsWave()</code> renamed to <code><a href="../reference/waves.html">FitWave()</a></code> and <code><a href="../reference/waves.html">BuildWave()</a></code>, respectively.</li>
 <li>
 <code><a href="../reference/GetSMNData.html">GetSMNData()</a></code> is updated to include the new SMN website and data types.</li>
 <li>

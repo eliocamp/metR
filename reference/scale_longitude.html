@@ -132,19 +132,19 @@ helpful defaults for plotting longitude, latitude and pressure levels.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>scale_x_longitude</span>(<span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>),
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>180</span>, <span class='fl'>360</span> - <span class='no'>ticks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>),
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>scale_x_longitude</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>0</span>, <span class='fl'>360</span>, <span class='kw'>by</span> <span class='kw'>=</span>
+  <span class='no'>ticks</span>), <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>),
+  <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"lon180"</span>, <span class='no'>...</span>)
 
-<span class='fu'>scale_y_longitude</span>(<span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>),
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>180</span>, <span class='fl'>360</span> - <span class='no'>ticks</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>),
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
+<span class='fu'>scale_y_longitude</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>180</span>, <span class='fl'>360</span>, <span class='kw'>by</span> <span class='kw'>=</span>
+  <span class='no'>ticks</span>), <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LonLabel</a></span>(<span class='no'>breaks</span>),
+  <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"lon180"</span>, <span class='no'>...</span>)
 
-<span class='fu'>scale_x_latitude</span>(<span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>),
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>90</span>, <span class='fl'>90</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LatLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
+<span class='fu'>scale_x_latitude</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>90</span>, <span class='fl'>90</span>, <span class='kw'>by</span> <span class='kw'>=</span>
+  <span class='no'>ticks</span>), <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LatLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
 
-<span class='fu'>scale_y_latitude</span>(<span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>),
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>90</span>, <span class='fl'>90</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>ticks</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LatLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
+<span class='fu'>scale_y_latitude</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'>seq</span>(-<span class='fl'>90</span>, <span class='fl'>90</span>, <span class='kw'>by</span> <span class='kw'>=</span>
+  <span class='no'>ticks</span>), <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='map_labels.html'>LatLabel</a></span>(<span class='no'>breaks</span>), <span class='no'>...</span>)
 
 <span class='fu'>scale_x_level</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"reverselog"</span>, <span class='no'>...</span>)
 
@@ -154,10 +154,6 @@ helpful defaults for plotting longitude, latitude and pressure levels.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>ticks</th>
-      <td><p>spacing between breaks</p></td>
-    </tr>
-    <tr>
       <th>name</th>
       <td><p>The name of the scale. Used as the axis or legend title. If
 <code>waiver()</code>, the default, the name of the scale is taken from the first
@@ -165,13 +161,8 @@ mapping used for that aesthetic. If <code>NULL</code>, the legend title will be
 omitted.</p></td>
     </tr>
     <tr>
-      <th>expand</th>
-      <td><p>Vector of range expansion constants used to add some
-padding around the data, to ensure that they are placed some distance
-away from the axes. Use the convenience function <code>expand_scale()</code>
-to generate the values for the <code>expand</code> argument. The defaults are to
-expand the scale by 5% on each side for continuous variables, and by
-0.6 units on each side for discrete variables.</p></td>
+      <th>ticks</th>
+      <td><p>spacing between breaks</p></td>
     </tr>
     <tr>
       <th>breaks</th>
@@ -185,6 +176,15 @@ as output</p></li>
 </ul></td>
     </tr>
     <tr>
+      <th>expand</th>
+      <td><p>Vector of range expansion constants used to add some
+padding around the data, to ensure that they are placed some distance
+away from the axes. Use the convenience function <code>expand_scale()</code>
+to generate the values for the <code>expand</code> argument. The defaults are to
+expand the scale by 5% on each side for continuous variables, and by
+0.6 units on each side for discrete variables.</p></td>
+    </tr>
+    <tr>
       <th>labels</th>
       <td><p>One of:</p><ul>
 <li><p><code>NULL</code> for no labels</p></li>
@@ -194,10 +194,6 @@ transformation object</p></li>
 <li><p>A function that takes the breaks as input and returns labels
 as output</p></li>
 </ul></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Other arguments passed on to <code>scale_(x|y)_continuous()</code></p></td>
     </tr>
     <tr>
       <th>trans</th>
@@ -210,6 +206,10 @@ and methods for generating breaks and labels. Transformation objects
 are defined in the scales package, and are called <code>name_trans</code>, e.g.
 <code><a href='http://www.rdocumentation.org/packages/scales/topics/boxcox_trans'>scales::boxcox_trans()</a></code>. You can create your own
 transformation with <code><a href='http://www.rdocumentation.org/packages/scales/topics/trans_new'>scales::trans_new()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments passed on to <code>scale_(x|y)_continuous()</code></p></td>
     </tr>
     </table>
     

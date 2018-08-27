@@ -128,7 +128,7 @@
 
     <pre class="usage"><span class='fu'>FitWave</span>(<span class='no'>y</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
-<span class='fu'>BuildField</span>(<span class='no'>x</span>, <span class='no'>amplitude</span>, <span class='no'>phase</span>, <span class='no'>k</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='no'>k</span>, <span class='kw'>amplitude</span> <span class='kw'>=</span>
+<span class='fu'>BuildWave</span>(<span class='no'>x</span>, <span class='no'>amplitude</span>, <span class='no'>phase</span>, <span class='no'>k</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='no'>k</span>, <span class='kw'>amplitude</span> <span class='kw'>=</span>
   <span class='no'>amplitude</span>, <span class='kw'>phase</span> <span class='kw'>=</span> <span class='no'>phase</span>), <span class='kw'>sum</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>FilterWave</span>(<span class='no'>x</span>, <span class='no'>k</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='fu'>sign</span>(<span class='no'>k</span>[<span class='no'>k</span> <span class='kw'>!=</span> <span class='fl'>0</span>][<span class='fl'>1</span>]))</pre>
@@ -179,7 +179,7 @@
 <dt>r2</dt><dd><p>explained variance of each wavenumber</p></dd>
 </dl>
 
-<p><code>BuildField</code> returns a vector of the same length of x with the reconstructed
+<p><code>BuildWave</code> returns a vector of the same length of x with the reconstructed
 vector if <code>sum</code> is <code>TRUE</code> or, instead, a list with components</p><dl class='dl-horizontal'>
 <dt>k</dt><dd><p>wavenumbers</p></dd>
 <dt>x</dt><dd><p>the vector of locations</p></dd>
@@ -198,7 +198,7 @@ $$y = \sum A cos((x - \phi)k)$$
 The phase is calculated so that it lies between 0 and \(2\pi/k\) so it
 represents the location (in radians) of the first maximum of each wave number.
 For the case of k = 0 (the mean), phase is arbitrarily set to 0.</p>
-<p><code>BuildField</code> is <code>FitWave</code>'s inverse. It reconstructs the original data for
+<p><code>BuildWave</code> is <code>FitWave</code>'s inverse. It reconstructs the original data for
 selected wavenumbers. If <code>sum</code> is <code>TRUE</code> (the default) it performs the above
 mentioned sum and returns a single vector. If is <code>FALSE</code>, then it returns a list
 of k vectors consisting of the reconstructed signal of each wavenumber.</p>
@@ -227,7 +227,7 @@ if <code>k=0</code>.</p>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>jan.waves</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lat</span>, <span class='no'>amplitude</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>factor</span>(<span class='no'>k</span>))) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>()</div><div class='img'><img src='waves-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Build field of wavenumber 1</span>
-<span class='no'>jan</span>[, <span class='no'>gh.1</span> <span class='kw'>:=</span> <span class='fu'>BuildField</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>1</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1
+<span class='no'>jan</span>[, <span class='no'>gh.1</span> <span class='kw'>:=</span> <span class='fu'>BuildWave</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>1</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1
 #&gt;    1:   0.0 -22.5 3163.581 9.443341
 #&gt;    2:   2.5 -22.5 3160.762 9.420932
 #&gt;    3:   5.0 -22.5 3158.026 9.380589
@@ -242,7 +242,7 @@ if <code>k=0</code>.</p>
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.1</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='img'><img src='waves-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Build fields of wavenumber 1 and 2</span>
-<span class='no'>waves</span> <span class='kw'>&lt;-</span> <span class='no'>jan</span>[, <span class='fu'>BuildField</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>1</span>:<span class='fl'>2</span>), <span class='kw'>sum</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]
+<span class='no'>waves</span> <span class='kw'>&lt;-</span> <span class='no'>jan</span>[, <span class='fu'>BuildWave</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>1</span>:<span class='fl'>2</span>), <span class='kw'>sum</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]
 <span class='no'>waves</span>[, <span class='no'>lon</span> <span class='kw'>:=</span> <span class='no'>x</span>*<span class='fl'>180</span>/<span class='no'>pi</span>]</div><div class='output co'>#&gt;         lat k          x        y   lon
 #&gt;    1: -22.5 1 0.00000000 9.443341   0.0
 #&gt;    2: -22.5 1 0.04363323 9.420932   2.5
@@ -259,7 +259,7 @@ if <code>k=0</code>.</p>
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a></span>(~<span class='no'>k</span>) +
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar'>coord_polar</a></span>()</div><div class='img'><img src='waves-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Field with waves 0 to 2 filtered</span>
-<span class='no'>jan</span>[, <span class='no'>gh.no12</span> <span class='kw'>:=</span> <span class='no'>gh</span> - <span class='fu'>BuildField</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>0</span>:<span class='fl'>2</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1    gh.no12
+<span class='no'>jan</span>[, <span class='no'>gh.no12</span> <span class='kw'>:=</span> <span class='no'>gh</span> - <span class='fu'>BuildWave</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>0</span>:<span class='fl'>2</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1    gh.no12
 #&gt;    1:   0.0 -22.5 3163.581 9.443341  6.5799303
 #&gt;    2:   2.5 -22.5 3160.762 9.420932  3.4553015
 #&gt;    3:   5.0 -22.5 3158.026 9.380589  0.4174548

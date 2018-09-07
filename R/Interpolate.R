@@ -156,6 +156,7 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
 #' @param x,y numeric vectos of x and y locations. If one of them is of length 1,
 #' if will be reciceld.
 #' @param path either `TRUE` of a character vector with the name of the path.
+#' @param n number of points to interpolate to
 #'
 #' @return
 #'
@@ -169,6 +170,7 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
 #' @seealso Interpolate
 #'
 #' @export
+#' @importFrom stats approx
 as.path <- function(x, y, n = 10, path = TRUE) {
     if (length(x) < 2 & length(y) < 2) {
         stop("either `xs` or `ys` must be of length greater than 1")

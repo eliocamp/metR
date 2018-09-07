@@ -10,6 +10,8 @@ as.path(x, y, n = 10, path = TRUE)
 \item{x, y}{numeric vectos of x and y locations. If one of them is of length 1,
 if will be reciceld.}
 
+\item{n}{number of points to interpolate to}
+
 \item{path}{either \code{TRUE} of a character vector with the name of the path.}
 }
 \value{

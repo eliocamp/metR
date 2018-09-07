@@ -23,12 +23,12 @@
 #' @export
 #' @import ggplot2
 scale_x_longitude <- function(name = "", ticks = 30,
-                              breaks = seq(0, 360, by = ticks),
+                              breaks = seq(-180, 360, by = ticks),
                               expand = c(0, 0),
-                              labels = LonLabel(breaks),
-                              trans = "lon180",
+                              labels = LonLabel,
+                              trans = "identity",
                               ...) {
-    labels = waiver()
+    # labels = waiver()
     ggplot2::scale_x_continuous(name = name, expand = expand,
                                 breaks = breaks,
                                 labels = labels,
@@ -42,8 +42,8 @@ scale_x_longitude <- function(name = "", ticks = 30,
 scale_y_longitude <- function(name = "", ticks = 60,
                               breaks = seq(-180, 360, by = ticks),
                               expand = c(0, 0),
-                              labels = LonLabel(breaks),
-                              trans = "lon180",
+                              labels = LonLabel,
+                              trans = "identity",
                               ...) {
     ggplot2::scale_y_continuous(name = name, expand = expand,
                        breaks = breaks,
@@ -58,7 +58,7 @@ scale_y_longitude <- function(name = "", ticks = 60,
 scale_x_latitude <- function(name = "", ticks = 30,
                              breaks = seq(-90, 90, by = ticks),
                              expand = c(0, 0),
-                             labels = LatLabel(breaks), ...) {
+                             labels = LatLabel, ...) {
     ggplot2::scale_x_continuous(name = name, expand = expand,
                                 breaks = breaks, labels = labels,
                                 ...)
@@ -70,7 +70,7 @@ scale_x_latitude <- function(name = "", ticks = 30,
 scale_y_latitude <- function(name = "", ticks = 30,
                              breaks = seq(-90, 90, by = ticks),
                              expand = c(0, 0),
-                             labels = LatLabel(breaks), ...) {
+                             labels = LatLabel, ...) {
     ggplot2::scale_y_continuous(name = name, expand = expand,
                        breaks = breaks, labels = labels,
                        ...)
@@ -123,8 +123,8 @@ LonLabel <- function(lon, east = "\u00B0E", west = "\u00B0O") {
     lon <- as.numeric(lon)
     lon <- ifelse(lon > 180, ConvertLongitude(lon), lon)
     newlon <- ifelse(lon < 0, paste0(abs(lon), west), paste0(lon, east))
-    newlon[lon == 0] <- paste0(lon[lon == 0], "\u00B0")
-    newlon[lon == 180] <- paste0(lon[lon == 180], "\u00B0")
+    newlon[lon == 0 & !is.na(lon)] <- paste0(lon[lon == 0 & !is.na(lon)], "\u00B0")
+    newlon[lon == 180 & !is.na(lon)] <- paste0(lon[lon == 180 & !is.na(lon)], "\u00B0")
     return(newlon)
 }
 
@@ -133,6 +133,6 @@ LonLabel <- function(lon, east = "\u00B0E", west = "\u00B0O") {
 LatLabel <- function(lat, north = "\u00B0N", south = "\u00B0S") {
     lat <- as.numeric(lat)
     newlat <- ifelse(lat < 0, paste0(abs(lat), south), paste0(lat, north))
-    newlat[lat == 0] <- paste0(lat[lat == 0], "\u00B0")
+    newlat[lat == 0 & !is.na(lat)] <- paste0(lat[lat == 0 & !is.na(lat)], "\u00B0")
     return(newlat)
 }

@@ -11,19 +11,19 @@
 \alias{scale_y_level}
 \title{Helpful scales for maps}
 \usage{
-scale_x_longitude(name = "", ticks = 30, breaks = seq(0, 360, by =
-  ticks), expand = c(0, 0), labels = LonLabel(breaks),
-  trans = "lon180", ...)
+scale_x_longitude(name = "", ticks = 30, breaks = seq(-180, 360, by =
+  ticks), expand = c(0, 0), labels = LonLabel, trans = "identity",
+  ...)
 
 scale_y_longitude(name = "", ticks = 60, breaks = seq(-180, 360, by =
-  ticks), expand = c(0, 0), labels = LonLabel(breaks),
-  trans = "lon180", ...)
+  ticks), expand = c(0, 0), labels = LonLabel, trans = "identity",
+  ...)
 
 scale_x_latitude(name = "", ticks = 30, breaks = seq(-90, 90, by =
-  ticks), expand = c(0, 0), labels = LatLabel(breaks), ...)
+  ticks), expand = c(0, 0), labels = LatLabel, ...)
 
 scale_y_latitude(name = "", ticks = 30, breaks = seq(-90, 90, by =
-  ticks), expand = c(0, 0), labels = LatLabel(breaks), ...)
+  ticks), expand = c(0, 0), labels = LatLabel, ...)
 
 scale_x_level(name = "", expand = c(0, 0), trans = "reverselog", ...)
 

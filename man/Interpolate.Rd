@@ -4,7 +4,8 @@
 \alias{Interpolate}
 \title{Bilinear inteprolation}
 \usage{
-Interpolate(formula, x.out, y.out, data = NULL, grid = TRUE)
+Interpolate(formula, x.out, y.out, data = NULL, grid = TRUE,
+  path = FALSE)
 }
 \arguments{
 \item{formula}{a formula indicating dependent and independent variables (see Details)}
@@ -14,6 +15,10 @@ Interpolate(formula, x.out, y.out, data = NULL, grid = TRUE)
 \item{data}{optional data.frame with the data}
 
 \item{grid}{logical indicating if x.out and y.out define a regular grid.}
+
+\item{path}{a logical or character indicating if the x.out and y.out define a
+path. If character, it will be the name of the column returing the order of
+said path.}
 }
 \value{
 A data.frame with interpolated values and locations
@@ -31,6 +36,13 @@ is ignored with a warning.
 
 If \code{grid = TRUE}, \code{x.out} and \code{y.out} must define the values of a regular
 grid. If \code{grid = FALSE}, they define the locations where to interpolate.
+Both \code{grid} and \code{path} cannot be set to \code{TRUE} and the value of \code{path} takes
+precedence.
+
+\code{x.out} can be a list, in which case, the first two elements will be interpreted
+as the x and y values where to interpolate and it can also have a \code{path} element
+that will be used in place of the \code{path} argument. This helps when creating a
+path with \link{as.path} (see Examples)
 }
 \examples{
 library(data.table)
@@ -50,5 +62,10 @@ geopotential[, gh.new := Interpolate(gh ~ lon + lat, lon, lat,
 # Interpolate multiple values
 geopotential[, c("u", "v") := GeostrophicWind(gh, lon, lat)]
 interpolated <- geopotential[, Interpolate(u | v ~ lon + lat, x.out, y.out)]
+
+# Interpolate values following a path
+lats <- c(-34, -54, -30)   # start and end latitudes
+lons <- c(302, 290, 180)   # start and end longituded
+path <- geopotential[, Interpolate(gh ~ lon + lat, as.path(lons, lats))]
 
 }

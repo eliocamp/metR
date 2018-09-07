@@ -43,6 +43,8 @@ explicitly set the domain. This makes the implementation more robust and also al
 in `scale_x_longitude()`.
 - `BuildField()` actually renamed `BuildWave()` (which should've happen in the previous
 release acording to this News)
+- New function `as.path()` and added functionality to `Interpolate()` that allows
+to interpolate values along a path of locations
 
 # metR 0.1
 - New function: `GetTopography()`

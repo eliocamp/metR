@@ -126,4 +126,10 @@ if(getRversion() >= "2.15.1") {
 
 
 `%>%` <- dplyr::`%>%`
+
+.is.reggrid <- function(data, coords) {
+    lengths <- data[, .N, by = coords]$N
+    !any(lengths > 1)
+}
 # nocov end
+

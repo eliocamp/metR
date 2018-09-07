@@ -128,7 +128,8 @@ grid with bilinear interpolation.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>Interpolate</span>(<span class='no'>formula</span>, <span class='no'>x.out</span>, <span class='no'>y.out</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>Interpolate</span>(<span class='no'>formula</span>, <span class='no'>x.out</span>, <span class='no'>y.out</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,6 +150,12 @@ grid with bilinear interpolation.</p>
       <th>grid</th>
       <td><p>logical indicating if x.out and y.out define a regular grid.</p></td>
     </tr>
+    <tr>
+      <th>path</th>
+      <td><p>a logical or character indicating if the x.out and y.out define a
+path. If character, it will be the name of the column returing the order of
+said path.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -163,7 +170,13 @@ x and y values, respectively. It is also possible to pass only values of x,
 in which case, regular linear interpolation is performed and y.out, if exists,
 is ignored with a warning.</p>
 <p>If <code>grid = TRUE</code>, <code>x.out</code> and <code>y.out</code> must define the values of a regular
-grid. If <code>grid = FALSE</code>, they define the locations where to interpolate.</p>
+grid. If <code>grid = FALSE</code>, they define the locations where to interpolate.
+Both <code>grid</code> and <code>path</code> cannot be set to <code>TRUE</code> and the value of <code>path</code> takes
+precedence.</p>
+<p><code>x.out</code> can be a list, in which case, the first two elements will be interpreted
+as the x and y values where to interpolate and it can also have a <code>path</code> element
+that will be used in place of the <code>path</code> argument. This helps when creating a
+path with <a href='as.path.html'>as.path</a> (see Examples)</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -203,7 +216,12 @@ grid. If <code>grid = FALSE</code>, they define the locations where to interpola
 #&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01       NA NA  0.0000000
 #&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01       NA NA  0.0000000
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01       NA NA  0.0000000
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01       NA NA  0.0000000</div><div class='input'><span class='no'>interpolated</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>Interpolate</span>(<span class='no'>u</span> <span class='kw'>|</span> <span class='no'>v</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='no'>x.out</span>, <span class='no'>y.out</span>)]</div></pre>
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01       NA NA  0.0000000</div><div class='input'><span class='no'>interpolated</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>Interpolate</span>(<span class='no'>u</span> <span class='kw'>|</span> <span class='no'>v</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='no'>x.out</span>, <span class='no'>y.out</span>)]
+
+<span class='co'># Interpolate values following a path</span>
+<span class='no'>lats</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(-<span class='fl'>34</span>, -<span class='fl'>54</span>, -<span class='fl'>30</span>)   <span class='co'># start and end latitudes</span>
+<span class='no'>lons</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>302</span>, <span class='fl'>290</span>, <span class='fl'>180</span>)   <span class='co'># start and end longituded</span>
+<span class='no'>path</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>Interpolate</span>(<span class='no'>gh</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='fu'><a href='as.path.html'>as.path</a></span>(<span class='no'>lons</span>, <span class='no'>lats</span>))]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

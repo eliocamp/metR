@@ -131,5 +131,11 @@ if(getRversion() >= "2.15.1") {
     lengths <- data[, .N, by = coords]$N
     !any(lengths > 1)
 }
+
+
+.simple.scale <- function(x) {
+    r <- range(x)
+    (x - r[1])/diff(r)
+}
 # nocov end
 

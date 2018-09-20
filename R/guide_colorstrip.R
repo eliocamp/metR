@@ -71,6 +71,7 @@ guide_colourstrip <- function(
     reverse = FALSE,
     order = 0,
 
+    available_aes = c("colour", "color", "fill", "fill2"),
     ...) {
 
     if (!is.null(barwidth) && !is.unit(barwidth)) barwidth <- unit(barwidth, default.unit)
@@ -109,7 +110,7 @@ guide_colourstrip <- function(
         order = order,
 
         # parameter
-        available_aes = c("colour", "color", "fill"), ..., name = "colorbar"),
+        available_aes = available_aes, ..., name = "colorbar"),
         class = c("guide", "colorstrip", "colorbar")
     )
 }
@@ -123,7 +124,7 @@ guide_colourstrip <- function(
 #' @keywords internal
 guide_train.colorstrip <- function(guide, scale, aesthetic = NULL) {
     # do nothing if scale are inappropriate
-    if (length(intersect(scale$aesthetics, c("color", "colour", "fill"))) == 0) {
+    if (length(intersect(scale$aesthetics, guide$available_aes)) == 0) {
         warning("colorstrip guide needs colour or fill scales.")
         return(NULL)
     }

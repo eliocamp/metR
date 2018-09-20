@@ -73,7 +73,41 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
         data = data,
         mapping = mapping,
         stat = stat,
-        geom = ggplot2::GeomPolygon,
+        geom = GeomPolygon,
+        position = position,
+        show.legend = show.legend,
+        inherit.aes = inherit.aes,
+        params = list(
+            breaks = breaks,
+            bins = bins,
+            binwidth = binwidth,
+            na.rm = FALSE,
+            na.fill = na.fill,
+            xwrap = xwrap,
+            ywrap = ywrap,
+            ...
+        )
+    )
+}
+
+
+geom_contour_fill2 <- function(mapping = NULL, data = NULL,
+                              stat = "ContourFill", position = "identity",
+                              ...,
+                              breaks = NULL,
+                              bins = NULL,
+                              binwidth = NULL,
+                              # na.rm = FALSE,
+                              na.fill = FALSE,
+                              xwrap = NULL,
+                              ywrap = NULL,
+                              show.legend = NA,
+                              inherit.aes = TRUE) {
+    ggplot2::layer(
+        data = data,
+        mapping = mapping,
+        stat = stat,
+        geom = GeomPolygon2,
         position = position,
         show.legend = show.legend,
         inherit.aes = inherit.aes,

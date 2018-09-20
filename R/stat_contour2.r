@@ -99,9 +99,14 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
   compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                            breaks = scales::fullseq, complete = TRUE,
                            na.rm = FALSE, circular = NULL, xwrap = NULL,
-                           ywrap = NULL, na.fill = TRUE) {
+                           ywrap = NULL, na.fill = FALSE) {
       setDT(data)
+
       data <- data[!(is.na(y) | is.na(x)), ]
+
+      if (isFALSE(na.fill)) {
+          data <- data[!is.na(z), ]
+      }
 
       nx <- data[, uniqueN(x), by = y]$V1
       ny <- data[, uniqueN(y), by = x]$V1

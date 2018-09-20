@@ -8,7 +8,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               breaks = scales::fullseq,
                               bins = NULL,
                               binwidth = NULL,
-                              # na.rm = FALSE,
+                              na.rm = FALSE,
                               na.fill = FALSE,
                               xwrap = NULL,
                               ywrap = NULL,
@@ -91,6 +91,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         setDT(data)
         data <- data[!(is.na(y) | is.na(x)), ]
 
+        if (isFALSE(na.fill)) {
+            data <- data[!is.na(z), ]
+        }
+
         # Check if is a complete grid
         nx <- data[, uniqueN(x), by = y]$V1
         ny <- data[, uniqueN(y), by = x]$V1
@@ -121,10 +125,11 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             data <- WrapCircular(data, "y", ywrap)
         }
 
+        # jitter <- diff(range(data$z))*0.000000
+        # data$z <- data$z + rnorm(nrow(data))*jitter
         setDF(data)
         mean.z <- mean(data$z)
         # mean.z <- min(breaks) - 100*resolution(breaks, zero = FALSE)
-        mean.level <- breaks[breaks %~% mean.z]
         range.data <- as.data.frame(vapply(data[c("x", "y", "z")], range, c(1, 2)))
 
         # Expand data by 1 unit in all directions.
@@ -144,33 +149,37 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         cont <- .inner_fill.m(cont, data, breaks)
 
         # Add bounding contour, if necessary.
-        i <-  which(breaks == mean.level)
-        correction <- sign(mean.z - mean.level)
-        if (correction == 0) correction <- 1
-        correction <- (breaks[i + correction] - mean.level)/2
+        if (data.table::between(mean.z, min(breaks), max(breaks))) {
+            mean.level <- breaks[breaks %~% mean.z]
 
-        # Adds bounding contour
-        setDT(data)
-        Nx <- data.table::uniqueN(data$x)
-        Ny <- data.table::uniqueN(data$y)
+            i <-  which(breaks == mean.level)
+            correction <- sign(mean.z - mean.level)
+            if (correction == 0) correction <- 1
+            correction <- (breaks[i + correction] - mean.level)/2
 
-        x <- c(rep(range.data$x[1], Ny),
-               sort(data[y == range.data$y[2], x]),
-               rep(range.data$x[2], Ny),
-               sort(data[y == range.data$y[1], x], decreasing = TRUE))
-        y <- c(sort(data[x == range.data$x[1], y]),
-               rep(range.data$y[2], Nx),
-               sort(data[x == range.data$x[2], y], decreasing = TRUE),
-               rep(range.data$y[1], Nx))
+            # Adds bounding contour
+            setDT(data)
+            Nx <- data.table::uniqueN(data$x)
+            Ny <- data.table::uniqueN(data$y)
 
-        mean.cont  <- data.frame(
-            level = mean.level,
-            x = x,
-            y = y,
-            piece = max(cont$piece) + 1,
-            int.level = mean.level + correction)
-        mean.cont$group <- factor(paste("", sprintf("%03d", mean.cont$piece), sep = "-"))
-        cont <- rbind(cont, mean.cont)
+            x <- c(rep(range.data$x[1], Ny),
+                   sort(data[y == range.data$y[2], x]),
+                   rep(range.data$x[2], Ny),
+                   sort(data[y == range.data$y[1], x], decreasing = TRUE))
+            y <- c(sort(data[x == range.data$x[1], y]),
+                   rep(range.data$y[2], Nx),
+                   sort(data[x == range.data$x[2], y], decreasing = TRUE),
+                   rep(range.data$y[1], Nx))
+
+            mean.cont  <- data.frame(
+                level = mean.level,
+                x = x,
+                y = y,
+                piece = max(cont$piece) + 1,
+                int.level = mean.level + correction)
+            mean.cont$group <- factor(paste("", sprintf("%03d", mean.cont$piece), sep = "-"))
+            cont <- rbind(cont, mean.cont)
+        }
 
         # Move contours to range of original data
         cont$x[cont$x > range.data$x[2]] <- range.data$x[2]
@@ -187,13 +196,17 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 .impute_data <- function(data, na.fill = TRUE) {
     nas <- nrow(data[is.na(z)])
     if (nas != 0) {
-        if (na.fill == TRUE) {
+        if (isTRUE(na.fill)) {
             warning("imputing missing values", call. = FALSE)
-            data[is.na(z), z := c(suppressWarnings(akima::interpp(data[is.finite(z),]$x,
-                                                                  data[is.finite(z),]$y,
+            data <- copy(data)
+            data[, xs := .simple.scale(x)]
+            data[, ys := .simple.scale(y)]
+            data[is.na(z), z := c(suppressWarnings(akima::interpp(data[is.finite(z),]$xs,
+                                                                  data[is.finite(z),]$ys,
                                                                   data[is.finite(z),]$z,
-                                                                  xo = x, yo = y, linear = FALSE,
+                                                                  xo = xs, yo = ys, linear = FALSE,
                                                                   extrap = TRUE))$z)]
+            data[, c("xs", "ys") := NULL]
         } else if (is.numeric(na.fill)) {
             warning("imputing missing values", call. = FALSE)
             data[is.na(z), z := na.fill[1]]
@@ -370,8 +383,10 @@ close_path <- function(x, y, range_x, range_y) {
     # (Oh, hi, future self!)
 
     contours[, close := is_closed(x, y), by = piece]
-    contours2 <- contours[close == FALSE][, close := NULL]
-    if (length(contours2) == 0) return(contours)
+    contours2 <- contours[close == FALSE]
+    contours[, close := NULL]
+    if (nrow(contours2) == 0) return(contours)
+    contours2[, close := NULL]
     contours2[, first := (1 == 1:.N), by = piece]
     pieces <- unique(contours2[, piece])
 
@@ -381,6 +396,12 @@ close_path <- function(x, y, range_x, range_y) {
         last <- cont[, .(x = x[.N], y = y[.N])]
         # search for next piece
         next.point <- contours2[x == last$x & y == last$y & piece != p]
+
+        if (nrow(next.point) == 0) {
+            warning("some contours may not have closed correctly", call. = FALSE)
+            return(contours)
+        }
+
         # if (nrow(next.point) == 0) break
         next.piece <- contours2[piece == next.point$piece]
 

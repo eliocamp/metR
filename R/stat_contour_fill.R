@@ -246,7 +246,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                      range.data$y[1] - dy),
                                x = c(range.data$x[1] - dx, range.data$x[2] + dx)))
 
-    extra$z <- mean(data$z)
+    extra$z <- min(data$z)
     # extra$z <- min(data$z) - 100
 
     rbind(data[c("x", "y", "z")], extra)

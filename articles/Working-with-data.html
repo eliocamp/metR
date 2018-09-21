@@ -85,7 +85,7 @@
       <h1>Working with data</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2018-09-20</h4>
+            <h4 class="date">2018-09-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Working-with-data.Rmd"><code>vignettes/Working-with-data.Rmd</code></a></small>
       <div class="hidden name"><code>Working-with-data.Rmd</code></div>
@@ -221,7 +221,12 @@
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">z =</span> gh.t.w), <span class="dt">xwrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>), <span class="dt">binwidth =</span> <span class="fl">0.01</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>PC) </a></code></pre></div>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span>PC) </a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="../reference/DivideTimeseries.html">DivideTimeseries</a></span>(</a>
@@ -307,7 +312,9 @@
 <a class="sourceLine" id="cb16-9" data-line-number="9"><span class="st">    </span><span class="kw"><a href="../reference/geom_arrow.html">geom_vector</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> gh.dlon, <span class="dt">dy =</span> gh.dlat), <span class="dt">skip =</span> <span class="dv">2</span>, </a>
 <a class="sourceLine" id="cb16-10" data-line-number="10">                <span class="dt">scale =</span> <span class="fl">3e4</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb16-11" data-line-number="11"><span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_map">coord_quickmap</a></span>()</a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">#&gt; Warning: Ignoring unknown parameters: scale</span></a></code></pre></div>
+<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">#&gt; Warning: Ignoring unknown parameters: scale</span></a>
+<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <p>There are several wrapers around <code><a href="../reference/Derivate.html">Derivate()</a></code> to perform other common related operations, <code><a href="../reference/Derivate.html">Laplacian()</a></code>, <code><a href="../reference/Derivate.html">Divergence()</a></code> and <code><a href="../reference/Derivate.html">Vorticity()</a></code>.</p>
 </div>

@@ -85,7 +85,7 @@
       <h1>Visualization tools</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2018-09-20</h4>
+            <h4 class="date">2018-09-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Visualization-tools.Rmd"><code>vignettes/Visualization-tools.Rmd</code></a></small>
       <div class="hidden name"><code>Visualization-tools.Rmd</code></div>
@@ -162,7 +162,9 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>()</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 <p>As an important note, this stat currently only works with rectangular grids.</p>
 </div>
@@ -176,7 +178,9 @@
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/geom_text_contour.html">geom_text_contour</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>()</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>By default it labels every 2nd contour (this can be changed by the <code>skip</code> parameter) and it rotates to follow the angle of the contour (this is not available on <code><a href="../reference/geom_text_contour.html">geom_label_contour()</a></code>). Since in some datasetss there can be very small contours that should not be labeled for clarity, the <code>min.size</code> argument specifies the minimum points a contour has to have in order to be labeled.</p>
 <p>Noticehow labels are drawn on top of contours? The problem is that <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">geom_contour()</a></code> doesn’t know it’s being labeled; <code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> adresses this issue by allowing you to draw a stroke arround the text.</p>
@@ -186,7 +190,9 @@
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="../reference/geom_text_contour.html">geom_text_contour</a></span>(<span class="dt">stroke =</span> <span class="fl">0.2</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>()</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 <div id="geom_contour_tanaka" class="section level2">
@@ -198,7 +204,9 @@
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">     </span><span class="kw"><a href="../reference/geom_contour_tanaka.html">geom_contour_tanaka</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">     </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>())</a></code></pre></div>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>())</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>For more on the use of contours, see the Advance Contouring vignette (comming soon).</p>
 </div>
@@ -245,11 +253,15 @@
 <a class="sourceLine" id="cb11-9" data-line-number="9"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb11-10" data-line-number="10"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb11-11" data-line-number="11"><span class="st">    </span><span class="kw">scale_mag</span>())</a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt; Warning: Removed 5184 rows containing non-finite values (stat_arrow).</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt; Warning: Removed 5184 rows containing non-finite values (stat_arrow).</span></a></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <p>In the above example, t.dx and t.dy represent displacements in the same units as the x and y dimension, so using <code><a href="../reference/geom_arrow.html">geom_vector()</a></code> each arrow points perpendicular to the contours even if we change the coordinate system.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">g <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; Warning: Removed 5184 rows containing non-finite values (stat_arrow).</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; Warning: Removed 5184 rows containing non-finite values (stat_arrow).</span></a></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 <p>But if we want to plot how the (horizontal) direction changes with height it makes more sense to use <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> (or <code><a href="../reference/geom_arrow.html">geom_vector(preserve.dir = TRUE)</a></code>)</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lon <span class="op">%between%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">200</span>) <span class="op">&amp;</span><span class="st"> </span>lat <span class="op">==</span><span class="st"> </span><span class="dv">-50</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lev)) <span class="op">+</span><span class="st"> </span></a>
@@ -269,11 +281,15 @@
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">     </span><span class="kw"><a href="../reference/geom_streamline.html">geom_streamline</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">dx =</span> t.dy, <span class="dt">dy =</span> <span class="op">-</span>t.dx), <span class="dt">L =</span> <span class="dv">10</span>, <span class="dt">res =</span> <span class="dv">2</span>,   </a>
 <a class="sourceLine" id="cb14-4" data-line-number="4">                     <span class="dt">arrow.length =</span> <span class="fl">0.3</span>, <span class="dt">xwrap =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>())</a></code></pre></div>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>())</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 <p>There are several parametres that control de feel of the result. <code>L</code> and <code>res</code> control the length and resolution, while the <code>skip</code> parameters change the amount of the streamlines. More in depth control over the simulation can be accomplished by the <code>S</code> and <code>dt</code> parameters.</p>
 <p>Since streamlines imply a tight relationship between the vector field and the spatial dimensions, it’s important that their units are compatible. A wind field in m/s in a lonitude-latitude grid should first be converted into degrees/s. The functions <code><a href="../reference/spherical.html">dlon()</a></code> and <code><a href="../reference/spherical.html">dlat()</a></code> are an easy way of doing this. This tight coupling also means that they are robuts to coordinate transformations.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">g <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">g <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_polar">coord_polar</a></span>()</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <p><code><a href="../reference/geom_streamline.html">stat_streamline()</a></code> computes three useful variables. <code>step</code> is the integration step, and <code>dx</code> and <code>dy</code> are the components of the vector field at each point. They can be used to visualize information about the field in each point, and to give a sense of direction without arrows.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">500</span>], <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(lon, lat)) <span class="op">+</span></a>
@@ -310,7 +326,9 @@
 <a class="sourceLine" id="cb18-4" data-line-number="4">                         <span class="dt">breaks =</span> <span class="kw"><a href="../reference/MakeBreaks.html">MakeBreaks</a></span>(<span class="dv">2</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb18-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb18-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co">#&gt; Warning: Computation failed in `stat_contour_fill()`:</span></a>
+<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="co">#&gt; object of type 'closure' is not subsettable</span></a></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <p>By default, colors are mapped to the values <em>in between</em> breaks, so there’s a one-to-one mapping between colors shown in the plot and in the guide. From an aesthetic standpoint, it’s much closer to the <code>cbarn</code> command from <code>GrADS</code>, which a lot of atmospheric scientists are probably used to.</p>
 </div>

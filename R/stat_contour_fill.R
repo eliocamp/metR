@@ -10,6 +10,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               binwidth = NULL,
                               na.rm = FALSE,
                               na.fill = FALSE,
+                              fill.linear = TRUE,
                               xwrap = NULL,
                               ywrap = NULL,
                               show.legend = NA,
@@ -25,6 +26,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
         params = list(
             na.rm = FALSE,
             na.fill = na.fill,
+            fill.linear = fill.linear,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
@@ -86,7 +88,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     },
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = scales::fullseq, complete = TRUE,
-                             na.rm = FALSE, xwrap = NULL,
+                             na.rm = FALSE, xwrap = NULL, fill.linear = TRUE,
                              ywrap = NULL, na.fill = FALSE) {
         setDT(data)
         data <- data[!(is.na(y) | is.na(x)), ]
@@ -110,7 +112,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             }
         }
 
-        data <- .impute_data(data, na.fill)
+        data <- .impute_data.m(data, na.fill, fill.linear)
 
         nas <- nrow(data[is.na(z)])
         if (nas != 0) {
@@ -193,10 +195,16 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         }
 )
 
-.impute_data <- function(data, na.fill = TRUE) {
+.impute_data <- function(data, na.fill = TRUE, fill.linear = TRUE) {
     nas <- nrow(data[is.na(z)])
+    extrap <- !fill.linear
     if (nas != 0) {
         if (isTRUE(na.fill)) {
+            akima.available <- requireNamespace("akima", quietly = TRUE)
+            if (!isTRUE(akima.available)) {
+                stop("Imputation of missing values needs packages 'akima'. Install it with 'install.packages(\"akima\")'",
+                     call. = FALSE)
+            }
             warning("imputing missing values", call. = FALSE)
             data <- copy(data)
             data[, xs := .simple.scale(x)]
@@ -204,8 +212,8 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             data[is.na(z), z := c(suppressWarnings(akima::interpp(data[is.finite(z),]$xs,
                                                                   data[is.finite(z),]$ys,
                                                                   data[is.finite(z),]$z,
-                                                                  xo = xs, yo = ys, linear = FALSE,
-                                                                  extrap = TRUE))$z)]
+                                                                  xo = xs, yo = ys, linear = fill.linear,
+                                                                  extrap = extrap))$z)]
             data[, c("xs", "ys") := NULL]
         } else if (is.numeric(na.fill)) {
             warning("imputing missing values", call. = FALSE)
@@ -218,6 +226,8 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     }
     return(data)
 }
+
+.impute_data.m <- memoise::memoise(.impute_data)
 
 .order_fill <- function(cont) {
     areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][
@@ -246,8 +256,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                      range.data$y[1] - dy),
                                x = c(range.data$x[1] - dx, range.data$x[2] + dx)))
 
-    extra$z <- min(data$z)
-    # extra$z <- min(data$z) - 100
+    extra$z <- data$z[data$z %~% mean(data$z)]
 
     rbind(data[c("x", "y", "z")], extra)
 }

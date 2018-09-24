@@ -15,6 +15,8 @@
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
 #' @param na.fill How to fill missing values.
+#' @param fill.linear If `TRUE`, interpolation is bilinear, otherwise is done
+#' with bicubic splines.
 #'    - `FALSE` for leting the computation fail with no interpolation
 #'    - `TRUE` for imputing missing values with [akima::interpp]
 #'    - A numeric value for constant imputation
@@ -65,6 +67,7 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
                          binwidth = NULL,
                          # na.rm = FALSE,
                          na.fill = FALSE,
+                         fill.linear = TRUE,
                          xwrap = NULL,
                          ywrap = NULL,
                          show.legend = NA,
@@ -83,6 +86,7 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
             binwidth = binwidth,
             na.rm = FALSE,
             na.fill = na.fill,
+            fill.linear = fill.linear,
             xwrap = xwrap,
             ywrap = ywrap,
             ...

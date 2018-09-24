@@ -23,6 +23,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
                           binwidth = NULL,
                           na.rm = FALSE,
                           na.fill = FALSE,
+                          fill.linear = TRUE,
                           xwrap = NULL,
                           ywrap = NULL,
                           show.legend = NA,
@@ -38,6 +39,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
         params = list(
             na.rm = na.rm,
             na.fill = na.fill,
+            fill.linear = fill.linear,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
@@ -99,7 +101,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
   compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                            breaks = scales::fullseq, complete = TRUE,
                            na.rm = FALSE, circular = NULL, xwrap = NULL,
-                           ywrap = NULL, na.fill = FALSE) {
+                           ywrap = NULL, na.fill = FALSE, fill.linear = TRUE) {
       setDT(data)
 
       data <- data[!(is.na(y) | is.na(x)), ]
@@ -122,7 +124,8 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
           }
       }
 
-      data <- .impute_data(data, na.fill)
+      data <- .impute_data.m(data, na.fill, fill.linear)
+
       if (!is.null(xwrap)) {
           data <- WrapCircular(data, "x", xwrap)
       }

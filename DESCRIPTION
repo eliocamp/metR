@@ -37,8 +37,7 @@ Imports:
     digest,
     fields,
     memoise,
-    Matrix,
-    akima
+    Matrix
 RoxygenNote: 6.1.0
 Suggests: 
     knitr,
@@ -51,7 +50,8 @@ Suggests:
     viridis,
     pkgdown,
     udunits2,
-    ncdf4
+    ncdf4,
+    akima
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 Remotes: tidyverse/ggplot2

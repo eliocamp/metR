@@ -134,7 +134,8 @@ by default, puts labels in between values.</p>
   <span class='kw'>label.hjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label.vjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>barwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>barheight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>draw.ulim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>draw.llim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>inside</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>default.unit</span> <span class='kw'>=</span> <span class='st'>"line"</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
+  <span class='kw'>default.unit</span> <span class='kw'>=</span> <span class='st'>"line"</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>available_aes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"colour"</span>, <span class='st'>"color"</span>, <span class='st'>"fill"</span>, <span class='st'>"fill2"</span>), <span class='no'>...</span>)
 
 <span class='fu'>guide_colorstrip</span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(), <span class='kw'>title.position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>title.theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title.hjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title.vjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -142,7 +143,8 @@ by default, puts labels in between values.</p>
   <span class='kw'>label.hjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label.vjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>barwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>barheight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>draw.ulim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>draw.llim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>inside</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>default.unit</span> <span class='kw'>=</span> <span class='st'>"line"</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>default.unit</span> <span class='kw'>=</span> <span class='st'>"line"</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>available_aes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"colour"</span>, <span class='st'>"color"</span>, <span class='st'>"fill"</span>, <span class='st'>"fill2"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -255,6 +257,11 @@ the highest value is on the top and the lowest value is on the bottom</p></td>
 this guide among multiple guides. This controls the order in which
 multiple guides are displayed, not the contents of the guide itself.
 If 0 (default), the order is determined by a secret algorithm.</p></td>
+    </tr>
+    <tr>
+      <th>available_aes</th>
+      <td><p>A vector of character strings listing the aesthetics
+for which a colourbar can be drawn.</p></td>
     </tr>
     <tr>
       <th>...</th>

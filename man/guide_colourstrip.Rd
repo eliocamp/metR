@@ -13,7 +13,8 @@ guide_colourstrip(title = waiver(), title.position = NULL,
   label.hjust = NULL, label.vjust = NULL, barwidth = NULL,
   barheight = NULL, ticks = FALSE, draw.ulim = TRUE,
   draw.llim = TRUE, inside = FALSE, direction = NULL,
-  default.unit = "line", reverse = FALSE, order = 0, ...)
+  default.unit = "line", reverse = FALSE, order = 0,
+  available_aes = c("colour", "color", "fill", "fill2"), ...)
 
 guide_colorstrip(title = waiver(), title.position = NULL,
   title.theme = NULL, title.hjust = NULL, title.vjust = NULL,
@@ -21,7 +22,8 @@ guide_colorstrip(title = waiver(), title.position = NULL,
   label.hjust = NULL, label.vjust = NULL, barwidth = NULL,
   barheight = NULL, ticks = FALSE, draw.ulim = TRUE,
   draw.llim = TRUE, inside = FALSE, direction = NULL,
-  default.unit = "line", reverse = FALSE, order = 0, ...)
+  default.unit = "line", reverse = FALSE, order = 0,
+  available_aes = c("colour", "color", "fill", "fill2"), ...)
 }
 \arguments{
 \item{title}{A character string or expression indicating a title of guide.
@@ -92,6 +94,9 @@ the highest value is on the top and the lowest value is on the bottom}
 this guide among multiple guides. This controls the order in which
 multiple guides are displayed, not the contents of the guide itself.
 If 0 (default), the order is determined by a secret algorithm.}
+
+\item{available_aes}{A vector of character strings listing the aesthetics
+for which a colourbar can be drawn.}
 
 \item{...}{ignored.}
 }

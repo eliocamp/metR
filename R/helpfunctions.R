@@ -137,5 +137,11 @@ if(getRversion() >= "2.15.1") {
     r <- range(x)
     (x - r[1])/diff(r)
 }
+
+isFALSE <- function (x) {
+        is.logical(x) && length(x) == 1L && !is.na(x) && !x
+}
+
+
 # nocov end
 

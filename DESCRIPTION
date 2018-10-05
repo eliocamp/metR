@@ -50,8 +50,7 @@ Suggests:
     viridis,
     pkgdown,
     udunits2,
-    ncdf4,
-    akima
+    ncdf4
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 Remotes: tidyverse/ggplot2

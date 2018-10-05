@@ -39,7 +39,7 @@ geom_contour2 <- function(mapping = NULL, data = NULL,
                           binwidth = NULL,
                           na.rm = FALSE,
                           na.fill = FALSE,
-                          fill.linear = TRUE,
+                          # fill.linear = TRUE,
                           show.legend = NA,
                           inherit.aes = TRUE) {
     dots <- list(...)
@@ -63,7 +63,7 @@ geom_contour2 <- function(mapping = NULL, data = NULL,
             binwidth = binwidth,
             na.rm = na.rm,
             na.fill = na.fill,
-            fill.linear = fill.linear,
+            # fill.linear = fill.linear,
             ...
         )
     )

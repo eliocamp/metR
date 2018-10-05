@@ -10,7 +10,6 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               binwidth = NULL,
                               na.rm = FALSE,
                               na.fill = FALSE,
-                              fill.linear = TRUE,
                               xwrap = NULL,
                               ywrap = NULL,
                               show.legend = NA,
@@ -26,7 +25,6 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
         params = list(
             na.rm = FALSE,
             na.fill = na.fill,
-            fill.linear = fill.linear,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
@@ -88,7 +86,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     },
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = scales::fullseq, complete = TRUE,
-                             na.rm = FALSE, xwrap = NULL, fill.linear = TRUE,
+                             na.rm = FALSE, xwrap = NULL,
                              ywrap = NULL, na.fill = FALSE) {
         setDT(data)
         data <- data[!(is.na(y) | is.na(x)), ]
@@ -112,7 +110,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             }
         }
 
-        data <- .impute_data.m(data, na.fill, fill.linear)
+        data <- .impute_data(data, na.fill)
 
         nas <- nrow(data[is.na(z)])
         if (nas != 0) {
@@ -194,40 +192,6 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         cont
         }
 )
-
-.impute_data <- function(data, na.fill = TRUE, fill.linear = TRUE) {
-    nas <- nrow(data[is.na(z)])
-    extrap <- !fill.linear
-    if (nas != 0) {
-        if (isTRUE(na.fill)) {
-            akima.available <- requireNamespace("akima", quietly = TRUE)
-            if (!isTRUE(akima.available)) {
-                stop("Imputation of missing values needs packages 'akima'. Install it with 'install.packages(\"akima\")'",
-                     call. = FALSE)
-            }
-            warning("imputing missing values", call. = FALSE)
-            data <- copy(data)
-            data[, xs := .simple.scale(x)]
-            data[, ys := .simple.scale(y)]
-            data[is.na(z), z := c(suppressWarnings(akima::interpp(data[is.finite(z),]$xs,
-                                                                  data[is.finite(z),]$ys,
-                                                                  data[is.finite(z),]$z,
-                                                                  xo = xs, yo = ys, linear = fill.linear,
-                                                                  extrap = extrap))$z)]
-            data[, c("xs", "ys") := NULL]
-        } else if (is.numeric(na.fill)) {
-            warning("imputing missing values", call. = FALSE)
-            data[is.na(z), z := na.fill[1]]
-        } else if (is.function(na.fill)) {
-            warning("imputing missing values", call. = FALSE)
-            z.fill <- data[is.finite(z), na.fill(z)]
-            data[is.na(z), z := z.fill]
-        }
-    }
-    return(data)
-}
-
-.impute_data.m <- memoise::memoise(.impute_data)
 
 .order_fill <- function(cont) {
     areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][

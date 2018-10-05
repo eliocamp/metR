@@ -45,6 +45,8 @@ in `scale_x_longitude()`.
 release acording to this News).
 - New function `as.path()` and added functionality to `Interpolate()` that allows
 to interpolate values along a path of locations.
+- New function `Impute2D()` which is an exported version of the method used by 
+`geom_contour_fill()` to impute missing values.
 
 # metR 0.1
 - New function: `GetTopography()`

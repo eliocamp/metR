@@ -12,13 +12,12 @@ geom_contour2(mapping = NULL, data = NULL, stat = "contour2",
   position = "identity", ..., lineend = "butt", linejoin = "round",
   linemitre = 1, breaks = scales::fullseq, bins = NULL,
   binwidth = NULL, na.rm = FALSE, na.fill = FALSE,
-  fill.linear = TRUE, show.legend = NA, inherit.aes = TRUE)
+  show.legend = NA, inherit.aes = TRUE)
 
 stat_contour2(mapping = NULL, data = NULL, geom = "contour2",
   position = "identity", ..., breaks = scales::fullseq, bins = NULL,
-  binwidth = NULL, na.rm = FALSE, na.fill = FALSE,
-  fill.linear = TRUE, xwrap = NULL, ywrap = NULL, show.legend = NA,
-  inherit.aes = TRUE)
+  binwidth = NULL, na.rm = FALSE, na.fill = FALSE, xwrap = NULL,
+  ywrap = NULL, show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -72,15 +71,6 @@ and returns breaks as output
 a warning. If \code{TRUE}, missing values are silently removed.}
 
 \item{na.fill}{How to fill missing values.}
-
-\item{fill.linear}{If \code{TRUE}, interpolation is bilinear, otherwise is done
-with bicubic splines.
-\itemize{
-\item \code{FALSE} for leting the computation fail with no interpolation
-\item \code{TRUE} for imputing missing values with \link[akima:interpp]{akima::interpp}
-\item A numeric value for constant imputation
-\item A function that takes a vector and returns a numeric (e.g. \code{mean})
-}}
 
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.

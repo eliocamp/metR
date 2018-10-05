@@ -142,14 +142,13 @@ have all the same binwidth.</p>
 
     <pre class="usage"><span class='fu'>geom_contour_fill</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"ContourFill"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fill.linear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ywrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ywrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>stat_contour_fill</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"polygon"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/scales/topics/fullseq'>fullseq</a></span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>na.fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fill.linear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ywrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>na.fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ywrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,16 +207,6 @@ to the paired geom/stat.</p></td>
       <td><p>How to fill missing values.</p></td>
     </tr>
     <tr>
-      <th>fill.linear</th>
-      <td><p>If <code>TRUE</code>, interpolation is bilinear, otherwise is done
-with bicubic splines.</p><ul>
-<li><p><code>FALSE</code> for leting the computation fail with no interpolation</p></li>
-<li><p><code>TRUE</code> for imputing missing values with <a href='http://www.rdocumentation.org/packages/akima/topics/interpp'>akima::interpp</a></p></li>
-<li><p>A numeric value for constant imputation</p></li>
-<li><p>A function that takes a vector and returns a numeric (e.g. <code>mean</code>)</p></li>
-</ul></td>
-    </tr>
-    <tr>
       <th>xwrap, ywrap</th>
       <td><p>vector of length two used to wrap the circulad dimension.</p></td>
     </tr>
@@ -244,6 +233,16 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
       <th>na.rm</th>
       <td><p>If <code>FALSE</code>, the default, missing values are removed with
 a warning. If <code>TRUE</code>, missing values are silently removed.</p></td>
+    </tr>
+    <tr>
+      <th>fill.linear</th>
+      <td><ul>
+<li><p><code>FALSE</code> for leting the computation fail with no interpolation</p><ul>
+<li><p><code>TRUE</code> for imputing missing values with approx</p></li>
+<li><p>A numeric value for constant imputation</p></li>
+<li><p>A function that takes a vector and returns a numeric (e.g. <code>mean</code>)</p></li>
+</ul></li>
+</ul></td>
     </tr>
     </table>
     
@@ -292,8 +291,7 @@ a warning. If <code>TRUE</code>, missing values are silently removed.</p></td>
 <span class='co'># If one uses level instead of int.level, one of the small</span>
 <span class='co'># contours near the crater disapears</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>surface</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-  <span class='fu'>geom_contour_fill</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>..level..</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour_fill()`:</span>
-#&gt; <span class='warning'>object 'z' not found</span></div><div class='img'><img src='geom_contour_fill-2.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'>geom_contour_fill</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>..level..</span>))</div><div class='img'><img src='geom_contour_fill-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

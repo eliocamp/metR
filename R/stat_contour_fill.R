@@ -134,6 +134,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
         # Expand data by 1 unit in all directions.
         data <- .expand_data(data)
+
         # Make contours
         cont <- data.table::setDT(.contour_lines(data, breaks, complete = complete))
 
@@ -220,7 +221,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                      range.data$y[1] - dy),
                                x = c(range.data$x[1] - dx, range.data$x[2] + dx)))
 
-    extra$z <- data$z[data$z %~% mean(data$z)]
+    extra$z <- data$z[data$z %~% mean(data$z)][1]
 
     rbind(data[c("x", "y", "z")], extra)
 }

@@ -47,6 +47,8 @@ release acording to this News).
 to interpolate values along a path of locations.
 - New function `Impute2D()` which is an exported version of the method used by 
 `geom_contour_fill()` to impute missing values.
+- `subset` argument in `ReadNetCDF()` now accepts character vectors for time 
+components. 
 
 # metR 0.1
 - New function: `GetTopography()`

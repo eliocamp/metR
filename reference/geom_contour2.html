@@ -124,7 +124,7 @@ per panel." />
 
     <div class="ref-description">
     
-    <p>A copy of <a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>ggplot2::geom_contour</a> that accepts a function as the <code>breaks</code>
+    <p>A copy of <a href='ggplot2.tidyverse.org/reference/geom_contour.html'>ggplot2::geom_contour</a> that accepts a function as the <code>breaks</code>
 argument and makes gaps for labels and computes breaks globally instead of
 per panel.</p>
     
@@ -293,8 +293,8 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
-    <span class='fu'>geom_contour2</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>),
+<span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
+    <span class='fu'>geom_contour2</span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>),
                   <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='MakeBreaks.html'>AnchorBreaks</a></span>(<span class='fl'>130</span>, <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='fl'>11</span>))</div><div class='img'><img src='geom_contour2-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

@@ -170,8 +170,8 @@ of x.</p>
 #&gt; 241128: 17970 2012-12-10   NA 24.6         NA</div><div class='input'><span class='no'>extreme.days</span> <span class='kw'>&lt;-</span> <span class='no'>claris</span>[, <span class='fu'>.</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>sum</span>(<span class='no'>percentile</span> <span class='kw'>&gt;</span> <span class='fl'>0.90</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)),
                        <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>year</a></span>(<span class='no'>date</span>))]
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>extreme.days</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>year</span>, <span class='no'>n</span>)) +
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>()</div><div class='img'><img src='Percentile-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>extreme.days</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>year</span>, <span class='no'>n</span>)) +
+    <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()</div><div class='img'><img src='Percentile-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

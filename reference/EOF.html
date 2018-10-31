@@ -179,13 +179,19 @@ data is dense.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-<dl class='dl-horizontal'>
+    <p>An <code>eof</code> object which is just a named list of <code>data.table</code>s</p><dl class='dl-horizontal'>
 <dt>left</dt><dd><p>data.table with left singular vectors</p></dd>
 <dt>right</dt><dd><p>data.table with right singular vectors</p></dd>
 <dt>sdev</dt><dd><p>data.table with singular values, their explained variance,
-and, optionally, cuantiles estimated via bootstrap</p></dd>
+and, optionally, quantiles estimated via bootstrap</p></dd>
 </dl>
+
+<p>There are some methods implemented</p><ul>
+<li><p>summary</p></li>
+<li><p>screeplot and the equivalent <a href='ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></p></li>
+<li><p><a href='cut.eof.html'>cut.eof</a></p></li>
+<li><p>predict</p></li>
+</ul>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -199,12 +205,8 @@ Think it like "VAR <em>as a function</em> of LEFT <em>and</em> RIGHT".</p>
 <p>Alternatively, if <code>value.var</code> is not <code>NULL</code>, it's possible to use the
 (probably) more familiar <a href='http://www.rdocumentation.org/packages/data.table/topics/dcast.data.table'>data.table::dcast</a> formula interface. In that case,
 <code>data</code> must be provided.</p>
-<p>The result of VAR ~ LHS | RHS and VAR ~ RHS | LHS (ie, terms reversed)
-is the same.</p>
 <p>The variable combination used in this formula <em>must</em> identify
-an unique value in a cell. For the time being, no error will be raised, but
-there will be a message from <code><a href='http://www.rdocumentation.org/packages/data.table/topics/dcast.data.table'>dcast</a></code>. If not every
-combination is present in the data,</p>
+an unique value in a cell.</p>
 <p>In the result, the left and right vectors have dimensions of the LEFT and RIGHT
 part of the <code>formula</code>, respectively.</p>
 <p>It is much faster to compute only some singular vectors, so is advisable not
@@ -243,27 +245,47 @@ standard deviation of each singular value.</p>
 #&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 5.045014e-07
 #&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 5.045014e-07
 #&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 5.045014e-07</div><div class='input'>
-<span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+<span class='no'>eof</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>,
            <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>hig</span> <span class='kw'>=</span> <span class='fl'>0.9</span>))
+
+<span class='co'># Inspect the explained variance of each component</span>
+<span class='fu'>summary</span>(<span class='no'>eof</span>)</div><div class='output co'>#&gt; Importance of components:
+#&gt; Component Explained variance Cumulative variance
+#&gt;       1                 27.8%               27.8%
+#&gt;       2                 11.8%               39.5%
+#&gt;       3                 9.43%               49.0%
+#&gt;       4                 6.34%               55.3%
+#&gt;       5                 5.85%               61.2%</div><div class='input'><span class='fu'>screeplot</span>(<span class='no'>eof</span>)</div><div class='img'><img src='EOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Keep only the 1st.</span>
+<span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='fu'>cut</span>(<span class='no'>eof</span>, <span class='fl'>1</span>)
 
 <span class='co'># AAO field</span>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>aao</span>$<span class='no'>left</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='img'><img src='EOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='img'><img src='EOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># AAO signal</span>
 <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>aao</span>$<span class='no'>right</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>date</span>, <span class='no'>gh.t.w</span>)) +
-    <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()</div><div class='img'><img src='EOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()</div><div class='img'><img src='EOF-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># standard deviation, % of explained variance and</span>
 <span class='co'># confidence intervals.</span>
 <span class='no'>aao</span>$<span class='no'>sdev</span></div><div class='output co'>#&gt;     PC       sd        r2      low      hig
-#&gt; 1: PC1 9295.148 0.2775804 8589.921 10079.57</div><div class='input'>
+#&gt; 1: PC1 9295.148 0.2775804 8642.948 10112.92</div><div class='input'>
+<span class='co'># Reconstructed fields based only on the two first</span>
+<span class='co'># principal components</span>
+<span class='no'>field</span> <span class='kw'>&lt;-</span> <span class='fu'>predict</span>(<span class='no'>eof</span>, <span class='fl'>1</span>:<span class='fl'>2</span>)
+
+<span class='co'># Compare it to the real field.</span>
+<span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>field</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+    <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]]) +
+    <span class='fu'><a href='geom_contour2.html'>geom_contour2</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>, <span class='kw'>linetype</span> <span class='kw'>=</span> <span class='fu'>factor</span>(-<span class='fu'>sign</span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/stat.html'>stat</a></span>(<span class='no'>level</span>))))) +
+    <span class='fu'><a href='scale_divergent.html'>scale_fill_divergent</a></span>()</div><div class='img'><img src='EOF-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># 1st eof for each month.</span>
 <span class='no'>aao2</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)$<span class='no'>left</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>month</a></span>(<span class='no'>date</span>)]
 
 <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>aao2</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(~ <span class='no'>month</span>)</div><div class='img'><img src='EOF-3.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(~ <span class='no'>month</span>)</div><div class='img'><img src='EOF-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Alternative interface</span>
 <span class='no'>aao2</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>lon</span> + <span class='no'>lat</span> ~ <span class='no'>date</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='st'>"gh.t.w"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>)</div></pre>
   </div>

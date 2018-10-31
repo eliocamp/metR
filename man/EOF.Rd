@@ -32,11 +32,20 @@ confidence intervals. If named, it's names will be used as column names.}
 data is dense.}
 }
 \value{
+An \code{eof} object which is just a named list of \code{data.table}s
 \describe{
 \item{left}{data.table with left singular vectors}
 \item{right}{data.table with right singular vectors}
 \item{sdev}{data.table with singular values, their explained variance,
-and, optionally, cuantiles estimated via bootstrap}
+and, optionally, quantiles estimated via bootstrap}
+}
+
+There are some methods implemented
+\itemize{
+\item \link{summary}
+\item \link{screeplot} and the equivalent \link{autoplot}
+\item \link{cut.eof}
+\item \link{predict}
 }
 }
 \description{
@@ -55,13 +64,8 @@ Alternatively, if \code{value.var} is not \code{NULL}, it's possible to use the
 (probably) more familiar \link[data.table:dcast]{data.table::dcast} formula interface. In that case,
 \code{data} must be provided.
 
-The result of VAR ~ LHS | RHS and VAR ~ RHS | LHS (ie, terms reversed)
-is the same.
-
 The variable combination used in this formula \emph{must} identify
-an unique value in a cell. For the time being, no error will be raised, but
-there will be a message from \code{\link[data.table]{dcast}}. If not every
-combination is present in the data,
+an unique value in a cell.
 
 In the result, the left and right vectors have dimensions of the LEFT and RIGHT
 part of the \code{formula}, respectively.
@@ -82,8 +86,15 @@ geopotential <- copy(geopotential)
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
       by = .(lon, lat, month(date))]
 
-aao <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1,
+eof <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1:5,
            B = 100, probs = c(low = 0.1, hig = 0.9))
+
+# Inspect the explained variance of each component
+summary(eof)
+screeplot(eof)
+
+# Keep only the 1st.
+aao <- cut(eof, 1)
 
 # AAO field
 library(ggplot2)
@@ -98,6 +109,16 @@ ggplot(aao$right, aes(date, gh.t.w)) +
 # standard deviation, \% of explained variance and
 # confidence intervals.
 aao$sdev
+
+# Reconstructed fields based only on the two first
+# principal components
+field <- predict(eof, 1:2)
+
+# Compare it to the real field.
+ggplot(field[date == date[1]], aes(lon, lat)) +
+    geom_contour_fill(aes(z = gh.t.w), data = geopotential[date == date[1]]) +
+    geom_contour2(aes(z = gh.t.w, linetype = factor(-sign(stat(level))))) +
+    scale_fill_divergent()
 
 # 1st eof for each month.
 aao2 <- geopotential[, EOF(gh.t.w ~ lat + lon | date, n = 1)$left, by = month(date)]

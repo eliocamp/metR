@@ -1,5 +1,11 @@
-## Methos for EOF
-
+#' Remove some principal components.
+#'
+#' Returns an `eof` object with just the n principal components.
+#'
+#' @param x an `eof` object
+#' @param n which eofs to keep
+#' @param ... further arguments passed to or from other methods
+#'
 #' @export
 cut.eof <- function(x, n, ...) {
     var <- attr(x, "suffix")
@@ -26,17 +32,14 @@ screeplot.eof <- function(x, npcs = "all", type = NULL, main = NULL, ...) {
 
 #' @export
 #' @importFrom ggplot2 autoplot
-autoplot.eof <- function(object, n = "all", ...) {
-    screeplot(object, n)
+autoplot.eof <- function(object, npcs = "all", ...) {
+    screeplot(object, npcs, ...)
 }
 
 #' @export
 #' @importFrom stats predict
 predict.eof <- function(object, n = NULL, ...) {
     ` %>% ` <- dplyr::`%>%`
-    if (!inherits(object, "eof")) {
-        stop("eof must be an EOF object")
-    }
 
     if(!is.null(n)) object <- cut(object, n)
 
@@ -115,6 +118,14 @@ summary.eof <- function(object, ...) {
     })
 }
 
+
+.check_eof <- function(object) {
+    if (!inherits(object, "eof")) {
+        stop("eof must be an EOF object")
+    }
+}
+
 if(getRversion() >= "2.15.1") {
     utils::globalVariables("cum.r2")
 }
+

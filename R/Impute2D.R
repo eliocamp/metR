@@ -5,8 +5,6 @@
 #' @inheritParams Interpolate
 #' @param method "interpolate" for interpolation, a numeric for constant imputation
 #' or a function that takes a vector and returns a number (like [mean])
-#' @param extraplate Used only for interpolation. Logical indicating if
-#'  extrapolation be used outside of the convex hull determined by the data points.
 #'
 #' @details
 #' This is "soft" imputation because the imputed values are not supposed to be

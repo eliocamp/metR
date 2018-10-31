@@ -70,11 +70,23 @@
 #' @export
 Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = FALSE,
                      sphere = FALSE, a = 6371000) {
+    checks <- makeAssertCollection()
+
+    assertFormula(formula, add = checks)
+    assertDataFrame(data, null.ok = TRUE, add = checks)
+    assertCount(order, positive = TRUE, add = checks)
+    assertFlag(fill, add = checks)
+    assertFlag(sphere, add = checks)
+    assertNumber(a, lower = 0, finite = TRUE, add = checks)
+    assertLogical(cyclical, any.missing = FALSE, add = checks)
+
+    reportAssertions(checks)
+
     dep.names <- formula.tools::lhs.vars(formula)
     ind.names <- formula.tools::rhs.vars(formula)
 
     formula <- Formula::as.Formula(formula)
-    data <- as.data.table(eval(quote(model.frame(formula, data  = data,
+    data <- as.data.table(eval(quote(model.frame(formula, data = data,
                                                  na.action = NULL))))
 
     # id.name <- digest::digest(data[1, 1])
@@ -143,13 +155,13 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
 #' @export
 Laplacian <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
                       sphere = FALSE, a = 6371000) {
+    der <- Derivate(formula = formula, data = data, cyclical = cyclical,
+                    sphere = sphere, a = a, order = 2)
+
     dep.names <- as.character(formula.tools::lhs(formula))
     dep.names <- dep.names[!grepl("+", as.character(dep.names), fixed = TRUE)]
     ndep <- length(dep.names)
     lap.name <- paste0(dep.names, ".lap")
-
-    der <- Derivate(formula = formula, data = data, cyclical = cyclical,
-                    sphere = sphere, a = a, order = 2)
 
     lap <- lapply(seq(ndep), FUN = function(x) {
         Reduce("+", der[1:ndep + (x-1)*ndep])
@@ -177,7 +189,6 @@ Divergence <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
 #' @rdname Derivate
 Vorticity <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
                       sphere = FALSE, a = 6371000) {
-
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
                     sphere = sphere, a = a, order = 1)
 

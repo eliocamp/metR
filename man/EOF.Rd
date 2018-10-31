@@ -121,7 +121,8 @@ ggplot(field[date == date[1]], aes(lon, lat)) +
     scale_fill_divergent()
 
 # 1st eof for each month.
-aao2 <- geopotential[, EOF(gh.t.w ~ lat + lon | date, n = 1)$left, by = month(date)]
+aao2 <- geopotential[, EOF(gh.t.w ~ lat + lon | date, n = 1)$left,
+                       by = month(date)]
 
 ggplot(aao2, aes(lon, lat)) +
     geom_contour(aes(z = gh.t.w, color = ..level..)) +

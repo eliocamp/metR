@@ -5,7 +5,7 @@
 #' @param lon numeric vector of longitude
 #' @param group optional vector of groups (the same length as longitude)
 #' that will be split on the edges (see examples)
-#' @param from optional explicitly say from which convension to convert
+#' @param from optionally explicitly say from which convension to convert
 #'
 #' @return If `group` is missing, a numeric vector the same length of lon.
 #' Else, a list with vectors `lon` and `group`.
@@ -25,7 +25,15 @@
 #'     geom_path()
 #'
 #' @export
-ConvertLongitude <- function(lon, group, from = waiver()) {
+ConvertLongitude <- function(lon, group = NULL, from = NULL) {
+    checks <- makeAssertCollection()
+
+    assertNumeric(lon, add = checks, lower = -180, upper = 360)
+    assertVector(group, len = length(lon), null.ok = TRUE, add = checks)
+    assert_choice(from, c(180, 360), null.ok = TRUE)
+
+    reportAssertions(checks)
+
     if (all(is.na(lon))) return(lon)
 
     m <- min(lon, na.rm = TRUE)
@@ -38,16 +46,16 @@ ConvertLongitude <- function(lon, group, from = waiver()) {
     lon180 <- FALSE
 
     new.lon <- lon
-    if (is.waive(from) || from == 180) {
+    if (is.null(from) || from == 180) {
         lon180 <- which(lon < 0)
         new.lon[lon180] <- new.lon[lon180] + 360
     }
-    if (is.waive(from) || from == 360) {
+    if (is.null(from) || from == 360) {
         lon360 <- which(lon > 180)
         new.lon[lon360] <- new.lon[lon360] - 360
     }
 
-    if (hasArg(group)) {
+    if (!is.null(group)) {
         group[lon360 | lon180] <- paste0(group[lon360 | lon180], "_2")
         return(list(lon = new.lon, group = group))
     }

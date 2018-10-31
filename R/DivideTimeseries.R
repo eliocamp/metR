@@ -28,6 +28,9 @@
 #' @import ggplot2
 #' @import gridExtra
 DivideTimeseries <- function(g, x, n = 2, xlab = "x", ylab = "y") {
+    warning("'DivideTimeseries' is deprecated, use ggwrap instead",
+            ' (https://github.com/wilkox/ggwrap)')
+
     M <- max(x)
     m <- min(x)
     step <- (M - m)/n

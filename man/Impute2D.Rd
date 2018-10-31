@@ -13,9 +13,6 @@ Impute2D(formula, data = NULL, method = "interpolate")
 
 \item{method}{"interpolate" for interpolation, a numeric for constant imputation
 or a function that takes a vector and returns a number (like \link{mean})}
-
-\item{extraplate}{Used only for interpolation. Logical indicating if
-extrapolation be used outside of the convex hull determined by the data points.}
 }
 \description{
 Provides methods for (soft) imputation of missing values.

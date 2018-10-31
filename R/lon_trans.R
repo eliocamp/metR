@@ -46,6 +46,7 @@ lon360_trans <- function() {
 }
 
 #' @export
+#' @rdname lon_trans
 lon180 <- function(lon) {
     lower <- lon[is.finite(lon)] == -180
     lon[!lower] <- lon[!lower] %% 360
@@ -55,6 +56,7 @@ lon180 <- function(lon) {
 }
 
 #' @export
+#' @rdname lon_trans
 lon360 <- function(lon) {
     upper <- lon[is.finite(lon)] == 360
     lon[!upper] <- (lon[!upper] + 180) %% 360 - 180

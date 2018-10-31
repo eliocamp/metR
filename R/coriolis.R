@@ -12,6 +12,7 @@
 #'
 #' @export
 coriolis <- function(lat) {
+    assertNumeric(lat, -90, 90)
     2*.omega*sin(lat*pi/180)
 }
 
@@ -23,6 +24,7 @@ f <- coriolis
 #' @export
 #' @rdname  coriolis
 coriolis.dy <- function(lat, a = 6371000) {
+    assertNumeric(lat, -90, 90)
     2*.omega*cos(lat*pi/180)/a
 }
 

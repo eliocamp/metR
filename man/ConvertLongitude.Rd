@@ -4,7 +4,7 @@
 \alias{ConvertLongitude}
 \title{Converts between longitude conventions}
 \usage{
-ConvertLongitude(lon, group, from = waiver())
+ConvertLongitude(lon, group = NULL, from = NULL)
 }
 \arguments{
 \item{lon}{numeric vector of longitude}
@@ -12,7 +12,7 @@ ConvertLongitude(lon, group, from = waiver())
 \item{group}{optional vector of groups (the same length as longitude)
 that will be split on the edges (see examples)}
 
-\item{from}{optional explicitly say from which convension to convert}
+\item{from}{optionally explicitly say from which convension to convert}
 }
 \value{
 If \code{group} is missing, a numeric vector the same length of lon.

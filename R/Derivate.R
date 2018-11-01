@@ -66,13 +66,13 @@
 #'                  color = "red")
 #'
 #' @family meteorology functions
-#' @import data.table Formula formula.tools
+#' @import data.table Formula formula.tools checkmate
 #' @export
 Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = FALSE,
                      sphere = FALSE, a = 6371000) {
     checks <- makeAssertCollection()
 
-    assertFormula(formula, add = checks)
+    checkmate::assertFormula(formula, add = checks)
     assertDataFrame(data, null.ok = TRUE, add = checks)
     assertCount(order, positive = TRUE, add = checks)
     assertFlag(fill, add = checks)

@@ -310,18 +310,18 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 #&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01  0.00000
 #&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01  0.00000
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01  0.00000
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01  0.00000</div><div class='input'><span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span>(<span class='no'>gh.z</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date     gh.z  u          v
-#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 13.67219 NA  1.0807091
-#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 12.34968 NA  0.5513294
-#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 12.05939 NA  0.0661829
-#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01 12.15607 NA -0.2976979
-#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01 12.93024 NA -0.7498781
-#&gt;   ---                                                           
-#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.0000000
-#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.0000000
-#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.0000000
-#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.0000000
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.0000000</div><div class='input'>
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01  0.00000</div><div class='input'><span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span>(<span class='no'>gh.z</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date     gh.z  u           v
+#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 13.67219 NA  1.08181190
+#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 12.34968 NA  0.55189199
+#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 12.05939 NA  0.06625043
+#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01 12.15607 NA -0.29800162
+#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01 12.93024 NA -0.75064329
+#&gt;   ---                                                            
+#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.00000000
+#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.00000000
+#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.00000000
+#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.00000000
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.00000000</div><div class='input'>
 (<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>geopotential</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'>geom_arrow</span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlon</a></span>(<span class='no'>u</span>, <span class='no'>lat</span>), <span class='kw'>dy</span> <span class='kw'>=</span> <span class='fu'><a href='spherical.html'>dlat</a></span>(<span class='no'>v</span>)), <span class='kw'>skip.x</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>skip.y</span> <span class='kw'>=</span> <span class='fl'>2</span>,
                <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +

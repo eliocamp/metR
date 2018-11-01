@@ -205,18 +205,18 @@ path with <a href='as.path.html'>as.path</a> (see Examples)</p>
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01       NA
 #&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01       NA</div><div class='input'>
 <span class='co'># Interpolate multiple values</span>
-<span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date   gh.new  u          v
-#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01       NA NA  1.0807091
-#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01       NA NA  0.5513294
-#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01       NA NA  0.0661829
-#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01       NA NA -0.2976979
-#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01       NA NA -0.7498781
-#&gt;   ---                                                           
-#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 2715.936 NA  0.0000000
-#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01       NA NA  0.0000000
-#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01       NA NA  0.0000000
-#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01       NA NA  0.0000000
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01       NA NA  0.0000000</div><div class='input'><span class='no'>interpolated</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>Interpolate</span>(<span class='no'>u</span> <span class='kw'>|</span> <span class='no'>v</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='no'>x.out</span>, <span class='no'>y.out</span>)]
+<span class='no'>geopotential</span>[, <span class='fu'>c</span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date   gh.new  u           v
+#&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01       NA NA  1.08181190
+#&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01       NA NA  0.55189199
+#&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01       NA NA  0.06625043
+#&gt;    4:   7.5 -22.5 700 3162.323 1990-01-01       NA NA -0.29800162
+#&gt;    5:  10.0 -22.5 700 3163.097 1990-01-01       NA NA -0.75064329
+#&gt;   ---                                                            
+#&gt; 4028: 347.5 -90.0 700 2715.936 1990-01-01 2715.936 NA  0.00000000
+#&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01       NA NA  0.00000000
+#&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01       NA NA  0.00000000
+#&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01       NA NA  0.00000000
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01       NA NA  0.00000000</div><div class='input'><span class='no'>interpolated</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>Interpolate</span>(<span class='no'>u</span> <span class='kw'>|</span> <span class='no'>v</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='no'>x.out</span>, <span class='no'>y.out</span>)]
 
 <span class='co'># Interpolate values following a path</span>
 <span class='no'>lats</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(-<span class='fl'>34</span>, -<span class='fl'>54</span>, -<span class='fl'>30</span>)   <span class='co'># start and end latitudes</span>

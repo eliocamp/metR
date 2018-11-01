@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>metR: Tools for Easier Analysis of Meteorological Fields — metR-package • metR</title>
+<title>metR: Tools for Easier Analysis of Meteorological Fields — metR • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="metR: Tools for Easier Analysis of Meteorological Fields — metR-package" />
+<meta property="og:title" content="metR: Tools for Easier Analysis of Meteorological Fields — metR" />
 
 <meta property="og:description" content="Many useful functions and extensions for dealing
     with meteorological data in the tidy data framework. Extends ggplot2
@@ -120,7 +120,7 @@
     <div class="page-header">
     <h1>metR: Tools for Easier Analysis of Meteorological Fields</h1>
     <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/metR-package.R'><code>R/metR-package.R</code></a></small>
-    <div class="hidden name"><code>metR-package.Rd</code></div>
+    <div class="hidden name"><code>metR.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -133,6 +133,20 @@
     </div>
 
         
+    <h2 class="hasAnchor" id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
+
+    
+    <p>Conceptually it's divided into <em>visualization tools</em> and <em>data tools</em>.
+The former are geoms, stats and scales that help with plotting using
+ggplot2, such as <a href='geom_contour_fill.html'>stat_contour_fill</a> or <a href='scale_longitude.html'>scale_y_level</a>, while the
+later are functions for common data processing tools in the atmospheric
+sciences, such as <a href='Derivate.html'>Derivate</a> or <a href='EOF.html'>EOF</a>; these are implemented to work in the
+data.table paradigm, but also work with regular data frames.</p>
+<p>To get started, check the vignettes:</p><ul>
+<li><p>Visualization Tools: <code><a href='../articles/Visualization-tools.html'>vignette("Visualization-tools", package = "metR")</a></code></p></li>
+<li><p>Working with Data: <code><a href='../articles/Working-with-data.html'>vignette("Working-with-data", package = "metR")</a></code></p></li>
+</ul>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Useful links:</p><ul>
@@ -146,6 +160,8 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
+      <li><a href="#overview">Overview</a></li>
+
       <li><a href="#see-also">See also</a></li>
           </ul>
 

@@ -131,7 +131,9 @@
 <a class="sourceLine" id="cb3-20" data-line-number="20"><span class="st">    </span><span class="kw"><a href="reference/scale_divergent.html">scale_fill_divergent</a></span>(<span class="dt">name =</span> <span class="st">"AAO pattern"</span>, </a>
 <a class="sourceLine" id="cb3-21" data-line-number="21">                         <span class="dt">breaks =</span> <span class="kw"><a href="reference/MakeBreaks.html">MakeBreaks</a></span>(binwidth),</a>
 <a class="sourceLine" id="cb3-22" data-line-number="22">                         <span class="dt">guide =</span> <span class="kw"><a href="reference/guide_colourstrip.html">guide_colorstrip</a></span>()) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span>()</a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt; Warning in WrapCircular(data, "x", xwrap): WrapCircular is deprecated, use</span></a>
+<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt; ggperiodic::wrap instead</span></a></code></pre></div>
 <p><img src="reference/figures/field-1.png" width="700"></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># AAO signal</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">g &lt;-<span class="st"> </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(aao<span class="op">$</span>right, <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(date, gh.t.w)) <span class="op">+</span></a>

@@ -21,7 +21,10 @@ Impute2D <- function(formula, data = NULL, method = "interpolate") {
     checks <- makeAssertCollection()
     assertClass(formula, "formula", add = checks)
     assertDataFrame(data, null.ok = TRUE, add = checks)
-    assertMultiClass(method, c("character", "numeric", "function"), add = checks)
+    assert(
+        checkClass(method, "character"),
+        checkClass(method, "numeric"),
+        checkClass(method, "function"))
 
     if (!is.function(method)) {
         assertVector(method, len = 1, add = checks)

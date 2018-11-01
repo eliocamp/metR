@@ -74,10 +74,9 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
                       validation = NULL, verbose = interactive()) {
     checks <- makeAssertCollection()
 
-    assertClass(formula, "formula", add = checks)
     assertCharacter(value.var, len = 1, null.ok = TRUE, any.missing = FALSE,
                     add = checks)
-    assertDataFrame(data, null.ok = TRUE, add = checks)
+    assertMultiClass(data, c("data.frame", "matrix"), null.ok = TRUE, add = checks)
     assertCount(max.eof, null.ok = TRUE, add = checks)
     assertCount(min.eof, add = checks)
     assertNumber(tol, add = checks)
@@ -89,6 +88,8 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
 
     # Build matrix if necessary.
     if (is.null(data) | is.data.frame(data)) {
+        assertClass(formula, "formula")
+
         if (!is.null(value.var)) {
             if (is.null(data)) stop("data must not be NULL if value.var is not NULL")
             data <- copy(data)

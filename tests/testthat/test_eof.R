@@ -51,8 +51,7 @@ test_that("EOF rotates", {
 })
 
 test_that("EOF fails gracefully", {
-    expect_error(EOF(gh ~ lon + lat | date, data = geopotential, fill = "a"),
-                 "fill must be numeric or NULL")
+    expect_error(EOF(gh ~ lon + lat | date, data = geopotential, fill = "a"))
     expect_error(EOF(gh ~ lon1 + lat2 | date, data = geopotential),
                  "Columns not found in data: lon1, lat2")
     expect_error(EOF(lon1 + lat2 ~ date, value.var = "gh"),

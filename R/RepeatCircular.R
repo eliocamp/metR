@@ -42,6 +42,7 @@
 #' @export
 #' @import data.table
 WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
+    .Deprecated("ggperiodic::wrap")
     x <- as.data.table(x)
     setorderv(x, circular)
 

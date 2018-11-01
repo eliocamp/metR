@@ -27,7 +27,7 @@ Creates a  mask
 \examples{
 
 # Make a sea-land mask
-mask <- temperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon, lat))]
+mask <- temperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon[1], lat))]
 temperature <- temperature[mask, on = c("lon", "lat")]
 
 # Take the temperature difference between land and ocean

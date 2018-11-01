@@ -59,6 +59,15 @@
 #' @importFrom fields interp.surface
 #' @import data.table Formula formula.tools
 Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = FALSE) {
+    checks <- makeAssertCollection()
+
+    assertFormula(formula, add = checks)
+    assertDataFrame(data, null.ok = TRUE, add = checks)
+    assertFlag(grid, add = checks)
+    assertFlag(path, add = checks)
+
+    reportAssertions(checks)
+
     if (is.list(x.out) == TRUE) {
         path <- x.out$path %||% path
         y.out <- x.out[[2]]

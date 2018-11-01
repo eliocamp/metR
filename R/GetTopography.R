@@ -38,16 +38,27 @@
 #' @import data.table
 GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution = 3.5,
                           cache = TRUE, file.dir = tempdir(), verbose = interactive()) {
-    d <- 1/60
-    if (length(resolution) == 1) resolution[2] <- resolution[1]
+    checks <- makeAssertCollection()
+    assertNumber(lon.west, finite = TRUE, lower = 0, upper = 360, add = checks)
+    assertNumber(lon.east, finite = TRUE, lower = 0, upper = 360, add = checks)
+    assertNumber(lat.north, finite = TRUE, lower = -90, upper = 90, add = checks)
+    assertNumber(lat.south, finite = TRUE, lower = -90, upper = 90, add = checks)
+    assertNumeric(resolution, lower = 1/60, finite = TRUE, max.len = 2, add = checks)
+    assertFlag(cache, add = checks)
+    assertFlag(verbose, add = checks)
+    reportAssertions(checks)
 
-    # Check arguments
-    if (min(resolution) < 1/60) stop("Resolution can't be smaller than 1 minute.")
+    if (isTRUE(cache)) {
+        assertAccess(file.dir, add = checks)
+    }
+
+    reportAssertions(checks)
+
     if (lat.north < lat.south) stop("lat.north can't be smaller than lat.south")
     if (lon.west > lon.east) stop("lon.east can't be smaller than lon.west")
 
-    if (any(c(lat.north, lat.south) < -90,
-            c(lat.north, lat.south) > 90)) stop("Latitude must be between -90 and 90.")
+    d <- 1/60
+    if (length(resolution) == 1) resolution[2] <- resolution[1]
 
     # Check antimeridian crossing
     if (lon.west < 180 & lon.east > 180) {

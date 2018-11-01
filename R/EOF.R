@@ -121,12 +121,25 @@
 #' @importFrom stats as.formula quantile varimax
 EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
-                rotate = FALSE, suffix = "PC", fill = 0) {
-    if (!is.null(fill)) {
-        if (!(is.na(fill) | is.null(fill) | is.finite(fill))) {
-            stop("fill must be numeric or NULL")
-        }
-    }
+                rotate = FALSE, suffix = "PC", fill = NULL) {
+    checks <- makeAssertCollection()
+
+    assertFormula(formula, add = checks)
+    assertCharacter(value.var, len = 1, null.ok = TRUE, any.missing = FALSE,
+                    add = checks)
+    assertDataFrame(data, null.ok = TRUE, add = checks)
+    assertIntegerish(n, lower = 1, null.ok = TRUE, add = checks)
+    assertCount(B, add = checks)
+    assertNumeric(probs, lower = 0, upper = 1, any.missing = FALSE, add = checks)
+    assertCharacter(names(probs), unique = TRUE, any.missing = FALSE,
+                    null.ok = TRUE, min.chars = 1,
+                    add = checks)
+    assertFlag(rotate, add = checks)
+    assertCharacter(suffix, len = 1, any.missing = FALSE, add = checks)
+    assertNumber(fill, finite = TRUE, null.ok = TRUE, add = checks)
+
+    reportAssertions(checks)
+
     if (!is.null(value.var)) {
         if (is.null(data)) stop("data must not be NULL if value.var is not NULL")
         data <- copy(data)

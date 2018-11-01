@@ -8,7 +8,8 @@
 #'
 #' @details
 #' This is "soft" imputation because the imputed values are not supposed to be
-#' representative but just to work with some algorithm. The method use if
+#' representative of the missing data but just filling for algorithms that need
+#' complete data (in particular, contouring). The method used if
 #' `method = "interpolate"` is to do simple linear interpolation in both the x and y
 #' direction and then average the result.
 #'
@@ -17,6 +18,17 @@
 #' @export
 #' @import data.table
 Impute2D <- function(formula, data = NULL, method = "interpolate") {
+    checks <- makeAssertCollection()
+    assertFormula(formula, add = checks)
+    assertDataFrame(data, null.ok = TRUE, add = checks)
+    assertMultiClass(method, c("character", "numeric", "function"), add = checks)
+
+    if (!is.function(method)) {
+        assertVector(method, len = 1, add = checks)
+    }
+
+    reportAssertions(checks)
+
     dep.names <- formula.tools::lhs.vars(formula)
     if (length(dep.names) == 0) stop("LHS of formula must have at least one variable")
 

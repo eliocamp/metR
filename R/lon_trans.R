@@ -17,7 +17,7 @@
 #' # Same as
 #' g + scale_x_longitude(trans = "lon180")
 #'
-#' @export
+# #' @export
 #' @importFrom scales trans_new
 lon_trans <- function(to = c(180, 360)) {
     if (to[1] == 180) {
@@ -33,20 +33,20 @@ lon_trans <- function(to = c(180, 360)) {
     }
 }
 
-#' @export
-#' @rdname lon_trans
+# #' @export
+# #' @rdname lon_trans
 lon180_trans <- function() {
     lon_trans(180)
 }
 
-#' @export
-#' @rdname lon_trans
+# #' @export
+# #' @rdname lon_trans
 lon360_trans <- function() {
     lon_trans(360)
 }
 
-#' @export
-#' @rdname lon_trans
+# #' @export
+# #' @rdname lon_trans
 lon180 <- function(lon) {
     lower <- lon[is.finite(lon)] == -180
     lon[!lower] <- lon[!lower] %% 360
@@ -55,8 +55,8 @@ lon180 <- function(lon) {
     lon
 }
 
-#' @export
-#' @rdname lon_trans
+# #' @export
+# #' @rdname lon_trans
 lon360 <- function(lon) {
     upper <- lon[is.finite(lon)] == 360
     lon[!upper] <- (lon[!upper] + 180) %% 360 - 180
@@ -64,5 +64,4 @@ lon360 <- function(lon) {
     lon[trans] <- lon[trans] + 360
     lon
 }
-
 

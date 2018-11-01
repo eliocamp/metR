@@ -2,21 +2,9 @@
 % Please edit documentation in R/lon_trans.R
 \name{lon_trans}
 \alias{lon_trans}
-\alias{lon180_trans}
-\alias{lon360_trans}
-\alias{lon180}
-\alias{lon360}
 \title{Switch between longitude conventions}
 \usage{
 lon_trans(to = c(180, 360))
-
-lon180_trans()
-
-lon360_trans()
-
-lon180(lon)
-
-lon360(lon)
 }
 \arguments{
 \item{to}{convention to transform to.}

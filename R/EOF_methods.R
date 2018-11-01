@@ -8,6 +8,11 @@
 #'
 #' @export
 cut.eof <- function(x, n, ...) {
+    checks <- makeAssertCollection()
+    assertClass(x, "eof", add = checks)
+    assertCount(n, positive = TRUE, add = checks)
+    reportAssertions(checks)
+
     var <- attr(x, "suffix")
     value.var <- attr(x, "value.var")
     return(structure(lapply(as.list(x), function(x) {
@@ -21,6 +26,12 @@ cut.eof <- function(x, n, ...) {
 #' @export
 #' @importFrom stats screeplot
 screeplot.eof <- function(x, npcs = "all", type = NULL, main = NULL, ...) {
+    checks <- makeAssertCollection()
+    assertClass(x, "eof", add = checks)
+    assert(checkCharacter(npcs, fixed = "all", any.missing = FALSE, len = 1),
+        checkCount(npcs, positive = TRUE))
+    reportAssertions(checks)
+
     var <- attr(x, "suffix")
     r2 <- "r2"
     if (npcs[1] == "all") npcs <- as.numeric(unique(x$sdev[[var]]))
@@ -39,6 +50,11 @@ autoplot.eof <- function(object, npcs = "all", ...) {
 #' @export
 #' @importFrom stats predict
 predict.eof <- function(object, n = NULL, ...) {
+    checks <- makeAssertCollection()
+    assertClass(object, "eof", add = checks)
+    assertCount(n, positive = TRUE, null.ok = TRUE, add = checks)
+    reportAssertions(checks)
+
     ` %>% ` <- dplyr::`%>%`
 
     if(!is.null(n)) object <- cut(object, n)

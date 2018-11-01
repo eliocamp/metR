@@ -139,8 +139,53 @@ if(getRversion() >= "2.15.1") {
 }
 
 isFALSE <- function (x) {
-        is.logical(x) && length(x) == 1L && !is.na(x) && !x
+    is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
+
+.pasteand <- function(x) {
+    l <- length(x)
+    paste0(paste0(x[-l], collapse = ", ")," and ", x[l])
+}
+
+checkListSameLengh <- function(x, names = "x") {
+    l <- lengths(wave)
+    if (slow_equal(l)) {
+        return(TRUE)
+    }
+
+    if (isTRUE(names)) {
+        names <- .pasteand(names(x))
+    } else {
+        names <- paste0("Elements of ", names)
+    }
+
+    return(paste0(names, " must have the same length"))
+}
+
+assertListSameLength <- checkmate::makeAssertionFunction(checkListSameLengh)
+
+# fast_equal = inline::cxxfunction(signature(x = 'numeric', y = 'numeric'), '
+#   NumericVector var(x);
+#   double precision = as<double>(y);
+#
+#   for (int i = 0, size = var.size(); i < size; ++i) {
+#     if (var[i] - var[0] > precision || var[0] - var[i] > precision)
+#       return Rcpp::wrap(false);
+#   }
+#
+#   return Rcpp::wrap(true);
+# ', plugin = 'Rcpp')
+
+slow_equal <- function(x) diff(range(x)) < sqrt(.Machine$double.eps)
+
+checkSameLength <- function(x) {
+    if (!slow_equal(x)) {
+        return(paste0(.pasteand(names(x)), " must have the same length"))
+    }
+    return(TRUE)
+}
+
+assertSameLength <- checkmate::makeAssertionFunction(checkSameLength)
 
 
 # nocov end

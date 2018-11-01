@@ -45,6 +45,7 @@ reference:
       - GetSMNData
       - EOF
       - ImputeEOF
+      - Impute2D
       - Interpolate
       - waves
       - FitLm
@@ -60,6 +61,8 @@ reference:
       - JumpBy
       - ConvertLongitude
       - spherical
+      - as.path
+      - cut.eof
   - title: Datasets
     desc: sample datasets
     contents:

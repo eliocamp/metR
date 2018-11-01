@@ -16,7 +16,7 @@
 #' @examples
 #'
 #' # Make a sea-land mask
-#' mask <- temperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon, lat))]
+#' mask <- temperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon[1], lat))]
 #' temperature <- temperature[mask, on = c("lon", "lat")]
 #'
 #' # Take the temperature difference between land and ocean
@@ -45,7 +45,13 @@
 #' @import maptools
 #' @import sp
 MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
-    # Chek arguments
+    checks <- makeAssertCollection()
+    assertSameLength(c(lon = length(lon), lat = length(lat)), .var.name = "lon and lat",
+                     add = checks)
+    assertCharacter(mask, len = 1, add = checks)
+    assertNumeric(wrap, len = 2, add = checks)
+    reportAssertions(checks)
+
     seamask <- maps::map(paste0("maps::", mask), fill = TRUE, col = "transparent",
                          plot = FALSE, wrap = wrap)
     IDs <- vapply(strsplit(seamask$names, ":"), function(x) x[1], "")

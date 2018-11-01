@@ -30,6 +30,13 @@
 #' @export
 #' @family meteorology functions
 GeostrophicWind <- function(gh, lon, lat, cyclical = "guess", g = 9.8) {
+    assertNumeric(gh)
+    assertNumeric(lon)
+    assertNumeric(lat)
+    lengths <- c(gh = length(gh), lon = length(lon), lat = length(lat))
+    assertSameLength(lengths)
+    assertNumber(g, finite = TRUE)
+
     if (cyclical == "guess") {
         cyclical <- FALSE
         rlon <- diff(range(lon)) + ggplot2::resolution(lon, zero = FALSE)

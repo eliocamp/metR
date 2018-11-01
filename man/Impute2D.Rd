@@ -19,7 +19,8 @@ Provides methods for (soft) imputation of missing values.
 }
 \details{
 This is "soft" imputation because the imputed values are not supposed to be
-representative but just to work with some algorithm. The method use if
+representative of the missing data but just filling for algorithms that need
+complete data (in particular, contouring). The method used if
 \code{method = "interpolate"} is to do simple linear interpolation in both the x and y
 direction and then average the result.
 

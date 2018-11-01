@@ -11,10 +11,10 @@
 \usage{
 FitWave(y, k = 1)
 
-BuildWave(x, amplitude, phase, k, wave = list(k = k, amplitude =
-  amplitude, phase = phase), sum = TRUE)
+BuildWave(x, amplitude, phase, k, wave = list(amplitude = amplitude,
+  phase = phase, k = k), sum = TRUE)
 
-FilterWave(x, k, action = sign(k[k != 0][1]))
+FilterWave(y, k, action = sign(k[k != 0][1]))
 }
 \arguments{
 \item{y}{numeric vector to transform}

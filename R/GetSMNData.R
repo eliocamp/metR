@@ -53,6 +53,13 @@
 #' @export
 #' @import RCurl
 GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FALSE) {
+    checks <- makeAssertCollection()
+    assertDate(as.Date(date), upper = as.Date(lubridate::now()),
+               .var.name = "date", add = checks)
+    assertChoice(type, c("hourly", "daily", "radiation"), add = checks)
+    assertFlag(bar, add = checks)
+    reportAssertions(checks)
+
     no_data <- vector()
 
     if (bar == TRUE) pb <- txtProgressBar(min = 0, max = length(date), style = 3)

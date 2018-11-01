@@ -100,6 +100,7 @@
 #' @aliases BuildWave FitWave
 #' @export
 FitWave <- function(y, k = 1) {
+    assertIntegerish(k, lower = 0, any.missing = FALSE)
     f <- fft(y)
     l <- length(f)
     f <- (f/l)[1:ceiling(l/2)]
@@ -117,8 +118,8 @@ FitWave <- function(y, k = 1) {
     r[1] <- 0
     k <- k + 1
 
-    ret <- list(k - 1, amp[k], phase[k], r[k])
-    names(ret) <- c("k", "amplitude", "phase", "r2")
+    ret <- list(amp[k], phase[k], k - 1, r[k])
+    names(ret) <- c("amplitude", "phase", "k", "r2")
     return(ret)
 }
 
@@ -126,8 +127,11 @@ FitWave <- function(y, k = 1) {
 #' @rdname waves
 #' @export
 BuildWave <- function(x, amplitude, phase, k,
-                       wave = list(k = k, amplitude = amplitude, phase = phase),
+                       wave = list(amplitude = amplitude, phase = phase, k = k),
                        sum = TRUE) {
+    assertListSameLength(wave, names = TRUE)
+    assertFlag(sum)
+
     if (sum == TRUE) {
         y <- lapply(seq_along(wave$k),
                     function(i) wave$amplitude[i]*cos((x - wave$phase[i])*wave$k[i]))
@@ -143,16 +147,17 @@ BuildWave <- function(x, amplitude, phase, k,
 
 #' @rdname waves
 #' @export
-FilterWave <- function(x, k, action = sign(k[k != 0][1])) {
-    f <- fft(x)
+FilterWave <- function(y, k, action = sign(k[k != 0][1])) {
+    assertIntegerish(k, any.missing = FALSE)
+    f <- fft(y)
     # Need to remove the k+1 spots (because index 1 is k = 0)
     # and the N - k + 1 because of symmetry.
     k1 <- abs(k)
     if (is.na(action)) action <- 1
-    k1 <- c(k1 + 1, length(x) - k1[k1 != 0] + 1)
+    k1 <- c(k1 + 1, length(y) - k1[k1 != 0] + 1)
     index <- -action*k1
     f[index] <- 0 + 0i
-    Re(fft(f, inverse = T))/length(x)
+    Re(fft(f, inverse = T))/length(y)
 }
 
 

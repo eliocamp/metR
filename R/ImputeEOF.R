@@ -76,7 +76,9 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
 
     assertCharacter(value.var, len = 1, null.ok = TRUE, any.missing = FALSE,
                     add = checks)
-    assertMultiClass(data, c("data.frame", "matrix"), null.ok = TRUE, add = checks)
+    assert(
+        checkClass(data, "data.frame", null.ok = TRUE),
+        checkClass(data, "matrix", null.ok = TRUE))
     assertCount(max.eof, null.ok = TRUE, add = checks)
     assertCount(min.eof, add = checks)
     assertNumber(tol, add = checks)

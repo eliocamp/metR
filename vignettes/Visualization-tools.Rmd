@@ -3,8 +3,7 @@ title: "Visualization tools"
 author: "Elio Campitelli"
 date: "`r Sys.Date()`"
 output: 
-    rmarkdown::html_vignette:
-        fig_width: 7
+    rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Visualization tools}
   %\VignetteEngine{knitr::rmarkdown}

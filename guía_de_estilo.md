@@ -41,12 +41,12 @@ ppNcepSpeedy    # ¡no usar CamelCase ni camelCase!
 Para ser consistente entre distintas partes del código, estos son algunos nombres de variables que **tienen** que respetarse so pena de quilombo en el código y tener que acordarse muchos más nombres. 
 
 * Latitud y Longitud son `lat` y `lon`. No usar ` long` como un troglodita (aunque técnicamente "long" significa largo, que no está tan lejos de "longitud"). La longitud va de 0 a 360 (para que sea más fácil proyectar con pacífico central) pero se la grafica en -180:180 (para eso, usar `scale_x_longitude()` y `scale_y_longitude()`).
-* La fecha es `date`. No usar `time` ni otra similar. El formato **siempre** debe ser YYYY-MM-DD HH:MM:SS. Siempre codificarlo como una clase `date` en caso de fechas sin hora y ` POSIXct` en caso de fechas con hora.
+* La fecha es `time`. No usar `date` ni otra similar. El formato **siempre** debe ser YYYY-MM-DD HH:MM:SS. Siempre codificarlo como una clase `datetime` de lubridate.
 * Los meses **siempre** se codifican el 1 al 12 y como `factor` ordenado. Todavía no decido si conviene tener diciembre o enero como el primer mes. 
 * Variables meteorológicas:
   
     * **gh**: altura geopotencial
-    * **u**: viento zonal (no usar para viento o flujo que NO sea meridional)
+    * **u**: viento zonal
     * **v**: viento meridional (no usar para viento o flujo que NO sea meridional)
     * **V**: magnitud del viento
     * **angle**: ángulo del viento
@@ -67,7 +67,7 @@ Para ser consistente entre distintas partes del código, estos son algunos nombr
 
 * Las derivadas se nombran agregando el sufijo `dx` al final de la variable. Derivadas de mayor orden se nombran repitiendo la coordenada que deriva (ej. `gh.dxx`). Las derivadas cruzadas se escriben siempre en orden x, y, z, t (ej. es `gh.dxy` en vez de `gh.dyx`).
 
-Como aclaración, es importante modificar todo dato leído de fuentes externas para que se ajuste a estos criterios. No hace ni siquiera una conversión de unidades antes de tener los datos prolijos. 
+Como aclaración, es importante modificar todo dato leído de fuentes externas para que se ajuste a estos criterios. No hacer ni siquiera una conversión de unidades antes de tener los datos prolijos. 
 
 Si es neceario guardar datos en el disco (como resutlados de computaciones largas) usar siempre `saveRDS()` en vez de `save()` y la extensión es ".Rds". 
 
@@ -170,7 +170,7 @@ if (i == 5)
     stop("i = 5!") knit
 ```
 
-Usar ` <-` para asignación (esto es lo más controversial de la guía ya que hubiera preferido aprender R usando ` =`; pero lo hecho hecho está y el código usando ` =` me resulta feo). Tratar de no usar nunca la asignación ` ->`. 
+Usar ` <-` para asignación (esto es lo más controversial de la guía ya que hubiera preferido aprender R usando ` =`; pero lo hecho hecho está y el código usando ` =` me resulta feo). 
 
 Respetar la identación usando 4 espacios. Se puede poner espaciado extra para alinear asignación de varias variables o la asiganción de muchos argumentos en una función. Acá está bien ser flexible si el código termina con demasiado espaciado innecesario. Algunos ejempos donde puede obviarse es al usar ` invisible()` para arreglar los problemas entre data.table y knitr o código muy largo dentro del *j* de un data.table. 
 
@@ -191,7 +191,7 @@ En lo posible, usar el operador `%>%` para evitarlas. Si no se puede, usar siemp
 x <- 5
 y <- x + 5
 
-ncep[, date := paste0(year, month, day, sep = "-")]
+ncep[, time := paste0(year, month, day, sep = "-")]
 
 ice.grid <- readBin(...) %>%
     melt() %>%

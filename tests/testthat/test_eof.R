@@ -21,7 +21,7 @@ test_that("EOF changes probs", {
     expect_identical({
         data(geopotential)
         round(EOF(gh ~ lat + lon | date, data = geopotential, n = 1, B = 10, probs = c(midd = 0.5))$sdev$midd)
-    }, 2065414)
+    }, 1524903)
 })
 
 
@@ -46,7 +46,7 @@ test_that("EOF works inside data.table", {
 test_that("EOF rotates", {
     expect_identical(
         round(EOF(gh ~ lon + lat | date, data = geopotential, n = 1:2, rotate = TRUE)$sdev$sd),
-        c(1934142, 724225)
+        c(1424982, 542271)
     )
 })
 

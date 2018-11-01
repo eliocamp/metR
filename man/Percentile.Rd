@@ -20,15 +20,6 @@ Computes percentiles.
 x <- rnorm(100)
 p <- Percentile(x)
 
-# Number of extreme temperature station-days
-library(data.table)
-claris <- copy(claris)
-claris[!is.na(max), percentile := Percentile(max), by = .(id, month(date))]
-extreme.days <- claris[, .(n = sum(percentile > 0.90, na.rm = TRUE)),
-                       by = .(year(date))]
-library(ggplot2)
-ggplot(extreme.days, aes(year, n)) +
-    geom_line()
 }
 \seealso{
 Other utilities: \code{\link{Anomaly}},

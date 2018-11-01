@@ -67,6 +67,5 @@ reference:
     desc: sample datasets
     contents:
       - geopotential
-      - claris
       - temperature
 

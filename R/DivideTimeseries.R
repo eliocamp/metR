@@ -17,11 +17,11 @@
 #' @examples
 #' library(ggplot2)
 #' library(data.table)
-#' gdata <- claris[year(date) == 2009][id == id[1]]
-#' g <- ggplot(gdata, aes(date, max)) +
+#' gdata <- geopotential[lat == -30 & lon == 0]
+#' g <- ggplot(gdata, aes(date, gh)) +
 #'     geom_line() +
 #'     geom_smooth() +
-#'     scale_x_date(date_breaks = "1 month", date_labels = "%b")
+#'     scale_x_date(date_breaks = "1 year", date_labels = "%b")
 #' DivideTimeseries(g, gdata$date, n = 2, "Date", "Max Temperature")
 #' @family ggplot2 helpers
 #' @export

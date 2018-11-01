@@ -57,21 +57,39 @@ ReadNetCDF <- function(file, vars = NULL,
     ncdf4.available <- requireNamespace("ncdf4", quietly = TRUE)
     udunits2.available <- requireNamespace("udunits2", quietly = TRUE)
     if (!ncdf4.available & !udunits2.available) {
-        stop("ReadNetCDF needs packages 'ncdf4' and 'udunits2'. Install them with 'install.packages(c(\"ncdf4\", \"udunits2\"))'")
+        stop("ReadNetCDF needs packages 'ncdf4' and 'udunits2'. ",
+             "Install them with 'install.packages(c(\"ncdf4\", \"udunits2\"))'")
     }
 
     if (!ncdf4.available) {
-        stop("ReadNetCDF needs package'ncdf4'. Install it with 'install.packages(\"ncdf4\")'")
+        stop("ReadNetCDF needs package'ncdf4'. ",
+             "Install it with 'install.packages(\"ncdf4\")'")
     }
 
     if (!udunits2.available) {
-        stop("ReadNetCDF needs package 'udunits2'. Install it with 'install.packages(\"udunits2\")'")
+        stop("ReadNetCDF needs package 'udunits2'. ",
+             "Install it with 'install.packages(\"udunits2\")'")
     }
 
-    dec <- getOption("OutDec")
-    options(OutDec = ".")
-    on.exit(options(OutDec = dec))
+    checks <- makeAssertCollection()
+    assertAccess(file, "r", add = checks)
+    assertCharacter(vars, null.ok = TRUE, any.missing = FALSE, unique = TRUE,
+                    add = checks)
+    assertChoice(out, c("data.frame", "vector", "array", "vars"), add = checks)
+    assertList(subset, types = "vector", null.ok = TRUE, add = checks)
+    assertNamed(subset, c("named", "unique"), add = checks)
+    assertFlag(key, add = checks)
+
+    reportAssertions(checks)
+
     ncfile <- ncdf4::nc_open(file)
+    dec <- getOption("OutDec")
+    # Dejemos todo prolijo antes de salir.
+    options(OutDec = ".")
+    on.exit({
+        options(OutDec = dec)
+        ncdf4::nc_close(ncfile)
+        })
 
     if (is.null(vars)) {
         vars <- names(ncfile$var)
@@ -162,14 +180,11 @@ ReadNetCDF <- function(file, vars = NULL,
     }
 
     if (out[1] == "array") {
-        ncdf4::nc_close(ncfile)
-        # options(OutDec = dec)
         return(nc)
     } else if (out[1] == "vector") {
         ncdf4::nc_close(ncfile)
         nc <- lapply(seq_along(nc), function(x) c(nc[[x]]))
         names(nc) <- names(vars)
-        # options(OutDec = dec)
         return(nc)
     } else {
         first.var <- which.max(dim.length)
@@ -194,9 +209,8 @@ ReadNetCDF <- function(file, vars = NULL,
 
         if (key == TRUE) data.table::setkeyv(nc.df, names(dimnames(nc[[1]])))
     }
-    # Dejemos todo prolijo antes de salir.
-    ncdf4::nc_close(ncfile)
-    # options(OutDec = dec)
+
+
     return(nc.df)
 }
 

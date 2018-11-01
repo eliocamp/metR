@@ -7,6 +7,7 @@
 #' @param lat latitude in degrees
 #' @param cyclical boundary condition for longitude (see details)
 #' @param g acceleration of gravity
+#' @param a Earth's radius
 #'
 #' @details
 #' If `cyclical = "guess"` (the default) the function will try to guess if `lon`
@@ -29,13 +30,16 @@
 #'
 #' @export
 #' @family meteorology functions
-GeostrophicWind <- function(gh, lon, lat, cyclical = "guess", g = 9.8) {
-    assertNumeric(gh)
-    assertNumeric(lon)
-    assertNumeric(lat)
+GeostrophicWind <- function(gh, lon, lat, cyclical = "guess", g = 9.81, a = 6371000) {
+    checks <- makeAssertCollection()
+    assertNumeric(gh, add = checks)
+    assertNumeric(lon, add = checks)
+    assertNumeric(lat, add = checks)
     lengths <- c(gh = length(gh), lon = length(lon), lat = length(lat))
-    assertSameLength(lengths)
-    assertNumber(g, finite = TRUE)
+    assertSameLength(lengths, add = checks)
+    assertNumber(g, finite = TRUE, add = checks)
+    assertNumber(a, finite = TRUE, add = checks)
+    reportAssertions(checks)
 
     if (cyclical == "guess") {
         cyclical <- FALSE
@@ -43,7 +47,8 @@ GeostrophicWind <- function(gh, lon, lat, cyclical = "guess", g = 9.8) {
         if (rlon == 360) cyclical <- TRUE
     }
 
-    gh.d <- Derivate(gh ~ lon + lat, sphere = TRUE, cyclical = c(cyclical, FALSE))
+    gh.d <- Derivate(gh ~ lon + lat, sphere = TRUE, cyclical = c(cyclical, FALSE),
+                     a = a)
     u <- -g*gh.d$gh.dlat/coriolis(lat)
     v <- g*gh.d$gh.dlon/coriolis(lat)
     return(list(ug = u, vg = v))

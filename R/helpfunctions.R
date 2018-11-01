@@ -187,6 +187,14 @@ checkSameLength <- function(x) {
 
 assertSameLength <- checkmate::makeAssertionFunction(checkSameLength)
 
+checkDateish <- function(x, ...) {
+    x <- try(as.Date(x), TRUE)
+    if (is.error(x)) {
+        return("Must be coercible to date")
+    }
+    checkDate(x, ...)
+}
 
+assertDateish <- checkmate::makeAssertionFunction(checkDateish)
 # nocov end
 

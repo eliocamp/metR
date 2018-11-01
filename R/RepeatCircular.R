@@ -43,6 +43,15 @@
 #' @import data.table
 WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
     .Deprecated("ggperiodic::wrap")
+
+    checks <- makeAssertCollection()
+    assertDataFrame(x, add = checks)
+    assertCharacter(circular, len = 1, any.missing = FALSE, add = checks)
+    assertNumeric(wrap, len = 2)
+    reportAssertions(checks)
+
+    if (nrow(x) == 0) return(x)
+
     x <- as.data.table(x)
     setorderv(x, circular)
 

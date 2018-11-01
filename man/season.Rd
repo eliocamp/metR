@@ -5,17 +5,17 @@
 \alias{AssignSeason}
 \title{Assign seasons to months}
 \usage{
-season(month, hemisphere = c("south", "north"), lang = c("en", "es"))
+season(x, hemisphere = c("south", "north"), lang = c("en", "es"))
 }
 \arguments{
-\item{month}{A numeric vector of months or a vector of dates.}
+\item{x}{A numeric vector of months or a vector of dates.}
 
 \item{hemisphere}{A character with the hemisphere for which to assign the seasons.}
 
 \item{lang}{Language to use.}
 }
 \value{
-A factor vector of the same length as \code{month} with the season of each
+A factor vector of the same length as \code{x} with the season of each
 month.
 }
 \description{

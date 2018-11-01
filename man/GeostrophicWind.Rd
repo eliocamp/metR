@@ -4,7 +4,8 @@
 \alias{GeostrophicWind}
 \title{Calculate geostrophic winds}
 \usage{
-GeostrophicWind(gh, lon, lat, cyclical = "guess", g = 9.8)
+GeostrophicWind(gh, lon, lat, cyclical = "guess", g = 9.81,
+  a = 6371000)
 }
 \arguments{
 \item{gh}{geopotential height}
@@ -16,6 +17,8 @@ GeostrophicWind(gh, lon, lat, cyclical = "guess", g = 9.8)
 \item{cyclical}{boundary condition for longitude (see details)}
 
 \item{g}{acceleration of gravity}
+
+\item{a}{Earth's radius}
 }
 \value{
 A named list with vectors for the zonal and meridional component of geostrophic

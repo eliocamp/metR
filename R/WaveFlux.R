@@ -6,6 +6,8 @@
 #' @param lon longitude (in degrees)
 #' @param lat latitude (in degrees)
 #' @param lev pressure level (in hPa)
+#' @param g acceleration of gravity
+#' @param a Earth's radius
 #'
 #' @details
 #' Calculates Plum-like wave activity fluxes
@@ -20,9 +22,21 @@
 #' @family meteorology functions
 #' @export
 #' @import data.table
-WaveFlux <- function(gh, u, v, lon, lat, lev) {
-    g  <- 9.81
-    a <- 6371000
+WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
+    checks <- makeAssertCollection()
+    assertNumeric(gh, add = checks)
+    assertNumeric(u, add = checks)
+    assertNumeric(v, add = checks)
+    assertNumeric(lon, add = checks)
+    assertNumeric(lat, add = checks)
+    assertNumber(lev, add = checks)
+    lengths <- c(gh = length(gh), lon = length(lon), lat = length(lat),
+                 y = length(u), v = length(v))
+    assertSameLength(lengths, add = checks)
+    assertNumber(g, finite = TRUE, add = checks)
+    assertNumber(a, finite = TRUE, add = checks)
+    reportAssertions(checks)
+
     p0 <- 100000    # normalizo a 100hPa
 
     # Todo en una data.table para que sea más cómodo.

@@ -1,11 +1,11 @@
 #' Assign seasons to months
 #'
-#' @param month A numeric vector of months or a vector of dates.
+#' @param x A numeric vector of months or a vector of dates.
 #' @param hemisphere A character with the hemisphere for which to assign the seasons.
 #' @param lang Language to use.
 #'
 #' @return
-#' A factor vector of the same length as \code{month} with the season of each
+#' A factor vector of the same length as \code{x} with the season of each
 #' month.
 #'
 #' @examples
@@ -15,12 +15,25 @@
 #'
 #' @aliases AssignSeason
 #' @export
-season <- function(month, hemisphere = c("south", "north"),
+season <- function(x, hemisphere = c("south", "north"),
                          lang = c("en", "es")) {
-
-    if (.is.somedate(month)) month <- lubridate::month(month)
-
+    checks <- makeAssertCollection()
+    assertCharacter(hemisphere, any.missing = FALSE, add = checks)
     hemisphere <- substr(tolower(hemisphere[[1]]), 1, 1)
+    assertChoice(hemisphere, c("s", "n"),
+                 .var.name = "first letter of 'hemisphere'", add = checks)
+    assertChoice(lang[1], c("en", "es"), .var.name = "lang", add = checks)
+    assertVector(x, any.missing = FALSE, add = checks)
+    assert(
+        checkIntegerish(x, lower = 1, upper = 12),
+        checkDateish(x),
+        .var.name = "month")
+
+    reportAssertions(checks)
+
+    if (is.character(x)) x <- as.Date(x)
+    if (.is.somedate(x)) x <- lubridate::x(x)
+
     if (lang[1] == "en") {
         sum <- "DJF" #"Summer"
 
@@ -38,7 +51,7 @@ season <- function(month, hemisphere = c("south", "north"),
     } else {
         seasons <- c(win, win, rep(c(spr, sum, aut), each = 3), win)
     }
-    return(factor(seasons[month], levels = c(sum, aut, win, spr)))
+    return(factor(seasons[x], levels = c(sum, aut, win, spr)))
 }
 
 #' @export

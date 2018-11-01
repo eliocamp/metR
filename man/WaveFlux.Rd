@@ -4,7 +4,7 @@
 \alias{WaveFlux}
 \title{Calculate wave-activity flux}
 \usage{
-WaveFlux(gh, u, v, lon, lat, lev)
+WaveFlux(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000)
 }
 \arguments{
 \item{gh}{geopotential height}
@@ -18,6 +18,10 @@ WaveFlux(gh, u, v, lon, lat, lev)
 \item{lat}{latitude (in degrees)}
 
 \item{lev}{pressure level (in hPa)}
+
+\item{g}{acceleration of gravity}
+
+\item{a}{Earth's radius}
 }
 \value{
 A list with elements: longitude, latitude, and the two horizontal components

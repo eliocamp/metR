@@ -71,13 +71,14 @@ ReadNetCDF <- function(file, vars = NULL,
              "Install it with 'install.packages(\"udunits2\")'")
     }
 
+    out <- out[1]
     checks <- makeAssertCollection()
     assertAccess(file, "r", add = checks)
     assertCharacter(vars, null.ok = TRUE, any.missing = FALSE, unique = TRUE,
                     add = checks)
     assertChoice(out, c("data.frame", "vector", "array", "vars"), add = checks)
     assertList(subset, types = "vector", null.ok = TRUE, add = checks)
-    assertNamed(subset, c("named", "unique"), add = checks)
+    assertNamed(subset, c("unique"), add = checks)
     assertFlag(key, add = checks)
 
     reportAssertions(checks)

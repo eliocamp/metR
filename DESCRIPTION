@@ -53,8 +53,6 @@ Suggests:
     udunits2,
     vdiffr,
     viridis
-VignetteBuilder: 
-    knitr
 Remotes: 
     tidyverse/ggplot2
 ByteCompile: yes
@@ -62,3 +60,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.0
+VignetteBuilder: knitr

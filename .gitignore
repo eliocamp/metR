@@ -1,12 +1,10 @@
+Meta
+doc
 .Rproj.user
 .Rhistory
 .RData
 
 R/mejora_fillcontour\.R
-inst/doc
-
 inst/data_files/
-
 docs/*
-
 docs/

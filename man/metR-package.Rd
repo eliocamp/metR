@@ -4,12 +4,25 @@
 \name{metR-package}
 \alias{metR}
 \alias{metR-package}
-\title{metR: Tools for Easier Analysis of Meteorological Fields}
+\title{Tools for Easier Analysis of Meteorological Fields}
 \description{
 Many useful functions and extensions for dealing
-    with meteorological data in the tidy data framework. Extends ggplot2
-    for better plotting of scalar and vector fields and provides commonly
-    used analysis methods in the atmospheric sciences.
+with meteorological data in the tidy data framework. Extends ggplot2
+for better plotting of scalar and vector fields and provides commonly
+used analysis methods in the atmospheric sciences.
+}
+\details{
+Conceptually it's divided into \emph{visualization tools} and \emph{data tools}.
+The former are geoms, stats and scales that help with plotting using
+\link{ggplot2}, such as \link{stat_contour_fill} or \link{scale_y_level}, while the
+later are functions for common data processing tools in the atmospheric
+sciences, such as \link{Derivate} or \link{EOF}; these are implemented to work in the
+\link{data.table} paradigm, but also work with regular data frames.
+
+Check the vignettes:
+\itemize{
+\item Visualization Tools: \code{vignette(}
+}
 }
 \seealso{
 Useful links:

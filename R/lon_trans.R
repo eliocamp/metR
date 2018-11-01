@@ -1,24 +1,24 @@
-#' Switch between longitude conventions
-#'
-#' Transform longitude coordinates from and to [0, 360) and [-180, 180). Similar
-#' to [ConverLongitude] but suitable for using in [ggplot2::scale_x_continuous] or,
-#' better still, [scale_x_longitude].
-#'
-#' @param to convention to transform to.
-#'
-#' @examples
-#' library(ggplot2)
-#'
-#' (g <- ggplot(geopotential[date == date[1]], aes(lon, lat)) +
-#'     geom_contour2(aes(z = gh)))
-#'
-#' g + scale_x_longitude(trans = lon_trans(180))
-#'
-#' # Same as
-#' g + scale_x_longitude(trans = "lon180")
-#'
-# #' @export
-#' @importFrom scales trans_new
+# Switch between longitude conventions
+#
+# Transform longitude coordinates from and to [0, 360) and [-180, 180). Similar
+# to [ConverLongitude] but suitable for using in [ggplot2::scale_x_continuous] or,
+# better still, [scale_x_longitude].
+#
+# @param to convention to transform to.
+#
+# @examples
+# library(ggplot2)
+#
+# (g <- ggplot(geopotential[date == date[1]], aes(lon, lat)) +
+#     geom_contour2(aes(z = gh)))
+#
+# g + scale_x_longitude(trans = lon_trans(180))
+#
+# # Same as
+# g + scale_x_longitude(trans = "lon180")
+#
+# # @export
+# @importFrom scales trans_new
 lon_trans <- function(to = c(180, 360)) {
     if (to[1] == 180) {
         scales::trans_new("lon180",

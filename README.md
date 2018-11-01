@@ -13,12 +13,12 @@ status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg)](http
 status](http://www.r-pkg.org/badges/version/metR)](https://cran.r-project.org/package=metR)
 
 meteR packages several functions and utilities that make R better for
-hadling<sup>1</sup> meteorological data in the tidy data paradigm. It’s
-not intended to be the be-all and end-all and is (at least for now)
-mostly a packaging of assorted wrapers and tricks that I wrote for my
-day to day work as a researcher in atmospheric sciences. Since it’s
-grown organically and for my own needs, do not expect a heavy emphasis
-on consistency across functions and do expect functions written with
+handling meteorological data in the tidy data paradigm. It’s not
+intended to be the be-all and end-all and is (at least for now) mostly a
+packaging of assorted wrapers and tricks that I wrote for my day to day
+work as a researcher in atmospheric sciences. Since it’s grown
+organically and for my own needs, do not expect a heavy emphasis on
+consistency across functions and do expect functions written with
 specific use cases in mind.
 
 Conceptually it’s divided into *visualization tools* and *data tools*.
@@ -35,9 +35,6 @@ better still, not at all). Functions do not generaly check arguments and
 do not print error messages. There are also few if any tests, so
 coverage is roughly 0%.
 
-<sup>1</sup>handling data, [Hadley](https://twitter.com/hadleywickham/)
-style.
-
 ## Installation
 
 You can install metR from github with:
@@ -47,8 +44,9 @@ You can install metR from github with:
 devtools::install_github("eliocamp/metR")
 ```
 
-You might need to install the netcdf and udunits2 libraries. On Ubuntu
-and it’s derivatives this can be done by typing
+If you need to read netcdf files, you might need to install the netcdf
+and udunits2 libraries. On Ubuntu and it’s derivatives this can be done
+by typing
 
     sudo apt install libnetcdf-dev netcdf-bin libudunits2-dev
 
@@ -85,7 +83,7 @@ ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
     coord_polar()
 ```
 
-![](README-field-1.png)<!-- -->
+![](man/figures/field-1.png)<!-- -->
 
 ``` r
 # AAO signal
@@ -94,11 +92,14 @@ g <- ggplot(aao$right, aes(date, gh.t.w)) +
     geom_smooth(span = 0.4)
 
 DivideTimeseries(g, aao$right$date, xlab = "Date", ylab = "AAO signal")
+#> Warning in DivideTimeseries(g, aao$right$date, xlab = "Date", ylab = "AAO
+#> signal"): 'DivideTimeseries' is deprecated, use ggwrap instead (https://
+#> github.com/wilkox/ggwrap)
 #> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 #> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 #> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-![](README-timeseries-1.png)<!-- -->
+![](man/figures/timeseries-1.png)<!-- -->
 
 You can read more in the vignettes (comming soon).

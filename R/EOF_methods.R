@@ -52,7 +52,7 @@ autoplot.eof <- function(object, npcs = "all", ...) {
 predict.eof <- function(object, n = NULL, ...) {
     checks <- makeAssertCollection()
     assertClass(object, "eof", add = checks)
-    assertCount(n, positive = TRUE, null.ok = TRUE, add = checks)
+    assertIntegerish(n, lower = 1, null.ok = TRUE, add = checks)
     reportAssertions(checks)
 
     ` %>% ` <- dplyr::`%>%`

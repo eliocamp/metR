@@ -56,6 +56,7 @@ ConvertLongitude <- function(lon, group = NULL, from = NULL) {
     }
 
     if (!is.null(group)) {
+        group <- as.character(group)
         group[lon360 | lon180] <- paste0(group[lon360 | lon180], "_2")
         return(list(lon = new.lon, group = group))
     }

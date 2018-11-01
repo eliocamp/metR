@@ -148,7 +148,7 @@ isFALSE <- function (x) {
 }
 
 checkListSameLengh <- function(x, names = "x") {
-    l <- lengths(wave)
+    l <- lengths(x)
     if (slow_equal(l)) {
         return(TRUE)
     }

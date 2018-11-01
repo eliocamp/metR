@@ -61,7 +61,7 @@
 Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = FALSE) {
     checks <- makeAssertCollection()
 
-    assertFormula(formula, add = checks)
+    assertClass(formula, "formula", add = checks)
     assertDataFrame(data, null.ok = TRUE, add = checks)
     assertFlag(grid, add = checks)
     assertFlag(path, add = checks)

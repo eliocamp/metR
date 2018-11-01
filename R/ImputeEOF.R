@@ -74,7 +74,7 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
                       validation = NULL, verbose = interactive()) {
     checks <- makeAssertCollection()
 
-    assertFormula(formula, add = checks)
+    assertClass(formula, "formula", add = checks)
     assertCharacter(value.var, len = 1, null.ok = TRUE, any.missing = FALSE,
                     add = checks)
     assertDataFrame(data, null.ok = TRUE, add = checks)

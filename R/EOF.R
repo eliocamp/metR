@@ -124,7 +124,7 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
                 rotate = FALSE, suffix = "PC", fill = NULL) {
     checks <- makeAssertCollection()
 
-    assertFormula(formula, add = checks)
+    assertClass(formula, "formula", add = checks)
     assertCharacter(value.var, len = 1, null.ok = TRUE, any.missing = FALSE,
                     add = checks)
     assertDataFrame(data, null.ok = TRUE, add = checks)

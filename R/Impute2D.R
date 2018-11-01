@@ -19,7 +19,7 @@
 #' @import data.table
 Impute2D <- function(formula, data = NULL, method = "interpolate") {
     checks <- makeAssertCollection()
-    assertFormula(formula, add = checks)
+    assertClass(formula, "formula", add = checks)
     assertDataFrame(data, null.ok = TRUE, add = checks)
     assertMultiClass(method, c("character", "numeric", "function"), add = checks)
 

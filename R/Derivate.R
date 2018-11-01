@@ -72,7 +72,7 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
                      sphere = FALSE, a = 6371000) {
     checks <- makeAssertCollection()
 
-    checkmate::assertFormula(formula, add = checks)
+    assertClass(formula, "formula", add = checks)
     assertDataFrame(data, null.ok = TRUE, add = checks)
     assertCount(order, positive = TRUE, add = checks)
     assertFlag(fill, add = checks)

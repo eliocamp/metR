@@ -73,15 +73,6 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
-
-\item{fill.linear}{\itemize{
-\item \code{FALSE} for leting the computation fail with no interpolation
-\itemize{
-\item \code{TRUE} for imputing missing values with \link{approx}
-\item A numeric value for constant imputation
-\item A function that takes a vector and returns a numeric (e.g. \code{mean})
-}
-}}
 }
 \description{
 While ggplot2's \code{\link[ggplot2]{geom_contour}} can plot nice contours, it

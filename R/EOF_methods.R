@@ -29,7 +29,7 @@ screeplot.eof <- function(x, npcs = "all", type = NULL, main = NULL, ...) {
     checks <- makeAssertCollection()
     assertClass(x, "eof", add = checks)
     assert(checkCharacter(npcs, fixed = "all", any.missing = FALSE, len = 1),
-           checkIntegerish(n, lower = 1))
+           checkIntegerish(npcs, lower = 1))
     reportAssertions(checks)
 
     var <- attr(x, "suffix")

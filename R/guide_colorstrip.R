@@ -71,7 +71,7 @@ guide_colourstrip <- function(
     reverse = FALSE,
     order = 0,
 
-    available_aes = c("colour", "color", "fill", "fill2"),
+    available_aes = c("colour", "color", "fill"),
     ...) {
 
     if (!is.null(barwidth) && !is.unit(barwidth)) barwidth <- unit(barwidth, default.unit)

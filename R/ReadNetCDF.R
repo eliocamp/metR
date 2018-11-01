@@ -183,7 +183,6 @@ ReadNetCDF <- function(file, vars = NULL,
     if (out[1] == "array") {
         return(nc)
     } else if (out[1] == "vector") {
-        ncdf4::nc_close(ncfile)
         nc <- lapply(seq_along(nc), function(x) c(nc[[x]]))
         names(nc) <- names(vars)
         return(nc)

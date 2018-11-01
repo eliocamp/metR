@@ -58,7 +58,7 @@ guide_vector <- function(# title
 
             # general
             direction = direction,
-            override.aes = ggplot2:::rename_aes(override.aes),
+            override.aes = rename_aes(override.aes),
             nrow = nrow,
             ncol = ncol,
             byrow = byrow,
@@ -117,7 +117,7 @@ guide_merge.vector <- function(guide, new_guide) {
 guide_geom.vector <- function(guide, layers, default_mapping) {
     # arrange common data for vertical and horizontal guide
     guide$geoms <- plyr::llply(layers, function(layer) {
-        matched <- ggplot2:::matched_aes(layer, guide, default_mapping)
+        matched <- matched_aes(layer, guide, default_mapping)
 
         if (length(matched) > 0) {
             # This layer contributes to the legend
@@ -125,7 +125,7 @@ guide_geom.vector <- function(guide, layers, default_mapping) {
             # check if this layer should be included, different behaviour depending on
             # if show.legend is a logical or a named logical vector
             if (!is.null(names(layer$show.legend))) {
-                layer$show.legend <- ggplot2:::rename_aes(layer$show.legend)
+                layer$show.legend <- rename_aes(layer$show.legend)
                 include <- is.na(layer$show.legend[matched]) ||
                     layer$show.legend[matched]
             } else {
@@ -308,7 +308,7 @@ guide_gengrob.vector <- function(guide, theme) {
             "top" = {
                 kl_widths <- pmax(label_widths, key_widths)
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(label_heights, vgap / 2, key_heights, vgap / 2),
+                    interleave(label_heights, vgap / 2, key_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -322,7 +322,7 @@ guide_gengrob.vector <- function(guide, theme) {
             "bottom" = {
                 kl_widths <- pmax(label_widths, key_widths)
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(key_heights, vgap / 2, label_heights, vgap / 2),
+                    interleave(key_heights, vgap / 2, label_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -335,11 +335,11 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "left" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(label_widths, hgap / 2, key_widths, hgap / 2),
+                    interleave(label_widths, hgap / 2, key_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(pmax(label_heights, key_heights), vgap / 2),
+                    interleave(pmax(label_heights, key_heights), vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -352,11 +352,11 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "right" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(key_widths, hgap / 2, label_widths, hgap / 2),
+                    interleave(key_widths, hgap / 2, label_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(pmax(label_heights, key_heights), vgap / 2),
+                    interleave(pmax(label_heights, key_heights), vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -372,11 +372,11 @@ guide_gengrob.vector <- function(guide, theme) {
             label.position,
             "top" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(pmax(label_widths, key_widths), hgap/2),
+                    interleave(pmax(label_widths, key_widths), hgap/2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(label_heights, vgap / 2, key_heights, vgap / 2),
+                    interleave(label_heights, vgap / 2, key_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -389,11 +389,11 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "bottom" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(pmax(label_widths, key_widths), hgap / 2),
+                    interleave(pmax(label_widths, key_widths), hgap / 2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(key_heights, vgap / 2, label_heights, vgap / 2),
+                    interleave(key_heights, vgap / 2, label_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -406,7 +406,7 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "left" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(label_widths, hgap / 2, key_widths, hgap / 2),
+                    interleave(label_widths, hgap / 2, key_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- pmax(key_heights, label_heights)
@@ -420,7 +420,7 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "right" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(key_widths, hgap / 2, label_widths, hgap / 2),
+                    interleave(key_widths, hgap / 2, label_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- pmax(key_heights, label_heights)
@@ -614,7 +614,7 @@ guide_vector <- function(# title
 
             # general
             direction = direction,
-            override.aes = ggplot2:::rename_aes(override.aes),
+            override.aes = rename_aes(override.aes),
             nrow = nrow,
             ncol = ncol,
             byrow = byrow,
@@ -673,7 +673,7 @@ guide_merge.vector <- function(guide, new_guide) {
 guide_geom.vector <- function(guide, layers, default_mapping) {
     # arrange common data for vertical and horizontal guide
     guide$geoms <- plyr::llply(layers, function(layer) {
-        matched <- ggplot2:::matched_aes(layer, guide, default_mapping)
+        matched <- matched_aes(layer, guide, default_mapping)
 
         if (length(matched) > 0) {
             # This layer contributes to the legend
@@ -681,7 +681,7 @@ guide_geom.vector <- function(guide, layers, default_mapping) {
             # check if this layer should be included, different behaviour depending on
             # if show.legend is a logical or a named logical vector
             if (!is.null(names(layer$show.legend))) {
-                layer$show.legend <- ggplot2:::rename_aes(layer$show.legend)
+                layer$show.legend <- rename_aes(layer$show.legend)
                 include <- is.na(layer$show.legend[matched]) ||
                     layer$show.legend[matched]
             } else {
@@ -864,7 +864,7 @@ guide_gengrob.vector <- function(guide, theme) {
             "top" = {
                 kl_widths <- pmax(label_widths, key_widths)
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(label_heights, vgap / 2, key_heights, vgap / 2),
+                    interleave(label_heights, vgap / 2, key_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -878,7 +878,7 @@ guide_gengrob.vector <- function(guide, theme) {
             "bottom" = {
                 kl_widths <- pmax(label_widths, key_widths)
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(key_heights, vgap / 2, label_heights, vgap / 2),
+                    interleave(key_heights, vgap / 2, label_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -891,11 +891,11 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "left" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(label_widths, hgap / 2, key_widths, hgap / 2),
+                    interleave(label_widths, hgap / 2, key_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(pmax(label_heights, key_heights), vgap / 2),
+                    interleave(pmax(label_heights, key_heights), vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -908,11 +908,11 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "right" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(key_widths, hgap / 2, label_widths, hgap / 2),
+                    interleave(key_widths, hgap / 2, label_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(pmax(label_heights, key_heights), vgap / 2),
+                    interleave(pmax(label_heights, key_heights), vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -928,11 +928,11 @@ guide_gengrob.vector <- function(guide, theme) {
             label.position,
             "top" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(pmax(label_widths, key_widths), hgap/2),
+                    interleave(pmax(label_widths, key_widths), hgap/2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(label_heights, vgap / 2, key_heights, vgap / 2),
+                    interleave(label_heights, vgap / 2, key_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -945,11 +945,11 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "bottom" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(pmax(label_widths, key_widths), hgap / 2),
+                    interleave(pmax(label_widths, key_widths), hgap / 2),
                     -1
                 )
                 kl_heights <- utils::head(
-                    ggplot2:::interleave(key_heights, vgap / 2, label_heights, vgap / 2),
+                    interleave(key_heights, vgap / 2, label_heights, vgap / 2),
                     -1
                 )
                 vps <- transform(
@@ -962,7 +962,7 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "left" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(label_widths, hgap / 2, key_widths, hgap / 2),
+                    interleave(label_widths, hgap / 2, key_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- pmax(key_heights, label_heights)
@@ -976,7 +976,7 @@ guide_gengrob.vector <- function(guide, theme) {
             },
             "right" = {
                 kl_widths <- utils::head(
-                    ggplot2:::interleave(key_widths, hgap / 2, label_widths, hgap / 2),
+                    interleave(key_widths, hgap / 2, label_widths, hgap / 2),
                     -1
                 )
                 kl_heights <- pmax(key_heights, label_heights)

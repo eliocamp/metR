@@ -381,8 +381,8 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     circ.x <- !is.null(xwrap)
     circ.y <- !is.null(ywrap)
 
-    if (circ.x) field <- WrapCircular(field, "x", xwrap)
-    if (circ.y) field <- WrapCircular(field, "y", ywrap)
+    if (circ.x) field <- suppressWarnings(WrapCircular(field, "x", xwrap))
+    if (circ.y) field <- suppressWarnings(WrapCircular(field, "y", ywrap))
 
     field <- field[!is.na(dx) & !is.na(dy)]
 

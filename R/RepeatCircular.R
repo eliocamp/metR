@@ -42,7 +42,7 @@
 #' @export
 #' @import data.table
 WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
-    .Deprecated("ggperiodic::wrap")
+    warning("WrapCircular is deprecated, use ggperiodic::wrap instead")
 
     checks <- makeAssertCollection()
     assertDataFrame(x, add = checks)

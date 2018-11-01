@@ -1,7 +1,7 @@
 
 context("ReadNetCDF")
 
-file <- "temperature.nc"
+file <- system.file("extdata", "temperature.nc", package = "metR")
 test_that("returns a data.table", {
     expect_known_output(ReadNetCDF(file),
                         "readnetcdf_default")

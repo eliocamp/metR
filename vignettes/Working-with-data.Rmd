@@ -69,16 +69,17 @@ The netCDF format is very flexible and this function has not been tested on ever
 As an example, let's look at a global relief map at 1/2° resolution with some ugly color palette. 
 
 ```{r}
-world <- GetTopography(0, 360, 90, -90, resolution = 1/2)
+# Not run because it needs internet access
+# world <- GetTopography(0, 360, 90, -90, resolution = 1)
 
-ggplot(world, aes(lon, lat)) +
-    geom_raster(aes(fill = h/1000)) +
-    geom_contour(aes(z = h), breaks = 0, color = "black", size = 0.5) +
-    coord_fixed(expand = FALSE) +
-    scale_fill_gradientn(colors = topo.colors(6)[c(1, 2, 3, 4, 6)], 
-                         values = scales::rescale(c(-11, 0, 0, 2, 7)),
-                         guide = "none") +
-    theme_void()
+# ggplot(world, aes(lon, lat)) +
+#     geom_raster(aes(fill = h/1000)) +
+#     geom_contour(aes(z = h), breaks = 0, color = "black", size = 0.5) +
+#     coord_fixed(expand = FALSE) +
+#     scale_fill_gradientn(colors = topo.colors(6)[c(1, 2, 3, 4, 6)], 
+#                          values = scales::rescale(c(-11, 0, 0, 2, 7)),
+#                          guide = "none") +
+#     theme_void()
 ```
 
 ## MaskLand
@@ -108,10 +109,11 @@ The resolution of `MaskLand()` is, in principle, only limited by the polygons us
 Finally, `GetSMNData()` retrieves data from Argentina's National Weather Service's public access. This is a rapidly evolving project, and data availability is not guaranteed. Currently available data are hourly station data, daily station maximum and minimum temperature, and global and diffuse radiation measured at Buenos Aires and Ushuaia. 
 
 ```{r}
-rad <- GetSMNData(as.Date("2018-03-15"), type = "radiation")
+# Not run because it needs internet access
+# rad <- GetSMNData(as.Date("2018-03-15"), type = "radiation")
 
-ggplot(rad, aes(date, global)) + 
-    geom_line(aes(color = station))
+# ggplot(rad, aes(date, global)) + 
+#     geom_line(aes(color = station))
 ```
 
 

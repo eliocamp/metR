@@ -110,6 +110,52 @@ message_wrap <- function(...) {
 
 
 
+# Interleave (or zip) multiple units into one vector
+interleave <- function(...) UseMethod("interleave")
+#' @export
+interleave.unit <- function(...) {
+    do.call("unit.c", do.call("interleave.default", plyr::llply(list(...), as.list)))
+}
+#' @export
+interleave.default <- function(...) {
+    vectors <- list(...)
+
+    # Check lengths
+    lengths <- unique(setdiff(plyr::laply(vectors, length), 1))
+    if (length(lengths) == 0) lengths <- 1
+    stopifnot(length(lengths) <= 1)
+
+    # Replicate elements of length one up to correct length
+    singletons <- plyr::laply(vectors, length) == 1
+    vectors[singletons] <- plyr::llply(vectors[singletons], rep, lengths)
+
+    # Interleave vectors
+    n <- lengths
+    p <- length(vectors)
+    interleave <- rep(1:n, each = p) + seq(0, p - 1) * n
+    unlist(vectors, recursive = FALSE)[interleave]
+}
+
+matched_aes <- function(layer, guide, defaults) {
+    all <- names(c(layer$mapping, if (layer$inherit.aes) defaults, layer$stat$default_aes))
+    geom <- c(layer$geom$required_aes, names(layer$geom$default_aes))
+    matched <- intersect(intersect(all, geom), names(guide$key))
+    matched <- setdiff(matched, names(layer$geom_params))
+    setdiff(matched, names(layer$aes_params))
+}
+
+rename_aes <- function(x) {
+    names(x) <- ggplot2::standardise_aes_names(names(x))
+    duplicated_names <- names(x)[duplicated(names(x))]
+    if (length(duplicated_names) > 0L) {
+        duplicated_message <- paste0(unique(duplicated_names), collapse = ", ")
+        warning(
+            "Duplicated aesthetics after name standardisation: ", duplicated_message, call. = FALSE
+        )
+    }
+    x
+}
+
 #' @importFrom stats line runif var
 #' @importFrom utils head
 if(getRversion() >= "2.15.1") {
@@ -121,7 +167,7 @@ if(getRversion() >= "2.15.1") {
           "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2",
           "group", "step", "point", "change", "end", "level", "m", "rotate",
           "x.d", "y.d", "PC", "step2", "runif", "N", "angle", "var", "head",
-          "col__", "row__"))
+          "col__", "row__", "t1", "z1", "z2"))
 }
 
 

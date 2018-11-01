@@ -32,7 +32,7 @@ season <- function(x, hemisphere = c("south", "north"),
     reportAssertions(checks)
 
     if (is.character(x)) x <- as.Date(x)
-    if (.is.somedate(x)) x <- lubridate::x(x)
+    if (.is.somedate(x)) x <- lubridate::month(x)
 
     if (lang[1] == "en") {
         sum <- "DJF" #"Summer"

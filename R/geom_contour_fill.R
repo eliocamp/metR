@@ -15,11 +15,11 @@
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
 #' @param na.fill How to fill missing values.
-#' @param fill.linear
-#'    - `FALSE` for leting the computation fail with no interpolation
-#'    - `TRUE` for imputing missing values with [approx]
-#'    - A numeric value for constant imputation
-#'    - A function that takes a vector and returns a numeric (e.g. `mean`)
+# #' @param fill.linear
+# #'    - `FALSE` for leting the computation fail with no interpolation
+# #'    - `TRUE` for imputing missing values with [approx]
+# #'    - A numeric value for constant imputation
+# #'    - A function that takes a vector and returns a numeric (e.g. `mean`)
 #' @param xwrap,ywrap vector of length two used to wrap the circulad dimension.
 #'
 #' @section Aesthetics:
@@ -94,35 +94,3 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
 }
 
 
-geom_contour_fill2 <- function(mapping = NULL, data = NULL,
-                              stat = "ContourFill", position = "identity",
-                              ...,
-                              breaks = NULL,
-                              bins = NULL,
-                              binwidth = NULL,
-                              # na.rm = FALSE,
-                              na.fill = FALSE,
-                              xwrap = NULL,
-                              ywrap = NULL,
-                              show.legend = NA,
-                              inherit.aes = TRUE) {
-    ggplot2::layer(
-        data = data,
-        mapping = mapping,
-        stat = stat,
-        geom = GeomPolygon2,
-        position = position,
-        show.legend = show.legend,
-        inherit.aes = inherit.aes,
-        params = list(
-            breaks = breaks,
-            bins = bins,
-            binwidth = binwidth,
-            na.rm = FALSE,
-            na.fill = na.fill,
-            xwrap = xwrap,
-            ywrap = ywrap,
-            ...
-        )
-    )
-}

@@ -14,7 +14,7 @@ guide_colourstrip(title = waiver(), title.position = NULL,
   barheight = NULL, ticks = FALSE, draw.ulim = TRUE,
   draw.llim = TRUE, inside = FALSE, direction = NULL,
   default.unit = "line", reverse = FALSE, order = 0,
-  available_aes = c("colour", "color", "fill", "fill2"), ...)
+  available_aes = c("colour", "color", "fill"), ...)
 
 guide_colorstrip(title = waiver(), title.position = NULL,
   title.theme = NULL, title.hjust = NULL, title.vjust = NULL,
@@ -23,7 +23,7 @@ guide_colorstrip(title = waiver(), title.position = NULL,
   barheight = NULL, ticks = FALSE, draw.ulim = TRUE,
   draw.llim = TRUE, inside = FALSE, direction = NULL,
   default.unit = "line", reverse = FALSE, order = 0,
-  available_aes = c("colour", "color", "fill", "fill2"), ...)
+  available_aes = c("colour", "color", "fill"), ...)
 }
 \arguments{
 \item{title}{A character string or expression indicating a title of guide.

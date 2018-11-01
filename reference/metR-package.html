@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Switch between longitude conventions — lon_trans • metR</title>
+<title>metR: Tools for Easier Analysis of Meteorological Fields — metR-package • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,11 +30,12 @@
 
 
 
-<meta property="og:title" content="Switch between longitude conventions — lon_trans" />
+<meta property="og:title" content="metR: Tools for Easier Analysis of Meteorological Fields — metR-package" />
 
-<meta property="og:description" content="Transform longitude coordinates from and to [0, 360) and [-180, 180). Similar
-to ConverLongitude but suitable for using in ggplot2::scale_x_continuous or,
-better still, scale_x_longitude." />
+<meta property="og:description" content="Many useful functions and extensions for dealing
+    with meteorological data in the tidy data framework. Extends ggplot2
+    for better plotting of scalar and vector fields and provides commonly
+    used analysis methods in the atmospheric sciences." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,52 +118,41 @@ better still, scale_x_longitude." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Switch between longitude conventions</h1>
-    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/lon_trans.R'><code>R/lon_trans.R</code></a></small>
-    <div class="hidden name"><code>lon_trans.Rd</code></div>
+    <h1>metR: Tools for Easier Analysis of Meteorological Fields</h1>
+    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/metR-package.R'><code>R/metR-package.R</code></a></small>
+    <div class="hidden name"><code>metR-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Transform longitude coordinates from and to [0, 360) and [-180, 180). Similar
-to ConverLongitude but suitable for using in <a href='ggplot2.tidyverse.org/reference/scale_continuous.html'>ggplot2::scale_x_continuous</a> or,
-better still, <a href='scale_longitude.html'>scale_x_longitude</a>.</p>
+    <p>Many useful functions and extensions for dealing
+    with meteorological data in the tidy data framework. Extends ggplot2
+    for better plotting of scalar and vector fields and provides commonly
+    used analysis methods in the atmospheric sciences.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>lon_trans</span>(<span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>180</span>, <span class='fl'>360</span>))
+        
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-<span class='fu'>lon180_trans</span>()
-
-<span class='fu'>lon360_trans</span>()</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>to</th>
-      <td><p>convention to transform to.</p></td>
-    </tr>
-    </table>
+    <div class='dont-index'><p>Useful links:</p><ul>
+<li><p><a href='https://github.com/eliocamp/metR'>https://github.com/eliocamp/metR</a></p></li>
+<li><p>Report bugs at <a href='https://github.com/eliocamp/metR/issues'>https://github.com/eliocamp/metR/issues</a></p></li>
+</ul></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-
-(<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='geom_contour2.html'>geom_contour2</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh</span>)))</div><div class='img'><img src='lon_trans-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>g</span> + <span class='fu'><a href='scale_longitude.html'>scale_x_longitude</a></span>(<span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>lon_trans</span>(<span class='fl'>180</span>))</div><div class='img'><img src='lon_trans-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Same as</span>
-<span class='no'>g</span> + <span class='fu'><a href='scale_longitude.html'>scale_x_longitude</a></span>(<span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"lon180"</span>)</div><div class='img'><img src='lon_trans-3.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-            
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      
+      <li><a href="#see-also">See also</a></li>
+          </ul>
+
+    <h2>Author</h2>
+    
+<strong>Maintainer</strong>: Elio Campitelli <a href='mailto:elio.campitelli@cima.fcen.uba.ar'>elio.campitelli@cima.fcen.uba.ar</a> (https://orcid.org/0000-0002-7742-9230)
+
 
   </div>
 </div>

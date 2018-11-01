@@ -85,7 +85,7 @@
       <h1>Visualization tools</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2018-10-31</h4>
+            <h4 class="date">2018-11-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Visualization-tools.Rmd"><code>vignettes/Visualization-tools.Rmd</code></a></small>
       <div class="hidden name"><code>Visualization-tools.Rmd</code></div>
@@ -322,7 +322,7 @@
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">(g &lt;-<span class="st"> </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(temperature[lev <span class="op">==</span><span class="st"> </span><span class="dv">300</span>], <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(lon, lat, <span class="dt">z =</span> air.z)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">     </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/geom_contour.html">geom_contour</a></span>(<span class="dt">binwidth =</span> <span class="fl">1.5</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">     </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>(<span class="dt">labels =</span> <span class="kw"><a href="ggplot2.tidyverse.org/reference/waiver.html">waiver</a></span>(), <span class="dt">trans =</span> <span class="st">"lon180"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span>(<span class="dt">labels =</span> <span class="kw"><a href="ggplot2.tidyverse.org/reference/waiver.html">waiver</a></span>()) <span class="op">+</span></a>
 <a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">     </span><span class="kw"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">-20</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb19-6" data-line-number="6"><span class="st">     </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span>())</a>
 <a class="sourceLine" id="cb19-7" data-line-number="7"></a>
@@ -348,7 +348,10 @@
 <a class="sourceLine" id="cb21-4" data-line-number="4"><span class="st">     </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))) </a></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
 <p>In the above plot, the timeseries looks noisy and hard to understand since the lines are too steep. Dividing it into 2 facets makes is easier to see what’s going on.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="../reference/DivideTimeseries.html">DivideTimeseries</a></span>(g, geopotential<span class="op">$</span>date, <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">xlab =</span> <span class="st">"date"</span>, <span class="dt">ylab =</span> <span class="st">"gh"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="../reference/DivideTimeseries.html">DivideTimeseries</a></span>(g, geopotential<span class="op">$</span>date, <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">xlab =</span> <span class="st">"date"</span>, <span class="dt">ylab =</span> <span class="st">"gh"</span>)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co">#&gt; Warning in DivideTimeseries(g, geopotential$date, n = 2, xlab = "date", :</span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="co">#&gt; 'DivideTimeseries' is deprecated, use ggwrap instead (https://github.com/</span></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="co">#&gt; wilkox/ggwrap)</span></a></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 </div>
 <div id="geom_relief" class="section level2">

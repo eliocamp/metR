@@ -85,7 +85,7 @@
       <h1>Working with data</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2018-10-31</h4>
+            <h4 class="date">2018-11-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Working-with-data.Rmd"><code>vignettes/Working-with-data.Rmd</code></a></small>
       <div class="hidden name"><code>Working-with-data.Rmd</code></div>
@@ -228,7 +228,10 @@
 <a class="sourceLine" id="cb11-3" data-line-number="3">    <span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(eof<span class="op">$</span>left, <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(date, gh.t.w)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">        </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">color =</span> PC)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">        </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)), </a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">    eof<span class="op">$</span>left<span class="op">$</span>date, <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">xlab =</span> <span class="st">"date"</span>, <span class="dt">ylab =</span> <span class="st">"gh.t.w"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb11-6" data-line-number="6">    eof<span class="op">$</span>left<span class="op">$</span>date, <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">xlab =</span> <span class="st">"date"</span>, <span class="dt">ylab =</span> <span class="st">"gh.t.w"</span>)</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt; Warning in DivideTimeseries(ggplot(eof$left, aes(date, gh.t.w)) +</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt; geom_line(aes(color = PC)) + : 'DivideTimeseries' is deprecated, use ggwrap</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt; instead (https://github.com/wilkox/ggwrap)</span></a></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-10-2.png" width="700"></p>
 <p>Where the 1st Principal Component is clearly the <a href="http://www.cpc.ncep.noaa.gov/products/precip/CWlink/daily_ao_index/aao/aao.shtml">Antarctic Oscillation</a> and the 2nd Principal Component looks like the Pacific–South American Pattern.</p>
 <p><code><a href="../reference/EOF.html">EOF()</a></code> not only works for regular grids.</p>

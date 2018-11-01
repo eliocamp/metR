@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Fast estimates of linear regression — FitLm • metR</title>
+<title>Scale for vector magnitudes — scale_mag • metR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,10 @@
 
 
 
-<meta property="og:title" content="Fast estimates of linear regression — FitLm" />
+<meta property="og:title" content="Scale for vector magnitudes — scale_mag" />
 
-<meta property="og:description" content="Computes a linear regression with stats::.lm.fit and returns the estimate
-and, optionally, standard error for each regressor." />
+<meta property="og:description" content="Allows to control the size of the arrows in geom_arrow.
+Highly experimental." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,77 +116,80 @@ and, optionally, standard error for each regressor." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Fast estimates of linear regression</h1>
-    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/FitLm.R'><code>R/FitLm.R</code></a></small>
-    <div class="hidden name"><code>FitLm.Rd</code></div>
+    <h1>Scale for vector magnitudes</h1>
+    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/scale_vector.R'><code>R/scale_vector.R</code></a></small>
+    <div class="hidden name"><code>scale_mag.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Computes a linear regression with <a href='http://www.rdocumentation.org/packages/stats/topics/lmfit'>stats::.lm.fit</a> and returns the estimate
-and, optionally, standard error for each regressor.</p>
+    <p>Allows to control the size of the arrows in <a href='geom_arrow.html'>geom_arrow</a>.
+Highly experimental.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>FitLm</span>(<span class='no'>y</span>, <span class='no'>...</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>scale_mag</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(), <span class='kw'>max_size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>default_unit</span> <span class='kw'>=</span> <span class='st'>"cm"</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(), <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'><a href='guide_vector.html'>guide_vector</a></span>(), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>y</th>
-      <td><p>numeric vector of observations to model</p></td>
+      <th>name</th>
+      <td><p>The name of the scale. Used as the axis or legend title. If
+<code>waiver()</code>, the default, the name of the scale is taken from the first
+mapping used for that aesthetic. If <code>NULL</code>, the legend title will be
+omitted.</p></td>
+    </tr>
+    <tr>
+      <th>labels</th>
+      <td><p>One of:</p><ul>
+<li><p><code>NULL</code> for no labels</p></li>
+<li><p><code>waiver()</code> for the default labels computed by the
+transformation object</p></li>
+<li><p>A character vector giving labels (must be same length as <code>breaks</code>)</p></li>
+<li><p>A function that takes the breaks as input and returns labels
+as output</p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>max_size</th>
+      <td><p>size of the arrow in centimeters</p></td>
+    </tr>
+    <tr>
+      <th>default_unit</th>
+      <td><p>ignored</p></td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td><p>magnitude of the reference arrow in data units. Will be the
+maximum value if <code>waiver()</code></p></td>
+    </tr>
+    <tr>
+      <th>guide</th>
+      <td><p>type of legend</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>numeric vectors of variables used in the modeling</p></td>
-    </tr>
-    <tr>
-      <th>se</th>
-      <td><p>logical indicating wheter to compute the stantdard error</p></td>
+      <td><p>Other arguments passed on to <code>scale_(x|y)_continuous()</code></p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a list with elements</p><dl class='dl-horizontal'>
-<dt>term</dt><dd><p>the name of the regressor</p></dd>
-<dt>estimate</dt><dd><p>estiamte of the regression</p></dd>
-<dt>std.error</dt><dd><p>standard error</p></dd>
-<dt>df</dt><dd><p>degrees of freedom</p></dd>
-</dl>
-
-<p>If there's no complete cases in the regression, <code>NA</code>s are returned with no
-warning.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Linear trend with "signficant" areas shaded with points</span>
-<span class='fu'>library</span>(<span class='no'>data.table</span>)
-<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'>system.time</span>({
-  <span class='no'>regr</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>FitLm</span>(<span class='no'>gh</span>, <span class='no'>date</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>)]
-})</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.409   0.004   0.412 </div><div class='input'>
-<span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>regr</span>[<span class='no'>term</span> <span class='kw'>!=</span> <span class='st'>"(intercept)"</span>], <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>estimate</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='stat_subset.html'>stat_subset</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'>abs</span>(<span class='no'>estimate</span>) <span class='kw'>&gt;</span> <span class='fl'>2</span>*<span class='no'>std.error</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
-#&gt; <span class='warning'>Contour requires single `z` at each combination of `x` and `y`.</span></div><div class='img'><img src='FitLm-1.png' alt='' width='700' height='433' /></div><div class='input'>
-# Using stats::lm() is much slower and with no names.
-</div><span class='co'># NOT RUN {</span>
-<span class='fu'>system.time</span>({
-  <span class='no'>regr</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>coef</span>(<span class='fu'>lm</span>(<span class='no'>gh</span> ~ <span class='no'>date</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>)]
-})
-<span class='co'># }</span><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>seals</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>long</span>, <span class='no'>lat</span>)) +
+    <span class='fu'><a href='geom_arrow.html'>geom_vector</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>delta_long</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>delta_lat</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+
+<span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>)</div><div class='img'><img src='scale_mag-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='scale_mag-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>, <span class='kw'>max_size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='scale_mag-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>, <span class='kw'>default_unit</span> <span class='kw'>=</span> <span class='st'>"mm"</span>)</div><div class='img'><img src='scale_mag-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

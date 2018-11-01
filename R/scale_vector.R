@@ -1,5 +1,26 @@
-## Scale_magnitude?
-
+#' Scale for vector magnitudes
+#'
+#' Allows to control the size of the arrows in [geom_arrow].
+#' Highly experimental.
+#'
+#' @inheritParams ggplot2::scale_x_continuous
+#' @param max_size size of the arrow in centimeters
+#' @param max magnitude of the reference arrow in data units. Will be the
+#' maximum value if `waiver()`
+#' @param guide type of legend
+#' @param default_unit ignored
+#'
+#' @examples
+#' library(ggplot2)
+#' g <- ggplot(seals, aes(long, lat)) +
+#'     geom_vector(aes(dx = delta_long, dy = delta_lat), skip = 2)
+#'
+#' g + scale_mag("Seals velocity")
+#'
+#' g + scale_mag("Seals velocity", max = 1)
+#'
+#' g + scale_mag("Seals velocity", max_size = 2)
+#' g + scale_mag("Seals velocity", default_unit = "mm")
 #' @export
 scale_mag <- function(name = waiver(),
                       # breaks = waiver(),
@@ -8,7 +29,7 @@ scale_mag <- function(name = waiver(),
                       max_size = 1,
                       default_unit = "cm",
                       max = waiver(),
-                      guide = guide_vector(default.unit = default_unit),
+                      guide =  guide_vector(),
                       ...) {
     # if (!is.unit(length)) length <- ggplot2::unit(length, default_unit)
     # if (is.waive(breaks)) {
@@ -22,6 +43,7 @@ scale_mag <- function(name = waiver(),
     # default_unit <- formals(guide)$default_unit
     # max_size <- units::con
     # guide <- guide_vector(default )
+    # guide = guide_vector(default.unit = "cm")
 
     ggplot2::continuous_scale("mag",
                               "mag",

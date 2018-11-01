@@ -1,5 +1,13 @@
+#' Reference arrow for magnitude scales
+#'
+#' Draws a reference arrow. Highly experimental.
+#'
+#' @inheritParams ggplot2::guide_legend
+#'
+#' @seealso scale_vector
 #' @export
-guide_vector <- function(# title
+guide_vector <- function(
+    # title
     title = waiver(),
     title.position = NULL,
     title.theme = NULL,

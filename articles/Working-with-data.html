@@ -193,21 +193,21 @@
 <a class="sourceLine" id="cb8-5" data-line-number="5">eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">~</span><span class="st"> </span>date <span class="op">|</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw">str</span>(eof)</a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; List of 3</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  $ left :Classes 'data.table' and 'data.frame':  264 obs. of  3 variables:</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;   ..$ date  : Date[1:264], format: "1990-01-01" ...</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  $ left :Classes 'data.table' and 'data.frame':  144 obs. of  3 variables:</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;   ..$ date  : Date[1:144], format: "1990-01-01" ...</span></a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;   ..$ PC    : Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 1 1 1 1 1 1 1 1 1 ...</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;   ..$ gh.t.w: num [1:264] -0.0668 0.0897 0.0198 -0.1765 -0.1711 ...</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;   ..$ gh.t.w: num [1:144] -0.0633 0.1145 0.0432 -0.1926 -0.1539 ...</span></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:</span></a>
 <a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt;   ..$ lon   : num [1:8064] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span></a>
 <a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt;   ..$ lat   : num [1:8064] -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 ...</span></a>
 <a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt;   ..$ PC    : Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 1 1 1 1 1 1 1 1 1 ...</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt;   ..$ gh.t.w: num [1:8064] 0.001305 0.001367 0.001223 0.000985 0.000782 ...</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt;   ..$ gh.t.w: num [1:8064] -2.32e-04 -4.67e-06 1.17e-04 1.47e-04 1.12e-04 ...</span></a>
 <a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span></a>
 <a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt;  $ sdev :Classes 'data.table' and 'data.frame':  2 obs. of  3 variables:</span></a>
 <a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt;   ..$ PC: Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 2</span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt;   ..$ sd: num [1:2] 9295 6056</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt;   ..$ r2: num [1:2] 0.278 0.118</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt;   ..$ sd: num [1:2] 7050 4228</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt;   ..$ r2: num [1:2] 0.318 0.114</span></a>
 <a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span></a>
 <a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt;  - attr(*, "call")= language EOF(formula = gh.t.w ~ date | lon + lat, data = geopotential, n = 1:2)</span></a>
 <a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt;  - attr(*, "class")= chr [1:2] "eof" "list"</span></a>
@@ -239,62 +239,45 @@
 <a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt; instead (https://github.com/wilkox/ggwrap)</span></a></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-10-2.png" width="700"></p>
 <p>Where the 1st Principal Component is clearly the <a href="http://www.cpc.ncep.noaa.gov/products/precip/CWlink/daily_ao_index/aao/aao.shtml">Antarctic Oscillation</a> and the 2nd Principal Component looks like the Pacific–South American Pattern.</p>
-<p><code><a href="../reference/EOF.html">EOF()</a></code> not only works for regular grids.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">data</span>(claris)            <span class="co"># station data of max and min temperature</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">data</span>(claris.stations)   <span class="co"># info and location for each station</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co"># As any other singular value decomposition, EOF() does not </span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co"># allow missing values</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">claris[, max.t <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(max), by =<span class="st"> </span>.(<span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">yday</a></span>(date), id)]</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">claris[<span class="kw">is.na</span>(max.t), max.t <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="dv">0</span>]</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(max.t <span class="op">~</span><span class="st"> </span>date <span class="op">|</span><span class="st"> </span>id, <span class="dt">data =</span> claris, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">eof<span class="op">$</span>right &lt;-<span class="st"> </span>eof<span class="op">$</span>right[claris.stations, on =<span class="st"> "id"</span>]   <span class="co"># join with geographical info</span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(eof<span class="op">$</span>right, <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(lon, lat)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">color =</span> max.t, <span class="dt">size =</span> <span class="kw">abs</span>(max.t))) <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>PC) <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_color_divergent</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span>()</a></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 <div id="imputeeof" class="section level2">
 <h2 class="hasAnchor">
 <a href="#imputeeof" class="anchor"></a>ImputeEOF</h2>
 <p>As shown above, <code><a href="../reference/EOF.html">EOF()</a></code> needs a complete data matrix. Imputing missing values is a huge problem on it’s own with a lot of different algorithms. <code>metR</code> offers <code><a href="../reference/ImputeEOF.html">ImputeEOF()</a></code>, which is an implementation of the <a href="http://modb.oce.ulg.ac.be/mediawiki/index.php/DINEOF">DINEOF</a> algorithm for imputation of missing data. It’s interface is similar to that of <code><a href="../reference/EOF.html">EOF()</a></code> but it returns a vector of imputed values.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># reload claris with it's missing values</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw">data</span>(claris)</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">claris[, max.t <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(max, <span class="dt">na.rm =</span> T), by =<span class="st"> </span>.(<span class="kw"><a href="http://www.rdocumentation.org/packages/data.table/topics/IDateTime">yday</a></span>(date), id)]</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">claris[, imputed <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/ImputeEOF.html">ImputeEOF</a></span>(max.t <span class="op">~</span><span class="st"> </span>date <span class="op">|</span><span class="st"> </span>id)]</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="kw">str</span>(claris)</a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co">#&gt; Classes 'data.table' and 'data.frame':   241128 obs. of  6 variables:</span></a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt;  $ id     : int  10008 10008 10008 10008 10008 10008 10008 10008 10008 10008 ...</span></a>
-<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt;  $ date   : Date, format: "2000-01-01" "2000-01-02" ...</span></a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt;  $ max    : num  NA NA 33 31 30.5 29.8 30.3 25 NA 28.4 ...</span></a>
-<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;  $ min    : num  NA NA 13.9 12.4 16.5 9 14 16.6 NA 15.4 ...</span></a>
-<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  $ max.t  : num  NA NA 3.173 0.4 0.533 ...</span></a>
-<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  $ imputed: num  2.936 1.936 3.173 0.4 0.533 ...</span></a>
-<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt;   ..- attr(*, "eof")= num 6</span></a>
-<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;   ..- attr(*, "rmse")= num 1.92</span></a>
-<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></a></code></pre></div>
-<p>The imputed vector is returned along with the Root Mean Square Error estimated from crossvalidation and the number of EOFs used in the imputation as attributes. In this case, with 6 EOFs the imputed values have an estimated rmse of 1.92.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">geopotential &lt;-<span class="st"> </span>geopotential[]</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">geopotential[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>.N, .N<span class="op">*</span><span class="fl">0.8</span>), gh.na <span class="op">:</span><span class="er">=</span><span class="st"> </span>gh]</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">geopotential[, imputed <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/ImputeEOF.html">ImputeEOF</a></span>(gh.na <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat <span class="op">|</span><span class="st"> </span>date, <span class="dt">max.eof =</span> <span class="dv">5</span>)]</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw">str</span>(geopotential)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; Classes 'data.table' and 'data.frame':   290304 obs. of  8 variables:</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt;  $ lon    : num  0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt;  $ lat    : num  -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 ...</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt;  $ lev    : int  700 700 700 700 700 700 700 700 700 700 ...</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt;  $ gh     : num  3164 3163 3162 3162 3163 ...</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;  $ date   : Date, format: "1990-01-01" "1990-01-01" ...</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt;  $ gh.t.w : num  -3.82 -3.59 -2.86 -2.4 -2.07 ...</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt;  $ gh.na  : num  NA NA 3162 NA 3163 ...</span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt;  $ imputed: num  3172 3170 3162 3170 3163 ...</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt;   ..- attr(*, "eof")= num 5</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;   ..- attr(*, "rmse")= num 26.7</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></a></code></pre></div>
+<p>The imputed vector is returned along with the Root Mean Square Error estimated from crossvalidation and the number of EOFs used in the imputation as attributes. In this case, with 5 EOFs the imputed values have an estimated rmse of 26.73.</p>
 </div>
 <div id="interpolate" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interpolate" class="anchor"></a>Interpolate</h2>
 <p><code><a href="../reference/Interpolate.html">Interpolate()</a></code> is a convenient wrapper of <code><a href="http://www.rdocumentation.org/packages/fields/topics/interp.surface">fields::interp.surface()</a></code> that makes it work better inside <code>data.table</code>s. It can be used to a new grid or to add interpolated values to an existing grid. It’s easy to interpolate multiple values with the formula interface.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># new grid</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">x.out &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">360</span>, <span class="dt">by =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">y.out &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>, <span class="dt">by =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">interpolated &lt;-<span class="st"> </span>geopotential[, <span class="kw"><a href="../reference/Interpolate.html">Interpolate</a></span>(gh <span class="op">|</span><span class="st"> </span>gh.t.w <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, x.out, y.out), </a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">                             by =<span class="st"> </span>date]</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># new grid</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">x.out &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">360</span>, <span class="dt">by =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">y.out &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">0</span>, <span class="dt">by =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">interpolated &lt;-<span class="st"> </span>geopotential[, <span class="kw"><a href="../reference/Interpolate.html">Interpolate</a></span>(gh <span class="op">|</span><span class="st"> </span>gh.t.w <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, x.out, y.out), </a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">                             by =<span class="st"> </span>date]</a></code></pre></div>
 <p>To add interpolated values to an existing <code>data.table</code> use <code>grid = FALSE</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">geopotential[, gh.new <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Interpolate.html">Interpolate</a></span>(gh <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, lon, lat, </a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">                                     <span class="dt">data =</span> interpolated[date <span class="op">==</span><span class="st"> </span>d],</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3">                                     <span class="dt">grid =</span> <span class="ot">FALSE</span>)<span class="op">$</span>gh, </a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">             by =<span class="st"> </span>.(<span class="dt">d =</span> date)]</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">geopotential[, gh.new <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Interpolate.html">Interpolate</a></span>(gh <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, lon, lat, </a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">                                     <span class="dt">data =</span> interpolated[date <span class="op">==</span><span class="st"> </span>d],</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">                                     <span class="dt">grid =</span> <span class="ot">FALSE</span>)<span class="op">$</span>gh, </a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">             by =<span class="st"> </span>.(<span class="dt">d =</span> date)]</a></code></pre></div>
 </div>
 </div>
 <div id="physics" class="section level1">
@@ -304,60 +287,60 @@
 <h2 class="hasAnchor">
 <a href="#derivates" class="anchor"></a>Derivates</h2>
 <p>Derivation is the bread and butter of the researcher so <code><a href="../reference/Derivate.html">Derivate()</a></code> offers a convenient interface for derivation using finite differences of multidimensional data. It has support for cyclical boundary conditions and for the special case of spherical coordinates (think: Earth).</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>],    <span class="co"># think: gh as a function of lon and lat</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">    <span class="kw">c</span>(<span class="st">"gh.dlon"</span>, <span class="st">"gh.dlat"</span>) <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Derivate.html">Derivate</a></span>(gh <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, </a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">                                        <span class="dt">cyclical =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>), </a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">                                        <span class="dt">sphere =</span> <span class="ot">TRUE</span>)]</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>]], <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(lon, lat)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">z =</span> gh)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="st">    </span><span class="kw"><a href="../reference/geom_arrow.html">geom_vector</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">dx =</span> gh.dlon, <span class="dt">dy =</span> gh.dlat), <span class="dt">skip =</span> <span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb16-10" data-line-number="10">                <span class="dt">scale =</span> <span class="fl">3e4</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span>()</a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">#&gt; Warning: Ignoring unknown parameters: scale</span></a></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>],    <span class="co"># think: gh as a function of lon and lat</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">    <span class="kw">c</span>(<span class="st">"gh.dlon"</span>, <span class="st">"gh.dlat"</span>) <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Derivate.html">Derivate</a></span>(gh <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, </a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">                                        <span class="dt">cyclical =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>), </a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">                                        <span class="dt">sphere =</span> <span class="ot">TRUE</span>)]</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>]], <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(lon, lat)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">z =</span> gh)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="st">    </span><span class="kw"><a href="../reference/geom_arrow.html">geom_vector</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">dx =</span> gh.dlon, <span class="dt">dy =</span> gh.dlat), <span class="dt">skip =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">                <span class="dt">scale =</span> <span class="fl">3e4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span>()</a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; Warning: Ignoring unknown parameters: scale</span></a></code></pre></div>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 <p>There are several wrapers around <code><a href="../reference/Derivate.html">Derivate()</a></code> to perform other common related operations, <code><a href="../reference/Derivate.html">Laplacian()</a></code>, <code><a href="../reference/Derivate.html">Divergence()</a></code> and <code><a href="../reference/Derivate.html">Vorticity()</a></code>.</p>
 </div>
 <div id="geostrophicwind" class="section level2">
 <h2 class="hasAnchor">
 <a href="#geostrophicwind" class="anchor"></a>GeostrophicWind</h2>
 <p>Finally, the function <code><a href="../reference/GeostrophicWind.html">GeostrophicWind()</a></code> computes geostrophic wind from geopotential height.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>], <span class="kw">c</span>(<span class="st">"u"</span>, <span class="st">"v"</span>) <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/GeostrophicWind.html">GeostrophicWind</a></span>(gh, lon, lat)]</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>]], <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(lon, lat)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/geom_contour.html">geom_contour</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">z =</span> gh)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="../reference/geom_arrow.html">geom_vector</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">dx =</span> <span class="kw"><a href="../reference/spherical.html">dlon</a></span>(u, lat), <span class="dt">dy =</span> <span class="kw"><a href="../reference/spherical.html">dlat</a></span>(v)), </a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">                <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">skip.x =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="fl">5e4</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span>()</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt; Warning: Ignoring unknown parameters: scale</span></a></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>], <span class="kw">c</span>(<span class="st">"u"</span>, <span class="st">"v"</span>) <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/GeostrophicWind.html">GeostrophicWind</a></span>(gh, lon, lat)]</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(geopotential[date <span class="op">==</span><span class="st"> </span>date[<span class="dv">1</span>]], <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(lon, lat)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/geom_contour.html">geom_contour</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">z =</span> gh)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="../reference/geom_arrow.html">geom_vector</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">dx =</span> <span class="kw"><a href="../reference/spherical.html">dlon</a></span>(u, lat), <span class="dt">dy =</span> <span class="kw"><a href="../reference/spherical.html">dlat</a></span>(v)), </a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">                <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">skip.x =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="fl">5e4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span>()</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt; Warning: Ignoring unknown parameters: scale</span></a></code></pre></div>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 </div>
 <div id="thermodynamics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#thermodynamics" class="anchor"></a>Thermodynamics</h2>
 <p><code>metR</code> offers several functions related to thermodynamical processes in the atmosphere (see <code><a href="../reference/thermodynamics.html">?thermodynamics</a></code>). These are <code><a href="../reference/thermodynamics.html">IdealGas()</a></code>, <code><a href="../reference/thermodynamics.html">Adiabat()</a></code>, <code><a href="../reference/thermodynamics.html">VirtualTemperature()</a></code>, <code><a href="../reference/thermodynamics.html">MixingRatio()</a></code>, <code><a href="../reference/thermodynamics.html">ClausiusClapeyron()</a></code> and <code><a href="../reference/thermodynamics.html">DewPoint()</a></code>. Each function represents a different phisical relationship between variables and computes one of them from the others.</p>
 <p>For example, <code><a href="../reference/thermodynamics.html">IdealGas()</a></code> uses the ideal gas law to compute pressure, temperature or density.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># Density of air at 20°C and 1030hPa.</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">(rho &lt;-<span class="st"> </span><span class="kw"><a href="../reference/thermodynamics.html">IdealGas</a></span>(<span class="dv">1013</span><span class="op">*</span><span class="dv">100</span>, <span class="dv">20</span> <span class="op">+</span><span class="st"> </span><span class="fl">273.15</span>))</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co">#&gt; [1] 1.203788</span></a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co"># Of course, the temperature of air at that density </span></a>
-<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="co"># and same pressure is 20°C.</span></a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="kw"><a href="../reference/thermodynamics.html">IdealGas</a></span>(<span class="dv">1013</span><span class="op">*</span><span class="dv">100</span>, <span class="dt">rho =</span> rho) <span class="op">-</span><span class="st"> </span><span class="fl">273.15</span></a>
-<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co">#&gt; [1] 20</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># Density of air at 20°C and 1030hPa.</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">(rho &lt;-<span class="st"> </span><span class="kw"><a href="../reference/thermodynamics.html">IdealGas</a></span>(<span class="dv">1013</span><span class="op">*</span><span class="dv">100</span>, <span class="dv">20</span> <span class="op">+</span><span class="st"> </span><span class="fl">273.15</span>))</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="co">#&gt; [1] 1.203788</span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co"># Of course, the temperature of air at that density </span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co"># and same pressure is 20°C.</span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="kw"><a href="../reference/thermodynamics.html">IdealGas</a></span>(<span class="dv">1013</span><span class="op">*</span><span class="dv">100</span>, <span class="dt">rho =</span> rho) <span class="op">-</span><span class="st"> </span><span class="fl">273.15</span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt; [1] 20</span></a></code></pre></div>
 <p>Different variables can be derived by combining these functions. For example, it’s easy to calculate relative humidity from data on temperature and dewpoint, then saturation mixing ratio from pressure and temperature and finally the actual mixing ratio.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># Relative humidity from T and Td</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">t &lt;-<span class="st"> </span><span class="dv">25</span> <span class="op">+</span><span class="st"> </span><span class="fl">273.15</span></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">td &lt;-<span class="st"> </span><span class="dv">20</span> <span class="op">+</span><span class="st"> </span><span class="fl">273.15</span></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4">p &lt;-<span class="st"> </span><span class="dv">1000000</span></a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">(rh &lt;-<span class="st"> </span><span class="kw"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span>(td)<span class="op">/</span><span class="kw"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span>(t))</a>
-<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co">#&gt; [1] 0.7380251</span></a>
-<a class="sourceLine" id="cb19-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="co"># Mixing ratio</span></a>
-<a class="sourceLine" id="cb19-9" data-line-number="9">ws &lt;-<span class="st"> </span><span class="kw"><a href="../reference/thermodynamics.html">MixingRatio</a></span>(p, <span class="kw"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span>(t))</a>
-<a class="sourceLine" id="cb19-10" data-line-number="10">(w &lt;-<span class="st"> </span>ws<span class="op">*</span>rh)</a>
-<a class="sourceLine" id="cb19-11" data-line-number="11"><span class="co">#&gt; [1] 0.001456004</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># Relative humidity from T and Td</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">t &lt;-<span class="st"> </span><span class="dv">25</span> <span class="op">+</span><span class="st"> </span><span class="fl">273.15</span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">td &lt;-<span class="st"> </span><span class="dv">20</span> <span class="op">+</span><span class="st"> </span><span class="fl">273.15</span></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">p &lt;-<span class="st"> </span><span class="dv">1000000</span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">(rh &lt;-<span class="st"> </span><span class="kw"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span>(td)<span class="op">/</span><span class="kw"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span>(t))</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="co">#&gt; [1] 0.7380251</span></a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co"># Mixing ratio</span></a>
+<a class="sourceLine" id="cb18-9" data-line-number="9">ws &lt;-<span class="st"> </span><span class="kw"><a href="../reference/thermodynamics.html">MixingRatio</a></span>(p, <span class="kw"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span>(t))</a>
+<a class="sourceLine" id="cb18-10" data-line-number="10">(w &lt;-<span class="st"> </span>ws<span class="op">*</span>rh)</a>
+<a class="sourceLine" id="cb18-11" data-line-number="11"><span class="co">#&gt; [1] 0.001456004</span></a></code></pre></div>
 <p>Of course, <code>w</code> can be also be computed by <code><a href="../reference/thermodynamics.html">DewPoint(p, td = td)</a></code> which gives essentially the same result: 0.0014548.</p>
 </div>
 </div>

@@ -150,7 +150,7 @@ ppNcepSpeedy    # ¡no usar CamelCase ni camelCase!</code></pre>
 <p>Para ser consistente entre distintas partes del código, estos son algunos nombres de variables que <strong>tienen</strong> que respetarse so pena de quilombo en el código y tener que acordarse muchos más nombres.</p>
 <ul>
 <li>Latitud y Longitud son <code>lat</code> y <code>lon</code>. No usar <code>long</code> como un troglodita (aunque técnicamente “long” significa largo, que no está tan lejos de “longitud”). La longitud va de 0 a 360 (para que sea más fácil proyectar con pacífico central) pero se la grafica en -180:180 (para eso, usar <code><a href="reference/scale_longitude.html">scale_x_longitude()</a></code> y <code><a href="reference/scale_longitude.html">scale_y_longitude()</a></code>).</li>
-<li>La fecha es <code>date</code>. No usar <code>time</code> ni otra similar. El formato <strong>siempre</strong> debe ser YYYY-MM-DD HH:MM:SS. Siempre codificarlo como una clase <code>date</code> en caso de fechas sin hora y <code>POSIXct</code> en caso de fechas con hora.</li>
+<li>La fecha es <code>time</code>. No usar <code>date</code> ni otra similar. El formato <strong>siempre</strong> debe ser YYYY-MM-DD HH:MM:SS. Siempre codificarlo como una clase <code>datetime</code> de lubridate.</li>
 <li>Los meses <strong>siempre</strong> se codifican el 1 al 12 y como <code>factor</code> ordenado. Todavía no decido si conviene tener diciembre o enero como el primer mes.</li>
 <li>
 <p>Variables meteorológicas:</p>
@@ -158,7 +158,7 @@ ppNcepSpeedy    # ¡no usar CamelCase ni camelCase!</code></pre>
 <li>
 <strong>gh</strong>: altura geopotencial</li>
 <li>
-<strong>u</strong>: viento zonal (no usar para viento o flujo que NO sea meridional)</li>
+<strong>u</strong>: viento zonal</li>
 <li>
 <strong>v</strong>: viento meridional (no usar para viento o flujo que NO sea meridional)</li>
 <li>
@@ -196,7 +196,7 @@ ppNcepSpeedy    # ¡no usar CamelCase ni camelCase!</code></pre>
 </li>
 <li><p>Las derivadas se nombran agregando el sufijo <code>dx</code> al final de la variable. Derivadas de mayor orden se nombran repitiendo la coordenada que deriva (ej. <code>gh.dxx</code>). Las derivadas cruzadas se escriben siempre en orden x, y, z, t (ej. es <code>gh.dxy</code> en vez de <code>gh.dyx</code>).</p></li>
 </ul>
-<p>Como aclaración, es importante modificar todo dato leído de fuentes externas para que se ajuste a estos criterios. No hace ni siquiera una conversión de unidades antes de tener los datos prolijos.</p>
+<p>Como aclaración, es importante modificar todo dato leído de fuentes externas para que se ajuste a estos criterios. No hacer ni siquiera una conversión de unidades antes de tener los datos prolijos.</p>
 <p>Si es neceario guardar datos en el disco (como resutlados de computaciones largas) usar siempre <code>saveRDS()</code> en vez de <code>save()</code> y la extensión es “.Rds”.</p>
 <pre class="{r}"><code># Bien.
 regr.sst_gh &lt;- lm(...)
@@ -279,7 +279,7 @@ if (i == 1)
 
 if (i == 5) 
     stop("i = 5!") knit</code></pre>
-<p>Usar <code>&lt;-</code> para asignación (esto es lo más controversial de la guía ya que hubiera preferido aprender R usando <code>=</code>; pero lo hecho hecho está y el código usando <code>=</code> me resulta feo). Tratar de no usar nunca la asignación <code>-&gt;</code>.</p>
+<p>Usar <code>&lt;-</code> para asignación (esto es lo más controversial de la guía ya que hubiera preferido aprender R usando <code>=</code>; pero lo hecho hecho está y el código usando <code>=</code> me resulta feo).</p>
 <p>Respetar la identación usando 4 espacios. Se puede poner espaciado extra para alinear asignación de varias variables o la asiganción de muchos argumentos en una función. Acá está bien ser flexible si el código termina con demasiado espaciado innecesario. Algunos ejempos donde puede obviarse es al usar <code>invisible()</code> para arreglar los problemas entre data.table y knitr o código muy largo dentro del <em>j</em> de un data.table.</p>
 <p>Usar nuevas líneas para estructurar el código. Tratar el código como si fuera texto y separarlo en párrafos con una temática consistente. Por ejemplo, líneas donde se lee y prepara una fuente de datos, por ejemplo, van todos juntos, pero separados de otro bloque donde se leen otros datos.</p>
 <p>Los <strong>comentarios</strong> pueden ir en su propia línea o en una línea de código. En el primer caso, empiezan con sólo un “#” y un espacio y se escriben en mayúscula y terminando con un punto (como si fuera una oración normal de toda la vida). En el segundo caso, se separan del código con 4 espacios y un “#” y van en minúscula y sin punto final.</p>
@@ -296,7 +296,7 @@ if (i == 5)
 x &lt;- 5
 y &lt;- x + 5
 
-ncep[, date := paste0(year, month, day, sep = "-")]
+ncep[, time := paste0(year, month, day, sep = "-")]
 
 ice.grid &lt;- readBin(...) %&gt;%
     melt() %&gt;%

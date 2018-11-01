@@ -233,29 +233,29 @@ standard deviation of each singular value.</p>
 <span class='fu'>data</span>(<span class='no'>geopotential</span>)
 <span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/copy'>copy</a></span>(<span class='no'>geopotential</span>)
 <span class='no'>geopotential</span>[, <span class='no'>gh.t.w</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>)*<span class='fu'>sqrt</span>(<span class='fu'>cos</span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>)),
-      <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>month</a></span>(<span class='no'>date</span>))]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t.w
-#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01 2.479552e-01
-#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01 1.685554e+00
-#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01 4.036403e+00
-#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01 6.003832e+00
-#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01 7.255320e+00
-#&gt;     ---                                                 
-#&gt; 532220: 347.5 -90.0 700 2762.000 2000-12-01 5.045014e-07
-#&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 5.045014e-07
-#&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 5.045014e-07
-#&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 5.045014e-07
-#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 5.045014e-07</div><div class='input'>
+      <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>month</a></span>(<span class='no'>date</span>))]</div><div class='output co'>#&gt;           lon   lat lev       gh       date        gh.t.w
+#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01 -3.824174e+00
+#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01 -3.591582e+00
+#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01 -2.862909e+00
+#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01 -2.403045e+00
+#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01 -2.067122e+00
+#&gt;     ---                                                  
+#&gt; 290300: 347.5 -90.0 700 2671.484 1995-12-01 -1.449750e-07
+#&gt; 290301: 350.0 -90.0 700 2671.484 1995-12-01 -1.449750e-07
+#&gt; 290302: 352.5 -90.0 700 2671.484 1995-12-01 -1.449750e-07
+#&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 -1.449750e-07
+#&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -1.449750e-07</div><div class='input'>
 <span class='no'>eof</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>,
            <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>hig</span> <span class='kw'>=</span> <span class='fl'>0.9</span>))
 
 <span class='co'># Inspect the explained variance of each component</span>
 <span class='fu'>summary</span>(<span class='no'>eof</span>)</div><div class='output co'>#&gt; Importance of components:
 #&gt; Component Explained variance Cumulative variance
-#&gt;       1                 27.8%               27.8%
-#&gt;       2                 11.8%               39.5%
-#&gt;       3                 9.43%               49.0%
-#&gt;       4                 6.34%               55.3%
-#&gt;       5                 5.85%               61.2%</div><div class='input'><span class='fu'>screeplot</span>(<span class='no'>eof</span>)</div><div class='img'><img src='EOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;       1                 31.8%               31.8%
+#&gt;       2                 11.4%               43.2%
+#&gt;       3                 7.74%               50.9%
+#&gt;       4                 7.35%               58.3%
+#&gt;       5                 5.73%               64.0%</div><div class='input'><span class='fu'>screeplot</span>(<span class='no'>eof</span>)</div><div class='img'><img src='EOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Keep only the 1st.</span>
 <span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='fu'>cut</span>(<span class='no'>eof</span>, <span class='fl'>1</span>)
 
@@ -270,7 +270,7 @@ standard deviation of each singular value.</p>
 <span class='co'># standard deviation, % of explained variance and</span>
 <span class='co'># confidence intervals.</span>
 <span class='no'>aao</span>$<span class='no'>sdev</span></div><div class='output co'>#&gt;     PC       sd        r2      low      hig
-#&gt; 1: PC1 9295.148 0.2775804 8642.948 10112.92</div><div class='input'>
+#&gt; 1: PC1 7050.352 0.3176266 6332.199 7855.192</div><div class='input'>
 <span class='co'># Reconstructed fields based only on the two first</span>
 <span class='co'># principal components</span>
 <span class='no'>field</span> <span class='kw'>&lt;-</span> <span class='fu'>predict</span>(<span class='no'>eof</span>, <span class='fl'>1</span>:<span class='fl'>2</span>)

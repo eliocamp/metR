@@ -186,11 +186,11 @@ predictable results, set the boundary condition explicitly.</p>
 #&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01 NA -0.29800162
 #&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01 NA -0.75064329
 #&gt;     ---                                                   
-#&gt; 532220: 347.5 -90.0 700 2762.000 2000-12-01 NA          NA
-#&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 NA          NA
-#&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 NA          NA
-#&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 NA          NA
-#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 NA          NA</div><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+#&gt; 290300: 347.5 -90.0 700 2671.484 1995-12-01 NA          NA
+#&gt; 290301: 350.0 -90.0 700 2671.484 1995-12-01 NA          NA
+#&gt; 290302: 352.5 -90.0 700 2671.484 1995-12-01 NA          NA
+#&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 NA          NA
+#&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 NA          NA</div><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh</span>)) +
     <span class='fu'><a href='geom_arrow.html'>geom_vector</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>u</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>v</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>2</span>) +

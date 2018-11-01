@@ -228,79 +228,79 @@ if <code>k=0</code>.</p>
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()</div><div class='img'><img src='waves-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Build field of wavenumber 1</span>
 <span class='no'>jan</span>[, <span class='no'>gh.1</span> <span class='kw'>:=</span> <span class='fu'>BuildWave</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>1</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1
-#&gt;    1:   0.0 -22.5 3163.581 9.443341
-#&gt;    2:   2.5 -22.5 3160.762 9.420932
-#&gt;    3:   5.0 -22.5 3158.026 9.380589
-#&gt;    4:   7.5 -22.5 3156.076 9.322390
-#&gt;    5:  10.0 -22.5 3155.548 9.246445
+#&gt;    1:   0.0 -22.5 3167.817 11.73417
+#&gt;    2:   2.5 -22.5 3166.253 11.84884
+#&gt;    3:   5.0 -22.5 3165.204 11.94097
+#&gt;    4:   7.5 -22.5 3164.823 12.01036
+#&gt;    5:  10.0 -22.5 3165.247 12.05689
 #&gt;   ---                              
-#&gt; 4028: 347.5 -90.0 2706.443 0.000000
-#&gt; 4029: 350.0 -90.0 2706.443 0.000000
-#&gt; 4030: 352.5 -90.0 2706.443 0.000000
-#&gt; 4031: 355.0 -90.0 2706.443 0.000000
-#&gt; 4032: 357.5 -90.0 2706.443 0.000000</div><div class='input'><span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='WrapCircular.html'>WrapCircular</a></span>(<span class='no'>jan</span>), <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+#&gt; 4028: 347.5 -90.0 2701.129  0.00000
+#&gt; 4029: 350.0 -90.0 2701.129  0.00000
+#&gt; 4030: 352.5 -90.0 2701.129  0.00000
+#&gt; 4031: 355.0 -90.0 2701.129  0.00000
+#&gt; 4032: 357.5 -90.0 2701.129  0.00000</div><div class='input'><span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='WrapCircular.html'>WrapCircular</a></span>(<span class='no'>jan</span>), <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.1</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: WrapCircular is deprecated, use ggperiodic::wrap instead</span></div><div class='img'><img src='waves-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Build fields of wavenumber 1 and 2</span>
 <span class='no'>waves</span> <span class='kw'>&lt;-</span> <span class='no'>jan</span>[, <span class='fu'>BuildWave</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>1</span>:<span class='fl'>2</span>), <span class='kw'>sum</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]
 <span class='no'>waves</span>[, <span class='no'>lon</span> <span class='kw'>:=</span> <span class='no'>x</span>*<span class='fl'>180</span>/<span class='no'>pi</span>]</div><div class='output co'>#&gt;         lat k          x        y   lon
-#&gt;    1: -22.5 1 0.00000000 9.443341   0.0
-#&gt;    2: -22.5 1 0.04363323 9.420932   2.5
-#&gt;    3: -22.5 1 0.08726646 9.380589   5.0
-#&gt;    4: -22.5 1 0.13089969 9.322390   7.5
-#&gt;    5: -22.5 1 0.17453293 9.246445  10.0
+#&gt;    1: -22.5 1 0.00000000 11.73417   0.0
+#&gt;    2: -22.5 1 0.04363323 11.84884   2.5
+#&gt;    3: -22.5 1 0.08726646 11.94097   5.0
+#&gt;    4: -22.5 1 0.13089969 12.01036   7.5
+#&gt;    5: -22.5 1 0.17453293 12.05689  10.0
 #&gt;   ---                                  
-#&gt; 8060: -90.0 2 6.06501915 0.000000 347.5
-#&gt; 8061: -90.0 2 6.10865238 0.000000 350.0
-#&gt; 8062: -90.0 2 6.15228561 0.000000 352.5
-#&gt; 8063: -90.0 2 6.19591884 0.000000 355.0
-#&gt; 8064: -90.0 2 6.23955208 0.000000 357.5</div><div class='input'><span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='WrapCircular.html'>WrapCircular</a></span>(<span class='no'>waves</span>), <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+#&gt; 8060: -90.0 2 6.06501915  0.00000 347.5
+#&gt; 8061: -90.0 2 6.10865238  0.00000 350.0
+#&gt; 8062: -90.0 2 6.15228561  0.00000 352.5
+#&gt; 8063: -90.0 2 6.19591884  0.00000 355.0
+#&gt; 8064: -90.0 2 6.23955208  0.00000 357.5</div><div class='input'><span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='WrapCircular.html'>WrapCircular</a></span>(<span class='no'>waves</span>), <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(~<span class='no'>k</span>) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: WrapCircular is deprecated, use ggperiodic::wrap instead</span></div><div class='img'><img src='waves-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Field with waves 0 to 2 filtered</span>
-<span class='no'>jan</span>[, <span class='no'>gh.no12</span> <span class='kw'>:=</span> <span class='no'>gh</span> - <span class='fu'>BuildWave</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>0</span>:<span class='fl'>2</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1    gh.no12
-#&gt;    1:   0.0 -22.5 3163.581 9.443341  6.5799303
-#&gt;    2:   2.5 -22.5 3160.762 9.420932  3.4553015
-#&gt;    3:   5.0 -22.5 3158.026 9.380589  0.4174548
-#&gt;    4:   7.5 -22.5 3156.076 9.322390 -1.8273141
-#&gt;    5:  10.0 -22.5 3155.548 9.246445 -2.6399566
-#&gt;   ---                                         
-#&gt; 4028: 347.5 -90.0 2706.443 0.000000  0.0000000
-#&gt; 4029: 350.0 -90.0 2706.443 0.000000  0.0000000
-#&gt; 4030: 352.5 -90.0 2706.443 0.000000  0.0000000
-#&gt; 4031: 355.0 -90.0 2706.443 0.000000  0.0000000
-#&gt; 4032: 357.5 -90.0 2706.443 0.000000  0.0000000</div><div class='input'><span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='WrapCircular.html'>WrapCircular</a></span>(<span class='no'>jan</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>)), <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+<span class='no'>jan</span>[, <span class='no'>gh.no12</span> <span class='kw'>:=</span> <span class='no'>gh</span> - <span class='fu'>BuildWave</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>0</span>:<span class='fl'>2</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12
+#&gt;    1:   0.0 -22.5 3167.817 11.73417 5.858149
+#&gt;    2:   2.5 -22.5 3166.253 11.84884 4.006104
+#&gt;    3:   5.0 -22.5 3165.204 11.94097 2.689758
+#&gt;    4:   7.5 -22.5 3164.823 12.01036 2.061137
+#&gt;    5:  10.0 -22.5 3165.247 12.05689 2.261535
+#&gt;   ---                                       
+#&gt; 4028: 347.5 -90.0 2701.129  0.00000 0.000000
+#&gt; 4029: 350.0 -90.0 2701.129  0.00000 0.000000
+#&gt; 4030: 352.5 -90.0 2701.129  0.00000 0.000000
+#&gt; 4031: 355.0 -90.0 2701.129  0.00000 0.000000
+#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000</div><div class='input'><span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='WrapCircular.html'>WrapCircular</a></span>(<span class='no'>jan</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>)), <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.no12</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: WrapCircular is deprecated, use ggperiodic::wrap instead</span></div><div class='img'><img src='waves-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Much faster</span>
-<span class='no'>jan</span>[, <span class='no'>gh.no12</span> <span class='kw'>:=</span> <span class='fu'>FilterWave</span>(<span class='no'>gh</span>, -<span class='fl'>2</span>:<span class='fl'>0</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1    gh.no12
-#&gt;    1:   0.0 -22.5 3163.581 9.443341  6.5799303
-#&gt;    2:   2.5 -22.5 3160.762 9.420932  3.4553015
-#&gt;    3:   5.0 -22.5 3158.026 9.380589  0.4174548
-#&gt;    4:   7.5 -22.5 3156.076 9.322390 -1.8273141
-#&gt;    5:  10.0 -22.5 3155.548 9.246445 -2.6399566
-#&gt;   ---                                         
-#&gt; 4028: 347.5 -90.0 2706.443 0.000000  0.0000000
-#&gt; 4029: 350.0 -90.0 2706.443 0.000000  0.0000000
-#&gt; 4030: 352.5 -90.0 2706.443 0.000000  0.0000000
-#&gt; 4031: 355.0 -90.0 2706.443 0.000000  0.0000000
-#&gt; 4032: 357.5 -90.0 2706.443 0.000000  0.0000000</div><div class='input'><span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='WrapCircular.html'>WrapCircular</a></span>(<span class='no'>jan</span>), <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+<span class='no'>jan</span>[, <span class='no'>gh.no12</span> <span class='kw'>:=</span> <span class='fu'>FilterWave</span>(<span class='no'>gh</span>, -<span class='fl'>2</span>:<span class='fl'>0</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12
+#&gt;    1:   0.0 -22.5 3167.817 11.73417 5.858149
+#&gt;    2:   2.5 -22.5 3166.253 11.84884 4.006104
+#&gt;    3:   5.0 -22.5 3165.204 11.94097 2.689758
+#&gt;    4:   7.5 -22.5 3164.823 12.01036 2.061137
+#&gt;    5:  10.0 -22.5 3165.247 12.05689 2.261535
+#&gt;   ---                                       
+#&gt; 4028: 347.5 -90.0 2701.129  0.00000 0.000000
+#&gt; 4029: 350.0 -90.0 2701.129  0.00000 0.000000
+#&gt; 4030: 352.5 -90.0 2701.129  0.00000 0.000000
+#&gt; 4031: 355.0 -90.0 2701.129  0.00000 0.000000
+#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000</div><div class='input'><span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='WrapCircular.html'>WrapCircular</a></span>(<span class='no'>jan</span>), <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.no12</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: WrapCircular is deprecated, use ggperiodic::wrap instead</span></div><div class='img'><img src='waves-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using positive numbers returns the field</span>
-<span class='no'>jan</span>[, <span class='no'>gh.only12</span> <span class='kw'>:=</span> <span class='fu'>FilterWave</span>(<span class='no'>gh</span>, <span class='fl'>2</span>:<span class='fl'>1</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1    gh.no12 gh.only12
-#&gt;    1:   0.0 -22.5 3163.581 9.443341  6.5799303  7.373604
-#&gt;    2:   2.5 -22.5 3160.762 9.420932  3.4553015  7.680073
-#&gt;    3:   5.0 -22.5 3158.026 9.380589  0.4174548  7.981858
-#&gt;    4:   7.5 -22.5 3156.076 9.322390 -1.8273141  8.276431
-#&gt;    5:  10.0 -22.5 3155.548 9.246445 -2.6399566  8.561220
-#&gt;   ---                                                   
-#&gt; 4028: 347.5 -90.0 2706.443 0.000000  0.0000000  0.000000
-#&gt; 4029: 350.0 -90.0 2706.443 0.000000  0.0000000  0.000000
-#&gt; 4030: 352.5 -90.0 2706.443 0.000000  0.0000000  0.000000
-#&gt; 4031: 355.0 -90.0 2706.443 0.000000  0.0000000  0.000000
-#&gt; 4032: 357.5 -90.0 2706.443 0.000000  0.0000000  0.000000</div><div class='input'><span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='WrapCircular.html'>WrapCircular</a></span>(<span class='no'>jan</span>), <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+<span class='no'>jan</span>[, <span class='no'>gh.only12</span> <span class='kw'>:=</span> <span class='fu'>FilterWave</span>(<span class='no'>gh</span>, <span class='fl'>2</span>:<span class='fl'>1</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12 gh.only12
+#&gt;    1:   0.0 -22.5 3167.817 11.73417 5.858149  11.17110
+#&gt;    2:   2.5 -22.5 3166.253 11.84884 4.006104  11.45865
+#&gt;    3:   5.0 -22.5 3165.204 11.94097 2.689758  11.72661
+#&gt;    4:   7.5 -22.5 3164.823 12.01036 2.061137  11.97348
+#&gt;    5:  10.0 -22.5 3165.247 12.05689 2.261535  12.19776
+#&gt;   ---                                                 
+#&gt; 4028: 347.5 -90.0 2701.129  0.00000 0.000000   0.00000
+#&gt; 4029: 350.0 -90.0 2701.129  0.00000 0.000000   0.00000
+#&gt; 4030: 352.5 -90.0 2701.129  0.00000 0.000000   0.00000
+#&gt; 4031: 355.0 -90.0 2701.129  0.00000 0.000000   0.00000
+#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000   0.00000</div><div class='input'><span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='WrapCircular.html'>WrapCircular</a></span>(<span class='no'>jan</span>), <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.only12</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: WrapCircular is deprecated, use ggperiodic::wrap instead</span></div><div class='img'><img src='waves-6.png' alt='' width='700' height='433' /></div><div class='input'>
 

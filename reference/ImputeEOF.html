@@ -202,56 +202,56 @@ returns a matrix.</p>
 <span class='fu'>data</span>(<span class='no'>geopotential</span>)
 <span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/copy'>copy</a></span>(<span class='no'>geopotential</span>)
 <span class='no'>geopotential</span>[, <span class='no'>gh.t</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lon</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>month</a></span>(<span class='no'>date</span>))]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t
-#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  0.2579679
-#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  1.7536177
-#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  4.1993963
-#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01  6.2462713
-#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01  7.5482955
+#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  -3.978597
+#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  -3.736613
+#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  -2.978516
+#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01  -2.500081
+#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01  -2.150594
 #&gt;     ---                                               
-#&gt; 532220: 347.5 -90.0 700 2762.000 2000-12-01 64.4721236
-#&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 64.4721236
-#&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 64.4721236
-#&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 64.4721236
-#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 64.4721236</div><div class='input'>
+#&gt; 290300: 347.5 -90.0 700 2671.484 1995-12-01 -18.526896
+#&gt; 290301: 350.0 -90.0 700 2671.484 1995-12-01 -18.526896
+#&gt; 290302: 352.5 -90.0 700 2671.484 1995-12-01 -18.526896
+#&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 -18.526896
+#&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -18.526896</div><div class='input'>
 <span class='co'># Add gaps to field</span>
 <span class='no'>geopotential</span>[, <span class='no'>gh.gap</span> <span class='kw'>:=</span> <span class='no'>gh.t</span>]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap
-#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  0.2579679  0.2579679
-#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  1.7536177  1.7536177
-#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  4.1993963  4.1993963
-#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01  6.2462713  6.2462713
-#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01  7.5482955  7.5482955
+#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  -3.978597  -3.978597
+#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  -3.736613  -3.736613
+#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  -2.978516  -2.978516
+#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01  -2.500081  -2.500081
+#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01  -2.150594  -2.150594
 #&gt;     ---                                                          
-#&gt; 532220: 347.5 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236
-#&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236
-#&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236
-#&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236
-#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236</div><div class='input'><span class='fu'>set.seed</span>(<span class='fl'>42</span>)
+#&gt; 290300: 347.5 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896
+#&gt; 290301: 350.0 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896
+#&gt; 290302: 352.5 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896
+#&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896
+#&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896</div><div class='input'><span class='fu'>set.seed</span>(<span class='fl'>42</span>)
 <span class='no'>geopotential</span>[<span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='no'>.N</span>, <span class='no'>.N</span>*<span class='fl'>0.3</span>), <span class='no'>gh.gap</span> <span class='kw'>:=</span> <span class='fl'>NA</span>]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap
-#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  0.2579679  0.2579679
-#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  1.7536177  1.7536177
-#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  4.1993963  4.1993963
-#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01  6.2462713  6.2462713
-#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01  7.5482955         NA
+#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  -3.978597  -3.978597
+#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  -3.736613  -3.736613
+#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  -2.978516         NA
+#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01  -2.500081  -2.500081
+#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01  -2.150594  -2.150594
 #&gt;     ---                                                          
-#&gt; 532220: 347.5 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236
-#&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236
-#&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 64.4721236         NA
-#&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236
-#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 64.4721236         NA</div><div class='input'>
+#&gt; 290300: 347.5 -90.0 700 2671.484 1995-12-01 -18.526896         NA
+#&gt; 290301: 350.0 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896
+#&gt; 290302: 352.5 -90.0 700 2671.484 1995-12-01 -18.526896         NA
+#&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896
+#&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -18.526896         NA</div><div class='input'>
 <span class='no'>max.eof</span> <span class='kw'>&lt;-</span> <span class='fl'>5</span>    <span class='co'># change to a higher value</span>
 <span class='no'>geopotential</span>[, <span class='no'>gh.impute</span> <span class='kw'>:=</span> <span class='fu'>ImputeEOF</span>(<span class='no'>gh.gap</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='no'>max.eof</span>,
-                                      <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>)]</div><div class='output co'>#&gt;  With 1 eof - rmse =  28.88934 With 2 eof - rmse =  26.36427 With 3 eof - rmse =  24.64826 With 4 eof - rmse =  23.08339 With 5 eof - rmse =  21.83368</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap  gh.impute
-#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  0.2579679  0.2579679  0.2579679
-#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  1.7536177  1.7536177  1.7536177
-#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  4.1993963  4.1993963  4.1993963
-#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01  6.2462713  6.2462713  6.2462713
-#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01  7.5482955         NA  2.3721733
+                                      <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>)]</div><div class='output co'>#&gt;  With 1 eof - rmse =  27.2008 With 2 eof - rmse =  25.38818 With 3 eof - rmse =  23.91113 With 4 eof - rmse =  22.46116 With 5 eof - rmse =  21.30494</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap  gh.impute
+#&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  -3.978597  -3.978597  -3.978597
+#&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  -3.736613  -3.736613  -3.736613
+#&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  -2.978516         NA   1.100607
+#&gt;      4:   7.5 -22.5 700 3162.323 1990-01-01  -2.500081  -2.500081  -2.500081
+#&gt;      5:  10.0 -22.5 700 3163.097 1990-01-01  -2.150594  -2.150594  -2.150594
 #&gt;     ---                                                                     
-#&gt; 532220: 347.5 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236 64.4721236
-#&gt; 532221: 350.0 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236 64.4721236
-#&gt; 532222: 352.5 -90.0 700 2762.000 2000-12-01 64.4721236         NA 60.3893312
-#&gt; 532223: 355.0 -90.0 700 2762.000 2000-12-01 64.4721236 64.4721236 64.4721236
-#&gt; 532224: 357.5 -90.0 700 2762.000 2000-12-01 64.4721236         NA 63.0619975</div><div class='input'>
+#&gt; 290300: 347.5 -90.0 700 2671.484 1995-12-01 -18.526896         NA -27.011880
+#&gt; 290301: 350.0 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896 -18.526896
+#&gt; 290302: 352.5 -90.0 700 2671.484 1995-12-01 -18.526896         NA -23.455715
+#&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896 -18.526896
+#&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -18.526896         NA -28.673721</div><div class='input'>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
@@ -261,8 +261,8 @@ returns a matrix.</p>
 <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>na.sample</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>gh.t</span>, <span class='no'>gh.impute</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>()</div><div class='img'><img src='ImputeEOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Estimated RMSE</span>
-<span class='fu'>attr</span>(<span class='no'>geopotential</span>$<span class='no'>gh.impute</span>, <span class='st'>"rmse"</span>)</div><div class='output co'>#&gt; [1] 21.83368</div><div class='input'><span class='co'># Real RMSE</span>
-<span class='no'>geopotential</span>[<span class='fu'>is.na</span>(<span class='no'>gh.gap</span>), <span class='fu'>sqrt</span>(<span class='fu'>mean</span>((<span class='no'>gh.t</span> - <span class='no'>gh.impute</span>)^<span class='fl'>2</span>))]</div><div class='output co'>#&gt; [1] 21.71992</div><div class='input'>
+<span class='fu'>attr</span>(<span class='no'>geopotential</span>$<span class='no'>gh.impute</span>, <span class='st'>"rmse"</span>)</div><div class='output co'>#&gt; [1] 21.30494</div><div class='input'><span class='co'># Real RMSE</span>
+<span class='no'>geopotential</span>[<span class='fu'>is.na</span>(<span class='no'>gh.gap</span>), <span class='fu'>sqrt</span>(<span class='fu'>mean</span>((<span class='no'>gh.t</span> - <span class='no'>gh.impute</span>)^<span class='fl'>2</span>))]</div><div class='output co'>#&gt; [1] 20.96812</div><div class='input'>
 
 </div></pre>
   </div>

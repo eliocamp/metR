@@ -10,7 +10,7 @@
 cut.eof <- function(x, n, ...) {
     checks <- makeAssertCollection()
     assertClass(x, "eof", add = checks)
-    assertCount(n, positive = TRUE, add = checks)
+    assertIntegerish(n, lower = 1, null.ok = TRUE, add = checks)
     reportAssertions(checks)
 
     var <- attr(x, "suffix")
@@ -29,7 +29,7 @@ screeplot.eof <- function(x, npcs = "all", type = NULL, main = NULL, ...) {
     checks <- makeAssertCollection()
     assertClass(x, "eof", add = checks)
     assert(checkCharacter(npcs, fixed = "all", any.missing = FALSE, len = 1),
-        checkCount(npcs, positive = TRUE))
+           checkIntegerish(n, lower = 1))
     reportAssertions(checks)
 
     var <- attr(x, "suffix")

@@ -194,7 +194,7 @@ to the paired geom/stat.</p></td>
     </tr>
     <tr>
       <th>L, </th>
-      <td><p>tipical length of a streamline in x and y units</p></td>
+      <td><p>typical length of a streamline in x and y units</p></td>
     </tr>
     <tr>
       <th>min.L</th>
@@ -214,11 +214,11 @@ to the paired geom/stat.</p></td>
     </tr>
     <tr>
       <th>xwrap</th>
-      <td><p>vector of length two used to wrap the circulad dimension</p></td>
+      <td><p>vector of length two used to wrap the circular dimension</p></td>
     </tr>
     <tr>
       <th>ywrap</th>
-      <td><p>vector of length two used to wrap the circulad dimension</p></td>
+      <td><p>vector of length two used to wrap the circular dimension</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -242,7 +242,7 @@ x and y direction (replaces <code>skip</code> if not <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>jitter, jitter.x, jitter.y</th>
-      <td><p>ammount of jitter of the starting poits</p></td>
+      <td><p>amount of jitter of the starting points</p></td>
     </tr>
     <tr>
       <th>arrow.angle</th>
@@ -300,10 +300,10 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Streamlines are computed by simple integration with a foward Euler method.
+    <p>Streamlines are computed by simple integration with a forward Euler method.
 By default, <code>stat_streamline()</code> computes <code>dt</code> and <code>S</code> from <code>L</code>, <code>res</code>,
 the resolution of the grid and the mean magnitude of the field. <code>S</code> is
-then defined as the number of steps necesary to make a streamline of length
+then defined as the number of steps necessary to make a streamline of length
 <code>L</code> under an uniform mean field and <code>dt</code> is chosen so that each step is no
 larger than the resolution of the data (divided by the <code>res</code> parameter). Be
 aware that this rule of thumb might fail in field with very skewed distribution
@@ -319,7 +319,7 @@ jittered by an amount proportional to the resolution of the data and the
 <p>It might be important that the units of the vector field are compatible to the units
 of the x and y dimensions. For example, passing <code>dx</code> and <code>dy</code> in m/s on a
 longitude-latitude grid will might misleading results (see <a href='spherical.html'>spherical</a>).</p>
-<p>Missing values are not permited and the field must be defined on a
+<p>Missing values are not permitted and the field must be defined on a
 regular grid, for now.</p>
     
     <h2 class="hasAnchor" id="aesthetics"><a class="anchor" href="#aesthetics"></a>Aesthetics</h2>

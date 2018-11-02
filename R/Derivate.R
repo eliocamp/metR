@@ -8,7 +8,7 @@
 #' @param data optional data.frame containing the variables
 #' @param sphere logical indicating whether to use spherical coordinates
 #' (see details)
-#' @param a radius for use in spherical coordinates (defaults to Earth's radius)
+#' @param a radius to use in spherical coordinates (defaults to Earth's radius)
 #'
 #'
 #' @return
@@ -68,8 +68,8 @@
 #' @family meteorology functions
 #' @import data.table Formula formula.tools checkmate
 #' @export
-Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = FALSE,
-                     sphere = FALSE, a = 6371000) {
+Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
+                     data = NULL, sphere = FALSE, a = 6371000) {
     checks <- makeAssertCollection()
 
     assertClass(formula, "formula", add = checks)
@@ -153,8 +153,8 @@ Derivate <- function(formula, data = NULL, order = 1, cyclical = FALSE, fill = F
 
 #' @rdname Derivate
 #' @export
-Laplacian <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
-                      sphere = FALSE, a = 6371000) {
+Laplacian <- function(formula, cyclical = FALSE, fill = FALSE,
+                      data = NULL, sphere = FALSE, a = 6371000) {
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
                     sphere = sphere, a = a, order = 2)
 
@@ -176,8 +176,8 @@ Laplacian <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
 
 #' @export
 #' @rdname Derivate
-Divergence <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
-                       sphere = FALSE, a = 6371000) {
+Divergence <- function(formula, cyclical = FALSE, fill = FALSE,
+                       data = NULL, sphere = FALSE, a = 6371000) {
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
                     sphere = sphere, a = a, order = 1)
 
@@ -187,8 +187,8 @@ Divergence <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
 
 #' @export
 #' @rdname Derivate
-Vorticity <- function(formula, data = NULL, cyclical = FALSE, fill = FALSE,
-                      sphere = FALSE, a = 6371000) {
+Vorticity <- function(formula, cyclical = FALSE, fill = FALSE,
+                      data = NULL, sphere = FALSE, a = 6371000) {
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
                     sphere = sphere, a = a, order = 1)
 

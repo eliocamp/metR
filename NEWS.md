@@ -1,4 +1,5 @@
 # metR 0.1.9000
+
 - Arrows in `geom_arrow()` and `geom_vector()` scale with vector magnitude. 
 - New geom `geom_streamline()` for visualizing vector fields.
 - Utilities `dlon()`, `dlat()`, `dx()`, `dy()` for converting physical units into 

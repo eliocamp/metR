@@ -7,22 +7,20 @@
 \alias{Vorticity}
 \title{Derivate a discrete variable using finite differences}
 \usage{
-Derivate(formula, data = NULL, order = 1, cyclical = FALSE,
-  fill = FALSE, sphere = FALSE, a = 6371000)
+Derivate(formula, order = 1, cyclical = FALSE, fill = FALSE,
+  data = NULL, sphere = FALSE, a = 6371000)
 
-Laplacian(formula, data = NULL, cyclical = FALSE, fill = FALSE,
+Laplacian(formula, cyclical = FALSE, fill = FALSE, data = NULL,
   sphere = FALSE, a = 6371000)
 
-Divergence(formula, data = NULL, cyclical = FALSE, fill = FALSE,
+Divergence(formula, cyclical = FALSE, fill = FALSE, data = NULL,
   sphere = FALSE, a = 6371000)
 
-Vorticity(formula, data = NULL, cyclical = FALSE, fill = FALSE,
+Vorticity(formula, cyclical = FALSE, fill = FALSE, data = NULL,
   sphere = FALSE, a = 6371000)
 }
 \arguments{
 \item{formula}{a formula indicating dependent and independent variables}
-
-\item{data}{optional data.frame containing the variables}
 
 \item{order}{order of the derivative}
 
@@ -31,10 +29,12 @@ Vorticity(formula, data = NULL, cyclical = FALSE, fill = FALSE,
 \item{fill}{logical indicating whether to fill values at the boundaries
 with forward and backwards differencing}
 
+\item{data}{optional data.frame containing the variables}
+
 \item{sphere}{logical indicating whether to use spherical coordinates
 (see details)}
 
-\item{a}{radius for use in spherical coordinates (defaults to Earth's radius)}
+\item{a}{radius to use in spherical coordinates (defaults to Earth's radius)}
 }
 \value{
 If there is one independent variable and one dependent variable, a numeric

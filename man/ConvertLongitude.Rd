@@ -12,7 +12,7 @@ ConvertLongitude(lon, group = NULL, from = NULL)
 \item{group}{optional vector of groups (the same length as longitude)
 that will be split on the edges (see examples)}
 
-\item{from}{optionally explicitly say from which convension to convert}
+\item{from}{optionally explicitly say from which convention to convert}
 }
 \value{
 If \code{group} is missing, a numeric vector the same length of lon.

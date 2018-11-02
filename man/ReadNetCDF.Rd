@@ -15,7 +15,7 @@ ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array",
 
 \item{out}{character indicating the type of output desired}
 
-\item{subset}{a named list a subseting vectors. See Details.}
+\item{subset}{a named list a subsetting vectors. See Details.}
 
 \item{key}{if \code{TRUE}, returns a data.table keyed by the dimensions of the data.}
 }
@@ -33,7 +33,7 @@ Finally, it can also be \code{vars}, in which case it returns a list with the na
 of the available variables and the dimensions of the spatiotemporal grid.
 
 When not all variables specified in \code{vars} have the same number of dimensions,
-the shorter variables will be recicled. E.g. if reading a 3D pressure field
+the shorter variables will be recycled. E.g. if reading a 3D pressure field
 and a 2D surface temperature field, the latter will be turned into a 3D field
 with the same values in each missing dimension.
 }
@@ -44,7 +44,7 @@ with proper dimensions.
 }
 \details{
 \code{subset} must be a named list for subsetting. Names must match dimensions
-specified in the NetCDF file and each element must be a vector of the same tipe
+specified in the NetCDF file and each element must be a vector of the same type
 of that dimension whose range will be use for subsetting. You don't need to
 provide and exact range that matches the actual gridpoints of the file; the
 closest gridpoint will be selected.

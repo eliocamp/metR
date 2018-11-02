@@ -33,7 +33,7 @@ DewPoint(p, ws, td, epsilon = 0.622)
 
 \item{theta}{potential temperature}
 
-\item{p0}{refference pressure}
+\item{p0}{reference pressure}
 
 \item{kappa}{ratio of dry air constant and specific heat capacity at constant pressure}
 
@@ -43,7 +43,7 @@ DewPoint(p, ws, td, epsilon = 0.622)
 
 \item{epsilon}{ratio of dry air constant and vapour constant}
 
-\item{es}{saturation vapour patial pressure}
+\item{es}{saturation vapour partial pressure}
 
 \item{w}{mixing ratio}
 
@@ -55,7 +55,7 @@ DewPoint(p, ws, td, epsilon = 0.622)
 Each function returns the value of the missing state variable.
 }
 \description{
-Functions related to common atmospheric termodynamic relationships.
+Functions related to common atmospheric thermodynamic relationships.
 }
 \details{
 \code{IdealGas} computes pressure, temperature or density of air according to the
@@ -71,7 +71,7 @@ virtual temperature according to the virtual temperature definition
 \code{MixingRatio} computes pressure, vapour partial temperature, or mixing ratio
 according to \eqn{w = \epsilon e/(P - e)}.
 
-\code{ClausiusClapeyron} computes saturaton pressure or temperature according
+\code{ClausiusClapeyron} computes saturation pressure or temperature according
 to the August-Roche-Magnus formula \eqn{es = a exp{bT/(T + c)}} with temperature
 in Kelvin and saturation pressure in Pa.
 

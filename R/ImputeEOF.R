@@ -13,8 +13,8 @@
 #' @param verbose logical indicating whether to print progress
 #'
 #' @return
-#' A vector of inputed values with attributes `eof`, which is the number of
-#' singular values used in the final inputation; and `rmse`, which is the Root
+#' A vector of imputed values with attributes `eof`, which is the number of
+#' singular values used in the final imputation; and `rmse`, which is the Root
 #' Mean Square Error estimated from crossvalidation.
 #'
 #' @details

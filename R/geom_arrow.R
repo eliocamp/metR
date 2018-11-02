@@ -14,7 +14,7 @@
 #' @param direction direction of rotation (counter-clockwise or clockwise)
 #' @param start starting angle for rotation in degrees
 #' @param pivot numeric indicating where to pivot the arrow where 0 means at the
-#' begining and 1 meanns at the end.
+#' beginning and 1 means at the end.
 #' @param preserve.dir logical indicating whether to preserve direction or not
 #'
 #' @details

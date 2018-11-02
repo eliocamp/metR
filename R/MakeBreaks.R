@@ -13,11 +13,11 @@
 #' and returns a sequence of equally spaced intervals covering the range.
 #'
 #' @details
-#' `MakeBreaks` is essencially an export of the default way
+#' `MakeBreaks` is essentially an export of the default way
 #' [ggplot2::stat_contour] makes breaks.
 #'
 #' `AnchorBreaks` makes breaks starting from an `anchor` value and covering
-#' the range of the data acording to `binwidth`.
+#' the range of the data according to `binwidth`.
 #'
 #' @examples
 #'

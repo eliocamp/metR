@@ -103,7 +103,7 @@ scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...
 #'
 #' @param lon longitude in degrees
 #' @param lat latitude in degrees
-#' @param east,west,north,south text to append for each cuadrant
+#' @param east,west,north,south text to append for each quadrant
 #'
 #' @details
 #' The default values are for Spanish.

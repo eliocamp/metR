@@ -29,7 +29,7 @@ FilterWave(y, k, action = sign(k[k != 0][1]))
 
 \item{wave}{optional list output from \code{FitWave}}
 
-\item{sum}{wheter to perform the sum or not (see Details)}
+\item{sum}{whether to perform the sum or not (see Details)}
 
 \item{action}{integer to disambiguate action for k = 0 (see Details)}
 }

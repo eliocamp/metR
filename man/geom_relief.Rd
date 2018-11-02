@@ -102,6 +102,13 @@ to color. \code{geom_shadow()} projects shadows.
 }
 }
 
+\examples{
+\dontrun{
+library(ggplot2)
+ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
+      geom_relief(aes(z = value))
+}
+}
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},

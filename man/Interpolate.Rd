@@ -2,7 +2,7 @@
 % Please edit documentation in R/Interpolate.R
 \name{Interpolate}
 \alias{Interpolate}
-\title{Bilinear inteprolation}
+\title{Bilinear interpolation}
 \usage{
 Interpolate(formula, x.out, y.out, data = NULL, grid = TRUE,
   path = FALSE)
@@ -17,7 +17,7 @@ Interpolate(formula, x.out, y.out, data = NULL, grid = TRUE,
 \item{grid}{logical indicating if x.out and y.out define a regular grid.}
 
 \item{path}{a logical or character indicating if the x.out and y.out define a
-path. If character, it will be the name of the column returing the order of
+path. If character, it will be the name of the column returning the order of
 said path.}
 }
 \value{

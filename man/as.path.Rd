@@ -7,8 +7,8 @@
 as.path(x, y, n = 10, path = TRUE)
 }
 \arguments{
-\item{x, y}{numeric vectos of x and y locations. If one of them is of length 1,
-if will be reciceld.}
+\item{x, y}{numeric vectors of x and y locations. If one of them is of length 1,
+if will be recycled.}
 
 \item{n}{number of points to interpolate to}
 

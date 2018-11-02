@@ -20,7 +20,7 @@
 # #'    - `TRUE` for imputing missing values with [approx]
 # #'    - A numeric value for constant imputation
 # #'    - A function that takes a vector and returns a numeric (e.g. `mean`)
-#' @param xwrap,ywrap vector of length two used to wrap the circulad dimension.
+#' @param xwrap,ywrap vector of length two used to wrap the circular dimension.
 #'
 #' @section Aesthetics:
 #' \code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):

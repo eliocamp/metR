@@ -27,11 +27,11 @@ Functions that return functions suitable to use as the \code{breaks} argument in
 ggplot2's continuous scales and in \link{geom_contour_fill}.
 }
 \details{
-\code{MakeBreaks} is essencially an export of the default way
+\code{MakeBreaks} is essentially an export of the default way
 \link[ggplot2:stat_contour]{ggplot2::stat_contour} makes breaks.
 
 \code{AnchorBreaks} makes breaks starting from an \code{anchor} value and covering
-the range of the data acording to \code{binwidth}.
+the range of the data according to \code{binwidth}.
 }
 \examples{
 

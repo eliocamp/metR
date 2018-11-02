@@ -88,7 +88,7 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
-\item{rotate}{logical indicating wether to rotate text following the contour.}
+\item{rotate}{logical indicating whether to rotate text following the contour.}
 
 \item{stroke}{numerical indicating width of stroke relative to the size of
 the text. Ignored if less than zero.}
@@ -98,9 +98,9 @@ the text. Ignored if less than zero.}
 \item{check_overlap}{If \code{TRUE}, text that overlaps previous text in the
 same layer will not be plotted.}
 
-\item{xwrap}{vector of length two used to wrap the circulad dimension}
+\item{xwrap}{vector of length two used to wrap the circular dimension}
 
-\item{ywrap}{vector of length two used to wrap the circulad dimension}
+\item{ywrap}{vector of length two used to wrap the circular dimension}
 }
 \description{
 Draws labels on contours built with \link[ggplot2:stat_contour]{ggplot2::stat_contour}.

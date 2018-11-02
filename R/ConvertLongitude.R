@@ -5,7 +5,7 @@
 #' @param lon numeric vector of longitude
 #' @param group optional vector of groups (the same length as longitude)
 #' that will be split on the edges (see examples)
-#' @param from optionally explicitly say from which convension to convert
+#' @param from optionally explicitly say from which convention to convert
 #'
 #' @return If `group` is missing, a numeric vector the same length of lon.
 #' Else, a list with vectors `lon` and `group`.

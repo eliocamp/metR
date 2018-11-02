@@ -62,7 +62,7 @@ to the paired geom/stat.}
 \item{direction}{direction of rotation (counter-clockwise or clockwise)}
 
 \item{pivot}{numeric indicating where to pivot the arrow where 0 means at the
-begining and 1 meanns at the end.}
+beginning and 1 means at the end.}
 
 \item{preserve.dir}{logical indicating whether to preserve direction or not}
 

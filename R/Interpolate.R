@@ -1,4 +1,4 @@
-#' Bilinear inteprolation
+#' Bilinear interpolation
 #'
 #' Uses [fields::interp.surface] to interpolate values defined in a bidimensional
 #' grid with bilinear interpolation.
@@ -8,7 +8,7 @@
 #' @param data optional data.frame with the data
 #' @param grid logical indicating if x.out and y.out define a regular grid.
 #' @param path a logical or character indicating if the x.out and y.out define a
-#' path. If character, it will be the name of the column returing the order of
+#' path. If character, it will be the name of the column returning the order of
 #' said path.
 #'
 #' @details
@@ -162,8 +162,8 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
 #' This is a helper function to quickly make an interpolated list of locations
 #' between a number of locations
 #'
-#' @param x,y numeric vectos of x and y locations. If one of them is of length 1,
-#' if will be reciceld.
+#' @param x,y numeric vectors of x and y locations. If one of them is of length 1,
+#' if will be recycled.
 #' @param path either `TRUE` of a character vector with the name of the path.
 #' @param n number of points to interpolate to
 #'

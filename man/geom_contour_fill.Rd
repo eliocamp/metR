@@ -56,7 +56,7 @@ to the paired geom/stat.}
 
 \item{na.fill}{How to fill missing values.}
 
-\item{xwrap, ywrap}{vector of length two used to wrap the circulad dimension.}
+\item{xwrap, ywrap}{vector of length two used to wrap the circular dimension.}
 
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.

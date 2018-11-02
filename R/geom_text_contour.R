@@ -7,7 +7,7 @@
 #' @inheritParams geom_contour2
 #' @param min.size minimum number of points for a contour to be labeled.
 #' @param skip number of contours to skip
-#' @param rotate logical indicating wether to rotate text following the contour.
+#' @param rotate logical indicating whether to rotate text following the contour.
 #' @param stroke numerical indicating width of stroke relative to the size of
 #' the text. Ignored if less than zero.
 #' @param stroke.color any valid color.

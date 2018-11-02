@@ -7,20 +7,20 @@
 #' @inheritParams geom_vector
 #' @inheritParams ggplot2::stat_identity
 #' @inheritParams geom_contour2
-#' @param L, tipical length of a streamline in x and y units
+#' @param L, typical length of a streamline in x and y units
 #' @param min.L minimum length of segments to show
 #' @param res, resolution parameter (higher numbers increases the resolution)
 #' @param S optional numeric number of timesteps for integration
 #' @param dt optional numeric size "timestep" for integration
 #' @param n,nx,ny optional numeric indicating the number of points to draw in the
 #' x and y direction (replaces `skip` if not `NULL`)
-#' @param jitter,jitter.x,jitter.y ammount of jitter of the starting poits
+#' @param jitter,jitter.x,jitter.y amount of jitter of the starting points
 #'
 #' @details
-#' Streamlines are computed by simple integration with a foward Euler method.
+#' Streamlines are computed by simple integration with a forward Euler method.
 #' By default, `stat_streamline()` computes `dt` and `S` from `L`, `res`,
 #' the resolution of the grid and the mean magnitude of the field. `S` is
-#' then defined as the number of steps necesary to make a streamline of length
+#' then defined as the number of steps necessary to make a streamline of length
 #' `L` under an uniform mean field and `dt` is chosen so that each step is no
 #' larger than the resolution of the data (divided by the `res` parameter). Be
 #' aware that this rule of thumb might fail in field with very skewed distribution
@@ -40,7 +40,7 @@
 #' of the x and y dimensions. For example, passing `dx` and `dy` in m/s on a
 #' longitude-latitude grid will might misleading results (see [spherical]).
 #'
-#' Missing values are not permited and the field must be defined on a
+#' Missing values are not permitted and the field must be defined on a
 #' regular grid, for now.
 #'
 #' @section Aesthetics:

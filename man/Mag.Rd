@@ -10,7 +10,7 @@ Mag(...)
 \item{...}{numeric vectors of coordinates or list of coordinates}
 }
 \value{
-A numeric vector the same length as each elemenet of ...
+A numeric vector the same length as each element of ...
 that is \eqn{\sqrt(x^2 + y^2 + ...)}.
 }
 \description{

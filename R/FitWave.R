@@ -8,7 +8,7 @@
 #' @param amplitude numeric vector of amplitudes
 #' @param phase numeric vector of phases
 #' @param wave optional list output from `FitWave`
-#' @param sum wheter to perform the sum or not (see Details)
+#' @param sum whether to perform the sum or not (see Details)
 #' @param action integer to disambiguate action for k = 0 (see Details)
 #'
 #' @return

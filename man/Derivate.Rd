@@ -56,7 +56,7 @@ correction is applied to the derivative so that they are in the same units as
 \code{a}.
 
 Using \code{fill = TRUE} will degrade the solution near the edges of a non-cyclical
-bondary. Use with caution.
+boundary. Use with caution.
 
 \code{Laplacian()}, \code{Divergence()} and \code{Vorticity()} are convenient wrappers that
 call \code{Derivate()} and make the appropriate sums. For \code{Divergence()} and

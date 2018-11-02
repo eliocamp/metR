@@ -6,7 +6,7 @@
 \alias{dlat}
 \alias{dx}
 \alias{dy}
-\title{Transform between spherical coordinates and phisical coordinates}
+\title{Transform between spherical coordinates and physical coordinates}
 \usage{
 dlon(dx, lat, a = 6731000)
 

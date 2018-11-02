@@ -48,7 +48,7 @@ ggplot(air, aes(lon, lat)) +
     geom_contour(aes(z = air, color = ..level..))
 ```
 
-Since the most consumig part of reading the file is melting a multidimensinal array into a tidy `data.table`, if we wanted to add another variable to the same `data.table` we could save time by only returning a vector. **It is of the upmost importance that both variables are on the same exact grid**.
+Since the most consuming part of reading the file is melting a multidimensional array into a tidy `data.table`, if we wanted to add another variable to the same `data.table` we could save time by only returning a vector. **It is of the upmost importance that both variables are on the same exact grid**.
 
 ```{r}
 air[, air2 := ReadNetCDF(file, out = "vector",
@@ -58,13 +58,13 @@ ggplot(air, aes(lon, lat)) +
     geom_contour(aes(z = air2, color = ..level..))
 ```
 
-Because `ReadNetCDF()` can read multiple variables at the same time, the `out = "vector"` output will be actually return a `list` of vectors (which integrates seamlessly with the `data.table` syntax). If one of the variables has degenerate dimensions (dimensions of length 1) then it will be recicled. That means that if the same file has Sea Surface Temperatures (a 2D field) and Air Temperature (a 3D field), then the returned `data.table` fill have an observation of Air Temperature *and* Sea Surface Temperature for each vertical level. 
+Because `ReadNetCDF()` can read multiple variables at the same time, the `out = "vector"` output will be actually return a `list` of vectors (which integrates seamlessly with the `data.table` syntax). If one of the variables has degenerate dimensions (dimensions of length 1) then it will be recycled. That means that if the same file has Sea Surface Temperatures (a 2D field) and Air Temperature (a 3D field), then the returned `data.table` fill have an observation of Air Temperature *and* Sea Surface Temperature for each vertical level. 
 
-The netCDF format is very flexible and this function has not been tested on every posible file so things may break in strange cases. If you have a file that cannot be read with this function, please [submit an issue](https://github.com/eliocamp/metR/issues). 
+The netCDF format is very flexible and this function has not been tested on every possible file so things may break in strange cases. If you have a file that cannot be read with this function, please [submit an issue](https://github.com/eliocamp/metR/issues). 
 
 ## GetTopography 
 
-`GetTopography()` retrieves topographic data from the [ETOPO1 Global Relief Model](https://www.ngdc.noaa.gov/mgg/global/global.html) into a convenient tidy `data.table`. By defualt, it also stores a cached version. 
+`GetTopography()` retrieves topographic data from the [ETOPO1 Global Relief Model](https://www.ngdc.noaa.gov/mgg/global/global.html) into a convenient tidy `data.table`. By default, it also stores a cached version. 
 
 As an example, let's look at a global relief map at 1/2° resolution with some ugly color palette. 
 
@@ -121,7 +121,7 @@ Finally, `GetSMNData()` retrieves data from Argentina's National Weather Service
 
 ## EOF
 
-Empirical Orthogonal Functions (also known as Principal Component Analysis) is a widely use technique for dimensional reduction of large datasets. In R there are multiple packages that implement this methodology (in fact, base R has *two* functions) but, IMHO, they have akward interfaces that don't interact well with `data.table` (or `dplyr`) syntax. `metR`'s `EOF()` essentially performs a Singular Value Decomposition of the data and returns the left and right singular vectors, and singular values in a tidy format.
+Empirical Orthogonal Functions (also known as Principal Component Analysis) is a widely use technique for dimensional reduction of large datasets. In R there are multiple packages that implement this methodology (in fact, base R has *two* functions) but, IMHO, they have awkward interfaces that don't interact well with `data.table` (or `dplyr`) syntax. `metR`'s `EOF()` essentially performs a Singular Value Decomposition of the data and returns the left and right singular vectors, and singular values in a tidy format.
 
 ```{r}
 data(geopotential)
@@ -132,7 +132,7 @@ eof <- EOF(gh.t.w ~ date | lon + lat, data = geopotential, n = 1:2)
 str(eof)
 ```
 
-In the returned list of `data.table`s the left (right) singular vectors are fields defined with the dimensions on the left (right) hand of the formula. In this case, the right `data.table` holds spatial fields and the left `data.table` holds a timeseries. If the order of the right hand side and left hand side of the formula are reversed, and `rotate == FALSE`, then de result is the same. Rotation of the singular vectors is perform via `stats::varimax()` and perform from the (scaled) right singular vector. 
+In the returned list of `data.table`s the left (right) singular vectors are fields defined with the dimensions on the left (right) hand of the formula. In this case, the right `data.table` holds spatial fields and the left `data.table` holds a timeseries. If the order of the right hand side and left hand side of the formula are reversed, and `rotate == FALSE`, then the result is the same. Rotation of the singular vectors is perform via `stats::varimax()` and perform from the (scaled) right singular vector. 
 
 Alternatively, `EOF()` also accepts the (probably) more familiar `dcast` interface.
 
@@ -233,7 +233,7 @@ ggplot(geopotential[date == date[1]], aes(lon, lat)) +
 
 ## Thermodynamics
 
-`metR` offers several functions related to thermodynamical processes in the atmosphere (see `?thermodynamics`). These are `IdealGas()`, `Adiabat()`, `VirtualTemperature()`, `MixingRatio()`, `ClausiusClapeyron()` and `DewPoint()`. Each function represents a different phisical relationship between variables and computes one of them from the others. 
+`metR` offers several functions related to thermodynamical processes in the atmosphere (see `?thermodynamics`). These are `IdealGas()`, `Adiabat()`, `VirtualTemperature()`, `MixingRatio()`, `ClausiusClapeyron()` and `DewPoint()`. Each function represents a different physical relationship between variables and computes one of them from the others. 
 
 For example, `IdealGas()` uses the ideal gas law to compute pressure, temperature or density. 
 

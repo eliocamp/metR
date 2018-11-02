@@ -6,7 +6,7 @@
 #'   and returns breaks as output
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
-#' @param xwrap,ywrap vector of length two used to wrap the circulad dimension
+#' @param xwrap,ywrap vector of length two used to wrap the circular dimension
 #'
 #' @export
 #' @section Computed variables:

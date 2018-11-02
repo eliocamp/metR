@@ -13,7 +13,7 @@ LatLabel(lat, north = "°N", south = "°S")
 \arguments{
 \item{lon}{longitude in degrees}
 
-\item{east, west, north, south}{text to append for each cuadrant}
+\item{east, west, north, south}{text to append for each quadrant}
 
 \item{lat}{latitude in degrees}
 }

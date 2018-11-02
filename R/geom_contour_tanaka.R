@@ -4,7 +4,7 @@
 #' create an illusion of relief. This can help distinguishing between concave and
 #' convex areas (local minimums and maximums), specially in black and white plots
 #' or to make photocopy safe plots with divergent colour palettes, or to render
-#' a more aesthetically pleasing representation of topogaphy.
+#' a more aesthetically pleasing representation of topography.
 #'
 #' @inheritParams geom_contour2
 #' @inheritParams geom_relief

@@ -11,13 +11,13 @@ FitLm(y, ..., se = FALSE)
 
 \item{...}{numeric vectors of variables used in the modeling}
 
-\item{se}{logical indicating wheter to compute the stantdard error}
+\item{se}{logical indicating whether to compute the standard error}
 }
 \value{
 a list with elements
 \describe{
 \item{term}{the name of the regressor}
-\item{estimate}{estiamte of the regression}
+\item{estimate}{estimate of the regression}
 \item{std.error}{standard error}
 \item{df}{degrees of freedom}
 }

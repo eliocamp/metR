@@ -8,12 +8,12 @@
 #' @param vars a character vector with the name of the variables to read. If
 #' \code{NULL}, then it read all the variables.
 #' @param out character indicating the type of output desired
-#' @param subset a named list a subseting vectors. See Details.
+#' @param subset a named list a subsetting vectors. See Details.
 #' @param key if `TRUE`, returns a data.table keyed by the dimensions of the data.
 #'
 #' @details
 #' `subset` must be a named list for subsetting. Names must match dimensions
-#' specified in the NetCDF file and each element must be a vector of the same tipe
+#' specified in the NetCDF file and each element must be a vector of the same type
 #' of that dimension whose range will be use for subsetting. You don't need to
 #' provide and exact range that matches the actual gridpoints of the file; the
 #' closest gridpoint will be selected.
@@ -32,7 +32,7 @@
 #' of the available variables and the dimensions of the spatiotemporal grid.
 #'
 #' When not all variables specified in `vars` have the same number of dimensions,
-#' the shorter variables will be recicled. E.g. if reading a 3D pressure field
+#' the shorter variables will be recycled. E.g. if reading a 3D pressure field
 #' and a 2D surface temperature field, the latter will be turned into a 3D field
 #' with the same values in each missing dimension.
 #'
@@ -134,7 +134,7 @@ ReadNetCDF <- function(file, vars = NULL,
     # Me fijo si faltan dimensiones
     subset.extra <- names(subset)[!(names(subset) %in% names(dimensions))]
     if (length(subset.extra) != 0) {
-        stop(paste0("Subseting dimensions not found: ",
+        stop(paste0("Subsetting dimensions not found: ",
                        paste0(subset.extra, collapse = ", "), "."))
     }
 

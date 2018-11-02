@@ -1,6 +1,6 @@
 #' Thermodynamics
 #'
-#' Functions related to common atmospheric termodynamic relationships.
+#' Functions related to common atmospheric thermodynamic relationships.
 #'
 #' @param p pressure
 #' @param t temperature
@@ -8,12 +8,12 @@
 #' @param td dewpoint
 #' @param rho density
 #' @param e vapour partial pressure
-#' @param es saturation vapour patial pressure
+#' @param es saturation vapour partial pressure
 #' @param w mixing ratio
 #' @param ws saturation mixing ratio
 #' @param R gas constant for air
 #' @param theta potential temperature
-#' @param p0 refference pressure
+#' @param p0 reference pressure
 #' @param kappa ratio of dry air constant and specific heat capacity at constant pressure
 #' @param epsilon ratio of dry air constant and vapour constant
 #'
@@ -34,7 +34,7 @@
 #' `MixingRatio` computes pressure, vapour partial temperature, or mixing ratio
 #' according to \eqn{w = \epsilon e/(P - e)}.
 #'
-#' `ClausiusClapeyron` computes saturaton pressure or temperature according
+#' `ClausiusClapeyron` computes saturation pressure or temperature according
 #' to the August-Roche-Magnus formula \eqn{es = a exp{bT/(T + c)}} with temperature
 #' in Kelvin and saturation pressure in Pa.
 #'

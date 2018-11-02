@@ -21,9 +21,9 @@ One of the "conceptual branches" of `metR` is the *visualization tools*. These a
 
 # Scales
 
-Many meteorological fields are defined in a longitude×latitude×level grid, so `metR` includes scales for each dimension. These are glorified wrapers around `scale_*_continuous()` with sensible defaults and, in the case of `scale_*_level()`, the implementation of `reverselog_trans()`. 
+Many meteorological fields are defined in a longitude×latitude×level grid, so `metR` includes scales for each dimension. These are glorified wrappers around `scale_*_continuous()` with sensible defaults and, in the case of `scale_*_level()`, the implementation of `reverselog_trans()`. 
 
-There are also `scale_color_divergent()` and `scale_fill_divergent()` which are wrapers around `scale_*_gradient2()` but with sane default colors for positive and negative values --particularily useful for plotting anomaly values. 
+There are also `scale_color_divergent()` and `scale_fill_divergent()` which are wrapers around `scale_*_gradient2()` but with sane default colors for positive and negative values --particularly useful for plotting anomaly values. 
 
 To see how this scales work, let's visualize the vertical distribution of temperature anomalies from the zonal mean. 
 
@@ -66,7 +66,7 @@ In ggplot2, the 'canonical' way to get filled contours is by using `stat_contour
 
 * There's no distinction between contours with the same level but different internal values (blue contours in the figure below)
 
-`geom_contour_fill()` makes some adjustments to the data and computes an aditional variable `int.level` (which is de defautl mapping for the `fill` aesthetic) that solve these problems.
+`geom_contour_fill()` makes some adjustments to the data and computes an additional variable `int.level` (which is the default mapping for the `fill` aesthetic) that solve these problems.
 
 ```{r, fig.show='hold', fig.width = 3.3}
 breaks = seq(100, 200, by = 10)
@@ -82,7 +82,7 @@ ggplot(v, aes(Var1, Var2, z = value)) +
     guides(fill = "none")
 ```
 
-In principle, `geom_contour_fill()` needs a full regular grid with no missing values and by default with fail if otherwise. However it can automatically impute missing values. With the `na.fill` parameter you can have some control over the imputaton of `NA`s. Setting it to `TRUE` will impute missing values with spiline bivariate interpolation. Other optins are passing a constant numeric value or a function that takes the vector of values and return one value (like `mean`).
+In principle, `geom_contour_fill()` needs a full regular grid with no missing values and by default with fail if otherwise. However it can automatically impute missing values. With the `na.fill` parameter you can have some control over the imputation of `NA`s. Setting it to `TRUE` will impute missing values with spline bivariate interpolation. Other options are passing a constant numeric value or a function that takes the vector of values and return one value (like `mean`).
 
 ```{r}
 # Adding missing values
@@ -122,9 +122,9 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     scale_y_latitude()
 ```
 
-By default it labels every 2nd contour (this can be changed by the `skip` parameter) and it rotates to follow the angle of the contour (this is not available on `geom_label_contour()`). Since in some datasetss there can be very small contours that should not be labeled for clarity, the `min.size` argument specifies the minimum points a contour has to have in order to be labeled. 
+By default it labels every 2nd contour (this can be changed by the `skip` parameter) and it rotates to follow the angle of the contour (this is not available on `geom_label_contour()`). Since in some datasets there can be very small contours that should not be labeled for clarity, the `min.size` argument specifies the minimum points a contour has to have in order to be labeled. 
 
-Noticehow labels are drawn on top of contours? The problem is that `geom_contour()` doesn't know it's being labeled; `geom_text_contour()` adresses this issue by allowing you to draw a stroke arround the text.
+Notice how labels are drawn on top of contours? The problem is that `geom_contour()` doesn't know it's being labeled; `geom_text_contour()` addresses this issue by allowing you to draw a stroke around the text.
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
@@ -139,7 +139,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
 
 ## geom_contour_tanaka
 
-Illuminated contours (aka Tanaka contours) use varying brightness and width to create an illusion of relief. This can help distinguishing between concave and convex areas (local minimums and maximums), specially in black and white plots or to make photocopy safe plots with divergent colour palettes, or to render a more aesthetically pleasing representation of topogaphy.
+Illuminated contours (aka Tanaka contours) use varying brightness and width to create an illusion of relief. This can help distinguishing between concave and convex areas (local minimums and maximums), specially in black and white plots or to make photocopy safe plots with divergent colour palettes, or to render a more aesthetically pleasing representation of topography.
 
 ```{r}
 (g <- ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
@@ -150,11 +150,9 @@ Illuminated contours (aka Tanaka contours) use varying brightness and width to c
      scale_y_latitude())
 ```
 
-For more on the use of contours, see the Advance Contouring vignette (comming soon). 
-
 ## stat_subset
 
-`metR` also has `stat_subset()` which makes a subset of the data according to the `subset` aesthetic. This makes it possible to show only part of the data in one geom without needing to specify a `data` argument (specially usefull if the data being plotted is the result of a long pipe and not actually asigned to a data.frame). It has a somewhat limited use in that it cannot perform further statistical transformations of the data. 
+`metR` also has `stat_subset()` which makes a subset of the data according to the `subset` aesthetic. This makes it possible to show only part of the data in one geom without needing to specify a `data` argument (specially useful if the data being plotted is the result of a long pipe and not actually assigned to a `data.frame`). It has a somewhat limited use in that it cannot perform further statistical transformations of the data. 
 
 For example, it can be used if you have a correlation field and want to mark only the points with significant correlations:
 
@@ -173,7 +171,7 @@ ggplot(geopotential[, gh.base := gh[lon == 120 & lat == -50], by = date][
     scale_y_latitude()
 ```
 
-Another posible use it to quickly mask missing values.
+Another possible use it to quickly mask missing values.
 
 ```{r}
 ggplot(v, aes(Var1, Var2, z = value.gap)) +
@@ -184,9 +182,9 @@ ggplot(v, aes(Var1, Var2, z = value.gap)) +
 
 ## geom_vector and geom_arrow
 
-Plotting arrows can be a pain. Again, the 'canonical' way of plotting vectors is tu use `geom_segment()` and specify `x`, `y`, `xend` and `yend` aesthetics which can be a lot of typing when one has the data on location and displacement (or velocity). Instead, `metR`'s `geom_vector()` and `geom_arrow()` draw vectors defined by their lateral displacements (dx, dy) or their magnitude and angle. It also has some usefull paramters like `min.mag`, which controls the minimum magnitude for an arrow to be drawn (useful for highlighting only areas of strong 'flow') and `skip`, which draws only the nth arrow in the x and y directions. 
+Plotting arrows can be a pain. Again, the 'canonical' way of plotting vectors is to use `geom_segment()` and specify `x`, `y`, `xend` and `yend` aesthetics which can be a lot of typing when one has the data on location and displacement (or velocity). Instead, `metR`'s `geom_vector()` and `geom_arrow()` draw vectors defined by their lateral displacements (dx, dy) or their magnitude and angle. It also has some useful parameters like `min.mag`, which controls the minimum magnitude for an arrow to be drawn (useful for highlighting only areas of strong 'flow') and `skip`, which draws only the nth arrow in the x and y directions. 
 
-Both geoms are essentially the same, except that `geom_arrow()` defaults to preserving direction in coordinate transformations and regardless of the plot aspect ratio. This is recomended if the arrows are ment to convey the direction of the flow in each point instead of being a description of the shape of the flow related to the plot coordinates. 
+Both geoms are essentially the same, except that `geom_arrow()` defaults to preserving direction in coordinate transformations and regardless of the plot aspect ratio. This is recommended if the arrows are meant to convey the direction of the flow in each point instead of being a description of the shape of the flow related to the plot coordinates. 
 
 So, as an example, we can plot the temperature gradient like this:
 
@@ -236,9 +234,9 @@ Streamlines are paths tangential to a vector field and provide an intuitive way 
      scale_x_longitude())
 ```
 
-There are several parametres that control de feel of the result. `L` and `res` control the length and resolution, while the `skip` parameters change the amount of the streamlines. More in depth control over the simulation can be accomplished by the `S` and `dt` parameters. 
+There are several parameters that control the feel of the result. `L` and `res` control the length and resolution, while the `skip` parameters change the amount of the streamlines. More in depth control over the simulation can be accomplished by the `S` and `dt` parameters. 
 
-Since streamlines imply a tight relationship between the vector field and the spatial dimensions, it's important that their units are compatible. A wind field in m/s in a lonitude-latitude grid should first be converted into degrees/s. The functions `dlon()` and `dlat()` are an easy way of doing this. This tight coupling also means that they are robuts to coordinate transformations. 
+Since streamlines imply a tight relationship between the vector field and the spatial dimensions, it's important that their units are compatible. A wind field in m/s in a longitude-latitude grid should first be converted into degrees/s. The functions `dlon()` and `dlat()` are an easy way of doing this. This tight coupling also means that they are robust to coordinate transformations. 
 
 ```{r}
 g + coord_polar()
@@ -289,56 +287,9 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
 
 By default, colors are mapped to the values *in between* breaks, so there's a one-to-one mapping between colors shown in the plot and in the guide. From an aesthetic standpoint, it's much closer to the `cbarn` command from `GrADS`, which a lot of atmospheric scientists are probably used to.  
 
-## WrapCircular
-
-The function `WrapCircular()` is an ugly kludge to fix an issue when using polar coordinates in ggplot2 in which contours that cross the dateline are not properly rendered. The workaround is to copy the leftmost data and place it to the right.
-
-See how in the figure on the left, contours that cross the 0° longitude mark are cut, but they join correctly in the figure on the right. 
-
-```{r, fig.width = 3.3, fig.show = 'hold', warning = FALSE}
-(g <- ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-     geom_contour(binwidth = 1.5) +
-     scale_fill_divergent() +
-     scale_x_longitude(labels = waiver()) +
-     scale_y_latitude(limits = c(-90, -20)) +
-     coord_polar())
-
-g %+% WrapCircular(temperature[lev == 300], 
-                   wrap = c(0, 360))    # change the data. 
-```
-
-This behaviour is now also implemented directly in `geom_contour2()` and `geom_contour_fill()`.
-
-```{r}
-ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-    geom_contour2(binwidth = 1.5, xwrap = c(0, 360)) +
-    scale_fill_divergent() +
-    scale_x_longitude(labels = waiver()) +
-    scale_y_latitude(limits = c(-90, -20)) +
-    coord_polar()
-```
-
-
-## DivideTimeseries
-
-This is another ugly kuldge that hopefully will be replaced by a new facetting function (as soon as I understand how they work). The idea is to divide a long timeseries in a series of shorter plots that are easier to interpret. 
-
-```{r}
-(g <- ggplot(geopotential[lon == 120 & lat == -50], aes(date, gh)) +
-     geom_line() +
-     geom_smooth(span = 0.3) +
-     scale_x_date(expand = c(0, 0))) 
-```
-
-In the above plot, the timeseries looks noisy and hard to understand since the lines are too steep. Dividing it into 2 facets makes is easier to see what's going on.
-
-```{r}
-DivideTimeseries(g, geopotential$date, n = 2, xlab = "date", ylab = "gh")
-```
-
 ## geom_relief
 
-This geom produces a shaded relief of the data. It doesn't really map the data per se, but it provides an intuitive representation of hills and valeys that can be used as a background for plotting actual data. 
+This geom produces a shaded relief of the data. It doesn't really map the data per se, but it provides an intuitive representation of hills and valleys that can be used as a background for plotting actual data. 
 
 ```{r}
 ggplot(v, aes(Var1, Var2)) +

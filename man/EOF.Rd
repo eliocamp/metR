@@ -21,12 +21,12 @@ the matrix that will be used in the SVD decomposition (see Details)}
 \item{B}{number of bootstrap samples used to estimate confidence intervals.
 Ignored if <= 1.}
 
-\item{probs}{the probabilities of the lower and upper values of estiamted
+\item{probs}{the probabilities of the lower and upper values of estimated
 confidence intervals. If named, it's names will be used as column names.}
 
 \item{rotate}{if \code{TRUE}, scores and loadings will be rotated using \link{varimax}}
 
-\item{suffix}{character to name de principal components}
+\item{suffix}{character to name the principal components}
 
 \item{fill}{value to infill implicit missing values or \code{NULL} if the
 data is dense.}
@@ -74,7 +74,7 @@ It is much faster to compute only some singular vectors, so is advisable not
 to set n to \code{NULL}. If the irba package is installed, EOF uses
 \link[irlba:irlba]{irlba::irlba} instead of \link[base:svd]{base::svd} since it's much faster.
 
-The boostraping procedure follows Fisher et.al. (2016) and returns the
+The bootsrapping procedure follows Fisher et.al. (2016) and returns the
 standard deviation of each singular value.
 }
 \examples{

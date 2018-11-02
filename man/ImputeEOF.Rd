@@ -29,8 +29,8 @@ maximum of 30 or 10\% of the non NA points)}
 \item{verbose}{logical indicating whether to print progress}
 }
 \value{
-A vector of inputed values with attributes \code{eof}, which is the number of
-singular values used in the final inputation; and \code{rmse}, which is the Root
+A vector of imputed values with attributes \code{eof}, which is the number of
+singular values used in the final imputation; and \code{rmse}, which is the Root
 Mean Square Error estimated from crossvalidation.
 }
 \description{

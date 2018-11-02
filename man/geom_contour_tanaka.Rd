@@ -63,9 +63,9 @@ and returns breaks as output
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
 
-\item{xwrap}{vector of length two used to wrap the circulad dimension}
+\item{xwrap}{vector of length two used to wrap the circular dimension}
 
-\item{ywrap}{vector of length two used to wrap the circulad dimension}
+\item{ywrap}{vector of length two used to wrap the circular dimension}
 
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
@@ -83,7 +83,7 @@ Illuminated contours (aka Tanaka contours) use varying brightness and width to
 create an illusion of relief. This can help distinguishing between concave and
 convex areas (local minimums and maximums), specially in black and white plots
 or to make photocopy safe plots with divergent colour palettes, or to render
-a more aesthetically pleasing representation of topogaphy.
+a more aesthetically pleasing representation of topography.
 }
 \section{Aesthetics}{
 

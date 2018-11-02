@@ -85,7 +85,7 @@ the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
 
-\item{xwrap, ywrap}{vector of length two used to wrap the circulad dimension}
+\item{xwrap, ywrap}{vector of length two used to wrap the circular dimension}
 }
 \description{
 A copy of \link[ggplot2:geom_contour]{ggplot2::geom_contour} that accepts a function as the \code{breaks}

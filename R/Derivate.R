@@ -28,7 +28,7 @@
 #' `a`.
 #'
 #' Using `fill = TRUE` will degrade the solution near the edges of a non-cyclical
-#' bondary. Use with caution.
+#' boundary. Use with caution.
 #'
 #' `Laplacian()`, `Divergence()` and `Vorticity()` are convenient wrappers that
 #' call `Derivate()` and make the appropriate sums. For `Divergence()` and

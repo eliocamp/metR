@@ -48,7 +48,7 @@ Percentile <- function(x) {
 #' @param ... numeric vectors of coordinates or list of coordinates
 #'
 #' @return
-#' A numeric vector the same length as each elemenet of ...
+#' A numeric vector the same length as each element of ...
 #' that is \eqn{\sqrt(x^2 + y^2 + ...)}.
 #'
 #' @details
@@ -204,7 +204,7 @@ JumpBy <- function(x, by, start = 1, fill = NULL) {
 
 
 
-#' Transform between spherical coordinates and phisical coordinates
+#' Transform between spherical coordinates and physical coordinates
 #'
 #' Transform a longitude or latitude interval into the equivalent in meters depending
 #' on latitude.

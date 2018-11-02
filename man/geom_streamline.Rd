@@ -61,7 +61,7 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 
-\item{L, }{tipical length of a streamline in x and y units}
+\item{L, }{typical length of a streamline in x and y units}
 
 \item{min.L}{minimum length of segments to show}
 
@@ -71,9 +71,9 @@ to the paired geom/stat.}
 
 \item{dt}{optional numeric size "timestep" for integration}
 
-\item{xwrap}{vector of length two used to wrap the circulad dimension}
+\item{xwrap}{vector of length two used to wrap the circular dimension}
 
-\item{ywrap}{vector of length two used to wrap the circulad dimension}
+\item{ywrap}{vector of length two used to wrap the circular dimension}
 
 \item{skip}{numeric specifying number of gridpoints not to draw
 in the x and y direction}
@@ -87,7 +87,7 @@ in the x and y direction}
 \item{n, nx, ny}{optional numeric indicating the number of points to draw in the
 x and y direction (replaces \code{skip} if not \code{NULL})}
 
-\item{jitter, jitter.x, jitter.y}{ammount of jitter of the starting poits}
+\item{jitter, jitter.x, jitter.y}{amount of jitter of the starting points}
 
 \item{arrow.angle}{parameters passed to
 \link[grid:arrow]{grid::arrow}}
@@ -127,10 +127,10 @@ case of a steady field, it's identical to the path of a massless particle that
 moves with the "flow".
 }
 \details{
-Streamlines are computed by simple integration with a foward Euler method.
+Streamlines are computed by simple integration with a forward Euler method.
 By default, \code{stat_streamline()} computes \code{dt} and \code{S} from \code{L}, \code{res},
 the resolution of the grid and the mean magnitude of the field. \code{S} is
-then defined as the number of steps necesary to make a streamline of length
+then defined as the number of steps necessary to make a streamline of length
 \code{L} under an uniform mean field and \code{dt} is chosen so that each step is no
 larger than the resolution of the data (divided by the \code{res} parameter). Be
 aware that this rule of thumb might fail in field with very skewed distribution
@@ -150,7 +150,7 @@ It might be important that the units of the vector field are compatible to the u
 of the x and y dimensions. For example, passing \code{dx} and \code{dy} in m/s on a
 longitude-latitude grid will might misleading results (see \link{spherical}).
 
-Missing values are not permited and the field must be defined on a
+Missing values are not permitted and the field must be defined on a
 regular grid, for now.
 }
 \section{Aesthetics}{

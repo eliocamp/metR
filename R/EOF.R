@@ -10,10 +10,10 @@
 #' @param n which singular values to return (if \code{NULL}, returns all)
 #' @param B number of bootstrap samples used to estimate confidence intervals.
 #' Ignored if <= 1.
-#' @param probs the probabilities of the lower and upper values of estiamted
+#' @param probs the probabilities of the lower and upper values of estimated
 #' confidence intervals. If named, it's names will be used as column names.
 #' @param rotate if `TRUE`, scores and loadings will be rotated using [varimax]
-#' @param suffix character to name de principal components
+#' @param suffix character to name the principal components
 #' @param fill value to infill implicit missing values or `NULL` if the
 #' data is dense.
 #'
@@ -54,7 +54,7 @@
 #' to set n to \code{NULL}. If the irba package is installed, EOF uses
 #' [irlba::irlba] instead of [base::svd] since it's much faster.
 #'
-#' The boostraping procedure follows Fisher et.al. (2016) and returns the
+#' The bootsrapping procedure follows Fisher et.al. (2016) and returns the
 #' standard deviation of each singular value.
 #'
 #' @examples

@@ -134,17 +134,11 @@ str(eof)
 
 In the returned list of `data.table`s the left (right) singular vectors are fields defined with the dimensions on the left (right) hand of the formula. In this case, the right `data.table` holds spatial fields and the left `data.table` holds a timeseries. If the order of the right hand side and left hand side of the formula are reversed, and `rotate == FALSE`, then the result is the same. Rotation of the singular vectors is perform via `stats::varimax()` and perform from the (scaled) right singular vector. 
 
-Alternatively, `EOF()` also accepts the (probably) more familiar `dcast` interface.
-
-```{r}
-eof2 <- EOF(lon + lat ~ date, value.var = "gh.t.w", data = geopotential, n = 1:2)
-```
-
 For completion, let's plot each Principal Component. 
 
 ```{r}
 ggplot(eof$right, aes(lon, lat)) +
-    geom_contour_fill(aes(z = gh.t.w), xwrap = c(0, 360), binwidth = 0.01) +
+    geom_contour_fill(aes(z = gh.t.w), binwidth = 0.01) +
     scale_fill_divergent() +
     coord_polar() +
     facet_wrap(~PC) 

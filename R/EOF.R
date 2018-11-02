@@ -6,7 +6,6 @@
 #' @param data a data.frame
 #' @param formula a formula to build the matrix that will be used in the SVD
 #' decomposition (see Details)
-#' @param value.var optional name of the data column (see Details)
 #' @param n which singular values to return (if \code{NULL}, returns all)
 #' @param B number of bootstrap samples used to estimate confidence intervals.
 #' Ignored if <= 1.

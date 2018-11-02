@@ -15,6 +15,7 @@
 #' @param n,nx,ny optional numeric indicating the number of points to draw in the
 #' x and y direction (replaces `skip` if not `NULL`)
 #' @param jitter,jitter.x,jitter.y amount of jitter of the starting points
+#' @param xwrap,ywrap vector of length two used to wrap the circular dimension.
 #'
 #' @details
 #' Streamlines are computed by simple integration with a forward Euler method.

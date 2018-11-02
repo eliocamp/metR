@@ -28,8 +28,6 @@ confidence intervals. If named, it's names will be used as column names.}
 
 \item{fill}{value to infill implicit missing values or \code{NULL} if the
 data is dense.}
-
-\item{value.var}{optional name of the data column (see Details)}
 }
 \value{
 An \code{eof} object which is just a named list of \code{data.table}s

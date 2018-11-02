@@ -8,7 +8,7 @@ Authors@R:
            family = "Campitelli",
            role = c("cre", "aut"),
            email = "elio.campitelli@cima.fcen.uba.ar",
-           comment = c(ORCID = "https://orcid.org/0000-0002-7742-9230"))
+           comment = c(ORCID = "0000-0002-7742-9230"))
 Description: Many useful functions and extensions for dealing
     with meteorological data in the tidy data framework. Extends 'ggplot2'
     for better plotting of scalar and vector fields and provides commonly

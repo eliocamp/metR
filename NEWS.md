@@ -1,4 +1,4 @@
-# metR 0.1.9000
+# metR 0.2.0
 
 ## Breaking changes
 
@@ -86,7 +86,8 @@ to interpolate values along a path of locations.
 - `subset` argument in `ReadNetCDF()` now accepts character vectors for time 
 components. 
 
-# metR 0.1
+# metR 0.1.0
+
 - New function: `GetTopography()`
 - `ReadNetCDF()` now can output arrays and vectors.
 - Changed name. 

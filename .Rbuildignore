@@ -7,7 +7,6 @@
 ^README\.Rmd$
 ^README-.*\.png$
 ^\.travis\.yml$
-^NEWS\.md$
 ^.lintr
 ^R/ReadCtl\.R$
 ^docs$

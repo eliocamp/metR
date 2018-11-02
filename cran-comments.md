@@ -12,4 +12,4 @@
 Notes:
 
 1. This is the first submission of this package
-2. Some examples took more than 5 seconds on some test enviroments
+2. Some examples took more than 5 seconds in some test enviroments

@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# metR
+# metR <img src="man/figures/logo.png" align="right"/>
 
 [![Build Status](https://travis-ci.org/eliocamp/metR.svg?branch=master)](https://travis-ci.org/eliocamp/metR)
 [![Package Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)

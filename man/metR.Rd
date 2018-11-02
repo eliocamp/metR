@@ -6,6 +6,8 @@
 \alias{metR-package}
 \title{metR: Tools for Easier Analysis of Meteorological Fields}
 \description{
+\if{html}{\figure{logo.png}{options: align='right'}}
+
 Many useful functions and extensions for dealing
     with meteorological data in the tidy data framework. Extends 'ggplot2'
     for better plotting of scalar and vector fields and provides commonly
@@ -36,6 +38,6 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Elio Campitelli \email{elio.campitelli@cima.fcen.uba.ar} (https://orcid.org/0000-0002-7742-9230)
+\strong{Maintainer}: Elio Campitelli \email{elio.campitelli@cima.fcen.uba.ar} (0000-0002-7742-9230)
 
 }

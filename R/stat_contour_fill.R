@@ -129,12 +129,13 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         # jitter <- diff(range(data$z))*0.000000
         # data$z <- data$z + rnorm(nrow(data))*jitter
         setDF(data)
-        mean.z <- mean(data$z)
+        mean.z <- data$z[data$z %~% mean(data$z)][1]
+
         # mean.z <- min(breaks) - 100*resolution(breaks, zero = FALSE)
         range.data <- as.data.frame(vapply(data[c("x", "y", "z")], range, c(1, 2)))
 
         # Expand data by 1 unit in all directions.
-        data <- .expand_data(data)
+        data <- .expand_data(data, mean.z)
 
         # Make contours
         cont <- data.table::setDT(.contour_lines(data, breaks, complete = complete))
@@ -145,7 +146,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         }
 
         # Ugly hack for joining disjointed contours
-        cont <- .join_contours(cont)
+        cont <- .join_contours.m(cont)
 
         # Calculate inner fill
         cont <- .inner_fill.m(cont, data, breaks)
@@ -209,7 +210,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     cont
 }
 
-.expand_data <- function(data) {
+.expand_data <- function(data, fill) {
     dx <- ggplot2::resolution(subset(data, y == data$y[1])$x)
     dy <- ggplot2::resolution(subset(data, x == data$x[1])$y)
 
@@ -222,7 +223,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                                      range.data$y[1] - dy),
                                x = c(range.data$x[1] - dx, range.data$x[2] + dx)))
 
-    extra$z <- data$z[data$z %~% mean(data$z)][1]
+    extra$z <- fill
 
     rbind(data[c("x", "y", "z")], extra)
 }
@@ -390,6 +391,8 @@ close_path <- function(x, y, range_x, range_y) {
     cont[, close := NULL]
     cont
 }
+
+.join_contours.m <- memoise::memoise(.join_contours)
 
 
 .reverse <- function(cont, point) {

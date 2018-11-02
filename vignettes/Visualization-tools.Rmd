@@ -139,7 +139,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
 
 ## geom_contour_tanaka
 
-Illuminated contours (aka Tanaka contours) use varying brightness and width to create an illusion of relief. This can help distinguishing between concave and convex areas (local minimums and maximums), specially in black and white plots or to make photocopy safe plots with divergent colour palettes, or to render a more aesthetically pleasing representation of topography.
+Illuminated contours (aka Tanaka contours) use varying brightness and width to create an illusion of relief. This can help distinguishing between concave and convex areas (local minimums and maximums), specially in black and white plots. It also allows for  photocopy safe plots with divergent colour palettes, and it just looks cool. 
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +

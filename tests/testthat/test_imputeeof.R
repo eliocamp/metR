@@ -24,16 +24,6 @@ test_that("Imputes reasonable values", {
 })
 
 
-test_that("Works with dcast format", {
-    expect_identical(
-        ImputeEOF(lat + lon ~ date, value.var = "gh.gap", data = geopotential,
-                  max.eof = 2),
-        ImputeEOF(gh.gap ~ lat + lon | date, data = geopotential,
-                  max.eof = 2))
-    expect_error(ImputeEOF(lat + lon ~ date, value.var = "gh.gap", max.eof = 2),
-                  "data must not be NULL if value.var is not NULL")
-})
-
 M <- metR:::.tidy2matrix(geopotential, lon + lat ~ date, value.var = "gh.gap")$matrix
 M.imputed <- ImputeEOF(data = M, max.eof = 5)
 

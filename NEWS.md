@@ -10,8 +10,11 @@ consistency.
 be called inside a `data.table` of `mutate()` call, where you don't need to 
 explicitly specify the data.
 
-- In `EOF()` the dcast-type formula interface has been removed. The `data` argument
+- In `EOF()` the dcast-style formula interface has been removed. The `data` argument
 was also moved back so you can use the `n` argument more easily without naming it. 
+
+- `ImputeEOF()` follows the same conventions. The dcast-style interface has been 
+removed and the `data` argument has been moved after the `max.eof` argument.
 
 
 ## Other changes

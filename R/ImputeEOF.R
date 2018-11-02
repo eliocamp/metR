@@ -47,7 +47,7 @@
 #' geopotential[sample(1:.N, .N*0.3), gh.gap := NA]
 #'
 #' max.eof <- 5    # change to a higher value
-#' geopotential[, gh.impute := ImputeEOF(gh.gap ~ lat + lon | date, max.eof = max.eof,
+#' geopotential[, gh.impute := ImputeEOF(gh.gap ~ lat + lon | date, max.eof,
 #'                                       verbose = TRUE, max.iter = 2000)]
 #'
 #' library(ggplot2)
@@ -69,13 +69,11 @@
 #' @import data.table
 #' @export
 #' @importFrom stats as.formula
-ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
+ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
                       min.eof = 1, tol = 1e-2, max.iter = 10000,
                       validation = NULL, verbose = interactive()) {
     checks <- makeAssertCollection()
 
-    assertCharacter(value.var, len = 1, null.ok = TRUE, any.missing = FALSE,
-                    add = checks)
     assert(
         checkClass(data, "data.frame", null.ok = TRUE),
         checkClass(data, "matrix", null.ok = TRUE))
@@ -91,14 +89,6 @@ ImputeEOF <- function(formula, value.var = NULL, data = NULL, max.eof = NULL,
     # Build matrix if necessary.
     if (is.null(data) | is.data.frame(data)) {
         assertClass(formula, "formula")
-
-        if (!is.null(value.var)) {
-            if (is.null(data)) stop("data must not be NULL if value.var is not NULL")
-            data <- copy(data)
-            f <- as.character(formula)
-            f <- stringr::str_replace(f, "~", "\\|")
-            formula <- Formula::as.Formula(paste0(value.var, " ~ ", f))
-        }
 
         if (is.null(data)) {
             formula <- Formula::as.Formula(formula)

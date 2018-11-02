@@ -14,6 +14,7 @@
     with meteorological data in the tidy data framework. Extends 'ggplot2'
     for better plotting of scalar and vector fields and provides commonly
     used analysis methods in the atmospheric sciences.">
+<meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -91,7 +92,8 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="metr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#metr" class="anchor"></a>metR</h1></div>
+<a href="#metr" class="anchor"></a>metR <img src="reference/figures/logo.png" align="right">
+</h1></div>
 
 <p>meteR packages several functions and utilities that make R better for handling meteorological data in the tidy data paradigm. It started mostly sa a packaging of assorted wrapers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since then, it has grown organically and for my own needs and feedback from users.</p>
 <p>Conceptually it’s divided into <em>visualization tools</em> and <em>data tools</em>. The former are geoms, stats and scales that help with plotting using <a href="http://ggplot2.tidyverse.org/index.html">ggplot2</a>, such as <code><a href="reference/geom_contour_fill.html">stat_contour_fill()</a></code> or <code><a href="reference/scale_longitude.html">scale_y_level()</a></code>, while the later are functions for common data processing tools in the atmospheric sciences, such as <code><a href="reference/Derivate.html">Derivate()</a></code> or <code><a href="reference/EOF.html">EOF()</a></code>; these are implemented to work in the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> paradigm, but also work with regular data frames.</p>

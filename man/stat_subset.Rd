@@ -4,7 +4,6 @@
 \name{stat_subset}
 \alias{stat_subset}
 \alias{StatSubset}
-\alias{stat_filter}
 \title{Subset values}
 \usage{
 stat_subset(mapping = NULL, data = NULL, geom = "point",

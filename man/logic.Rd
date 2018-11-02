@@ -4,25 +4,16 @@
 \alias{logic}
 \alias{\%~\%}
 \alias{Similar}
-\alias{\%b\%}
-\alias{Between}
 \title{Extended logical operators}
 \usage{
 x \%~\% target
 
 Similar(x, target, tol = Inf)
-
-x \%b\% limits
-
-Between(x, limits, include = c(TRUE, TRUE))
 }
 \arguments{
-\item{x, target, limits}{numeric vectors}
+\item{x, target}{numeric vectors}
 
 \item{tol}{tolerance for similarity}
-
-\item{include}{logical vector of length 2 (or 1) indicating whether to include
-the extreme bounds}
 }
 \value{
 A logical vector of the same length of x.
@@ -37,21 +28,6 @@ which is the (first) closest to any element of \code{target}.
 
 \code{Similar} is a functional version of \code{\%~\%} that also has a
 \code{tol} parameter that indicates the maximum allowed tolerance.
-
-\code{\%b\%} can be thought as the "between" operator. It returns \code{TRUE}
-for each element of \code{x} that is between the minimum and the maximum of
-\code{limits}.
-
-\code{Between} is a functional version of \code{\%b\%} that also has an
-\code{include} parameter that let's you test for \code{x > lower & x < upper}.
-If it's a unitary vector, it will be recycled so that \code{include = TRUE} is
-equivalent to \code{include = c(TRUE, TRUE)}.
-
-It's important to note that \link{data.table} already has a
-\code{\link[data.table]{between}} function optimized with c code, so these
-functions use that implementation if data.table is installed (except for the
-case of \code{include[1] != include[2]}, for which data.table has no
-implementation yet).
 }
 \examples{
 set.seed(198)

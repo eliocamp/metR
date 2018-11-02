@@ -6,7 +6,7 @@
 \alias{StatNa}
 \title{Filter only NA values.}
 \usage{
-stat_na(mapping = NULL, data = NULL, geom = "tile",
+stat_na(mapping = NULL, data = NULL, geom = "point",
   position = "identity", ..., show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{

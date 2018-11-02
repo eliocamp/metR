@@ -24,6 +24,16 @@ existed.
 - Removed `hemisphere` argument from `season()` since the function returns the
 trimester so it made no sense. 
 
+- Contour functions now compute breaks globaly (using all the data) instead of
+per panel. This means default intercomparabilty between facetwed plots but also 
+a considerable deviation from `ggplot2::geom_contour()`. 
+
+- The `Between` operators are removed since they were already implemented in 
+`data.table`.
+
+- The default `geom` for `stat_na()` is changed to `point` for consistency with 
+`stat_subset()`
+
 ## Other changes
 
 - Arrows in `geom_arrow()` and `geom_vector()` scale with vector magnitude. 
@@ -47,18 +57,15 @@ export them as they are.
 can be made.
 - `EOF()` now supports estimation of confidence intervals via bootstrap.
 - `EOF()` supports varimax rotation. Rotated components are labeled accordingly. 
-- `geom_relief()` is much faster now (but see package `rayshader`)
+- `geom_relief()` is much faster now (but see package `rayshader`).
+- New `geom_shadow()` for casting shadows in topographic maps.
 - Contour calculations in `StatContour2` are 
 [memoised](https://github.com/r-lib/memoise) so they are
 only computed once even adding several layers with the same contours 
 (`geom_contour() + geom_text_contour()`) or running the same plot while tweaking
 it's appearance.
-- New `geom_shadow()` for casting shadows in topographic maps.
 - New `FitLm()` for getting fast estimates of linear fits. 
 - New `FilterWave()` for filtering waves. 
-- Contour functions now compute breaks globaly (using all the data) instead of
-per panel. This means default intercomparabilty between facetwed plots but also 
-a considerable deviation from `ggplot2::geom_contour()`. 
 - Circular dimensions had quite a ride during this developement process. `RepeatCircular()` was deprecated in favour of `WrapCircular()` which is more
 robust, and then `WrapCircular()` was deprecated in favour of the `ggperiodic` package.
 - The way that `stat_contour2()`, `stat_contour_fill()` and `geom_streamlines()`
@@ -68,8 +75,6 @@ explicitly set the domain. This makes the implementation more robust and also al
 can handle this stuff better. The above mentioned arguments still work but are not 
 documented and will be deprecated. 
 - `EOF()` gains a `fill` argument for sparse-ish data. 
-- The `Between` operators are deprecated since they are already implemented in 
-`data.table`.
 - `geom_text_contour()` now has the ability to draw a stroke around text. 
 - `geom_contour_fill()` now can impute missing values with bivariate interpolation. 
 - `BuildField()` actually renamed `BuildWave()` (which should've happen in the previous

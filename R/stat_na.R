@@ -32,7 +32,7 @@
 #' @family ggplot2 helpers
 #' @importFrom plyr ddply
 stat_na <- function(mapping = NULL, data = NULL,
-                              geom = "tile", position = "identity",
+                              geom = "point", position = "identity",
                               ...,
                               show.legend = NA,
                               inherit.aes = TRUE) {

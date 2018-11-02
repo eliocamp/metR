@@ -81,10 +81,8 @@ Mag <- function(...) {
 #'
 #' Extended binary operators for easy subsetting.
 #'
-#' @param x,target,limits numeric vectors
+#' @param x,target numeric vectors
 #' @param tol tolerance for similarity
-#' @param include logical vector of length 2 (or 1) indicating whether to include
-#'  the extreme bounds
 #'
 #'
 #' @return
@@ -97,21 +95,6 @@ Mag <- function(...) {
 #'
 #' \code{Similar} is a functional version of \code{\%~\%} that also has a
 #' \code{tol} parameter that indicates the maximum allowed tolerance.
-#'
-#' \code{\%b\%} can be thought as the "between" operator. It returns \code{TRUE}
-#' for each element of \code{x} that is between the minimum and the maximum of
-#' \code{limits}.
-#'
-#' \code{Between} is a functional version of \code{\%b\%} that also has an
-#' \code{include} parameter that let's you test for \code{x > lower & x < upper}.
-#' If it's a unitary vector, it will be recycled so that \code{include = TRUE} is
-#' equivalent to \code{include = c(TRUE, TRUE)}.
-#'
-#' It's important to note that \link{data.table} already has a
-#' \code{\link[data.table]{between}} function optimized with c code, so these
-#' functions use that implementation if data.table is installed (except for the
-#' case of \code{include[1] != include[2]}, for which data.table has no
-#' implementation yet).
 #'
 #' @examples
 #' set.seed(198)
@@ -153,20 +136,6 @@ Similar <- function(x, target, tol = Inf) {
     return(r)
 }
 
-
-#' @rdname logic
-#' @export
-#' @import data.table
-`%b%` <- function(x, limits) {
-    .Deprecated("data.table::between")
-}
-
-#' @rdname logic
-#' @export
-#' @import data.table
-Between <- function(x, limits, include = c(TRUE, TRUE)) {
-    .Deprecated("data.table::between")
-}
 
 #' Skip observations
 #'

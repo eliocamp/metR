@@ -19,6 +19,8 @@ removed and the `data` argument has been moved after the `max.eof` argument.
 - `BuildQsWave()` and `FitQsWave()` have been removed and should had never even
 existed. 
 
+- The default `skip` argument for `geom_text_contour()` is now 0.
+
 ## Other changes
 
 - Arrows in `geom_arrow()` and `geom_vector()` scale with vector magnitude. 
@@ -59,6 +61,9 @@ robust, and then `WrapCircular()` was deprecated in favour of the `ggperiodic` p
 - The way that `stat_contour2()`, `stat_contour_fill()` and `geom_streamlines()`
 handle circular dimensions has changed. Now you need to use `xwrap`/`ywrap` to 
 explicitly set the domain. This makes the implementation more robust and also allow to easily wrap to an arbitrary domain.
+- After that change, the wrapping functionallity has moved to `ggperiodic`, which 
+can handle this stuff better. The above mentioned arguments still work but are not 
+documented and will be deprecated. 
 - `EOF()` gains a `fill` argument for sparse-ish data. 
 - The `Between` operators are deprecated since they are already implemented in 
 `data.table`.

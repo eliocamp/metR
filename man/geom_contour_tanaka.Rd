@@ -63,10 +63,6 @@ and returns breaks as output
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
 
-\item{xwrap}{vector of length two used to wrap the circular dimension}
-
-\item{ywrap}{vector of length two used to wrap the circular dimension}
-
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.

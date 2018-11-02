@@ -227,7 +227,7 @@ Streamlines are paths tangential to a vector field and provide an intuitive way 
 
 ```{r}
 (g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
-     geom_contour_fill(aes(z = air.z), xwrap = c(0, 360)) +
+     geom_contour_fill(aes(z = air.z)) +
      geom_streamline(aes(dx = t.dy, dy = -t.dx), L = 10, res = 2,   
                      arrow.length = 0.3, xwrap = c(0, 360)) + 
      scale_y_latitude(limits = c(-90, 0)) +

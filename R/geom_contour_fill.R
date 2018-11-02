@@ -20,7 +20,7 @@
 # #'    - `TRUE` for imputing missing values with [approx]
 # #'    - A numeric value for constant imputation
 # #'    - A function that takes a vector and returns a numeric (e.g. `mean`)
-#' @param xwrap,ywrap vector of length two used to wrap the circular dimension.
+# #' @param xwrap,ywrap vector of length two used to wrap the circular dimension.
 #'
 #' @section Aesthetics:
 #' \code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):
@@ -61,16 +61,17 @@
 geom_contour_fill <- function(mapping = NULL, data = NULL,
                          stat = "ContourFill", position = "identity",
                          ...,
-                         breaks = NULL,
+                         breaks = MakeBreaks(),
                          bins = NULL,
                          binwidth = NULL,
                          # na.rm = FALSE,
                          na.fill = FALSE,
                          # fill.linear = TRUE,
-                         xwrap = NULL,
-                         ywrap = NULL,
+                         # xwrap = NULL,
+                         # ywrap = NULL,
                          show.legend = NA,
                          inherit.aes = TRUE) {
+    .check_wrap_param(list(...))
     ggplot2::layer(
         data = data,
         mapping = mapping,
@@ -86,8 +87,8 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
             na.rm = FALSE,
             na.fill = na.fill,
             # fill.linear = fill.linear,
-            xwrap = xwrap,
-            ywrap = ywrap,
+            # xwrap = xwrap,
+            # ywrap = ywrap,
             ...
         )
     )

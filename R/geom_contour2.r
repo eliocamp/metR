@@ -34,7 +34,7 @@ geom_contour2 <- function(mapping = NULL, data = NULL,
                           lineend = "butt",
                           linejoin = "round",
                           linemitre = 1,
-                          breaks = scales::fullseq,
+                          breaks = MakeBreaks(),
                           bins = NULL,
                           binwidth = NULL,
                           na.rm = FALSE,
@@ -42,10 +42,7 @@ geom_contour2 <- function(mapping = NULL, data = NULL,
                           # fill.linear = TRUE,
                           show.legend = NA,
                           inherit.aes = TRUE) {
-    dots <- list(...)
-    if (!is.null(dots$gap)) stop("gap argument in geom_contour2 is deprecated, use stroke in geom_contour_text instead",
-                                 call. = FALSE)
-
+    .check_wrap_param(list(...))
     layer(
         data = data,
         mapping = mapping,
@@ -77,3 +74,10 @@ geom_contour2 <- function(mapping = NULL, data = NULL,
 GeomContour2 <- ggplot2::ggproto("GeomContour2", ggplot2::GeomContour,
    default_aes = aes(weight = 1, colour = "black", size = 0.5, linetype = 1,
                      alpha = NA))
+
+.check_wrap_param <- function(params) {
+    if (!is.null(params$xwrap) | !is.null(params$ywrap)) {
+        warning("'xwrap' and 'ywrap' will be deprecated.",
+                " Use ggperiodic::periodic insead.")
+    }
+}

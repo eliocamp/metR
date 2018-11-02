@@ -97,10 +97,6 @@ the text. Ignored if less than zero.}
 
 \item{check_overlap}{If \code{TRUE}, text that overlaps previous text in the
 same layer will not be plotted.}
-
-\item{xwrap}{vector of length two used to wrap the circular dimension}
-
-\item{ywrap}{vector of length two used to wrap the circular dimension}
 }
 \description{
 Draws labels on contours built with \link[ggplot2:stat_contour]{ggplot2::stat_contour}.

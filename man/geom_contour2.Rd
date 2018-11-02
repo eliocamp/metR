@@ -10,14 +10,14 @@
 \usage{
 geom_contour2(mapping = NULL, data = NULL, stat = "contour2",
   position = "identity", ..., lineend = "butt", linejoin = "round",
-  linemitre = 1, breaks = scales::fullseq, bins = NULL,
+  linemitre = 1, breaks = MakeBreaks(), bins = NULL,
   binwidth = NULL, na.rm = FALSE, na.fill = FALSE,
   show.legend = NA, inherit.aes = TRUE)
 
 stat_contour2(mapping = NULL, data = NULL, geom = "contour2",
-  position = "identity", ..., breaks = scales::fullseq, bins = NULL,
-  binwidth = NULL, na.rm = FALSE, na.fill = FALSE, xwrap = NULL,
-  ywrap = NULL, show.legend = NA, inherit.aes = TRUE)
+  position = "identity", ..., breaks = MakeBreaks(), bins = NULL,
+  binwidth = NULL, na.rm = FALSE, na.fill = FALSE,
+  show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -84,8 +84,6 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
-
-\item{xwrap, ywrap}{vector of length two used to wrap the circular dimension}
 }
 \description{
 A copy of \link[ggplot2:geom_contour]{ggplot2::geom_contour} that accepts a function as the \code{breaks}

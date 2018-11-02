@@ -5,15 +5,16 @@
 stat_contour_fill <- function(mapping = NULL, data = NULL,
                               geom = "polygon", position = "identity",
                               ...,
-                              breaks = scales::fullseq,
+                              breaks = MakeBreaks(),
                               bins = NULL,
                               binwidth = NULL,
-                              na.rm = FALSE,
+                              # na.rm = FALSE,
                               na.fill = FALSE,
-                              xwrap = NULL,
-                              ywrap = NULL,
+                              # xwrap = NULL,
+                              # ywrap = NULL,
                               show.legend = NA,
                               inherit.aes = TRUE) {
+    .check_wrap_param(list(...))
     layer(
         data = data,
         mapping = mapping,
@@ -28,8 +29,8 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
-            xwrap = xwrap,
-            ywrap = ywrap,
+            # xwrap = xwrap,
+            # ywrap = ywrap,
             ...
         )
     )

@@ -71,10 +71,6 @@ to the paired geom/stat.}
 
 \item{dt}{optional numeric size "timestep" for integration}
 
-\item{xwrap}{vector of length two used to wrap the circular dimension}
-
-\item{ywrap}{vector of length two used to wrap the circular dimension}
-
 \item{skip}{numeric specifying number of gridpoints not to draw
 in the x and y direction}
 

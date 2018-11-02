@@ -19,7 +19,7 @@
 #'
 #' @details
 #' Direction and start allows to work with different standards. For the
-#' meteorological standard, for example, use `star = -90` and `direction = 1`.
+#' meteorological standard, for example, use `star = -90` and `direction = "cw"`.
 #'
 #' @section Aesthetics:
 #' `geom_vector` understands the following aesthetics (required aesthetics are in bold)

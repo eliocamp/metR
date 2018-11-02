@@ -6,7 +6,7 @@
 #'   and returns breaks as output
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
-#' @param xwrap,ywrap vector of length two used to wrap the circular dimension
+# #' @param xwrap,ywrap vector of length two used to wrap the circular dimension
 #'
 #' @export
 #' @section Computed variables:
@@ -18,16 +18,17 @@
 stat_contour2 <- function(mapping = NULL, data = NULL,
                           geom = "contour2", position = "identity",
                           ...,
-                          breaks = scales::fullseq,
+                          breaks = MakeBreaks(),
                           bins = NULL,
                           binwidth = NULL,
                           na.rm = FALSE,
                           na.fill = FALSE,
                           # fill.linear = TRUE,
-                          xwrap = NULL,
-                          ywrap = NULL,
+                          # xwrap = NULL,
+                          # ywrap = NULL,
                           show.legend = NA,
                           inherit.aes = TRUE) {
+    .check_wrap_param(list(...))
     layer(
         data = data,
         mapping = mapping,
@@ -43,8 +44,8 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
-            xwrap = xwrap,
-            ywrap = ywrap,
+            # xwrap = xwrap,
+            # ywrap = ywrap,
             ...
         )
     )

@@ -100,7 +100,7 @@ transformation and different plot ratios.
 }
 \details{
 Direction and start allows to work with different standards. For the
-meteorological standard, for example, use \code{star = -90} and \code{direction = 1}.
+meteorological standard, for example, use \code{star = -90} and \code{direction = "cw"}.
 }
 \section{Aesthetics}{
 

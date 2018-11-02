@@ -71,10 +71,11 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
                                 dark = "gray20",
                                 range = c(0.01, 0.5),
                                 na.rm = FALSE,
-                                xwrap = NULL,
-                                ywrap = NULL,
+                                # xwrap = NULL,
+                                # ywrap = NULL,
                                 show.legend = NA,
                                 inherit.aes = TRUE) {
+    .check_wrap_param(list(...))
     ggplot2::layer(
         data = data,
         mapping = mapping,

@@ -119,10 +119,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         }
 
         if (!is.null(xwrap)) {
-            data <- WrapCircular(data, "x", xwrap)
+            data <- suppressWarnings(WrapCircular(data, "x", xwrap))
         }
         if (!is.null(ywrap)) {
-            data <- WrapCircular(data, "y", ywrap)
+            data <- suppressWarnings(WrapCircular(data, "y", ywrap))
         }
 
         # jitter <- diff(range(data$z))*0.000000

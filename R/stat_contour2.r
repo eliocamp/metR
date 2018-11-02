@@ -127,10 +127,10 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
       data <- .impute_data.m(data, na.fill)
 
       if (!is.null(xwrap)) {
-          data <- WrapCircular(data, "x", xwrap)
+          data <- suppressWarnings(WrapCircular(data, "x", xwrap))
       }
       if (!is.null(ywrap)) {
-          data <- WrapCircular(data, "y", ywrap)
+          data <- suppressWarnings(WrapCircular(data, "y", ywrap))
       }
       setDF(data)
       contours <- as.data.table(.contour_lines(data, breaks, complete = complete))

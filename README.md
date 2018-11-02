@@ -78,8 +78,6 @@ ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
                          breaks = MakeBreaks(binwidth),
                          guide = guide_colorstrip()) +
     coord_polar()
-#> Warning in WrapCircular(data, "x", xwrap): WrapCircular is deprecated, use
-#> ggperiodic::wrap instead
 ```
 
 ![](man/figures/field-1.png)<!-- -->

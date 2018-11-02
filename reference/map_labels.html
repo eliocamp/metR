@@ -130,9 +130,9 @@ maps.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>LonLabel</span>(<span class='no'>lon</span>, <span class='kw'>east</span> <span class='kw'>=</span> <span class='st'>"°E"</span>, <span class='kw'>west</span> <span class='kw'>=</span> <span class='st'>"°O"</span>)
+    <pre class="usage"><span class='fu'>LonLabel</span>(<span class='no'>lon</span>, <span class='kw'>east</span> <span class='kw'>=</span> <span class='st'>"°E"</span>, <span class='kw'>west</span> <span class='kw'>=</span> <span class='st'>"°W"</span>, <span class='kw'>zero</span> <span class='kw'>=</span> <span class='st'>"°"</span>)
 
-<span class='fu'>LatLabel</span>(<span class='no'>lat</span>, <span class='kw'>north</span> <span class='kw'>=</span> <span class='st'>"°N"</span>, <span class='kw'>south</span> <span class='kw'>=</span> <span class='st'>"°S"</span>)</pre>
+<span class='fu'>LatLabel</span>(<span class='no'>lat</span>, <span class='kw'>north</span> <span class='kw'>=</span> <span class='st'>"°N"</span>, <span class='kw'>south</span> <span class='kw'>=</span> <span class='st'>"°S"</span>, <span class='kw'>zero</span> <span class='kw'>=</span> <span class='st'>"°"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,7 +142,7 @@ maps.</p>
       <td><p>longitude in degrees</p></td>
     </tr>
     <tr>
-      <th>east, west, north, south</th>
+      <th>east, west, north, south, zero</th>
       <td><p>text to append for each quadrant</p></td>
     </tr>
     <tr>
@@ -192,29 +192,28 @@ maps.</p>
 #&gt; [154] "153°E" "154°E" "155°E" "156°E" "157°E" "158°E" "159°E" "160°E" "161°E"
 #&gt; [163] "162°E" "163°E" "164°E" "165°E" "166°E" "167°E" "168°E" "169°E" "170°E"
 #&gt; [172] "171°E" "172°E" "173°E" "174°E" "175°E" "176°E" "177°E" "178°E" "179°E"
-#&gt; [181] "180°"  "179°O" "178°O" "177°O" "176°O" "175°O" "174°O" "173°O" "172°O"
-#&gt; [190] "171°O" "170°O" "169°O" "168°O" "167°O" "166°O" "165°O" "164°O" "163°O"
-#&gt; [199] "162°O" "161°O" "160°O" "159°O" "158°O" "157°O" "156°O" "155°O" "154°O"
-#&gt; [208] "153°O" "152°O" "151°O" "150°O" "149°O" "148°O" "147°O" "146°O" "145°O"
-#&gt; [217] "144°O" "143°O" "142°O" "141°O" "140°O" "139°O" "138°O" "137°O" "136°O"
-#&gt; [226] "135°O" "134°O" "133°O" "132°O" "131°O" "130°O" "129°O" "128°O" "127°O"
-#&gt; [235] "126°O" "125°O" "124°O" "123°O" "122°O" "121°O" "120°O" "119°O" "118°O"
-#&gt; [244] "117°O" "116°O" "115°O" "114°O" "113°O" "112°O" "111°O" "110°O" "109°O"
-#&gt; [253] "108°O" "107°O" "106°O" "105°O" "104°O" "103°O" "102°O" "101°O" "100°O"
-#&gt; [262] "99°O"  "98°O"  "97°O"  "96°O"  "95°O"  "94°O"  "93°O"  "92°O"  "91°O" 
-#&gt; [271] "90°O"  "89°O"  "88°O"  "87°O"  "86°O"  "85°O"  "84°O"  "83°O"  "82°O" 
-#&gt; [280] "81°O"  "80°O"  "79°O"  "78°O"  "77°O"  "76°O"  "75°O"  "74°O"  "73°O" 
-#&gt; [289] "72°O"  "71°O"  "70°O"  "69°O"  "68°O"  "67°O"  "66°O"  "65°O"  "64°O" 
-#&gt; [298] "63°O"  "62°O"  "61°O"  "60°O"  "59°O"  "58°O"  "57°O"  "56°O"  "55°O" 
-#&gt; [307] "54°O"  "53°O"  "52°O"  "51°O"  "50°O"  "49°O"  "48°O"  "47°O"  "46°O" 
-#&gt; [316] "45°O"  "44°O"  "43°O"  "42°O"  "41°O"  "40°O"  "39°O"  "38°O"  "37°O" 
-#&gt; [325] "36°O"  "35°O"  "34°O"  "33°O"  "32°O"  "31°O"  "30°O"  "29°O"  "28°O" 
-#&gt; [334] "27°O"  "26°O"  "25°O"  "24°O"  "23°O"  "22°O"  "21°O"  "20°O"  "19°O" 
-#&gt; [343] "18°O"  "17°O"  "16°O"  "15°O"  "14°O"  "13°O"  "12°O"  "11°O"  "10°O" 
-#&gt; [352] "9°O"   "8°O"   "7°O"   "6°O"   "5°O"   "4°O"   "3°O"   "2°O"   "1°O"  
+#&gt; [181] "180°"  "179°W" "178°W" "177°W" "176°W" "175°W" "174°W" "173°W" "172°W"
+#&gt; [190] "171°W" "170°W" "169°W" "168°W" "167°W" "166°W" "165°W" "164°W" "163°W"
+#&gt; [199] "162°W" "161°W" "160°W" "159°W" "158°W" "157°W" "156°W" "155°W" "154°W"
+#&gt; [208] "153°W" "152°W" "151°W" "150°W" "149°W" "148°W" "147°W" "146°W" "145°W"
+#&gt; [217] "144°W" "143°W" "142°W" "141°W" "140°W" "139°W" "138°W" "137°W" "136°W"
+#&gt; [226] "135°W" "134°W" "133°W" "132°W" "131°W" "130°W" "129°W" "128°W" "127°W"
+#&gt; [235] "126°W" "125°W" "124°W" "123°W" "122°W" "121°W" "120°W" "119°W" "118°W"
+#&gt; [244] "117°W" "116°W" "115°W" "114°W" "113°W" "112°W" "111°W" "110°W" "109°W"
+#&gt; [253] "108°W" "107°W" "106°W" "105°W" "104°W" "103°W" "102°W" "101°W" "100°W"
+#&gt; [262] "99°W"  "98°W"  "97°W"  "96°W"  "95°W"  "94°W"  "93°W"  "92°W"  "91°W" 
+#&gt; [271] "90°W"  "89°W"  "88°W"  "87°W"  "86°W"  "85°W"  "84°W"  "83°W"  "82°W" 
+#&gt; [280] "81°W"  "80°W"  "79°W"  "78°W"  "77°W"  "76°W"  "75°W"  "74°W"  "73°W" 
+#&gt; [289] "72°W"  "71°W"  "70°W"  "69°W"  "68°W"  "67°W"  "66°W"  "65°W"  "64°W" 
+#&gt; [298] "63°W"  "62°W"  "61°W"  "60°W"  "59°W"  "58°W"  "57°W"  "56°W"  "55°W" 
+#&gt; [307] "54°W"  "53°W"  "52°W"  "51°W"  "50°W"  "49°W"  "48°W"  "47°W"  "46°W" 
+#&gt; [316] "45°W"  "44°W"  "43°W"  "42°W"  "41°W"  "40°W"  "39°W"  "38°W"  "37°W" 
+#&gt; [325] "36°W"  "35°W"  "34°W"  "33°W"  "32°W"  "31°W"  "30°W"  "29°W"  "28°W" 
+#&gt; [334] "27°W"  "26°W"  "25°W"  "24°W"  "23°W"  "22°W"  "21°W"  "20°W"  "19°W" 
+#&gt; [343] "18°W"  "17°W"  "16°W"  "15°W"  "14°W"  "13°W"  "12°W"  "11°W"  "10°W" 
+#&gt; [352] "9°W"   "8°W"   "7°W"   "6°W"   "5°W"   "4°W"   "3°W"   "2°W"   "1°W"  
 #&gt; [361] "0°"   </div><div class='input'>
-<span class='co'># If you want it to speak in English.</span>
-<span class='no'>LonLabel</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>...</span>) <span class='kw pkg'>metR</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/metR/topics/map_labels'>LonLabel</a></span>(<span class='no'>...</span>, <span class='kw'>west</span> <span class='kw'>=</span> <span class='st'>"\u00B0W"</span>)</div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

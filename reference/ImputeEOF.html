@@ -130,8 +130,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>ImputeEOF</span>(<span class='no'>formula</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>min.eof</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>validation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>ImputeEOF</span>(<span class='no'>formula</span>, <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>min.eof</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>validation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fu'>interactive</span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -139,21 +139,17 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>formula</th>
-      <td><p>a formula passed to <code><a href='http://www.rdocumentation.org/packages/data.table/topics/dcast.data.table'>dcast</a></code> to build
-the matrix that will be used in the SVD decomposition (see Details)</p></td>
-    </tr>
-    <tr>
-      <th>value.var</th>
-      <td><p>optional name of the data column (see Details)</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p>a data.frame</p></td>
+      <td><p>a formula to build the matrix that will be used in the SVD
+decomposition (see Details)</p></td>
     </tr>
     <tr>
       <th>max.eof, min.eof</th>
       <td><p>maximum and minimum number of singular values used for
 imputation</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>a data.frame</p></td>
     </tr>
     <tr>
       <th>tol</th>
@@ -241,7 +237,7 @@ returns a matrix.</p>
 #&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896
 #&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -18.526896         NA</div><div class='input'>
 <span class='no'>max.eof</span> <span class='kw'>&lt;-</span> <span class='fl'>5</span>    <span class='co'># change to a higher value</span>
-<span class='no'>geopotential</span>[, <span class='no'>gh.impute</span> <span class='kw'>:=</span> <span class='fu'>ImputeEOF</span>(<span class='no'>gh.gap</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='no'>max.eof</span>,
+<span class='no'>geopotential</span>[, <span class='no'>gh.impute</span> <span class='kw'>:=</span> <span class='fu'>ImputeEOF</span>(<span class='no'>gh.gap</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='no'>max.eof</span>,
                                       <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>)]</div><div class='output co'>#&gt;  With 1 eof - rmse =  27.2008 With 2 eof - rmse =  25.38818 With 3 eof - rmse =  23.91113 With 4 eof - rmse =  22.46116 With 5 eof - rmse =  21.30494</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap  gh.impute
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  -3.978597  -3.978597  -3.978597
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  -3.736613  -3.736613  -3.736613

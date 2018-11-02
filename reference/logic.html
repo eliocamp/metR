@@ -130,27 +130,18 @@
 
     <pre class="usage"><span class='no'>x</span> <span class='kw'>%~%</span> <span class='no'>target</span>
 
-<span class='fu'>Similar</span>(<span class='no'>x</span>, <span class='no'>target</span>, <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>Inf</span>)
-
-<span class='no'>x</span> <span class='kw'>%b%</span> <span class='no'>limits</span>
-
-<span class='fu'>Between</span>(<span class='no'>x</span>, <span class='no'>limits</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>TRUE</span>, <span class='fl'>TRUE</span>))</pre>
+<span class='fu'>Similar</span>(<span class='no'>x</span>, <span class='no'>target</span>, <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>Inf</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x, target, limits</th>
+      <th>x, target</th>
       <td><p>numeric vectors</p></td>
     </tr>
     <tr>
       <th>tol</th>
       <td><p>tolerance for similarity</p></td>
-    </tr>
-    <tr>
-      <th>include</th>
-      <td><p>logical vector of length 2 (or 1) indicating whether to include
-the extreme bounds</p></td>
     </tr>
     </table>
     
@@ -165,18 +156,6 @@ the extreme bounds</p></td>
 which is the (first) closest to any element of <code>target</code>.</p>
 <p><code>Similar</code> is a functional version of <code>%~%</code> that also has a
 <code>tol</code> parameter that indicates the maximum allowed tolerance.</p>
-<p><code>%b%</code> can be thought as the "between" operator. It returns <code>TRUE</code>
-for each element of <code>x</code> that is between the minimum and the maximum of
-<code>limits</code>.</p>
-<p><code>Between</code> is a functional version of <code>%b%</code> that also has an
-<code>include</code> parameter that let's you test for <code>x &gt; lower &amp; x &lt; upper</code>.
-If it's a unitary vector, it will be recycled so that <code>include = TRUE</code> is
-equivalent to <code>include = c(TRUE, TRUE)</code>.</p>
-<p>It's important to note that <a href='http://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table</a> already has a
-<code><a href='http://www.rdocumentation.org/packages/data.table/topics/between'>between</a></code> function optimized with c code, so these
-functions use that implementation if data.table is installed (except for the
-case of <code>include[1] != include[2]</code>, for which data.table has no
-implementation yet).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

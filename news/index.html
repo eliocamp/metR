@@ -122,6 +122,25 @@
     <div id="metr-0-1-9000" class="section level1">
 <h1 class="page-header">
 <a href="#metr-0-1-9000" class="anchor"></a>metR 0.1.9000</h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<p>There has been some changes in the interface of some functions for the sake of consistency.</p>
+<ul>
+<li><p>In <code><a href="../reference/Derivate.html">Derivate()</a></code> (and it’s derivated functions –see what I did there?), the <code>data</code> argument has been moved back. This is because this function is intended to be called inside a <code>data.table</code> of <code>mutate()</code> call, where you don’t need to explicitly specify the data.</p></li>
+<li><p>In <code><a href="../reference/EOF.html">EOF()</a></code> the dcast-style formula interface has been removed. The <code>data</code> argument was also moved back so you can use the <code>n</code> argument more easily without naming it.</p></li>
+<li><p><code><a href="../reference/ImputeEOF.html">ImputeEOF()</a></code> follows the same conventions. The dcast-style interface has been removed and the <code>data</code> argument has been moved after the <code>max.eof</code> argument.</p></li>
+<li><p><code>BuildQsWave()</code> and <code>FitQsWave()</code> have been removed and should had never even existed.</p></li>
+<li><p>The default <code>skip</code> argument for <code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> is now 0.</p></li>
+<li><p>Removed <code>hemisphere</code> argument from <code><a href="../reference/season.html">season()</a></code> since the function returns the trimester so it made no sense.</p></li>
+<li><p>Contour functions now compute breaks globaly (using all the data) instead of per panel. This means default intercomparabilty between facetwed plots but also a considerable deviation from <code><a href="ggplot2.tidyverse.org/reference/geom_contour.html">ggplot2::geom_contour()</a></code>.</p></li>
+<li><p>The <code>Between</code> operators are removed since they were already implemented in <code>data.table</code>.</p></li>
+<li><p>The default <code>geom</code> for <code><a href="../reference/stat_na.html">stat_na()</a></code> is changed to <code>point</code> for consistency with <code><a href="../reference/stat_subset.html">stat_subset()</a></code></p></li>
+</ul>
+</div>
+<div id="other-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other changes</h2>
 <ul>
 <li>Arrows in <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> and <code><a href="../reference/geom_arrow.html">geom_vector()</a></code> scale with vector magnitude.</li>
 <li>New geom <code><a href="../reference/geom_streamline.html">geom_streamline()</a></code> for visualizing vector fields.</li>
@@ -143,17 +162,16 @@
 <li>
 <code><a href="../reference/EOF.html">EOF()</a></code> supports varimax rotation. Rotated components are labeled accordingly.</li>
 <li>
-<code><a href="../reference/geom_relief.html">geom_relief()</a></code> is much faster now (but see package <code>rayshader</code>)</li>
-<li>Contour calculations in <code>StatContour2</code> are <a href="https://github.com/r-lib/memoise">memoised</a> so they are only computed once even adding several layers with the same contours (<code>geom_contour() + geom_text_contour()</code>) or running the same plot while tweaking it’s appearance.</li>
+<code><a href="../reference/geom_relief.html">geom_relief()</a></code> is much faster now (but see package <code>rayshader</code>).</li>
 <li>New <code><a href="../reference/geom_relief.html">geom_shadow()</a></code> for casting shadows in topographic maps.</li>
+<li>Contour calculations in <code>StatContour2</code> are <a href="https://github.com/r-lib/memoise">memoised</a> so they are only computed once even adding several layers with the same contours (<code>geom_contour() + geom_text_contour()</code>) or running the same plot while tweaking it’s appearance.</li>
 <li>New <code><a href="../reference/FitLm.html">FitLm()</a></code> for getting fast estimates of linear fits.</li>
 <li>New <code><a href="../reference/waves.html">FilterWave()</a></code> for filtering waves.</li>
-<li>Contour functions now compute breaks globaly (using all the data) instead of per panel. This means default intercomparabilty between facetwed plots but also a considerable deviation from <code><a href="ggplot2.tidyverse.org/reference/geom_contour.html">ggplot2::geom_contour()</a></code>.</li>
 <li>Circular dimensions had quite a ride during this developement process. <code><a href="../reference/WrapCircular.html">RepeatCircular()</a></code> was deprecated in favour of <code><a href="../reference/WrapCircular.html">WrapCircular()</a></code> which is more robust, and then <code><a href="../reference/WrapCircular.html">WrapCircular()</a></code> was deprecated in favour of the <code>ggperiodic</code> package.</li>
 <li>The way that <code><a href="../reference/geom_contour2.html">stat_contour2()</a></code>, <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code> and <code>geom_streamlines()</code> handle circular dimensions has changed. Now you need to use <code>xwrap</code>/<code>ywrap</code> to explicitly set the domain. This makes the implementation more robust and also allow to easily wrap to an arbitrary domain.</li>
+<li>After that change, the wrapping functionallity has moved to <code>ggperiodic</code>, which can handle this stuff better. The above mentioned arguments still work but are not documented and will be deprecated.</li>
 <li>
 <code><a href="../reference/EOF.html">EOF()</a></code> gains a <code>fill</code> argument for sparse-ish data.</li>
-<li>The <code>Between</code> operators are deprecated since they are already implemented in <code>data.table</code>.</li>
 <li>
 <code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> now has the ability to draw a stroke around text.</li>
 <li>
@@ -165,6 +183,7 @@
 <li>
 <code>subset</code> argument in <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now accepts character vectors for time components.</li>
 </ul>
+</div>
 </div>
     <div id="metr-0-1" class="section level1">
 <h1 class="page-header">
@@ -213,7 +232,7 @@
 <li>
 <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> can return a keyed data.table.</li>
 <li>
-<code><a href="../reference/waves.html">FitQsWave()</a></code> and <code>BuildQsWave()</code> renamed to <code><a href="../reference/waves.html">FitWave()</a></code> and <code><a href="../reference/waves.html">BuildWave()</a></code>, respectively.</li>
+<code>FitQsWave()</code> and <code>BuildQsWave()</code> renamed to <code><a href="../reference/waves.html">FitWave()</a></code> and <code><a href="../reference/waves.html">BuildWave()</a></code>, respectively.</li>
 <li>
 <code><a href="../reference/GetSMNData.html">GetSMNData()</a></code> is updated to include the new SMN website and data types.</li>
 <li>

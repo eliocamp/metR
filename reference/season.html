@@ -128,18 +128,14 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>season</span>(<span class='no'>x</span>, <span class='kw'>hemisphere</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"south"</span>, <span class='st'>"north"</span>), <span class='kw'>lang</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"en"</span>, <span class='st'>"es"</span>))</pre>
+    <pre class="usage"><span class='fu'>season</span>(<span class='no'>x</span>, <span class='kw'>lang</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"en"</span>, <span class='st'>"es"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A numeric vector of months or a vector of dates.</p></td>
-    </tr>
-    <tr>
-      <th>hemisphere</th>
-      <td><p>A character with the hemisphere for which to assign the seasons.</p></td>
+      <td><p>A numeric vector of months or a vector of dates</p></td>
     </tr>
     <tr>
       <th>lang</th>
@@ -149,13 +145,12 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A factor vector of the same length as <code>x</code> with the season of each
+    <p>A factor vector of the same length as <code>x</code> with the trimestre of each
 month.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>season</span>(<span class='fl'>1</span>, <span class='kw'>lang</span> <span class='kw'>=</span> <span class='st'>"en"</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='st'>"n"</span>)</div><div class='output co'>#&gt; [1] JJA
-#&gt; Levels: DJF MAM JJA SON</div><div class='input'><span class='fu'>season</span>(<span class='fl'>1</span>, <span class='kw'>lang</span> <span class='kw'>=</span> <span class='st'>"en"</span>)</div><div class='output co'>#&gt; [1] DJF
+    <pre class="examples"><div class='input'><span class='fu'>season</span>(<span class='fl'>1</span>, <span class='kw'>lang</span> <span class='kw'>=</span> <span class='st'>"en"</span>)</div><div class='output co'>#&gt; [1] DJF
 #&gt; Levels: DJF MAM JJA SON</div><div class='input'><span class='fu'>season</span>(<span class='fu'>as.Date</span>(<span class='st'>"2017-01-01"</span>))</div><div class='output co'>#&gt; [1] DJF
 #&gt; Levels: DJF MAM JJA SON</div><div class='input'>
 </div></pre>

@@ -140,7 +140,7 @@ a more aesthetically pleasing representation of topography.</p>
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sun.angle</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>light</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
   <span class='kw'>dark</span> <span class='kw'>=</span> <span class='st'>"gray20"</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.01</span>, <span class='fl'>0.5</span>), <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ywrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -216,14 +216,6 @@ and returns breaks as output</p></li>
 a warning. If <code>TRUE</code>, missing values are silently removed.</p></td>
     </tr>
     <tr>
-      <th>xwrap</th>
-      <td><p>vector of length two used to wrap the circular dimension</p></td>
-    </tr>
-    <tr>
-      <th>ywrap</th>
-      <td><p>vector of length two used to wrap the circular dimension</p></td>
-    </tr>
-    <tr>
       <th>show.legend</th>
       <td><p>logical. Should this layer be included in the legends?
 <code>NA</code>, the default, includes if any aesthetics are mapped.
@@ -278,19 +270,19 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
 <span class='co'># In a monochrome contour map, it's impossible to know which areas are</span>
 <span class='co'># local maximums or minimums.</span>
 <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>geo</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='geom_contour2.html'>geom_contour2</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.z</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>))</div><div class='img'><img src='geom_contour_tanaka-2.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='geom_contour2.html'>geom_contour2</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.z</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead.</span></div><div class='img'><img src='geom_contour_tanaka-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># With tanaka contours, they are obvious.</span>
 <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>geo</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'>geom_contour_tanaka</span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.z</span>), <span class='kw'>dark</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
                         <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>)) +
-    <span class='fu'><a href='scale_divergent.html'>scale_fill_divergent</a></span>()</div><div class='img'><img src='geom_contour_tanaka-3.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='scale_divergent.html'>scale_fill_divergent</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: 'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead.</span></div><div class='img'><img src='geom_contour_tanaka-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># A good divergent color palette has the same luminosity for positive</span>
 <span class='co'># and negative values.But that means that printed in grayscale (Desaturated),</span>
 <span class='co'># they are indistinguishable.</span>
 (<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>geo</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.z</span>), <span class='kw'>xwrap</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>360</span>)) +
     <span class='fu'><a href='ggplot2.tidyverse.org/reference/scale_gradient.html'>scale_fill_gradientn</a></span>(<span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"#767676"</span>, <span class='st'>"white"</span>, <span class='st'>"#484848"</span>),
-                         <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0.415</span>, <span class='fl'>1</span>)))</div><div class='img'><img src='geom_contour_tanaka-4.png' alt='' width='700' height='433' /></div><div class='input'>
+                         <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0.415</span>, <span class='fl'>1</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead.</span></div><div class='img'><img src='geom_contour_tanaka-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Tanaka contours can solve this issue.</span>
 <span class='no'>g</span> + <span class='fu'>geom_contour_tanaka</span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.z</span>))</div><div class='img'><img src='geom_contour_tanaka-5.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>

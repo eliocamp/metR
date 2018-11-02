@@ -6,19 +6,21 @@ spherical units.
 - New geom `geom_contour_tanaka()` that plots illuminated contours. 
 - New function `Interpolate()` for bilinear interpolation.
 - Fixed bug in `FitWave()` with wavenumber 0. Now it rerturns the mean. 
-- `FitWave()` runs slightly faster and `BuildField()` runs much faster. 
+- `FitWave()` runs slightly faster and `BuildWave()` runs much faster. 
 - Removed `GeomContourFill` object since it was just a polygon. 
 - The results from `EOF()` now use factors instead of numbers to identify each
 PC
-- New scale `scale_vector()` and guide `guide_vector()` for controlling and 
-communicating the scale of vectors. 
+- New scale `scale_mag()` and guide `guide_vector()` for controlling and 
+communicating the scale of vectors. These are highly experimental and **will** 
+change in the future, but provide some very needed functionality so I decided to
+export them as they are. 
 - `geom_arrow()` gains new `pivot` agument to control point of rotation and 
 `preserve.dir` to tell if angle should be preserved. 
 - `stat_contour_fill()` and `stat_contour2()` print a warning when no contours 
 can be made.
 - `EOF()` now supports estimation of confidence intervals via bootstrap.
 - `EOF()` supports varimax rotation. Rotated components are labeled accordingly. 
-- `geom_relief()` is MUCH faster now.
+- `geom_relief()` is much faster now (but see package `rayshader`)
 - Contour calculations in `StatContour2` are 
 [memoised](https://github.com/r-lib/memoise) so they are
 only computed once even adding several layers with the same contours 
@@ -28,25 +30,24 @@ it's appearance.
 - New `FitLm()` for getting fast estimates of linear fits. 
 - New `FilterWave()` for filtering waves. 
 - Contour functions now compute breaks globaly (using all the data) instead of
-per panel. This means default intercomparabilty between facetwed plots. 
-- `RepeatCircular()` is deprecated in favour if `WrapCircular()` which is more
-robust.
+per panel. This means default intercomparabilty between facetwed plots but also 
+a considerable deviation from `ggplot2::geom_contour()`. 
+- Circular dimensions had quite a ride during this developement process. `RepeatCircular()` was deprecated in favour of `WrapCircular()` which is more
+robust, and then `WrapCircular()` was deprecated in favour of the `ggperiodic` package.
 - The way that `stat_contour2()`, `stat_contour_fill()` and `geom_streamlines()`
 handle circular dimensions has changed. Now you need to use `xwrap`/`ywrap` to 
 explicitly set the domain. This makes the implementation more robust and also allow to easily wrap to an arbitrary domain.
 - `EOF()` gains a `fill` argument for sparse-ish data. 
 - The `Between` operators are deprecated since they are already implemented in 
 `data.table`.
-- `geom_text_contour()` now has the ability of drawing a stroke arround text. 
+- `geom_text_contour()` now has the ability to draw a stroke around text. 
 - `geom_contour_fill()` now can impute missing values with bivariate interpolation. 
-- New transformations `lon_trans()` for converting to and from longitude conventions
-in `scale_x_longitude()`.
 - `BuildField()` actually renamed `BuildWave()` (which should've happen in the previous
 release acording to this News).
 - New function `as.path()` and added functionality to `Interpolate()` that allows
 to interpolate values along a path of locations.
 - New function `Impute2D()` which is an exported version of the method used by 
-`geom_contour_fill()` to impute missing values.
+`geom_contour_fill()` to (soft) impute missing values.
 - `subset` argument in `ReadNetCDF()` now accepts character vectors for time 
 components. 
 

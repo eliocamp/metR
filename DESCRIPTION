@@ -2,7 +2,7 @@ Type: Package
 Package: metR
 Title: Tools for Easier Analysis of Meteorological Fields
 Version: 0.1.9001
-Date: 2018-06-18
+Date: 2018-11-01
 Authors@R: 
     person(given = "Elio",
            family = "Campitelli",
@@ -10,7 +10,7 @@ Authors@R:
            email = "elio.campitelli@cima.fcen.uba.ar",
            comment = c(ORCID = "https://orcid.org/0000-0002-7742-9230"))
 Description: Many useful functions and extensions for dealing
-    with meteorological data in the tidy data framework. Extends ggplot2
+    with meteorological data in the tidy data framework. Extends 'ggplot2'
     for better plotting of scalar and vector fields and provides commonly
     used analysis methods in the atmospheric sciences.
 License: GPL-3
@@ -53,8 +53,6 @@ Suggests:
     udunits2,
     vdiffr,
     viridis
-Remotes: 
-    tidyverse/ggplot2
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true

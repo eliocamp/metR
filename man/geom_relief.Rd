@@ -102,31 +102,6 @@ to color. \code{geom_shadow()} projects shadows.
 }
 }
 
-\examples{
-library(ggplot2)
-ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-      geom_relief(aes(z = value))
-
-# If you're more of a moring person
-ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-      geom_relief(aes(z = value), sun.angle = -60)
-
-ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-      geom_relief(aes(z = value), sun.angle = -60, sun.altitude = 5,
-                  shadow = TRUE)
-
-# is the same as
-ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-      geom_relief(aes(z = value), sun.angle = -60) +
-      geom_shadow(aes(z = value), sun.angle = -60, sun.altitude = 5)
-
-# The fill aesthetic works as a parameter for the shadow colour.
-ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-      geom_relief(aes(z = value), sun.angle = -60, sun.altitude = 5,
-                  shadow = TRUE, fill = "blue")
-
-
-}
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},
   \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},

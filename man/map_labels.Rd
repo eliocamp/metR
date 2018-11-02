@@ -6,14 +6,14 @@
 \alias{LatLabel}
 \title{Label longitude and latitude}
 \usage{
-LonLabel(lon, east = "°E", west = "°O")
+LonLabel(lon, east = "°E", west = "°W", zero = "°")
 
-LatLabel(lat, north = "°N", south = "°S")
+LatLabel(lat, north = "°N", south = "°S", zero = "°")
 }
 \arguments{
 \item{lon}{longitude in degrees}
 
-\item{east, west, north, south}{text to append for each quadrant}
+\item{east, west, north, south, zero}{text to append for each quadrant}
 
 \item{lat}{latitude in degrees}
 }

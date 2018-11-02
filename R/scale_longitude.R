@@ -103,7 +103,7 @@ scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...
 #'
 #' @param lon longitude in degrees
 #' @param lat latitude in degrees
-#' @param east,west,north,south text to append for each quadrant
+#' @param east,west,north,south,zero text to append for each quadrant
 #'
 #' @details
 #' The default values are for Spanish.
@@ -112,27 +112,23 @@ scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...
 #'
 #' LonLabel(0:360)
 #'
-#' # If you want it to speak in English.
-#' LonLabel <- function(...) metR::LonLabel(..., west = "\u00B0W")
-#'
-#'
 #' @export
 #' @name map_labels
 #' @family ggplot2 helpers
-LonLabel <- function(lon, east = "\u00B0E", west = "\u00B0O") {
+LonLabel <- function(lon, east = "\u00B0E", west = "\u00B0W", zero = "\u00B0") {
     lon <- as.numeric(lon)
     lon <- ifelse(lon > 180, ConvertLongitude(lon), lon)
     newlon <- ifelse(lon < 0, paste0(abs(lon), west), paste0(lon, east))
-    newlon[lon == 0 & !is.na(lon)] <- paste0(lon[lon == 0 & !is.na(lon)], "\u00B0")
-    newlon[lon == 180 & !is.na(lon)] <- paste0(lon[lon == 180 & !is.na(lon)], "\u00B0")
+    newlon[lon == 0 & !is.na(lon)] <- paste0(lon[lon == 0 & !is.na(lon)], zero)
+    newlon[lon == 180 & !is.na(lon)] <- paste0(lon[lon == 180 & !is.na(lon)], zero)
     return(newlon)
 }
 
 #' @export
 #' @rdname map_labels
-LatLabel <- function(lat, north = "\u00B0N", south = "\u00B0S") {
+LatLabel <- function(lat, north = "\u00B0N", south = "\u00B0S", zero = "\u00B0") {
     lat <- as.numeric(lat)
     newlat <- ifelse(lat < 0, paste0(abs(lat), south), paste0(lat, north))
-    newlat[lat == 0 & !is.na(lat)] <- paste0(lat[lat == 0 & !is.na(lat)], "\u00B0")
+    newlat[lat == 0 & !is.na(lat)] <- paste0(lat[lat == 0 & !is.na(lat)], zero)
     return(newlat)
 }

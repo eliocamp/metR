@@ -65,6 +65,7 @@
 #'  }
 #'
 #' @examples
+#' \dontrun{
 #' library(data.table)
 #' library(ggplot2)
 #' data(geopotential)
@@ -97,7 +98,6 @@
 #'                         lineend = "round") +
 #'     scale_size(range = c(0, 0.6))
 #'
-#' \dontrun{
 #' # Using topographic information to simulate "rivers" from slope
 #' topo <- GetTopography(295, -55+360, -30, -42, res = 1/20)  # needs internet!
 #' topo[, c("dx", "dy") := Derivate(h ~ lon + lat)]

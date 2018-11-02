@@ -31,28 +31,10 @@
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' library(ggplot2)
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 #'       geom_relief(aes(z = value))
-#'
-#' # If you're more of a moring person
-#' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-#'       geom_relief(aes(z = value), sun.angle = -60)
-#'
-#' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-#'       geom_relief(aes(z = value), sun.angle = -60, sun.altitude = 5,
-#'                   shadow = TRUE)
-#'
-#' # is the same as
-#' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-#'       geom_relief(aes(z = value), sun.angle = -60) +
-#'       geom_shadow(aes(z = value), sun.angle = -60, sun.altitude = 5)
-#'
-#' # The fill aesthetic works as a parameter for the shadow colour.
-#' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-#'       geom_relief(aes(z = value), sun.angle = -60, sun.altitude = 5,
-#'                   shadow = TRUE, fill = "blue")
-#'
 #'
 #' @family ggplot2 helpers
 #'
@@ -97,6 +79,7 @@ geom_relief <- function(mapping = NULL, data = NULL,
                 raster = raster,
                 interpolate = interpolate,
                 na.rm = na.rm,
+                sun.angle = sun.angle,
                 ...
             )
         )
@@ -115,6 +98,7 @@ geom_relief <- function(mapping = NULL, data = NULL,
             raster = raster,
             interpolate = interpolate,
             na.rm = na.rm,
+            sun.angle = sun.angle,
             ...
         )
     )
@@ -129,7 +113,7 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", ggplot2::GeomTile,
     required_aes = c("x", "y", "z"),
     default_aes = ggplot2::aes(color = NA, fill = "grey35", size = 0.5, linetype = 1,
                       alpha = NA, light = "white", dark = "gray20", sun.angle = 60),
-    draw_panel = function(data, panel_scales, coord, raster, interpolate,
+    draw_panel = function(data, panel_scales, coord, raster, interpolate, sun.angle = 60,
                           sun.altitude = NULL, skip = NULL, alpha.range = NULL) {
 
         if (!coord$is_linear()) {

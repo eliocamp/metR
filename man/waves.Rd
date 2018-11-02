@@ -5,8 +5,6 @@
 \alias{FitWave}
 \alias{BuildWave}
 \alias{FilterWave}
-\alias{FitQsWave}
-\alias{BuildQsField}
 \title{Fourier transform}
 \usage{
 FitWave(y, k = 1)

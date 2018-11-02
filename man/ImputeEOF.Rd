@@ -4,20 +4,18 @@
 \alias{ImputeEOF}
 \title{Impute missing values}
 \usage{
-ImputeEOF(formula, value.var = NULL, data = NULL, max.eof = NULL,
-  min.eof = 1, tol = 0.01, max.iter = 10000, validation = NULL,
+ImputeEOF(formula, max.eof = NULL, data = NULL, min.eof = 1,
+  tol = 0.01, max.iter = 10000, validation = NULL,
   verbose = interactive())
 }
 \arguments{
 \item{formula}{a formula to build the matrix that will be used in the SVD
 decomposition (see Details)}
 
-\item{value.var}{optional name of the data column (see Details)}
-
-\item{data}{a data.frame}
-
 \item{max.eof, min.eof}{maximum and minimum number of singular values used for
 imputation}
+
+\item{data}{a data.frame}
 
 \item{tol}{tolerance used for determining convergence}
 
@@ -64,7 +62,7 @@ set.seed(42)
 geopotential[sample(1:.N, .N*0.3), gh.gap := NA]
 
 max.eof <- 5    # change to a higher value
-geopotential[, gh.impute := ImputeEOF(gh.gap ~ lat + lon | date, max.eof = max.eof,
+geopotential[, gh.impute := ImputeEOF(gh.gap ~ lat + lon | date, max.eof,
                                       verbose = TRUE, max.iter = 2000)]
 
 library(ggplot2)

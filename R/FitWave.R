@@ -162,21 +162,3 @@ FilterWave <- function(y, k, action = sign(k[k != 0][1])) {
 
 
 
-#' @format NULL
-#' @usage NULL
-#' @rdname waves
-#' @export
-FitQsWave <- function(y, k = 1) {
-    .Deprecated("FitWave")
-}
-
-#' @format NULL
-#' @usage NULL
-#' @rdname waves
-#' @export
-BuildQsField <- function(x, amplitude, phase, k, wave) {
-    .Deprecated("BuildWave")
-}
-
-
-

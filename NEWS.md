@@ -16,6 +16,8 @@ was also moved back so you can use the `n` argument more easily without naming i
 - `ImputeEOF()` follows the same conventions. The dcast-style interface has been 
 removed and the `data` argument has been moved after the `max.eof` argument.
 
+- `BuildQsWave()` and `FitQsWave()` have been removed and should had never even
+existed. 
 
 ## Other changes
 

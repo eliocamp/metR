@@ -3,6 +3,7 @@
 geom_shadow <- function(mapping = NULL, data = NULL,
                         stat = "identity", position = "identity",
                         ...,
+                        sun.angle = 60,
                         range = c(0, 1),
                         skip = 0,
                         raster = TRUE,

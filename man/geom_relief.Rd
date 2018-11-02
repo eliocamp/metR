@@ -14,8 +14,8 @@ geom_relief(mapping = NULL, data = NULL, stat = "identity",
   show.legend = NA, inherit.aes = TRUE)
 
 geom_shadow(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., range = c(0, 1), skip = 0,
-  raster = TRUE, interpolate = TRUE, na.rm = FALSE,
+  position = "identity", ..., sun.angle = 60, range = c(0, 1),
+  skip = 0, raster = TRUE, interpolate = TRUE, na.rm = FALSE,
   show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{

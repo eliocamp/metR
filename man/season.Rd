@@ -5,24 +5,21 @@
 \alias{AssignSeason}
 \title{Assign seasons to months}
 \usage{
-season(x, hemisphere = c("south", "north"), lang = c("en", "es"))
+season(x, lang = c("en", "es"))
 }
 \arguments{
-\item{x}{A numeric vector of months or a vector of dates.}
-
-\item{hemisphere}{A character with the hemisphere for which to assign the seasons.}
+\item{x}{A numeric vector of months or a vector of dates}
 
 \item{lang}{Language to use.}
 }
 \value{
-A factor vector of the same length as \code{x} with the season of each
+A factor vector of the same length as \code{x} with the trimestre of each
 month.
 }
 \description{
 Assign seasons to months
 }
 \examples{
-season(1, lang = "en", h = "n")
 season(1, lang = "en")
 season(as.Date("2017-01-01"))
 

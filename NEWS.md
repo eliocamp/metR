@@ -21,6 +21,9 @@ existed.
 
 - The default `skip` argument for `geom_text_contour()` is now 0.
 
+- Removed `hemisphere` argument from `season()` since the function returns the
+trimester so it made no sense. 
+
 ## Other changes
 
 - Arrows in `geom_arrow()` and `geom_vector()` scale with vector magnitude. 

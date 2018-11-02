@@ -4,8 +4,6 @@ library(metR)
 context("season")
 test_that("season assigns season", {
     expect_equal(as.character(season(1)), "DJF")
-    expect_equal(as.character(season(1, hemisphere = "n")),
-                 "JJA")
     expect_equal(as.character(season(1, lang = "es")),
                  "DEF")
     expect_equal(as.character(season(c(1, 3))),

@@ -28,10 +28,6 @@ The default values are for Spanish.
 
 LonLabel(0:360)
 
-# If you want it to speak in English.
-LonLabel <- function(...) metR::LonLabel(..., west = "\\u00B0W")
-
-
 }
 \seealso{
 Other ggplot2 helpers: \code{\link{DivideTimeseries}},

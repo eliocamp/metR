@@ -11,7 +11,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Tools for Easier Analysis of Meteorological Fields">
 <meta property="og:description" content="Many useful functions and extensions for dealing
-    with meteorological data in the tidy data framework. Extends ggplot2
+    with meteorological data in the tidy data framework. Extends 'ggplot2'
     for better plotting of scalar and vector fields and provides commonly
     used analysis methods in the atmospheric sciences.">
 <meta name="twitter:card" content="summary">
@@ -93,9 +93,9 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#metr" class="anchor"></a>metR</h1></div>
 
-<p>meteR packages several functions and utilities that make R better for handling meteorological data in the tidy data paradigm. It’s not intended to be the be-all and end-all and is (at least for now) mostly a packaging of assorted wrapers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since it’s grown organically and for my own needs, do not expect a heavy emphasis on consistency across functions and do expect functions written with specific use cases in mind.</p>
+<p>meteR packages several functions and utilities that make R better for handling meteorological data in the tidy data paradigm. It started mostly sa a packaging of assorted wrapers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since then, it has grown organically and for my own needs and feedback from users.</p>
 <p>Conceptually it’s divided into <em>visualization tools</em> and <em>data tools</em>. The former are geoms, stats and scales that help with plotting using <a href="http://ggplot2.tidyverse.org/index.html">ggplot2</a>, such as <code><a href="reference/geom_contour_fill.html">stat_contour_fill()</a></code> or <code><a href="reference/scale_longitude.html">scale_y_level()</a></code>, while the later are functions for common data processing tools in the atmospheric sciences, such as <code><a href="reference/Derivate.html">Derivate()</a></code> or <code><a href="reference/EOF.html">EOF()</a></code>; these are implemented to work in the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> paradigm, but also work with regular data frames.</p>
-<p>Currently metR is in developement and should only be used carefully (or better still, not at all). Functions do not generaly check arguments and do not print error messages. There are also few if any tests, so coverage is roughly 0%.</p>
+<p>Currently metR is in developement but maturing. Most functions check arguments and there are some tests. However, some functions might change it’s interface, and functionality can be moved to other packages, so please bear that in mind.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -136,19 +136,12 @@
 <a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt; ggperiodic::wrap instead</span></a></code></pre></div>
 <p><img src="reference/figures/field-1.png" width="700"></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># AAO signal</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">g &lt;-<span class="st"> </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(aao<span class="op">$</span>right, <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(date, gh.t.w)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(aao<span class="op">$</span>right, <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(date, gh.t.w)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="dt">span =</span> <span class="fl">0.4</span>)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw"><a href="reference/DivideTimeseries.html">DivideTimeseries</a></span>(g, aao<span class="op">$</span>right<span class="op">$</span>date, <span class="dt">xlab =</span> <span class="st">"Date"</span>, <span class="dt">ylab =</span> <span class="st">"AAO signal"</span>)</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; Warning in DivideTimeseries(g, aao$right$date, xlab = "Date", ylab = "AAO</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; signal"): 'DivideTimeseries' is deprecated, use ggwrap instead (https://</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; github.com/wilkox/ggwrap)</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></a></code></pre></div>
 <p><img src="reference/figures/timeseries-1.png" width="700"></p>
-<p>You can read more in the vignettes (comming soon).</p>
+<p>You can read more in the vignettes: <a href="https://eliocamp.github.io/metR/articles/Visualization-tools.html">Visualization tools</a> and <a href="https://eliocamp.github.io/metR/articles/Working-with-data.html">Working with data</a>.</p>
 </div>
 </div>
   </div>
@@ -180,7 +173,7 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/eliocamp/metR"><img src="https://travis-ci.org/eliocamp/metR.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Package Status"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Package Status"></a></li>
 <li><a href="https://codecov.io/github/eliocamp/metR/?branch=master"><img src="https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 <li><a href="https://cran.r-project.org/package=metR"><img src="http://www.r-pkg.org/badges/version/metR" alt="CRAN status"></a></li>
 </ul>

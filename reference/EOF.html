@@ -280,15 +280,11 @@ standard deviation of each singular value.</p>
     <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]]) +
     <span class='fu'><a href='geom_contour2.html'>geom_contour2</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>, <span class='kw'>linetype</span> <span class='kw'>=</span> <span class='fu'>factor</span>(-<span class='fu'>sign</span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/stat.html'>stat</a></span>(<span class='no'>level</span>))))) +
     <span class='fu'><a href='scale_divergent.html'>scale_fill_divergent</a></span>()</div><div class='img'><img src='EOF-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># 1st eof for each month.</span>
-<span class='no'>aao2</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)$<span class='no'>left</span>,
-                       <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/IDateTime'>month</a></span>(<span class='no'>date</span>)]
-
-<span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>aao2</span>, <span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(~ <span class='no'>month</span>)</div><div class='img'><img src='EOF-5.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
 <span class='co'># Alternative interface</span>
-<span class='no'>aao2</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>lon</span> + <span class='no'>lat</span> ~ <span class='no'>date</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='st'>"gh.t.w"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>)</div></pre>
+<span class='no'>aao2</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>lon</span> + <span class='no'>lat</span> ~ <span class='no'>date</span>, <span class='kw'>value.var</span> <span class='kw'>=</span> <span class='st'>"gh.t.w"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

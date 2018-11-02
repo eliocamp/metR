@@ -25,18 +25,6 @@ test_that("EOF changes probs", {
 })
 
 
-test_that("EOF works with dcast format", {
-    expect_identical({
-        D <- EOF(lat + lon ~ date, value.var = "gh", data = geopotential, n = 1)
-        attr(D, "call") <- NULL
-        D
-    }, {
-        D <- EOF(gh ~ lat + lon | date, data = geopotential, n = 1)
-        attr(D, "call") <- NULL
-        D})
-})
-
-
 test_that("EOF works inside data.table", {
     expect_identical(geopotential[, EOF(gh ~ lon + lat | date)$left],
                      EOF(gh ~ lon + lat | date, data = geopotential)$left)
@@ -54,8 +42,6 @@ test_that("EOF fails gracefully", {
     expect_error(EOF(gh ~ lon + lat | date, data = geopotential, fill = "a"))
     expect_error(EOF(gh ~ lon1 + lat2 | date, data = geopotential),
                  "Columns not found in data: lon1, lat2")
-    expect_error(EOF(lon1 + lat2 ~ date, value.var = "gh"),
-                 "data must not be NULL if value.var is not NULL")
     expect_error(EOF(gh ~ lon | date, data = geopotential),
                  "The formula  gh ~ lon | date  does not identify an unique observation for each cell.")
 })

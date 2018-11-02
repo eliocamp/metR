@@ -4,19 +4,17 @@
 \alias{EOF}
 \title{Empirical Orthogonal Function}
 \usage{
-EOF(formula, value.var = NULL, data = NULL, n = 1, B = 0,
-  probs = c(lower = 0.025, mid = 0.5, upper = 0.975), rotate = FALSE,
-  suffix = "PC", fill = NULL)
+EOF(formula, n = 1, data = NULL, B = 0, probs = c(lower = 0.025,
+  mid = 0.5, upper = 0.975), rotate = FALSE, suffix = "PC",
+  fill = NULL)
 }
 \arguments{
-\item{formula}{a formula passed to \code{\link[data.table]{dcast}} to build
-the matrix that will be used in the SVD decomposition (see Details)}
-
-\item{value.var}{optional name of the data column (see Details)}
-
-\item{data}{a data.frame}
+\item{formula}{a formula to build the matrix that will be used in the SVD
+decomposition (see Details)}
 
 \item{n}{which singular values to return (if \code{NULL}, returns all)}
+
+\item{data}{a data.frame}
 
 \item{B}{number of bootstrap samples used to estimate confidence intervals.
 Ignored if <= 1.}
@@ -30,6 +28,8 @@ confidence intervals. If named, it's names will be used as column names.}
 
 \item{fill}{value to infill implicit missing values or \code{NULL} if the
 data is dense.}
+
+\item{value.var}{optional name of the data column (see Details)}
 }
 \value{
 An \code{eof} object which is just a named list of \code{data.table}s
@@ -57,15 +57,13 @@ Singular values can be computed over matrices so \code{formula} denotes how
 to build a matrix from the data. It is a formula of the form VAR ~ LEFT | RIGHT
 (see \link[Formula:Formula]{Formula::Formula}) in which VAR is the variable whose values will
 populate the matrix, and LEFT represent the variables used to make the rows
-and RIGHT, the columns of the matrix.
-Think it like "VAR \emph{as a function} of LEFT \emph{and} RIGHT".
-
-Alternatively, if \code{value.var} is not \code{NULL}, it's possible to use the
-(probably) more familiar \link[data.table:dcast]{data.table::dcast} formula interface. In that case,
-\code{data} must be provided.
-
-The variable combination used in this formula \emph{must} identify
+and RIGHT, the columns of the matrix. Think it like "VAR \emph{as a function} of
+LEFT \emph{and} RIGHT". The variable combination used in this formula \emph{must} identify
 an unique value in a cell.
+
+So, for example, \code{v ~ x + y | t} would mean that ther is one value of \code{v} for
+each combination of \code{x}, \code{y} and \code{t}, and that there will be one row for
+each combination of \code{x} and \code{y} and one row for each \code{t}.
 
 In the result, the left and right vectors have dimensions of the LEFT and RIGHT
 part of the \code{formula}, respectively.
@@ -86,7 +84,7 @@ geopotential <- copy(geopotential)
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
       by = .(lon, lat, month(date))]
 
-eof <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1:5,
+eof <- EOF(gh.t.w ~ lat + lon | date, 1:5, data = geopotential,
            B = 100, probs = c(low = 0.1, hig = 0.9))
 
 # Inspect the explained variance of each component
@@ -120,10 +118,6 @@ ggplot(field[date == date[1]], aes(lon, lat)) +
     geom_contour2(aes(z = gh.t.w, linetype = factor(-sign(stat(level))))) +
     scale_fill_divergent()
 
-\dontrun{
-# Alternative interface
-aao2 <- EOF(lon + lat ~ date, value.var = "gh.t.w", data = geopotential)
-}
 
 }
 \references{

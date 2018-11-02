@@ -9,8 +9,8 @@ ImputeEOF(formula, value.var = NULL, data = NULL, max.eof = NULL,
   verbose = interactive())
 }
 \arguments{
-\item{formula}{a formula passed to \code{\link[data.table]{dcast}} to build
-the matrix that will be used in the SVD decomposition (see Details)}
+\item{formula}{a formula to build the matrix that will be used in the SVD
+decomposition (see Details)}
 
 \item{value.var}{optional name of the data column (see Details)}
 

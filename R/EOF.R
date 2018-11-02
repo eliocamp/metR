@@ -4,8 +4,8 @@
 #' Analysis or Empirical Orthogonal Functions).
 #'
 #' @param data a data.frame
-#' @param formula a formula passed to \code{\link[data.table]{dcast}} to build
-#' the matrix that will be used in the SVD decomposition (see Details)
+#' @param formula a formula to build the matrix that will be used in the SVD
+#' decomposition (see Details)
 #' @param value.var optional name of the data column (see Details)
 #' @param n which singular values to return (if \code{NULL}, returns all)
 #' @param B number of bootstrap samples used to estimate confidence intervals.
@@ -37,15 +37,13 @@
 #' to build a matrix from the data. It is a formula of the form VAR ~ LEFT | RIGHT
 #' (see [Formula::Formula]) in which VAR is the variable whose values will
 #' populate the matrix, and LEFT represent the variables used to make the rows
-#' and RIGHT, the columns of the matrix.
-#' Think it like "VAR *as a function* of LEFT *and* RIGHT".
-#'
-#' Alternatively, if `value.var` is not `NULL`, it's possible to use the
-#' (probably) more familiar [data.table::dcast] formula interface. In that case,
-#' `data` must be provided.
-#'
-#' The variable combination used in this formula *must* identify
+#' and RIGHT, the columns of the matrix. Think it like "VAR *as a function* of
+#' LEFT *and* RIGHT". The variable combination used in this formula *must* identify
 #' an unique value in a cell.
+#'
+#' So, for example, `v ~ x + y | t` would mean that ther is one value of `v` for
+#' each combination of `x`, `y` and `t`, and that there will be one row for
+#' each combination of `x` and `y` and one row for each `t`.
 #'
 #' In the result, the left and right vectors have dimensions of the LEFT and RIGHT
 #' part of the `formula`, respectively.
@@ -66,7 +64,7 @@
 #' geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
 #'       by = .(lon, lat, month(date))]
 #'
-#' eof <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1:5,
+#' eof <- EOF(gh.t.w ~ lat + lon | date, 1:5, data = geopotential,
 #'            B = 100, probs = c(low = 0.1, hig = 0.9))
 #'
 #' # Inspect the explained variance of each component
@@ -100,10 +98,6 @@
 #'     geom_contour2(aes(z = gh.t.w, linetype = factor(-sign(stat(level))))) +
 #'     scale_fill_divergent()
 #'
-#' \dontrun{
-#' # Alternative interface
-#' aao2 <- EOF(lon + lat ~ date, value.var = "gh.t.w", data = geopotential)
-#' }
 #'
 #' @references
 #' Fisher, A., Caffo, B., Schwartz, B., & Zipunnikov, V. (2016). Fast, Exact Bootstrap Principal Component Analysis for p > 1 million. Journal of the American Statistical Association, 111(514), 846–860. http://doi.org/10.1080/01621459.2015.1062383
@@ -113,14 +107,12 @@
 #' @import Formula
 #' @import formula.tools
 #' @importFrom stats as.formula quantile varimax
-EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
+EOF <- function(formula, n = 1, data = NULL, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
                 rotate = FALSE, suffix = "PC", fill = NULL) {
     checks <- makeAssertCollection()
 
     assertClass(formula, "formula", add = checks)
-    assertCharacter(value.var, len = 1, null.ok = TRUE, any.missing = FALSE,
-                    add = checks)
     assertDataFrame(data, null.ok = TRUE, add = checks)
     assertIntegerish(n, lower = 1, null.ok = TRUE, add = checks)
     assertCount(B, add = checks)
@@ -133,14 +125,6 @@ EOF <- function(formula, value.var = NULL, data = NULL, n = 1, B = 0,
     assertNumber(fill, finite = TRUE, null.ok = TRUE, add = checks)
 
     reportAssertions(checks)
-
-    if (!is.null(value.var)) {
-        if (is.null(data)) stop("data must not be NULL if value.var is not NULL")
-        data <- copy(data)
-        f <- as.character(formula)
-        f <- stringr::str_replace(f, "~", "\\|")
-        formula <- Formula::as.Formula(paste0(value.var, " ~ ", f))
-    }
 
     f <- as.character(formula)
     f <- stringr::str_split(f,"~", n = 2)[[1]]

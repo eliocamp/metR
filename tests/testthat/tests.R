@@ -56,10 +56,10 @@ test_that("Derivative checks boundary conditions", {
 })
 
 test_that("Derivative uses spherical coords", {
-    expect_equal(Derivate(gh ~ lon + lat, geopotential[date == date[1]],
+    expect_equal(Derivate(gh ~ lon + lat, data = geopotential[date == date[1]],
                           sphere = TRUE),
                  {
-                     g <- Derivate(gh ~ lon + lat, geopotential[date == date[1]])
+                     g <- Derivate(gh ~ lon + lat, data = geopotential[date == date[1]])
                      g[[1]] <- g[[1]]*180/pi/(6371000*cos(geopotential[date == date[1]]$lat*pi/180))
                      g[[2]] <- g[[2]]*180/pi/6371000
                      g

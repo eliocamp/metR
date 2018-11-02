@@ -1,5 +1,21 @@
 # metR 0.1.9000
 
+## Breaking changes
+
+There has been some changes in the interface of some functions for the sake of 
+consistency.
+
+- In `Derivate()` (and it's derivated functions --see what I did there?), the
+`data` argument has been moved back. This is because this function is intended to
+be called inside a `data.table` of `mutate()` call, where you don't need to 
+explicitly specify the data.
+
+- In `EOF()` the dcast-type formula interface has been removed. The `data` argument
+was also moved back so you can use the `n` argument more easily without naming it. 
+
+
+## Other changes
+
 - Arrows in `geom_arrow()` and `geom_vector()` scale with vector magnitude. 
 - New geom `geom_streamline()` for visualizing vector fields.
 - Utilities `dlon()`, `dlat()`, `dx()`, `dy()` for converting physical units into 

@@ -1,3 +1,9 @@
+## Resubmission
+
+This is a resubmission. In this version I have encoded the URL in `WaveFlux()`'s
+documentation.
+
+
 ## Test environments
 * local elementary OS 0.4.1 (based on ubuntu 16.04) install, R 3.5.1
 * ubuntu 14.04.5 (on travis-ci), R 3.5.1

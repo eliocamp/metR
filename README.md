@@ -12,7 +12,7 @@ status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg)](http
 [![CRAN
 status](http://www.r-pkg.org/badges/version/metR)](https://cran.r-project.org/package=metR)
 
-meteR packages several functions and utilities that make R better for
+metR packages several functions and utilities that make R better for
 handling meteorological data in the tidy data paradigm. It started
 mostly sa a packaging of assorted wrapers and tricks that I wrote for my
 day to day work as a researcher in atmospheric sciences. Since then, it
@@ -78,6 +78,8 @@ ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
                          breaks = MakeBreaks(binwidth),
                          guide = guide_colorstrip()) +
     coord_polar()
+#> Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be
+#> deprecated. Use ggperiodic::periodic insead.
 ```
 
 ![](man/figures/field-1.png)<!-- -->

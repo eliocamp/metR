@@ -125,14 +125,14 @@
 <a class="sourceLine" id="cb2-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(air, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(lon, lat)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">geom_contour</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">z =</span> air, <span class="dt">color =</span> ..level..))</a></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 <p>Since the most consuming part of reading the file is melting a multidimensional array into a tidy <code>data.table</code>, if we wanted to add another variable to the same <code>data.table</code> we could save time by only returning a vector. <strong>It is of the upmost importance that both variables are on the same exact grid</strong>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">air[, air2 <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span>(file, <span class="dt">out =</span> <span class="st">"vector"</span>,</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">                         <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">lat =</span> <span class="dv">90</span><span class="op">:</span><span class="dv">0</span>, <span class="dt">level =</span> <span class="dv">300</span>))]</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(air, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(lon, lat)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">geom_contour</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">z =</span> air2, <span class="dt">color =</span> ..level..))</a></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
 <p>Because <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> can read multiple variables at the same time, the <code>out = "vector"</code> output will be actually return a <code>list</code> of vectors (which integrates seamlessly with the <code>data.table</code> syntax). If one of the variables has degenerate dimensions (dimensions of length 1) then it will be recycled. That means that if the same file has Sea Surface Temperatures (a 2D field) and Air Temperature (a 3D field), then the returned <code>data.table</code> fill have an observation of Air Temperature <em>and</em> Sea Surface Temperature for each vertical level.</p>
 <p>The netCDF format is very flexible and this function has not been tested on every possible file so things may break in strange cases. If you have a file that cannot be read with this function, please <a href="https://github.com/eliocamp/metR/issues">submit an issue</a>.</p>
 </div>
@@ -162,12 +162,12 @@
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(air, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(lon, lat)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">fill =</span> land)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span>()</a></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 <p>With this, we can compare mean temperature over land and over sea by latitude.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(air[, .(<span class="dt">air =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(air) <span class="op">-</span><span class="st"> </span><span class="fl">273.15</span>), <span class="dt">by =</span> .(lat, land)],</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(lat, air)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">color =</span> land))</a></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 <p>The resolution of <code><a href="../reference/MaskLand.html">MaskLand()</a></code> is, in principle, only limited by the polygons used as mask. Currently it can only use maps from the <code>maps</code> package (see <code><a href="https://www.rdocumentation.org/packages/maps/topics/map">?maps::map</a></code>).</p>
 </div>
 <div id="getsmndata" class="section level2">
@@ -222,17 +222,12 @@
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>PC) </a></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="../reference/DivideTimeseries.html">DivideTimeseries</a></span>(</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">    <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(eof<span class="op">$</span>left, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(date, gh.t.w)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">color =</span> PC)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span>(<span class="dt">expand =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">0</span>)), </a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">    eof<span class="op">$</span>left<span class="op">$</span>date, <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">xlab =</span> <span class="st">"date"</span>, <span class="dt">ylab =</span> <span class="st">"gh.t.w"</span>)</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; Warning in DivideTimeseries(ggplot(eof$left, aes(date, gh.t.w)) +</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; geom_line(aes(color = PC)) + : 'DivideTimeseries' is deprecated, use ggwrap</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; instead (https://github.com/wilkox/ggwrap)</span></a></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(eof<span class="op">$</span>left, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(date, gh.t.w)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">color =</span> PC)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span>(<span class="dt">expand =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">0</span>))</a></code></pre></div>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-9-2.png" width="672"></p>
 <p>Where the 1st Principal Component is clearly the <a href="http://www.cpc.ncep.noaa.gov/products/precip/CWlink/daily_ao_index/aao/aao.shtml">Antarctic Oscillation</a> and the 2nd Principal Component looks like the Pacific–South American Pattern.</p>
 </div>
 <div id="imputeeof" class="section level2">
@@ -294,7 +289,7 @@
 <a class="sourceLine" id="cb14-10" data-line-number="10">                <span class="dt">scale =</span> <span class="fl">3e4</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb14-11" data-line-number="11"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span>()</a>
 <a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; Warning: Ignoring unknown parameters: scale</span></a></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 <p>There are several wrapers around <code><a href="../reference/Derivate.html">Derivate()</a></code> to perform other common related operations, <code><a href="../reference/Derivate.html">Laplacian()</a></code>, <code><a href="../reference/Derivate.html">Divergence()</a></code> and <code><a href="../reference/Derivate.html">Vorticity()</a></code>.</p>
 </div>
 <div id="geostrophicwind" class="section level2">
@@ -309,7 +304,7 @@
 <a class="sourceLine" id="cb15-6" data-line-number="6">                <span class="dt">skip.y =</span> <span class="dv">1</span>, <span class="dt">skip.x =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="fl">5e4</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb15-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span>()</a>
 <a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; Warning: Ignoring unknown parameters: scale</span></a></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 </div>
 <div id="thermodynamics" class="section level2">
 <h2 class="hasAnchor">

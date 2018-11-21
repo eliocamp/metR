@@ -14,6 +14,7 @@ vignette: >
 knitr::opts_chunk$set(
 collapse = TRUE,
 message = FALSE,
+fig.width = 7,
 comment = "#>")
 ```
 
@@ -27,7 +28,7 @@ There are also `scale_color_divergent()` and `scale_fill_divergent()` which are 
 
 To see how this scales work, let's visualize the vertical distribution of temperature anomalies from the zonal mean. 
 
-```{r, message = FALSE, fig.width = 7}
+```{r, message = FALSE}
 library(metR)
 library(ggplot2)
 library(data.table)
@@ -45,7 +46,7 @@ On the other hand, `scale_*_latitude()` (and `scale_*_longitude()`) not only def
 
 These scales default to printing no label, since usually the dimensions are understood by the shape of the plot.
 
-```{r, fig.width = 7}
+```{r}
 g + 
     scale_y_level() +
     scale_x_latitude(ticks = 15, limits = c(-90, 90)) +
@@ -98,7 +99,7 @@ It's probably good practice to mask missing values with `geom_raster()`. See `st
 
 We can apply this to a more realistic dataset 
 
-```{r,  fig.width = 7}
+```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     scale_fill_divergent() +
@@ -188,7 +189,7 @@ Both geoms are essentially the same, except that `geom_arrow()` defaults to pres
 
 So, as an example, we can plot the temperature gradient like this:
 
-```{r, fig.width = 7}
+```{r}
 temperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat,
                                             cyclical = c(TRUE, FALSE)), 
             by = lev]

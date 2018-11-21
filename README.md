@@ -34,7 +34,13 @@ please bear that in mind.
 
 ## Installation
 
-You can install metR from github with:
+You can instlal metR from CRAN with:
+
+``` r
+install.packages("metR")
+```
+
+Or the developement version with:
 
 ``` r
 # install.packages("devtools")

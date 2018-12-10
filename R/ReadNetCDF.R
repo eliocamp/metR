@@ -77,7 +77,7 @@ ReadNetCDF <- function(file, vars = NULL,
     assertCharacter(vars, null.ok = TRUE, any.missing = FALSE, unique = TRUE,
                     add = checks)
     assertChoice(out, c("data.frame", "vector", "array", "vars"), add = checks)
-    assertList(subset, types = "vector", null.ok = TRUE, add = checks)
+    assertList(subset, types = c("vector", "POSIXct", "POSIXt"), null.ok = TRUE, add = checks)
     assertNamed(subset, c("unique"), add = checks)
     assertFlag(key, add = checks)
 

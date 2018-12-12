@@ -1,3 +1,9 @@
+# metR 0.2.9000 
+
+
+- `Anomaly()` has a new `baseline` argument. 
+
+
 # metR 0.2.0
 
 ## Breaking changes

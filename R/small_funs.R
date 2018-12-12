@@ -3,6 +3,8 @@
 #' Saves keystrokes for computing anomalies.
 #'
 #' @param x numeric vector
+#' @param baseline logical or numerical vector used for subseting x before
+#' computing the mean
 #' @param ... other arguments passed to \code{\link{mean}} such as `na.rm`
 #'
 #' @return
@@ -16,10 +18,9 @@
 #'
 #' @family utilities
 #' @export
-Anomaly <- function(x, ...) {
-    x - mean(x, ...)
+Anomaly <- function(x, baseline = seq_along(x), ...) {
+    x - mean(x[baseline], ...)
 }
-
 
 #' Percentiles
 #'

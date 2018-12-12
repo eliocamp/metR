@@ -1,7 +1,7 @@
 Type: Package
 Package: metR
 Title: Tools for Easier Analysis of Meteorological Fields
-Version: 0.2.0
+Version: 0.2.9000
 Date: 2018-11-02
 Authors@R: 
     person(given = "Elio",

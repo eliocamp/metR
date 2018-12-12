@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.9000</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>Anomaly</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>Anomaly</span>(<span class='no'>x</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq_along</a></span>(<span class='no'>x</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,6 +138,11 @@
     <tr>
       <th>x</th>
       <td><p>numeric vector</p></td>
+    </tr>
+    <tr>
+      <th>baseline</th>
+      <td><p>logical or numerical vector used for subseting x before
+computing the mean</p></td>
     </tr>
     <tr>
       <th>...</th>

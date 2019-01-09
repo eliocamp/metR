@@ -159,7 +159,7 @@ ReadNetCDF <- function(file, vars = NULL,
 
             if (.is.somedate(sub[1]) | s == "time") {
                 start[[s]] <- which(lubridate::as_datetime(d) %~% min(lubridate::as_datetime(sub)))
-                count[[s]] <- abs(which(lubridate::as_datetime(d) %~% max(lubridate::as_datetime(sub))) - start[[s]])
+                count[[s]] <- abs(which(lubridate::as_datetime(d) %~% max(lubridate::as_datetime(sub))) - start[[s]] + 1)
             } else {
                 start1 <- which(d %~% sub[1])
                 end <- which(d %~% sub[length(sub)])

@@ -9,6 +9,8 @@
 
 - `ReadNetCDF()` now accepts dates as elements for `subset`.
 
+- `ReadNetCDF()` will read all dates correctly (@m-saenger). 
+
 
 # metR 0.2.0
 

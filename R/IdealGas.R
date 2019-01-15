@@ -126,14 +126,14 @@ VirtualTemperature <- function(p, t, e, tv, epsilon = 0.622) {
 
 #' @rdname thermodynamics
 #' @export
-MixingRatio <- function(p, es, w, epsilon = 0.622) {
-    if (hasArg(p) & !hasArg(w) & hasArg(es)) {
-        return(epsilon*(es/(p - es)))
-    } else if (!hasArg(p) & hasArg(w) & hasArg(es)) {
-        return(es/(w*epsilon) + es)
-    } else if (hasArg(p) & hasArg(w) & !hasArg(es)) {
+MixingRatio <- function(p, e, w, epsilon = 0.622) {
+    if (hasArg(p) & !hasArg(w) & hasArg(e)) {
+        return(epsilon*(e/(p - e)))
+    } else if (!hasArg(p) & hasArg(w) & hasArg(e)) {
+        return(e/(w*epsilon) + e)
+    } else if (hasArg(p) & hasArg(w) & !hasArg(e)) {
         return(p*w*epsilon/(1 + w*epsilon))
-    } else if (hasArg(p) & hasArg(w) & hasArg(es)) {
+    } else if (hasArg(p) & hasArg(w) & hasArg(e)) {
         stop("Too many state variables.")
     } else {
         stop("Too few stat variables.")

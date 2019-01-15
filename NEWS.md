@@ -11,6 +11,11 @@
 
 - `ReadNetCDF()` will read all dates correctly (@m-saenger). 
 
+## Breaking changes
+
+- The `es` argument from `MixingRatio()` changes to `e`, to be consistent with
+the rest of the variables. Sorry, thermodynamics is not my forte! (thanks @PaoCorrales)
+
 
 # metR 0.2.0
 

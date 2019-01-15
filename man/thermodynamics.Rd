@@ -16,7 +16,7 @@ Adiabat(p, t, theta, p0 = 1e+05, kappa = 2/7)
 
 VirtualTemperature(p, t, e, tv, epsilon = 0.622)
 
-MixingRatio(p, es, w, epsilon = 0.622)
+MixingRatio(p, e, w, epsilon = 0.622)
 
 ClausiusClapeyron(t, es)
 
@@ -43,9 +43,9 @@ DewPoint(p, ws, td, epsilon = 0.622)
 
 \item{epsilon}{ratio of dry air constant and vapour constant}
 
-\item{es}{saturation vapour partial pressure}
-
 \item{w}{mixing ratio}
+
+\item{es}{saturation vapour partial pressure}
 
 \item{ws}{saturation mixing ratio}
 

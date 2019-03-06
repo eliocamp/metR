@@ -9,14 +9,14 @@
 
 - `ReadNetCDF()` now accepts dates as elements for `subset`.
 
-- `ReadNetCDF()` will read all dates correctly (@m-saenger). 
+- `ReadNetCDF()` will read all dates correctly (#91; thanks to @m-saenger). 
 
 ## Breaking changes
 
 - The `es` argument from `MixingRatio()` changes to `e`, to be consistent with
 the rest of the variables. Sorry, thermodynamics is not my forte! (thanks @PaoCorrales)
 
-- Arrow heads in `geom_arrow()` are now scaled correctly in faceted plots (@m-saenger)
+- Arrow heads in `geom_arrow()` are now scaled correctly in faceted plots (fixes, #92; thanks to @m-saenger)
 
 # metR 0.2.0
 

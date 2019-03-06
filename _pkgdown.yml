@@ -47,6 +47,7 @@ reference:
       - ImputeEOF
       - Impute2D
       - Interpolate
+      - Trajectory
       - waves
       - FitLm
 #      - ReadCtl

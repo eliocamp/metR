@@ -1,5 +1,30 @@
+#' Compute trajectories
+#'
+#' Computes trajectories of particles in a time-varying velocity field.
+#'
+#' @param formula a formula indicating dependent and independent variables
+#' in the form of dx + dy ~ x + y + t.
+#' @param x0,y0 starting coordinates of the particles.
+#' @param cyclical logical vector of boundary condition for x and y.
+#' @param data optional data.frame containing the variables.
+#' @param res resolution parameter (higher numbers increases the resolution)
+#'
+#'
+#' @export
+Trajectory <- function(formula, x0, y0,
+                       cyclical = FALSE,
+                       data = NULL, res = 2) {
 
-Trajectory <- function(formula, x0, y0, data = NULL, res = 0.5) {
+    checks <- makeAssertCollection()
+
+    assertClass(formula, "formula", add = checks)
+    assertSameLength(list(x0 = length(x0), y0 = length(y0)), add = checks)
+    assertLogical(cyclical, add = checks)
+    assertDataFrame(data, null.ok = TRUE, add = checks)
+    assertNumeric(res, len = 1, add = checks)
+
+    reportAssertions(checks)
+
     dep.names <- formula.tools::lhs.vars(formula)
     if (length(dep.names) == 0) stop("LHS of formula must have at least one variable")
 
@@ -23,25 +48,45 @@ Trajectory <- function(formula, x0, y0, data = NULL, res = 0.5) {
 
     field <- field[!is.na(dx) & !is.na(dy)]
 
+    range.x <- range(field$x)
+    range.y <- range(field$y)
+
     times <- unique(field$t1)
-    dt <- diff(times)[1]*res
+    dt <- diff(times)[1]/res
     ts <- seq(min(times), max(times), by = dt)
 
-    points_out <- data.table(x = x0, y = y0, id = seq_along(x0),
-                             t1 = ts[1])
-    points_out[, c("dx", "dy") := force.fun3d(x, y, t1, times, field)]
-    points <- copy(points_out)
+    points_out <- list(data.table(x = x0, y = y0, id = seq_along(x0),
+                                  piece = 1,
+                                  t1 = ts[1]))
+    points_out[[1]][, c("dx", "dy") := force.fun3d(x, y, t1, times, field)]
+    points <- copy(points_out[[1]])
+
+    if (length(cyclical) == 1) {
+        cyclical <- rep(cyclical, 2)
+    }
+    circ.x <-  cyclical[1]
+    circ.y <-  cyclical[2]
 
     for (ti in seq_along(ts)[-1]) {
-        points[, t1 := ts[ti]]
-        points[, c("x", "y") := .(x + dx*dt, y + dy*dt)]
+        points[, c("x", "y", "t1") := .(x + dx*dt, y + dy*dt, ts[ti])]
+        points[, c("x", "piece") := .fold(x, piece, range.x, circ.x)]
+        points[, c("y", "piece") := .fold(y, piece, range.y, circ.y)]
         points[, c("dx", "dy") := force.fun3d(x, y, ts, times, field)]
         points <- points[!is.na(dx) & !is.na(dy)]
-        points_out <- rbindlist(list(points_out, points))
+        points_out[[ti]] <- points
         points <- points[dx + dy != 0]
         if(nrow(points) == 0) break
     }
 
+    points_out <- do.call(rbind, points_out)
+
+    if (.is.somedate(field$t)) {
+        points_out[, t1 := start <- lubridate::ymd_hms("1970-01-01 00:00:00") +
+                       seconds(t1[1]),
+                   by = t1]
+    }
+
+    setnames(points_out, c("x", "y", "t1", "dx", "dy"), c(ind.names, dep.names))
 
     return(points_out)
 }
@@ -94,5 +139,6 @@ force.fun <- function(x, y, field) {
 }
 
 to_seconds <- function(date) {
-    lubridate::time_length(lubridate::interval(lubridate::ymd("1970-01-01"), date), "second")
+    start <- lubridate::ymd_hms("1970-01-01 00:00:00")
+    lubridate::time_length(lubridate::interval(start, date), "second")
 }

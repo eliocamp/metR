@@ -4,6 +4,9 @@
 
 - `Anomaly()` has a new `baseline` argument. 
 
+- New function `Trajectory()` that computes trajectories in time-varying 
+velocity fields. 
+
 ##  Bugfixes 
 
 - `ReadNetCDF()` now accepts dates as elements for `subset`.

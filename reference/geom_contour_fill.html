@@ -208,7 +208,12 @@ to the paired geom/stat.</p></td>
     </tr>
     <tr>
       <th>na.fill</th>
-      <td><p>How to fill missing values.</p></td>
+      <td><p>How to fill missing values.</p><ul>
+<li><p><code>FALSE</code> for leting the computation fail with no interpolation</p></li>
+<li><p><code>TRUE</code> for imputing missing values with <a href='Impute2D.html'>Impute2D</a></p></li>
+<li><p>A numeric value for constant imputation</p></li>
+<li><p>A function that takes a vector and returns a numeric (e.g. <code>mean</code>)</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>show.legend</th>

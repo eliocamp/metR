@@ -212,8 +212,8 @@ GeomArrow <- ggplot2::ggproto("GeomArrow", ggplot2::Geom,
           pivot <- 0
           warning("pivot less than 0, setting it to 0", call. = FALSE)
       }
+      mag <- data$norm_mag
 
-      mag <- with(data, mag/max(mag, na.rm = TRUE))
       arrow$length <- unit(as.numeric(arrow$length)*mag, attr(arrow$length, "unit"))
 
       if (preserve.dir == FALSE) {
@@ -282,9 +282,37 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
                              preserve.dir = TRUE, ...) {
         data
     },
+    setup_data = function(data, params) {
+
+
+        params$direction <- switch(params$direction[1],
+                            ccw = -1,
+                            cw = 1,
+                            stop("direction must be either ccw or cw", call. = FALSE)
+        )
+        if (is.null(data$mag) | is.null(data$angle)) {
+            if (is.null(data$dx) | is.null(data$dy)) {
+                stop("stat_arrow needs wither mag and angle or dx and dy", call. = FALSE)
+            }
+            data$mag <- with(data, Mag(dx, dy))
+            data$angle <- with(data, atan2(dy, dx)*180/pi)
+        } else {
+            # Turn into mathematical angle
+            data$angle <-  params$start - data$angle*params$direction
+            data$dx <- with(data, mag*cos(angle*pi/180))
+            data$dy <- with(data, mag*sin(angle*pi/180))
+        }
+
+        data <- subset(data, x %in% JumpBy(sort(unique(x)), params$skip.x + 1) &
+                           y %in% JumpBy(sort(unique(y)), params$skip.y + 1) &
+                           mag >= params$min.mag)
+
+        data$norm_mag <- with(data, mag/max(mag, na.rm = TRUE))
+        data
+    },
     compute_panel = function(self, data, scales,
-                             skip.x = skip.x, skip.y = skip.y,
-                             min.mag = min.mag, start = 0, direction = -1,
+                             skip.x = 0, skip.y = 0,
+                             min.mag = 0, start = 0, direction = -1,
                              preserve.dir = TRUE, ...) {
         if (plyr::empty(data)) return(data.frame())
 
@@ -304,6 +332,7 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
         }, stats, groups, SIMPLIFY = FALSE)
 
         data <- do.call(plyr::rbind.fill, stats)
+
         min.mag <- data$min.mag %||% min.mag
 
         # Warnings for good usage
@@ -317,29 +346,6 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
             }
         }
 
-        direction <- switch(direction[1],
-            ccw = -1,
-            cw = 1,
-            stop("direction must be either ccw or cw", call. = FALSE)
-        )
-        if (is.null(data$mag) | is.null(data$angle)) {
-            if (is.null(data$dx) | is.null(data$dy)) {
-                stop("stat_arrow needs wither mag and angle or dx and dy", call. = FALSE)
-            }
-            data$mag <- with(data, Mag(dx, dy))
-            data$angle <- with(data, atan2(dy, dx)*180/pi)
-        } else {
-            # Turn into mathematical angle
-            data$angle <-  start - data$angle*direction
-            data$dx <- with(data, mag*cos(angle*pi/180))
-            data$dy <- with(data, mag*sin(angle*pi/180))
-        }
-
-        data <- subset(data, x %in% JumpBy(sort(unique(x)), skip.x + 1) &
-                             y %in% JumpBy(sort(unique(y)), skip.y + 1) &
-                             mag >= min.mag)
-
         data
-
     }
 )

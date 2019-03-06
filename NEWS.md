@@ -16,6 +16,7 @@
 - The `es` argument from `MixingRatio()` changes to `e`, to be consistent with
 the rest of the variables. Sorry, thermodynamics is not my forte! (thanks @PaoCorrales)
 
+- Arrow heads in `geom_arrow()` are now scaled correctly in faceted plots (@m-saenger)
 
 # metR 0.2.0
 

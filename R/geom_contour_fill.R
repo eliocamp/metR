@@ -15,11 +15,10 @@
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
 #' @param na.fill How to fill missing values.
-# #' @param fill.linear
-# #'    - `FALSE` for leting the computation fail with no interpolation
-# #'    - `TRUE` for imputing missing values with [approx]
-# #'    - A numeric value for constant imputation
-# #'    - A function that takes a vector and returns a numeric (e.g. `mean`)
+#'    - `FALSE` for leting the computation fail with no interpolation
+#'    - `TRUE` for imputing missing values with [Impute2D]
+#'    - A numeric value for constant imputation
+#'    - A function that takes a vector and returns a numeric (e.g. `mean`)
 # #' @param xwrap,ywrap vector of length two used to wrap the circular dimension.
 #'
 #' @section Aesthetics:

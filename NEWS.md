@@ -1,6 +1,5 @@
 # metR 0.2.9000 
 
-
 ## New features
 
 - `Anomaly()` has a new `baseline` argument. 

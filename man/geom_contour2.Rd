@@ -70,7 +70,13 @@ and returns breaks as output
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
 
-\item{na.fill}{How to fill missing values.}
+\item{na.fill}{How to fill missing values.
+\itemize{
+\item \code{FALSE} for leting the computation fail with no interpolation
+\item \code{TRUE} for imputing missing values with \link{Impute2D}
+\item A numeric value for constant imputation
+\item A function that takes a vector and returns a numeric (e.g. \code{mean})
+}}
 
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.

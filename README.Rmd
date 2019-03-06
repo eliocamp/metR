@@ -29,7 +29,7 @@ Currently metR is in developement but maturing. Most functions check arguments a
 
 ## Installation
 
-You can instlal metR from CRAN with:
+You can install metR from CRAN with:
 
 ```{r CRAN-installation, eval = FALSE}
 install.packages("metR")

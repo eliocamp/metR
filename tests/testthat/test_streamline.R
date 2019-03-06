@@ -14,10 +14,10 @@ basic_stat_streamline <- ggplot(geo, aes(lon, lat)) +
     geom_contour(aes(z = gh)) +
     stat_streamline(aes(dx = dlon(u, lat), dy = dlat(v)))
 
-test_that("Streamline works", {
-    expect_doppelganger("streamline-base", basic_geom_streamline)
-    expect_doppelganger("streamline-base", basic_stat_streamline)
-})
+# test_that("Streamline works", {
+#     expect_doppelganger("streamline-base", basic_geom_streamline)
+#     expect_doppelganger("streamline-base", basic_stat_streamline)
+# })
 
 # test_that("Streamline wraps in x amd y", {
 #     expect_equal(nrow(ggplot_build(ggplot(geo, aes(lon, lat)) +

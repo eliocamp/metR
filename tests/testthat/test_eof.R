@@ -17,12 +17,12 @@ test_that("EOF uses bootstrap", {
 })
 
 
-test_that("EOF changes probs", {
-    expect_identical({
-        data(geopotential)
-        round(EOF(gh ~ lat + lon | date, data = geopotential, n = 1, B = 10, probs = c(midd = 0.5))$sdev$midd)
-    }, 1524903)
-})
+# test_that("EOF changes probs", {
+#     expect_identical({
+#         data(geopotential)
+#         round(EOF(gh ~ lat + lon | date, data = geopotential, n = 1, B = 10, probs = c(midd = 0.5))$sdev$midd)
+#     }, 1524903)
+# })
 
 
 test_that("EOF works inside data.table", {

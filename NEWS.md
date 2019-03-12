@@ -1,4 +1,4 @@
-# metR 0.2.9000 
+# metR 0.3.0
 
 ## New features
 

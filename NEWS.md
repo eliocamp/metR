@@ -1,4 +1,4 @@
-# metR 0.3.0
+# metR 0.3.0 - Cumulonimbus
 
 ## New features
 

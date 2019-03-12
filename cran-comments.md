@@ -5,4 +5,8 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 2 notes
+
+
+* Author field differs from that derived from Authors@R
+* One example took more than 10 seconds in oldrelease. 

@@ -16,8 +16,6 @@ Description: Many useful functions and extensions for dealing
 License: GPL-3
 URL: https://github.com/eliocamp/metR
 BugReports: https://github.com/eliocamp/metR/issues
-Depends:
-    R (>= 2.10)
 Imports:
     checkmate,
     curl,
@@ -27,7 +25,7 @@ Imports:
     fields,
     Formula,
     formula.tools,
-    ggplot2,
+    ggplot2 (>= 3.0.0),
     grid,
     gridExtra,
     gtable,

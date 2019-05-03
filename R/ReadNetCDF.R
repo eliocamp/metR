@@ -211,7 +211,7 @@ ReadNetCDF <- function(file, vars = NULL,
     }
 
 
-    return(nc.df)
+    return(nc.df[])
 }
 
 

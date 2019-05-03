@@ -90,7 +90,7 @@ ReadNetCDF <- function(file, vars = NULL,
     on.exit({
         options(OutDec = dec)
         ncdf4::nc_close(ncfile)
-        })
+    })
 
     if (is.null(vars)) {
         vars <- names(ncfile$var)
@@ -125,7 +125,7 @@ ReadNetCDF <- function(file, vars = NULL,
     }
 
     if (out[1] == "vars") {
-        r <- list(vars = unname(vars), dimensions = dimensions)
+        r <- list(vars = unname(vars), dimensions = dimensions, dims = dims)
         # options(OutDec = dec)
         return(r)
     }
@@ -135,7 +135,7 @@ ReadNetCDF <- function(file, vars = NULL,
     subset.extra <- names(subset)[!(names(subset) %in% names(dimensions))]
     if (length(subset.extra) != 0) {
         stop(paste0("Subsetting dimensions not found: ",
-                       paste0(subset.extra, collapse = ", "), "."))
+                    paste0(subset.extra, collapse = ", "), "."))
     }
 
     # Leo las variables y las meto en una lista.
@@ -215,3 +215,72 @@ ReadNetCDF <- function(file, vars = NULL,
 }
 
 
+
+GlimpseNetCDF <- function(file) {
+
+    ncfile <- ncdf4::nc_open(file)
+
+    on.exit({
+        ncdf4::nc_close(ncfile)
+    })
+
+
+    vars <- ncfile$var
+
+
+    # Vars must be a (fully) named vector.
+    varnames <- names(vars)
+    if (is.null(varnames)) {
+        names(vars) <- vars
+    } else {
+        no.names <- nchar(varnames) == 0
+        names(vars)[no.names] <- vars[no.names]
+    }
+
+    # Leo las dimensiones.
+    dims <- names(ncfile$dim)
+    # dims <- dims[dims != "nbnds"]
+    ids <- vector()
+    dimensions <- list()
+    for (i in seq_along(dims)) {
+        dimensions[[dims[i]]] <- ncfile$dim[[dims[i]]]$vals
+        ids[i] <- ncfile$dim[[i]]$id
+    }
+    names(dims) <- ids
+
+    if ("time" %in% names(dimensions)) {
+        time <- udunits2::ud.convert(dimensions[["time"]],
+                                     ncfile$dim$time$units,
+                                     "seconds since 1970-01-01 00:00:00")
+        dimensions[["time"]] <- as.character(as.POSIXct(time, tz = "UTC",
+                                                        origin = "1970-01-01 00:00:00"))
+    }
+
+
+    for (v in seq_along(vars)) {
+        var <- vars[[v]]
+        cat("   ", var$name, ":", sep = "")
+        cat(var$longname)
+
+
+    }
+
+
+    if (out[1] == "vars") {
+        r <- list(vars = unname(vars), dimensions = dimensions, dims = dims)
+        # options(OutDec = dec)
+        return(r)
+    }
+
+
+}
+
+print_var <- function(var) {
+    cat(var$longname, " in ", var$units, ' ("', var$name, '")\n', sep = "")
+
+
+
+    cat(var$dims)
+
+
+}

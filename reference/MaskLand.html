@@ -172,8 +172,8 @@ map (the default), this means that the point is over land.</p>
           <span class='fu'>.</span>(<span class='kw'>tempdif</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>air</span>[<span class='no'>land</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>]) - <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>air</span>[<span class='no'>land</span> <span class='kw'>==</span> <span class='fl'>FALSE</span>])),
            <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lev</span>)]
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>diftemp</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lat</span>, <span class='no'>lev</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>tempdif</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
+<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>diftemp</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lat</span>, <span class='no'>lev</span>)) +
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/geom_contour'>geom_contour</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>tempdif</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='scale_longitude.html'>scale_y_level</a></span>() +
     <span class='fu'><a href='scale_longitude.html'>scale_x_latitude</a></span>() +
     <span class='fu'><a href='scale_divergent.html'>scale_color_divergent</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 136 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='MaskLand-1.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -182,10 +182,10 @@ map (the default), this means that the point is over land.</p>
     , <span class='fu'>.</span>(<span class='kw'>air</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/weighted.mean'>weighted.mean</a></span>(<span class='no'>air</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Trig'>cos</a></span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>))), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>usa</span>, <span class='no'>lev</span>)][
         <span class='no'>usa</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>]
 
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>usatemp</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lev</span>, <span class='no'>air</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>() +
+<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>usatemp</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>lev</span>, <span class='no'>air</span>)) +
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>() +
     <span class='fu'><a href='scale_longitude.html'>scale_x_level</a></span>() +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span>()</div><div class='img'><img src='MaskLand-2.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/coord_flip'>coord_flip</a></span>()</div><div class='img'><img src='MaskLand-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

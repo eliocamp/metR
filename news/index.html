@@ -121,6 +121,19 @@
       <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="metr-0-3-0-90000" class="section level1">
+<h1 class="page-header">
+<a href="#metr-0-3-0-90000" class="anchor"></a>metR 0.3.0.90000<small> Unreleased </small>
+</h1>
+<div id="bugfixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bugfixes" class="anchor"></a>Bugfixes</h2>
+<ul>
+<li>
+<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> result will print correctly.</li>
+</ul>
+</div>
+</div>
     <div id="metr-0-3-0---cumulonimbus" class="section level1">
 <h1 class="page-header">
 <a href="#metr-0-3-0---cumulonimbus" class="anchor"></a>metR 0.3.0 - Cumulonimbus<small> 2019-03-12 </small>
@@ -133,9 +146,9 @@
 <li><p>New function <code><a href="../reference/Trajectory.html">Trajectory()</a></code> that computes trajectories in time-varying velocity fields.</p></li>
 </ul>
 </div>
-<div id="bugfixes" class="section level2">
+<div id="bugfixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-1" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now accepts dates as elements for <code>subset</code>.</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> will read all dates correctly (<a href='https://github.com/eliocamp/metR/issues/91'>#91</a>; thanks to <a href='https://github.com/m-saenger'>@m-saenger</a>).</p></li>
@@ -165,7 +178,7 @@
 <li><p><code>BuildQsWave()</code> and <code>FitQsWave()</code> have been removed and should had never even existed.</p></li>
 <li><p>The default <code>skip</code> argument for <code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> is now 0.</p></li>
 <li><p>Removed <code>hemisphere</code> argument from <code><a href="../reference/season.html">season()</a></code> since the function returns the trimester so it made no sense.</p></li>
-<li><p>Contour functions now compute breaks globaly (using all the data) instead of per panel. This means default intercomparabilty between facetwed plots but also a considerable deviation from <code><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">ggplot2::geom_contour()</a></code>.</p></li>
+<li><p>Contour functions now compute breaks globaly (using all the data) instead of per panel. This means default intercomparabilty between facetwed plots but also a considerable deviation from <code><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">ggplot2::geom_contour()</a></code>.</p></li>
 <li><p>The <code>Between</code> operators are removed since they were already implemented in <code>data.table</code>.</p></li>
 <li><p>The default <code>geom</code> for <code><a href="../reference/stat_na.html">stat_na()</a></code> is changed to <code>point</code> for consistency with <code><a href="../reference/stat_subset.html">stat_subset()</a></code></p></li>
 </ul>
@@ -292,6 +305,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#metr-0-3-0-90000">0.3.0.90000</a></li>
         <li><a href="#metr-0-3-0---cumulonimbus">0.3.0</a></li>
         <li><a href="#metr-0-2-0">0.2.0</a></li>
         <li><a href="#metr-0-1-0">0.1.0</a></li>

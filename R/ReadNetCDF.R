@@ -28,21 +28,23 @@
 #' returned by [ncdf4::ncvar_get]. `out = "vector"` is particularly useful for
 #' adding new variables to an existing data frame with the same dimensions.
 #'
-#' Finally, it can also be `vars`, in which case it returns a list with the name
-#' of the available variables and the dimensions of the spatiotemporal grid.
-#'
 #' When not all variables specified in `vars` have the same number of dimensions,
 #' the shorter variables will be recycled. E.g. if reading a 3D pressure field
 #' and a 2D surface temperature field, the latter will be turned into a 3D field
 #' with the same values in each missing dimension.
 #'
+#' `GlimpseNetCDF()` returns a list of variables and dimensions included in the
+#' file with a nice printing method.
+#'
 #' @examples
 #' \dontrun{
 #' file <- "file.nc"
 #' # Get a list of variables.
-#' variables <- ReadNetCDF(file, out = "vars")
+#' variables <- GlimpseNetCDF(file)
+#' print(variables)
+#'
 #' # Read only the first one, with name "var".
-#' field <- ReadNetCDF(file, vars = c(var = variables$vars[1]))
+#' field <- ReadNetCDF(file, vars = c(var = names(variables$vars[1])))
 #' # Add a new variable.
 #' # ¡Make sure it's on the same exact grid!
 #' field[, var2 := ReadNerCDF(file2, out = "vector", subset = list(lat = 90:10))]
@@ -52,7 +54,7 @@
 #' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
 #' @import data.table
 ReadNetCDF <- function(file, vars = NULL,
-                       out = c("data.frame", "vector", "array", "vars"),
+                       out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {
     ncdf4.available <- requireNamespace("ncdf4", quietly = TRUE)
     udunits2.available <- requireNamespace("udunits2", quietly = TRUE)
@@ -84,6 +86,16 @@ ReadNetCDF <- function(file, vars = NULL,
     reportAssertions(checks)
 
     ncfile <- ncdf4::nc_open(file)
+
+    if (out[1] == "vars") {
+        r <- list(vars = ncfile$var,
+                  dims = ncfile$dim)
+        class(r) <- c("nc_glimpse", class(r))
+        # options(OutDec = dec)
+        return(r)
+    }
+
+
     dec <- getOption("OutDec")
     # Dejemos todo prolijo antes de salir.
     options(OutDec = ".")
@@ -124,11 +136,11 @@ ReadNetCDF <- function(file, vars = NULL,
                                                         origin = "1970-01-01 00:00:00"))
     }
 
-    if (out[1] == "vars") {
-        r <- list(vars = unname(vars), dimensions = dimensions, dims = dims)
-        # options(OutDec = dec)
-        return(r)
-    }
+    # if (out[1] == "vars") {
+    #     r <- list(vars = unname(vars), dimensions = dimensions, dims = dims)
+    #     # options(OutDec = dec)
+    #     return(r)
+    # }
 
     ## Hago los subsets
     # Me fijo si faltan dimensiones
@@ -215,72 +227,51 @@ ReadNetCDF <- function(file, vars = NULL,
 }
 
 
-
+#' @rdname ReadNetCDF
+#'
+#' @export
 GlimpseNetCDF <- function(file) {
-
-    ncfile <- ncdf4::nc_open(file)
-
-    on.exit({
-        ncdf4::nc_close(ncfile)
-    })
-
-
-    vars <- ncfile$var
-
-
-    # Vars must be a (fully) named vector.
-    varnames <- names(vars)
-    if (is.null(varnames)) {
-        names(vars) <- vars
-    } else {
-        no.names <- nchar(varnames) == 0
-        names(vars)[no.names] <- vars[no.names]
-    }
-
-    # Leo las dimensiones.
-    dims <- names(ncfile$dim)
-    # dims <- dims[dims != "nbnds"]
-    ids <- vector()
-    dimensions <- list()
-    for (i in seq_along(dims)) {
-        dimensions[[dims[i]]] <- ncfile$dim[[dims[i]]]$vals
-        ids[i] <- ncfile$dim[[i]]$id
-    }
-    names(dims) <- ids
-
-    if ("time" %in% names(dimensions)) {
-        time <- udunits2::ud.convert(dimensions[["time"]],
-                                     ncfile$dim$time$units,
-                                     "seconds since 1970-01-01 00:00:00")
-        dimensions[["time"]] <- as.character(as.POSIXct(time, tz = "UTC",
-                                                        origin = "1970-01-01 00:00:00"))
-    }
-
-
-    for (v in seq_along(vars)) {
-        var <- vars[[v]]
-        cat("   ", var$name, ":", sep = "")
-        cat(var$longname)
-
-
-    }
-
-
-    if (out[1] == "vars") {
-        r <- list(vars = unname(vars), dimensions = dimensions, dims = dims)
-        # options(OutDec = dec)
-        return(r)
-    }
-
-
+    ReadNetCDF(file, out = "vars")
 }
 
-print_var <- function(var) {
-    cat(var$longname, " in ", var$units, ' ("', var$name, '")\n', sep = "")
+print.nc_glimpse <- function(glimpse) {
+    cat("----- Variables  ----- \n")
+    x <- lapply(glimpse$vars, print)
+
+    cat("\n\n")
+    cat("----- Dimensions ----- \n")
+    x <- lapply(glimpse$dim, print)
+}
 
 
+print.ncvar4 <- function(var) {
+    # cat("$", var$name, "\n", sep = "")
+    cat("    ", var$longname, " in ", var$units, "\n", sep = "")
 
-    cat(var$dims)
+    dims <- vapply(var$dim, function(x) x$name, "a")
 
+    cat("    ", paste0(dims, collapse = "\u2613"), sep = "")
 
+    return(invisible(var))
+}
+
+print.ncdim4 <- function(dim) {
+    # cat("$", dim$name, "\n", sep = "")
+    if (dim$name == "time") {
+        time <- udunits2::ud.convert(dim$vals,
+                                     dim$units,
+                                     "seconds since 1970-01-01 00:00:00")
+        vals <- as.POSIXct(time, tz = "UTC", origin = "1970-01-01 00:00:00")
+        units <- ""
+    } else {
+        vals <- dim$vals
+        units <- dim$units
+    }
+
+    cat("  ", dim$name, ": ",
+        dim$len, " values from ",
+        as.character(min(vals)), " to ",
+        as.character(max(vals)), " ",
+        units,"\n", sep = "")
+    return(invisible(dim))
 }

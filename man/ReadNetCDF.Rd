@@ -2,10 +2,13 @@
 % Please edit documentation in R/ReadNetCDF.R
 \name{ReadNetCDF}
 \alias{ReadNetCDF}
+\alias{GlimpseNetCDF}
 \title{Read NetCDF files.}
 \usage{
-ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array",
-  "vars"), subset = NULL, key = FALSE)
+ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array"),
+  subset = NULL, key = FALSE)
+
+GlimpseNetCDF(file)
 }
 \arguments{
 \item{file}{file to read from.}
@@ -29,13 +32,13 @@ first since the most time consuming part is the melting of the array
 returned by \link[ncdf4:ncvar_get]{ncdf4::ncvar_get}. \code{out = "vector"} is particularly useful for
 adding new variables to an existing data frame with the same dimensions.
 
-Finally, it can also be \code{vars}, in which case it returns a list with the name
-of the available variables and the dimensions of the spatiotemporal grid.
-
 When not all variables specified in \code{vars} have the same number of dimensions,
 the shorter variables will be recycled. E.g. if reading a 3D pressure field
 and a 2D surface temperature field, the latter will be turned into a 3D field
 with the same values in each missing dimension.
+
+\code{GlimpseNetCDF()} returns a list of variables and dimensions included in the
+file with a nice printing method.
 }
 \description{
 Using the \code{\link[ncdf4]{ncdf4-package}} package, it reads a NetCDF file. The advantage
@@ -53,9 +56,11 @@ closest gridpoint will be selected.
 \dontrun{
 file <- "file.nc"
 # Get a list of variables.
-variables <- ReadNetCDF(file, out = "vars")
+variables <- GlimpseNetCDF(file)
+print(variables)
+
 # Read only the first one, with name "var".
-field <- ReadNetCDF(file, vars = c(var = variables$vars[1]))
+field <- ReadNetCDF(file, vars = c(var = names(variables$vars[1])))
 # Add a new variable.
 # ¡Make sure it's on the same exact grid!
 field[, var2 := ReadNerCDF(file2, out = "vector", subset = list(lat = 90:10))]

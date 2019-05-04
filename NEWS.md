@@ -1,5 +1,8 @@
 # metR 0.3.0.90000 
 
+## New features
+
+- New `GlimpseNetCDF()` function that is an alias for `ReadNetCDF(out = "vars")` but now prints a human readable summary of the contents of the NetCDF file.
 
 ## Bugfixes
 

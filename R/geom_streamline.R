@@ -242,41 +242,40 @@ stat_streamline <- function(mapping = NULL, data = NULL,
 #' @format NULL
 #' @export
 StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
-    required_aes = c("x", "y", "dx", "dy"),
-    setup_params = function(data, params) {
+  required_aes = c("x", "y", "dx", "dy"),
+  setup_params = function(data, params) {
+      # M <- with(data, max(Mag(dx, dy), na.rm = T))
+      m <- with(data, mean(Mag(dx, dy), na.rm = TRUE))  # No me gustaaaa
+      r <- min(ggplot2::resolution(data$x, zero = FALSE),
+               ggplot2::resolution(data$y, zero = FALSE))
 
-        # M <- with(data, max(Mag(dx, dy), na.rm = T))
-        m <- with(data, mean(Mag(dx, dy), na.rm = TRUE))  # No me gustaaaa
-        r <- min(ggplot2::resolution(data$x, zero = FALSE),
-                 ggplot2::resolution(data$y, zero = FALSE))
+      if (is.null(params$dt)) params$dt <- r/m/params$res
 
-        if (is.null(params$dt)) params$dt <- r/m/params$res
+      if (is.null(params$S)) params$S <- ceiling(params$L/params$dt/m/2)
+      if (params$S == 1) {
+          warning("performing only 1 integration step, please consider increasing the resolution")
+      }
 
-        if (is.null(params$S)) params$S <- ceiling(params$L/params$dt/m)
-        if (params$S == 1) {
-            warning("performing only 1 integration step, please consider increasing the resolution")
-        }
+      return(params)
+  },
+  compute_group = function(data, scales, dt = 0.1, S = 3, skip.x = 1,
+                           skip.y = 1, nx = 10, ny  = 10, jitter.x = 1,
+                           jitter.y = 1, xwrap = NULL, ywrap = NULL,
+                           min.L = 0,
+                           L = NULL, res = NULL,
+                           no.cache = FALSE) {
 
-        return(params)
-    },
-    compute_group = function(data, scales, dt = 0.1, S = 3, skip.x = 1,
-                             skip.y = 1, nx = 10, ny  = 10, jitter.x = 1,
-                             jitter.y = 1, xwrap = NULL, ywrap = NULL,
-                             min.L = 0,
-                             L = NULL, res = NULL,
-                             no.cache = FALSE) {
+      if (no.cache == TRUE) memoise::forget(streamline.f)
+      data <- streamline.f(data, dt = dt, S = S, skip.x = skip.x,
+                           skip.y = skip.y, nx = nx, ny = ny, jitter.x = jitter.x,
+                           jitter.y = jitter.y, xwrap = xwrap, ywrap = ywrap)
 
-        if (no.cache == TRUE) memoise::forget(streamline.f)
-        data <- streamline.f(data, dt = dt, S = S, skip.x = skip.x,
-                             skip.y = skip.y, nx = nx, ny = ny, jitter.x = jitter.x,
-                             jitter.y = jitter.y, xwrap = xwrap, ywrap = ywrap)
+      distance <- data[, .(dx = diff(x), dy = diff(y)), by = line]
+      distance <- distance[, .(distance = sum(sqrt(dx^2 + dy^2))), by = line]
+      keep <- distance[distance >= min.L, line]
 
-        distance <- data[, .(dx = diff(x), dy = diff(y)), by = line]
-        distance <- distance[, .(distance = sum(sqrt(dx^2 + dy^2))), by = line]
-        keep <- distance[distance >= min.L, line]
-
-        return(setDF(data[line %in% keep]))
-    }
+      return(setDF(data[line %in% keep]))
+  }
 )
 
 #' @rdname geom_streamline
@@ -285,88 +284,89 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
 #' @export
 #' @import ggplot2
 GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
-    default_aes = ggplot2::aes(colour = "black", size = 0.5, linetype = 1, alpha = NA),
-    draw_panel = function(data, panel_params, coord, arrow = NULL,
-                          lineend = "butt", linejoin = "round", linemitre = 1,
-                          na.rm = FALSE) {
-        if (!anyDuplicated(data$group)) {
-            message_wrap("geom_path: Each group consists of only one observation. ",
-                         "Do you need to adjust the group aesthetic?")
-        }
+  default_aes = ggplot2::aes(colour = "black", size = 0.5, linetype = 1, alpha = NA),
+  draw_panel = function(data, panel_params, coord, arrow = NULL,
+                        lineend = "butt", linejoin = "round", linemitre = 1,
+                        na.rm = FALSE) {
+      if (!anyDuplicated(data$group)) {
+          message_wrap("geom_path: Each group consists of only one observation. ",
+                       "Do you need to adjust the group aesthetic?")
+      }
 
-        # must be sorted on group
-        data <- data[order(data$group), , drop = FALSE]
-        munched <- coord_munch(coord, data, panel_params)
+      # browser()
+      # must be sorted on group
+      data <- data[order(data$group), , drop = FALSE]
+      munched <- coord_munch(coord, data, panel_params)
 
-        # Silently drop lines with less than two points, preserving order
-        rows <- stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
-        munched <- munched[rows >= 2, ]
-        if (nrow(munched) < 2) return(zeroGrob())
+      # Silently drop lines with less than two points, preserving order
+      rows <- stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
+      munched <- munched[rows >= 2, ]
+      if (nrow(munched) < 2) return(zeroGrob())
 
-        # Work out whether we should use lines or segments
-        attr <- plyr::ddply(munched, "group", function(df) {
-            linetype <- unique(df$linetype)
-            data.frame(
-                solid = identical(linetype, 1) || identical(linetype, "solid"),
-                constant = nrow(unique(df[, c("alpha", "colour","size", "linetype")])) == 1
-            )
-        })
-        solid_lines <- all(attr$solid)
-        constant <- all(attr$constant)
-        if (!solid_lines && !constant) {
-            stop("geom_streamline: If you are using dotted or dashed lines",
-                 ", colour, size and linetype must be constant over the line",
-                 call. = FALSE)
-        }
+      # Work out whether we should use lines or segments
+      attr <- plyr::ddply(munched, "group", function(df) {
+          linetype <- unique(df$linetype)
+          data.frame(
+              solid = identical(linetype, 1) || identical(linetype, "solid"),
+              constant = nrow(unique(df[, c("alpha", "colour","size", "linetype")])) == 1
+          )
+      })
+      solid_lines <- all(attr$solid)
+      constant <- all(attr$constant)
+      if (!solid_lines && !constant) {
+          stop("geom_streamline: If you are using dotted or dashed lines",
+               ", colour, size and linetype must be constant over the line",
+               call. = FALSE)
+      }
 
-        # Work out grouping variables for grobs
-        n <- nrow(munched)
-        group_diff <- munched$group[-1] != munched$group[-n]
-        start <- c(TRUE, group_diff)
-        end <-   c(group_diff, TRUE)
+      # Work out grouping variables for grobs
+      n <- nrow(munched)
+      group_diff <- munched$group[-1] != munched$group[-n]
+      start <- c(TRUE, group_diff)
+      end <-   c(group_diff, TRUE)
 
-        if (!constant) {
-            if (!is.null(arrow)) {
-                mult <- end&munched$end
-                mult <- mult[!start]
-                arrow$length <- unit(as.numeric(arrow$length)[1]*mult, attr(arrow$length, "unit"))
-            }
-            segmentsGrob(
-                munched$x[!end], munched$y[!end], munched$x[!start], munched$y[!start],
-                default.units = "native", arrow = arrow,
-                gp = gpar(
-                    col = alpha(munched$colour, munched$alpha)[!end],
-                    fill = alpha(munched$colour, munched$alpha)[!end],
-                    lwd = munched$size[!end] * .pt,
-                    lty = munched$linetype[!end],
-                    lineend = lineend,
-                    linejoin = linejoin,
-                    linemitre = linemitre
-                )
-            )
-        } else {
-            id <- match(munched$group, unique(munched$group))
+      if (!constant) {
+          if (!is.null(arrow)) {
+              mult <- end&munched$end
+              mult <- mult[!start]
+              arrow$length <- unit(as.numeric(arrow$length)[1]*mult, attr(arrow$length, "unit"))
+          }
+          segmentsGrob(
+              munched$x[!end], munched$y[!end], munched$x[!start], munched$y[!start],
+              default.units = "native", arrow = arrow,
+              gp = gpar(
+                  col = alpha(munched$colour, munched$alpha)[!end],
+                  fill = alpha(munched$colour, munched$alpha)[!end],
+                  lwd = munched$size[!end] * .pt,
+                  lty = munched$linetype[!end],
+                  lineend = lineend,
+                  linejoin = linejoin,
+                  linemitre = linemitre
+              )
+          )
+      } else {
+          id <- match(munched$group, unique(munched$group))
 
-            if (!is.null(arrow)) {
-                mult <- as.numeric(munched$end)[start]
-                arrow$length <- unit(as.numeric(arrow$length)[1]*mult,
-                                     attr(arrow$length, "unit"))
-            }
-            polylineGrob(
-                munched$x, munched$y, id = id,
-                default.units = "native", arrow = arrow,
-                gp = gpar(
-                    col = alpha(munched$colour, munched$alpha)[start],
-                    fill = alpha(munched$colour, munched$alpha)[start],
-                    lwd = munched$size[start] * .pt,
-                    lty = munched$linetype[start],
-                    lineend = lineend,
-                    linejoin = linejoin,
-                    linemitre = linemitre
-                )
-            )
-        }
-    }
+          if (!is.null(arrow)) {
+              mult <- as.numeric(munched$end)[start]
+              arrow$length <- unit(as.numeric(arrow$length)[1]*mult,
+                                   attr(arrow$length, "unit"))
+          }
+          polylineGrob(
+              munched$x, munched$y, id = id,
+              default.units = "native", arrow = arrow,
+              gp = gpar(
+                  col = alpha(munched$colour, munched$alpha)[start],
+                  fill = alpha(munched$colour, munched$alpha)[start],
+                  lwd = munched$size[start] * .pt,
+                  lty = munched$linetype[start],
+                  lineend = lineend,
+                  linejoin = linejoin,
+                  linemitre = linemitre
+              )
+          )
+      }
+  }
 )
 
 
@@ -389,6 +389,8 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
 
     rx <- ggplot2::resolution(as.numeric(field$x), zero = FALSE)
     ry <- ggplot2::resolution(as.numeric(field$y), zero = FALSE)
+    range.x <- range(field$x)
+    range.y <- range(field$y)
 
     matrix <- .tidy2matrix(field, x ~ y, value.var = "dx", fill = 0)
     dx.field <- list(x = matrix$rowdims$x,
@@ -400,13 +402,15 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
                      y = matrix$coldims$y,
                      z = matrix$matrix)
 
-    force.fun <- function(x, y) {
-        dx <- fields::interp.surface(dx.field, cbind(x, y))
-        dy <- fields::interp.surface(dy.field, cbind(x, y))
-        return(list(dx = dx, dy = dy))
+    force.fun <- function(X) {
+        X[, 1] <- .fold(X[, 1], 1, range.x, circ.x)[[1]]
+        X[, 2] <- .fold(X[, 2], 1, range.y, circ.y)[[1]]
+
+        dx <- fields::interp.surface(dx.field, X)
+        dy <- fields::interp.surface(dy.field, X)
+        return(cbind(dx = dx, dy = dy))
     }
-    range.x <- range(field$x)
-    range.y <- range(field$y)
+
     # Build grid
     if (is.null(nx)) {
         xs <- JumpBy(dx.field$x, skip.x + 1)
@@ -450,72 +454,81 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         points[, y := ifelse(y < range.y[1], range.y[1], y)]
     }
 
-    points[, c("dx", "dy") := force.fun(x, y)]
-    points <- points[abs(dx) + abs(dy) != 0 & !is.na(dx) & !is.na(dy)]
-
-    points2 <- copy(points)
-
-    # Integration
-    for (s in 1:S) {
-        points2[, c("x", "y", "step") := .(x + dx*dt, y + dy*dt, s)]
-        points2[, c("x", "piece") := .fold(x, piece, range.x, circ.x)]
-        points2[, c("y", "piece") := .fold(y, piece, range.y, circ.y)]
-        points2[, c("dx", "dy") := force.fun(x, y)]
-        points2 <- points2[!is.na(dx) & !is.na(dy)]
-        points <- rbindlist(list(points, points2)) # se puede optimizar prealocando
-        points2 <- points2[dx + dy != 0]
+    as.list.matrix <- function(x, ...) {
+        list(x[, 1], x[, 2])
     }
 
+    points[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
+    points <- points[abs(dx) + abs(dy) != 0 & !is.na(dx) & !is.na(dy)]
+    points[, sign := 1]
+
+    points_forw <- copy(points)
+    points_forw[, sign := 1]
+    points_back <- copy(points)
+    points_back[, sign := -1]
+
+    accum_forw <- vector(mode = "list", length = S)
+    accum_back <- vector(mode = "list", length = S)
+    # Integration
+    for (s in 1:S) {
+        points_forw <- points_forw[dx + dy != 0]
+        points_back <- points_back[dx + dy != 0]
+
+        points_forw[, c("x", "y") := runge_kutta4(x, y, force.fun, dt, piece, list(range.x, range.y), c(circ.x, circ.y))]
+        points_forw[, step := s]
+        points_forw[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
+
+        points_back[, c("x", "y") := runge_kutta4(x, y, force.fun, -dt, piece, list(range.x, range.y), c(circ.x, circ.y))]
+        points_back[, step := -s]
+        points_back[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
+
+        points_forw <- points_forw[!is.na(dx) & !is.na(dy)]
+        points_back <- points_back[!is.na(dx) & !is.na(dy)]
+
+        accum_forw[[s]] <- points_forw
+        accum_back[[S - s + 1]] <- points_back
+    }
+
+    # accum_back <- list()
+    points <- rbindlist(c(accum_back, list(points), accum_forw)) # se puede optimizar prealocando
+    # points[, step := step - min(step)]
     # Empalmo los pieces que pasan de un lado
     # al otro del dominio.
     range.select <- function(sign, range) {
         ifelse(sign == 1, range[2], range[1])
     }
-
+    # browser()
     points[, step2 := step]
     if (circ.x == TRUE) {
-        points[, change := c(sign(diff(x)), NA) != sign(dx), by = group]
-        points[is.na(change), change := FALSE]
-
-        extra <- points[change == TRUE]
-        if (nrow(extra) != 0) {
-            extra <- rbind(extra, extra)
-            extra[, y := y + (range.select(sign(dx), range.x) - x)*dy/dx]
-            extra[, step2 := step2 + 0.5*c(1, -1)*sign(dx)]
-            extra[, step := step + 1]
-            extra[, x := if (dx[1] < 0) range.x else range.x[2:1],
-                  by = .(group, piece)]
-            extra[, piece := piece + c(0, 1), by = .(group, piece)]
-            points <- rbind(points, extra)[order(step2)]
-        }
+        points <- points[, .approx_order(x, y, range.x), by = group]
+        points[, piece := as.numeric(rleid(x %between% range.x)), by = group]
+        points[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
+        points[, step := seq_along(x), by = group]
+        points[, x := .fold(x, 1, range.x, circ.x)[[1]]]
     }
 
 
     if (circ.y == TRUE) {
-        points[, change := c(sign(diff(y)), NA) != sign(dy), by = group]
-        points[is.na(change), change := FALSE]
-
-        extra <- points[change == TRUE]
-        if (nrow(extra) != 0) {
-            extra <- rbind(extra, extra)
-            extra[, x := x + (range.select(sign(dy), range.y) - y)*dx/dy]
-            extra[, step2 := step2 + 0.5*c(1, -1)*sign(dy)]
-            extra[, step := step + 1]
-            extra[, y := if (dy[1] < 0) range.y else range.y[2:1],
-                  by = .(group, piece)]
-            extra[, piece := piece + c(0, 1), by = .(group, piece)]
-            points <- rbind(points, extra)[order(step2)]
-        }
+        points <- points[, .approx_order(y, x, range.y), by = group]
+        points[, piece := as.numeric(rleid(y %between% range.y)), by = group]
+        points[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
+        points[, step := seq_along(y), by = group]
+        points[, y := .fold(y, 1, range.y, circ.y)[[1]]]
     }
+    # browser()
 
     # Me fijo si ese piece tiene el final.
     # Esto luego va al geom que decide si ponerle flecha o no.
-    points[, end := step == max(step), by = group]
-    points[, line := group]
+    # points[, sign := seq_len(.N) < .N/2, by = .(group, piece)]
+    # points[, end := sign < 0]
+
+
+    points[, end := piece == max(piece), by = group]
     points[, group := interaction(group, piece)]
     points[, end := as.logical(sum(end)), by = group]
+    points[, line := group]
 
-    return(points[, .(x, y, group, piece, step, end, dx, dy, line)])
+    return(points[, .(x, y, group, piece, end, step, dx, dy, line)])
 }
 
 
@@ -539,5 +552,29 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
 
 #' @importFrom memoise memoise
 streamline.f <- memoise::memoise(streamline)
+#
+# xbk <- x
+# ybk <- y
+# extra.x <- c(0, 360)
+.approx_order <- function(x, y, extra.x) {
+    rx <- ggplot2::resolution(x, zero = FALSE)
+    extra.x <- c(extra.x - rx/100000, extra.x + rx/100000)
+    for (i in seq_along(extra.x)) {
+        ind <- which(diff(x < extra.x[i]) != 0) + 1
+        if (length(ind) != 0) {
+            val <- rep(extra.x[i], length(ind))
 
+            new_x <- vector(mode = "numeric", length(x) + length(val))
+            new_y <- new_x
+            new_x[-ind] <- x
+            new_x[ind] <- val
 
+            new_y[-ind] <- y
+            new_y[ind] <- y[ind-1] +  (extra.x[i] - x[ind-1])  * (diff(y)/diff(x))[ind - 1]
+            x <- new_x
+            y <- new_y
+        }
+    }
+
+    return(list(x = x, y = y))
+}

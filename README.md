@@ -1,18 +1,38 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-metR <img src="man/figures/logo.png" align="right"/>
-====================================================
 
-[![Build Status](https://travis-ci.org/eliocamp/metR.svg?branch=master)](https://travis-ci.org/eliocamp/metR) [![Package Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) [![Coverage status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg)](https://codecov.io/github/eliocamp/metR/?branch=master) [![CRAN status](http://www.r-pkg.org/badges/version/metR)](https://cran.r-project.org/package=metR)
+# metR <img src="man/figures/logo.png" align="right"/>
 
-metR packages several functions and utilities that make R better for handling meteorological data in the tidy data paradigm. It started mostly sa a packaging of assorted wrapers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since then, it has grown organically and for my own needs and feedback from users.
+[![Build
+Status](https://travis-ci.org/eliocamp/metR.svg?branch=master)](https://travis-ci.org/eliocamp/metR)
+[![Package
+Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Coverage
+status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg)](https://codecov.io/github/eliocamp/metR/?branch=master)
+[![CRAN
+status](http://www.r-pkg.org/badges/version/metR)](https://cran.r-project.org/package=metR)
 
-Conceptually it's divided into *visualization tools* and *data tools*. The former are geoms, stats and scales that help with plotting using [ggplot2](http://ggplot2.tidyverse.org/index.html), such as `stat_contour_fill()` or `scale_y_level()`, while the later are functions for common data processing tools in the atmospheric sciences, such as `Derivate()` or `EOF()`; these are implemented to work in the [data.table](https://github.com/Rdatatable/data.table/wiki) paradigm, but also work with regular data frames.
+metR packages several functions and utilities that make R better for
+handling meteorological data in the tidy data paradigm. It started
+mostly sa a packaging of assorted wrapers and tricks that I wrote for my
+day to day work as a researcher in atmospheric sciences. Since then, it
+has grown organically and for my own needs and feedback from users.
 
-Currently metR is in developement but maturing. Most functions check arguments and there are some tests. However, some functions might change it's interface, and functionality can be moved to other packages, so please bear that in mind.
+Conceptually it’s divided into *visualization tools* and *data tools*.
+The former are geoms, stats and scales that help with plotting using
+[ggplot2](http://ggplot2.tidyverse.org/index.html), such as
+`stat_contour_fill()` or `scale_y_level()`, while the later are
+functions for common data processing tools in the atmospheric sciences,
+such as `Derivate()` or `EOF()`; these are implemented to work in the
+[data.table](https://github.com/Rdatatable/data.table/wiki) paradigm,
+but also work with regular data frames.
 
-Installation
-------------
+Currently metR is in developement but maturing. Most functions check
+arguments and there are some tests. However, some functions might change
+it’s interface, and functionality can be moved to other packages, so
+please bear that in mind.
+
+## Installation
 
 You can install metR from CRAN with:
 
@@ -27,17 +47,26 @@ Or the developement version with:
 devtools::install_github("eliocamp/metR")
 ```
 
-If you need to read netcdf files, you might need to install the netcdf and udunits2 libraries. On Ubuntu and it's derivatives this can be done by typing
+If you need to read netcdf files, you might need to install the netcdf
+and udunits2 libraries. On Ubuntu and it’s derivatives this can be done
+by typing
 
     sudo apt install libnetcdf-dev netcdf-bin libudunits2-dev
 
-Examples
---------
+## Examples
 
-In this example we easily perform Principal Components Decomposition (EOF) on monthly geopotential height, then compute the geostrophic wind associated with this field and plot the field with filled contours and the wind with streamlines.
+In this example we easily perform Principal Components Decomposition
+(EOF) on monthly geopotential height, then compute the geostrophic wind
+associated with this field and plot the field with filled contours and
+the wind with streamlines.
 
 ``` r
 library(metR)
+#> Registered S3 methods overwritten by 'ggplot2':
+#>   method         from 
+#>   [.quosures     rlang
+#>   c.quosures     rlang
+#>   print.quosures rlang
 library(data.table)
 library(ggplot2)
 data(geopotential)
@@ -64,7 +93,20 @@ ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
 #> deprecated. Use ggperiodic::periodic insead.
 ```
 
-![](man/figures/field-1.png)
+![](man/figures/field-1.png)<!-- -->
+
+    #> Called from: `_f`(field = field, dt = dt, S = S, skip.x = skip.x, skip.y = skip.y, 
+    #>     nx = nx, ny = ny, jitter.x = jitter.x, jitter.y = jitter.y, 
+    #>     xwrap = xwrap, ywrap = ywrap)
+    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#522: points[, `:=`(end, seq_len(.N) < .N/2), by = .(group, piece)]
+    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#523: points_last <- points[end == FALSE, ]
+    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#524: points_first <- rbind(points[end == TRUE, ], points_last[, head(.SD, 
+    #>     1), by = .(group, piece)])
+    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#526: points_first[, `:=`(end, TRUE)]
+    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#527: points <- rbind(points_first, points_last)
+    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#529: points[, `:=`(group, interaction(group, piece, end))]
+    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#530: points[, `:=`(line, group)]
+    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#532: return(points[, .(x, y, group, piece, end, step, dx, dy, line)])
 
 ``` r
 # AAO signal
@@ -74,6 +116,9 @@ ggplot(aao$right, aes(date, gh.t.w)) +
 #> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-![](man/figures/timeseries-1.png)
+![](man/figures/timeseries-1.png)<!-- -->
 
-You can read more in the vignettes: [Visualization tools](https://eliocamp.github.io/metR/articles/Visualization-tools.html) and [Working with data](https://eliocamp.github.io/metR/articles/Working-with-data.html).
+You can read more in the vignettes: [Visualization
+tools](https://eliocamp.github.io/metR/articles/Visualization-tools.html)
+and [Working with
+data](https://eliocamp.github.io/metR/articles/Working-with-data.html).

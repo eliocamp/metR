@@ -515,17 +515,18 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         points[, step := seq_along(y), by = group]
         points[, y := .fold(y, 1, range.y, circ.y)[[1]]]
     }
-    # browser()
+    browser()
 
     # Me fijo si ese piece tiene el final.
     # Esto luego va al geom que decide si ponerle flecha o no.
-    # points[, sign := seq_len(.N) < .N/2, by = .(group, piece)]
-    # points[, end := sign < 0]
+    points[, end := seq_len(.N) < .N/2, by = .(group, piece)]
+    points_last <- points[end == FALSE, ]
+    points_first <- rbind(points[end == TRUE, ],
+                          points_last[, head(.SD, 1), by = .(group, piece)])
+    points_first[, end := TRUE]
+    points <- rbind(points_first, points_last)
 
-
-    points[, end := piece == max(piece), by = group]
-    points[, group := interaction(group, piece)]
-    points[, end := as.logical(sum(end)), by = group]
+    points[, group := interaction(group, piece, end)]
     points[, line := group]
 
     return(points[, .(x, y, group, piece, end, step, dx, dy, line)])

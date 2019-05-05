@@ -87,7 +87,7 @@
       <h1>Working with data</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2019-05-03</h4>
+            <h4 class="date">2019-05-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Working-with-data.Rmd"><code>vignettes/Working-with-data.Rmd</code></a></small>
       <div class="hidden name"><code>Working-with-data.Rmd</code></div>
@@ -117,15 +117,184 @@
 <a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># dimensions</span></a>
 <a class="sourceLine" id="cb1-12" data-line-number="12">file &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"temperature.nc"</span>, <span class="dt">package =</span> <span class="st">"metR"</span>)</a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(<span class="kw"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span>(file, <span class="dt">out =</span> <span class="st">"vars"</span>))</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; List of 3</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt;  $ vars      : chr "air"</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt;  $ dimensions:List of 4</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt;   ..$ time : chr "2010-07-09"</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt;   ..$ level: num [1:17(1d)] 1000 925 850 700 600 500 400 300 250 200 ...</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt;   ..$ lat  : num [1:73(1d)] 90 87.5 85 82.5 80 77.5 75 72.5 70 67.5 ...</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt;   ..$ lon  : num [1:144(1d)] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt;  $ dims      : Named chr [1:4] "time" "level" "lat" "lon"</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt;   ..- attr(*, "names")= chr [1:4] "0" "1" "2" "3"</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; List of 2</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt;  $ vars:List of 1</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt;   ..$ air:List of 22</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt;   .. ..$ id                :List of 5</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt;   .. .. ..$ id         : num 0</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt;   .. .. ..$ group_index: num -1</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt;   .. .. ..$ group_id   : int 65536</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt;   .. .. ..$ list_index : num 1</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt;   .. .. ..$ isdimvar   : logi FALSE</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "ncid4"</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt;   .. ..$ name              : chr "air"</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#&gt;   .. ..$ ndims             : int 4</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">#&gt;   .. ..$ natts             : int 14</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#&gt;   .. ..$ size              : int [1:4] 144 73 17 1</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">#&gt;   .. ..$ dimids            : int [1:4] 3 2 1 0</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co">#&gt;   .. ..$ prec              : chr "float"</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30"><span class="co">#&gt;   .. ..$ units             : chr "degK"</span></a>
+<a class="sourceLine" id="cb1-31" data-line-number="31"><span class="co">#&gt;   .. ..$ longname          : chr "mean Daily Air temperature"</span></a>
+<a class="sourceLine" id="cb1-32" data-line-number="32"><span class="co">#&gt;   .. ..$ group_index       : int 1</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33"><span class="co">#&gt;   .. ..$ chunksizes        : logi NA</span></a>
+<a class="sourceLine" id="cb1-34" data-line-number="34"><span class="co">#&gt;   .. ..$ storage           : num 2</span></a>
+<a class="sourceLine" id="cb1-35" data-line-number="35"><span class="co">#&gt;   .. ..$ shuffle           : logi FALSE</span></a>
+<a class="sourceLine" id="cb1-36" data-line-number="36"><span class="co">#&gt;   .. ..$ compression       : logi NA</span></a>
+<a class="sourceLine" id="cb1-37" data-line-number="37"><span class="co">#&gt;   .. ..$ dims              : list()</span></a>
+<a class="sourceLine" id="cb1-38" data-line-number="38"><span class="co">#&gt;   .. ..$ dim               :List of 4</span></a>
+<a class="sourceLine" id="cb1-39" data-line-number="39"><span class="co">#&gt;   .. .. ..$ :List of 10</span></a>
+<a class="sourceLine" id="cb1-40" data-line-number="40"><span class="co">#&gt;   .. .. .. ..$ name         : chr "lon"</span></a>
+<a class="sourceLine" id="cb1-41" data-line-number="41"><span class="co">#&gt;   .. .. .. ..$ len          : int 144</span></a>
+<a class="sourceLine" id="cb1-42" data-line-number="42"><span class="co">#&gt;   .. .. .. ..$ unlim        : logi FALSE</span></a>
+<a class="sourceLine" id="cb1-43" data-line-number="43"><span class="co">#&gt;   .. .. .. ..$ group_index  : int 1</span></a>
+<a class="sourceLine" id="cb1-44" data-line-number="44"><span class="co">#&gt;   .. .. .. ..$ group_id     : int 65536</span></a>
+<a class="sourceLine" id="cb1-45" data-line-number="45"><span class="co">#&gt;   .. .. .. ..$ id           : int 3</span></a>
+<a class="sourceLine" id="cb1-46" data-line-number="46"><span class="co">#&gt;   .. .. .. ..$ dimvarid     :List of 5</span></a>
+<a class="sourceLine" id="cb1-47" data-line-number="47"><span class="co">#&gt;   .. .. .. .. ..$ id         : int 3</span></a>
+<a class="sourceLine" id="cb1-48" data-line-number="48"><span class="co">#&gt;   .. .. .. .. ..$ group_index: int 1</span></a>
+<a class="sourceLine" id="cb1-49" data-line-number="49"><span class="co">#&gt;   .. .. .. .. ..$ group_id   : int 65536</span></a>
+<a class="sourceLine" id="cb1-50" data-line-number="50"><span class="co">#&gt;   .. .. .. .. ..$ list_index : num -1</span></a>
+<a class="sourceLine" id="cb1-51" data-line-number="51"><span class="co">#&gt;   .. .. .. .. ..$ isdimvar   : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-52" data-line-number="52"><span class="co">#&gt;   .. .. .. .. ..- attr(*, "class")= chr "ncid4"</span></a>
+<a class="sourceLine" id="cb1-53" data-line-number="53"><span class="co">#&gt;   .. .. .. ..$ units        : chr "degrees_east"</span></a>
+<a class="sourceLine" id="cb1-54" data-line-number="54"><span class="co">#&gt;   .. .. .. ..$ vals         : num [1:144(1d)] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span></a>
+<a class="sourceLine" id="cb1-55" data-line-number="55"><span class="co">#&gt;   .. .. .. ..$ create_dimvar: logi TRUE</span></a>
+<a class="sourceLine" id="cb1-56" data-line-number="56"><span class="co">#&gt;   .. .. .. ..- attr(*, "class")= chr "ncdim4"</span></a>
+<a class="sourceLine" id="cb1-57" data-line-number="57"><span class="co">#&gt;   .. .. ..$ :List of 10</span></a>
+<a class="sourceLine" id="cb1-58" data-line-number="58"><span class="co">#&gt;   .. .. .. ..$ name         : chr "lat"</span></a>
+<a class="sourceLine" id="cb1-59" data-line-number="59"><span class="co">#&gt;   .. .. .. ..$ len          : int 73</span></a>
+<a class="sourceLine" id="cb1-60" data-line-number="60"><span class="co">#&gt;   .. .. .. ..$ unlim        : logi FALSE</span></a>
+<a class="sourceLine" id="cb1-61" data-line-number="61"><span class="co">#&gt;   .. .. .. ..$ group_index  : int 1</span></a>
+<a class="sourceLine" id="cb1-62" data-line-number="62"><span class="co">#&gt;   .. .. .. ..$ group_id     : int 65536</span></a>
+<a class="sourceLine" id="cb1-63" data-line-number="63"><span class="co">#&gt;   .. .. .. ..$ id           : int 2</span></a>
+<a class="sourceLine" id="cb1-64" data-line-number="64"><span class="co">#&gt;   .. .. .. ..$ dimvarid     :List of 5</span></a>
+<a class="sourceLine" id="cb1-65" data-line-number="65"><span class="co">#&gt;   .. .. .. .. ..$ id         : int 1</span></a>
+<a class="sourceLine" id="cb1-66" data-line-number="66"><span class="co">#&gt;   .. .. .. .. ..$ group_index: int 1</span></a>
+<a class="sourceLine" id="cb1-67" data-line-number="67"><span class="co">#&gt;   .. .. .. .. ..$ group_id   : int 65536</span></a>
+<a class="sourceLine" id="cb1-68" data-line-number="68"><span class="co">#&gt;   .. .. .. .. ..$ list_index : num -1</span></a>
+<a class="sourceLine" id="cb1-69" data-line-number="69"><span class="co">#&gt;   .. .. .. .. ..$ isdimvar   : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-70" data-line-number="70"><span class="co">#&gt;   .. .. .. .. ..- attr(*, "class")= chr "ncid4"</span></a>
+<a class="sourceLine" id="cb1-71" data-line-number="71"><span class="co">#&gt;   .. .. .. ..$ units        : chr "degrees_north"</span></a>
+<a class="sourceLine" id="cb1-72" data-line-number="72"><span class="co">#&gt;   .. .. .. ..$ vals         : num [1:73(1d)] 90 87.5 85 82.5 80 77.5 75 72.5 70 67.5 ...</span></a>
+<a class="sourceLine" id="cb1-73" data-line-number="73"><span class="co">#&gt;   .. .. .. ..$ create_dimvar: logi TRUE</span></a>
+<a class="sourceLine" id="cb1-74" data-line-number="74"><span class="co">#&gt;   .. .. .. ..- attr(*, "class")= chr "ncdim4"</span></a>
+<a class="sourceLine" id="cb1-75" data-line-number="75"><span class="co">#&gt;   .. .. ..$ :List of 10</span></a>
+<a class="sourceLine" id="cb1-76" data-line-number="76"><span class="co">#&gt;   .. .. .. ..$ name         : chr "level"</span></a>
+<a class="sourceLine" id="cb1-77" data-line-number="77"><span class="co">#&gt;   .. .. .. ..$ len          : int 17</span></a>
+<a class="sourceLine" id="cb1-78" data-line-number="78"><span class="co">#&gt;   .. .. .. ..$ unlim        : logi FALSE</span></a>
+<a class="sourceLine" id="cb1-79" data-line-number="79"><span class="co">#&gt;   .. .. .. ..$ group_index  : int 1</span></a>
+<a class="sourceLine" id="cb1-80" data-line-number="80"><span class="co">#&gt;   .. .. .. ..$ group_id     : int 65536</span></a>
+<a class="sourceLine" id="cb1-81" data-line-number="81"><span class="co">#&gt;   .. .. .. ..$ id           : int 1</span></a>
+<a class="sourceLine" id="cb1-82" data-line-number="82"><span class="co">#&gt;   .. .. .. ..$ dimvarid     :List of 5</span></a>
+<a class="sourceLine" id="cb1-83" data-line-number="83"><span class="co">#&gt;   .. .. .. .. ..$ id         : int 2</span></a>
+<a class="sourceLine" id="cb1-84" data-line-number="84"><span class="co">#&gt;   .. .. .. .. ..$ group_index: int 1</span></a>
+<a class="sourceLine" id="cb1-85" data-line-number="85"><span class="co">#&gt;   .. .. .. .. ..$ group_id   : int 65536</span></a>
+<a class="sourceLine" id="cb1-86" data-line-number="86"><span class="co">#&gt;   .. .. .. .. ..$ list_index : num -1</span></a>
+<a class="sourceLine" id="cb1-87" data-line-number="87"><span class="co">#&gt;   .. .. .. .. ..$ isdimvar   : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-88" data-line-number="88"><span class="co">#&gt;   .. .. .. .. ..- attr(*, "class")= chr "ncid4"</span></a>
+<a class="sourceLine" id="cb1-89" data-line-number="89"><span class="co">#&gt;   .. .. .. ..$ units        : chr "millibar"</span></a>
+<a class="sourceLine" id="cb1-90" data-line-number="90"><span class="co">#&gt;   .. .. .. ..$ vals         : num [1:17(1d)] 1000 925 850 700 600 500 400 300 250 200 ...</span></a>
+<a class="sourceLine" id="cb1-91" data-line-number="91"><span class="co">#&gt;   .. .. .. ..$ create_dimvar: logi TRUE</span></a>
+<a class="sourceLine" id="cb1-92" data-line-number="92"><span class="co">#&gt;   .. .. .. ..- attr(*, "class")= chr "ncdim4"</span></a>
+<a class="sourceLine" id="cb1-93" data-line-number="93"><span class="co">#&gt;   .. .. ..$ :List of 10</span></a>
+<a class="sourceLine" id="cb1-94" data-line-number="94"><span class="co">#&gt;   .. .. .. ..$ name         : chr "time"</span></a>
+<a class="sourceLine" id="cb1-95" data-line-number="95"><span class="co">#&gt;   .. .. .. ..$ len          : int 1</span></a>
+<a class="sourceLine" id="cb1-96" data-line-number="96"><span class="co">#&gt;   .. .. .. ..$ unlim        : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-97" data-line-number="97"><span class="co">#&gt;   .. .. .. ..$ group_index  : int 1</span></a>
+<a class="sourceLine" id="cb1-98" data-line-number="98"><span class="co">#&gt;   .. .. .. ..$ group_id     : int 65536</span></a>
+<a class="sourceLine" id="cb1-99" data-line-number="99"><span class="co">#&gt;   .. .. .. ..$ id           : int 0</span></a>
+<a class="sourceLine" id="cb1-100" data-line-number="100"><span class="co">#&gt;   .. .. .. ..$ dimvarid     :List of 5</span></a>
+<a class="sourceLine" id="cb1-101" data-line-number="101"><span class="co">#&gt;   .. .. .. .. ..$ id         : int 4</span></a>
+<a class="sourceLine" id="cb1-102" data-line-number="102"><span class="co">#&gt;   .. .. .. .. ..$ group_index: int 1</span></a>
+<a class="sourceLine" id="cb1-103" data-line-number="103"><span class="co">#&gt;   .. .. .. .. ..$ group_id   : int 65536</span></a>
+<a class="sourceLine" id="cb1-104" data-line-number="104"><span class="co">#&gt;   .. .. .. .. ..$ list_index : num -1</span></a>
+<a class="sourceLine" id="cb1-105" data-line-number="105"><span class="co">#&gt;   .. .. .. .. ..$ isdimvar   : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-106" data-line-number="106"><span class="co">#&gt;   .. .. .. .. ..- attr(*, "class")= chr "ncid4"</span></a>
+<a class="sourceLine" id="cb1-107" data-line-number="107"><span class="co">#&gt;   .. .. .. ..$ units        : chr "hours since 1800-01-01 00:00:0.0"</span></a>
+<a class="sourceLine" id="cb1-108" data-line-number="108"><span class="co">#&gt;   .. .. .. ..$ vals         : num [1(1d)] 1845360</span></a>
+<a class="sourceLine" id="cb1-109" data-line-number="109"><span class="co">#&gt;   .. .. .. ..$ create_dimvar: logi TRUE</span></a>
+<a class="sourceLine" id="cb1-110" data-line-number="110"><span class="co">#&gt;   .. .. .. ..- attr(*, "class")= chr "ncdim4"</span></a>
+<a class="sourceLine" id="cb1-111" data-line-number="111"><span class="co">#&gt;   .. ..$ varsize           : int [1:4] 144 73 17 1</span></a>
+<a class="sourceLine" id="cb1-112" data-line-number="112"><span class="co">#&gt;   .. ..$ unlim             : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-113" data-line-number="113"><span class="co">#&gt;   .. ..$ make_missing_value: logi TRUE</span></a>
+<a class="sourceLine" id="cb1-114" data-line-number="114"><span class="co">#&gt;   .. ..$ missval           : num -9.97e+36</span></a>
+<a class="sourceLine" id="cb1-115" data-line-number="115"><span class="co">#&gt;   .. ..$ hasAddOffset      : logi FALSE</span></a>
+<a class="sourceLine" id="cb1-116" data-line-number="116"><span class="co">#&gt;   .. ..$ hasScaleFact      : logi FALSE</span></a>
+<a class="sourceLine" id="cb1-117" data-line-number="117"><span class="co">#&gt;   .. ..- attr(*, "class")= chr "ncvar4"</span></a>
+<a class="sourceLine" id="cb1-118" data-line-number="118"><span class="co">#&gt;  $ dims:List of 4</span></a>
+<a class="sourceLine" id="cb1-119" data-line-number="119"><span class="co">#&gt;   ..$ time :List of 10</span></a>
+<a class="sourceLine" id="cb1-120" data-line-number="120"><span class="co">#&gt;   .. ..$ name         : chr "time"</span></a>
+<a class="sourceLine" id="cb1-121" data-line-number="121"><span class="co">#&gt;   .. ..$ len          : int 1</span></a>
+<a class="sourceLine" id="cb1-122" data-line-number="122"><span class="co">#&gt;   .. ..$ unlim        : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-123" data-line-number="123"><span class="co">#&gt;   .. ..$ group_index  : int 1</span></a>
+<a class="sourceLine" id="cb1-124" data-line-number="124"><span class="co">#&gt;   .. ..$ group_id     : int 65536</span></a>
+<a class="sourceLine" id="cb1-125" data-line-number="125"><span class="co">#&gt;   .. ..$ id           : int 0</span></a>
+<a class="sourceLine" id="cb1-126" data-line-number="126"><span class="co">#&gt;   .. ..$ dimvarid     :List of 5</span></a>
+<a class="sourceLine" id="cb1-127" data-line-number="127"><span class="co">#&gt;   .. .. ..$ id         : int 4</span></a>
+<a class="sourceLine" id="cb1-128" data-line-number="128"><span class="co">#&gt;   .. .. ..$ group_index: int 1</span></a>
+<a class="sourceLine" id="cb1-129" data-line-number="129"><span class="co">#&gt;   .. .. ..$ group_id   : int 65536</span></a>
+<a class="sourceLine" id="cb1-130" data-line-number="130"><span class="co">#&gt;   .. .. ..$ list_index : num -1</span></a>
+<a class="sourceLine" id="cb1-131" data-line-number="131"><span class="co">#&gt;   .. .. ..$ isdimvar   : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-132" data-line-number="132"><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "ncid4"</span></a>
+<a class="sourceLine" id="cb1-133" data-line-number="133"><span class="co">#&gt;   .. ..$ units        : chr "hours since 1800-01-01 00:00:0.0"</span></a>
+<a class="sourceLine" id="cb1-134" data-line-number="134"><span class="co">#&gt;   .. ..$ vals         : num [1(1d)] 1845360</span></a>
+<a class="sourceLine" id="cb1-135" data-line-number="135"><span class="co">#&gt;   .. ..$ create_dimvar: logi TRUE</span></a>
+<a class="sourceLine" id="cb1-136" data-line-number="136"><span class="co">#&gt;   .. ..- attr(*, "class")= chr "ncdim4"</span></a>
+<a class="sourceLine" id="cb1-137" data-line-number="137"><span class="co">#&gt;   ..$ level:List of 10</span></a>
+<a class="sourceLine" id="cb1-138" data-line-number="138"><span class="co">#&gt;   .. ..$ name         : chr "level"</span></a>
+<a class="sourceLine" id="cb1-139" data-line-number="139"><span class="co">#&gt;   .. ..$ len          : int 17</span></a>
+<a class="sourceLine" id="cb1-140" data-line-number="140"><span class="co">#&gt;   .. ..$ unlim        : logi FALSE</span></a>
+<a class="sourceLine" id="cb1-141" data-line-number="141"><span class="co">#&gt;   .. ..$ group_index  : int 1</span></a>
+<a class="sourceLine" id="cb1-142" data-line-number="142"><span class="co">#&gt;   .. ..$ group_id     : int 65536</span></a>
+<a class="sourceLine" id="cb1-143" data-line-number="143"><span class="co">#&gt;   .. ..$ id           : int 1</span></a>
+<a class="sourceLine" id="cb1-144" data-line-number="144"><span class="co">#&gt;   .. ..$ dimvarid     :List of 5</span></a>
+<a class="sourceLine" id="cb1-145" data-line-number="145"><span class="co">#&gt;   .. .. ..$ id         : int 2</span></a>
+<a class="sourceLine" id="cb1-146" data-line-number="146"><span class="co">#&gt;   .. .. ..$ group_index: int 1</span></a>
+<a class="sourceLine" id="cb1-147" data-line-number="147"><span class="co">#&gt;   .. .. ..$ group_id   : int 65536</span></a>
+<a class="sourceLine" id="cb1-148" data-line-number="148"><span class="co">#&gt;   .. .. ..$ list_index : num -1</span></a>
+<a class="sourceLine" id="cb1-149" data-line-number="149"><span class="co">#&gt;   .. .. ..$ isdimvar   : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-150" data-line-number="150"><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "ncid4"</span></a>
+<a class="sourceLine" id="cb1-151" data-line-number="151"><span class="co">#&gt;   .. ..$ units        : chr "millibar"</span></a>
+<a class="sourceLine" id="cb1-152" data-line-number="152"><span class="co">#&gt;   .. ..$ vals         : num [1:17(1d)] 1000 925 850 700 600 500 400 300 250 200 ...</span></a>
+<a class="sourceLine" id="cb1-153" data-line-number="153"><span class="co">#&gt;   .. ..$ create_dimvar: logi TRUE</span></a>
+<a class="sourceLine" id="cb1-154" data-line-number="154"><span class="co">#&gt;   .. ..- attr(*, "class")= chr "ncdim4"</span></a>
+<a class="sourceLine" id="cb1-155" data-line-number="155"><span class="co">#&gt;   ..$ lat  :List of 10</span></a>
+<a class="sourceLine" id="cb1-156" data-line-number="156"><span class="co">#&gt;   .. ..$ name         : chr "lat"</span></a>
+<a class="sourceLine" id="cb1-157" data-line-number="157"><span class="co">#&gt;   .. ..$ len          : int 73</span></a>
+<a class="sourceLine" id="cb1-158" data-line-number="158"><span class="co">#&gt;   .. ..$ unlim        : logi FALSE</span></a>
+<a class="sourceLine" id="cb1-159" data-line-number="159"><span class="co">#&gt;   .. ..$ group_index  : int 1</span></a>
+<a class="sourceLine" id="cb1-160" data-line-number="160"><span class="co">#&gt;   .. ..$ group_id     : int 65536</span></a>
+<a class="sourceLine" id="cb1-161" data-line-number="161"><span class="co">#&gt;   .. ..$ id           : int 2</span></a>
+<a class="sourceLine" id="cb1-162" data-line-number="162"><span class="co">#&gt;   .. ..$ dimvarid     :List of 5</span></a>
+<a class="sourceLine" id="cb1-163" data-line-number="163"><span class="co">#&gt;   .. .. ..$ id         : int 1</span></a>
+<a class="sourceLine" id="cb1-164" data-line-number="164"><span class="co">#&gt;   .. .. ..$ group_index: int 1</span></a>
+<a class="sourceLine" id="cb1-165" data-line-number="165"><span class="co">#&gt;   .. .. ..$ group_id   : int 65536</span></a>
+<a class="sourceLine" id="cb1-166" data-line-number="166"><span class="co">#&gt;   .. .. ..$ list_index : num -1</span></a>
+<a class="sourceLine" id="cb1-167" data-line-number="167"><span class="co">#&gt;   .. .. ..$ isdimvar   : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-168" data-line-number="168"><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "ncid4"</span></a>
+<a class="sourceLine" id="cb1-169" data-line-number="169"><span class="co">#&gt;   .. ..$ units        : chr "degrees_north"</span></a>
+<a class="sourceLine" id="cb1-170" data-line-number="170"><span class="co">#&gt;   .. ..$ vals         : num [1:73(1d)] 90 87.5 85 82.5 80 77.5 75 72.5 70 67.5 ...</span></a>
+<a class="sourceLine" id="cb1-171" data-line-number="171"><span class="co">#&gt;   .. ..$ create_dimvar: logi TRUE</span></a>
+<a class="sourceLine" id="cb1-172" data-line-number="172"><span class="co">#&gt;   .. ..- attr(*, "class")= chr "ncdim4"</span></a>
+<a class="sourceLine" id="cb1-173" data-line-number="173"><span class="co">#&gt;   ..$ lon  :List of 10</span></a>
+<a class="sourceLine" id="cb1-174" data-line-number="174"><span class="co">#&gt;   .. ..$ name         : chr "lon"</span></a>
+<a class="sourceLine" id="cb1-175" data-line-number="175"><span class="co">#&gt;   .. ..$ len          : int 144</span></a>
+<a class="sourceLine" id="cb1-176" data-line-number="176"><span class="co">#&gt;   .. ..$ unlim        : logi FALSE</span></a>
+<a class="sourceLine" id="cb1-177" data-line-number="177"><span class="co">#&gt;   .. ..$ group_index  : int 1</span></a>
+<a class="sourceLine" id="cb1-178" data-line-number="178"><span class="co">#&gt;   .. ..$ group_id     : int 65536</span></a>
+<a class="sourceLine" id="cb1-179" data-line-number="179"><span class="co">#&gt;   .. ..$ id           : int 3</span></a>
+<a class="sourceLine" id="cb1-180" data-line-number="180"><span class="co">#&gt;   .. ..$ dimvarid     :List of 5</span></a>
+<a class="sourceLine" id="cb1-181" data-line-number="181"><span class="co">#&gt;   .. .. ..$ id         : int 3</span></a>
+<a class="sourceLine" id="cb1-182" data-line-number="182"><span class="co">#&gt;   .. .. ..$ group_index: int 1</span></a>
+<a class="sourceLine" id="cb1-183" data-line-number="183"><span class="co">#&gt;   .. .. ..$ group_id   : int 65536</span></a>
+<a class="sourceLine" id="cb1-184" data-line-number="184"><span class="co">#&gt;   .. .. ..$ list_index : num -1</span></a>
+<a class="sourceLine" id="cb1-185" data-line-number="185"><span class="co">#&gt;   .. .. ..$ isdimvar   : logi TRUE</span></a>
+<a class="sourceLine" id="cb1-186" data-line-number="186"><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "ncid4"</span></a>
+<a class="sourceLine" id="cb1-187" data-line-number="187"><span class="co">#&gt;   .. ..$ units        : chr "degrees_east"</span></a>
+<a class="sourceLine" id="cb1-188" data-line-number="188"><span class="co">#&gt;   .. ..$ vals         : num [1:144(1d)] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span></a>
+<a class="sourceLine" id="cb1-189" data-line-number="189"><span class="co">#&gt;   .. ..$ create_dimvar: logi TRUE</span></a>
+<a class="sourceLine" id="cb1-190" data-line-number="190"><span class="co">#&gt;   .. ..- attr(*, "class")= chr "ncdim4"</span></a>
+<a class="sourceLine" id="cb1-191" data-line-number="191"><span class="co">#&gt;  - attr(*, "class")= chr [1:2] "nc_glimpse" "list"</span></a></code></pre></div>
 <p>Now that we know the name and the dimensions of the data, we can read it. <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> can also read only a (continuous) subset of the data.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">air &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span>(file, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">lat =</span> <span class="dv">90</span><span class="op">:</span><span class="dv">0</span>, <span class="dt">level =</span> <span class="dv">925</span>))</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>

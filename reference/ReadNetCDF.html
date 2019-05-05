@@ -134,8 +134,10 @@ with proper dimensions.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ReadNetCDF</span>(<span class='no'>file</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"data.frame"</span>, <span class='st'>"vector"</span>, <span class='st'>"array"</span>,
-  <span class='st'>"vars"</span>), <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>ReadNetCDF</span>(<span class='no'>file</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"data.frame"</span>, <span class='st'>"vector"</span>, <span class='st'>"array"</span>),
+  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>GlimpseNetCDF</span>(<span class='no'>file</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,12 +175,12 @@ list. Either of these two options are much faster than the
 first since the most time consuming part is the melting of the array
 returned by <a href='https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get'>ncdf4::ncvar_get</a>. <code>out = "vector"</code> is particularly useful for
 adding new variables to an existing data frame with the same dimensions.</p>
-<p>Finally, it can also be <code>vars</code>, in which case it returns a list with the name
-of the available variables and the dimensions of the spatiotemporal grid.</p>
 <p>When not all variables specified in <code>vars</code> have the same number of dimensions,
 the shorter variables will be recycled. E.g. if reading a 3D pressure field
 and a 2D surface temperature field, the latter will be turned into a 3D field
 with the same values in each missing dimension.</p>
+<p><code>GlimpseNetCDF()</code> returns a list of variables and dimensions included in the
+file with a nice printing method.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -193,9 +195,11 @@ closest gridpoint will be selected.</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='st'>"file.nc"</span>
 <span class='co'># Get a list of variables.</span>
-<span class='no'>variables</span> <span class='kw'>&lt;-</span> <span class='fu'>ReadNetCDF</span>(<span class='no'>file</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"vars"</span>)
+<span class='no'>variables</span> <span class='kw'>&lt;-</span> <span class='fu'>GlimpseNetCDF</span>(<span class='no'>file</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>variables</span>)
+
 <span class='co'># Read only the first one, with name "var".</span>
-<span class='no'>field</span> <span class='kw'>&lt;-</span> <span class='fu'>ReadNetCDF</span>(<span class='no'>file</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>var</span> <span class='kw'>=</span> <span class='no'>variables</span>$<span class='no'>vars</span>[<span class='fl'>1</span>]))
+<span class='no'>field</span> <span class='kw'>&lt;-</span> <span class='fu'>ReadNetCDF</span>(<span class='no'>file</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>var</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>variables</span>$<span class='no'>vars</span>[<span class='fl'>1</span>])))
 <span class='co'># Add a new variable.</span>
 <span class='co'># ¡Make sure it's on the same exact grid!</span>
 <span class='no'>field</span>[, <span class='no'>var2</span> <span class='kw'>:=</span> <span class='fu'>ReadNerCDF</span>(<span class='no'>file2</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"vector"</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>90</span>:<span class='fl'>10</span>))]

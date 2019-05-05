@@ -25,6 +25,4 @@ test_that("different outs work", {
                     "data.table")
     expect_is(ReadNetCDF(file, out = "array")[[1]], "array")
     expect_is(ReadNetCDF(file, out = "vector")[[1]], "numeric")
-    expect_equal(names(ReadNetCDF(file, out = "vars")),
-                 c("vars", "dimensions"))
 })

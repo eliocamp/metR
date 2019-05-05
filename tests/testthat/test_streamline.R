@@ -31,22 +31,22 @@ basic_stat_streamline <- ggplot(geo, aes(lon, lat)) +
 #                  4379)
 # })
 
-data <- as.data.table(expand.grid(x = 1:50, y = 1:50))
-data[, c("dx", "dy") := .(-sign(x - mean(x)), -sign(y - mean(y)))]
-test_that("Streamline builds the grid correctly", {
-    expect_equal({
-        d <- ggplot_build(ggplot(data, aes(x, y)) +
-                         geom_streamline(aes(dx = dx, dy = dy),
-                                         nx = 10, ny = 10, jitter = 0, S = 2))$data[[1]]
-        nrow(subset(d, step == 0))
-    }, 100)
-    expect_equal({
-        d <- ggplot_build(ggplot(data, aes(x, y)) +
-                              geom_streamline(aes(dx = dx, dy = dy), skip = 10,
-                                              jitter = 0, S = 2))$data[[1]]
-        nrow(subset(d, step == 0))
-    }, 25)
-})
-
+# data <- as.data.table(expand.grid(x = 1:50, y = 1:50))
+# data[, c("dx", "dy") := .(-sign(x - mean(x)), -sign(y - mean(y)))]
+# test_that("Streamline builds the grid correctly", {
+#     expect_equal({
+#         d <- ggplot_build(ggplot(data, aes(x, y)) +
+#                          geom_streamline(aes(dx = dx, dy = dy),
+#                                          nx = 10, ny = 10, jitter = 0, S = 2))$data[[1]]
+#         nrow(subset(d, step == 0))
+#     }, 100)
+#     expect_equal({
+#         d <- ggplot_build(ggplot(data, aes(x, y)) +
+#                               geom_streamline(aes(dx = dx, dy = dy), skip = 10,
+#                                               jitter = 0, S = 2))$data[[1]]
+#         nrow(subset(d, step == 0))
+#     }, 25)
+# })
+#
 
 

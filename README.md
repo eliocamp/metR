@@ -95,19 +95,6 @@ ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
 
 ![](man/figures/field-1.png)<!-- -->
 
-    #> Called from: `_f`(field = field, dt = dt, S = S, skip.x = skip.x, skip.y = skip.y, 
-    #>     nx = nx, ny = ny, jitter.x = jitter.x, jitter.y = jitter.y, 
-    #>     xwrap = xwrap, ywrap = ywrap)
-    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#522: points[, `:=`(end, seq_len(.N) < .N/2), by = .(group, piece)]
-    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#523: points_last <- points[end == FALSE, ]
-    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#524: points_first <- rbind(points[end == TRUE, ], points_last[, head(.SD, 
-    #>     1), by = .(group, piece)])
-    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#526: points_first[, `:=`(end, TRUE)]
-    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#527: points <- rbind(points_first, points_last)
-    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#529: points[, `:=`(group, interaction(group, piece, end))]
-    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#530: points[, `:=`(line, group)]
-    #> debug at /home/elio/Documents/metR/R/geom_streamline.R#532: return(points[, .(x, y, group, piece, end, step, dx, dy, line)])
-
 ``` r
 # AAO signal
 ggplot(aao$right, aes(date, gh.t.w)) +

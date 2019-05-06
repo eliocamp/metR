@@ -145,23 +145,11 @@
 <a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt; Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be</span></a>
 <a class="sourceLine" id="cb4-30" data-line-number="30"><span class="co">#&gt; deprecated. Use ggperiodic::periodic insead.</span></a></code></pre></div>
 <p><img src="reference/figures/field-1.png" width="700"></p>
-<pre><code>#&gt; Called from: `_f`(field = field, dt = dt, S = S, skip.x = skip.x, skip.y = skip.y, 
-#&gt;     nx = nx, ny = ny, jitter.x = jitter.x, jitter.y = jitter.y, 
-#&gt;     xwrap = xwrap, ywrap = ywrap)
-#&gt; debug: points[, `:=`(end, seq_len(.N) &lt; .N/2), by = .(group, piece)]
-#&gt; debug: points_last &lt;- points[end == FALSE, ]
-#&gt; debug: points_first &lt;- rbind(points[end == TRUE, ], points_last[, head(.SD, 
-#&gt;     1), by = .(group, piece)])
-#&gt; debug: points_first[, `:=`(end, TRUE)]
-#&gt; debug: points &lt;- rbind(points_first, points_last)
-#&gt; debug: points[, `:=`(group, interaction(group, piece, end))]
-#&gt; debug: points[, `:=`(line, group)]
-#&gt; debug: return(points[, .(x, y, group, piece, end, step, dx, dy, line)])</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># AAO signal</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao<span class="op">$</span>right, <span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, gh.t.w)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_smooth">geom_smooth</a></span>(<span class="dt">span =</span> <span class="fl">0.4</span>)</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># AAO signal</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(aao<span class="op">$</span>right, <span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, gh.t.w)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_smooth">geom_smooth</a></span>(<span class="dt">span =</span> <span class="fl">0.4</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></a></code></pre></div>
 <p><img src="reference/figures/timeseries-1.png" width="700"></p>
 <p>You can read more in the vignettes: <a href="https://eliocamp.github.io/metR/articles/Visualization-tools.html">Visualization tools</a> and <a href="https://eliocamp.github.io/metR/articles/Working-with-data.html">Working with data</a>.</p>
 </div>

@@ -192,7 +192,7 @@ ReadNetCDF <- function(file, vars = NULL,
         dimnames(var1) <- sub.dimensions[dims[as.character(order)]]
         dim.length[v] <- length(order)
         nc[[v]] <- var1
-        nc_dim[[v]] <- sub.dimensions[dims[as.character(order)]]
+        nc_dim[[v]] <- as.vector(sub.dimensions[dims[as.character(order)]])
     }
 
     if (out[1] == "array") {

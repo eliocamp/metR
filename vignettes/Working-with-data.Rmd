@@ -36,7 +36,7 @@ library(ggplot2)
 # If out = "vars", returns information about the available variables and 
 # dimensions
 file <- system.file("extdata", "temperature.nc", package = "metR")
-str(ReadNetCDF(file, out = "vars"))
+GlimpseNetCDF(file)
 ```
 
 Now that we know the name and the dimensions of the data, we can read it. `ReadNetCDF()` can also read only a (continuous) subset of the data.

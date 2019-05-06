@@ -6,6 +6,8 @@
 
 - `geom_streamline()` now uses 4th order Runge-Kutta insteaf of plain old Euler. It also draws arrows in the middle of the streamline. 
 
+- `ReadNetCDF()` is slightly faster and should use less memory. 
+
 ## Bugfixes
 
 - `ReadNetCDF()` result will print correctly. 

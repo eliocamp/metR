@@ -127,8 +127,9 @@ ReadNetCDF <- function(file, vars = NULL,
         ids[i] <- ncfile$dim[[i]]$id
     }
     names(dims) <- ids
-
-    if ("time" %in% names(dimensions)) {
+    has_timedate <- FALSE
+    if ("time" %in% names(dimensions) && ncfile$dim$time$units != "") {
+        has_timedate <- TRUE
         time <- udunits2::ud.convert(dimensions[["time"]],
                                      ncfile$dim$time$units,
                                      "seconds since 1970-01-01 00:00:00")
@@ -152,6 +153,7 @@ ReadNetCDF <- function(file, vars = NULL,
 
     # Leo las variables y las meto en una lista.
     nc <- list()
+    nc_dim <- list()
 
     dim.length <- vector("numeric", length = length(vars))
     for (v in seq_along(vars)) {
@@ -190,6 +192,7 @@ ReadNetCDF <- function(file, vars = NULL,
         dimnames(var1) <- sub.dimensions[dims[as.character(order)]]
         dim.length[v] <- length(order)
         nc[[v]] <- var1
+        nc_dim[[v]] <- sub.dimensions[dims[as.character(order)]]
     }
 
     if (out[1] == "array") {
@@ -200,11 +203,10 @@ ReadNetCDF <- function(file, vars = NULL,
         return(nc)
     } else {
         first.var <- which.max(dim.length)
-        nc.df <- data.table::melt(nc[[first.var]], varnames = names(dimnames(nc[[first.var]])),
-                                  value.name = names(vars)[first.var])
-        data.table::setDT(nc.df)
+        nc.df <- .melt_array(nc[[first.var]], dims = nc_dim[[first.var]],
+                             value.name = names(vars)[first.var])
 
-        if ("time" %in% names(dimensions)) {
+        if ("time" %in% names(dimensions) && has_timedate) {
             nc.df[, time2 := lubridate::as_datetime(time[1]), by = time]
             nc.df[, time := NULL]
             data.table::setnames(nc.df, "time2", "time")
@@ -214,12 +216,10 @@ ReadNetCDF <- function(file, vars = NULL,
             this.dim <- names(dimnames(nc[[v]]))
             first.dim <- names(dimnames(nc[[first.var]]))
             missing.dim <- first.dim[!(first.dim %in% this.dim)]
-            nc.df[, c(names(vars[-first.var])) := lapply(seq_along(vars)[-first.var],
-                                                         function(x) c(nc[[x]])),
-                  by = c(missing.dim)]
+            nc.df[, names(vars)[v] := c(nc[[v]]), by = c(missing.dim)]
         }
 
-        if (key == TRUE) data.table::setkeyv(nc.df, names(dimnames(nc[[1]])))
+        if (key == TRUE) data.table::setkeyv(nc.df, names(nc.df)[!(names(nc.df) %in% names(vars))])
     }
 
 
@@ -234,8 +234,9 @@ GlimpseNetCDF <- function(file) {
     ReadNetCDF(file, out = "vars")
 }
 
+#' @export
 print.nc_glimpse <- function(glimpse) {
-    cat("----- Variables  ----- \n")
+    cat("----- Variables ----- \n")
     x <- lapply(glimpse$vars, print)
 
     cat("\n\n")
@@ -243,21 +244,27 @@ print.nc_glimpse <- function(glimpse) {
     x <- lapply(glimpse$dim, print)
 }
 
-
+#' @export
 print.ncvar4 <- function(var) {
-    # cat("$", var$name, "\n", sep = "")
-    cat("    ", var$longname, " in ", var$units, "\n", sep = "")
+    cat(var$name, ":\n", sep = "")
+    cat("    ", var$longname, sep = "")
 
+    if (var$units != "") cat(" in ", var$units, sep = "")
+
+    cat("\n")
     dims <- vapply(var$dim, function(x) x$name, "a")
 
-    cat("    ", paste0(dims, collapse = "\u2613"), sep = "")
+    cat("    Dimensions: ")
+    cat(paste0(dims, collapse = " by "), sep = "")
+    cat("\n")
 
     return(invisible(var))
 }
 
+#' @export
 print.ncdim4 <- function(dim) {
     # cat("$", dim$name, "\n", sep = "")
-    if (dim$name == "time") {
+    if (dim$name == "time" & dim$units != "") {
         time <- udunits2::ud.convert(dim$vals,
                                      dim$units,
                                      "seconds since 1970-01-01 00:00:00")
@@ -274,4 +281,16 @@ print.ncdim4 <- function(dim) {
         as.character(max(vals)), " ",
         units,"\n", sep = "")
     return(invisible(dim))
+}
+
+
+.melt_array <- function(array, dims, value.name = "V1") {
+    # args <- dims
+    # # args <- attr(array, "dimnames")
+    # args <- lapply(args, type.convert)
+    dims <- c(dims[length(dims):1], sorted = FALSE)
+    grid <- do.call(data.table::CJ, dims)
+    grid[, c(value.name) := c(array)][]
+
+    return(grid)
 }

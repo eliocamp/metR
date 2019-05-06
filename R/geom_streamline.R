@@ -515,7 +515,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         points[, step := seq_along(y), by = group]
         points[, y := .fold(y, 1, range.y, circ.y)[[1]]]
     }
-    browser()
+    # browser()
 
     # Me fijo si ese piece tiene el final.
     # Esto luego va al geom que decide si ponerle flecha o no.

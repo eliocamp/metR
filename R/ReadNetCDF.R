@@ -235,59 +235,57 @@ GlimpseNetCDF <- function(file) {
 }
 
 #' @export
-print.nc_glimpse <- function(glimpse) {
+print.nc_glimpse <- function(x, ...) {
     cat("----- Variables ----- \n")
-    x <- lapply(glimpse$vars, print)
+    x <- lapply(x$vars, print)
 
     cat("\n\n")
     cat("----- Dimensions ----- \n")
-    x <- lapply(glimpse$dim, print)
+    x <- lapply(x$dim, print)
 }
 
 #' @export
-print.ncvar4 <- function(var) {
-    cat(var$name, ":\n", sep = "")
-    cat("    ", var$longname, sep = "")
+print.ncvar4 <- function(x, ...) {
+    cat(x$name, ":\n", sep = "")
+    cat("    ", x$longname, sep = "")
 
-    if (var$units != "") cat(" in ", var$units, sep = "")
+    if (x$units != "") cat(" in ", x$units, sep = "")
 
     cat("\n")
-    dims <- vapply(var$dim, function(x) x$name, "a")
+    dims <- vapply(x$dim, function(x) x$name, "a")
 
     cat("    Dimensions: ")
     cat(paste0(dims, collapse = " by "), sep = "")
     cat("\n")
 
-    return(invisible(var))
+    return(invisible(x))
 }
 
 #' @export
-print.ncdim4 <- function(dim) {
+print.ncdim4 <- function(x, ...) {
     # cat("$", dim$name, "\n", sep = "")
-    if (dim$name == "time" & dim$units != "") {
-        time <- udunits2::ud.convert(dim$vals,
-                                     dim$units,
+    if (x$name == "time" & x$units != "") {
+        time <- udunits2::ud.convert(x$vals,
+                                     x$units,
                                      "seconds since 1970-01-01 00:00:00")
         vals <- as.POSIXct(time, tz = "UTC", origin = "1970-01-01 00:00:00")
         units <- ""
     } else {
-        vals <- dim$vals
-        units <- dim$units
+        vals <- x$vals
+        units <- x$units
     }
 
-    cat("  ", dim$name, ": ",
-        dim$len, " values from ",
+    cat("  ", x$name, ": ",
+        x$len, " values from ",
         as.character(min(vals)), " to ",
         as.character(max(vals)), " ",
         units,"\n", sep = "")
-    return(invisible(dim))
+    return(invisible(x))
 }
 
 
 .melt_array <- function(array, dims, value.name = "V1") {
-    # args <- dims
-    # # args <- attr(array, "dimnames")
-    # args <- lapply(args, type.convert)
+    dims <- lapply(dims, c)
     dims <- c(dims[length(dims):1], sorted = FALSE)
     grid <- do.call(data.table::CJ, dims)
     grid[, c(value.name) := c(array)][]

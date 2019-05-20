@@ -2,13 +2,13 @@
 % Please edit documentation in R/ReadNetCDF.R
 \name{ReadNetCDF}
 \alias{ReadNetCDF}
-\alias{GlimpseNetCDF}
+\alias{GlanceNetCDF}
 \title{Read NetCDF files.}
 \usage{
 ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array"),
   subset = NULL, key = FALSE)
 
-GlimpseNetCDF(file)
+GlanceNetCDF(file)
 }
 \arguments{
 \item{file}{file to read from.}
@@ -37,7 +37,7 @@ the shorter variables will be recycled. E.g. if reading a 3D pressure field
 and a 2D surface temperature field, the latter will be turned into a 3D field
 with the same values in each missing dimension.
 
-\code{GlimpseNetCDF()} returns a list of variables and dimensions included in the
+\code{GlanceNetCDF()} returns a list of variables and dimensions included in the
 file with a nice printing method.
 }
 \description{
@@ -56,7 +56,7 @@ closest gridpoint will be selected.
 \dontrun{
 file <- "file.nc"
 # Get a list of variables.
-variables <- GlimpseNetCDF(file)
+variables <- GlanceNetCDF(file)
 print(variables)
 
 # Read only the first one, with name "var".

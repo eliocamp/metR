@@ -2,7 +2,7 @@
 
 ## New features
 
-- New `GlimpseNetCDF()` function that is an alias for `ReadNetCDF(out = "vars")` but now prints a human readable summary of the contents of the NetCDF file.
+- New `GlanceNetCDF()` function that is an alias for `ReadNetCDF(out = "vars")` but now prints a human readable summary of the contents of the NetCDF file.
 
 - `geom_streamline()` now uses 4th order Runge-Kutta insteaf of plain old Euler. It also draws arrows in the middle of the streamline. 
 

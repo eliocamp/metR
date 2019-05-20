@@ -33,14 +33,14 @@
 #' and a 2D surface temperature field, the latter will be turned into a 3D field
 #' with the same values in each missing dimension.
 #'
-#' `GlimpseNetCDF()` returns a list of variables and dimensions included in the
+#' `GlanceNetCDF()` returns a list of variables and dimensions included in the
 #' file with a nice printing method.
 #'
 #' @examples
 #' \dontrun{
 #' file <- "file.nc"
 #' # Get a list of variables.
-#' variables <- GlimpseNetCDF(file)
+#' variables <- GlanceNetCDF(file)
 #' print(variables)
 #'
 #' # Read only the first one, with name "var".
@@ -90,7 +90,7 @@ ReadNetCDF <- function(file, vars = NULL,
     if (out[1] == "vars") {
         r <- list(vars = ncfile$var,
                   dims = ncfile$dim)
-        class(r) <- c("nc_glimpse", class(r))
+        class(r) <- c("nc_glance", class(r))
         # options(OutDec = dec)
         return(r)
     }
@@ -230,12 +230,12 @@ ReadNetCDF <- function(file, vars = NULL,
 #' @rdname ReadNetCDF
 #'
 #' @export
-GlimpseNetCDF <- function(file) {
+GlanceNetCDF <- function(file) {
     ReadNetCDF(file, out = "vars")
 }
 
 #' @export
-print.nc_glimpse <- function(x, ...) {
+print.nc_glance <- function(x, ...) {
     cat("----- Variables ----- \n")
     x <- lapply(x$vars, print)
 

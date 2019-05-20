@@ -137,7 +137,7 @@ with proper dimensions.</p>
     <pre class="usage"><span class='fu'>ReadNetCDF</span>(<span class='no'>file</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"data.frame"</span>, <span class='st'>"vector"</span>, <span class='st'>"array"</span>),
   <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>GlimpseNetCDF</span>(<span class='no'>file</span>)</pre>
+<span class='fu'>GlanceNetCDF</span>(<span class='no'>file</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,7 +179,7 @@ adding new variables to an existing data frame with the same dimensions.</p>
 the shorter variables will be recycled. E.g. if reading a 3D pressure field
 and a 2D surface temperature field, the latter will be turned into a 3D field
 with the same values in each missing dimension.</p>
-<p><code>GlimpseNetCDF()</code> returns a list of variables and dimensions included in the
+<p><code>GlanceNetCDF()</code> returns a list of variables and dimensions included in the
 file with a nice printing method.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -195,7 +195,7 @@ closest gridpoint will be selected.</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='st'>"file.nc"</span>
 <span class='co'># Get a list of variables.</span>
-<span class='no'>variables</span> <span class='kw'>&lt;-</span> <span class='fu'>GlimpseNetCDF</span>(<span class='no'>file</span>)
+<span class='no'>variables</span> <span class='kw'>&lt;-</span> <span class='fu'>GlanceNetCDF</span>(<span class='no'>file</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>variables</span>)
 
 <span class='co'># Read only the first one, with name "var".</span>

@@ -127,7 +127,7 @@ by default, puts labels in between values." />
 
     <div class="ref-description">
     
-    <p>A version of <a href='https://www.rdocumentation.org/packages/ggplot2/topics/guide_colourbar'>ggplot2::guide_colourbar</a> that displays discretized values and,
+    <p>A version of <a href='https://ggplot2.tidyverse.org/reference/guide_colourbar.html'>ggplot2::guide_colourbar</a> that displays discretized values and,
 by default, puts labels in between values.</p>
     
     </div>
@@ -282,7 +282,7 @@ for which a colourbar can be drawn.</p></td>
     <p>The default behaviour works fell for geom_contour_fill in which the colors
 represent the value between contour surfaces.</p>
 <p>`inside = TRUE`` works better for geom_tile where the color represents
-the value of the data and is very similar to <a href='https://www.rdocumentation.org/packages/ggplot2/topics/guide_legend'>ggplot2::guide_legend</a>.</p>
+the value of the data and is very similar to <a href='https://ggplot2.tidyverse.org/reference/guide_legend.html'>ggplot2::guide_legend</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -304,19 +304,19 @@ the value of the data and is very similar to <a href='https://www.rdocumentation
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
 <span class='no'>binwidth</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>volcano</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
     <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span>(<span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='no'>binwidth</span>) +
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/scale_colour_continuous'>scale_fill_continuous</a></span>(<span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'>guide_colourstrip</span>(),
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html'>scale_fill_continuous</a></span>(<span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'>guide_colourstrip</span>(),
                          <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='MakeBreaks.html'>MakeBreaks</a></span>(<span class='no'>binwidth</span>))</div><div class='img'><img src='guide_colourstrip-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Difference between guide_legend() and guide_colorbar2(inside = T)</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/outer'>outer</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='fl'>1</span>:<span class='fl'>4</span>), <span class='kw'>varnames</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"X1"</span>, <span class='st'>"X2"</span>))
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>df</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>X1</span>, <span class='no'>X2</span>)) +
-        <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/geom_tile'>geom_tile</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-        <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/theme'>theme</a></span>(<span class='kw'>legend.position</span> <span class='kw'>=</span> <span class='st'>"bottom"</span>)
+<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>X1</span>, <span class='no'>X2</span>)) +
+        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>geom_tile</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
+        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span>(<span class='kw'>legend.position</span> <span class='kw'>=</span> <span class='st'>"bottom"</span>)
 
 <span class='co'># Tick labels are to the side</span>
-<span class='no'>g</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/scale_colour_continuous'>scale_fill_continuous</a></span>(<span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/guide_legend'>guide_legend</a></span>())</div><div class='img'><img src='guide_colourstrip-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Tick labels are at the bottom</span>
-<span class='no'>g</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/scale_colour_continuous'>scale_fill_continuous</a></span>(<span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'>guide_colourstrip</span>(<span class='kw'>inside</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='img'><img src='guide_colourstrip-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>g</span> + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html'>scale_fill_continuous</a></span>(<span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/guide_legend.html'>guide_legend</a></span>())</div><div class='img'><img src='guide_colourstrip-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Tick labels are at the bottom</span>
+<span class='no'>g</span> + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html'>scale_fill_continuous</a></span>(<span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'>guide_colourstrip</span>(<span class='kw'>inside</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='img'><img src='guide_colourstrip-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

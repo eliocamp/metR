@@ -132,6 +132,7 @@
 <li><p>New <code><a href="../reference/ReadNetCDF.html">GlanceNetCDF()</a></code> function that is an alias for <code><a href="../reference/ReadNetCDF.html">ReadNetCDF(out = "vars")</a></code> but now prints a human readable summary of the contents of the NetCDF file.</p></li>
 <li><p><code><a href="../reference/geom_streamline.html">geom_streamline()</a></code> now uses 4th order Runge-Kutta insteaf of plain old Euler. It also draws arrows in the middle of the streamline.</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> is slightly faster and should use less memory.</p></li>
+<li><p>The <code>df</code> element returned by <code><a href="../reference/FitLm.html">FitLm()</a></code> now has the same length as the rest.</p></li>
 </ul>
 </div>
 <div id="bugfixes" class="section level2">
@@ -187,7 +188,7 @@
 <li><p><code>BuildQsWave()</code> and <code>FitQsWave()</code> have been removed and should had never even existed.</p></li>
 <li><p>The default <code>skip</code> argument for <code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> is now 0.</p></li>
 <li><p>Removed <code>hemisphere</code> argument from <code><a href="../reference/season.html">season()</a></code> since the function returns the trimester so it made no sense.</p></li>
-<li><p>Contour functions now compute breaks globaly (using all the data) instead of per panel. This means default intercomparabilty between facetwed plots but also a considerable deviation from <code><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_contour">ggplot2::geom_contour()</a></code>.</p></li>
+<li><p>Contour functions now compute breaks globaly (using all the data) instead of per panel. This means default intercomparabilty between facetwed plots but also a considerable deviation from <code><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">ggplot2::geom_contour()</a></code>.</p></li>
 <li><p>The <code>Between</code> operators are removed since they were already implemented in <code>data.table</code>.</p></li>
 <li><p>The default <code>geom</code> for <code><a href="../reference/stat_na.html">stat_na()</a></code> is changed to <code>point</code> for consistency with <code><a href="../reference/stat_subset.html">stat_subset()</a></code></p></li>
 </ul>

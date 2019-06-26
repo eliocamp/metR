@@ -193,8 +193,8 @@ counterclockwise from 12 o' clock</p></td>
     </tr>
     <tr>
       <th>raster</th>
-      <td><p>if <code>TRUE</code> (the default), uses <a href='https://www.rdocumentation.org/packages/ggplot2/topics/geom_tile'>ggplot2::geom_raster</a>,
-if <code>FALSE</code>, uses <a href='https://www.rdocumentation.org/packages/ggplot2/topics/geom_tile'>ggplot2::geom_tile</a>.</p></td>
+      <td><p>if <code>TRUE</code> (the default), uses <a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>ggplot2::geom_raster</a>,
+if <code>FALSE</code>, uses <a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>ggplot2::geom_tile</a>.</p></td>
     </tr>
     <tr>
       <th>interpolate</th>
@@ -271,8 +271,8 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
-      <span class='fu'>geom_relief</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>))
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/reshape2/topics/melt'>melt</a></span>(<span class='no'>volcano</span>), <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>)) +
+      <span class='fu'>geom_relief</span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

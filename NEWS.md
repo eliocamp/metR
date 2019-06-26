@@ -8,6 +8,8 @@
 
 - `ReadNetCDF()` is slightly faster and should use less memory. 
 
+- The `df` element returned by `FitLm()` now has the same length as the rest. 
+
 ## Bugfixes
 
 - `ReadNetCDF()` result will print correctly. 

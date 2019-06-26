@@ -55,7 +55,7 @@ FitLm <- function(y, ..., se = FALSE) {
             return(list(term = term,
                         estimate = estimate,
                         std.error = se,
-                        df = df))
+                        df = rep(df, length(term))))
         } else {
             return(list(term = term,
                         estimate = estimate))
@@ -81,7 +81,7 @@ FitLm <- function(y, ..., se = FALSE) {
         return(list(term = term,
                     estimate = estimate,
                     std.error = se,
-                    df = df))
+                    df = rep(df, length(term))))
     } else {
         return(list(term = term,
                     estimate = estimate))

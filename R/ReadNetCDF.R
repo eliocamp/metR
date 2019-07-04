@@ -8,15 +8,64 @@
 #' @param vars a character vector with the name of the variables to read. If
 #' \code{NULL}, then it read all the variables.
 #' @param out character indicating the type of output desired
-#' @param subset a named list a subsetting vectors. See Details.
+#' @param subset a list of subsetting objects. See below.
 #' @param key if `TRUE`, returns a data.table keyed by the dimensions of the data.
 #'
-#' @details
-#' `subset` must be a named list for subsetting. Names must match dimensions
-#' specified in the NetCDF file and each element must be a vector of the same type
-#' of that dimension whose range will be use for subsetting. You don't need to
-#' provide and exact range that matches the actual gridpoints of the file; the
-#' closest gridpoint will be selected.
+#' @section Subsetting:
+#' In the most basic form, `subset` will be a named list whose names must match
+#' the dimensions specified in the NetCDF file and each element must be a vector
+#' whose range defines
+#' a contiguous subset of data. You don't need to provide and exact range that
+#' matches the actual gridpoints of the file; the closest gridpoint will be selected.
+#'
+#' So, if you want to get Southern Hemisphere data from the from a file that defines
+#' latitude as `lat`, then you can use:
+#' \preformatted{
+#' subset = list(lat = -90:0)
+#'}
+#' More complex subsetting operations are supported. If yuou want to read non-contiguous
+#' chunks of data, you can specify each chunk into a list inside `subset`. For example
+#' this subset
+#' \preformatted{
+#' subset = list(list(lat = -90:-70, lon = 0:60),
+#'               list(lat = 70:90, lon = 300:360))
+#'}
+#' will return two contiguous chunks: one on the South-West corner and one on the
+#' North-East corner. Alternatively, if you want to get the four corners that
+#' are combination of those two conditions,
+#'
+#' \preformatted{
+#' subset = list(lat = list(-90:-70, 70:90),
+#'               lon = list(0:60, 300:360))
+#'}
+#' Both operations can be mixed together. So for exmaple this
+#'
+#' \preformatted{
+#' subset = list(list(lat = -90:-70,
+#'                    lon = 0:60),
+#'               time = list(c("2000-01-01", "2000-12-31"),
+#'                           c("2010-01-01", "2010-12-31")))
+#'}
+#'
+#' returns one spatial chunk for each of two temporal chunks.
+#'
+#' The general idea is that named elements define 'global' subsets ranges that will be
+#' applied to every other subset, while each unnamed element define one contiguous chunk.
+#' In the above example, `time` defines two temporal ranges that every subset of data will
+#' have.
+#'
+#' The above example, then, is equivalent to
+#'
+#' \preformatted{
+#' subset = list(list(lat = -90:-70,
+#'                    lon = 0:60,
+#'                    time = c("2000-01-01", "2000-12-31")),
+#'               list(lat = -90:-70,
+#'                    lon = 0:60,
+#'                    time = c("2010-01-01", "2010-12-31")))
+#'}
+#'
+#' but demands much less typing.
 #'
 #' @return
 #' The return format is specified by `out`. It can be a data table in which each
@@ -79,8 +128,8 @@ ReadNetCDF <- function(file, vars = NULL,
     assertCharacter(vars, null.ok = TRUE, any.missing = FALSE, unique = TRUE,
                     add = checks)
     assertChoice(out, c("data.frame", "vector", "array", "vars"), add = checks)
-    assertList(subset, types = c("vector", "POSIXct", "POSIXt", "Date"), null.ok = TRUE, add = checks)
-    assertNamed(subset, c("unique"), add = checks)
+    assertList(subset, types = c("vector", "POSIXct", "POSIXt", "Date", "list"), null.ok = TRUE, add = checks)
+    # assertNamed(subset, c("unique"), add = checks)
     assertFlag(key, add = checks)
 
     reportAssertions(checks)
@@ -145,10 +194,25 @@ ReadNetCDF <- function(file, vars = NULL,
 
     ## Hago los subsets
     # Me fijo si faltan dimensiones
-    subset.extra <- names(subset)[!(names(subset) %in% names(dimensions))]
+    subset <- .expand_chunks(subset)
+
+    subset_names <- .names_recursive(subset)
+    subset.extra <- subset_names[!(subset_names %in% names(dimensions))]
     if (length(subset.extra) != 0) {
         stop(paste0("Subsetting dimensions not found: ",
                     paste0(subset.extra, collapse = ", "), "."))
+    }
+
+    if (length(subset) > 1) {
+        if (out != "data.frame") {
+            stop('Multiple subsets only supported for `out = "data.frame"')
+        }
+        reads <- lapply(subset, function(this_subset) {
+                ReadNetCDF(file = file, vars = vars, out = out, key = key, subset = this_subset)
+            })
+        return(data.table::rbindlist(reads))
+    } else {
+        subset <- subset[[1]]
     }
 
     # Leo las variables y las meto en una lista.
@@ -156,6 +220,7 @@ ReadNetCDF <- function(file, vars = NULL,
     nc_dim <- list()
 
     dim.length <- vector("numeric", length = length(vars))
+
     for (v in seq_along(vars)) {
 
         # Para cada variable, veo start y count
@@ -186,13 +251,16 @@ ReadNetCDF <- function(file, vars = NULL,
             sub.dimensions[[s]] <- dimensions[[s]][seq.int(start[[s]], start[[s]] + count[[s]] - 1)]
         }
 
+
         var1 <- ncdf4::ncvar_get(ncfile, vars[v], collapse_degen = FALSE, start = start,
                                  count = count)
-
         dimnames(var1) <- sub.dimensions[dims[as.character(order)]]
+
+
         dim.length[v] <- length(order)
         nc[[v]] <- var1
         nc_dim[[v]] <- as.vector(sub.dimensions[dims[as.character(order)]])
+
     }
 
     if (out[1] == "array") {
@@ -226,6 +294,54 @@ ReadNetCDF <- function(file, vars = NULL,
     return(nc.df[])
 }
 
+
+.expand_chunks <- function(subset) {
+    # Make everything a list
+    subset <- lapply(subset, function(l) {
+        if (!is.list(l)) {
+            list(l)
+        } else {
+            l
+        }
+    })
+
+    # If it has name, is a global subset,
+    # otherwhise, is a chunck definition
+    has_name <- names(subset) != ""
+
+    new_subset <- subset[has_name]
+    if (sum(!has_name) != 0) new_subset["chunks"] <- list(subset[!has_name])
+
+    chunks <- purrr::cross(new_subset)
+    new_subset <- lapply(chunks, function(chunk) {
+        is.chunk <- which(names(chunk) == "chunks")
+        if (length(is.chunk) != 0) {
+            c(chunk[-is.chunk], chunk[[is.chunk]])
+        } else {
+            chunk
+        }
+    })
+
+    to_range <- function(x) {
+        if (is.list(x)) {
+            lapply(x, to_range)
+        } else {
+            range(x)
+        }
+    }
+
+    new_subset <- lapply(new_subset, to_range)
+    new_subset
+}
+
+
+.names_recursive <- function(x) {
+    out <- names(x)
+    if (is.list(x)) {
+        out <- c(out, unlist(lapply(x, .names_recursive)))
+    }
+    unique(out[out != ""])
+}
 
 #' @rdname ReadNetCDF
 #'

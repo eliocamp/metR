@@ -51,7 +51,6 @@ Suggests:
     rmarkdown,
     testthat,
     udunits2,
-    vdiffr,
     viridis
 ByteCompile: yes
 Encoding: UTF-8

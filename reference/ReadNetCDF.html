@@ -157,7 +157,7 @@ with proper dimensions.</p>
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>a named list a subsetting vectors. See Details.</p></td>
+      <td><p>a list of subsetting objects. See below.</p></td>
     </tr>
     <tr>
       <th>key</th>
@@ -182,13 +182,50 @@ with the same values in each missing dimension.</p>
 <p><code>GlanceNetCDF()</code> returns a list of variables and dimensions included in the
 file with a nice printing method.</p>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="subsetting"><a class="anchor" href="#subsetting"></a>Subsetting</h2>
 
-    <p><code>subset</code> must be a named list for subsetting. Names must match dimensions
-specified in the NetCDF file and each element must be a vector of the same type
-of that dimension whose range will be use for subsetting. You don't need to
-provide and exact range that matches the actual gridpoints of the file; the
-closest gridpoint will be selected.</p>
+    
+    <p>In the most basic form, <code>subset</code> will be a named list whose names must match
+the dimensions specified in the NetCDF file and each element must be a vector
+whose range defines
+a contiguous subset of data. You don't need to provide and exact range that
+matches the actual gridpoints of the file; the closest gridpoint will be selected.</p>
+<p>So, if you want to get Southern Hemisphere data from the from a file that defines
+latitude as <code>lat</code>, then you can use:</p><pre>
+subset = list(lat = -90:0)
+</pre><p>More complex subsetting operations are supported. If yuou want to read non-contiguous
+chunks of data, you can specify each chunk into a list inside <code>subset</code>. For example
+this subset</p><pre>
+subset = list(list(lat = -90:-70, lon = 0:60),
+              list(lat = 70:90, lon = 300:360))
+</pre><p>will return two contiguous chunks: one on the South-West corner and one on the
+North-East corner. Alternatively, if you want to get the four corners that
+are combination of those two conditions,</p>
+<pre>
+subset = list(lat = list(-90:-70, 70:90),
+              lon = list(0:60, 300:360))
+</pre><p>Both operations can be mixed together. So for exmaple this</p>
+<pre>
+subset = list(list(lat = -90:-70,
+                   lon = 0:60),
+              time = list(c("2000-01-01", "2000-12-31"),
+                          c("2010-01-01", "2010-12-31")))
+</pre>
+    <p>returns one spatial chunk for each of two temporal chunks.</p>
+<p>The general idea is that named elements define 'global' subsets ranges that will be
+applied to every other subset, while each unnamed element define one contiguous chunk.
+In the above example, <code>time</code> defines two temporal ranges that every subset of data will
+have.</p>
+<p>The above example, then, is equivalent to</p>
+<pre>
+subset = list(list(lat = -90:-70,
+                   lon = 0:60,
+                   time = c("2000-01-01", "2000-12-31")),
+              list(lat = -90:-70,
+                   lon = 0:60,
+                   time = c("2010-01-01", "2010-12-31")))
+</pre>
+    <p>but demands much less typing.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -213,7 +250,7 @@ closest gridpoint will be selected.</p>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
+      <li><a href="#subsetting">Subsetting</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

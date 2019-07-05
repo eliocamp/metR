@@ -118,7 +118,11 @@
 <a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt;     Dimensions: lon by lat by level by time</span></a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; ----- Dimensions -----</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; ----- Dimensions ----- </span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt;   time: 1 values from 2010-07-09 to 2010-07-09 </span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt;   level: 17 values from 10 to 1000 millibar</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt;   lat: 73 values from -90 to 90 degrees_north</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt;   lon: 144 values from 0 to 357.5 degrees_east</span></a></code></pre></div>
 <p>Now that we know the name and the dimensions of the data, we can read it. <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> can also read only a (continuous) subset of the data.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">air &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span>(file, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">lat =</span> <span class="dv">90</span><span class="op">:</span><span class="dv">0</span>, <span class="dt">level =</span> <span class="dv">925</span>))</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>

@@ -356,11 +356,11 @@ GlanceNetCDF <- function(file) {
 #' @export
 print.nc_glance <- function(x, ...) {
     cat("----- Variables ----- \n")
-    x <- lapply(x$vars, print)
+    out <- lapply(x$vars, print)
 
     cat("\n\n")
     cat("----- Dimensions ----- \n")
-    x <- lapply(x$dim, print)
+    out <- lapply(x$dim, print)
 }
 
 #' @export

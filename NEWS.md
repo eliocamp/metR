@@ -16,8 +16,6 @@
 
 - `ReadNetCDF()` result will print correctly. 
 
-
-
 # metR 0.3.0 - Cumulonimbus
 
 ## New features

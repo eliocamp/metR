@@ -27,7 +27,8 @@ data. All objects will be fortified to produce a data frame. See
 
 A \code{function} will be called with a single argument,
 the plot data. The return value must be a \code{data.frame}, and
-will be used as the layer data.}
+will be used as the layer data. A \code{function} can be created
+from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
 \item{geom}{The geometric object to use display the data}
 
@@ -71,7 +72,7 @@ manually subsetting the data.
 \examples{
 
 library(ggplot2)
-ggplot(data.table::melt(volcano), aes(Var1, Var2)) +
+ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
     geom_contour(aes(z = value)) +
     stat_subset(aes(subset = value >= 150 & value <= 160),
                 shape = 3, color = "red")

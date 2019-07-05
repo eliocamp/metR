@@ -39,7 +39,8 @@ Imports:
     RCurl,
     scales,
     sp,
-    stringr
+    stringr,
+    purrr
 Suggests: 
     covr,
     irlba,

@@ -1,5 +1,5 @@
 library(testthat)
 library(metR)
-library(vdiffr)
+# library(vdiffr)
 
 test_check("metR")

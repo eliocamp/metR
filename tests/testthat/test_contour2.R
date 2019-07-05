@@ -1,5 +1,5 @@
 library(metR)
-library(vdiffr)
+# library(vdiffr)
 
 context("stat_contour2")
 data(geopotential)

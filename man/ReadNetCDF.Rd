@@ -18,7 +18,7 @@ GlanceNetCDF(file)
 
 \item{out}{character indicating the type of output desired}
 
-\item{subset}{a named list a subsetting vectors. See Details.}
+\item{subset}{a list of subsetting objects. See below.}
 
 \item{key}{if \code{TRUE}, returns a data.table keyed by the dimensions of the data.}
 }
@@ -45,13 +45,64 @@ Using the \code{\link[ncdf4]{ncdf4-package}} package, it reads a NetCDF file. Th
 over using \code{\link[ncdf4]{ncvar_get}} is that the output is a tidy data.table
 with proper dimensions.
 }
-\details{
-\code{subset} must be a named list for subsetting. Names must match dimensions
-specified in the NetCDF file and each element must be a vector of the same type
-of that dimension whose range will be use for subsetting. You don't need to
-provide and exact range that matches the actual gridpoints of the file; the
-closest gridpoint will be selected.
+\section{Subsetting}{
+
+In the most basic form, \code{subset} will be a named list whose names must match
+the dimensions specified in the NetCDF file and each element must be a vector
+whose range defines
+a contiguous subset of data. You don't need to provide and exact range that
+matches the actual gridpoints of the file; the closest gridpoint will be selected.
+
+So, if you want to get Southern Hemisphere data from the from a file that defines
+latitude as \code{lat}, then you can use:
+\preformatted{
+subset = list(lat = -90:0)
 }
+More complex subsetting operations are supported. If yuou want to read non-contiguous
+chunks of data, you can specify each chunk into a list inside \code{subset}. For example
+this subset
+\preformatted{
+subset = list(list(lat = -90:-70, lon = 0:60),
+              list(lat = 70:90, lon = 300:360))
+}
+will return two contiguous chunks: one on the South-West corner and one on the
+North-East corner. Alternatively, if you want to get the four corners that
+are combination of those two conditions,
+
+\preformatted{
+subset = list(lat = list(-90:-70, 70:90),
+              lon = list(0:60, 300:360))
+}
+Both operations can be mixed together. So for exmaple this
+
+\preformatted{
+subset = list(list(lat = -90:-70,
+                   lon = 0:60),
+              time = list(c("2000-01-01", "2000-12-31"),
+                          c("2010-01-01", "2010-12-31")))
+}
+
+returns one spatial chunk for each of two temporal chunks.
+
+The general idea is that named elements define 'global' subsets ranges that will be
+applied to every other subset, while each unnamed element define one contiguous chunk.
+In the above example, \code{time} defines two temporal ranges that every subset of data will
+have.
+
+The above example, then, is equivalent to
+
+\preformatted{
+subset = list(list(lat = -90:-70,
+                   lon = 0:60,
+                   time = c("2000-01-01", "2000-12-31")),
+              list(lat = -90:-70,
+                   lon = 0:60,
+                   time = c("2010-01-01", "2010-12-31")))
+}
+
+but demands much less typing.
+}
+
 \examples{
 \dontrun{
 file <- "file.nc"

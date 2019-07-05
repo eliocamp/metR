@@ -30,7 +30,8 @@ data. All objects will be fortified to produce a data frame. See
 
 A \code{function} will be called with a single argument,
 the plot data. The return value must be a \code{data.frame}, and
-will be used as the layer data.}
+will be used as the layer data. A \code{function} can be created
+from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
 \item{stat}{The statistical transformation to use on the data for this
 layer, as a string.}
@@ -97,7 +98,7 @@ a more aesthetically pleasing representation of topography.
 library(ggplot2)
 library(data.table)
 # A fresh look at the boring old volcano dataset
-ggplot(melt(volcano), aes(Var1, Var2)) +
+ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
     geom_contour_fill(aes(z = value)) +
     geom_contour_tanaka(aes(z = value)) +
     theme_void() +

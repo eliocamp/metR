@@ -1,5 +1,5 @@
 library(metR)
-library(vdiffr)
+# library(vdiffr)
 library(ggplot2)
 
 context("guide_colourstrip")

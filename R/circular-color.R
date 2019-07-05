@@ -32,7 +32,7 @@
 # ## 'Real' example
 # library(data.table)
 # library(metR)
-# v <- as.data.table(melt(volcano))
+# v <- as.data.table(reshape2::melt(volcano))
 # v[, c("dx", "dy") := Derivate(value ~ Var1 + Var2, fill = TRUE)]
 # v[, angle := atan2(-dy, -dx)]
 #

@@ -296,6 +296,9 @@ ReadNetCDF <- function(file, vars = NULL,
 
 
 .expand_chunks <- function(subset) {
+    if (is.null(subset)) {
+        return(list(NULL))
+    }
     # Make everything a list
     subset <- lapply(subset, function(l) {
         if (!is.list(l)) {

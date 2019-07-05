@@ -130,7 +130,7 @@ this is not the case with \code{geom_label_contour()}.
 
 \examples{
 library(ggplot2)
-v <- data.table::melt(volcano)
+v <- reshape2::melt(volcano)
 g <- ggplot(v, aes(Var1, Var2)) +
        geom_contour(aes(z = value))
 g + geom_text_contour(aes(z = value))

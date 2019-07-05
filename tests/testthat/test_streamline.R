@@ -1,7 +1,7 @@
 library(metR)
 library(ggplot2)
 library(data.table)
-library(vdiffr)
+# library(vdiffr)
 
 context("Streamline")
 geo <- geopotential[date == date[1]]

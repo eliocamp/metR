@@ -26,7 +26,7 @@
 #' library(ggplot2)
 #' library(data.table)
 #' # A fresh look at the boring old volcano dataset
-#' ggplot(melt(volcano), aes(Var1, Var2)) +
+#' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 #'     geom_contour_fill(aes(z = value)) +
 #'     geom_contour_tanaka(aes(z = value)) +
 #'     theme_void() +

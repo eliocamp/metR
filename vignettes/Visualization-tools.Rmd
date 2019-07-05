@@ -71,7 +71,7 @@ In ggplot2, the 'canonical' way to get filled contours is by using `stat_contour
 
 ```{r, fig.show='hold', fig.width = 3.3}
 breaks = seq(100, 200, by = 10)
-v <- setDT(melt(volcano))
+v <- setDT(reshape2::melt(volcano))
 ggplot(v, aes(Var1, Var2, z = value)) +
     stat_contour(aes(fill = ..level..), geom = "polygon", breaks = breaks) +
     geom_contour(color = "red", size = 0.2, breaks = 150) +

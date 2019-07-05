@@ -8,6 +8,8 @@
 
 - `ReadNetCDF()` is slightly faster and should use less memory. 
 
+- `ReadNetCDF()` supports more complex subsetting operations now. 
+
 - The `df` element returned by `FitLm()` now has the same length as the rest. 
 
 ## Bugfixes

@@ -16,6 +16,7 @@ reference:
       - geom_streamline
       - geom_relief
       - stat_subset
+      - is.cross
       - stat_na
       - scale_longitude
       - scale_divergent

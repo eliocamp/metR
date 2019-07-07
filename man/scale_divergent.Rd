@@ -60,16 +60,13 @@ Use \code{NA} to refer to the existing minimum or maximum
 \item A function that accepts the existing (automatic) limits and returns
 new limits
 }}
-  \item{rescaler}{A function used to scale the input values to the
-range [0, 1]. This is always \code{\link[scales:rescale]{scales::rescale()}}, except for
-diverging and n colour gradients (i.e., \code{\link[=scale_colour_gradient2]{scale_colour_gradient2()}},
-\code{\link[=scale_colour_gradientn]{scale_colour_gradientn()}}). The \code{rescaler} is ignored by position
-scales, which ways use \code{\link[scales:rescale]{scales::rescale()}}.}
+  \item{rescaler}{Used by diverging and n colour gradients
+(i.e. \code{\link[=scale_colour_gradient2]{scale_colour_gradient2()}}, \code{\link[=scale_colour_gradientn]{scale_colour_gradientn()}}).
+A function used to scale the input values to the range [0, 1].}
   \item{oob}{Function that handles limits outside of the scale limits
-(out of bounds). The default (\code{\link[scales:censor]{scales::censor()}}) replaces out of
-bounds values with \code{NA}.}
-  \item{trans}{For continuous scales, the name of a transformation object
-or the object itself. Built-in transformations include "asn", "atanh",
+(out of bounds). The default replaces out of bounds values with \code{NA}.}
+  \item{trans}{Either the name of a transformation object, or the
+object itself. Built-in transformations include "asn", "atanh",
 "boxcox", "date", "exp", "hms", "identity", "log", "log10", "log1p", "log2",
 "logit", "modulus", "probability", "probit", "pseudo_log", "reciprocal",
 "reverse", "sqrt" and "time".

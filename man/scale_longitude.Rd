@@ -64,8 +64,8 @@ transformation object
 as output
 }}
 
-\item{trans}{For continuous scales, the name of a transformation object
-or the object itself. Built-in transformations include "asn", "atanh",
+\item{trans}{Either the name of a transformation object, or the
+object itself. Built-in transformations include "asn", "atanh",
 "boxcox", "date", "exp", "hms", "identity", "log", "log10", "log1p", "log2",
 "logit", "modulus", "probability", "probit", "pseudo_log", "reciprocal",
 "reverse", "sqrt" and "time".

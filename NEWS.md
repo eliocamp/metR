@@ -11,7 +11,7 @@
 - `ReadNetCDF()` supports more complex subsetting operations now. 
 
 - The `df` element returned by `FitLm()` now has the same length as the rest. 
-
+    
 ## Bugfixes
 
 - `ReadNetCDF()` result will print correctly. 

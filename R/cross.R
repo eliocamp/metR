@@ -20,6 +20,7 @@
 #' # Its intended use is to highlight areas with geom_subset()
 #' # with reduced densnity. This "hatches" areas with temperature
 #' # over 270K
+#' library(ggplot2)
 #' ggplot(temperature[lev == 500], aes(lon, lat)) +
 #'   geom_raster(aes(fill = air)) +
 #'   stat_subset(aes(subset = air > 270 & is.cross(lon, lat)),

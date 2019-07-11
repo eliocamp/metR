@@ -1,4 +1,4 @@
-# metR 0.3.0.90000 
+# metR 0.4.0
 
 ## New features
 
@@ -11,7 +11,7 @@
 - `ReadNetCDF()` supports more complex subsetting operations now. 
 
 - The `df` element returned by `FitLm()` now has the same length as the rest. 
-
+    
 ## Bugfixes
 
 - `ReadNetCDF()` result will print correctly. 

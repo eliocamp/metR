@@ -154,7 +154,7 @@ ppNcepSpeedy    # ¡no usar CamelCase ni camelCase!</code></pre>
 <a href="#nombres-especiales" class="anchor"></a>Nombres especiales</h3>
 <p>Para ser consistente entre distintas partes del código, estos son algunos nombres de variables que <strong>tienen</strong> que respetarse so pena de quilombo en el código y tener que acordarse muchos más nombres.</p>
 <ul>
-<li>Latitud y Longitud son <code>lat</code> y <code>lon</code>. No usar <code>long</code> como un troglodita (aunque técnicamente “long” significa largo, que no está tan lejos de “longitud”). La longitud va de 0 a 360 (para que sea más fácil proyectar con pacífico central) pero se la grafica en -180:180 (para eso, usar <code><a href="reference/scale_longitude.html">scale_x_longitude()</a></code> y <code><a href="reference/scale_longitude.html">scale_y_longitude()</a></code>).</li>
+<li>Latitud y Longitud son <code>lat</code> y <code>lon</code>. No usar <code>long</code> como un troglodita (aunque técnicamente “long” significa largo, que no está tan lejos de “longitud”). La longitud va de 0 a 360 (para que sea más fácil proyectar con pacífico central) pero se la grafica en -180:180 (para eso, usar <code>scale_x_longitude()</code> y <code>scale_y_longitude()</code>).</li>
 <li>La fecha es <code>time</code>. No usar <code>date</code> ni otra similar. El formato <strong>siempre</strong> debe ser YYYY-MM-DD HH:MM:SS. Siempre codificarlo como una clase <code>datetime</code> de lubridate.</li>
 <li>Los meses <strong>siempre</strong> se codifican el 1 al 12 y como <code>factor</code> ordenado. Todavía no decido si conviene tener diciembre o enero como el primer mes.</li>
 <li>

@@ -8,13 +8,14 @@
     data[, col__ := .GRP, by = c(col.vars)]
     if (is.null(fill)){
         fill <- 0
-        rowdims <- data[col__ == 1, (row.vars), with = FALSE]
-        coldims <- data[row__ == 1, (col.vars), with = FALSE]
+        # rowdims <- data[col__ == 1, (row.vars), with = FALSE]
+        # coldims <- data[row__ == 1, (col.vars), with = FALSE]
     } else {
-        rowdims <- unique(data[, (row.vars), with = FALSE])
-        coldims <- unique(data[, (col.vars), with = FALSE])
+        # rowdims <- unique(data[, (row.vars), with = FALSE])
+        # coldims <- unique(data[, (col.vars), with = FALSE])
     }
-
+    rowdims <- unique(data[, (row.vars), with = FALSE])
+    coldims <- unique(data[, (col.vars), with = FALSE])
     data.m <- matrix(fill[1], nrow = max(data[["row__"]]),
                      ncol = max(data[["col__"]]))
     data.m[cbind(data[["row__"]], data[["col__"]])] <- data[[value.var]]
@@ -35,8 +36,7 @@ is.error <- function(x) inherits(x, "try-error")
 
 
 # from data.table
-guess <- function (x)
-{
+guess <- function (x) {
     if ("value" %chin% names(x))
         return("value")
     if ("(all)" %chin% names(x))

@@ -124,6 +124,7 @@ ReadNetCDF <- function(file, vars = NULL,
 
     out <- out[1]
     checks <- makeAssertCollection()
+    assertCharacter(file, len = 1, min.chars = 1, any.missing = FALSE, add = checks)
     assertAccess(file, "r", add = checks)
     assertCharacter(vars, null.ok = TRUE, any.missing = FALSE, unique = TRUE,
                     add = checks)

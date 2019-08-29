@@ -52,6 +52,7 @@ the dimensions specified in the NetCDF file and each element must be a vector
 whose range defines
 a contiguous subset of data. You don't need to provide and exact range that
 matches the actual gridpoints of the file; the closest gridpoint will be selected.
+Furthermore, you can use \code{NA} to refer to the existing minimum or maximum.
 
 So, if you want to get Southern Hemisphere data from the from a file that defines
 latitude as \code{lat}, then you can use:

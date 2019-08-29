@@ -17,6 +17,7 @@
 #' whose range defines
 #' a contiguous subset of data. You don't need to provide and exact range that
 #' matches the actual gridpoints of the file; the closest gridpoint will be selected.
+#' Furthermore, you can use `NA` to refer to the existing minimum or maximum.
 #'
 #' So, if you want to get Southern Hemisphere data from the from a file that defines
 #' latitude as `lat`, then you can use:
@@ -145,7 +146,6 @@ ReadNetCDF <- function(file, vars = NULL,
         return(r)
     }
 
-
     dec <- getOption("OutDec")
     # Dejemos todo prolijo antes de salir.
     options(OutDec = ".")
@@ -223,7 +223,6 @@ ReadNetCDF <- function(file, vars = NULL,
     dim.length <- vector("numeric", length = length(vars))
 
     for (v in seq_along(vars)) {
-
         # Para cada variable, veo start y count
         order <- ncfile$var[[vars[v]]]$dimids
         start <- rep(1, length(order))
@@ -237,7 +236,15 @@ ReadNetCDF <- function(file, vars = NULL,
             d <- dimensions[[s]]
             sub <- subset[[s]]
 
-            if (.is.somedate(sub[1]) | s == "time") {
+            if (is.na(sub[1])) {
+                sub[1] <- min(d)
+            }
+
+            if (is.na(sub[2])) {
+                sub[2] <- max(d)
+            }
+
+            if (.is.somedate(sub) | s == "time") {
                 start[[s]] <- which(lubridate::as_datetime(d) %~% min(lubridate::as_datetime(sub)))
                 count[[s]] <- abs(which(lubridate::as_datetime(d) %~% max(lubridate::as_datetime(sub))) - start[[s]] + 1)
             } else {
@@ -330,7 +337,11 @@ ReadNetCDF <- function(file, vars = NULL,
         if (is.list(x)) {
             lapply(x, to_range)
         } else {
-            range(x)
+            if (length(x) != 2) {
+                range(x)
+            } else {
+                x
+            }
         }
     }
 

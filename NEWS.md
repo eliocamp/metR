@@ -1,3 +1,10 @@
+# metR 0.4.9000 
+
+## New features
+
+- `ReadNetCDF()` suports using `NA` in subset to refer to max or min value. 
+
+
 # metR 0.4.0 - Cumulonimbus
 
 ## New features

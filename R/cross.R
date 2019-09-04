@@ -3,16 +3,17 @@
 #' Reduces the density of a regular grid using a cross pattern.
 #'
 #' @param x,y x and y points that define a regular grid.
+#' @param skip how many points to skip. Greater value reduces the final point density.
 #'
 #' @return
 #' `is.cross` returns a logical vector indicating whether each point belongs to the
 #' reduced grid or not.
-#' `corss` returns a list of x and y components of the reduced density grid.
+#' `cross` returns a list of x and y components of the reduced density grid.
 #'
 #' @examples
 #' # Basic usage
 #' grid <- expand.grid(x = 1:10, y = 1:10)
-#' cross <- is.cross(grid$x, grid$y)
+#' cross <- is.cross(grid$x, grid$y, skip = 2)
 #'
 #' with(grid, plot(x, y))
 #' with(grid, points(x[cross], y[cross], col = "red"))
@@ -27,11 +28,23 @@
 #'               geom = "point", size = 0.1)
 #'
 #' @export
-is.cross <- function(x, y) {
-    x_r <- data.table::frank(x, ties.method = "dense")
-    y_r <- data.table::frank(y, ties.method = "dense")
+is.cross <- function(x, y, skip = 0) {
+    # browser()
 
-    (x_r + y_r) %% 2 == 0
+    x[!(x %in% JumpBy(unique(x), by = skip + 1))] <- NA
+    y[!(y %in% JumpBy(unique(y), by = skip + 1))] <- NA
+
+
+    x_r <- data.table::frank(x, ties.method = "dense", na.last = "keep")
+    y_r <- data.table::frank(y, ties.method = "dense", na.last = "keep")
+
+    # x_r[!(x_r %in% JumpBy(unique(x_r), by = skip + 1))] <- NA
+    # y_r[!(y_r %in% JumpBy(unique(y_r), by = skip + 1))] <- NA
+
+    test <- (x_r + y_r) %% 2
+
+    !(test != 0 | is.na(test))
+
 }
 
 #' @export

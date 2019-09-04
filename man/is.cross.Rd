@@ -5,17 +5,19 @@
 \alias{cross}
 \title{Cross pattern}
 \usage{
-is.cross(x, y)
+is.cross(x, y, skip = 0)
 
 cross(x, y)
 }
 \arguments{
 \item{x, y}{x and y points that define a regular grid.}
+
+\item{skip}{how many points to skip. Greater value reduces the final point density.}
 }
 \value{
 \code{is.cross} returns a logical vector indicating whether each point belongs to the
 reduced grid or not.
-\code{corss} returns a list of x and y components of the reduced density grid.
+\code{cross} returns a list of x and y components of the reduced density grid.
 }
 \description{
 Reduces the density of a regular grid using a cross pattern.
@@ -23,7 +25,7 @@ Reduces the density of a regular grid using a cross pattern.
 \examples{
 # Basic usage
 grid <- expand.grid(x = 1:10, y = 1:10)
-cross <- is.cross(grid$x, grid$y)
+cross <- is.cross(grid$x, grid$y, skip = 2)
 
 with(grid, plot(x, y))
 with(grid, points(x[cross], y[cross], col = "red"))

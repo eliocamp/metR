@@ -16,3 +16,4 @@
 ^guía_de_estilo\.md$
 ^codecov\.yml$
 ^.nojekyll
+^pkgdown$

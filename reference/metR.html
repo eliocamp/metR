@@ -6,15 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Authors • metR</title>
+<title>metR: Tools for Easier Analysis of Meteorological Fields — metR • metR</title>
 
 <!-- favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -36,13 +36,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
 
-<meta property="og:title" content="Authors" />
+<meta property="og:title" content="metR: Tools for Easier Analysis of Meteorological Fields — metR" />
+<meta property="og:description" content="
+Many useful functions and extensions for dealing
+    with meteorological data in the tidy data framework. Extends 'ggplot2'
+    for better plotting of scalar and vector fields and provides commonly
+    used analysis methods in the atmospheric sciences." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -63,7 +68,7 @@
   </head>
 
   <body>
-    <div class="container template-authors">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -75,7 +80,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">metR</a>
+        <a class="navbar-link" href="../index.html">metR</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
@@ -83,13 +88,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
+  <a href="../index.html">
     <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -99,15 +104,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="articles/Visualization-tools.html">Visualization tools</a>
+      <a href="../articles/Visualization-tools.html">Visualization tools</a>
     </li>
     <li>
-      <a href="articles/Working-with-data.html">Working with data</a>
+      <a href="../articles/Working-with-data.html">Working with data</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="news/index.html">Changelog</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -128,22 +133,59 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Authors</h1>
+    <h1>metR: Tools for Easier Analysis of Meteorological Fields</h1>
+    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/metR-package.R'><code>R/metR-package.R</code></a></small>
+    <div class="hidden name"><code>metR.Rd</code></div>
     </div>
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong>Elio Campitelli</strong>. Maintainer, author. <a href='https://orcid.org/0000-0002-7742-9230' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' alt='ORCID'></a>
-        </p>
-      </li>
-    </ul>
+    <div class="ref-description">
+    <p><img src='figures/logo.png' align='right' /></p>
+<p>Many useful functions and extensions for dealing
+    with meteorological data in the tidy data framework. Extends 'ggplot2'
+    for better plotting of scalar and vector fields and provides commonly
+    used analysis methods in the atmospheric sciences.</p>
+    </div>
 
-  </div>
+
+
+    <h2 class="hasAnchor" id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
+
+    
+
+<p>Conceptually it's divided into <em>visualization tools</em> and <em>data tools</em>.
+The former are geoms, stats and scales that help with plotting using
+ggplot2, such as <a href='geom_contour_fill.html'>stat_contour_fill</a> or <a href='scale_longitude.html'>scale_y_level</a>, while the
+later are functions for common data processing tools in the atmospheric
+sciences, such as <a href='Derivate.html'>Derivate</a> or <a href='EOF.html'>EOF</a>; these are implemented to work in the
+data.table paradigm, but also work with regular data frames.</p>
+<p>To get started, check the vignettes:</p><ul>
+<li><p>Visualization Tools: <code><a href='../articles/Visualization-tools.html'>vignette("Visualization-tools", package = "metR")</a></code></p></li>
+<li><p>Working with Data: <code><a href='../articles/Working-with-data.html'>vignette("Working-with-data", package = "metR")</a></code></p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Useful links:</p><ul>
+<li><p><a href='https://github.com/eliocamp/metR'>https://github.com/eliocamp/metR</a></p></li>
+<li><p>Report bugs at <a href='https://github.com/eliocamp/metR/issues'>https://github.com/eliocamp/metR/issues</a></p></li>
+</ul>
 
 </div>
 
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#see-also">See also</a></li>
+    </ul>
+
+    <h2>Author</h2>
+    <p><strong>Maintainer</strong>: Elio Campitelli <a href='mailto:elio.campitelli@cima.fcen.uba.ar'>elio.campitelli@cima.fcen.uba.ar</a> (0000-0002-7742-9230)</p>
+  </div>
+</div>
 
 
       <footer>

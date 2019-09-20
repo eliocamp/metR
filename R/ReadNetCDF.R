@@ -107,7 +107,8 @@ ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {
     ncdf4.available <- requireNamespace("ncdf4", quietly = TRUE)
-    udunits2.available <- requireNamespace("udunits2", quietly = TRUE)
+    # udunits2.available <- requireNamespace("udunits2", quietly = TRUE)
+    udunits2.available <- TRUE
     if (!ncdf4.available & !udunits2.available) {
         stop("ReadNetCDF needs packages 'ncdf4' and 'udunits2'. ",
              "Install them with 'install.packages(c(\"ncdf4\", \"udunits2\"))'")
@@ -178,14 +179,14 @@ ReadNetCDF <- function(file, vars = NULL,
     }
     names(dims) <- ids
     has_timedate <- FALSE
-    if ("time" %in% names(dimensions) && ncfile$dim$time$units != "") {
-        has_timedate <- TRUE
-        time <- udunits2::ud.convert(dimensions[["time"]],
-                                     ncfile$dim$time$units,
-                                     "seconds since 1970-01-01 00:00:00")
-        dimensions[["time"]] <- as.character(as.POSIXct(time, tz = "UTC",
-                                                        origin = "1970-01-01 00:00:00"))
-    }
+    # if ("time" %in% names(dimensions) && ncfile$dim$time$units != "") {
+    #     has_timedate <- TRUE
+    #     time <- udunits2::ud.convert(dimensions[["time"]],
+    #                                  ncfile$dim$time$units,
+    #                                  "seconds since 1970-01-01 00:00:00")
+    #     dimensions[["time"]] <- as.character(as.POSIXct(time, tz = "UTC",
+    #                                                     origin = "1970-01-01 00:00:00"))
+    # }
 
     # if (out[1] == "vars") {
     #     r <- list(vars = unname(vars), dimensions = dimensions, dims = dims)

@@ -8,7 +8,7 @@
 ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array"),
   subset = NULL, key = FALSE)
 
-GlanceNetCDF(file)
+GlanceNetCDF(file, ...)
 }
 \arguments{
 \item{file}{file to read from.}
@@ -21,6 +21,9 @@ GlanceNetCDF(file)
 \item{subset}{a list of subsetting objects. See below.}
 
 \item{key}{if \code{TRUE}, returns a data.table keyed by the dimensions of the data.}
+
+\item{...}{ignored. Is there for convenience so that a call to \code{\link[=ReadNetCDF]{ReadNetCDF()}} can
+be also valid for \code{\link[=GlanceNetCDF]{GlanceNetCDF()}}.}
 }
 \value{
 The return format is specified by \code{out}. It can be a data table in which each

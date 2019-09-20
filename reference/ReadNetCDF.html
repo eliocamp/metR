@@ -147,7 +147,7 @@ with proper dimensions.</p>
     <pre class="usage"><span class='fu'>ReadNetCDF</span>(<span class='no'>file</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"data.frame"</span>, <span class='st'>"vector"</span>, <span class='st'>"array"</span>),
   <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>GlanceNetCDF</span>(<span class='no'>file</span>)</pre>
+<span class='fu'>GlanceNetCDF</span>(<span class='no'>file</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,6 +172,11 @@ with proper dimensions.</p>
     <tr>
       <th>key</th>
       <td><p>if <code>TRUE</code>, returns a data.table keyed by the dimensions of the data.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>ignored. Is there for convenience so that a call to <code>ReadNetCDF()</code> can
+be also valid for <code>GlanceNetCDF()</code>.</p></td>
     </tr>
     </table>
 
@@ -273,7 +278,7 @@ subset = list(list(lat = -90:-70,
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

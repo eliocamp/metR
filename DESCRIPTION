@@ -50,8 +50,8 @@ Suggests:
     reshape2,
     rmarkdown,
     testthat,
-    udunits2,
-    viridis
+    viridis,
+    udunits2
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true

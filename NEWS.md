@@ -4,6 +4,11 @@
 
 - `ReadNetCDF()` suports using `NA` in subset to refer to max or min value. 
 
+- `ReadNetCDF()`'s subset argument supports more complex queries. (see the help 
+section at`?ReadNetCDF()`). 
+
+- `ReadNetCDF()` now has a simple date-time parser that is tried if the udunits2 package
+is not installed. 
 
 # metR 0.4.0 - Cumulonimbus
 

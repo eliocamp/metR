@@ -10,6 +10,8 @@ section at`?ReadNetCDF()`).
 - `ReadNetCDF()` now has a simple date-time parser that is tried if the udunits2 package
 is not installed. 
 
+- `GetSMNData()` gains the ability to cache results in a file. 
+
 # metR 0.4.0 - Cumulonimbus
 
 ## New features

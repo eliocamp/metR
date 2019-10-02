@@ -8,6 +8,8 @@
 #' @param date date vector of dates to fetch data
 #' @param type type of data to retrieve
 #' @param bar logical object indicating whether to show a progress bar
+#' @param cache logical indicating if the results should be saved on disk
+#' @param file.dir optional directory where to save and/or retrieve data
 #'
 #' @return
 #' For `type = "hourly"`, a data.frame with observations of
@@ -52,13 +54,27 @@
 #' @source https://ssl.smn.gob.ar/dpd/pron5d-calendario.php
 #' @export
 #' @import RCurl
-GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FALSE) {
+GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FALSE,
+                       cache = TRUE, file.dir = tempdir()) {
     checks <- makeAssertCollection()
     assertDate(as.Date(date), upper = as.Date(lubridate::now()),
                .var.name = "date", add = checks)
     assertChoice(type, c("hourly", "daily", "radiation"), add = checks)
     assertFlag(bar, add = checks)
+
+    if (isTRUE(cache)) {
+        assertAccess(file.dir, add = checks)
+    }
     reportAssertions(checks)
+
+    if (cache) {
+        file.name <- paste0(digest::digest(paste0(c(date, type[1]), collapse = "_")), ".csv")
+        file <- file.path(file.dir, file.name)
+        if (file.exists(file)) {
+            data <- data.table::fread(file)
+            return(data)
+        }
+    }
 
     no_data <- vector()
 
@@ -84,6 +100,10 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
     if (length(return.data) == 0) stop("No data available for any of selected dates")
     if (length(no_data) != 0) {
         warning(paste0("No data for available for these dates: "), date[no_data])
+    }
+
+    if (cache) {
+        data.table::fwrite(return.data, file = file)
     }
     return(return.data)
 }

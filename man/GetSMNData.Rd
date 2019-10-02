@@ -7,7 +7,8 @@
 https://ssl.smn.gob.ar/dpd/pron5d-calendario.php
 }
 \usage{
-GetSMNData(date, type = c("hourly", "daily", "radiation"), bar = FALSE)
+GetSMNData(date, type = c("hourly", "daily", "radiation"), bar = FALSE,
+  cache = TRUE, file.dir = tempdir())
 }
 \arguments{
 \item{date}{date vector of dates to fetch data}
@@ -15,6 +16,10 @@ GetSMNData(date, type = c("hourly", "daily", "radiation"), bar = FALSE)
 \item{type}{type of data to retrieve}
 
 \item{bar}{logical object indicating whether to show a progress bar}
+
+\item{cache}{logical indicating if the results should be saved on disk}
+
+\item{file.dir}{optional directory where to save and/or retrieve data}
 }
 \value{
 For \code{type = "hourly"}, a data.frame with observations of

@@ -12,6 +12,10 @@ is not installed.
 
 - `GetSMNData()` gains the ability to cache results in a file. 
 
+## Bugfixes
+
+- `geom_contour_fill()` imputation method is fixed for some special cases (#96; thanks @bergmul).
+
 # metR 0.4.0 - Cumulonimbus
 
 ## New features

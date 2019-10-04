@@ -196,7 +196,7 @@ populate the matrix, and LEFT represent the variables used to make the rows
 and RIGHT, the columns of the matrix.
 Think it like "VAR <em>as a function</em> of LEFT <em>and</em> RIGHT".</p>
 <p>Alternatively, if <code>value.var</code> is not <code>NULL</code>, it's possible to use the
-(probably) more familiar <a href='https://rdrr.io/pkg/data.table/man/dcast.data.table.html'>data.table::dcast</a> formula interface. In that case,
+(probably) more familiar <a href='https://Rdatatable.gitlab.io/data.table/reference/dcast.data.table.html'>data.table::dcast</a> formula interface. In that case,
 <code>data</code> must be provided.</p>
 <p>If <code>data</code> is a matrix, the <code>formula</code> argument is ignored and the function
 returns a matrix.</p>
@@ -207,8 +207,8 @@ returns a matrix.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/copy.html'>copy</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geopotential</span>[, <span class='no'>gh.t</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lon</span>, <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/IDateTime.html'>month</a></span>(<span class='no'>date</span>))]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t
+<span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span>(<span class='no'>geopotential</span>)
+<span class='no'>geopotential</span>[, <span class='no'>gh.t</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lon</span>, <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html'>month</a></span>(<span class='no'>date</span>))]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  -3.978597
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  -3.736613
 #&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  -2.978516

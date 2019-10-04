@@ -95,7 +95,7 @@
       <h1>Working with data</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2019-10-02</h4>
+            <h4 class="date">2019-10-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Working-with-data.Rmd"><code>vignettes/Working-with-data.Rmd</code></a></small>
       <div class="hidden name"><code>Working-with-data.Rmd</code></div>
@@ -202,7 +202,7 @@
 <p>Empirical Orthogonal Functions (also known as Principal Component Analysis) is a widely use technique for dimensional reduction of large datasets. In R there are multiple packages that implement this methodology (in fact, base R has <em>two</em> functions) but, IMHO, they have awkward interfaces that don’t interact well with <code>data.table</code> (or <code>dplyr</code>) syntax. <code>metR</code>’s <code><a href="../reference/EOF.html">EOF()</a></code> essentially performs a Singular Value Decomposition of the data and returns the left and right singular vectors, and singular values in a tidy format.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(geopotential)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># Weigthed geopotential anomaly</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">geopotential[, gh.t.w <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(gh)<span class="op">*</span><span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span>(lat<span class="op">*</span>pi<span class="op">/</span><span class="dv">180</span>)), by =<span class="st"> </span>.(lon, lat, <span class="kw"><a href="https://rdrr.io/pkg/data.table/man/IDateTime.html">month</a></span>(date))]</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">geopotential[, gh.t.w <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(gh)<span class="op">*</span><span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span>(lat<span class="op">*</span>pi<span class="op">/</span><span class="dv">180</span>)), by =<span class="st"> </span>.(lon, lat, <span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html">month</a></span>(date))]</a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5">eof &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EOF.html">EOF</a></span>(gh.t.w <span class="op">~</span><span class="st"> </span>date <span class="op">|</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat, <span class="dt">data =</span> geopotential, <span class="dt">n =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(eof)</a>

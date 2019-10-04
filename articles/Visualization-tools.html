@@ -95,7 +95,7 @@
       <h1>Visualization tools</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2019-10-02</h4>
+            <h4 class="date">2019-10-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Visualization-tools.Rmd"><code>vignettes/Visualization-tools.Rmd</code></a></small>
       <div class="hidden name"><code>Visualization-tools.Rmd</code></div>
@@ -114,7 +114,7 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(metR)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(data.table)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">temperature &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/data.table/man/copy.html">copy</a></span>(temperature)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">temperature &lt;-<span class="st"> </span><span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html">copy</a></span>(temperature)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5">temperature[, air.z <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/Anomaly.html">Anomaly</a></span>(air), by =<span class="st"> </span>.(lat, lev)]</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># Plot made with base ggplot</span></a>
@@ -145,7 +145,7 @@
 </ul>
 <p><code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> makes some adjustments to the data and computes an additional variable <code>int.level</code> (which is the default mapping for the <code>fill</code> aesthetic) that solve these problems.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">breaks =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">100</span>, <span class="dv">200</span>, <span class="dt">by =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">v &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/data.table/man/setDT.html">setDT</a></span>(reshape2<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(volcano))</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">v &lt;-<span class="st"> </span><span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/setDT.html">setDT</a></span>(reshape2<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(volcano))</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(v, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(Var1, Var2, <span class="dt">z =</span> value)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">stat_contour</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">fill =</span> ..level..), <span class="dt">geom =</span> <span class="st">"polygon"</span>, <span class="dt">breaks =</span> breaks) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">geom_contour</a></span>(<span class="dt">color =</span> <span class="st">"red"</span>, <span class="dt">size =</span> <span class="fl">0.2</span>, <span class="dt">breaks =</span> <span class="dv">150</span>) <span class="op">+</span></a>

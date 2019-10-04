@@ -237,9 +237,9 @@ standard deviation of each singular value.</p>
 <span class='co'># monthly geopotential height anomalies weigthed by latitude.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/copy.html'>copy</a></span>(<span class='no'>geopotential</span>)
+<span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span>(<span class='no'>geopotential</span>)
 <span class='no'>geopotential</span>[, <span class='no'>gh.t.w</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>)*<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>)),
-      <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/IDateTime.html'>month</a></span>(<span class='no'>date</span>))]</div><div class='output co'>#&gt;           lon   lat lev       gh       date        gh.t.w
+      <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html'>month</a></span>(<span class='no'>date</span>))]</div><div class='output co'>#&gt;           lon   lat lev       gh       date        gh.t.w
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01 -3.824174e+00
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01 -3.591582e+00
 #&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01 -2.862909e+00

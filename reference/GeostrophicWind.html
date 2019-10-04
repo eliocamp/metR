@@ -189,7 +189,7 @@ predictable results, set the boundary condition explicitly.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/copy.html'>copy</a></span>(<span class='no'>geopotential</span>)
+<span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span>(<span class='no'>geopotential</span>)
 <span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>], <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'>GeostrophicWind</span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]</div><div class='output co'>#&gt;           lon   lat lev       gh       date  u           v
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.08181190
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.55189199

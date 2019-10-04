@@ -268,7 +268,7 @@ the default plot specification, e.g. <code>borders()</code>.</p></td>
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_void</a></span>() +
     <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/viridis/man/scale_viridis.html'>scale_fill_viridis</a></span>(<span class='kw'>guide</span> <span class='kw'>=</span> <span class='st'>"none"</span>)</div><div class='img'><img src='geom_contour_tanaka-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geo</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/pkg/data.table/man/duplicated.html'>unique</a></span>(<span class='no'>date</span>)[<span class='fl'>4</span>]]
+<span class='no'>geo</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/duplicated.html'>unique</a></span>(<span class='no'>date</span>)[<span class='fl'>4</span>]]
 <span class='no'>geo</span>[, <span class='no'>gh.z</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>lat</span>]</div><div class='output co'>#&gt;         lon   lat lev       gh       date        gh.z
 #&gt;    1:   0.0 -22.5 700 3150.467 1990-04-01  -0.5528954
 #&gt;    2:   2.5 -22.5 700 3146.000 1990-04-01  -5.0194482

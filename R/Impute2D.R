@@ -66,7 +66,7 @@ soft_approx <- function(x, y = NULL, xout = x) {
 soft_approx2d <- function(x, y, z) {
     dt <- data.table(x, y, z)
     dt[, z1 := soft_approx(x, z), by = y][, z2 := soft_approx(y, z), by = x]
-    dt[, mean(c(z1, z2), na.rm = TRUE), by = .(x, y)]$V1
+    dt[, mean(c(z1, z2, z), na.rm = TRUE), by = .(x, y)]$V1
 }
 
 .impute_data <- function(data, na.fill = TRUE, verbose = TRUE) {
@@ -75,6 +75,9 @@ soft_approx2d <- function(x, y, z) {
         if (isTRUE(na.fill)) {
             if(isTRUE(verbose)) warning("imputing missing values", call. = FALSE)
             data <- copy(data)[, z := soft_approx2d(x, y, z)]
+            if (sum(is.na(data[["z"]])) != 0) {
+                warning("Linear imputation failed. Try passing a constant number or a function (e.g. `na.fill = mean`).")
+            }
         } else if (is.numeric(na.fill)) {
             if(isTRUE(verbose)) warning("imputing missing values", call. = FALSE)
             data[is.na(z), z := na.fill[1]]

@@ -124,6 +124,9 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
        }
        # Get points of labels
        data <- .label.position(copy(data), min.size, skip, rotate)
+       if (nrow(data) == 0) {
+           return(nullGrob())
+       }
 
        ## Original ggplot2 here.
        lab <- data$label
@@ -175,6 +178,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
 
 .label.position <- function(data, min.size, skip, rotate) {
     data <- as.data.table(data)
+
     breaks <- unique(data$level)
     breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]
     data <- data[level %in% breaks.cut]
@@ -189,7 +193,9 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
 
     data[, N := .N, by = piece]
     data <- data[N >= min.size]
-
+    if (nrow(data) == 0) {
+        return(data)
+    }
     # if (rotate == TRUE) {
         data[, angle := .cont.angle(x, y, min.size), by = piece]
     # }

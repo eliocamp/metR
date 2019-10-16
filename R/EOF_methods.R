@@ -76,7 +76,7 @@ predict.eof <- function(object, n = NULL, ...) {
 
     dt <- cbind(.extend.dt(left$coldims, each = nrow(right$coldims)),
                 .extend.dt(right$coldims, n = nrow(left$coldims)),
-                c(t(right$matrix)%*%left$matrix))
+                c(Conj(t(right$matrix))%*%left$matrix))
     colnames(dt)[length(colnames(dt))] <- value.var
     return(dt)
 }

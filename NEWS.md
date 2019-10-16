@@ -1,4 +1,4 @@
-# metR 0.4.9000 
+# metR 0.5.9000 
 
 ## New features
 
@@ -15,6 +15,8 @@ is not installed.
 ## Bugfixes
 
 - `geom_contour_fill()` imputation method is fixed for some special cases (#96; thanks @bergmul).
+
+- `predict.eof()` handles complex value svd correctly.
 
 # metR 0.4.0 - Cumulonimbus
 

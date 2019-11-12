@@ -69,7 +69,7 @@
 #' @import data.table Formula formula.tools checkmate
 #' @export
 Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
-                     data = NULL, sphere = FALSE, a = 6371000) {
+                     data = NULL, sphere = FALSE, a = 6371000, equispaced = TRUE) {
     checks <- makeAssertCollection()
 
     assertClass(formula, "formula", add = checks)
@@ -114,7 +114,8 @@ Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
         data.array <- array(data[[dep.names[v]]], dim = unlist(lapply(coords, length)))
         s <- lapply(seq_along(coords), function(x) {
             c(.derv.array(data.array, coords, x, order = order[1],
-                          cyclical = cyclical[x], fill = fill))
+                          cyclical = cyclical[x], fill = fill,
+                          equispaced = equispaced))
         })
         set(data, NULL, dernames[[v]], s)
     }
@@ -135,16 +136,20 @@ Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
     return(as.list(data))
 }
 
+
 # Derivates multidimensional arrays.
-.derv.array <- function(X, coords, margin, order = 1, cyclical = FALSE, fill = FALSE) {
+.derv.array <- function(X, coords, margin, order = 1, cyclical = FALSE, fill = FALSE,
+                        equispaced = TRUE) {
     if (length(dim(X)) == 1) {
-        return(.derv(X, coords[[1]], order = order, cyclical = cyclical, fill = fill))
+        return(.derv(X, coords[[1]], order = order, cyclical = cyclical, fill = fill,
+                     equispaced = equispaced))
     }
     dims <- seq(dim(X))
     coord <- coords[[margin]]
     margins <- dims[!(dims %in% margin)]
     f <- apply(X, margins, function(x) .derv(x, coord, order = order,
-                                             cyclical = cyclical, fill = fill))
+                                             cyclical = cyclical, fill = fill,
+                                             equispaced = equispaced))
     f <- aperm(f, c(margin, margins))
     return(f)
 }
@@ -154,9 +159,11 @@ Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
 #' @rdname Derivate
 #' @export
 Laplacian <- function(formula, cyclical = FALSE, fill = FALSE,
-                      data = NULL, sphere = FALSE, a = 6371000) {
+                      data = NULL, sphere = FALSE, a = 6371000,
+                      equispaced = TRUE) {
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
-                    sphere = sphere, a = a, order = 2)
+                    sphere = sphere, a = a, order = 2,
+                    equispaced = equispaced)
 
     dep.names <- as.character(formula.tools::lhs(formula))
     dep.names <- dep.names[!grepl("+", as.character(dep.names), fixed = TRUE)]
@@ -177,9 +184,11 @@ Laplacian <- function(formula, cyclical = FALSE, fill = FALSE,
 #' @export
 #' @rdname Derivate
 Divergence <- function(formula, cyclical = FALSE, fill = FALSE,
-                       data = NULL, sphere = FALSE, a = 6371000) {
+                       data = NULL, sphere = FALSE, a = 6371000,
+                       equispaced = TRUE) {
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
-                    sphere = sphere, a = a, order = 1)
+                    sphere = sphere, a = a, order = 1,
+                    equispaced = equispaced)
 
     div <- der[[1]] + der[[4]]
     div
@@ -188,18 +197,29 @@ Divergence <- function(formula, cyclical = FALSE, fill = FALSE,
 #' @export
 #' @rdname Derivate
 Vorticity <- function(formula, cyclical = FALSE, fill = FALSE,
-                      data = NULL, sphere = FALSE, a = 6371000) {
+                      data = NULL, sphere = FALSE, a = 6371000,
+                      equispaced = TRUE) {
     der <- Derivate(formula = formula, data = data, cyclical = cyclical,
-                    sphere = sphere, a = a, order = 1)
+                    sphere = sphere, a = a, order = 1,
+                    equispaced = equispaced)
 
     vort <- -der[[2]] + der[[3]]
     vort
 }
 
 
-.derv <- function(x, y, order = 1, cyclical = FALSE, fill = FALSE) {
+.derv <- function(x, y, order = 1, cyclical = FALSE, fill = FALSE, equispaced = TRUE) {
     N <- length(x)
-    d <- y[2] - y[1]
+    if (equispaced) {
+        d <- y[2] - y[1]
+    } else {
+        if (cyclical) {
+            stop("cyclical derivatives on a non-equispaced grid not yet supported")
+        }
+
+        d <- (y[c(2:N, 1)] - y[c(N, 1:(N-1))])/2
+    }
+
     if (order >= 3) {
         dxdy <- .derv(.derv(x, y, order = 2, cyclical = cyclical, fill = fill),
                       y, order = order - 2, cyclical = cyclical, fill = fill)
@@ -222,6 +242,8 @@ Vorticity <- function(formula, cyclical = FALSE, fill = FALSE,
     }
     return(dxdy)
 }
+
+
 
 # .get_order_dim <- function(data) {
 #     setDT(data)

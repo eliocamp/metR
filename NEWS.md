@@ -12,11 +12,14 @@ is not installed.
 
 - `GetSMNData()` gains the ability to cache results in a file. 
 
+- `Derivate()` now can derive in a non-equispaced grid. 
+
 ## Bugfixes
 
 - `geom_contour_fill()` imputation method is fixed for some special cases (#96; thanks @bergmul).
 
 - `predict.eof()` handles complex value svd correctly.
+
 
 # metR 0.4.0 - Cumulonimbus
 

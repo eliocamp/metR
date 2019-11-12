@@ -20,6 +20,7 @@ is not installed.
 
 - `predict.eof()` handles complex value svd correctly.
 
+- Acommodates new grid implementation of units (#105 thanks @pmur002).
 
 # metR 0.4.0 - Cumulonimbus
 

@@ -30,13 +30,12 @@
 #' @seealso [stat_subset] for a more general way of filtering data.
 #' @export
 #' @family ggplot2 helpers
-#' @importFrom plyr ddply
 stat_na <- function(mapping = NULL, data = NULL,
                               geom = "point", position = "identity",
                               ...,
                               show.legend = NA,
                               inherit.aes = TRUE) {
-    layer(
+    ggplot2::layer(
         data = data,
         mapping = mapping,
         stat = StatNa,
@@ -51,7 +50,6 @@ stat_na <- function(mapping = NULL, data = NULL,
 }
 
 #' @import ggplot2
-#' @import scales
 #' @rdname stat_na
 #' @usage NULL
 #' @format NULL
@@ -77,8 +75,8 @@ StatNa <- ggplot2::ggproto("StatNa", ggplot2::Stat,
             })
         },
     compute_group = function(data, scales, width = NULL, height = NULL) {
-        data$width <- data$width %||% width %||% resolution(data$x, FALSE)
-        data$height <- data$height %||% height %||% resolution(data$y, FALSE)
+        data$width <- data$width %||% width %||% ggplot2::resolution(data$x, FALSE)
+        data$height <- data$height %||% height %||% ggplot2::resolution(data$y, FALSE)
 
         data <- data[!(is.na(data$x) | is.na(data$y)), ]
         data <- data[is.na(data$na), ]

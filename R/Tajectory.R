@@ -34,11 +34,11 @@ Trajectory <- function(formula, x0, y0,
     }
 
     formula <- Formula::as.Formula(formula)
-    field <- as.data.table(eval(quote(model.frame(formula, data = data,
+    field <- data.table::as.data.table(eval(quote(model.frame(formula, data = data,
                                                   na.action = NULL))))
 
-    setorderv(field, ind.names)
-    setnames(field, c(ind.names, dep.names), c("x", "y", "t", "dx", "dy"))
+    data.table::setorderv(field, ind.names)
+    data.table::setnames(field, c(ind.names, dep.names), c("x", "y", "t", "dx", "dy"))
 
     if (.is.somedate(field$t)) {
         field[, t1 := to_seconds(t[1]), by = t]
@@ -86,7 +86,7 @@ Trajectory <- function(formula, x0, y0,
                    by = t1]
     }
 
-    setnames(points_out, c("x", "y", "t1", "dx", "dy"), c(ind.names, dep.names))
+    data.table::setnames(points_out, c("x", "y", "t1", "dx", "dy"), c(ind.names, dep.names))
 
     return(points_out)
 }

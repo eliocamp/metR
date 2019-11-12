@@ -67,7 +67,7 @@
 #'                  color = "red")
 #'
 #' @family meteorology functions
-#' @import data.table Formula formula.tools checkmate
+#' @import checkmate
 #' @export
 Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
                      data = NULL, sphere = FALSE, a = 6371000, equispaced = TRUE) {
@@ -87,13 +87,13 @@ Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
     ind.names <- formula.tools::rhs.vars(formula)
 
     formula <- Formula::as.Formula(formula)
-    data <- as.data.table(eval(quote(model.frame(formula, data = data,
+    data <- data.table::as.data.table(eval(quote(model.frame(formula, data = data,
                                                  na.action = NULL))))
 
     # id.name <- digest::digest(data[1, 1])
     id.name <- "ff19bdd67ff5f59cdce2824074707d20"
-    set(data, NULL, id.name, 1:nrow(data))
-    setkeyv(data, ind.names[length(ind.names):1])
+    data.table::set(data, NULL, id.name, 1:nrow(data))
+    data.table::setkeyv(data, ind.names[length(ind.names):1])
 
     if (length(ind.names) > 1) {
         if (length(cyclical) == 1) {
@@ -118,10 +118,10 @@ Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
                           cyclical = cyclical[x], fill = fill,
                           equispaced = equispaced))
         })
-        set(data, NULL, dernames[[v]], s)
+        data.table::set(data, NULL, dernames[[v]], s)
     }
     # data <- data[order(data[[id.name]])]
-    setkeyv(data, id.name)
+    data.table::setkeyv(data, id.name)
 
     # Correction for spherical coordinates.
     if (sphere == TRUE) {

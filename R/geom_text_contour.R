@@ -75,10 +75,10 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
                  call. = FALSE)
         }
 
-        position <- position_nudge(nudge_x, nudge_y)
+        position <- ggplot2::position_nudge(nudge_x, nudge_y)
     }
 
-    layer(
+    ggplot2::layer(
         data = data,
         mapping = mapping,
         stat = stat,

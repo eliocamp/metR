@@ -41,9 +41,6 @@
 #'     coord_flip()
 #'
 #' @export
-#' @import maps
-#' @import maptools
-#' @import sp
 MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
     checks <- makeAssertCollection()
     assertSameLength(c(lon = length(lon), lat = length(lat)), .var.name = "lon and lat",
@@ -52,13 +49,15 @@ MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
     assertNumeric(wrap, len = 2, add = checks)
     reportAssertions(checks)
 
+    check_packages(c("maps", "maptools"), "MaskLand")
+
     seamask <- maps::map(paste0("maps::", mask), fill = TRUE, col = "transparent",
                          plot = FALSE, wrap = wrap)
     IDs <- vapply(strsplit(seamask$names, ":"), function(x) x[1], "")
     proj <- sp::CRS("+proj=longlat +datum=WGS84")
     seamask <- maptools::map2SpatialPolygons(seamask, IDs = IDs, proj4string = proj)
 
-    field <- data.table(lon, lat)
+    field <- data.table::data.table(lon, lat)
     field.unique <- unique(field)
 
     points <- sp::SpatialPoints(field.unique, proj4string = proj)

@@ -29,7 +29,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
                           show.legend = NA,
                           inherit.aes = TRUE) {
     .check_wrap_param(list(...))
-    layer(
+  ggplot2::layer(
         data = data,
         mapping = mapping,
         stat = StatContour2,

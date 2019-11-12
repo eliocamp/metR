@@ -60,8 +60,8 @@ GeomShadow <- ggplot2::ggproto("GeomShadow", ggplot2::GeomTile,
                   stop("geom_raster only works with Cartesian coordinates", call. = FALSE)
               }
               # Convert vector of data to raster
-              x_pos <- as.integer((coords$x - min(coords$x)) / resolution(coords$x, FALSE))
-              y_pos <- as.integer((coords$y - min(coords$y)) / resolution(coords$y, FALSE))
+              x_pos <- as.integer((coords$x - min(coords$x)) / ggplot2::resolution(coords$x, FALSE))
+              y_pos <- as.integer((coords$y - min(coords$y)) / ggplot2::resolution(coords$y, FALSE))
 
               nrow <- max(y_pos) + 1
               ncol <- max(x_pos) + 1

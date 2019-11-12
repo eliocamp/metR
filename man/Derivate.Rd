@@ -8,16 +8,16 @@
 \title{Derivate a discrete variable using finite differences}
 \usage{
 Derivate(formula, order = 1, cyclical = FALSE, fill = FALSE,
-  data = NULL, sphere = FALSE, a = 6371000)
+  data = NULL, sphere = FALSE, a = 6371000, equispaced = TRUE)
 
 Laplacian(formula, cyclical = FALSE, fill = FALSE, data = NULL,
-  sphere = FALSE, a = 6371000)
+  sphere = FALSE, a = 6371000, equispaced = TRUE)
 
 Divergence(formula, cyclical = FALSE, fill = FALSE, data = NULL,
-  sphere = FALSE, a = 6371000)
+  sphere = FALSE, a = 6371000, equispaced = TRUE)
 
 Vorticity(formula, cyclical = FALSE, fill = FALSE, data = NULL,
-  sphere = FALSE, a = 6371000)
+  sphere = FALSE, a = 6371000, equispaced = TRUE)
 }
 \arguments{
 \item{formula}{a formula indicating dependent and independent variables}
@@ -35,6 +35,8 @@ with forward and backwards differencing}
 (see details)}
 
 \item{a}{radius to use in spherical coordinates (defaults to Earth's radius)}
+
+\item{equispaced}{logical indicating whether points are equispaced or not.}
 }
 \value{
 If there is one independent variable and one dependent variable, a numeric

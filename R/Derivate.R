@@ -9,6 +9,7 @@
 #' @param sphere logical indicating whether to use spherical coordinates
 #' (see details)
 #' @param a radius to use in spherical coordinates (defaults to Earth's radius)
+#' @param equispaced logical indicating whether points are equispaced or not.
 #'
 #'
 #' @return

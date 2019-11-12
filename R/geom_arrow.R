@@ -214,7 +214,12 @@ GeomArrow <- ggplot2::ggproto("GeomArrow", ggplot2::Geom,
       }
       mag <- data$norm_mag
 
-      arrow$length <- unit(as.numeric(arrow$length)*mag, attr(arrow$length, "unit"))
+      if ("simpleUnit" %in% class(unit(1, "mm"))) {
+          arrow$length <- mag*arrow$length
+      } else {
+          arrow$length <- unit(as.numeric(arrow$length)*mag,
+                               attr(arrow$length, "unit"))
+      }
 
       if (preserve.dir == FALSE) {
           # For non linear coords

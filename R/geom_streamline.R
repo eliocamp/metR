@@ -329,7 +329,12 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
           if (!is.null(arrow)) {
               mult <- end&munched$end
               mult <- mult[!start]
-              arrow$length <- unit(as.numeric(arrow$length)[1]*mult, attr(arrow$length, "unit"))
+              if ("simpleUnit" %in% class(unit(1, "mm"))) {
+                  arrow$length <- mult*arrow$length[1]
+              } else {
+                  arrow$length <- unit(as.numeric(arrow$length)[1]*mult,
+                                       attr(arrow$length, "unit"))
+              }
           }
           segmentsGrob(
               munched$x[!end], munched$y[!end], munched$x[!start], munched$y[!start],
@@ -349,8 +354,12 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
 
           if (!is.null(arrow)) {
               mult <- as.numeric(munched$end)[start]
-              arrow$length <- unit(as.numeric(arrow$length)[1]*mult,
-                                   attr(arrow$length, "unit"))
+              if ("simpleUnit" %in% class(unit(1, "mm"))) {
+                  arrow$length <- mult*arrow$length[1]
+              } else {
+                  arrow$length <- unit(as.numeric(arrow$length)[1]*mult,
+                                       attr(arrow$length, "unit"))
+              }
           }
           polylineGrob(
               munched$x, munched$y, id = id,

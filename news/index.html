@@ -146,6 +146,7 @@
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code>’s subset argument supports more complex queries. (see the help section at<code>?ReadNetCDF()</code>).</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now has a simple date-time parser that is tried if the udunits2 package is not installed.</p></li>
 <li><p><code><a href="../reference/GetSMNData.html">GetSMNData()</a></code> gains the ability to cache results in a file.</p></li>
+<li><p><code><a href="../reference/Derivate.html">Derivate()</a></code> now can derive in a non-equispaced grid.</p></li>
 </ul>
 </div>
 <div id="bugfixes" class="section level2">
@@ -154,6 +155,7 @@
 <ul>
 <li><p><code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> imputation method is fixed for some special cases (<a href='https://github.com/eliocamp/metR/issues/96'>#96</a>; thanks <a href='https://github.com/bergmul'>@bergmul</a>).</p></li>
 <li><p><code>predict.eof()</code> handles complex value svd correctly.</p></li>
+<li><p>Acommodates new grid implementation of units (<a href='https://github.com/eliocamp/metR/issues/105'>#105</a> thanks <a href='https://github.com/pmur002'>@pmur002</a>).</p></li>
 </ul>
 </div>
 </div>

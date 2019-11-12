@@ -142,12 +142,12 @@ inverted defaults of high and low." />
 inverted defaults of <code>high</code> and <code>low</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>scale_color_divergent</span>(<span class='no'>...</span>, <span class='kw'>low</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/scales/man/muted.html'>muted</a></span>(<span class='st'>"blue"</span>), <span class='kw'>mid</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
-  <span class='kw'>high</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/scales/man/muted.html'>muted</a></span>(<span class='st'>"red"</span>), <span class='kw'>midpoint</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"Lab"</span>,
+    <pre class="usage"><span class='fu'>scale_color_divergent</span>(<span class='no'>...</span>, <span class='kw'>low</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/muted.html'>muted</a></span>(<span class='st'>"blue"</span>), <span class='kw'>mid</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
+  <span class='kw'>high</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/muted.html'>muted</a></span>(<span class='st'>"red"</span>), <span class='kw'>midpoint</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"Lab"</span>,
   <span class='kw'>na.value</span> <span class='kw'>=</span> <span class='st'>"grey50"</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='st'>"colourbar"</span>)
 
-<span class='fu'>scale_fill_divergent</span>(<span class='no'>...</span>, <span class='kw'>low</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/scales/man/muted.html'>muted</a></span>(<span class='st'>"blue"</span>), <span class='kw'>mid</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
-  <span class='kw'>high</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/scales/man/muted.html'>muted</a></span>(<span class='st'>"red"</span>), <span class='kw'>midpoint</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"Lab"</span>,
+<span class='fu'>scale_fill_divergent</span>(<span class='no'>...</span>, <span class='kw'>low</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/muted.html'>muted</a></span>(<span class='st'>"blue"</span>), <span class='kw'>mid</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
+  <span class='kw'>high</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/muted.html'>muted</a></span>(<span class='st'>"red"</span>), <span class='kw'>midpoint</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"Lab"</span>,
   <span class='kw'>na.value</span> <span class='kw'>=</span> <span class='st'>"grey50"</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='st'>"colourbar"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -210,8 +210,8 @@ object itself. Built-in transformations include "asn", "atanh",
 "reverse", "sqrt" and "time".A transformation object bundles together a transform, its inverse,
 and methods for generating breaks and labels. Transformation objects
 are defined in the scales package, and are called <code>name_trans</code>, e.g.
-<code><a href='https://rdrr.io/pkg/scales/man/boxcox_trans.html'>scales::boxcox_trans()</a></code>. You can create your own
-transformation with <code><a href='https://rdrr.io/pkg/scales/man/trans_new.html'>scales::trans_new()</a></code>.</p></dd>
+<code><a href='https://scales.r-lib.org//reference/boxcox_trans.html'>scales::boxcox_trans()</a></code>. You can create your own
+transformation with <code><a href='https://scales.r-lib.org//reference/trans_new.html'>scales::trans_new()</a></code>.</p></dd>
   <dt>position</dt><dd><p>The position of the axis. "left" or "right" for vertical
 scales, "top" or "bottom" for horizontal scales</p></dd>
   <dt>super</dt><dd><p>The super class to use for the constructed scale</p></dd>

@@ -4,8 +4,15 @@
 \alias{scale_mag}
 \title{Scale for vector magnitudes}
 \usage{
-scale_mag(name = waiver(), labels = waiver(), max_size = 1,
-  default_unit = "cm", max = waiver(), guide = guide_vector(), ...)
+scale_mag(
+  name = waiver(),
+  labels = waiver(),
+  max_size = 1,
+  default_unit = "cm",
+  max = waiver(),
+  guide = guide_vector(),
+  ...
+)
 }
 \arguments{
 \item{name}{The name of the scale. Used as the axis or legend title. If

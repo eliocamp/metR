@@ -7,23 +7,55 @@
 \alias{guide_gengrob.colorstrip}
 \title{Discretized continuous color guide}
 \usage{
-guide_colourstrip(title = waiver(), title.position = NULL,
-  title.theme = NULL, title.hjust = NULL, title.vjust = NULL,
-  label = TRUE, label.position = NULL, label.theme = NULL,
-  label.hjust = NULL, label.vjust = NULL, barwidth = NULL,
-  barheight = NULL, ticks = FALSE, draw.ulim = TRUE,
-  draw.llim = TRUE, inside = FALSE, direction = NULL,
-  default.unit = "line", reverse = FALSE, order = 0,
-  available_aes = c("colour", "color", "fill"), ...)
+guide_colourstrip(
+  title = waiver(),
+  title.position = NULL,
+  title.theme = NULL,
+  title.hjust = NULL,
+  title.vjust = NULL,
+  label = TRUE,
+  label.position = NULL,
+  label.theme = NULL,
+  label.hjust = NULL,
+  label.vjust = NULL,
+  barwidth = NULL,
+  barheight = NULL,
+  ticks = FALSE,
+  draw.ulim = TRUE,
+  draw.llim = TRUE,
+  inside = FALSE,
+  direction = NULL,
+  default.unit = "line",
+  reverse = FALSE,
+  order = 0,
+  available_aes = c("colour", "color", "fill"),
+  ...
+)
 
-guide_colorstrip(title = waiver(), title.position = NULL,
-  title.theme = NULL, title.hjust = NULL, title.vjust = NULL,
-  label = TRUE, label.position = NULL, label.theme = NULL,
-  label.hjust = NULL, label.vjust = NULL, barwidth = NULL,
-  barheight = NULL, ticks = FALSE, draw.ulim = TRUE,
-  draw.llim = TRUE, inside = FALSE, direction = NULL,
-  default.unit = "line", reverse = FALSE, order = 0,
-  available_aes = c("colour", "color", "fill"), ...)
+guide_colorstrip(
+  title = waiver(),
+  title.position = NULL,
+  title.theme = NULL,
+  title.hjust = NULL,
+  title.vjust = NULL,
+  label = TRUE,
+  label.position = NULL,
+  label.theme = NULL,
+  label.hjust = NULL,
+  label.vjust = NULL,
+  barwidth = NULL,
+  barheight = NULL,
+  ticks = FALSE,
+  draw.ulim = TRUE,
+  draw.llim = TRUE,
+  inside = FALSE,
+  direction = NULL,
+  default.unit = "line",
+  reverse = FALSE,
+  order = 0,
+  available_aes = c("colour", "color", "fill"),
+  ...
+)
 }
 \arguments{
 \item{title}{A character string or expression indicating a title of guide.
@@ -138,16 +170,22 @@ g + scale_fill_continuous(guide = guide_colourstrip(inside = TRUE))
 
 }
 \seealso{
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_label_contour}},
-  \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}},
-  \code{\link{stat_subset}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_arrow}()},
+\code{\link{geom_contour2}()},
+\code{\link{geom_contour_fill}()},
+\code{\link{geom_label_contour}()},
+\code{\link{geom_relief}()},
+\code{\link{geom_streamline}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_divergent}},
+\code{\link{scale_longitude}},
+\code{\link{stat_na}()},
+\code{\link{stat_subset}()}
 }
 \concept{ggplot2 helpers}
 \keyword{internal}

@@ -123,7 +123,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
            min.size <- min.size - 1
        }
        # Get points of labels
-       data <- .label.position(copy(data), min.size, skip, rotate)
+       data <- .label.position(data.table::copy(data), min.size, skip, rotate)
        if (nrow(data) == 0) {
            return(nullGrob())
        }
@@ -148,7 +148,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
            dx = data$dx, dy = data$dy,
            bg.r = stroke, bg.color = stroke.colour,
            gp = grid::gpar(
-               col = alpha(data$colour, data$alpha),
+               col = scales::alpha(data$colour, data$alpha),
                fontsize = data$size * .pt,
                fontfamily = data$family,
                fontface = data$fontface,

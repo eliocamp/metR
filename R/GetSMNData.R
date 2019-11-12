@@ -16,7 +16,7 @@
 #' \describe{
 #'    \item{date}{date}
 #'    \item{t}{temperature in degrees celsius}
-#'    \item{rh}{relative humidity in \%}
+#'    \item{rh}{relative humidity in %}
 #'    \item{slp}{sea level pressure in hPa}
 #'    \item{dir}{wind direction in clockwise degrees from 6 o'clock}
 #'    \item{V}{wind magnitude in m/s}

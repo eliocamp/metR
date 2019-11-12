@@ -38,8 +38,11 @@ Takaya, K. and H. Nakamura, 2001: A Formulation of a Phase-Independent Wave-Acti
 Adapted from \url{https://github.com/marisolosman/Reunion_Clima/blob/master/WAF/Calculo_WAF.ipynb}
 }
 \seealso{
-Other meteorology functions: \code{\link{Derivate}},
-  \code{\link{EOF}}, \code{\link{GeostrophicWind}},
-  \code{\link{thermodynamics}}, \code{\link{waves}}
+Other meteorology functions: 
+\code{\link{Derivate}()},
+\code{\link{EOF}()},
+\code{\link{GeostrophicWind}()},
+\code{\link{thermodynamics}},
+\code{\link{waves}}
 }
 \concept{meteorology functions}

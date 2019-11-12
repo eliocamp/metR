@@ -258,8 +258,10 @@ check_packages <- function(packages, fun) {
     }
 }
 
+.datatable.aware <- TRUE
 
 # nocov end
+
 
 
 

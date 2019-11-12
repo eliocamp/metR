@@ -123,7 +123,12 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
     reportAssertions(checks)
 
     f <- as.character(formula)
-    f <- stringr::str_split(f,"~", n = 2)[[1]]
+
+    if (length(f) == 1) {  # formula.tool did its thing
+        f <- stringr::str_split(f, "~", n = 2)[[1]]
+    } else {
+        f <- f[-1]
+    }
 
     value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
 

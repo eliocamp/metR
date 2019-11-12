@@ -10,18 +10,44 @@
 \alias{StatTextContour}
 \title{Label contours}
 \usage{
-geom_label_contour(mapping = NULL, data = NULL,
-  stat = "text_contour", position = "identity", ..., min.size = 5,
-  skip = 0, parse = FALSE, nudge_x = 0, nudge_y = 0,
-  label.padding = unit(0.25, "lines"), label.r = unit(0.15, "lines"),
-  label.size = 0.25, na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+geom_label_contour(
+  mapping = NULL,
+  data = NULL,
+  stat = "text_contour",
+  position = "identity",
+  ...,
+  min.size = 5,
+  skip = 0,
+  parse = FALSE,
+  nudge_x = 0,
+  nudge_y = 0,
+  label.padding = unit(0.25, "lines"),
+  label.r = unit(0.15, "lines"),
+  label.size = 0.25,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
-geom_text_contour(mapping = NULL, data = NULL, stat = "text_contour",
-  position = "identity", ..., min.size = 5, skip = 0,
-  rotate = TRUE, parse = FALSE, nudge_x = 0, nudge_y = 0,
-  stroke = 0, stroke.color = "white", check_overlap = FALSE,
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+geom_text_contour(
+  mapping = NULL,
+  data = NULL,
+  stat = "text_contour",
+  position = "identity",
+  ...,
+  min.size = 5,
+  skip = 0,
+  rotate = TRUE,
+  parse = FALSE,
+  nudge_x = 0,
+  nudge_y = 0,
+  stroke = 0,
+  stroke.color = "white",
+  check_overlap = FALSE,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -139,16 +165,22 @@ g + geom_text_contour(aes(z = value), stroke = 0.2)
 
 }
 \seealso{
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{guide_colourstrip}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}},
-  \code{\link{stat_subset}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_arrow}()},
+\code{\link{geom_contour2}()},
+\code{\link{geom_contour_fill}()},
+\code{\link{geom_relief}()},
+\code{\link{geom_streamline}()},
+\code{\link{guide_colourstrip}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_divergent}},
+\code{\link{scale_longitude}},
+\code{\link{stat_na}()},
+\code{\link{stat_subset}()}
 }
 \concept{ggplot2 helpers}
 \keyword{datasets}

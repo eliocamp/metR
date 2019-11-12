@@ -25,6 +25,6 @@ Coriolis and beta parameters by latitude.
 }
 \details{
 All functions use the correct sidereal day (24hs 56mins 4.091s) instead of
-the incorrect solar day (24hs) for 0.3\% more precision and 1000\% more
+the incorrect solar day (24hs) for 0.3\\% more precision and 1000\\% more
 pedantry.
 }

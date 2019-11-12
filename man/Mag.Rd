@@ -32,8 +32,10 @@ Mag(1, 1:2)
 
 }
 \seealso{
-Other utilities: \code{\link{Anomaly}},
-  \code{\link{JumpBy}}, \code{\link{Percentile}},
-  \code{\link{logic}}
+Other utilities: 
+\code{\link{Anomaly}()},
+\code{\link{JumpBy}()},
+\code{\link{Percentile}()},
+\code{\link{logic}}
 }
 \concept{utilities}

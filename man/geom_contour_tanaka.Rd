@@ -6,11 +6,23 @@
 \alias{GeomContourTanaka}
 \title{Illuminated contours}
 \usage{
-geom_contour_tanaka(mapping = NULL, data = NULL, stat = "Contour2",
-  position = "identity", ..., breaks = NULL, bins = NULL,
-  binwidth = NULL, sun.angle = 60, light = "white",
-  dark = "gray20", range = c(0.01, 0.5), na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+geom_contour_tanaka(
+  mapping = NULL,
+  data = NULL,
+  stat = "Contour2",
+  position = "identity",
+  ...,
+  breaks = NULL,
+  bins = NULL,
+  binwidth = NULL,
+  sun.angle = 60,
+  light = "white",
+  dark = "gray20",
+  range = c(0.01, 0.5),
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or

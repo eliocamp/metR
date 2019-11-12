@@ -4,8 +4,7 @@
 \alias{GeostrophicWind}
 \title{Calculate geostrophic winds}
 \usage{
-GeostrophicWind(gh, lon, lat, cyclical = "guess", g = 9.81,
-  a = 6371000)
+GeostrophicWind(gh, lon, lat, cyclical = "guess", g = 9.81, a = 6371000)
 }
 \arguments{
 \item{gh}{geopotential height}
@@ -44,8 +43,11 @@ ggplot(geopotential[date == date[1]], aes(lon, lat)) +
 
 }
 \seealso{
-Other meteorology functions: \code{\link{Derivate}},
-  \code{\link{EOF}}, \code{\link{WaveFlux}},
-  \code{\link{thermodynamics}}, \code{\link{waves}}
+Other meteorology functions: 
+\code{\link{Derivate}()},
+\code{\link{EOF}()},
+\code{\link{WaveFlux}()},
+\code{\link{thermodynamics}},
+\code{\link{waves}}
 }
 \concept{meteorology functions}

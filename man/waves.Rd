@@ -9,8 +9,14 @@
 \usage{
 FitWave(y, k = 1)
 
-BuildWave(x, amplitude, phase, k, wave = list(amplitude = amplitude,
-  phase = phase, k = k), sum = TRUE)
+BuildWave(
+  x,
+  amplitude,
+  phase,
+  k,
+  wave = list(amplitude = amplitude, phase = phase, k = k),
+  sum = TRUE
+)
 
 FilterWave(y, k, action = sign(k[k != 0][1]))
 }
@@ -121,8 +127,11 @@ ggplot(jan, aes(lon, lat)) +
 
 }
 \seealso{
-Other meteorology functions: \code{\link{Derivate}},
-  \code{\link{EOF}}, \code{\link{GeostrophicWind}},
-  \code{\link{WaveFlux}}, \code{\link{thermodynamics}}
+Other meteorology functions: 
+\code{\link{Derivate}()},
+\code{\link{EOF}()},
+\code{\link{GeostrophicWind}()},
+\code{\link{WaveFlux}()},
+\code{\link{thermodynamics}}
 }
 \concept{meteorology functions}

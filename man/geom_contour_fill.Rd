@@ -7,15 +7,33 @@
 \alias{StatContourFill}
 \title{Filled 2d contours of a 3d surface}
 \usage{
-geom_contour_fill(mapping = NULL, data = NULL, stat = "ContourFill",
-  position = "identity", ..., breaks = MakeBreaks(), bins = NULL,
-  binwidth = NULL, na.fill = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+geom_contour_fill(
+  mapping = NULL,
+  data = NULL,
+  stat = "ContourFill",
+  position = "identity",
+  ...,
+  breaks = MakeBreaks(),
+  bins = NULL,
+  binwidth = NULL,
+  na.fill = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
-stat_contour_fill(mapping = NULL, data = NULL, geom = "polygon",
-  position = "identity", ..., breaks = MakeBreaks(), bins = NULL,
-  binwidth = NULL, na.fill = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+stat_contour_fill(
+  mapping = NULL,
+  data = NULL,
+  geom = "polygon",
+  position = "identity",
+  ...,
+  breaks = MakeBreaks(),
+  bins = NULL,
+  binwidth = NULL,
+  na.fill = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -123,16 +141,22 @@ ggplot(surface, aes(Var1, Var2, z = value)) +
 
 }
 \seealso{
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
-  \code{\link{geom_label_contour}},
-  \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{guide_colourstrip}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}},
-  \code{\link{stat_subset}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_arrow}()},
+\code{\link{geom_contour2}()},
+\code{\link{geom_label_contour}()},
+\code{\link{geom_relief}()},
+\code{\link{geom_streamline}()},
+\code{\link{guide_colourstrip}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_divergent}},
+\code{\link{scale_longitude}},
+\code{\link{stat_na}()},
+\code{\link{stat_subset}()}
 }
 \concept{ggplot2 helpers}
 \keyword{datasets}

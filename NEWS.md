@@ -1,3 +1,11 @@
+# metR 0.6.90000 
+
+
+## Internals
+
+* Cleaned up a lot of dependencies. Some are gone (they were not longer needed) and some 
+have been moved to Suggest. 
+
 # metR 0.5.0 - Incus
 
 ## New features

@@ -8,16 +8,38 @@
 \alias{StatContour2}
 \title{2d contours of a 3d surface}
 \usage{
-geom_contour2(mapping = NULL, data = NULL, stat = "contour2",
-  position = "identity", ..., lineend = "butt", linejoin = "round",
-  linemitre = 1, breaks = MakeBreaks(), bins = NULL,
-  binwidth = NULL, na.rm = FALSE, na.fill = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+geom_contour2(
+  mapping = NULL,
+  data = NULL,
+  stat = "contour2",
+  position = "identity",
+  ...,
+  lineend = "butt",
+  linejoin = "round",
+  linemitre = 1,
+  breaks = MakeBreaks(),
+  bins = NULL,
+  binwidth = NULL,
+  na.rm = FALSE,
+  na.fill = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
-stat_contour2(mapping = NULL, data = NULL, geom = "contour2",
-  position = "identity", ..., breaks = MakeBreaks(), bins = NULL,
-  binwidth = NULL, na.rm = FALSE, na.fill = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+stat_contour2(
+  mapping = NULL,
+  data = NULL,
+  geom = "contour2",
+  position = "identity",
+  ...,
+  breaks = MakeBreaks(),
+  bins = NULL,
+  binwidth = NULL,
+  na.rm = FALSE,
+  na.fill = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -128,29 +150,39 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 
 }
 \seealso{
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_arrow}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_label_contour}},
-  \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{guide_colourstrip}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}},
-  \code{\link{stat_subset}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_arrow}()},
+\code{\link{geom_contour_fill}()},
+\code{\link{geom_label_contour}()},
+\code{\link{geom_relief}()},
+\code{\link{geom_streamline}()},
+\code{\link{guide_colourstrip}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_divergent}},
+\code{\link{scale_longitude}},
+\code{\link{stat_na}()},
+\code{\link{stat_subset}()}
 
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_arrow}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_label_contour}},
-  \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{guide_colourstrip}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}},
-  \code{\link{stat_subset}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_arrow}()},
+\code{\link{geom_contour_fill}()},
+\code{\link{geom_label_contour}()},
+\code{\link{geom_relief}()},
+\code{\link{geom_streamline}()},
+\code{\link{guide_colourstrip}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_divergent}},
+\code{\link{scale_longitude}},
+\code{\link{stat_na}()},
+\code{\link{stat_subset}()}
 }
 \concept{ggplot2 helpers}
 \keyword{datasets}

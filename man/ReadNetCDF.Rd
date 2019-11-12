@@ -5,8 +5,13 @@
 \alias{GlanceNetCDF}
 \title{Read NetCDF files.}
 \usage{
-ReadNetCDF(file, vars = NULL, out = c("data.frame", "vector", "array"),
-  subset = NULL, key = FALSE)
+ReadNetCDF(
+  file,
+  vars = NULL,
+  out = c("data.frame", "vector", "array"),
+  subset = NULL,
+  key = FALSE
+)
 
 GlanceNetCDF(file, ...)
 }

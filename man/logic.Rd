@@ -45,8 +45,10 @@ ggplot(temperature[lon \%~\% cross.lon & lat \%between\% c(-50, 50)],
 
 }
 \seealso{
-Other utilities: \code{\link{Anomaly}},
-  \code{\link{JumpBy}}, \code{\link{Mag}},
-  \code{\link{Percentile}}
+Other utilities: 
+\code{\link{Anomaly}()},
+\code{\link{JumpBy}()},
+\code{\link{Mag}()},
+\code{\link{Percentile}()}
 }
 \concept{utilities}

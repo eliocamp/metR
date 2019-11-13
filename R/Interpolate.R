@@ -56,8 +56,7 @@
 #' path <- geopotential[, Interpolate(gh ~ lon + lat, as.path(lons, lats))]
 #'
 #' @export
-#' @importFrom fields interp.surface
-#' @import data.table Formula formula.tools
+#' @import data.table
 Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = FALSE) {
     checks <- makeAssertCollection()
 

@@ -8,23 +8,57 @@
 \alias{StatArrow}
 \title{Arrows}
 \usage{
-geom_arrow(mapping = NULL, data = NULL, stat = "arrow",
-  position = "identity", ..., start = 0, direction = c("ccw", "cw"),
-  pivot = 0.5, preserve.dir = TRUE, min.mag = 0, skip = 0,
-  skip.x = skip, skip.y = skip, arrow.angle = 15,
-  arrow.length = 0.5, arrow.ends = "last", arrow.type = "closed",
-  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
-  arrow.ends, type = arrow.type), lineend = "butt", na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+geom_arrow(
+  mapping = NULL,
+  data = NULL,
+  stat = "arrow",
+  position = "identity",
+  ...,
+  start = 0,
+  direction = c("ccw", "cw"),
+  pivot = 0.5,
+  preserve.dir = TRUE,
+  min.mag = 0,
+  skip = 0,
+  skip.x = skip,
+  skip.y = skip,
+  arrow.angle = 15,
+  arrow.length = 0.5,
+  arrow.ends = "last",
+  arrow.type = "closed",
+  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends = arrow.ends, type
+    = arrow.type),
+  lineend = "butt",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
-geom_vector(mapping = NULL, data = NULL, stat = "arrow",
-  position = "identity", ..., start = 0, direction = c("ccw", "cw"),
-  pivot = 0.5, preserve.dir = FALSE, min.mag = 0, skip = 0,
-  skip.x = skip, skip.y = skip, arrow.angle = 15,
-  arrow.length = 0.5, arrow.ends = "last", arrow.type = "closed",
-  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends =
-  arrow.ends, type = arrow.type), lineend = "butt", na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+geom_vector(
+  mapping = NULL,
+  data = NULL,
+  stat = "arrow",
+  position = "identity",
+  ...,
+  start = 0,
+  direction = c("ccw", "cw"),
+  pivot = 0.5,
+  preserve.dir = FALSE,
+  min.mag = 0,
+  skip = 0,
+  skip.x = skip,
+  skip.y = skip,
+  arrow.angle = 15,
+  arrow.length = 0.5,
+  arrow.ends = "last",
+  arrow.type = "closed",
+  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends = arrow.ends, type
+    = arrow.type),
+  lineend = "butt",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -170,17 +204,22 @@ ggplot(grid, aes(x, y)) +
 
 }
 \seealso{
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_contour2}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_label_contour}},
-  \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{guide_colourstrip}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}},
-  \code{\link{stat_subset}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_contour2}()},
+\code{\link{geom_contour_fill}()},
+\code{\link{geom_label_contour}()},
+\code{\link{geom_relief}()},
+\code{\link{geom_streamline}()},
+\code{\link{guide_colourstrip}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_divergent}},
+\code{\link{scale_longitude}},
+\code{\link{stat_na}()},
+\code{\link{stat_subset}()}
 }
 \concept{ggplot2 helpers}
 \keyword{datasets}

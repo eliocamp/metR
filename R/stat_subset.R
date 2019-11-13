@@ -33,7 +33,7 @@ stat_subset <- function(mapping = NULL, data = NULL,
                     ...,
                     show.legend = NA,
                     inherit.aes = TRUE) {
-    layer(
+  ggplot2::layer(
         data = data,
         mapping = mapping,
         stat = StatSubset,
@@ -48,7 +48,6 @@ stat_subset <- function(mapping = NULL, data = NULL,
 }
 
 #' @import ggplot2
-#' @import scales
 #' @rdname stat_subset
 #' @usage NULL
 #' @format NULL
@@ -56,8 +55,8 @@ stat_subset <- function(mapping = NULL, data = NULL,
 StatSubset <- ggplot2::ggproto("StatSubset", ggplot2::Stat,
   required_aes = c("x", "y", "subset"),
   compute_group = function(data, scales, width = NULL, height = NULL) {
-      data$width <- data$width %||% width %||% resolution(data$x, FALSE)
-      data$height <- data$height %||% height %||% resolution(data$y, FALSE)
+      data$width <- data$width %||% width %||% ggplot2::resolution(data$x, FALSE)
+      data$height <- data$height %||% height %||% ggplot2::resolution(data$y, FALSE)
       data <- subset(data, subset == TRUE)
       data
   }

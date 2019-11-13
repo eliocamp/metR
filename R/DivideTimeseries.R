@@ -25,11 +25,13 @@
 #' DivideTimeseries(g, gdata$date, n = 2, "Date", "Max Temperature")
 #' @family ggplot2 helpers
 #' @export
-#' @import ggplot2
-#' @import gridExtra
 DivideTimeseries <- function(g, x, n = 2, xlab = "x", ylab = "y") {
     warning("'DivideTimeseries' is deprecated, use ggwrap instead",
             ' (https://github.com/wilkox/ggwrap)')
+
+    if (!requireNamespace("gridExtra", quietly = TRUE)) {
+        stop("DivideTimeseries needs the gridExtra package. Install it with `install.packages(\"gridExtra\")`")
+    }
 
     M <- max(x)
     m <- min(x)

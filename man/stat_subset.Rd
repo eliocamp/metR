@@ -6,8 +6,15 @@
 \alias{StatSubset}
 \title{Subset values}
 \usage{
-stat_subset(mapping = NULL, data = NULL, geom = "point",
-  position = "identity", ..., show.legend = NA, inherit.aes = TRUE)
+stat_subset(
+  mapping = NULL,
+  data = NULL,
+  geom = "point",
+  position = "identity",
+  ...,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -81,16 +88,22 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 \seealso{
 \link{stat_na} for a more specialized stat for filtering \code{NA} values.
 
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_label_contour}},
-  \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{guide_colourstrip}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_arrow}()},
+\code{\link{geom_contour2}()},
+\code{\link{geom_contour_fill}()},
+\code{\link{geom_label_contour}()},
+\code{\link{geom_relief}()},
+\code{\link{geom_streamline}()},
+\code{\link{guide_colourstrip}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_divergent}},
+\code{\link{scale_longitude}},
+\code{\link{stat_na}()}
 }
 \concept{ggplot2 helpers}
 \keyword{datasets}

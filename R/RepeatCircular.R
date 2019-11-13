@@ -53,7 +53,7 @@ WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
     if (nrow(x) == 0) return(x)
 
     x <- as.data.table(x)
-    setorderv(x, circular)
+    data.table::setorderv(x, circular)
 
     res <- ggplot2::resolution(x[[circular]])
     m <- min(x[[circular]])
@@ -67,21 +67,21 @@ WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
     # New "grid"
     x.new <- seq(m + left*res, M + right*res, by = res)
 
-    right <- right + uniqueN(x[[circular]]) - 1
+    right <- right + data.table::uniqueN(x[[circular]]) - 1
 
     # The old coord of the new grid
     index <- seq(left, right)
     index <- index %% length(unique(x[[circular]])) + 1
     x.old <- unique(x[[circular]])[index]
 
-    x.new <- data.table(x.old, x.new)
+    x.new <- data.table::data.table(x.old, x.new)
     colnames(x.new) <- c(circular, paste0(circular, "new"))
 
     # Add values according to the old grid and then
     # remove it.
     y <- x[x.new, on = circular, allow.cartesian = TRUE]
-    set(y, NULL, circular, NULL )
-    setnames(y, paste0(circular, "new"), circular)
+    data.table::set(y, NULL, circular, NULL )
+    data.table::setnames(y, paste0(circular, "new"), circular)
     return(y)
 }
 

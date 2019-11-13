@@ -59,7 +59,6 @@
 #' g + geom_contour_tanaka(aes(z = gh.z))
 #'
 #' @export
-#' @import grid ggplot2 data.table
 geom_contour_tanaka <- function(mapping = NULL, data = NULL,
                                 stat = "Contour2", position = "identity",
                                 ...,
@@ -119,20 +118,20 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
 
       rx <- ggplot2::resolution(data$x, zero = FALSE)
       ry <- ggplot2::resolution(data$y, zero = FALSE)
-      setDT(data)
+      data.table::setDT(data)
 
       data[, dx := c(diff(x), 0), by = group]
       data[, dy := c(diff(y), 0), by = group]
 
-      munched <- coord_munch(coord, data, panel_params)
+      munched <- ggplot2::coord_munch(coord, data, panel_params)
 
       # munched <- subset(munched, is.na(remove))
       # Silently drop lines with less than two points, preserving order
       rows <- stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
       munched <- munched[rows >= 2, ]
-      if (nrow(munched) < 2) return(zeroGrob())
+      if (nrow(munched) < 2) return(ggplot2::zeroGrob())
 
-      munched <- setDT(munched)
+      munched <- data.table::setDT(munched)
       munched[, dx := c(diff(x), 0), by = group]
       munched[, dy := c(diff(y), 0), by = group]
 
@@ -173,12 +172,12 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
       end <-   c(group_diff, TRUE)
 
       if (!constant) {
-          segmentsGrob(
+          grid::segmentsGrob(
               munched$x[!end], munched$y[!end], munched$x[!start], munched$y[!start],
               default.units = "native", arrow = arrow,
-              gp = gpar(
-                  col = alpha(munched$colour, munched$alpha)[!end],
-                  fill = alpha(munched$colour, munched$alpha)[!end],
+              gp = grid::gpar(
+                  col = scales::alpha(munched$colour, munched$alpha)[!end],
+                  fill = scales::alpha(munched$colour, munched$alpha)[!end],
                   lwd = munched$size[!end] * .pt,
                   lty = munched$linetype[!end],
                   lineend = lineend,
@@ -187,14 +186,13 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
               )
           )
       } else {
-          print("constant")
           id <- match(munched$group, unique(munched$group))
-          polylineGrob(
+          grid::polylineGrob(
               munched$x, munched$y, id = id,
               default.units = "native", arrow = arrow,
-              gp = gpar(
-                  col = alpha(munched$colour, munched$alpha)[start],
-                  fill = alpha(munched$colour, munched$alpha)[start],
+              gp = grid::gpar(
+                  col = scales::alpha(munched$colour, munched$alpha)[start],
+                  fill = scales::alpha(munched$colour, munched$alpha)[start],
                   lwd = munched$size[start] * .pt,
                   lty = munched$linetype[start],
                   lineend = lineend,

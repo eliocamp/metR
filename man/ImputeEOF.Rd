@@ -4,9 +4,16 @@
 \alias{ImputeEOF}
 \title{Impute missing values}
 \usage{
-ImputeEOF(formula, max.eof = NULL, data = NULL, min.eof = 1,
-  tol = 0.01, max.iter = 10000, validation = NULL,
-  verbose = interactive())
+ImputeEOF(
+  formula,
+  max.eof = NULL,
+  data = NULL,
+  min.eof = 1,
+  tol = 0.01,
+  max.iter = 10000,
+  validation = NULL,
+  verbose = interactive()
+)
 }
 \arguments{
 \item{formula}{a formula to build the matrix that will be used in the SVD

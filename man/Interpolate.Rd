@@ -4,8 +4,7 @@
 \alias{Interpolate}
 \title{Bilinear interpolation}
 \usage{
-Interpolate(formula, x.out, y.out, data = NULL, grid = TRUE,
-  path = FALSE)
+Interpolate(formula, x.out, y.out, data = NULL, grid = TRUE, path = FALSE)
 }
 \arguments{
 \item{formula}{a formula indicating dependent and independent variables (see Details)}

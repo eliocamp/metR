@@ -19,29 +19,24 @@ Depends:
      R (>= 2.10)
 Imports:
     checkmate,
-    curl,
     data.table,
     digest,
-    dplyr,
     fields,
     Formula,
     formula.tools,
     ggplot2 (>= 3.0.0),
     grid,
-    gridExtra,
     gtable,
     lubridate,
-    maps,
-    maptools,
-    Matrix,
     memoise,
     plyr,
-    RCurl,
     scales,
     sp,
     stringr,
     purrr
 Suggests: 
+    maps,
+    maptools,
     covr,
     irlba,
     knitr,
@@ -51,10 +46,11 @@ Suggests:
     rmarkdown,
     testthat,
     viridis,
-    udunits2
+    udunits2,
+    gridExtra
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 VignetteBuilder: knitr

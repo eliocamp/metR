@@ -3,7 +3,7 @@
 .tidy2matrix <- function(data, formula, value.var, fill = NULL, ...) {
     row.vars <- all.vars(formula[[2]])
     col.vars <- all.vars(formula[[3]])
-    data <- as.data.table(data)
+    data <- data.table::as.data.table(data)
     data[, row__ := .GRP, by = c(row.vars)]
     data[, col__ := .GRP, by = c(col.vars)]
     if (is.null(fill)){
@@ -64,7 +64,7 @@ element_render <- function(theme, element, ..., name = NULL) {
         return(ggplot2::zeroGrob())
     }
 
-    grob <- element_grob(el, ...)
+    grob <- ggplot2::element_grob(el, ...)
     ggname(paste(element, name, sep = "."), grob)
 }
 
@@ -75,9 +75,9 @@ ggname <- function(prefix, grob) {
 
 
 width_cm <- function(x) {
-    if (is.grob(x)) {
+    if (grid::is.grob(x)) {
         grid::convertWidth(grid::grobWidth(x), "cm", TRUE)
-    } else if (is.unit(x)) {
+    } else if (grid::is.unit(x)) {
         grid::convertWidth(x, "cm", TRUE)
     } else if (is.list(x)) {
         vapply(x, width_cm, numeric(1))
@@ -86,9 +86,9 @@ width_cm <- function(x) {
     }
 }
 height_cm <- function(x) {
-    if (is.grob(x)) {
+    if (grid::is.grob(x)) {
         grid::convertHeight(grid::grobHeight(x), "cm", TRUE)
-    } else if (is.unit(x)) {
+    } else if (grid::is.unit(x)) {
         grid::convertHeight(x, "cm", TRUE)
     } else if (is.list(x)) {
         vapply(x, height_cm, numeric(1))
@@ -114,7 +114,7 @@ message_wrap <- function(...) {
 interleave <- function(...) UseMethod("interleave")
 #' @export
 interleave.unit <- function(...) {
-    do.call("unit.c", do.call("interleave.default", plyr::llply(list(...), as.list)))
+    do.call("grid::unit.c", do.call("interleave.default", plyr::llply(list(...), as.list)))
 }
 #' @export
 interleave.default <- function(...) {
@@ -170,8 +170,6 @@ if(getRversion() >= "2.15.1") {
           "col__", "row__", "t1", "z1", "z2"))
 }
 
-
-`%>%` <- dplyr::`%>%`
 
 .is.reggrid <- function(data, coords) {
     lengths <- data[, .N, by = coords]$N
@@ -242,5 +240,28 @@ checkDateish <- function(x, ...) {
 }
 
 assertDateish <- checkmate::makeAssertionFunction(checkDateish)
+
+check_packages <- function(packages, fun) {
+    installed <- vapply(packages, function(p) {
+        requireNamespace(p, quietly = TRUE)
+    }, TRUE)
+
+    missing <- packages[!installed]
+
+    if (length(missing != 0)) {
+        text <- paste0(fun, " needs packages ",
+               paste0(missing, collapse = ", "),
+               ". Install with: \n",
+               "`install.packages(c(\"",
+               paste0(missing, collapse = "\", \""), "\"))`")
+        stop(text)
+    }
+}
+
+.datatable.aware <- TRUE
+
 # nocov end
+
+
+
 

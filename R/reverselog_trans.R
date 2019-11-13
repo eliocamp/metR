@@ -19,7 +19,6 @@
 #'
 #' @family ggplot2 helpers
 #' @export
-#' @import scales
 reverselog_trans <- function(base = 10) {
     trans <- function(x) -log(x, base)
     inv <- function(x) base^(-x)

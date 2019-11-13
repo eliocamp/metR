@@ -8,15 +8,36 @@
 \alias{GeomShadow}
 \title{Relief Shading}
 \usage{
-geom_relief(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., sun.angle = 60, raster = TRUE,
-  interpolate = TRUE, shadow = FALSE, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+geom_relief(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  sun.angle = 60,
+  raster = TRUE,
+  interpolate = TRUE,
+  shadow = FALSE,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
-geom_shadow(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., sun.angle = 60, range = c(0, 1),
-  skip = 0, raster = TRUE, interpolate = TRUE, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+geom_shadow(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  sun.angle = 60,
+  range = c(0, 1),
+  skip = 0,
+  raster = TRUE,
+  interpolate = TRUE,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
@@ -111,17 +132,22 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 }
 }
 \seealso{
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_label_contour}},
-  \code{\link{geom_streamline}},
-  \code{\link{guide_colourstrip}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}},
-  \code{\link{stat_subset}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_arrow}()},
+\code{\link{geom_contour2}()},
+\code{\link{geom_contour_fill}()},
+\code{\link{geom_label_contour}()},
+\code{\link{geom_streamline}()},
+\code{\link{guide_colourstrip}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_divergent}},
+\code{\link{scale_longitude}},
+\code{\link{stat_na}()},
+\code{\link{stat_subset}()}
 }
 \concept{ggplot2 helpers}
 \keyword{datasets}

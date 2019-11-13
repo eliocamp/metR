@@ -55,8 +55,6 @@ predict.eof <- function(object, n = NULL, ...) {
     assertIntegerish(n, lower = 1, null.ok = TRUE, add = checks)
     reportAssertions(checks)
 
-    ` %>% ` <- dplyr::`%>%`
-
     if(!is.null(n)) object <- cut(object, n)
 
     value.var <- attr(object, "value.var")
@@ -65,10 +63,8 @@ predict.eof <- function(object, n = NULL, ...) {
     right.vars <- colnames(object$right)[!(colnames(object$right) %in% c(pc, value.var))]
     right.formula <- as.formula(paste0(pc, " ~ ", paste0(right.vars, collapse = "+")))
 
-    right <- object$right %>%
-        .[object$sdev, on = pc] %>%
-        .[, (value.var) := get(value.var)*sd] %>%
-        .tidy2matrix(right.formula, value.var)
+    right <- object$right[object$sdev, on = pc][, (value.var) := get(value.var)*sd]
+    right <- .tidy2matrix(right, right.formula, value.var)
 
     left.vars <- colnames(object$left)[!(colnames(object$left) %in% c(pc, value.var))]
     left.formula <- as.formula(paste0(pc, " ~ ", paste0(left.vars, collapse = "+")))

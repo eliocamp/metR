@@ -14,7 +14,6 @@
 #' @name scale_divergent
 #' @family ggplot2 helpers
 #' @export
-#' @import ggplot2 scales
 scale_color_divergent <- function(..., low = scales::muted("blue"), mid = "white",
                                   high = scales::muted("red"), midpoint = 0, space = "Lab",
                                   na.value = "grey50", guide = "colourbar") {
@@ -24,7 +23,6 @@ scale_color_divergent <- function(..., low = scales::muted("blue"), mid = "white
 
 #' @rdname scale_divergent
 #' @export
-#' @import ggplot2 scales
 scale_fill_divergent <- function(..., low = scales::muted("blue"),
                                  mid = "white",
                                  high = scales::muted("red"),

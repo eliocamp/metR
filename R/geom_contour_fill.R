@@ -55,7 +55,6 @@
 #'
 #' @family ggplot2 helpers
 #' @export
-#' @import sp
 #' @import ggplot2
 geom_contour_fill <- function(mapping = NULL, data = NULL,
                          stat = "ContourFill", position = "identity",

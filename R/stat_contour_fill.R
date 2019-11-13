@@ -1,6 +1,5 @@
 #' @rdname geom_contour_fill
 #' @export
-#' @import sp
 #' @import ggplot2
 stat_contour_fill <- function(mapping = NULL, data = NULL,
                               geom = "polygon", position = "identity",
@@ -15,7 +14,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               show.legend = NA,
                               inherit.aes = TRUE) {
     .check_wrap_param(list(...))
-    layer(
+    ggplot2::layer(
         data = data,
         mapping = mapping,
         stat = StatContourFill,
@@ -37,7 +36,6 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
 }
 
 #' @import ggplot2
-#' @import scales
 #' @rdname geom_contour_fill
 #' @usage NULL
 #' @format NULL
@@ -89,7 +87,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              breaks = scales::fullseq, complete = TRUE,
                              na.rm = FALSE, xwrap = NULL,
                              ywrap = NULL, na.fill = FALSE) {
-        setDT(data)
+        data.table::setDT(data)
         data <- data[!(is.na(y) | is.na(x)), ]
 
         if (isFALSE(na.fill)) {
@@ -97,8 +95,8 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         }
 
         # Check if is a complete grid
-        nx <- data[, uniqueN(x), by = y]$V1
-        ny <- data[, uniqueN(y), by = x]$V1
+        nx <- data[, data.table::uniqueN(x), by = y]$V1
+        ny <- data[, data.table::uniqueN(y), by = x]$V1
 
         complete.grid <- abs(max(nx) - min(nx)) == 0 & abs(max(ny) - min(ny)) == 0
 
@@ -107,7 +105,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                 warning("data must be a complete regular grid", call. = FALSE)
                 return(data.frame())
             } else {
-                data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+                data <- data.table::setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
             }
         }
 
@@ -128,10 +126,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
         # jitter <- diff(range(data$z))*0.000000
         # data$z <- data$z + rnorm(nrow(data))*jitter
-        setDF(data)
+        data.table::setDF(data)
         mean.z <- data$z[data$z %~% mean(data$z)][1]
 
-        # mean.z <- min(breaks) - 100*resolution(breaks, zero = FALSE)
+        # mean.z <- min(breaks) - 100*ggplot2::resolution(breaks, zero = FALSE)
         range.data <- as.data.frame(vapply(data[c("x", "y", "z")], range, c(1, 2)))
 
         # Expand data by 1 unit in all directions.
@@ -161,7 +159,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             correction <- (breaks[i + correction] - mean.level)/2
 
             # Adds bounding contour
-            setDT(data)
+            data.table::setDT(data)
             Nx <- data.table::uniqueN(data$x)
             Ny <- data.table::uniqueN(data$y)
 
@@ -198,7 +196,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
 .order_fill <- function(cont) {
     areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][
-        , rank := frank(-area, ties.method = "first")]
+        , rank := data.table::frank(-area, ties.method = "first")]
 
     cont <- cont[areas, on = "piece"]
     area.back <- areas[piece == max(cont$piece), area]
@@ -383,11 +381,11 @@ close_path <- function(x, y, range_x, range_y) {
 
         if (next.piece$piece[1] == pieces[1]) break
 
-        cont <- rbindlist(list(cont, .reverse(next.piece, next.point)))
+        cont <- data.table::rbindlist(list(cont, .reverse(next.piece, next.point)))
         p <- next.piece[1, piece]
     }
     cont[, piece := max(contours$piece) + 1]
-    cont <- rbindlist(list(contours[close == TRUE], cont))
+    cont <- data.table::rbindlist(list(contours[close == TRUE], cont))
     cont[, close := NULL]
     cont
 }

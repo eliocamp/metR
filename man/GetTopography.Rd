@@ -4,8 +4,16 @@
 \alias{GetTopography}
 \title{Get topographic data}
 \usage{
-GetTopography(lon.west, lon.east, lat.north, lat.south, resolution = 3.5,
-  cache = TRUE, file.dir = tempdir(), verbose = interactive())
+GetTopography(
+  lon.west,
+  lon.east,
+  lat.north,
+  lat.south,
+  resolution = 3.5,
+  cache = TRUE,
+  file.dir = tempdir(),
+  verbose = interactive()
+)
 }
 \arguments{
 \item{lon.west, lon.east, lat.north, lat.south}{latitudes and longitudes of the

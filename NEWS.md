@@ -8,6 +8,9 @@
 
 - A reworked non-equispaced derivative gives better resutls. 
 
+- `ReadNetCDF()` will not fail if the first variable was valled "v" (yeah, I know.. weird
+error related to data.table's non standard evaluation).
+
 ## Internals
 
 * Cleaned up a lot of dependencies. Some are gone (they were not longer needed) and some 

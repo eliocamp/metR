@@ -282,9 +282,11 @@ ReadNetCDF <- function(file, vars = NULL,
 
         for (v in seq_along(vars)[-first.var]) {
             this.dim <- names(dimnames(nc[[v]]))
+            # browser()
             first.dim <- names(dimnames(nc[[first.var]]))
             missing.dim <- first.dim[!(first.dim %in% this.dim)]
-            nc.df[, names(vars)[v] := c(nc[[v]]), by = c(missing.dim)]
+            ..n <- c(nc[[v]])
+            nc.df[, names(vars)[v] := ..n, by = c(missing.dim)]
         }
 
         if (key == TRUE) data.table::setkeyv(nc.df, names(nc.df)[!(names(nc.df) %in% names(vars))])

@@ -131,7 +131,7 @@ EPflux <- function(lon, lat, lev, t, u, v) {
             by = .(lev, lat)][
          , `:=`(Flat = p*cos(lat*pi/180)*(v_z^2 - dvtita*2*.omega*a*sin(2*lat*pi/180)),
                  Flon = p*cos(lat*pi/180)*(-uv   + dutita*2*.omega*a*sin(2*lat*pi/180)),
-                 Fz   = p*cos(lat*pi/180)/S*coriolis(lat)*(vt  - dttita*2*.omega*a*sin(2*lat*pi/180)))]
+                 Flev   = p*cos(lat*pi/180)/S*coriolis(lat)*(vt  - dttita*2*.omega*a*sin(2*lat*pi/180)))]
 
     # Undefined global blah blah blah
     tita <- dtp <- S <- tita_z  <-

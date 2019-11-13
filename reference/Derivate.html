@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -141,16 +141,16 @@
     </div>
 
     <pre class="usage"><span class='fu'>Derivate</span>(<span class='no'>formula</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>)
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>, <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>Laplacian</span>(<span class='no'>formula</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>)
+  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>, <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>Divergence</span>(<span class='no'>formula</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>)
+  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>, <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>Vorticity</span>(<span class='no'>formula</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>)</pre>
+  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>, <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,6 +184,10 @@ with forward and backwards differencing</p></td>
     <tr>
       <th>a</th>
       <td><p>radius to use in spherical coordinates (defaults to Earth's radius)</p></td>
+    </tr>
+    <tr>
+      <th>equispaced</th>
+      <td><p>logical indicating whether points are equispaced or not.</p></td>
     </tr>
     </table>
 

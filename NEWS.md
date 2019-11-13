@@ -1,6 +1,10 @@
 # metR 0.6.90000 
 
 
+## Bugfixes
+
+- A reworked non-equispaced derivative gives better resutls. 
+
 ## Internals
 
 * Cleaned up a lot of dependencies. Some are gone (they were not longer needed) and some 

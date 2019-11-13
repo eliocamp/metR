@@ -1,5 +1,8 @@
 # metR 0.6.90000 
 
+## New features
+
+- `EPflux` computes Eliassen-Palm fluxes (experimental).
 
 ## Bugfixes
 

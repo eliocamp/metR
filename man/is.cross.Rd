@@ -3,11 +3,14 @@
 \name{is.cross}
 \alias{is.cross}
 \alias{cross}
+\alias{filter_cross}
 \title{Cross pattern}
 \usage{
 is.cross(x, y, skip = 0)
 
-cross(x, y)
+cross(x, y, skip = 0)
+
+filter_cross(x, y, skip = 0)
 }
 \arguments{
 \item{x, y}{x and y points that define a regular grid.}
@@ -25,7 +28,7 @@ Reduces the density of a regular grid using a cross pattern.
 \examples{
 # Basic usage
 grid <- expand.grid(x = 1:10, y = 1:10)
-cross <- is.cross(grid$x, grid$y, skip = 2)
+cross <- is.cross(grid$x, grid$y, skip = 1)
 
 with(grid, plot(x, y))
 with(grid, points(x[cross], y[cross], col = "red"))
@@ -38,5 +41,6 @@ ggplot(temperature[lev == 500], aes(lon, lat)) +
   geom_raster(aes(fill = air)) +
   stat_subset(aes(subset = air > 270 & is.cross(lon, lat)),
               geom = "point", size = 0.1)
+
 
 }

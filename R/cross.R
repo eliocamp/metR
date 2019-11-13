@@ -9,11 +9,13 @@
 #' `is.cross` returns a logical vector indicating whether each point belongs to the
 #' reduced grid or not.
 #' `cross` returns a list of x and y components of the reduced density grid.
+# #' `filter_cross` returns a function that takes a dataframe and returns the dataframe filtered by
+# #' `is.cross`. This is suitable to pass it to the `data` argument of ggplot2's geoms.
 #'
 #' @examples
 #' # Basic usage
 #' grid <- expand.grid(x = 1:10, y = 1:10)
-#' cross <- is.cross(grid$x, grid$y, skip = 2)
+#' cross <- is.cross(grid$x, grid$y, skip = 1)
 #'
 #' with(grid, plot(x, y))
 #' with(grid, points(x[cross], y[cross], col = "red"))
@@ -26,6 +28,7 @@
 #'   geom_raster(aes(fill = air)) +
 #'   stat_subset(aes(subset = air > 270 & is.cross(lon, lat)),
 #'               geom = "point", size = 0.1)
+#'
 #'
 #' @export
 is.cross <- function(x, y, skip = 0) {
@@ -49,8 +52,23 @@ is.cross <- function(x, y, skip = 0) {
 
 #' @export
 #' @rdname is.cross
-cross <- function(x, y) {
-    out <- is.cross(x, y)
+cross <- function(x, y, skip = 0) {
+    out <- is.cross(x, y, skip = skip)
     return(list(x = x[out],
                 y = y[out]))
 }
+
+
+#' @rdname is.cross
+filter_cross <- function(x, y, skip = 0) {
+    x <- deparse(substitute(x))
+    y <- deparse(substitute(y))
+    force(skip)
+    function(d) {
+        keep <- is.cross(with(d, get(x)),
+                         with(d, get(y)),
+                         skip = skip)
+        d[keep, ]
+    }
+}
+

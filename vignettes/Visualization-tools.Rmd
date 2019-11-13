@@ -37,7 +37,7 @@ temperature[, air.z := Anomaly(air), by = .(lat, lev)]
 
 # Plot made with base ggplot
 (g <- ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
-        geom_contour(aes(color = ..level..)))
+        geom_contour2(aes(color = ..level..)))
 ```
 
 While this is fine, since pressure levels are roughly proportional to $\mathrm{e}^{-z}$ in meteorology we usually plot the vertical coordinate as $-\log(p)$. However, while ggplot2 has `scale_y_log10()` and `scale_y_reverse()`, they don't work together. `metR` defines the new transformation `reverselog_trans()` that can be used with any scale but that is the default for `scale_*_level()`. 

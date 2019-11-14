@@ -53,7 +53,7 @@ WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
     dt[, `:=`(psi.dy  = Derivate(psi ~ latrad, cyclical = FALSE),
               psi.dyy = Derivate(psi ~ latrad, 2, cyclical = FALSE),
               psi.dxy = Derivate(psi.dx ~ latrad, cyclical = FALSE)), by = lon]
-o
+
     # Cálculo del flujo (al fin!)
     flux <- dt[, {
         wind <- sqrt(u.mean^2 + v.mean^2)
@@ -85,7 +85,7 @@ o
 #' @param u zonal wind in m/s.
 #' @param v meridional wind in m/s.
 #'
-#' @result
+#' @return
 #' A data.table with columns `Flon`, `Flat` and `Flev` giving the zonal, meridional
 #' and vertical components of the EP Fluxes at each longitude, latitude and level.
 #'

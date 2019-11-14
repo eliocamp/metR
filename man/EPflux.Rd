@@ -19,6 +19,10 @@ EPflux(lon, lat, lev, t, u, v)
 
 \item{v}{meridional wind in m/s.}
 }
+\value{
+A data.table with columns \code{Flon}, \code{Flat} and \code{Flev} giving the zonal, meridional
+and vertical components of the EP Fluxes at each longitude, latitude and level.
+}
 \description{
 Computes Eliassen-Palm fluxes.
 }

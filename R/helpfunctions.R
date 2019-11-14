@@ -171,11 +171,32 @@ if(getRversion() >= "2.15.1") {
 }
 
 
-.is.reggrid <- function(data, coords) {
+.has_single_value <- function(data, coords) {
     lengths <- data[, .N, by = coords]$N
     !any(lengths > 1)
 }
 
+
+.is.regular_grid <- function(x, y) {
+    data <- data.table::data.table(x = x, y = y)
+    nx <- data[, data.table::uniqueN(x), by = y]$V1
+    ny <- data[, data.table::uniqueN(y), by = x]$V1
+
+    xs <- data.table::uniqueN(data$x)
+    ys <- data.table::uniqueN(data$y)
+
+
+    # Conditinos for regular grid
+    # 1. each y has the same number of unique values of x
+    # 2. each x has the same number of unique values of y
+    regularity <- sum(abs(ys - ny)) == 0 & sum(abs(xs - nx)) == 0
+
+    # 3. there are no duplicated values
+    lengths <- data[, .N, by = .(x, y)]$N
+    unicity <- !any(lengths > 1)
+
+    regularity & unicity
+}
 
 .simple.scale <- function(x) {
     r <- range(x)

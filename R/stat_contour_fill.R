@@ -95,10 +95,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         }
 
         # Check if is a complete grid
-        nx <- data[, data.table::uniqueN(x), by = y]$V1
-        ny <- data[, data.table::uniqueN(y), by = x]$V1
-
-        complete.grid <- abs(max(nx) - min(nx)) == 0 & abs(max(ny) - min(ny)) == 0
+        complete.grid <- with(data, .is.regular_grid(x, y))
 
         if (complete.grid == FALSE) {
             if (complete == FALSE) {

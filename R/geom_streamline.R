@@ -384,6 +384,13 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
                        ny = NULL, jitter.x = 1, jitter.y = 1, xwrap = NULL,
                        ywrap = NULL) {
     field <- data.table::copy(data.table::as.data.table(field))
+
+    is.grid <- with(field, .is.regular_grid(x, y))
+
+    if (!is.grid) {
+      stop("x and y do not define a regular grid")
+    }
+
     data.table::setorder(field, x, y)
 
     circ.x <- !is.null(xwrap)

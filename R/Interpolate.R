@@ -96,7 +96,7 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
     formula <- Formula::as.Formula(formula)
     data <- as.data.table(eval(quote(model.frame(formula, data = data,
                                                  na.action = NULL))))
-    if (!.is.reggrid(data, ind.names)) {
+    if (!.has_single_value(data, ind.names)) {
         stop("Interpolate need a unique value for each x and y")
     }
 

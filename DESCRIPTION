@@ -47,7 +47,8 @@ Suggests:
     testthat,
     viridis,
     udunits2,
-    gridExtra
+    gridExtra,
+    vdiffr
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true

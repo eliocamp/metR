@@ -14,12 +14,13 @@ basic_stat_streamline <- ggplot(geo, aes(lon, lat)) +
     stat_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), L = 20)
 
 test_that("Streamline works", {
+    skip_on_ci()
     expect_doppelganger("streamline-base", basic_geom_streamline)
     expect_doppelganger("streamline-base", basic_stat_streamline)
 })
 
 test_that("Streamline wraps in x amd y", {
-
+    skip_on_ci()
     expect_doppelganger("streamline-xwrapped",
                         ggplot(geo, aes(lon, lat)) +
                             geom_streamline(aes(dx = u, dy = v), L = 20,
@@ -37,17 +38,17 @@ test_that("Streamline ignores irregular grids", {
     g <- ggplot(data, aes(lon, lat)) +
         geom_streamline(aes(dx = v, dy = u))
 
-    expect_warning(print(g))
-
-    suppressWarnings(expect_doppelganger("streamline-irregular", g))
-
     geo <- rbind(na.omit(geo)[1, u := 1], geo)
 
-    g <- ggplot(geo, aes(lon, lat)) +
+    g2 <- ggplot(geo, aes(lon, lat)) +
         geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), L = 20)
 
     expect_warning(print(g))
+    expect_warning(print(g2))
+
+    skip_on_ci()
     suppressWarnings(expect_doppelganger("streamline-irregular", g))
+    suppressWarnings(expect_doppelganger("streamline-irregular", g2))
 })
 
 

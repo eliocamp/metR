@@ -102,7 +102,8 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                 warning("data must be a complete regular grid", call. = FALSE)
                 return(data.frame())
             } else {
-                data <- data.table::setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+                # data <- data.table::setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+                data <- .complete(data, x, y)
             }
         }
 

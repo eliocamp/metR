@@ -25,16 +25,16 @@ test_that("interpolation", {
 
     g1 <- ggplot(data, aes(lon, lat)) +
         geom_contour_fill(aes(z = gh), na.fill = TRUE)
-    expect_warning(print(g), "imputing missing values")
-    suppressWarnings(expect_doppelganger("contour_fill-fill", g))
+    expect_warning(print(g1), "imputing missing values")
+    suppressWarnings(expect_doppelganger("contour_fill-fill", g1))
 
     data <- geopotential[date == date[1]][!(lat %between% c(-60, -30) & lon %between% c(90, 120))]
 
     g2 <- ggplot(data, aes(lon, lat)) +
         geom_contour_fill(aes(z = gh), complete = FALSE)
-    expect_warning(print(g), "data must be a complete regular grid")
+    expect_warning(print(g2), "data must be a complete regular grid")
 
-    suppressWarnings(expect_doppelganger("contour_fill-nofill", g))
+    suppressWarnings(expect_doppelganger("contour_fill-nofill", g2))
 })
 
 

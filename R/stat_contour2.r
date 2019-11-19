@@ -121,7 +121,8 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
               warning("data must be a complete regular grid", call. = FALSE)
               return(data.frame())
           } else {
-              data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+              # data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+              data <- .complete(data, x, y)
           }
       }
 
@@ -147,6 +148,13 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 )
 
 
+.complete <- function(data, ...) {
+  l <-  match.call(expand.dots = FALSE)$`...`
+  coord <- with(data, do.call(data.table::CJ, c(l, list(unique = TRUE))))
+
+  data[coord, on = as.character(l), allow.cartesian = TRUE]
+
+}
 
 .order_contour <- function(contours, data) {
     data <- copy(data)

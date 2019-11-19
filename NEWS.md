@@ -2,7 +2,9 @@
 
 ## New features
 
-- `EPflux` computes Eliassen-Palm fluxes (experimental).
+- `EPflux()` computes Eliassen-Palm fluxes (experimental).
+
+- `geom_arrow()` and `geom_vector()` should plot faster. 
 
 ## Bugfixes
 

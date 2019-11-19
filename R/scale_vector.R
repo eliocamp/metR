@@ -59,6 +59,17 @@ scale_mag <- function(name = waiver(),
     )
 }
 
+#' @export
+#' @rdname scale_mag
+scale_mag_continuous <- scale_mag
+
+#' @export
+#' @rdname scale_mag
+scale_dx_continuous <- scale_mag
+
+#' @export
+# scale_dy_continuous <- scale_mag
+
 # scale_type.mag <- function(x) "vector"
 
 vector_breaks <- function(max_size, max) {

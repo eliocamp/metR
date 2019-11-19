@@ -33,8 +33,7 @@ Imports:
     scales,
     sp,
     stringr,
-    purrr,
-    tidyr
+    purrr
 Suggests: 
     maps,
     maptools,

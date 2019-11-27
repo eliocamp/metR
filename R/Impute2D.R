@@ -71,6 +71,7 @@ soft_approx2d <- function(x, y, z) {
 
 .impute_data <- function(data, na.fill = TRUE, verbose = TRUE) {
     nas <- nrow(data[is.na(z)])
+    data <- copy(data)
     if (nas != 0) {
         if (isTRUE(na.fill)) {
             if(isTRUE(verbose)) warning("imputing missing values", call. = FALSE)

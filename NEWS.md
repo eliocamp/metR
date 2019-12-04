@@ -6,6 +6,8 @@
 
 - `geom_arrow()` and `geom_vector()` should plot faster. 
 
+- New functions `is.full_season()` and `seasonaly()`. 
+
 ## Bugfixes
 
 - A reworked non-equispaced derivative gives better resutls. 

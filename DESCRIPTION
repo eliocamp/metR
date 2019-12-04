@@ -44,7 +44,7 @@ Suggests:
     pkgdown,
     reshape2,
     rmarkdown,
-    testthat,
+    testthat (>= 2.1.0),
     viridis,
     udunits2,
     gridExtra,

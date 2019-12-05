@@ -281,6 +281,8 @@ check_packages <- function(packages, fun) {
 
 .datatable.aware <- TRUE
 
+a <- 6371000
+
 # nocov end
 
 

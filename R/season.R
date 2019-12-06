@@ -92,10 +92,9 @@ is.full_season <- function(x) {
     season <- season(times)
     year <- data.table::year(times)
 
-    complete <- data.table::data.table(times, year, season) %>%
-        .[, n := .N, by = .(year, season)] %>%
-        .[n == 3] %>%
-        .[, n := NULL]
+    complete <- data.table::data.table(times, year, season)[
+        , n := .N, by = .(year, season)][n == 3][
+        , n := NULL]
 
     x %in% times_org[times %in% complete$times]
 }

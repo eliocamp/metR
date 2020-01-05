@@ -44,7 +44,7 @@ Or the developement version with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("eliocamp/metR")
+devtools::install_github("eliocamp/metR@dev")
 ```
 
 If you need to read netcdf files, you might need to install the netcdf
@@ -62,11 +62,6 @@ the wind with streamlines.
 
 ``` r
 library(metR)
-#> Registered S3 methods overwritten by 'ggplot2':
-#>   method         from 
-#>   [.quosures     rlang
-#>   c.quosures     rlang
-#>   print.quosures rlang
 library(data.table)
 library(ggplot2)
 data(geopotential)

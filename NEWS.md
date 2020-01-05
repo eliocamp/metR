@@ -10,10 +10,12 @@
 
 ## Bugfixes
 
-- A reworked non-equispaced derivative gives better resutls. 
+- A reworked non-equispaced derivative gives better resutls in `Derivate()`.
 
 - `ReadNetCDF()` will not fail if the first variable was valled "v" (yeah, I know.. weird
 error related to data.table's non standard evaluation).
+
+- Subsets in `ReadNetCDF()` won't fail if no element is named (#107, thanks @m-saenger)
 
 ## Internals
 

@@ -282,7 +282,6 @@ ReadNetCDF <- function(file, vars = NULL,
 
         for (v in seq_along(vars)[-first.var]) {
             this.dim <- names(dimnames(nc[[v]]))
-            # browser()
             first.dim <- names(dimnames(nc[[first.var]]))
             missing.dim <- first.dim[!(first.dim %in% this.dim)]
             ..n <- c(nc[[v]])
@@ -338,6 +337,9 @@ ReadNetCDF <- function(file, vars = NULL,
         }
     })
 
+    if (is.null(names(subset))) {
+        names(subset) <- rep("", length(subset))
+    }
     # If it has name, is a global subset,
     # otherwhise, is a chunck definition
     has_name <- names(subset) != ""

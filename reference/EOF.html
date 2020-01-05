@@ -257,11 +257,11 @@ standard deviation of each singular value.</p>
 <span class='co'># Inspect the explained variance of each component</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>eof</span>)</div><div class='output co'>#&gt; Importance of components:
 #&gt; Component Explained variance Cumulative variance
-#&gt;       1                 31.8%               31.8%
-#&gt;       2                 11.4%               43.2%
-#&gt;       3                 7.74%               50.9%
-#&gt;       4                 7.35%               58.3%
-#&gt;       5                 5.73%               64.0%</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/screeplot.html'>screeplot</a></span>(<span class='no'>eof</span>)</div><div class='img'><img src='EOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;       1                   32%                 32%
+#&gt;       2                   11%                 43%
+#&gt;       3                    8%                 51%
+#&gt;       4                    7%                 58%
+#&gt;       5                    6%                 64%</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/screeplot.html'>screeplot</a></span>(<span class='no'>eof</span>)</div><div class='img'><img src='EOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Keep only the 1st.</span>
 <span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cut.html'>cut</a></span>(<span class='no'>eof</span>, <span class='fl'>1</span>)
 

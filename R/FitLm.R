@@ -14,6 +14,8 @@
 #'    \item{estimate}{estimate of the regression}
 #'    \item{std.error}{standard error}
 #'    \item{df}{degrees of freedom}
+#'    \item{r.squared}{Percent of variance explained by the model (repeated in each term)}
+#'    \item{adj.r.squared}{ r.squared` adjusted based on the degrees of freedom)}
 #' }
 #'
 #' If there's no complete cases in the regression, `NA`s are returned with no
@@ -27,14 +29,14 @@
 #'   regr <- geopotential[, FitLm(gh, date, se = TRUE), by = .(lon, lat)]
 #' })
 #'
-#' ggplot(regr[term != "(intercept)"], aes(lon, lat)) +
+#' ggplot(regr[term != "(Intercept)"], aes(lon, lat)) +
 #'     geom_contour(aes(z = estimate, color = ..level..)) +
 #'     stat_subset(aes(subset = abs(estimate) > 2*std.error), size = 0.05)
 #'
 #' # Using stats::lm() is much slower and with no names.
 #' \dontrun{
 #' system.time({
-#'   regr <- geopotential[, coef(lm(gh ~ date)), by = .(lon, lat)]
+#'   regr <- geopotential[, coef(lm(gh ~ date))[2], by = .(lon, lat)]
 #' })
 #' }
 #'
@@ -75,13 +77,20 @@ FitLm <- function(y, ..., se = FALSE) {
         if (all(a$residuals == 0)) {
             se <- NA_real_
         } else {
-            sigma <- sum(a$residuals^2)/(nrow(X) - ncol(X))
+            res_sum <- sum(a$residuals^2)
+            ss <- sum((y - mean(y))^2)
+            r_squared <- 1 - res_sum/ss
+            adj_r_squared <- 1 - res_sum/ss*(N-1)/df
+
+            sigma <- res_sum/(nrow(X) - ncol(X))
             se <- sqrt(diag(chol2inv(chol(t(X)%*%X)))*sigma)
         }
         return(list(term = term,
                     estimate = estimate,
                     std.error = se,
-                    df = rep(df, length(term))))
+                    df = rep(df, length(term)),
+                    r.squared = r_squared,
+                    adj.r.squared = adj_r_squared))
     } else {
         return(list(term = term,
                     estimate = estimate))

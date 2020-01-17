@@ -8,6 +8,8 @@
 
 - New functions `is.full_season()` and `seasonaly()`. 
 
+- `FitLm()` returns model $r^2$ and adjusted $r^2$.
+
 ## Bugfixes
 
 - A reworked non-equispaced derivative gives better resutls in `Derivate()`.

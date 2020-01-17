@@ -61,8 +61,8 @@ FitLm <- function(y, ..., se = FALSE) {
                         estimate = estimate,
                         std.error = se,
                         df = rep(df, length(term)),
-                        r.quared = rep(NA, length(term)),
-                        adj.r.squared = rep(NA, length(term))))
+                        r.quared = rep(NA_real_, length(term)),
+                        adj.r.squared = rep(NA_real_, length(term))))
         } else {
             return(list(term = term,
                         estimate = estimate))

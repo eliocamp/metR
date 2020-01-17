@@ -10,6 +10,8 @@
 
 - `FitLm()` returns model $r^2$ and adjusted $r^2$.
 
+- `FitLm()` adds names to unnamed terms. 
+
 ## Bugfixes
 
 - A reworked non-equispaced derivative gives better resutls in `Derivate()`.

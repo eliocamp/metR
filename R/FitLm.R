@@ -45,6 +45,9 @@
 FitLm <- function(y, ..., se = FALSE) {
     X <- cbind(`(Intercept)` = 1, ...)
     term <- dimnames(X)[[2]]
+    missing <- term == ""
+    term[missing] <- paste0("V", seq_len(sum(missing)))
+
     remove <- which(!complete.cases(X) | is.na(y))
     N <- length(y) - length(remove)
 
@@ -58,8 +61,8 @@ FitLm <- function(y, ..., se = FALSE) {
                         estimate = estimate,
                         std.error = se,
                         df = rep(df, length(term)),
-                        r.quared = NA,
-                        adj.r.squared = NA))
+                        r.quared = rep(NA, length(term)),
+                        adj.r.squared = rep(NA, length(term))))
         } else {
             return(list(term = term,
                         estimate = estimate))
@@ -91,8 +94,8 @@ FitLm <- function(y, ..., se = FALSE) {
                     estimate = estimate,
                     std.error = se,
                     df = rep(df, length(term)),
-                    r.squared = r_squared,
-                    adj.r.squared = adj_r_squared))
+                    r.squared = rep(r_squared, length(term)),
+                    adj.r.squared = rep(adj_r_squared, length(term))))
     } else {
         return(list(term = term,
                     estimate = estimate))

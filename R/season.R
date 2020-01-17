@@ -91,7 +91,7 @@ is.full_season <- function(x) {
     lubridate::year(times[m == 12]) <- data.table::year(times[m == 12]) + 1
     season <- season(times)
     year <- data.table::year(times)
-
+    n <- NULL
     complete <- data.table::data.table(times, year, season)[
         , n := .N, by = .(year, season)][n == 3][
         , n := NULL]

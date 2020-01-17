@@ -67,7 +67,7 @@ scale_mag_continuous <- scale_mag
 #' @rdname scale_mag
 scale_dx_continuous <- scale_mag
 
-#' @export
+# #' @export
 # scale_dy_continuous <- scale_mag
 
 # scale_type.mag <- function(x) "vector"

@@ -57,7 +57,9 @@ FitLm <- function(y, ..., se = FALSE) {
             return(list(term = term,
                         estimate = estimate,
                         std.error = se,
-                        df = rep(df, length(term))))
+                        df = rep(df, length(term)),
+                        r.quared = NA,
+                        adj.r.squared = NA))
         } else {
             return(list(term = term,
                         estimate = estimate))
@@ -74,14 +76,14 @@ FitLm <- function(y, ..., se = FALSE) {
 
     if (se == TRUE) {
         df <- N - ncol(X)
+        res_sum <- sum(a$residuals^2)
+        ss <- sum((y - mean(y))^2)
+        r_squared <- 1 - res_sum/ss
+        adj_r_squared <- 1 - res_sum/ss*(N-1)/df
+
         if (all(a$residuals == 0)) {
             se <- NA_real_
         } else {
-            res_sum <- sum(a$residuals^2)
-            ss <- sum((y - mean(y))^2)
-            r_squared <- 1 - res_sum/ss
-            adj_r_squared <- 1 - res_sum/ss*(N-1)/df
-
             sigma <- res_sum/(nrow(X) - ncol(X))
             se <- sqrt(diag(chol2inv(chol(t(X)%*%X)))*sigma)
         }

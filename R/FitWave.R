@@ -50,6 +50,9 @@
 #' specified in `k`. The argument `action` must be be manually set to `-1` or `+1`
 #' if `k=0`.
 #'
+#' `WaveEnvelope` computes the wave envelope of `y` following Zimin (2003). To compute
+#' the envelope of only a restricted band, first filter it with `FilterWave`.
+#'
 #' @examples
 #' data(geopotential)
 #' library(data.table)
@@ -94,7 +97,13 @@
 #'     geom_contour(aes(z = gh.only12, color = ..level..)) +
 #'     coord_polar()
 #'
+#' # Compute the envelope of the geopotential
+#' jan[, envelope := WaveEnvelope(gh.no12), by = .(lat)]
+#' ggplot(jan[lat == -60], aes(lon, gh.no12)) +
+#'     geom_line() +
+#'     geom_line(aes(y = envelope), color = "red")
 #'
+#' @references Zimin, A.V., I. Szunyogh, D.J. Patil, B.R. Hunt, and E. Ott, 2003: Extracting Envelopes of Rossby Wave Packets. Mon. Wea. Rev., 131, 1011–1017, https://doi.org/10.1175/1520-0493(2003)131<1011:EEORWP>2.0.CO;2
 #' @name waves
 #' @family meteorology functions
 #' @aliases BuildWave FitWave
@@ -162,3 +171,13 @@ FilterWave <- function(y, k, action = sign(k[k != 0][1])) {
 
 
 
+#' @rdname waves
+#' @export
+WaveEnvelope <- function(y) {
+    assertNumeric(y, any.missing = FALSE)
+    N <- length(y)
+    x_hat <- fft(y)/N
+    k <- 1:ceiling(N/2)
+    x_hat[k] <- 0
+    Mod(fft(x_hat, inverse = T))*2
+}

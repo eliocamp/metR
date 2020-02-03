@@ -12,6 +12,8 @@
 
 - `FitLm()` adds names to unnamed terms. 
 
+- New function `WaveEnvelope()` that computes... the wave envelope. 
+
 ## Bugfixes
 
 - A reworked non-equispaced derivative gives better resutls in `Derivate()`.

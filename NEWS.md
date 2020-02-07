@@ -23,6 +23,8 @@ error related to data.table's non standard evaluation).
 
 - Subsets in `ReadNetCDF()` won't fail if no element is named (#107, thanks @m-saenger)
 
+- Fixed bug in `WaveFlux()` (#110, thanks @salvatirehbein)
+
 ## Internals
 
 * Cleaned up a lot of dependencies. Some are gone (they were not longer needed) and some 

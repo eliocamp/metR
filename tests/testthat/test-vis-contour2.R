@@ -9,12 +9,14 @@ test_that("geom_contour2 mimics geom_contour", {
     expect_doppelganger("contour2-base_geom",
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour(aes(z = gh), color = "red") +
-                            geom_contour2(aes(z = gh)))
+                            geom_contour2(aes(z = gh)) +
+                            guides(fill = "none"))
 
     expect_doppelganger("contour2-base_stat",
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour(aes(z = gh), color = "red") +
-                            stat_contour2(aes(z = gh)))
+                            stat_contour2(aes(z = gh)) +
+                            guides(fill = "none"))
 })
 
 test_that("accepts function in breaks", {
@@ -31,6 +33,7 @@ test_that("global.breaks work", {
                         ggplot(df, aes(x=V1, y=V2, z=V3)) +
                             geom_contour(color = "red") +
                             geom_contour2(global.breaks = FALSE) +
+                            guides(fill = "none") +
                             facet_grid(. ~ V4))
 
     expect_doppelganger("contour2-global.breaks_full",
@@ -38,6 +41,7 @@ test_that("global.breaks work", {
                             geom_contour_fill(global.breaks = FALSE) +
                             geom_contour2(global.breaks = FALSE) +
                             geom_text_contour(global.breaks = FALSE) +
+                            guides(fill = "none") +
                             facet_grid(. ~ V4))
 
 

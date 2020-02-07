@@ -14,7 +14,7 @@
 #'
 #' @details
 #' Is best used with a previous call to [ggplot2::stat_contour] with the same
-#' parameters (e.g. the same `bindwidth`, `breaks`, or `bins`).
+#' parameters (e.g. the same `binwidth`, `breaks`, or `bins`).
 #' Note that while `geom_text_contour()` can angle itself to follow the contour,
 #' this is not the case with `geom_label_contour()`.
 #'

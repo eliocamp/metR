@@ -14,6 +14,13 @@
 
 - New function `WaveEnvelope()` that computes... the wave envelope. 
 
+- `geom_contour2()`, `geom_contour_fill()` and `geom_text_contour()` now accept a `global.breaks`
+argument that controls wether breaks should be computed once using the range of the whole 
+dataset or once for every grouping (e.g. facetting). `TRUE` (the default) ensures that 
+intervals between contours are comparable between panels. Setting it to `FALSE` computes 
+contours compatible with `ggplot2::geom_conotur()` (#109, thanks @freeseek)
+
+
 ## Bugfixes
 
 - A reworked non-equispaced derivative gives better resutls in `Derivate()`.

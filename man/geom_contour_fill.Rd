@@ -30,6 +30,7 @@ stat_contour_fill(
   breaks = MakeBreaks(),
   bins = NULL,
   binwidth = NULL,
+  global.breaks = TRUE,
   na.fill = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
@@ -93,6 +94,9 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
+
+\item{global.breaks}{Logical indicating wether \code{breaks} should be computed for the whole
+data or for each grouping.}
 }
 \description{
 While ggplot2's \code{\link[ggplot2]{geom_contour}} can plot nice contours, it

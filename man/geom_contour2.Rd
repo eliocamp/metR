@@ -20,6 +20,7 @@ geom_contour2(
   breaks = MakeBreaks(),
   bins = NULL,
   binwidth = NULL,
+  global.breaks = TRUE,
   na.rm = FALSE,
   na.fill = FALSE,
   show.legend = NA,
@@ -35,6 +36,7 @@ stat_contour2(
   breaks = MakeBreaks(),
   bins = NULL,
   binwidth = NULL,
+  global.breaks = TRUE,
   na.rm = FALSE,
   na.fill = FALSE,
   show.legend = NA,
@@ -89,6 +91,9 @@ and returns breaks as output
 \item{bins}{Number of evenly spaced breaks.}
 
 \item{binwidth}{Distance between breaks.}
+
+\item{global.breaks}{Logical indicating wether \code{breaks} should be computed for the whole
+data or for each grouping.}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}

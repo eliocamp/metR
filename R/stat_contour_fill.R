@@ -7,6 +7,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               breaks = MakeBreaks(),
                               bins = NULL,
                               binwidth = NULL,
+                              global.breaks = TRUE,
                               # na.rm = FALSE,
                               na.fill = FALSE,
                               # xwrap = NULL,
@@ -28,6 +29,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
+            global.breaks = global.breaks,
             # xwrap = xwrap,
             # ywrap = ywrap,
             ...
@@ -44,21 +46,11 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     required_aes = c("x", "y", "z"),
     default_aes = ggplot2::aes(fill = ..int.level..),
     setup_params = function(data, params) {
-        # Check is.null(breaks) for backwards compatibility
-        if (is.null(params$breaks)) {
-            params$breaks <- scales::fullseq
-        }
-        if (is.function(params$breaks)) {
-            # If no parameters set, use pretty bins to calculate binwidth
-            if (is.null(params$bins) && is.null(params$binwidth)) {
-                params$binwidth <- diff(pretty(range(data$z, na.rm = TRUE), 10))[1]
-            }
-            # If provided, use bins to calculate binwidth
-            if (!is.null(params$bins)) {
-                params$binwidth <- diff(range(data$z, na.rm = TRUE)) / params$bins
-            }
-
-            params$breaks <- params$breaks(range(data$z, na.rm = TRUE), params$binwidth)
+        if (is.null(params$global) || isTRUE(params$global.breaks)) {
+            params$breaks <- setup_breaks(data,
+                                          breaks = params$breaks,
+                                          bins = params$bins,
+                                          binwidth = params$binwidth)
         }
         return(params)
     },
@@ -86,8 +78,16 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = scales::fullseq, complete = TRUE,
                              na.rm = FALSE, xwrap = NULL,
-                             ywrap = NULL, na.fill = FALSE) {
+                             ywrap = NULL, na.fill = FALSE, global.breaks = TRUE) {
         data.table::setDT(data)
+
+        if (isFALSE(global.breaks)) {
+            breaks <- setup_breaks(data,
+                                   breaks = breaks,
+                                   bins = bins,
+                                   binwidth = binwidth)
+        }
+
         data <- data[!(is.na(y) | is.na(x)), ]
 
         if (isFALSE(na.fill)) {

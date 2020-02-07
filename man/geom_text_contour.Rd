@@ -129,7 +129,7 @@ Draws labels on contours built with \link[ggplot2:stat_contour]{ggplot2::stat_co
 }
 \details{
 Is best used with a previous call to \link[ggplot2:stat_contour]{ggplot2::stat_contour} with the same
-parameters.
+parameters (e.g. the same \code{bindwidth}, \code{breaks}, or \code{bins}).
 Note that while \code{geom_text_contour()} can angle itself to follow the contour,
 this is not the case with \code{geom_label_contour()}.
 }

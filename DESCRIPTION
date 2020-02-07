@@ -1,7 +1,7 @@
 Type: Package
 Package: metR
 Title: Tools for Easier Analysis of Meteorological Fields
-Version: 0.5.0
+Version: 0.6.9000
 Authors@R: 
     c(person(given = "Elio",
            family = "Campitelli",

@@ -1,4 +1,4 @@
-# metR 0.6.90000 
+# metR 0.6.0 - Pileus
 
 ## New features
 

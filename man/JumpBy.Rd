@@ -23,7 +23,7 @@ the same length.
 Skip observations
 }
 \details{
-Mostly useful for labeling only every \code{by}th element.
+Mostly useful for labelling only every \code{by}th element.
 }
 \examples{
 x <- 1:50

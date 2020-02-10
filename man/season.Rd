@@ -19,12 +19,12 @@ is.full_season(x)
 \item{lang}{Language to use.}
 }
 \value{
-\code{season()} returns a factor vector of the same length as \code{x} with the trimestre of each
+\code{season()} returns a factor vector of the same length as \code{x} with the trimester of each
 month.
-\code{seasonaly()} returns a date vector of the same length as \code{x} with the date "roudned" up to the center
+\code{seasonaly()} returns a date vector of the same length as \code{x} with the date "rounded" up to the centre
 month of each season.
 \code{is.full_season()} returns a logical vector of the same length as \code{x} that is true only if the
-3 months of each season for each year (december counts for the following year) are present in the dataset.
+3 months of each season for each year (December counts for the following year) are present in the dataset.
 }
 \description{
 Assign seasons to months

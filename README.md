@@ -14,9 +14,9 @@ status](http://www.r-pkg.org/badges/version/metR)](https://cran.r-project.org/pa
 
 metR packages several functions and utilities that make R better for
 handling meteorological data in the tidy data paradigm. It started
-mostly sa a packaging of assorted wrapers and tricks that I wrote for my
-day to day work as a researcher in atmospheric sciences. Since then, it
-has grown organically and for my own needs and feedback from users.
+mostly sa a packaging of assorted wrappers and tricks that I wrote for
+my day to day work as a researcher in atmospheric sciences. Since then,
+it has grown organically and for my own needs and feedback from users.
 
 Conceptually it’s divided into *visualization tools* and *data tools*.
 The former are geoms, stats and scales that help with plotting using
@@ -62,11 +62,6 @@ the wind with streamlines.
 
 ``` r
 library(metR)
-#> Registered S3 methods overwritten by 'ggplot2':
-#>   method         from 
-#>   [.quosures     rlang
-#>   c.quosures     rlang
-#>   print.quosures rlang
 library(data.table)
 library(ggplot2)
 data(geopotential)
@@ -89,8 +84,8 @@ ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
                          breaks = MakeBreaks(binwidth),
                          guide = guide_colorstrip()) +
     coord_polar()
-#> Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be
-#> deprecated. Use ggperiodic::periodic insead.
+#> Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be deprecated.
+#> Use ggperiodic::periodic insead.
 ```
 
 ![](man/figures/field-1.png)<!-- -->

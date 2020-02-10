@@ -26,7 +26,7 @@
 #' \preformatted{
 #' subset = list(lat = -90:0)
 #'}
-#' More complex subsetting operations are supported. If yuou want to read non-contiguous
+#' More complex subsetting operations are supported. If you want to read non-contiguous
 #' chunks of data, you can specify each chunk into a list inside `subset`. For example
 #' this subset
 #' \preformatted{
@@ -41,7 +41,7 @@
 #' subset = list(lat = list(-90:-70, 70:90),
 #'               lon = list(0:60, 300:360))
 #'}
-#' Both operations can be mixed together. So for exmaple this
+#' Both operations can be mixed together. So for example this
 #'
 #' \preformatted{
 #' subset = list(list(lat = -90:-70,

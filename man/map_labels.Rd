@@ -18,7 +18,7 @@ LatLabel(lat, north = "°N", south = "°S", zero = "°")
 \item{lat}{latitude in degrees}
 }
 \description{
-Provide easy functions for adding suffixes to longitude and latitude for labeling
+Provide easy functions for adding suffixes to longitude and latitude for labelling
 maps.
 }
 \details{

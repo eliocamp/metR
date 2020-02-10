@@ -104,7 +104,7 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 \code{geom_relief()} simulates shading caused by relief. Can be useful when
 plotting topographic data because relief shading might give a more intuitive
 impression of the shape of the terrain than contour lines or mapping height
-to color. \code{geom_shadow()} projects shadows.
+to colour. \code{geom_shadow()} projects shadows.
 }
 \details{
 \code{light} and \code{dark} must be valid colours determining the light and dark shading

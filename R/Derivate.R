@@ -21,7 +21,7 @@
 #' @details
 #' Each element of the return vector is an estimation of
 #' \eqn{\frac{\partial^n x}{\partial y^{n}}}{d^nx/dy^n} by
-#' centered finite differences.
+#' centred finite differences.
 #'
 #' If `sphere = TRUE`, then the first two independent variables are
 #' assumed to be longitude and latitude (**in that order**) in degrees. Then, a

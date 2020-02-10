@@ -6,7 +6,7 @@
 #'   and returns breaks as output
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
-#' @param global.breaks Logical indicating wether `breaks` should be computed for the whole
+  #' @param global.breaks Logical indicating whether `breaks` should be computed for the whole
 #' data or for each grouping.
 # #' @param xwrap,ywrap vector of length two used to wrap the circular dimension
 #'

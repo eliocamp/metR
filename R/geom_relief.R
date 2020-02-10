@@ -3,7 +3,7 @@
 #' `geom_relief()` simulates shading caused by relief. Can be useful when
 #' plotting topographic data because relief shading might give a more intuitive
 #' impression of the shape of the terrain than contour lines or mapping height
-#' to color. `geom_shadow()` projects shadows.
+#' to colour. `geom_shadow()` projects shadows.
 #'
 #' @inheritParams ggplot2::geom_tile
 #' @param raster if `TRUE` (the default), uses [ggplot2::geom_raster],

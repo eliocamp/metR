@@ -66,7 +66,7 @@ and RIGHT, the columns of the matrix. Think it like "VAR \emph{as a function} of
 LEFT \emph{and} RIGHT". The variable combination used in this formula \emph{must} identify
 an unique value in a cell.
 
-So, for example, \code{v ~ x + y | t} would mean that ther is one value of \code{v} for
+So, for example, \code{v ~ x + y | t} would mean that there is one value of \code{v} for
 each combination of \code{x}, \code{y} and \code{t}, and that there will be one row for
 each combination of \code{x} and \code{y} and one row for each \code{t}.
 

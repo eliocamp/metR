@@ -4,7 +4,7 @@
 #' and, optionally, standard error for each regressor.
 #'
 #' @param y numeric vector of observations to model
-#' @param ... numeric vectors of variables used in the modeling
+#' @param ... numeric vectors of variables used in the modelling
 #' @param se logical indicating whether to compute the standard error
 #'
 #' @return

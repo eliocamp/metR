@@ -142,17 +142,17 @@ if(getRversion() >= "2.15.1") {
 }
 
 
-#' Denormalize eof matrices
+#' Denormalise eof matrices
 #'
 #' The matrices returned by [EOF()] are normalized. This function multiplies the left or right
-#' matrix by the diagonal matrix to return to proper units.
+#' matrix by the diagonal matrix to return it to proper units.
 #'
 #' @param eof an `eof` object.
-#' @param which which side of the eof decomposition to denormaliza
+#' @param which which side of the eof decomposition to denormalise
 #'
 #'
 #' @export
-denormalize <- function(eof, which = c("left", "right")) {
+denormalise <- function(eof, which = c("left", "right")) {
     .check_eof(eof)
     which <- which[1]
     name <-  attr(eof, "value.var")
@@ -161,3 +161,8 @@ denormalize <- function(eof, which = c("left", "right")) {
 
     copy(eof[[which]])[, (name) := value][]
 }
+
+
+#' @export
+#' @rdname denormalise
+denormalize <- denormalise

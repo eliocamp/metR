@@ -4,12 +4,12 @@
 #' @param lang Language to use.
 #'
 #' @return
-#' `season()` returns a factor vector of the same length as `x` with the trimestre of each
+#' `season()` returns a factor vector of the same length as `x` with the trimester of each
 #' month.
-#' `seasonaly()` returns a date vector of the same length as `x` with the date "roudned" up to the center
+#' `seasonaly()` returns a date vector of the same length as `x` with the date "rounded" up to the centre
 #' month of each season.
 #' `is.full_season()` returns a logical vector of the same length as `x` that is true only if the
-#' 3 months of each season for each year (december counts for the following year) are present in the dataset.
+#' 3 months of each season for each year (December counts for the following year) are present in the dataset.
 #'
 #' @examples
 #' season(1, lang = "en")

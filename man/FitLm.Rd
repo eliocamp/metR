@@ -9,7 +9,7 @@ FitLm(y, ..., se = FALSE)
 \arguments{
 \item{y}{numeric vector of observations to model}
 
-\item{...}{numeric vectors of variables used in the modeling}
+\item{...}{numeric vectors of variables used in the modelling}
 
 \item{se}{logical indicating whether to compute the standard error}
 }

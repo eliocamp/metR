@@ -5,7 +5,7 @@
 \alias{guide_train.colorstrip}
 \alias{guide_colorstrip}
 \alias{guide_gengrob.colorstrip}
-\title{Discretized continuous color guide}
+\title{Discretized continuous colour guide}
 \usage{
 guide_colourstrip(
   title = waiver(),
@@ -140,14 +140,14 @@ A version of \link[ggplot2:guide_colourbar]{ggplot2::guide_colourbar} that displ
 by default, puts labels in between values.
 }
 \details{
-The default behaviour works fell for geom_contour_fill in which the colors
+The default behaviour works fell for geom_contour_fill in which the colours
 represent the value between contour surfaces.
 
-`inside = TRUE`` works better for geom_tile where the color represents
+`inside = TRUE`` works better for geom_tile where the colour represents
 the value of the data and is very similar to \link[ggplot2:guide_legend]{ggplot2::guide_legend}.
 }
 \examples{
-# In this example the lowest color represents an area of the data with values
+# In this example the lowest colour represents an area of the data with values
 # between 80 and 100.
 library(ggplot2)
 binwidth <- 20

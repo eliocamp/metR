@@ -40,7 +40,7 @@
 #' LEFT *and* RIGHT". The variable combination used in this formula *must* identify
 #' an unique value in a cell.
 #'
-#' So, for example, `v ~ x + y | t` would mean that ther is one value of `v` for
+#' So, for example, `v ~ x + y | t` would mean that there is one value of `v` for
 #' each combination of `x`, `y` and `t`, and that there will be one row for
 #' each combination of `x` and `y` and one row for each `t`.
 #'

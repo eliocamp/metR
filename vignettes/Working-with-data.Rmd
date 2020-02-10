@@ -49,7 +49,7 @@ ggplot(air, aes(lon, lat)) +
   geom_contour2(aes(z = air, color = ..level..))
 ```
 
-Since the most consuming part of reading the file is melting a multidimensional array into a tidy `data.table`, if we wanted to add another variable to the same `data.table` we could save time by only returning a vector. **It is of the upmost importance that both variables are on the same exact grid**.
+Since the most consuming part of reading the file is melting a multidimensional array into a tidy `data.table`, if we wanted to add another variable to the same `data.table` we could save time by only returning a vector. **It is of the utmost importance that both variables are on the same exact grid**.
 
 ```{r}
 air[, air2 := ReadNetCDF(file, out = "vector",
@@ -67,7 +67,7 @@ The netCDF format is very flexible and this function has not been tested on ever
 
 `GetTopography()` retrieves topographic data from the [ETOPO1 Global Relief Model](https://www.ngdc.noaa.gov/mgg/global/global.html) into a convenient tidy `data.table`. By default, it also stores a cached version. 
 
-As an example, let's look at a global relief map at 1/2° resolution with some ugly color palette. 
+As an example, let's look at a global relief map at 1/2° resolution with some ugly colour palette. 
 
 ```{r}
 # Not run because it needs internet access
@@ -163,7 +163,7 @@ geopotential[, imputed := ImputeEOF(gh.na ~ lon + lat | date, max.eof = 5)]
 str(geopotential)
 ```
 
-The imputed vector is returned along with the Root Mean Square Error estimated from crossvalidation and the number of EOFs used in the imputation as attributes. In this case, with `r attr(geopotential$imputed, "eof")` EOFs the imputed values have an estimated rmse of `r round(attr(geopotential$imputed, "rmse"), 2)`.
+The imputed vector is returned along with the Root Mean Square Error estimated from cross-validation and the number of EOFs used in the imputation as attributes. In this case, with `r attr(geopotential$imputed, "eof")` EOFs the imputed values have an estimated rmse of `r round(attr(geopotential$imputed, "rmse"), 2)`.
 
 ## Interpolate
 
@@ -207,7 +207,7 @@ ggplot(geopotential[date == date[1]], aes(lon, lat)) +
   coord_quickmap()
 ```
 
-There are several wrapers around `Derivate()` to perform other common related operations, `Laplacian()`, `Divergence()` and `Vorticity()`. 
+There are several wrappers around `Derivate()` to perform other common related operations, `Laplacian()`, `Divergence()` and `Vorticity()`. 
 
 ## GeostrophicWind
 

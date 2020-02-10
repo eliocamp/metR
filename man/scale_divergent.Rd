@@ -2,10 +2,22 @@
 % Please edit documentation in R/scale_divergent.R
 \name{scale_divergent}
 \alias{scale_divergent}
+\alias{scale_colour_divergent}
 \alias{scale_color_divergent}
 \alias{scale_fill_divergent}
-\title{Divergent color scales}
+\title{Divergent colour scales}
 \usage{
+scale_colour_divergent(
+  ...,
+  low = scales::muted("blue"),
+  mid = "white",
+  high = scales::muted("red"),
+  midpoint = 0,
+  space = "Lab",
+  na.value = "grey50",
+  guide = "colourbar"
+)
+
 scale_color_divergent(
   ...,
   low = scales::muted("blue"),
@@ -125,7 +137,7 @@ inverted defaults of \code{high} and \code{low}.
 library(ggplot2)
 ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
   geom_contour(aes(color = ..level..)) +
-  scale_color_divergent(midpoint = 130)
+  scale_colour_divergent(midpoint = 130)
 
 }
 \seealso{

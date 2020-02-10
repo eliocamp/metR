@@ -52,7 +52,7 @@ transformation object
 as output
 }}
 
-\item{max_size}{size of the arrow in centimeters}
+\item{max_size}{size of the arrow in centimetres}
 
 \item{default_unit}{ignored}
 

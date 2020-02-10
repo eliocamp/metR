@@ -81,7 +81,7 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 
-\item{min.size}{minimum number of points for a contour to be labeled.}
+\item{min.size}{minimum number of points for a contour to be labelled.}
 
 \item{skip}{number of contours to skip}
 
@@ -119,7 +119,7 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 \item{stroke}{numerical indicating width of stroke relative to the size of
 the text. Ignored if less than zero.}
 
-\item{stroke.color}{any valid color.}
+\item{stroke.color}{any valid colour.}
 
 \item{check_overlap}{If \code{TRUE}, text that overlaps previous text in the
 same layer will not be plotted.}

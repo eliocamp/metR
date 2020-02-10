@@ -8,14 +8,14 @@
 #' imputation
 #' @param tol tolerance used for determining convergence
 #' @param max.iter maximum iterations allowed for the algorithm
-#' @param validation number of points to use in crossvalidation (defaults to the
+#' @param validation number of points to use in cross-validation (defaults to the
 #' maximum of 30 or 10% of the non NA points)
 #' @param verbose logical indicating whether to print progress
 #'
 #' @return
 #' A vector of imputed values with attributes `eof`, which is the number of
 #' singular values used in the final imputation; and `rmse`, which is the Root
-#' Mean Square Error estimated from crossvalidation.
+#' Mean Square Error estimated from cross-validation.
 #'
 #' @details
 #' Singular values can be computed over matrices so \code{formula} denotes how

@@ -4,7 +4,7 @@
 #' Highly experimental.
 #'
 #' @inheritParams ggplot2::scale_x_continuous
-#' @param max_size size of the arrow in centimeters
+#' @param max_size size of the arrow in centimetres
 #' @param max magnitude of the reference arrow in data units. Will be the
 #' maximum value if `waiver()`
 #' @param guide type of legend

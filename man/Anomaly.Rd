@@ -9,7 +9,7 @@ Anomaly(x, baseline = seq_along(x), ...)
 \arguments{
 \item{x}{numeric vector}
 
-\item{baseline}{logical or numerical vector used for subseting x before
+\item{baseline}{logical or numerical vector used for subsetting x before
 computing the mean}
 
 \item{...}{other arguments passed to \code{\link{mean}} such as \code{na.rm}}

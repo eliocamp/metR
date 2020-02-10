@@ -76,7 +76,7 @@ to the paired geom/stat.}
 
 \item{na.fill}{How to fill missing values.
 \itemize{
-\item \code{FALSE} for leting the computation fail with no interpolation
+\item \code{FALSE} for letting the computation fail with no interpolation
 \item \code{TRUE} for imputing missing values with \link{Impute2D}
 \item A numeric value for constant imputation
 \item A function that takes a vector and returns a numeric (e.g. \code{mean})
@@ -95,7 +95,7 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
 
-\item{global.breaks}{Logical indicating wether \code{breaks} should be computed for the whole
+\item{global.breaks}{Logical indicating whether \code{breaks} should be computed for the whole
 data or for each grouping.}
 }
 \description{

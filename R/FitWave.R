@@ -110,6 +110,15 @@
 #' @export
 FitWave <- function(y, k = 1) {
     assertIntegerish(k, lower = 0, any.missing = FALSE)
+
+    if (any(is.na(y))) {
+        nas <- rep(NA_real_, length(k))
+        return(list(amplitude = nas,
+                    phase = nas,
+                    k = k,
+                    r2 = nas))
+    }
+
     f <- fft(y)
     l <- length(f)
     f <- (f/l)[1:ceiling(l/2)]
@@ -157,7 +166,14 @@ BuildWave <- function(x, amplitude, phase, k,
 #' @rdname waves
 #' @export
 FilterWave <- function(y, k, action = sign(k[k != 0][1])) {
-    assertIntegerish(k, any.missing = FALSE)
+    assertIntegerish(k, lower = 0, any.missing = FALSE)
+
+    assertNumeric(y)
+
+    if (any(is.na(y))) {
+        return(rep(NA_real_, length(y)))
+    }
+
     f <- fft(y)
     # Need to remove the k+1 spots (because index 1 is k = 0)
     # and the N - k + 1 because of symmetry.
@@ -174,7 +190,13 @@ FilterWave <- function(y, k, action = sign(k[k != 0][1])) {
 #' @rdname waves
 #' @export
 WaveEnvelope <- function(y) {
-    assertNumeric(y, any.missing = FALSE)
+    assertNumeric(y)
+
+    if (any(is.na(y))) {
+        return(rep(NA_real_, length(y)))
+    }
+
+
     N <- length(y)
     x_hat <- fft(y)/N
     k <- 1:ceiling(N/2)

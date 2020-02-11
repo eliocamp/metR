@@ -1,3 +1,11 @@
+# metR 0.7.0
+
+## New feattures
+
+- `FitWave()` and related functions return `NA`s when the inputted signal has `NA`s.
+
+
+
 # metR 0.6.0 - Pileus
 
 ## New features

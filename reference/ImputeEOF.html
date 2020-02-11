@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -142,9 +142,16 @@
 (DINEOF).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ImputeEOF</span>(<span class='no'>formula</span>, <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>min.eof</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>validation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>())</pre>
+    <pre class="usage"><span class='fu'>ImputeEOF</span>(
+  <span class='no'>formula</span>,
+  <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>min.eof</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
+  <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>10000</span>,
+  <span class='kw'>validation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,7 +180,7 @@ imputation</p></td>
     </tr>
     <tr>
       <th>validation</th>
-      <td><p>number of points to use in crossvalidation (defaults to the
+      <td><p>number of points to use in cross-validation (defaults to the
 maximum of 30 or 10% of the non NA points)</p></td>
     </tr>
     <tr>
@@ -186,7 +193,7 @@ maximum of 30 or 10% of the non NA points)</p></td>
 
     <p>A vector of imputed values with attributes <code>eof</code>, which is the number of
 singular values used in the final imputation; and <code>rmse</code>, which is the Root
-Mean Square Error estimated from crossvalidation.</p>
+Mean Square Error estimated from cross-validation.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Singular values can be computed over matrices so <code>formula</code> denotes how

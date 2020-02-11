@@ -80,7 +80,7 @@ the website." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -146,8 +146,13 @@ guaranteed so you are encouraged to check it on
 <a href='https://www.smn.gob.ar/descarga-de-datos'>the website</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>GetSMNData</span>(<span class='no'>date</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"hourly"</span>, <span class='st'>"daily"</span>, <span class='st'>"radiation"</span>), <span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>file.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())</pre>
+    <pre class="usage"><span class='fu'>GetSMNData</span>(
+  <span class='no'>date</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"hourly"</span>, <span class='st'>"daily"</span>, <span class='st'>"radiation"</span>),
+  <span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>file.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

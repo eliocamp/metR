@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -142,10 +142,18 @@
 
     <pre class="usage"><span class='fu'>FitWave</span>(<span class='no'>y</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
-<span class='fu'>BuildWave</span>(<span class='no'>x</span>, <span class='no'>amplitude</span>, <span class='no'>phase</span>, <span class='no'>k</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>amplitude</span> <span class='kw'>=</span> <span class='no'>amplitude</span>,
-  <span class='kw'>phase</span> <span class='kw'>=</span> <span class='no'>phase</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='no'>k</span>), <span class='kw'>sum</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>BuildWave</span>(
+  <span class='no'>x</span>,
+  <span class='no'>amplitude</span>,
+  <span class='no'>phase</span>,
+  <span class='no'>k</span>,
+  <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>amplitude</span> <span class='kw'>=</span> <span class='no'>amplitude</span>, <span class='kw'>phase</span> <span class='kw'>=</span> <span class='no'>phase</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='no'>k</span>),
+  <span class='kw'>sum</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
-<span class='fu'>FilterWave</span>(<span class='no'>y</span>, <span class='no'>k</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sign.html'>sign</a></span>(<span class='no'>k</span>[<span class='no'>k</span> <span class='kw'>!=</span> <span class='fl'>0</span>][<span class='fl'>1</span>]))</pre>
+<span class='fu'>FilterWave</span>(<span class='no'>y</span>, <span class='no'>k</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sign.html'>sign</a></span>(<span class='no'>k</span>[<span class='no'>k</span> <span class='kw'>!=</span> <span class='fl'>0</span>][<span class='fl'>1</span>]))
+
+<span class='fu'>WaveEnvelope</span>(<span class='no'>y</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,11 +230,19 @@ then the result is the reconstructed signal of <code>y</code> only for wavenumbe
 specified in <code>k</code>, if it's negative, is the signal of <code>y</code> minus the wavenumbers
 specified in <code>k</code>. The argument <code>action</code> must be be manually set to <code>-1</code> or <code>+1</code>
 if <code>k=0</code>.</p>
+<p><code>WaveEnvelope</code> computes the wave envelope of <code>y</code> following Zimin (2003). To compute
+the envelope of only a restricted band, first filter it with <code>FilterWave</code>.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Zimin, A.V., I. Szunyogh, D.J. Patil, B.R. Hunt, and E. Ott, 2003: Extracting Envelopes of Rossby Wave Packets. Mon. Wea. Rev., 131, 1011–1017, https://doi.org/10.1175/1520-0493(2003)131&lt;1011:EEORWP&gt;2.0.CO;2</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other meteorology functions: <code><a href='Derivate.html'>Derivate</a></code>,
-  <code><a href='EOF.html'>EOF</a></code>, <code><a href='GeostrophicWind.html'>GeostrophicWind</a></code>,
-  <code><a href='WaveFlux.html'>WaveFlux</a></code>, <code><a href='thermodynamics.html'>thermodynamics</a></code></p></div>
+    <div class='dont-index'><p>Other meteorology functions: 
+<code><a href='Derivate.html'>Derivate</a>()</code>,
+<code><a href='EOF.html'>EOF</a>()</code>,
+<code><a href='GeostrophicWind.html'>GeostrophicWind</a>()</code>,
+<code><a href='WaveFlux.html'>WaveFlux</a>()</code>,
+<code><a href='thermodynamics.html'>thermodynamics</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
@@ -316,7 +332,21 @@ if <code>k=0</code>.</p>
 #&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000   0.00000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>jan</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.only12</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='img'><img src='waves-6.png' alt='' width='700' height='433' /></div><div class='input'>
-
+<span class='co'># Compute the envelope of the geopotential</span>
+<span class='no'>jan</span>[, <span class='no'>envelope</span> <span class='kw'>:=</span> <span class='fu'>WaveEnvelope</span>(<span class='no'>gh.no12</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12 gh.only12  envelope
+#&gt;    1:   0.0 -22.5 3167.817 11.73417 5.858149  11.17110 10.834194
+#&gt;    2:   2.5 -22.5 3166.253 11.84884 4.006104  11.45865  9.544124
+#&gt;    3:   5.0 -22.5 3165.204 11.94097 2.689758  11.72661  8.173016
+#&gt;    4:   7.5 -22.5 3164.823 12.01036 2.061137  11.97348  6.906214
+#&gt;    5:  10.0 -22.5 3165.247 12.05689 2.261535  12.19776  5.958197
+#&gt;   ---                                                           
+#&gt; 4028: 347.5 -90.0 2701.129  0.00000 0.000000   0.00000  0.000000
+#&gt; 4029: 350.0 -90.0 2701.129  0.00000 0.000000   0.00000  0.000000
+#&gt; 4030: 352.5 -90.0 2701.129  0.00000 0.000000   0.00000  0.000000
+#&gt; 4031: 355.0 -90.0 2701.129  0.00000 0.000000   0.00000  0.000000
+#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000   0.00000  0.000000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>jan</span>[<span class='no'>lat</span> <span class='kw'>==</span> -<span class='fl'>60</span>], <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>gh.no12</span>)) +
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>() +
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>envelope</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='waves-7.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -325,6 +355,7 @@ if <code>k=0</code>.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#references">References</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

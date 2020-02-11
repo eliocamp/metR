@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute trajectories — Trajectory • metR</title>
+<title>Denormalise eof matrices — denormalise • metR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,8 +42,9 @@
 
 
 
-<meta property="og:title" content="Compute trajectories — Trajectory" />
-<meta property="og:description" content="Computes trajectories of particles in a time-varying velocity field." />
+<meta property="og:title" content="Denormalise eof matrices — denormalise" />
+<meta property="og:description" content="The matrices returned by EOF() are normalized. This function multiplies the left or right
+matrix by the diagonal matrix to return it to proper units." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -131,40 +132,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute trajectories</h1>
-    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/Tajectory.R'><code>R/Tajectory.R</code></a></small>
-    <div class="hidden name"><code>Trajectory.Rd</code></div>
+    <h1>Denormalise eof matrices</h1>
+    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/EOF_methods.R'><code>R/EOF_methods.R</code></a></small>
+    <div class="hidden name"><code>denormalise.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Computes trajectories of particles in a time-varying velocity field.</p>
+    <p>The matrices returned by <code><a href='EOF.html'>EOF()</a></code> are normalized. This function multiplies the left or right
+matrix by the diagonal matrix to return it to proper units.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Trajectory</span>(<span class='no'>formula</span>, <span class='no'>x0</span>, <span class='no'>y0</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'>denormalise</span>(<span class='no'>eof</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"left"</span>, <span class='st'>"right"</span>))
+
+<span class='fu'>denormalize</span>(<span class='no'>eof</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"left"</span>, <span class='st'>"right"</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>formula</th>
-      <td><p>a formula indicating dependent and independent variables
-in the form of dx + dy ~ x + y + t.</p></td>
+      <th>eof</th>
+      <td><p>an <code>eof</code> object.</p></td>
     </tr>
     <tr>
-      <th>x0, y0</th>
-      <td><p>starting coordinates of the particles.</p></td>
-    </tr>
-    <tr>
-      <th>cyclical</th>
-      <td><p>logical vector of boundary condition for x and y.</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p>optional data.frame containing the variables.</p></td>
-    </tr>
-    <tr>
-      <th>res</th>
-      <td><p>resolution parameter (higher numbers increases the resolution)</p></td>
+      <th>which</th>
+      <td><p>which side of the eof decomposition to denormalise</p></td>
     </tr>
     </table>
 

@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -140,17 +140,46 @@
     <p>Derivate a discrete variable using finite differences</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Derivate</span>(<span class='no'>formula</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>, <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>Derivate</span>(
+  <span class='no'>formula</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>,
+  <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
-<span class='fu'>Laplacian</span>(<span class='no'>formula</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>, <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>Laplacian</span>(
+  <span class='no'>formula</span>,
+  <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>,
+  <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
-<span class='fu'>Divergence</span>(<span class='no'>formula</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>, <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>Divergence</span>(
+  <span class='no'>formula</span>,
+  <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>,
+  <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
-<span class='fu'>Vorticity</span>(<span class='no'>formula</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>, <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>Vorticity</span>(
+  <span class='no'>formula</span>,
+  <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>,
+  <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,7 +230,7 @@ a list containing the directional derivatives of each dependent variables.</p>
 
     <p>Each element of the return vector is an estimation of
 \(\frac{\partial^n x}{\partial y^{n}}\) by
-centered finite differences.</p>
+centred finite differences.</p>
 <p>If <code>sphere = TRUE</code>, then the first two independent variables are
 assumed to be longitude and latitude (<strong>in that order</strong>) in degrees. Then, a
 correction is applied to the derivative so that they are in the same units as
@@ -214,9 +243,12 @@ call <code>Derivate()</code> and make the appropriate sums. For <code>Divergence
 (<strong>in that order</strong>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other meteorology functions: <code><a href='EOF.html'>EOF</a></code>,
-  <code><a href='GeostrophicWind.html'>GeostrophicWind</a></code>, <code><a href='WaveFlux.html'>WaveFlux</a></code>,
-  <code><a href='thermodynamics.html'>thermodynamics</a></code>, <code><a href='waves.html'>waves</a></code></p></div>
+    <div class='dont-index'><p>Other meteorology functions: 
+<code><a href='EOF.html'>EOF</a>()</code>,
+<code><a href='GeostrophicWind.html'>GeostrophicWind</a>()</code>,
+<code><a href='WaveFlux.html'>WaveFlux</a>()</code>,
+<code><a href='thermodynamics.html'>thermodynamics</a></code>,
+<code><a href='waves.html'>waves</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>theta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>360</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>20</span>)*<span class='no'>pi</span>/<span class='fl'>180</span>
@@ -238,7 +270,7 @@ call <code>Derivate()</code> and make the appropriate sums. For <code>Divergence
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>variable</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z.ddlon</span> + <span class='no'>z.ddlat</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 240 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='Derivate-2.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z.ddlon</span> + <span class='no'>z.ddlat</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 480 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='Derivate-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># The same as</span>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>variable</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z</span>)) +

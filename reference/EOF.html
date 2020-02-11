@@ -78,7 +78,7 @@ Analysis or Empirical Orthogonal Functions)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -142,9 +142,16 @@ Analysis or Empirical Orthogonal Functions)." />
 Analysis or Empirical Orthogonal Functions).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>EOF</span>(<span class='no'>formula</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0.025</span>,
-  <span class='kw'>mid</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>0.975</span>), <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>EOF</span>(
+  <span class='no'>formula</span>,
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0.025</span>, <span class='kw'>mid</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>0.975</span>),
+  <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,7 +220,7 @@ populate the matrix, and LEFT represent the variables used to make the rows
 and RIGHT, the columns of the matrix. Think it like "VAR <em>as a function</em> of
 LEFT <em>and</em> RIGHT". The variable combination used in this formula <em>must</em> identify
 an unique value in a cell.</p>
-<p>So, for example, <code>v ~ x + y | t</code> would mean that ther is one value of <code>v</code> for
+<p>So, for example, <code>v ~ x + y | t</code> would mean that there is one value of <code>v</code> for
 each combination of <code>x</code>, <code>y</code> and <code>t</code>, and that there will be one row for
 each combination of <code>x</code> and <code>y</code> and one row for each <code>t</code>.</p>
 <p>In the result, the left and right vectors have dimensions of the LEFT and RIGHT
@@ -228,9 +235,12 @@ standard deviation of each singular value.</p>
     <p>Fisher, A., Caffo, B., Schwartz, B., &amp; Zipunnikov, V. (2016). Fast, Exact Bootstrap Principal Component Analysis for p &gt; 1 million. Journal of the American Statistical Association, 111(514), 846–860. http://doi.org/10.1080/01621459.2015.1062383</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other meteorology functions: <code><a href='Derivate.html'>Derivate</a></code>,
-  <code><a href='GeostrophicWind.html'>GeostrophicWind</a></code>, <code><a href='WaveFlux.html'>WaveFlux</a></code>,
-  <code><a href='thermodynamics.html'>thermodynamics</a></code>, <code><a href='waves.html'>waves</a></code></p></div>
+    <div class='dont-index'><p>Other meteorology functions: 
+<code><a href='Derivate.html'>Derivate</a>()</code>,
+<code><a href='GeostrophicWind.html'>GeostrophicWind</a>()</code>,
+<code><a href='WaveFlux.html'>WaveFlux</a>()</code>,
+<code><a href='thermodynamics.html'>thermodynamics</a></code>,
+<code><a href='waves.html'>waves</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># The Antarctic Oscillation is computed from the</span>

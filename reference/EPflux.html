@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute trajectories — Trajectory • metR</title>
+<title>Computes Eliassen-Palm fluxes. — EPflux • metR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,8 +42,8 @@
 
 
 
-<meta property="og:title" content="Compute trajectories — Trajectory" />
-<meta property="og:description" content="Computes trajectories of particles in a time-varying velocity field." />
+<meta property="og:title" content="Computes Eliassen-Palm fluxes. — EPflux" />
+<meta property="og:description" content="Computes Eliassen-Palm fluxes." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -131,49 +131,62 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute trajectories</h1>
-    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/Tajectory.R'><code>R/Tajectory.R</code></a></small>
-    <div class="hidden name"><code>Trajectory.Rd</code></div>
+    <h1>Computes Eliassen-Palm fluxes.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/WaveFlux.R'><code>R/WaveFlux.R</code></a></small>
+    <div class="hidden name"><code>EPflux.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Computes trajectories of particles in a time-varying velocity field.</p>
+    <p>Computes Eliassen-Palm fluxes.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Trajectory</span>(<span class='no'>formula</span>, <span class='no'>x0</span>, <span class='no'>y0</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'>EPflux</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='no'>lev</span>, <span class='no'>t</span>, <span class='no'>u</span>, <span class='no'>v</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>formula</th>
-      <td><p>a formula indicating dependent and independent variables
-in the form of dx + dy ~ x + y + t.</p></td>
+      <th>lon</th>
+      <td><p>longitudes in degrees.</p></td>
     </tr>
     <tr>
-      <th>x0, y0</th>
-      <td><p>starting coordinates of the particles.</p></td>
+      <th>lat</th>
+      <td><p>latitudes in degrees.</p></td>
     </tr>
     <tr>
-      <th>cyclical</th>
-      <td><p>logical vector of boundary condition for x and y.</p></td>
+      <th>lev</th>
+      <td><p>pressure levels.</p></td>
     </tr>
     <tr>
-      <th>data</th>
-      <td><p>optional data.frame containing the variables.</p></td>
+      <th>t</th>
+      <td><p>temperature in Kelvin.</p></td>
     </tr>
     <tr>
-      <th>res</th>
-      <td><p>resolution parameter (higher numbers increases the resolution)</p></td>
+      <th>u</th>
+      <td><p>zonal wind in m/s.</p></td>
+    </tr>
+    <tr>
+      <th>v</th>
+      <td><p>meridional wind in m/s.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data.table with columns <code>Flon</code>, <code>Flat</code> and <code>Flev</code> giving the zonal, meridional
+and vertical components of the EP Fluxes at each longitude, latitude and level.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Plumb, R. A. (1985). On the Three-Dimensional Propagation of Stationary Waves. Journal of the Atmospheric Sciences, 42(3), 217–229. <a href='https://doi.org/10.1175/1520-0469(1985)042&lt;0217:OTTDPO&gt;2.0.CO;2'>https://doi.org/10.1175/1520-0469(1985)042&lt;0217:OTTDPO&gt;2.0.CO;2</a>
+Cohen, J., Barlow, M., Kushner, P. J., &amp; Saito, K. (2007). Stratosphere–Troposphere Coupling and Links with Eurasian Land Surface Variability. Journal of Climate, 20(21), 5335–5343. <a href='https://doi.org/10.1175/2007JCLI1725.1'>https://doi.org/10.1175/2007JCLI1725.1</a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#references">References</a></li>
     </ul>
 
   </div>

@@ -78,7 +78,7 @@ Highly experimental." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -142,8 +142,35 @@ Highly experimental." />
 Highly experimental.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>scale_mag</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(), <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(), <span class='kw'>max_size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>default_unit</span> <span class='kw'>=</span> <span class='st'>"cm"</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(), <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'><a href='guide_vector.html'>guide_vector</a></span>(), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>scale_mag</span>(
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(),
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(),
+  <span class='kw'>max_size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>default_unit</span> <span class='kw'>=</span> <span class='st'>"cm"</span>,
+  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(),
+  <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'><a href='guide_vector.html'>guide_vector</a></span>(),
+  <span class='no'>...</span>
+)
+
+<span class='fu'>scale_mag_continuous</span>(
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(),
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(),
+  <span class='kw'>max_size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>default_unit</span> <span class='kw'>=</span> <span class='st'>"cm"</span>,
+  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(),
+  <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'><a href='guide_vector.html'>guide_vector</a></span>(),
+  <span class='no'>...</span>
+)
+
+<span class='fu'>scale_dx_continuous</span>(
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(),
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(),
+  <span class='kw'>max_size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>default_unit</span> <span class='kw'>=</span> <span class='st'>"cm"</span>,
+  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(),
+  <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fu'><a href='guide_vector.html'>guide_vector</a></span>(),
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,7 +195,7 @@ as output</p></li>
     </tr>
     <tr>
       <th>max_size</th>
-      <td><p>size of the arrow in centimeters</p></td>
+      <td><p>size of the arrow in centimetres</p></td>
     </tr>
     <tr>
       <th>default_unit</th>
@@ -195,9 +222,13 @@ maximum value if <code>waiver()</code></p></td>
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>seals</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>long</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='geom_arrow.html'>geom_vector</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>delta_long</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>delta_lat</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>)</div><div class='img'><img src='scale_mag-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='scale_mag-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>, <span class='kw'>max_size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='scale_mag-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>, <span class='kw'>default_unit</span> <span class='kw'>=</span> <span class='st'>"mm"</span>)</div><div class='img'><img src='scale_mag-4.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>)</div><div class='output co'>#&gt; <span class='message'>Scale for 'mag' is already present. Adding another scale for 'mag', which</span>
+#&gt; <span class='message'>will replace the existing scale.</span></div><div class='img'><img src='scale_mag-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>Scale for 'mag' is already present. Adding another scale for 'mag', which</span>
+#&gt; <span class='message'>will replace the existing scale.</span></div><div class='img'><img src='scale_mag-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>, <span class='kw'>max_size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='message'>Scale for 'mag' is already present. Adding another scale for 'mag', which</span>
+#&gt; <span class='message'>will replace the existing scale.</span></div><div class='img'><img src='scale_mag-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>g</span> + <span class='fu'>scale_mag</span>(<span class='st'>"Seals velocity"</span>, <span class='kw'>default_unit</span> <span class='kw'>=</span> <span class='st'>"mm"</span>)</div><div class='output co'>#&gt; <span class='message'>Scale for 'mag' is already present. Adding another scale for 'mag', which</span>
+#&gt; <span class='message'>will replace the existing scale.</span></div><div class='img'><img src='scale_mag-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

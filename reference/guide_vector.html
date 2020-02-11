@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -140,13 +140,29 @@
     <p>Draws a reference arrow. Highly experimental.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>guide_vector</span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(), <span class='kw'>title.position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>title.theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title.hjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title.vjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>label.position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label.theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>label.hjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label.vjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keywidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>keyheight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>default.unit</span> <span class='kw'>=</span> <span class='st'>"cm"</span>,
-  <span class='kw'>override.aes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>guide_vector</span>(
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(),
+  <span class='kw'>title.position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>title.theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>title.hjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>title.vjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>label.position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>label.theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>label.hjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>label.vjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>keywidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>keyheight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>default.unit</span> <span class='kw'>=</span> <span class='st'>"cm"</span>,
+  <span class='kw'>override.aes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,8 +171,8 @@
       <th>title</th>
       <td><p>A character string or expression indicating a title of guide.
 If <code>NULL</code>, the title is not shown. By default
-(<code>waiver()</code>), the name of the scale object or the name
-specified in <code>labs()</code> is used for the title.</p></td>
+(<code><a href='https://ggplot2.tidyverse.org/reference/waiver.html'>waiver()</a></code>), the name of the scale object or the name
+specified in <code><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs()</a></code> is used for the title.</p></td>
     </tr>
     <tr>
       <th>title.position</th>
@@ -167,8 +183,8 @@ title. One of "top" (default for a vertical guide), "bottom", "left"
     <tr>
       <th>title.theme</th>
       <td><p>A theme object for rendering the title text. Usually the
-object of <code>element_text()</code> is expected. By default, the theme is
-specified by <code>legend.title</code> in <code>theme()</code> or theme.</p></td>
+object of <code><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text()</a></code> is expected. By default, the theme is
+specified by <code>legend.title</code> in <code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme()</a></code> or theme.</p></td>
     </tr>
     <tr>
       <th>title.hjust</th>
@@ -194,8 +210,8 @@ label. One of "top", "bottom" (default for horizontal guide), "left", or
     <tr>
       <th>label.theme</th>
       <td><p>A theme object for rendering the label text. Usually the
-object of <code>element_text()</code> is expected. By default, the theme is
-specified by <code>legend.text</code> in <code>theme()</code>.</p></td>
+object of <code><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text()</a></code> is expected. By default, the theme is
+specified by <code>legend.text</code> in <code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme()</a></code>.</p></td>
     </tr>
     <tr>
       <th>label.hjust</th>
@@ -211,13 +227,13 @@ text.</p></td>
       <th>keywidth</th>
       <td><p>A numeric or a <code><a href='https://rdrr.io/r/grid/unit.html'>grid::unit()</a></code> object specifying
 the width of the legend key. Default value is <code>legend.key.width</code> or
-<code>legend.key.size</code> in <code>theme()</code>.</p></td>
+<code>legend.key.size</code> in <code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme()</a></code>.</p></td>
     </tr>
     <tr>
       <th>keyheight</th>
       <td><p>A numeric or a <code><a href='https://rdrr.io/r/grid/unit.html'>grid::unit()</a></code> object specifying
 the height of the legend key. Default value is <code>legend.key.height</code> or
-<code>legend.key.size</code> in <code>theme()</code>.</p></td>
+<code>legend.key.size</code> in <code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme()</a></code>.</p></td>
     </tr>
     <tr>
       <th>direction</th>

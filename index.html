@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
 <a href="#metr" class="anchor"></a>metR <img src="reference/figures/logo.png" align="right">
 </h1></div>
 
-<p>metR packages several functions and utilities that make R better for handling meteorological data in the tidy data paradigm. It started mostly sa a packaging of assorted wrapers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since then, it has grown organically and for my own needs and feedback from users.</p>
+<p>metR packages several functions and utilities that make R better for handling meteorological data in the tidy data paradigm. It started mostly sa a packaging of assorted wrappers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since then, it has grown organically and for my own needs and feedback from users.</p>
 <p>Conceptually it’s divided into <em>visualization tools</em> and <em>data tools</em>. The former are geoms, stats and scales that help with plotting using <a href="http://ggplot2.tidyverse.org/index.html">ggplot2</a>, such as <code><a href="reference/geom_contour_fill.html">stat_contour_fill()</a></code> or <code><a href="reference/scale_longitude.html">scale_y_level()</a></code>, while the later are functions for common data processing tools in the atmospheric sciences, such as <code><a href="reference/Derivate.html">Derivate()</a></code> or <code><a href="reference/EOF.html">EOF()</a></code>; these are implemented to work in the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> paradigm, but also work with regular data frames.</p>
 <p>Currently metR is in developement but maturing. Most functions check arguments and there are some tests. However, some functions might change it’s interface, and functionality can be moved to other packages, so please bear that in mind.</p>
 <div id="installation" class="section level2">
@@ -109,7 +109,7 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"metR"</span>)</a></code></pre></div>
 <p>Or the developement version with:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"eliocamp/metR@dev"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"eliocamp/metR@dev"</span>)</a></code></pre></div>
 <p>If you need to read netcdf files, you might need to install the netcdf and udunits2 libraries. On Ubuntu and it’s derivatives this can be done by typing</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">sudo apt install libnetcdf<span class="op">-</span>dev netcdf<span class="op">-</span>bin libudunits2<span class="op">-</span>dev</a></code></pre></div>
 </div>
@@ -140,8 +140,8 @@
 <a class="sourceLine" id="cb4-21" data-line-number="21">                         <span class="dt">breaks =</span> <span class="kw"><a href="reference/MakeBreaks.html">MakeBreaks</a></span>(binwidth),</a>
 <a class="sourceLine" id="cb4-22" data-line-number="22">                         <span class="dt">guide =</span> <span class="kw"><a href="reference/guide_colourstrip.html">guide_colorstrip</a></span>()) <span class="op">+</span></a>
 <a class="sourceLine" id="cb4-23" data-line-number="23"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span>()</a>
-<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt; Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be</span></a>
-<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt; deprecated. Use ggperiodic::periodic insead.</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt; Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be deprecated.</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt; Use ggperiodic::periodic insead.</span></a></code></pre></div>
 <p><img src="reference/figures/field-1.png"><!-- --></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># AAO signal</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(aao<span class="op">$</span>right, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(date, gh.t.w)) <span class="op">+</span></a>

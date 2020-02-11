@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -140,8 +140,7 @@
     <p>Geostrophic wind from a geopotential height field.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>GeostrophicWind</span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='st'>"guess"</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='fl'>9.81</span>,
-  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>)</pre>
+    <pre class="usage"><span class='fu'>GeostrophicWind</span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='st'>"guess"</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='fl'>9.81</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,9 +182,12 @@ covers the whole globe and set cyclical conditions accordingly. For more
 predictable results, set the boundary condition explicitly.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other meteorology functions: <code><a href='Derivate.html'>Derivate</a></code>,
-  <code><a href='EOF.html'>EOF</a></code>, <code><a href='WaveFlux.html'>WaveFlux</a></code>,
-  <code><a href='thermodynamics.html'>thermodynamics</a></code>, <code><a href='waves.html'>waves</a></code></p></div>
+    <div class='dont-index'><p>Other meteorology functions: 
+<code><a href='Derivate.html'>Derivate</a>()</code>,
+<code><a href='EOF.html'>EOF</a>()</code>,
+<code><a href='WaveFlux.html'>WaveFlux</a>()</code>,
+<code><a href='thermodynamics.html'>thermodynamics</a></code>,
+<code><a href='waves.html'>waves</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
@@ -205,7 +207,8 @@ predictable results, set the boundary condition explicitly.</p>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh</span>)) +
     <span class='fu'><a href='geom_arrow.html'>geom_vector</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>dx</span> <span class='kw'>=</span> <span class='no'>u</span>, <span class='kw'>dy</span> <span class='kw'>=</span> <span class='no'>v</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>2</span>) +
-    <span class='fu'><a href='scale_mag.html'>scale_mag</a></span>()</div><div class='img'><img src='GeostrophicWind-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='scale_mag.html'>scale_mag</a></span>()</div><div class='output co'>#&gt; <span class='message'>Scale for 'mag' is already present. Adding another scale for 'mag', which</span>
+#&gt; <span class='message'>will replace the existing scale.</span></div><div class='img'><img src='GeostrophicWind-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

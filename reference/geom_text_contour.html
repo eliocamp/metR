@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -140,26 +140,52 @@
     <p>Draws labels on contours built with <a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>ggplot2::stat_contour</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>geom_label_contour</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"text_contour"</span>, <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>min.size</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>parse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>nudge_x</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>nudge_y</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>label.padding</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>0.25</span>, <span class='st'>"lines"</span>), <span class='kw'>label.r</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>0.15</span>, <span class='st'>"lines"</span>),
-  <span class='kw'>label.size</span> <span class='kw'>=</span> <span class='fl'>0.25</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>geom_label_contour</span>(
+  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"text_contour"</span>,
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>min.size</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>parse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>nudge_x</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>nudge_y</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>label.padding</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>0.25</span>, <span class='st'>"lines"</span>),
+  <span class='kw'>label.r</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>0.15</span>, <span class='st'>"lines"</span>),
+  <span class='kw'>label.size</span> <span class='kw'>=</span> <span class='fl'>0.25</span>,
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
-<span class='fu'>geom_text_contour</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"text_contour"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>...</span>, <span class='kw'>min.size</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>parse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>nudge_x</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>nudge_y</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>stroke</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>stroke.color</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>check_overlap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>geom_text_contour</span>(
+  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"text_contour"</span>,
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>min.size</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>parse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>nudge_x</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>nudge_y</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>stroke</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>stroke.color</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
+  <span class='kw'>check_overlap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mapping</th>
-      <td><p>Set of aesthetic mappings created by <code>aes()</code> or
-<code>aes_()</code>. If specified and <code>inherit.aes = TRUE</code> (the
+      <td><p>Set of aesthetic mappings created by <code><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes()</a></code> or
+<code><a href='https://ggplot2.tidyverse.org/reference/aes_.html'>aes_()</a></code>. If specified and <code>inherit.aes = TRUE</code> (the
 default), it is combined with the default mapping at the top level of the
 plot. You must supply <code>mapping</code> if there is no plot mapping.</p></td>
     </tr>
@@ -168,10 +194,10 @@ plot. You must supply <code>mapping</code> if there is no plot mapping.</p></td>
       <td><p>The data to be displayed in this layer. There are three
 options:</p>
 <p>If <code>NULL</code>, the default, the data is inherited from the plot
-data as specified in the call to <code>ggplot()</code>.</p>
+data as specified in the call to <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot()</a></code>.</p>
 <p>A <code>data.frame</code>, or other object, will override the plot
 data. All objects will be fortified to produce a data frame. See
-<code>fortify()</code> for which variables will be created.</p>
+<code><a href='https://ggplot2.tidyverse.org/reference/fortify.html'>fortify()</a></code> for which variables will be created.</p>
 <p>A <code>function</code> will be called with a single argument,
 the plot data. The return value must be a <code>data.frame</code>, and
 will be used as the layer data. A <code>function</code> can be created
@@ -189,14 +215,14 @@ a call to a position adjustment function.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other arguments passed on to <code>layer()</code>. These are
+      <td><p>Other arguments passed on to <code><a href='https://ggplot2.tidyverse.org/reference/layer.html'>layer()</a></code>. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 <code>colour = "red"</code> or <code>size = 3</code>. They may also be parameters
 to the paired geom/stat.</p></td>
     </tr>
     <tr>
       <th>min.size</th>
-      <td><p>minimum number of points for a contour to be labeled.</p></td>
+      <td><p>minimum number of points for a contour to be labelled.</p></td>
     </tr>
     <tr>
       <th>skip</th>
@@ -247,7 +273,7 @@ display.</p></td>
       <td><p>If <code>FALSE</code>, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. <code>borders()</code>.</p></td>
+the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.org/reference/borders.html'>borders()</a></code>.</p></td>
     </tr>
     <tr>
       <th>rotate</th>
@@ -260,7 +286,7 @@ the text. Ignored if less than zero.</p></td>
     </tr>
     <tr>
       <th>stroke.color</th>
-      <td><p>any valid color.</p></td>
+      <td><p>any valid colour.</p></td>
     </tr>
     <tr>
       <th>check_overlap</th>
@@ -272,7 +298,7 @@ same layer will not be plotted.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Is best used with a previous call to <a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>ggplot2::stat_contour</a> with the same
-parameters.
+parameters (e.g. the same <code>binwidth</code>, <code>breaks</code>, or <code>bins</code>).
 Note that while <code>geom_text_contour()</code> can angle itself to follow the contour,
 this is not the case with <code>geom_label_contour()</code>.</p>
     <h2 class="hasAnchor" id="aesthetics"><a class="anchor" href="#aesthetics"></a>Aesthetics</h2>
@@ -298,16 +324,22 @@ this is not the case with <code>geom_label_contour()</code>.</p>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other ggplot2 helpers: <code><a href='DivideTimeseries.html'>DivideTimeseries</a></code>,
-  <code><a href='MakeBreaks.html'>MakeBreaks</a></code>, <code><a href='WrapCircular.html'>WrapCircular</a></code>,
-  <code><a href='geom_arrow.html'>geom_arrow</a></code>, <code><a href='geom_contour2.html'>geom_contour2</a></code>,
-  <code><a href='geom_contour_fill.html'>geom_contour_fill</a></code>,
-  <code><a href='geom_relief.html'>geom_relief</a></code>, <code><a href='geom_streamline.html'>geom_streamline</a></code>,
-  <code><a href='guide_colourstrip.html'>guide_colourstrip</a></code>,
-  <code><a href='map_labels.html'>map_labels</a></code>, <code><a href='reverselog_trans.html'>reverselog_trans</a></code>,
-  <code><a href='scale_divergent.html'>scale_divergent</a></code>,
-  <code><a href='scale_longitude.html'>scale_longitude</a></code>, <code><a href='stat_na.html'>stat_na</a></code>,
-  <code><a href='stat_subset.html'>stat_subset</a></code></p></div>
+    <div class='dont-index'><p>Other ggplot2 helpers: 
+<code><a href='DivideTimeseries.html'>DivideTimeseries</a>()</code>,
+<code><a href='MakeBreaks.html'>MakeBreaks</a>()</code>,
+<code><a href='WrapCircular.html'>WrapCircular</a>()</code>,
+<code><a href='geom_arrow.html'>geom_arrow</a>()</code>,
+<code><a href='geom_contour2.html'>geom_contour2</a>()</code>,
+<code><a href='geom_contour_fill.html'>geom_contour_fill</a>()</code>,
+<code><a href='geom_relief.html'>geom_relief</a>()</code>,
+<code><a href='geom_streamline.html'>geom_streamline</a>()</code>,
+<code><a href='guide_colourstrip.html'>guide_colourstrip</a>()</code>,
+<code><a href='map_labels.html'>map_labels</a></code>,
+<code><a href='reverselog_trans.html'>reverselog_trans</a>()</code>,
+<code><a href='scale_divergent.html'>scale_divergent</a></code>,
+<code><a href='scale_longitude.html'>scale_longitude</a></code>,
+<code><a href='stat_na.html'>stat_na</a>()</code>,
+<code><a href='stat_subset.html'>stat_subset</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)

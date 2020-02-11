@@ -79,7 +79,7 @@ with proper dimensions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -144,8 +144,13 @@ over using <code><a href='https://rdrr.io/pkg/ncdf4/man/ncvar_get.html'>ncvar_ge
 with proper dimensions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ReadNetCDF</span>(<span class='no'>file</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"data.frame"</span>, <span class='st'>"vector"</span>, <span class='st'>"array"</span>),
-  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>ReadNetCDF</span>(
+  <span class='no'>file</span>,
+  <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"data.frame"</span>, <span class='st'>"vector"</span>, <span class='st'>"array"</span>),
+  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>key</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)
 
 <span class='fu'>GlanceNetCDF</span>(<span class='no'>file</span>, <span class='no'>...</span>)</pre>
 
@@ -209,7 +214,7 @@ Furthermore, you can use <code>NA</code> to refer to the existing minimum or max
 <p>So, if you want to get Southern Hemisphere data from the from a file that defines
 latitude as <code>lat</code>, then you can use:</p><pre>
 subset = list(lat = -90:0)
-</pre><p>More complex subsetting operations are supported. If yuou want to read non-contiguous
+</pre><p>More complex subsetting operations are supported. If you want to read non-contiguous
 chunks of data, you can specify each chunk into a list inside <code>subset</code>. For example
 this subset</p><pre>
 subset = list(list(lat = -90:-70, lon = 0:60),
@@ -220,7 +225,7 @@ are combination of those two conditions,</p>
 <pre>
 subset = list(lat = list(-90:-70, 70:90),
               lon = list(0:60, 300:360))
-</pre><p>Both operations can be mixed together. So for exmaple this</p>
+</pre><p>Both operations can be mixed together. So for example this</p>
 <pre>
 subset = list(list(lat = -90:-70,
                    lon = 0:60),

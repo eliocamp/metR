@@ -78,7 +78,7 @@ and, optionally, standard error for each regressor." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@ and, optionally, standard error for each regressor.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>numeric vectors of variables used in the modeling</p></td>
+      <td><p>numeric vectors of variables used in the modelling</p></td>
     </tr>
     <tr>
       <th>se</th>
@@ -168,6 +168,8 @@ and, optionally, standard error for each regressor.</p>
 <dt>estimate</dt><dd><p>estimate of the regression</p></dd>
 <dt>std.error</dt><dd><p>standard error</p></dd>
 <dt>df</dt><dd><p>degrees of freedom</p></dd>
+<dt>r.squared</dt><dd><p>Percent of variance explained by the model (repeated in each term)</p></dd>
+<dt>adj.r.squared</dt><dd><p>r.squared` adjusted based on the degrees of freedom)</p></dd>
 
 </dl>
 
@@ -181,15 +183,14 @@ warning.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>({
   <span class='no'>regr</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>FitLm</span>(<span class='no'>gh</span>, <span class='no'>date</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>)]
 })</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.198   0.004   0.202 </div><div class='input'>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>regr</span>[<span class='no'>term</span> <span class='kw'>!=</span> <span class='st'>"(intercept)"</span>], <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
+#&gt;   0.238   0.000   0.238 </div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>regr</span>[<span class='no'>term</span> <span class='kw'>!=</span> <span class='st'>"(Intercept)"</span>], <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>estimate</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='stat_subset.html'>stat_subset</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>estimate</span>) <span class='kw'>&gt;</span> <span class='fl'>2</span>*<span class='no'>std.error</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_contour()`:</span>
-#&gt; <span class='warning'>Contour requires single `z` at each combination of `x` and `y`.</span></div><div class='img'><img src='FitLm-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <span class='fu'><a href='stat_subset.html'>stat_subset</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>estimate</span>) <span class='kw'>&gt;</span> <span class='fl'>2</span>*<span class='no'>std.error</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)</div><div class='img'><img src='FitLm-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using stats::lm() is much slower and with no names.</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>({
-  <span class='no'>regr</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>gh</span> ~ <span class='no'>date</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>)]
+  <span class='no'>regr</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>gh</span> ~ <span class='no'>date</span>))[<span class='fl'>2</span>], <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>)]
 })
 }</div></pre>
   </div>

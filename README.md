@@ -44,7 +44,7 @@ Or the developement version with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("eliocamp/metR")
+devtools::install_github("eliocamp/metR@dev")
 ```
 
 If you need to read netcdf files, you might need to install the netcdf

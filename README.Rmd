@@ -39,7 +39,7 @@ Or the developement version with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("eliocamp/metR")
+devtools::install_github("eliocamp/metR@dev")
 ```
 
 If you need to read netcdf files, you might need to install the netcdf and udunits2 libraries. On Ubuntu and it's derivatives this can be done by typing 

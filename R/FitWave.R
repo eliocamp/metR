@@ -166,7 +166,7 @@ BuildWave <- function(x, amplitude, phase, k,
 #' @rdname waves
 #' @export
 FilterWave <- function(y, k, action = sign(k[k != 0][1])) {
-    assertIntegerish(k, lower = 0, any.missing = FALSE)
+    assertIntegerish(k, any.missing = FALSE)
 
     assertNumeric(y)
 

@@ -11,6 +11,14 @@ test_that("subsetting works", {
     expect_known_output(ReadNetCDF(file,
                                    subset = list(lat = -90:20)),
                         "readnetcdf_subset")
+
+
+    s <-  list(
+        list(lat = -90:-70, lon = 0:60),
+        list(lat = 70:90, lon = 300:360)
+    )
+    expect_known_output(ReadNetCDF(file, subset = s), "readnetcdf_unnamed_subset")
+
 })
 
 test_that("naming works", {

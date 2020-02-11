@@ -21,7 +21,7 @@
 #' @details
 #' Each element of the return vector is an estimation of
 #' \eqn{\frac{\partial^n x}{\partial y^{n}}}{d^nx/dy^n} by
-#' centered finite differences.
+#' centred finite differences.
 #'
 #' If `sphere = TRUE`, then the first two independent variables are
 #' assumed to be longitude and latitude (**in that order**) in degrees. Then, a
@@ -67,7 +67,7 @@
 #'                  color = "red")
 #'
 #' @family meteorology functions
-#' @import data.table Formula formula.tools checkmate
+#' @import checkmate
 #' @export
 Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
                      data = NULL, sphere = FALSE, a = 6371000, equispaced = TRUE) {
@@ -87,13 +87,13 @@ Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
     ind.names <- formula.tools::rhs.vars(formula)
 
     formula <- Formula::as.Formula(formula)
-    data <- as.data.table(eval(quote(model.frame(formula, data = data,
-                                                 na.action = NULL))))
+    data <- data.table::as.data.table(eval(quote(model.frame(formula, data = data,
+                                                             na.action = NULL))))
 
     # id.name <- digest::digest(data[1, 1])
     id.name <- "ff19bdd67ff5f59cdce2824074707d20"
-    set(data, NULL, id.name, 1:nrow(data))
-    setkeyv(data, ind.names[length(ind.names):1])
+    data.table::set(data, NULL, id.name, 1:nrow(data))
+    data.table::setkeyv(data, ind.names[length(ind.names):1])
 
     if (length(ind.names) > 1) {
         if (length(cyclical) == 1) {
@@ -118,10 +118,10 @@ Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
                           cyclical = cyclical[x], fill = fill,
                           equispaced = equispaced))
         })
-        set(data, NULL, dernames[[v]], s)
+        data.table::set(data, NULL, dernames[[v]], s)
     }
     # data <- data[order(data[[id.name]])]
-    setkeyv(data, id.name)
+    data.table::setkeyv(data, id.name)
 
     # Correction for spherical coordinates.
     if (sphere == TRUE) {
@@ -211,35 +211,75 @@ Vorticity <- function(formula, cyclical = FALSE, fill = FALSE,
 
 .derv <- function(x, y, order = 1, cyclical = FALSE, fill = FALSE, equispaced = TRUE) {
     N <- length(x)
-    if (equispaced) {
-        d <- y[2] - y[1]
-    } else {
-        if (cyclical) {
-            stop("cyclical derivatives on a non-equispaced grid not yet supported")
-        }
-
-        d <- (y[c(2:N, 1)] - y[c(N, 1:(N-1))])/2
+    nxt <- function(v) {
+        v[c(2:N, 1)]
     }
 
-    if (order >= 3) {
-        dxdy <- .derv(.derv(x, y, order = 2, cyclical = cyclical, fill = fill),
-                      y, order = order - 2, cyclical = cyclical, fill = fill)
-    } else {
-        if (order == 1) {
-            dxdy <- (x[c(2:N, 1)] - x[c(N, 1:(N-1))])/(2*d)
-        } else if (order == 2) {
-            dxdy <- (x[c(2:N, 1)] + x[c(N, 1:(N-1))] - 2*x)/(d)^2
+    prv <- function(v) {
+        v[c(N, 1:(N-1))]
+    }
+
+    if (cyclical) {
+        # Check for equispaced grid
+        # even if the user says its equispaced, it might not be.
+        # If the user says it's not, then trust them.
+        h1 <- diff(y)
+        if (equispaced){
+            equispaced <- slow_equal(h1)
         }
+        if (!equispaced) {
+            # TODO
+            stop("cyclical derivatives on a non-equispaced grid not yet supported")
+        }
+        h1 <- rep(h1[1], N)
+        h2 <- h1
+    } else {
+        h2 <- nxt(y) - y
+        h1 <- y - prv(y)
+    }
+
+    x0 <- prv(x)
+    x2 <- nxt(x)
+
+    # Higher order derivatives are taken by succesive differentiation
+    if (order >= 2) {
+        dxdy <- .derv(x, y, order = 1, cyclical = cyclical, fill = fill,
+                     equispaced = equispaced)
+        dxdy <- .derv(dxdy, y, order = order - 1, cyclical = cyclical, fill = fill,
+                      equispaced = equispaced)
+
+    } else {
+        # First order derivative
+        if (order == 1) {
+            # from http://www.m-hikari.com/ijma/ijma-password-2009/ijma-password17-20-2009/bhadauriaIJMA17-20-2009.pdf
+            # Eq 8b (f -> x)
+            dxdy <- -(h2/(h1*(h1+h2)))*x0 - (h1 - h2)/(h1*h2)*x + h1/(h2*(h1+h2))*x2
+        }
+        # else if (order == 2) {
+        #     # Eq 11
+        #     h2 <- nxt(y) - y
+        #     h1 <- y - prv(y)
+        #
+        #     x0 <- prv(x)
+        #     x2 <- nxt(x)
+        #     dxdy <- 2*(h2*x0 - (h1+h2)*x + h1*x2)/(h1*h2*(h1+h2))
+        # }
+
         if (!cyclical) {
             if (!fill) {
                 dxdy[c(1, N)] <- NA
             }
             if (fill) {
-                dxdy[1] <- (-11/6*x[1] + 3*x[2] - 3/2*x[3] + 1/3*x[4])/d
-                dxdy[N] <- (11/6*x[N] - 3*x[N-1] + 3/2*x[N-2] - 1/3*x[N-3])/d
+                # Eq 81
+                dxdy[1] <- (-(2*h1 + h2)/(h1*(h1 + h2))*x0 +
+                    (h1 + h2)/(h1*h2)*x - h1/(h2*(h1 + h2))*x2)[2]
+
+                # Eq 8c
+                dxdy[N] <- (h2/(h1*(h1 + h2))*x0 - (h1+h2)/(h1*h2)*x + (2*h2 + h1)/(h2*(h1+h2))*x2)[N-1]
+
+                # dxdy[N] <- (11/6*x[N] - 3*x[N-1] + 3/2*x[N-2] - 1/3*x[N-3])/d
             }
         }
-
     }
     return(dxdy)
 }

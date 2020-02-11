@@ -11,19 +11,43 @@
 \alias{scale_y_level}
 \title{Helpful scales for maps}
 \usage{
-scale_x_longitude(name = "", ticks = 30, breaks = seq(-180, 360, by =
-  ticks), expand = c(0, 0), labels = LonLabel, trans = "identity",
-  ...)
+scale_x_longitude(
+  name = "",
+  ticks = 30,
+  breaks = seq(-180, 360, by = ticks),
+  expand = c(0, 0),
+  labels = LonLabel,
+  trans = "identity",
+  ...
+)
 
-scale_y_longitude(name = "", ticks = 60, breaks = seq(-180, 360, by =
-  ticks), expand = c(0, 0), labels = LonLabel, trans = "identity",
-  ...)
+scale_y_longitude(
+  name = "",
+  ticks = 60,
+  breaks = seq(-180, 360, by = ticks),
+  expand = c(0, 0),
+  labels = LonLabel,
+  trans = "identity",
+  ...
+)
 
-scale_x_latitude(name = "", ticks = 30, breaks = seq(-90, 90, by =
-  ticks), expand = c(0, 0), labels = LatLabel, ...)
+scale_x_latitude(
+  name = "",
+  ticks = 30,
+  breaks = seq(-90, 90, by = ticks),
+  expand = c(0, 0),
+  labels = LatLabel,
+  ...
+)
 
-scale_y_latitude(name = "", ticks = 30, breaks = seq(-90, 90, by =
-  ticks), expand = c(0, 0), labels = LatLabel, ...)
+scale_y_latitude(
+  name = "",
+  ticks = 30,
+  breaks = seq(-90, 90, by = ticks),
+  expand = c(0, 0),
+  labels = LatLabel,
+  ...
+)
 
 scale_x_level(name = "", expand = c(0, 0), trans = "reverselog", ...)
 
@@ -49,7 +73,7 @@ as output
 
 \item{expand}{Vector of range expansion constants used to add some
 padding around the data, to ensure that they are placed some distance
-away from the axes. Use the convenience function \code{\link[=expand_scale]{expand_scale()}}
+away from the axes. Use the convenience function \code{\link[ggplot2:expand_scale]{expand_scale()}}
 to generate the values for the \code{expand} argument. The defaults are to
 expand the scale by 5\% on each side for continuous variables, and by
 0.6 units on each side for discrete variables.}
@@ -94,15 +118,21 @@ ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
 
 }
 \seealso{
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_label_contour}},
-  \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{guide_colourstrip}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_divergent}}, \code{\link{stat_na}},
-  \code{\link{stat_subset}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_arrow}()},
+\code{\link{geom_contour2}()},
+\code{\link{geom_contour_fill}()},
+\code{\link{geom_label_contour}()},
+\code{\link{geom_relief}()},
+\code{\link{geom_streamline}()},
+\code{\link{guide_colourstrip}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_divergent}},
+\code{\link{stat_na}()},
+\code{\link{stat_subset}()}
 }
 \concept{ggplot2 helpers}

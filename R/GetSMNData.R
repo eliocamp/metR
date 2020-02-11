@@ -16,7 +16,7 @@
 #' \describe{
 #'    \item{date}{date}
 #'    \item{t}{temperature in degrees celsius}
-#'    \item{rh}{relative humidity in \%}
+#'    \item{rh}{relative humidity in %}
 #'    \item{slp}{sea level pressure in hPa}
 #'    \item{dir}{wind direction in clockwise degrees from 6 o'clock}
 #'    \item{V}{wind magnitude in m/s}
@@ -53,7 +53,6 @@
 #'
 #' @source https://ssl.smn.gob.ar/dpd/pron5d-calendario.php
 #' @export
-#' @import RCurl
 GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FALSE,
                        cache = TRUE, file.dir = tempdir()) {
     checks <- makeAssertCollection()
@@ -149,13 +148,13 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
         variables <- c("start", "date", "tmax", "tmin", "station")
         charend <- c(1, 9, 15, 21, 101)
 
-        obs <- as.data.table(lapply(seq_along(variables)[-1], function(x) {
+        obs <- data.table::as.data.table(lapply(seq_along(variables)[-1], function(x) {
             s <- stringr::str_squish(stringr::str_sub(obs, charend[x - 1], charend[x] -1))
             if(variables[x] != "station") s <- as.numeric(s)
             s
         }))
 
-        setnames(obs, variables[-1])
+        data.table::setnames(obs, variables[-1])
         obs <- obs[, -1]
         obs <- obs[!is.na(date)]
 
@@ -170,16 +169,16 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
     file <- paste0("radiacionsolar/radsolar",
                    stringr::str_remove_all(as.character(as.Date(date)), "-"), ".txt")
     url <- paste0("https://ssl.smn.gob.ar/dpd/descarga_opendata.php?file=", file)
-    obs <- fread(url, showProgress = FALSE)
+    obs <- data.table::fread(url, showProgress = FALSE)
 
     if (nrow(obs) == 0) return(NULL)
 
     bs <- obs[, 1:3]
-    setnames(bs, c("date", "global", "diffuse"))
+    data.table::setnames(bs, c("date", "global", "diffuse"))
     bs$station <- "BsAs"
 
     ush <- obs[, c(1, 4:5)]
-    setnames(ush, c("date", "global", "diffuse"))
+    data.table::setnames(ush, c("date", "global", "diffuse"))
     ush$station <- "Ushuaia"
 
     obs <- rbind(bs, ush)

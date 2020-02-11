@@ -8,14 +8,14 @@
 #' imputation
 #' @param tol tolerance used for determining convergence
 #' @param max.iter maximum iterations allowed for the algorithm
-#' @param validation number of points to use in crossvalidation (defaults to the
-#' maximum of 30 or 10\% of the non NA points)
+#' @param validation number of points to use in cross-validation (defaults to the
+#' maximum of 30 or 10% of the non NA points)
 #' @param verbose logical indicating whether to print progress
 #'
 #' @return
 #' A vector of imputed values with attributes `eof`, which is the number of
 #' singular values used in the final imputation; and `rmse`, which is the Root
-#' Mean Square Error estimated from crossvalidation.
+#' Mean Square Error estimated from cross-validation.
 #'
 #' @details
 #' Singular values can be computed over matrices so \code{formula} denotes how
@@ -92,12 +92,16 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
 
         if (is.null(data)) {
             formula <- Formula::as.Formula(formula)
-            data <- as.data.table(eval(quote(model.frame(formula, data  = data,
+            data <- data.table::as.data.table(eval(quote(model.frame(formula, data  = data,
                                                          na.action = NULL))))
         }
-
         f <- as.character(formula)
-        f <- stringr::str_split(f,"~", n = 2)[[1]]
+
+        if (length(f) == 1) {  # formula.tool did its thing
+            f <- stringr::str_split(f, "~", n = 2)[[1]]
+        } else {
+            f <- f[-1]
+        }
         dcast.formula <- stringr::str_squish(f[stringr::str_detect(f, "\\|")])
         dcast.formula <- as.formula(stringr::str_replace(dcast.formula, "\\|", "~"))
 

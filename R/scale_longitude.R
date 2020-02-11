@@ -98,7 +98,7 @@ scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...
 
 #' Label longitude and latitude
 #'
-#' Provide easy functions for adding suffixes to longitude and latitude for labeling
+#' Provide easy functions for adding suffixes to longitude and latitude for labelling
 #' maps.
 #'
 #' @param lon longitude in degrees

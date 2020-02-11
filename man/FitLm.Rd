@@ -9,7 +9,7 @@ FitLm(y, ..., se = FALSE)
 \arguments{
 \item{y}{numeric vector of observations to model}
 
-\item{...}{numeric vectors of variables used in the modeling}
+\item{...}{numeric vectors of variables used in the modelling}
 
 \item{se}{logical indicating whether to compute the standard error}
 }
@@ -20,6 +20,8 @@ a list with elements
 \item{estimate}{estimate of the regression}
 \item{std.error}{standard error}
 \item{df}{degrees of freedom}
+\item{r.squared}{Percent of variance explained by the model (repeated in each term)}
+\item{adj.r.squared}{ r.squared` adjusted based on the degrees of freedom)}
 }
 
 If there's no complete cases in the regression, \code{NA}s are returned with no
@@ -37,14 +39,14 @@ system.time({
   regr <- geopotential[, FitLm(gh, date, se = TRUE), by = .(lon, lat)]
 })
 
-ggplot(regr[term != "(intercept)"], aes(lon, lat)) +
+ggplot(regr[term != "(Intercept)"], aes(lon, lat)) +
     geom_contour(aes(z = estimate, color = ..level..)) +
     stat_subset(aes(subset = abs(estimate) > 2*std.error), size = 0.05)
 
 # Using stats::lm() is much slower and with no names.
 \dontrun{
 system.time({
-  regr <- geopotential[, coef(lm(gh ~ date)), by = .(lon, lat)]
+  regr <- geopotential[, coef(lm(gh ~ date))[2], by = .(lon, lat)]
 })
 }
 

@@ -3,7 +3,7 @@
 #' Saves keystrokes for computing anomalies.
 #'
 #' @param x numeric vector
-#' @param baseline logical or numerical vector used for subseting x before
+#' @param baseline logical or numerical vector used for subsetting x before
 #' computing the mean
 #' @param ... other arguments passed to \code{\link{mean}} such as `na.rm`
 #'
@@ -151,7 +151,7 @@ Similar <- function(x, target, tol = Inf) {
 #' the same length.
 #'
 #' @details
-#' Mostly useful for labeling only every \code{by}th element.
+#' Mostly useful for labelling only every \code{by}th element.
 #'
 #' @examples
 #' x <- 1:50

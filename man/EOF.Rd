@@ -4,9 +4,16 @@
 \alias{EOF}
 \title{Empirical Orthogonal Function}
 \usage{
-EOF(formula, n = 1, data = NULL, B = 0, probs = c(lower = 0.025,
-  mid = 0.5, upper = 0.975), rotate = FALSE, suffix = "PC",
-  fill = NULL)
+EOF(
+  formula,
+  n = 1,
+  data = NULL,
+  B = 0,
+  probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
+  rotate = FALSE,
+  suffix = "PC",
+  fill = NULL
+)
 }
 \arguments{
 \item{formula}{a formula to build the matrix that will be used in the SVD
@@ -59,7 +66,7 @@ and RIGHT, the columns of the matrix. Think it like "VAR \emph{as a function} of
 LEFT \emph{and} RIGHT". The variable combination used in this formula \emph{must} identify
 an unique value in a cell.
 
-So, for example, \code{v ~ x + y | t} would mean that ther is one value of \code{v} for
+So, for example, \code{v ~ x + y | t} would mean that there is one value of \code{v} for
 each combination of \code{x}, \code{y} and \code{t}, and that there will be one row for
 each combination of \code{x} and \code{y} and one row for each \code{t}.
 
@@ -122,8 +129,11 @@ ggplot(field[date == date[1]], aes(lon, lat)) +
 Fisher, A., Caffo, B., Schwartz, B., & Zipunnikov, V. (2016). Fast, Exact Bootstrap Principal Component Analysis for p > 1 million. Journal of the American Statistical Association, 111(514), 846–860. http://doi.org/10.1080/01621459.2015.1062383
 }
 \seealso{
-Other meteorology functions: \code{\link{Derivate}},
-  \code{\link{GeostrophicWind}}, \code{\link{WaveFlux}},
-  \code{\link{thermodynamics}}, \code{\link{waves}}
+Other meteorology functions: 
+\code{\link{Derivate}()},
+\code{\link{GeostrophicWind}()},
+\code{\link{WaveFlux}()},
+\code{\link{thermodynamics}},
+\code{\link{waves}}
 }
 \concept{meteorology functions}

@@ -2,10 +2,39 @@
 % Please edit documentation in R/scale_vector.R
 \name{scale_mag}
 \alias{scale_mag}
+\alias{scale_mag_continuous}
+\alias{scale_dx_continuous}
 \title{Scale for vector magnitudes}
 \usage{
-scale_mag(name = waiver(), labels = waiver(), max_size = 1,
-  default_unit = "cm", max = waiver(), guide = guide_vector(), ...)
+scale_mag(
+  name = waiver(),
+  labels = waiver(),
+  max_size = 1,
+  default_unit = "cm",
+  max = waiver(),
+  guide = guide_vector(),
+  ...
+)
+
+scale_mag_continuous(
+  name = waiver(),
+  labels = waiver(),
+  max_size = 1,
+  default_unit = "cm",
+  max = waiver(),
+  guide = guide_vector(),
+  ...
+)
+
+scale_dx_continuous(
+  name = waiver(),
+  labels = waiver(),
+  max_size = 1,
+  default_unit = "cm",
+  max = waiver(),
+  guide = guide_vector(),
+  ...
+)
 }
 \arguments{
 \item{name}{The name of the scale. Used as the axis or legend title. If
@@ -23,7 +52,7 @@ transformation object
 as output
 }}
 
-\item{max_size}{size of the arrow in centimeters}
+\item{max_size}{size of the arrow in centimetres}
 
 \item{default_unit}{ignored}
 

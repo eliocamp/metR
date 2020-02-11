@@ -1,6 +1,5 @@
 #' @rdname geom_contour_fill
 #' @export
-#' @import sp
 #' @import ggplot2
 stat_contour_fill <- function(mapping = NULL, data = NULL,
                               geom = "polygon", position = "identity",
@@ -8,6 +7,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               breaks = MakeBreaks(),
                               bins = NULL,
                               binwidth = NULL,
+                              global.breaks = TRUE,
                               # na.rm = FALSE,
                               na.fill = FALSE,
                               # xwrap = NULL,
@@ -15,7 +15,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               show.legend = NA,
                               inherit.aes = TRUE) {
     .check_wrap_param(list(...))
-    layer(
+    ggplot2::layer(
         data = data,
         mapping = mapping,
         stat = StatContourFill,
@@ -29,6 +29,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
+            global.breaks = global.breaks,
             # xwrap = xwrap,
             # ywrap = ywrap,
             ...
@@ -37,7 +38,6 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
 }
 
 #' @import ggplot2
-#' @import scales
 #' @rdname geom_contour_fill
 #' @usage NULL
 #' @format NULL
@@ -46,21 +46,11 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     required_aes = c("x", "y", "z"),
     default_aes = ggplot2::aes(fill = ..int.level..),
     setup_params = function(data, params) {
-        # Check is.null(breaks) for backwards compatibility
-        if (is.null(params$breaks)) {
-            params$breaks <- scales::fullseq
-        }
-        if (is.function(params$breaks)) {
-            # If no parameters set, use pretty bins to calculate binwidth
-            if (is.null(params$bins) && is.null(params$binwidth)) {
-                params$binwidth <- diff(pretty(range(data$z, na.rm = TRUE), 10))[1]
-            }
-            # If provided, use bins to calculate binwidth
-            if (!is.null(params$bins)) {
-                params$binwidth <- diff(range(data$z, na.rm = TRUE)) / params$bins
-            }
-
-            params$breaks <- params$breaks(range(data$z, na.rm = TRUE), params$binwidth)
+        if (is.null(params$global) || isTRUE(params$global.breaks)) {
+            params$breaks <- setup_breaks(data,
+                                          breaks = params$breaks,
+                                          bins = params$bins,
+                                          binwidth = params$binwidth)
         }
         return(params)
     },
@@ -88,8 +78,16 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = scales::fullseq, complete = TRUE,
                              na.rm = FALSE, xwrap = NULL,
-                             ywrap = NULL, na.fill = FALSE) {
-        setDT(data)
+                             ywrap = NULL, na.fill = FALSE, global.breaks = TRUE) {
+        data.table::setDT(data)
+
+        if (isFALSE(global.breaks)) {
+            breaks <- setup_breaks(data,
+                                   breaks = breaks,
+                                   bins = bins,
+                                   binwidth = binwidth)
+        }
+
         data <- data[!(is.na(y) | is.na(x)), ]
 
         if (isFALSE(na.fill)) {
@@ -97,17 +95,15 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         }
 
         # Check if is a complete grid
-        nx <- data[, uniqueN(x), by = y]$V1
-        ny <- data[, uniqueN(y), by = x]$V1
-
-        complete.grid <- abs(max(nx) - min(nx)) == 0 & abs(max(ny) - min(ny)) == 0
+        complete.grid <- with(data, .is.regular_grid(x, y))
 
         if (complete.grid == FALSE) {
             if (complete == FALSE) {
                 warning("data must be a complete regular grid", call. = FALSE)
                 return(data.frame())
             } else {
-                data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+                # data <- data.table::setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+                data <- .complete(data, x, y)
             }
         }
 
@@ -128,10 +124,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
         # jitter <- diff(range(data$z))*0.000000
         # data$z <- data$z + rnorm(nrow(data))*jitter
-        setDF(data)
+        data.table::setDF(data)
         mean.z <- data$z[data$z %~% mean(data$z)][1]
 
-        # mean.z <- min(breaks) - 100*resolution(breaks, zero = FALSE)
+        # mean.z <- min(breaks) - 100*ggplot2::resolution(breaks, zero = FALSE)
         range.data <- as.data.frame(vapply(data[c("x", "y", "z")], range, c(1, 2)))
 
         # Expand data by 1 unit in all directions.
@@ -161,7 +157,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             correction <- (breaks[i + correction] - mean.level)/2
 
             # Adds bounding contour
-            setDT(data)
+            data.table::setDT(data)
             Nx <- data.table::uniqueN(data$x)
             Ny <- data.table::uniqueN(data$y)
 
@@ -198,7 +194,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
 .order_fill <- function(cont) {
     areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][
-        , rank := frank(-area, ties.method = "first")]
+        , rank := data.table::frank(-area, ties.method = "first")]
 
     cont <- cont[areas, on = "piece"]
     area.back <- areas[piece == max(cont$piece), area]
@@ -383,11 +379,11 @@ close_path <- function(x, y, range_x, range_y) {
 
         if (next.piece$piece[1] == pieces[1]) break
 
-        cont <- rbindlist(list(cont, .reverse(next.piece, next.point)))
+        cont <- data.table::rbindlist(list(cont, .reverse(next.piece, next.point)))
         p <- next.piece[1, piece]
     }
     cont[, piece := max(contours$piece) + 1]
-    cont <- rbindlist(list(contours[close == TRUE], cont))
+    cont <- data.table::rbindlist(list(contours[close == TRUE], cont))
     cont[, close := NULL]
     cont
 }

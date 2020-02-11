@@ -10,22 +10,48 @@
 \alias{StatTextContour}
 \title{Label contours}
 \usage{
-geom_label_contour(mapping = NULL, data = NULL,
-  stat = "text_contour", position = "identity", ..., min.size = 5,
-  skip = 0, parse = FALSE, nudge_x = 0, nudge_y = 0,
-  label.padding = unit(0.25, "lines"), label.r = unit(0.15, "lines"),
-  label.size = 0.25, na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+geom_label_contour(
+  mapping = NULL,
+  data = NULL,
+  stat = "text_contour",
+  position = "identity",
+  ...,
+  min.size = 5,
+  skip = 0,
+  parse = FALSE,
+  nudge_x = 0,
+  nudge_y = 0,
+  label.padding = unit(0.25, "lines"),
+  label.r = unit(0.15, "lines"),
+  label.size = 0.25,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 
-geom_text_contour(mapping = NULL, data = NULL, stat = "text_contour",
-  position = "identity", ..., min.size = 5, skip = 0,
-  rotate = TRUE, parse = FALSE, nudge_x = 0, nudge_y = 0,
-  stroke = 0, stroke.color = "white", check_overlap = FALSE,
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+geom_text_contour(
+  mapping = NULL,
+  data = NULL,
+  stat = "text_contour",
+  position = "identity",
+  ...,
+  min.size = 5,
+  skip = 0,
+  rotate = TRUE,
+  parse = FALSE,
+  nudge_x = 0,
+  nudge_y = 0,
+  stroke = 0,
+  stroke.color = "white",
+  check_overlap = FALSE,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
 }
 \arguments{
-\item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
-\code{\link[=aes_]{aes_()}}. If specified and \code{inherit.aes = TRUE} (the
+\item{mapping}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}} or
+\code{\link[ggplot2:aes_]{aes_()}}. If specified and \code{inherit.aes = TRUE} (the
 default), it is combined with the default mapping at the top level of the
 plot. You must supply \code{mapping} if there is no plot mapping.}
 
@@ -33,11 +59,11 @@ plot. You must supply \code{mapping} if there is no plot mapping.}
 options:
 
 If \code{NULL}, the default, the data is inherited from the plot
-data as specified in the call to \code{\link[=ggplot]{ggplot()}}.
+data as specified in the call to \code{\link[ggplot2:ggplot]{ggplot()}}.
 
 A \code{data.frame}, or other object, will override the plot
 data. All objects will be fortified to produce a data frame. See
-\code{\link[=fortify]{fortify()}} for which variables will be created.
+\code{\link[ggplot2:fortify]{fortify()}} for which variables will be created.
 
 A \code{function} will be called with a single argument,
 the plot data. The return value must be a \code{data.frame}, and
@@ -50,12 +76,12 @@ layer, as a string.}
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
 
-\item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
+\item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 
-\item{min.size}{minimum number of points for a contour to be labeled.}
+\item{min.size}{minimum number of points for a contour to be labelled.}
 
 \item{skip}{number of contours to skip}
 
@@ -86,14 +112,14 @@ display.}
 \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
+the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{rotate}{logical indicating whether to rotate text following the contour.}
 
 \item{stroke}{numerical indicating width of stroke relative to the size of
 the text. Ignored if less than zero.}
 
-\item{stroke.color}{any valid color.}
+\item{stroke.color}{any valid colour.}
 
 \item{check_overlap}{If \code{TRUE}, text that overlaps previous text in the
 same layer will not be plotted.}
@@ -103,7 +129,7 @@ Draws labels on contours built with \link[ggplot2:stat_contour]{ggplot2::stat_co
 }
 \details{
 Is best used with a previous call to \link[ggplot2:stat_contour]{ggplot2::stat_contour} with the same
-parameters.
+parameters (e.g. the same \code{binwidth}, \code{breaks}, or \code{bins}).
 Note that while \code{geom_text_contour()} can angle itself to follow the contour,
 this is not the case with \code{geom_label_contour()}.
 }
@@ -139,16 +165,22 @@ g + geom_text_contour(aes(z = value), stroke = 0.2)
 
 }
 \seealso{
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{guide_colourstrip}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}},
-  \code{\link{stat_subset}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_arrow}()},
+\code{\link{geom_contour2}()},
+\code{\link{geom_contour_fill}()},
+\code{\link{geom_relief}()},
+\code{\link{geom_streamline}()},
+\code{\link{guide_colourstrip}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_divergent}},
+\code{\link{scale_longitude}},
+\code{\link{stat_na}()},
+\code{\link{stat_subset}()}
 }
 \concept{ggplot2 helpers}
 \keyword{datasets}

@@ -5,16 +5,16 @@
 #' @inheritParams ggplot2::geom_text
 #' @inheritParams ggplot2::geom_label
 #' @inheritParams geom_contour2
-#' @param min.size minimum number of points for a contour to be labeled.
+#' @param min.size minimum number of points for a contour to be labelled.
 #' @param skip number of contours to skip
 #' @param rotate logical indicating whether to rotate text following the contour.
 #' @param stroke numerical indicating width of stroke relative to the size of
 #' the text. Ignored if less than zero.
-#' @param stroke.color any valid color.
+#' @param stroke.color any valid colour.
 #'
 #' @details
 #' Is best used with a previous call to [ggplot2::stat_contour] with the same
-#' parameters.
+#' parameters (e.g. the same `binwidth`, `breaks`, or `bins`).
 #' Note that while `geom_text_contour()` can angle itself to follow the contour,
 #' this is not the case with `geom_label_contour()`.
 #'
@@ -75,10 +75,10 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
                  call. = FALSE)
         }
 
-        position <- position_nudge(nudge_x, nudge_y)
+        position <- ggplot2::position_nudge(nudge_x, nudge_y)
     }
 
-    layer(
+    ggplot2::layer(
         data = data,
         mapping = mapping,
         stat = stat,
@@ -123,7 +123,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
            min.size <- min.size - 1
        }
        # Get points of labels
-       data <- .label.position(copy(data), min.size, skip, rotate)
+       data <- .label.position(data.table::copy(data), min.size, skip, rotate)
        if (nrow(data) == 0) {
            return(nullGrob())
        }
@@ -148,7 +148,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
            dx = data$dx, dy = data$dy,
            bg.r = stroke, bg.color = stroke.colour,
            gp = grid::gpar(
-               col = alpha(data$colour, data$alpha),
+               col = scales::alpha(data$colour, data$alpha),
                fontsize = data$size * .pt,
                fontfamily = data$family,
                fontface = data$fontface,

@@ -23,7 +23,7 @@ the same length.
 Skip observations
 }
 \details{
-Mostly useful for labeling only every \code{by}th element.
+Mostly useful for labelling only every \code{by}th element.
 }
 \examples{
 x <- 1:50
@@ -34,7 +34,10 @@ JumpBy(x, 2, fill = 6)   # even numbers replaced by 6
 
 }
 \seealso{
-Other utilities: \code{\link{Anomaly}}, \code{\link{Mag}},
-  \code{\link{Percentile}}, \code{\link{logic}}
+Other utilities: 
+\code{\link{Anomaly}()},
+\code{\link{Mag}()},
+\code{\link{Percentile}()},
+\code{\link{logic}}
 }
 \concept{utilities}

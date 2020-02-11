@@ -49,7 +49,7 @@ WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
 
     # Derivadas
     dt[, `:=`(psi.dx  = Derivate(psi ~ lonrad, cyclical = TRUE),
-              psi.dxx = Derivate(ps ~ lonrad, 2), cyclical = TRUE), by = lat]
+              psi.dxx = Derivate(psi ~ lonrad, 2), cyclical = TRUE), by = lat]
     dt[, `:=`(psi.dy  = Derivate(psi ~ latrad, cyclical = FALSE),
               psi.dyy = Derivate(psi ~ latrad, 2, cyclical = FALSE),
               psi.dxy = Derivate(psi.dx ~ latrad, cyclical = FALSE)), by = lon]
@@ -72,4 +72,70 @@ WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
              w.x = w.x, w.y = w.y)
         }]
     return(flux)
+}
+
+
+
+#' Computes Eliassen-Palm fluxes.
+#'
+#' @param lon longitudes in degrees.
+#' @param lat latitudes in degrees.
+#' @param lev pressure levels.
+#' @param t temperature in Kelvin.
+#' @param u zonal wind in m/s.
+#' @param v meridional wind in m/s.
+#'
+#' @return
+#' A data.table with columns `Flon`, `Flat` and `Flev` giving the zonal, meridional
+#' and vertical components of the EP Fluxes at each longitude, latitude and level.
+#'
+#' @references
+#' Plumb, R. A. (1985). On the Three-Dimensional Propagation of Stationary Waves. Journal of the Atmospheric Sciences, 42(3), 217–229. \url{https://doi.org/10.1175/1520-0469(1985)042<0217:OTTDPO>2.0.CO;2}
+#' Cohen, J., Barlow, M., Kushner, P. J., & Saito, K. (2007). Stratosphere–Troposphere Coupling and Links with Eurasian Land Surface Variability. Journal of Climate, 20(21), 5335–5343. \url{https://doi.org/10.1175/2007JCLI1725.1}
+#' @export
+EPflux <- function(lon, lat, lev, t, u, v) {
+    # Ecuación 7.1 plumb 1984
+    # https://journals.ametsoc.org/doi/pdf/10.1175/1520-0469%281985%29042%3C0217%3AOTTDPO%3E2.0.CO%3B2
+    a <-  6371000
+    H <- 8000
+
+    data <- data.table::data.table(
+        lon = lon,
+        lat = lat,
+        lev = lev,
+        t = t,
+        u = u,
+        v = v)
+
+    # Cáclulo de S: Cohen et.al.
+    # https://journals.ametsoc.org/doi/pdf/10.1175/2007JCLI1725.1
+
+    data[, tita := Adiabat(lev, t) ][
+         , dtp := .derv(t, lev), by = .(lon, lat) ][
+         , `:=`(S = mean(-lev*H*dtp + 2/7*t/H, na.rm = TRUE)),
+            by = .(lev, sign(lat)) ][
+         , `:=`(tita_z = Anomaly(tita),
+                 t_z = Anomaly(t),
+                 u_z = Anomaly(u),
+                 v_z = Anomaly(v)),
+            by = .(lev, lat)][
+         , `:=`(vtita = v_z*tita_z,
+                 utita = u_z*tita_z,
+                 vt = v_z*t_z,
+                 uv = u_z*v_z,
+                 ttita = t_z*tita_z)][
+         , `:=`(dvtita = .derv(vtita, lon*pi/180, cyclical = TRUE),
+                 dutita = .derv(utita, lon*pi/180, cyclical = TRUE),
+                 dttita = .derv(ttita, lon*pi/180, cyclical = TRUE),
+                 p = lev/1000),
+            by = .(lev, lat)][
+         , `:=`(Flat = p*cos(lat*pi/180)*(v_z^2 - dvtita*2*.omega*a*sin(2*lat*pi/180)),
+                 Flon = p*cos(lat*pi/180)*(-uv   + dutita*2*.omega*a*sin(2*lat*pi/180)),
+                 Flev   = p*cos(lat*pi/180)/S*coriolis(lat)*(vt  - dttita*2*.omega*a*sin(2*lat*pi/180)))]
+
+    # Undefined global blah blah blah
+    tita <- dtp <- S <- tita_z  <-
+        t_z <- u_z <- v_z <- vtita <- utita <- vt <- uv <- ttita <- dvtita <-
+        dutita <- dttita <- p <- Flat <- Flon <- Flev <- NULL
+    data[, .(Flon, Flat, Flev)][]
 }

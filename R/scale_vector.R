@@ -4,7 +4,7 @@
 #' Highly experimental.
 #'
 #' @inheritParams ggplot2::scale_x_continuous
-#' @param max_size size of the arrow in centimeters
+#' @param max_size size of the arrow in centimetres
 #' @param max magnitude of the reference arrow in data units. Will be the
 #' maximum value if `waiver()`
 #' @param guide type of legend
@@ -31,7 +31,7 @@ scale_mag <- function(name = waiver(),
                       max = waiver(),
                       guide =  guide_vector(),
                       ...) {
-    # if (!is.unit(length)) length <- ggplot2::unit(length, default_unit)
+    # if (!grid::is.unit(length)) length <- ggplot2::unit(length, default_unit)
     # if (is.waive(breaks)) {
     if (is.waive(max)) {
         breaks <- function(range) return(range[2])
@@ -58,6 +58,17 @@ scale_mag <- function(name = waiver(),
                               ...
     )
 }
+
+#' @export
+#' @rdname scale_mag
+scale_mag_continuous <- scale_mag
+
+#' @export
+#' @rdname scale_mag
+scale_dx_continuous <- scale_mag
+
+# #' @export
+# scale_dy_continuous <- scale_mag
 
 # scale_type.mag <- function(x) "vector"
 

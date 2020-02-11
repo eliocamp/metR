@@ -40,7 +40,7 @@
 #' LEFT *and* RIGHT". The variable combination used in this formula *must* identify
 #' an unique value in a cell.
 #'
-#' So, for example, `v ~ x + y | t` would mean that ther is one value of `v` for
+#' So, for example, `v ~ x + y | t` would mean that there is one value of `v` for
 #' each combination of `x`, `y` and `t`, and that there will be one row for
 #' each combination of `x` and `y` and one row for each `t`.
 #'
@@ -103,9 +103,6 @@
 #' @family meteorology functions
 #' @export
 #' @import data.table
-#' @import Formula
-#' @import formula.tools
-#' @importFrom stats as.formula quantile varimax
 EOF <- function(formula, n = 1, data = NULL, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
                 rotate = FALSE, suffix = "PC", fill = NULL) {
@@ -126,7 +123,12 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
     reportAssertions(checks)
 
     f <- as.character(formula)
-    f <- stringr::str_split(f,"~", n = 2)[[1]]
+
+    if (length(f) == 1) {  # formula.tool did its thing
+        f <- stringr::str_split(f, "~", n = 2)[[1]]
+    } else {
+        f <- f[-1]
+    }
 
     value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
 
@@ -146,12 +148,12 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
         if (length(missing.cols) != 0) {
             stop(paste0("Columns not found in data: ", paste0(missing.cols, collapse = ", ")))
         }
-        data <- setDT(data)[, (all.cols), with = FALSE]
+        data <- data.table::setDT(data)[, (all.cols), with = FALSE]
     }
 
-    setDT(data)
+    data.table::setDT(data)
     dcast.formula <- stringr::str_squish(f[stringr::str_detect(f, "\\|")])
-    dcast.formula <- as.formula(stringr::str_replace(dcast.formula, "\\|", "~"))
+    dcast.formula <- stats::as.formula(stringr::str_replace(dcast.formula, "\\|", "~"))
     value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
 
     g <- .tidy2matrix(data, dcast.formula, value.var, fill = fill)
@@ -181,7 +183,7 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
         eof$D <- diag(eof$d, ncol = max(n), nrow = max(n))
         loadings <- t(with(eof, D%*%t(v)))
         scores <- eof$u
-        R <- varimax(loadings, normalize = FALSE)
+        R <- stats::varimax(loadings, normalize = FALSE)
         eof$u <- eof$u%*%R$rotmat
 
         # Recover rotated V and D matrixs
@@ -192,19 +194,19 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
     }
 
     # setDF(data)
-    right <- cbind(data.table(rep(pcomps, each = nrow(eof$v))), c(eof$v[, n]))
+    right <- cbind(data.table::data.table(rep(pcomps, each = nrow(eof$v))), c(eof$v[, n]))
     colnames(right) <- c(suffix, value.var)
     right <- cbind(unique(g$coldims), right)
     right[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
 
-    left <- cbind(data.table(rep(pcomps, each = nrow(eof$u))), c(eof$u[, n]))
+    left <- cbind(data.table::data.table(rep(pcomps, each = nrow(eof$u))), c(eof$u[, n]))
     colnames(left) <- c(suffix, value.var)
     left <- cbind(unique(g$rowdims), left)
     left[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
 
     # setDT(data)
     r2 <- eof$d^2/v.g^2
-    sdev <- data.table(pcomps, eof$d)
+    sdev <- data.table::data.table(pcomps, eof$d)
     colnames(sdev) <- c(suffix, "sd")
     sdev[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
     sdev[, r2 := r2]
@@ -222,7 +224,7 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
             eof <- svd(m)
             if (rotate == TRUE) {
                 loadings <- t(with(eof, diag(d, ncol = max(n), nrow = max(n))%*%t(v)))
-                R <- varimax(loadings, normalize = FALSE)
+                R <- stats::varimax(loadings, normalize = FALSE)
                 loadings <- R$loadings
                 class(loadings) <- "matrix"
                 return(sqrt(apply(loadings, 2, function(x) sum(x^2))))
@@ -231,7 +233,7 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
             }
         })
 
-        se <- lapply(data.table::transpose(sdevs), quantile, probs = probs, names = FALSE)
+        se <- lapply(data.table::transpose(sdevs), stats::quantile, probs = probs, names = FALSE)
         se <- data.table::transpose(se)
         if (is.null(names(probs))) names(probs) <- scales::percent(probs)
         sdev[, names(probs) := se]

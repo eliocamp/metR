@@ -207,7 +207,7 @@ stat_streamline <- function(mapping = NULL, data = NULL,
                             na.rm = TRUE,
                             show.legend = NA,
                             inherit.aes = TRUE) {
-    layer(
+  ggplot2::layer(
         data = data,
         mapping = mapping,
         stat = StatStreamline,
@@ -329,19 +329,19 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
           if (!is.null(arrow)) {
               mult <- end&munched$end
               mult <- mult[!start]
-              if ("simpleUnit" %in% class(unit(1, "mm"))) {
+              if ("simpleUnit" %in% class(grid::unit(1, "mm"))) {
                   arrow$length <- mult*arrow$length[1]
               } else {
-                  arrow$length <- unit(as.numeric(arrow$length)[1]*mult,
+                  arrow$length <- grid::unit(as.numeric(arrow$length)[1]*mult,
                                        attr(arrow$length, "unit"))
               }
           }
-          segmentsGrob(
+          grid::segmentsGrob(
               munched$x[!end], munched$y[!end], munched$x[!start], munched$y[!start],
               default.units = "native", arrow = arrow,
-              gp = gpar(
-                  col = alpha(munched$colour, munched$alpha)[!end],
-                  fill = alpha(munched$colour, munched$alpha)[!end],
+              gp = grid::gpar(
+                  col = scales::alpha(munched$colour, munched$alpha)[!end],
+                  fill = scales::alpha(munched$colour, munched$alpha)[!end],
                   lwd = munched$size[!end] * .pt,
                   lty = munched$linetype[!end],
                   lineend = lineend,
@@ -354,19 +354,19 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
 
           if (!is.null(arrow)) {
               mult <- as.numeric(munched$end)[start]
-              if ("simpleUnit" %in% class(unit(1, "mm"))) {
+              if ("simpleUnit" %in% class(grid::unit(1, "mm"))) {
                   arrow$length <- mult*arrow$length[1]
               } else {
-                  arrow$length <- unit(as.numeric(arrow$length)[1]*mult,
+                  arrow$length <- grid::unit(as.numeric(arrow$length)[1]*mult,
                                        attr(arrow$length, "unit"))
               }
           }
-          polylineGrob(
+          grid::polylineGrob(
               munched$x, munched$y, id = id,
               default.units = "native", arrow = arrow,
-              gp = gpar(
-                  col = alpha(munched$colour, munched$alpha)[start],
-                  fill = alpha(munched$colour, munched$alpha)[start],
+              gp = grid::gpar(
+                  col = scales::alpha(munched$colour, munched$alpha)[start],
+                  fill = scales::alpha(munched$colour, munched$alpha)[start],
                   lwd = munched$size[start] * .pt,
                   lty = munched$linetype[start],
                   lineend = lineend,
@@ -380,13 +380,18 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
 
 
 #' @importFrom stats rnorm
-#' @importFrom fields interp.surface
-#' @importFrom Matrix sparseMatrix
 streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL,
                        ny = NULL, jitter.x = 1, jitter.y = 1, xwrap = NULL,
                        ywrap = NULL) {
-    field <- copy(as.data.table(field))
-    setorder(field, x, y)
+    field <- data.table::copy(data.table::as.data.table(field))
+
+    is.grid <- with(field, .is.regular_grid(x, y))
+
+    if (!is.grid) {
+      stop("x and y do not define a regular grid")
+    }
+
+    data.table::setorder(field, x, y)
 
     circ.x <- !is.null(xwrap)
     circ.y <- !is.null(ywrap)
@@ -433,9 +438,9 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     }
 
     if ((is.null(nx) && is.null(ny))) {
-        points <- as.data.table(field[x %in% xs & y %in% ys, .(x = x, y = y)])
+        points <- data.table::as.data.table(field[x %in% xs & y %in% ys, .(x = x, y = y)])
     } else {
-        points <- as.data.table(expand.grid(x = xs, y = ys))
+        points <- data.table::as.data.table(expand.grid(x = xs, y = ys))
     }
 
 
@@ -471,9 +476,9 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     points <- points[abs(dx) + abs(dy) != 0 & !is.na(dx) & !is.na(dy)]
     points[, sign := 1]
 
-    points_forw <- copy(points)
+    points_forw <- data.table::copy(points)
     points_forw[, sign := 1]
-    points_back <- copy(points)
+    points_back <- data.table::copy(points)
     points_back[, sign := -1]
 
     accum_forw <- vector(mode = "list", length = S)
@@ -499,7 +504,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     }
 
     # accum_back <- list()
-    points <- rbindlist(c(accum_back, list(points), accum_forw)) # se puede optimizar prealocando
+    points <- data.table::rbindlist(c(accum_back, list(points), accum_forw)) # se puede optimizar prealocando
     # points[, step := step - min(step)]
     # Empalmo los pieces que pasan de un lado
     # al otro del dominio.
@@ -560,7 +565,6 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
 
 
 
-#' @importFrom memoise memoise
 streamline.f <- memoise::memoise(streamline)
 #
 # xbk <- x

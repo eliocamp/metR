@@ -7,8 +7,13 @@
 https://ssl.smn.gob.ar/dpd/pron5d-calendario.php
 }
 \usage{
-GetSMNData(date, type = c("hourly", "daily", "radiation"), bar = FALSE,
-  cache = TRUE, file.dir = tempdir())
+GetSMNData(
+  date,
+  type = c("hourly", "daily", "radiation"),
+  bar = FALSE,
+  cache = TRUE,
+  file.dir = tempdir()
+)
 }
 \arguments{
 \item{date}{date vector of dates to fetch data}

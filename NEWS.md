@@ -1,8 +1,47 @@
+# metR 0.6.0 - Pileus
+
+## New features
+
+- `EPflux()` computes Eliassen-Palm fluxes (experimental).
+
+- `geom_arrow()` and `geom_vector()` should plot faster. 
+
+- New functions `is.full_season()` and `seasonaly()`. 
+
+- `FitLm()` returns model $r^2$ and adjusted $r^2$.
+
+- `FitLm()` adds names to unnamed terms. 
+
+- New function `WaveEnvelope()` that computes... the wave envelope. 
+
+- `geom_contour2()`, `geom_contour_fill()` and `geom_text_contour()` now accept a `global.breaks`
+argument that controls whether breaks should be computed once using the range of the whole 
+dataset or once for every grouping (e.g. faceting). `TRUE` (the default) ensures that 
+intervals between contours are comparable between panels. Setting it to `FALSE` computes 
+contours compatible with `ggplot2::geom_conotur()` (#109, thanks @freeseek)
+
+
+## Bugfixes
+
+- A reworked non-equispaced derivative gives better results in `Derivate()`.
+
+- `ReadNetCDF()` will not fail if the first variable was called "v" (yeah, I know.. weird
+error related to data.table's non standard evaluation).
+
+- Subsets in `ReadNetCDF()` won't fail if no element is named (#107, thanks @m-saenger)
+
+- Fixed bug in `WaveFlux()` (#110, thanks @salvatirehbein)
+
+## Internals
+
+* Cleaned up a lot of dependencies. Some are gone (they were not longer needed) and some 
+have been moved to Suggest. Overall metR should now be a bit lighter to install. 
+
 # metR 0.5.0 - Incus
 
 ## New features
 
-- `ReadNetCDF()` suports using `NA` in subset to refer to max or min value. 
+- `ReadNetCDF()` supports using `NA` in subset to refer to max or min value. 
 
 - `ReadNetCDF()`'s subset argument supports more complex queries. (see the help 
 section at`?ReadNetCDF()`). 
@@ -28,7 +67,7 @@ is not installed.
 
 - New `GlanceNetCDF()` function that is an alias for `ReadNetCDF(out = "vars")` but now prints a human readable summary of the contents of the NetCDF file.
 
-- `geom_streamline()` now uses 4th order Runge-Kutta insteaf of plain old Euler. It also draws arrows in the middle of the streamline. 
+- `geom_streamline()` now uses 4th order Runge-Kutta instead of plain old Euler. It also draws arrows in the middle of the streamline. 
 
 - `ReadNetCDF()` is slightly faster and should use less memory. 
 
@@ -88,8 +127,8 @@ existed.
 - Removed `hemisphere` argument from `season()` since the function returns the
 trimester so it made no sense. 
 
-- Contour functions now compute breaks globaly (using all the data) instead of
-per panel. This means default intercomparabilty between facetwed plots but also 
+- Contour functions now compute breaks globally (using all the data) instead of
+per panel. This means default intercomparabilty between faceted plots but also 
 a considerable deviation from `ggplot2::geom_contour()`. 
 
 - The `Between` operators are removed since they were already implemented in 
@@ -106,7 +145,7 @@ a considerable deviation from `ggplot2::geom_contour()`.
 spherical units. 
 - New geom `geom_contour_tanaka()` that plots illuminated contours. 
 - New function `Interpolate()` for bilinear interpolation.
-- Fixed bug in `FitWave()` with wavenumber 0. Now it rerturns the mean. 
+- Fixed bug in `FitWave()` with wavenumber 0. Now it returns the mean. 
 - `FitWave()` runs slightly faster and `BuildWave()` runs much faster. 
 - Removed `GeomContourFill` object since it was just a polygon. 
 - The results from `EOF()` now use factors instead of numbers to identify each
@@ -115,12 +154,12 @@ PC
 communicating the scale of vectors. These are highly experimental and **will** 
 change in the future, but provide some very needed functionality so I decided to
 export them as they are. 
-- `geom_arrow()` gains new `pivot` agument to control point of rotation and 
+- `geom_arrow()` gains new `pivot` argument to control point of rotation and 
 `preserve.dir` to tell if angle should be preserved. 
 - `stat_contour_fill()` and `stat_contour2()` print a warning when no contours 
 can be made.
 - `EOF()` now supports estimation of confidence intervals via bootstrap.
-- `EOF()` supports varimax rotation. Rotated components are labeled accordingly. 
+- `EOF()` supports varimax rotation. Rotated components are labelled accordingly. 
 - `geom_relief()` is much faster now (but see package `rayshader`).
 - New `geom_shadow()` for casting shadows in topographic maps.
 - Contour calculations in `StatContour2` are 
@@ -130,19 +169,19 @@ only computed once even adding several layers with the same contours
 it's appearance.
 - New `FitLm()` for getting fast estimates of linear fits. 
 - New `FilterWave()` for filtering waves. 
-- Circular dimensions had quite a ride during this developement process. `RepeatCircular()` was deprecated in favour of `WrapCircular()` which is more
+- Circular dimensions had quite a ride during this development process. `RepeatCircular()` was deprecated in favour of `WrapCircular()` which is more
 robust, and then `WrapCircular()` was deprecated in favour of the `ggperiodic` package.
 - The way that `stat_contour2()`, `stat_contour_fill()` and `geom_streamlines()`
 handle circular dimensions has changed. Now you need to use `xwrap`/`ywrap` to 
 explicitly set the domain. This makes the implementation more robust and also allow to easily wrap to an arbitrary domain.
-- After that change, the wrapping functionallity has moved to `ggperiodic`, which 
+- After that change, the wrapping functionality has moved to `ggperiodic`, which 
 can handle this stuff better. The above mentioned arguments still work but are not 
 documented and will be deprecated. 
 - `EOF()` gains a `fill` argument for sparse-ish data. 
 - `geom_text_contour()` now has the ability to draw a stroke around text. 
 - `geom_contour_fill()` now can impute missing values with bivariate interpolation. 
 - `BuildField()` actually renamed `BuildWave()` (which should've happen in the previous
-release acording to this News).
+release according to this News).
 - New function `as.path()` and added functionality to `Interpolate()` that allows
 to interpolate values along a path of locations.
 - New function `Impute2D()` which is an exported version of the method used by 
@@ -169,17 +208,17 @@ parameters and `geom_arrow()` is a new geom for arrows that preserve direction.
 - `DerivatePhysical()` is removed since it was made redundant by the extended
 functionality in `Derivate()`
 - New functions related to several physical processes (see ?physics).
-- New `geom_text_contour()` and `geom_label_contour()` for labeling contours. 
+- New `geom_text_contour()` and `geom_label_contour()` for labelling contours. 
 - New function `GeostrophicWind()`.
-- Fixed? werid bug with `ReadNetCDF()` and `as.POSIXct`.
+- Fixed? weird bug with `ReadNetCDF()` and `as.POSIXct`.
 - `ReadNetCDF()` now supports timezones via de `udunits2` package.
 - Fixed bad polygon ordering and extra polygon in `stat_contour_fill()`.
 - New functions `MakeBreaks()` and `AnchorBreaks()`.
-- New guide. `guide_colorstrip()` displays discretized values of a continuous color 
+- New guide. `guide_colorstrip()` displays discretized values of a continuous colour 
 or fill scale. 
 - Fix for unconnected contours in `stat_contour_fill()`
 - New `geom_relief()` for generating relief shading. 
-- `ReadNetCDF()` gains a `subset` argument for subseting data.  
+- `ReadNetCDF()` gains a `subset` argument for subsetting data.  
 - `AnchorBreaks()` is a new way of generating breaks.
 - New `geom_contour2()` that takes a function as argument in `breaks` and 
 `geom_contour_fill()` also does the same. 
@@ -191,7 +230,7 @@ respectively.
 - `geom_contour2()` and `geom_contour_fill()` gain a `circular` argument to specify
 a circular dimension.
 - `RepeatCircular()` renamed to `RepeatCircular()`.
-- `LonLabel()` and `LatLabel()` aid labeling latitude and longitude. 
+- `LonLabel()` and `LatLabel()` aid labelling latitude and longitude. 
 - Changed interface of `EOF()` and `ImputeEOF()`.
 
 # meteoR 0.0.9100

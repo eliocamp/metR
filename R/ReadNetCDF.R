@@ -26,7 +26,7 @@
 #' \preformatted{
 #' subset = list(lat = -90:0)
 #'}
-#' More complex subsetting operations are supported. If yuou want to read non-contiguous
+#' More complex subsetting operations are supported. If you want to read non-contiguous
 #' chunks of data, you can specify each chunk into a list inside `subset`. For example
 #' this subset
 #' \preformatted{
@@ -41,7 +41,7 @@
 #' subset = list(lat = list(-90:-70, 70:90),
 #'               lon = list(0:60, 300:360))
 #'}
-#' Both operations can be mixed together. So for exmaple this
+#' Both operations can be mixed together. So for example this
 #'
 #' \preformatted{
 #' subset = list(list(lat = -90:-70,
@@ -284,7 +284,8 @@ ReadNetCDF <- function(file, vars = NULL,
             this.dim <- names(dimnames(nc[[v]]))
             first.dim <- names(dimnames(nc[[first.var]]))
             missing.dim <- first.dim[!(first.dim %in% this.dim)]
-            nc.df[, names(vars)[v] := c(nc[[v]]), by = c(missing.dim)]
+            ..n <- c(nc[[v]])
+            nc.df[, names(vars)[v] := ..n, by = c(missing.dim)]
         }
 
         if (key == TRUE) data.table::setkeyv(nc.df, names(nc.df)[!(names(nc.df) %in% names(vars))])
@@ -336,6 +337,9 @@ ReadNetCDF <- function(file, vars = NULL,
         }
     })
 
+    if (is.null(names(subset))) {
+        names(subset) <- rep("", length(subset))
+    }
     # If it has name, is a global subset,
     # otherwhise, is a chunck definition
     has_name <- names(subset) != ""

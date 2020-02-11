@@ -35,3 +35,18 @@ test_that("JumpBy jumps", {
 })
 
 
+
+test_that(".is.regular_grid works", {
+    x <- rnorm(100)
+    y <- rnorm(100)
+
+    irreg <- data.table::data.table(x, y)
+
+    reg <- data.table::CJ(x = 1:10, y = (1:10)^2)
+
+    expect_false(irreg[, .is.regular_grid(x, y)])
+    expect_true(reg[, .is.regular_grid(x, y)])
+    expect_false(reg[x*y < 600, .is.regular_grid(x,y)])
+})
+
+

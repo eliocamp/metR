@@ -36,11 +36,11 @@ guide_vector <- function(
     order = 0,
     ...) {
 
-    if (!is.null(keywidth) && !is.unit(keywidth)) {
-        keywidth <- unit(keywidth, default.unit)
+    if (!is.null(keywidth) && !grid::is.unit(keywidth)) {
+        keywidth <- grid::unit(keywidth, default.unit)
     }
-    if (!is.null(keyheight) && !is.unit(keyheight)) {
-        keyheight <- unit(keyheight, default.unit)
+    if (!is.null(keyheight) && !grid::is.unit(keyheight)) {
+        keyheight <- grid::unit(keyheight, default.unit)
     }
 
     structure(
@@ -92,7 +92,7 @@ guide_train.vector <- function(guide, scale, output = NULL) {
     }
 
     key <- as.data.frame(
-        setNames(list(scale$map(breaks)), scale$aesthetics[1]),
+        stats::setNames(list(scale$map(breaks)), scale$aesthetics[1]),
         stringsAsFactors = FALSE
     )
     key$.label <- scale$get_labels(breaks)
@@ -513,13 +513,13 @@ guide_gengrob.vector <- function(guide, theme) {
     krows <- rep(vps$key.row, each = ngeom)
 
     # padding
-    padding <- convertUnit(theme$legend.margin %||% margin(), "cm")
+    padding <- grid::convertUnit(theme$legend.margin %||% ggplot2::margin(), "cm")
     widths <- c(padding[4], widths, padding[2])
     heights <- c(padding[1], heights, padding[3])
 
     # Create the gtable for the legend
-    gt <- gtable(widths = unit(widths, "cm"), heights = unit(heights, "cm"))
-    gt <- gtable_add_grob(
+    gt <- gtable::gtable(widths = grid::unit(widths, "cm"), heights = grid::unit(heights, "cm"))
+    gt <- gtable::gtable_add_grob(
         gt,
         grob.background,
         name = "background",
@@ -539,7 +539,7 @@ guide_gengrob.vector <- function(guide, theme) {
         b = 1 + max(vps.title.row),
         l = 1 + min(vps.title.col)
     )
-    gt <- gtable_add_grob(
+    gt <- gtable::gtable_add_grob(
         gt,
         grob.keys,
         name = paste("key", krows, kcols, c("bg", seq(ngeom - 1)), sep = "-"),
@@ -549,7 +549,7 @@ guide_gengrob.vector <- function(guide, theme) {
         b = 1 + krows,
         l = 1 + kcols
     )
-    gt <- gtable_add_grob(
+    gt <- gtable::gtable_add_grob(
         gt,
         grob.labels,
         name = paste("label", vps$label.row, vps$label.col, sep = "-"),
@@ -592,11 +592,11 @@ guide_vector <- function(# title
     order = 0,
     ...) {
 
-    if (!is.null(keywidth) && !is.unit(keywidth)) {
-        keywidth <- unit(keywidth, default.unit)
+    if (!is.null(keywidth) && !grid::is.unit(keywidth)) {
+        keywidth <- grid::unit(keywidth, default.unit)
     }
-    if (!is.null(keyheight) && !is.unit(keyheight)) {
-        keyheight <- unit(keyheight, default.unit)
+    if (!is.null(keyheight) && !grid::is.unit(keyheight)) {
+        keyheight <- grid::unit(keyheight, default.unit)
     }
 
     structure(
@@ -648,7 +648,7 @@ guide_train.vector <- function(guide, scale, output = NULL) {
     }
 
     key <- as.data.frame(
-        setNames(list(scale$map(breaks)), scale$aesthetics[1]),
+        stats::setNames(list(scale$map(breaks)), scale$aesthetics[1]),
         stringsAsFactors = FALSE
     )
     key$.label <- scale$get_labels(breaks)
@@ -1069,13 +1069,13 @@ guide_gengrob.vector <- function(guide, theme) {
     krows <- rep(vps$key.row, each = ngeom)
 
     # padding
-    padding <- convertUnit(theme$legend.margin %||% margin(), "cm")
+    padding <- grid::convertUnit(theme$legend.margin %||% ggplot2::margin(), "cm")
     widths <- c(padding[4], widths, padding[2])
     heights <- c(padding[1], heights, padding[3])
 
     # Create the gtable for the legend
-    gt <- gtable(widths = unit(widths, "cm"), heights = unit(heights, "cm"))
-    gt <- gtable_add_grob(
+    gt <- gtable::gtable(widths = unit(widths, "cm"), heights = unit(heights, "cm"))
+    gt <- gtable::gtable_add_grob(
         gt,
         grob.background,
         name = "background",
@@ -1085,7 +1085,7 @@ guide_gengrob.vector <- function(guide, theme) {
         b = -1,
         l = 1
     )
-    gt <- gtable_add_grob(
+    gt <- gtable::gtable_add_grob(
         gt,
         grob.title,
         name = "title",
@@ -1095,7 +1095,7 @@ guide_gengrob.vector <- function(guide, theme) {
         b = 1 + max(vps.title.row),
         l = 1 + min(vps.title.col)
     )
-    gt <- gtable_add_grob(
+    gt <- gtable::gtable_add_grob(
         gt,
         grob.keys,
         name = paste("key", krows, kcols, c("bg", seq(ngeom - 1)), sep = "-"),
@@ -1105,7 +1105,7 @@ guide_gengrob.vector <- function(guide, theme) {
         b = 1 + krows,
         l = 1 + kcols
     )
-    gt <- gtable_add_grob(
+    gt <- gtable::gtable_add_grob(
         gt,
         grob.labels,
         name = paste("label", vps$label.row, vps$label.col, sep = "-"),

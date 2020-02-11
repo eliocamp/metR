@@ -3,7 +3,7 @@
 .tidy2matrix <- function(data, formula, value.var, fill = NULL, ...) {
     row.vars <- all.vars(formula[[2]])
     col.vars <- all.vars(formula[[3]])
-    data <- as.data.table(data)
+    data <- data.table::as.data.table(data)
     data[, row__ := .GRP, by = c(row.vars)]
     data[, col__ := .GRP, by = c(col.vars)]
     if (is.null(fill)){
@@ -64,7 +64,7 @@ element_render <- function(theme, element, ..., name = NULL) {
         return(ggplot2::zeroGrob())
     }
 
-    grob <- element_grob(el, ...)
+    grob <- ggplot2::element_grob(el, ...)
     ggname(paste(element, name, sep = "."), grob)
 }
 
@@ -75,9 +75,9 @@ ggname <- function(prefix, grob) {
 
 
 width_cm <- function(x) {
-    if (is.grob(x)) {
+    if (grid::is.grob(x)) {
         grid::convertWidth(grid::grobWidth(x), "cm", TRUE)
-    } else if (is.unit(x)) {
+    } else if (grid::is.unit(x)) {
         grid::convertWidth(x, "cm", TRUE)
     } else if (is.list(x)) {
         vapply(x, width_cm, numeric(1))
@@ -86,9 +86,9 @@ width_cm <- function(x) {
     }
 }
 height_cm <- function(x) {
-    if (is.grob(x)) {
+    if (grid::is.grob(x)) {
         grid::convertHeight(grid::grobHeight(x), "cm", TRUE)
-    } else if (is.unit(x)) {
+    } else if (grid::is.unit(x)) {
         grid::convertHeight(x, "cm", TRUE)
     } else if (is.list(x)) {
         vapply(x, height_cm, numeric(1))
@@ -114,7 +114,7 @@ message_wrap <- function(...) {
 interleave <- function(...) UseMethod("interleave")
 #' @export
 interleave.unit <- function(...) {
-    do.call("unit.c", do.call("interleave.default", plyr::llply(list(...), as.list)))
+    do.call("grid::unit.c", do.call("interleave.default", plyr::llply(list(...), as.list)))
 }
 #' @export
 interleave.default <- function(...) {
@@ -171,13 +171,32 @@ if(getRversion() >= "2.15.1") {
 }
 
 
-`%>%` <- dplyr::`%>%`
-
-.is.reggrid <- function(data, coords) {
+.has_single_value <- function(data, coords) {
     lengths <- data[, .N, by = coords]$N
     !any(lengths > 1)
 }
 
+
+.is.regular_grid <- function(x, y) {
+    data <- data.table::data.table(x = x, y = y)
+    nx <- data[, data.table::uniqueN(x), by = y]$V1
+    ny <- data[, data.table::uniqueN(y), by = x]$V1
+
+    xs <- data.table::uniqueN(data$x)
+    ys <- data.table::uniqueN(data$y)
+
+
+    # Conditinos for regular grid
+    # 1. each y has the same number of unique values of x
+    # 2. each x has the same number of unique values of y
+    regularity <- sum(abs(ys - ny)) == 0 & sum(abs(xs - nx)) == 0
+
+    # 3. there are no duplicated values
+    lengths <- data[, .N, by = .(x, y)]$N
+    unicity <- !any(lengths > 1)
+
+    regularity & unicity
+}
 
 .simple.scale <- function(x) {
     r <- range(x)
@@ -242,5 +261,30 @@ checkDateish <- function(x, ...) {
 }
 
 assertDateish <- checkmate::makeAssertionFunction(checkDateish)
+
+check_packages <- function(packages, fun) {
+    installed <- vapply(packages, function(p) {
+        requireNamespace(p, quietly = TRUE)
+    }, TRUE)
+
+    missing <- packages[!installed]
+
+    if (length(missing != 0)) {
+        text <- paste0(fun, " needs packages ",
+               paste0(missing, collapse = ", "),
+               ". Install with: \n",
+               "`install.packages(c(\"",
+               paste0(missing, collapse = "\", \""), "\"))`")
+        stop(text)
+    }
+}
+
+.datatable.aware <- TRUE
+
+a <- 6371000
+
 # nocov end
+
+
+
 

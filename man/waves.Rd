@@ -5,14 +5,23 @@
 \alias{FitWave}
 \alias{BuildWave}
 \alias{FilterWave}
+\alias{WaveEnvelope}
 \title{Fourier transform}
 \usage{
 FitWave(y, k = 1)
 
-BuildWave(x, amplitude, phase, k, wave = list(amplitude = amplitude,
-  phase = phase, k = k), sum = TRUE)
+BuildWave(
+  x,
+  amplitude,
+  phase,
+  k,
+  wave = list(amplitude = amplitude, phase = phase, k = k),
+  sum = TRUE
+)
 
 FilterWave(y, k, action = sign(k[k != 0][1]))
+
+WaveEnvelope(y)
 }
 \arguments{
 \item{y}{numeric vector to transform}
@@ -73,6 +82,9 @@ then the result is the reconstructed signal of \code{y} only for wavenumbers
 specified in \code{k}, if it's negative, is the signal of \code{y} minus the wavenumbers
 specified in \code{k}. The argument \code{action} must be be manually set to \code{-1} or \code{+1}
 if \code{k=0}.
+
+\code{WaveEnvelope} computes the wave envelope of \code{y} following Zimin (2003). To compute
+the envelope of only a restricted band, first filter it with \code{FilterWave}.
 }
 \examples{
 data(geopotential)
@@ -118,11 +130,22 @@ ggplot(jan, aes(lon, lat)) +
     geom_contour(aes(z = gh.only12, color = ..level..)) +
     coord_polar()
 
+# Compute the envelope of the geopotential
+jan[, envelope := WaveEnvelope(gh.no12), by = .(lat)]
+ggplot(jan[lat == -60], aes(lon, gh.no12)) +
+    geom_line() +
+    geom_line(aes(y = envelope), color = "red")
 
 }
+\references{
+Zimin, A.V., I. Szunyogh, D.J. Patil, B.R. Hunt, and E. Ott, 2003: Extracting Envelopes of Rossby Wave Packets. Mon. Wea. Rev., 131, 1011–1017, https://doi.org/10.1175/1520-0493(2003)131<1011:EEORWP>2.0.CO;2
+}
 \seealso{
-Other meteorology functions: \code{\link{Derivate}},
-  \code{\link{EOF}}, \code{\link{GeostrophicWind}},
-  \code{\link{WaveFlux}}, \code{\link{thermodynamics}}
+Other meteorology functions: 
+\code{\link{Derivate}()},
+\code{\link{EOF}()},
+\code{\link{GeostrophicWind}()},
+\code{\link{WaveFlux}()},
+\code{\link{thermodynamics}}
 }
 \concept{meteorology functions}

@@ -4,9 +4,16 @@
 \alias{ImputeEOF}
 \title{Impute missing values}
 \usage{
-ImputeEOF(formula, max.eof = NULL, data = NULL, min.eof = 1,
-  tol = 0.01, max.iter = 10000, validation = NULL,
-  verbose = interactive())
+ImputeEOF(
+  formula,
+  max.eof = NULL,
+  data = NULL,
+  min.eof = 1,
+  tol = 0.01,
+  max.iter = 10000,
+  validation = NULL,
+  verbose = interactive()
+)
 }
 \arguments{
 \item{formula}{a formula to build the matrix that will be used in the SVD
@@ -21,7 +28,7 @@ imputation}
 
 \item{max.iter}{maximum iterations allowed for the algorithm}
 
-\item{validation}{number of points to use in crossvalidation (defaults to the
+\item{validation}{number of points to use in cross-validation (defaults to the
 maximum of 30 or 10\% of the non NA points)}
 
 \item{verbose}{logical indicating whether to print progress}
@@ -29,7 +36,7 @@ maximum of 30 or 10\% of the non NA points)}
 \value{
 A vector of imputed values with attributes \code{eof}, which is the number of
 singular values used in the final imputation; and \code{rmse}, which is the Root
-Mean Square Error estimated from crossvalidation.
+Mean Square Error estimated from cross-validation.
 }
 \description{
 Imputes missing values via Data Interpolating Empirical Orthogonal Functions

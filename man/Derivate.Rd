@@ -7,17 +7,46 @@
 \alias{Vorticity}
 \title{Derivate a discrete variable using finite differences}
 \usage{
-Derivate(formula, order = 1, cyclical = FALSE, fill = FALSE,
-  data = NULL, sphere = FALSE, a = 6371000, equispaced = TRUE)
+Derivate(
+  formula,
+  order = 1,
+  cyclical = FALSE,
+  fill = FALSE,
+  data = NULL,
+  sphere = FALSE,
+  a = 6371000,
+  equispaced = TRUE
+)
 
-Laplacian(formula, cyclical = FALSE, fill = FALSE, data = NULL,
-  sphere = FALSE, a = 6371000, equispaced = TRUE)
+Laplacian(
+  formula,
+  cyclical = FALSE,
+  fill = FALSE,
+  data = NULL,
+  sphere = FALSE,
+  a = 6371000,
+  equispaced = TRUE
+)
 
-Divergence(formula, cyclical = FALSE, fill = FALSE, data = NULL,
-  sphere = FALSE, a = 6371000, equispaced = TRUE)
+Divergence(
+  formula,
+  cyclical = FALSE,
+  fill = FALSE,
+  data = NULL,
+  sphere = FALSE,
+  a = 6371000,
+  equispaced = TRUE
+)
 
-Vorticity(formula, cyclical = FALSE, fill = FALSE, data = NULL,
-  sphere = FALSE, a = 6371000, equispaced = TRUE)
+Vorticity(
+  formula,
+  cyclical = FALSE,
+  fill = FALSE,
+  data = NULL,
+  sphere = FALSE,
+  a = 6371000,
+  equispaced = TRUE
+)
 }
 \arguments{
 \item{formula}{a formula indicating dependent and independent variables}
@@ -50,7 +79,7 @@ Derivate a discrete variable using finite differences
 \details{
 Each element of the return vector is an estimation of
 \eqn{\frac{\partial^n x}{\partial y^{n}}}{d^nx/dy^n} by
-centered finite differences.
+centred finite differences.
 
 If \code{sphere = TRUE}, then the first two independent variables are
 assumed to be longitude and latitude (\strong{in that order}) in degrees. Then, a
@@ -97,8 +126,11 @@ ggplot(variable, aes(lon, lat)) +
 
 }
 \seealso{
-Other meteorology functions: \code{\link{EOF}},
-  \code{\link{GeostrophicWind}}, \code{\link{WaveFlux}},
-  \code{\link{thermodynamics}}, \code{\link{waves}}
+Other meteorology functions: 
+\code{\link{EOF}()},
+\code{\link{GeostrophicWind}()},
+\code{\link{WaveFlux}()},
+\code{\link{thermodynamics}},
+\code{\link{waves}}
 }
 \concept{meteorology functions}

@@ -5,39 +5,71 @@
 \alias{guide_train.colorstrip}
 \alias{guide_colorstrip}
 \alias{guide_gengrob.colorstrip}
-\title{Discretized continuous color guide}
+\title{Discretized continuous colour guide}
 \usage{
-guide_colourstrip(title = waiver(), title.position = NULL,
-  title.theme = NULL, title.hjust = NULL, title.vjust = NULL,
-  label = TRUE, label.position = NULL, label.theme = NULL,
-  label.hjust = NULL, label.vjust = NULL, barwidth = NULL,
-  barheight = NULL, ticks = FALSE, draw.ulim = TRUE,
-  draw.llim = TRUE, inside = FALSE, direction = NULL,
-  default.unit = "line", reverse = FALSE, order = 0,
-  available_aes = c("colour", "color", "fill"), ...)
+guide_colourstrip(
+  title = waiver(),
+  title.position = NULL,
+  title.theme = NULL,
+  title.hjust = NULL,
+  title.vjust = NULL,
+  label = TRUE,
+  label.position = NULL,
+  label.theme = NULL,
+  label.hjust = NULL,
+  label.vjust = NULL,
+  barwidth = NULL,
+  barheight = NULL,
+  ticks = FALSE,
+  draw.ulim = TRUE,
+  draw.llim = TRUE,
+  inside = FALSE,
+  direction = NULL,
+  default.unit = "line",
+  reverse = FALSE,
+  order = 0,
+  available_aes = c("colour", "color", "fill"),
+  ...
+)
 
-guide_colorstrip(title = waiver(), title.position = NULL,
-  title.theme = NULL, title.hjust = NULL, title.vjust = NULL,
-  label = TRUE, label.position = NULL, label.theme = NULL,
-  label.hjust = NULL, label.vjust = NULL, barwidth = NULL,
-  barheight = NULL, ticks = FALSE, draw.ulim = TRUE,
-  draw.llim = TRUE, inside = FALSE, direction = NULL,
-  default.unit = "line", reverse = FALSE, order = 0,
-  available_aes = c("colour", "color", "fill"), ...)
+guide_colorstrip(
+  title = waiver(),
+  title.position = NULL,
+  title.theme = NULL,
+  title.hjust = NULL,
+  title.vjust = NULL,
+  label = TRUE,
+  label.position = NULL,
+  label.theme = NULL,
+  label.hjust = NULL,
+  label.vjust = NULL,
+  barwidth = NULL,
+  barheight = NULL,
+  ticks = FALSE,
+  draw.ulim = TRUE,
+  draw.llim = TRUE,
+  inside = FALSE,
+  direction = NULL,
+  default.unit = "line",
+  reverse = FALSE,
+  order = 0,
+  available_aes = c("colour", "color", "fill"),
+  ...
+)
 }
 \arguments{
 \item{title}{A character string or expression indicating a title of guide.
 If \code{NULL}, the title is not shown. By default
-(\code{\link[=waiver]{waiver()}}), the name of the scale object or the name
-specified in \code{\link[=labs]{labs()}} is used for the title.}
+(\code{\link[ggplot2:waiver]{waiver()}}), the name of the scale object or the name
+specified in \code{\link[ggplot2:labs]{labs()}} is used for the title.}
 
 \item{title.position}{A character string indicating the position of a
 title. One of "top" (default for a vertical guide), "bottom", "left"
 (default for a horizontal guide), or "right."}
 
 \item{title.theme}{A theme object for rendering the title text. Usually the
-object of \code{\link[=element_text]{element_text()}} is expected. By default, the theme is
-specified by \code{legend.title} in \code{\link[=theme]{theme()}} or theme.}
+object of \code{\link[ggplot2:element_text]{element_text()}} is expected. By default, the theme is
+specified by \code{legend.title} in \code{\link[ggplot2:theme]{theme()}} or theme.}
 
 \item{title.hjust}{A number specifying horizontal justification of the
 title text.}
@@ -53,8 +85,8 @@ label. One of "top", "bottom" (default for horizontal guide), "left", or
 "right" (default for vertical guide).}
 
 \item{label.theme}{A theme object for rendering the label text. Usually the
-object of \code{\link[=element_text]{element_text()}} is expected. By default, the theme is
-specified by \code{legend.text} in \code{\link[=theme]{theme()}}.}
+object of \code{\link[ggplot2:element_text]{element_text()}} is expected. By default, the theme is
+specified by \code{legend.text} in \code{\link[ggplot2:theme]{theme()}}.}
 
 \item{label.hjust}{A numeric specifying horizontal justification of the
 label text.}
@@ -64,11 +96,11 @@ text.}
 
 \item{barwidth}{A numeric or a \code{\link[grid:unit]{grid::unit()}} object specifying
 the width of the colourbar. Default value is \code{legend.key.width} or
-\code{legend.key.size} in \code{\link[=theme]{theme()}} or theme.}
+\code{legend.key.size} in \code{\link[ggplot2:theme]{theme()}} or theme.}
 
 \item{barheight}{A numeric or a \code{\link[grid:unit]{grid::unit()}} object specifying
 the height of the colourbar. Default value is \code{legend.key.height} or
-\code{legend.key.size} in \code{\link[=theme]{theme()}} or theme.}
+\code{legend.key.size} in \code{\link[ggplot2:theme]{theme()}} or theme.}
 
 \item{ticks}{A logical specifying if tick marks on the colourbar should be
 visible.}
@@ -108,14 +140,14 @@ A version of \link[ggplot2:guide_colourbar]{ggplot2::guide_colourbar} that displ
 by default, puts labels in between values.
 }
 \details{
-The default behaviour works fell for geom_contour_fill in which the colors
+The default behaviour works fell for geom_contour_fill in which the colours
 represent the value between contour surfaces.
 
-`inside = TRUE`` works better for geom_tile where the color represents
+`inside = TRUE`` works better for geom_tile where the colour represents
 the value of the data and is very similar to \link[ggplot2:guide_legend]{ggplot2::guide_legend}.
 }
 \examples{
-# In this example the lowest color represents an area of the data with values
+# In this example the lowest colour represents an area of the data with values
 # between 80 and 100.
 library(ggplot2)
 binwidth <- 20
@@ -138,16 +170,22 @@ g + scale_fill_continuous(guide = guide_colourstrip(inside = TRUE))
 
 }
 \seealso{
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_label_contour}},
-  \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_divergent}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}},
-  \code{\link{stat_subset}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_arrow}()},
+\code{\link{geom_contour2}()},
+\code{\link{geom_contour_fill}()},
+\code{\link{geom_label_contour}()},
+\code{\link{geom_relief}()},
+\code{\link{geom_streamline}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_divergent}},
+\code{\link{scale_longitude}},
+\code{\link{stat_na}()},
+\code{\link{stat_subset}()}
 }
 \concept{ggplot2 helpers}
 \keyword{internal}

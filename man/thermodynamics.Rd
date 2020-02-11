@@ -111,8 +111,11 @@ DewPoint(p, w) - 273.15    # Recover Td
 http://www.atmo.arizona.edu/students/courselinks/fall11/atmo551a/ATMO_451a_551a_files/WaterVapor.pdf
 }
 \seealso{
-Other meteorology functions: \code{\link{Derivate}},
-  \code{\link{EOF}}, \code{\link{GeostrophicWind}},
-  \code{\link{WaveFlux}}, \code{\link{waves}}
+Other meteorology functions: 
+\code{\link{Derivate}()},
+\code{\link{EOF}()},
+\code{\link{GeostrophicWind}()},
+\code{\link{WaveFlux}()},
+\code{\link{waves}}
 }
 \concept{meteorology functions}

@@ -46,17 +46,17 @@ air <- ReadNetCDF(file, subset = list(lat = 90:0, level = 925))
 
 
 ggplot(air, aes(lon, lat)) +
-    geom_contour(aes(z = air, color = ..level..))
+  geom_contour2(aes(z = air, color = ..level..))
 ```
 
-Since the most consuming part of reading the file is melting a multidimensional array into a tidy `data.table`, if we wanted to add another variable to the same `data.table` we could save time by only returning a vector. **It is of the upmost importance that both variables are on the same exact grid**.
+Since the most consuming part of reading the file is melting a multidimensional array into a tidy `data.table`, if we wanted to add another variable to the same `data.table` we could save time by only returning a vector. **It is of the utmost importance that both variables are on the same exact grid**.
 
 ```{r}
 air[, air2 := ReadNetCDF(file, out = "vector",
                          subset = list(lat = 90:0, level = 300))]
 
 ggplot(air, aes(lon, lat)) +
-    geom_contour(aes(z = air2, color = ..level..))
+  geom_contour2(aes(z = air2, color = ..level..))
 ```
 
 Because `ReadNetCDF()` can read multiple variables at the same time, the `out = "vector"` output will be actually return a `list` of vectors (which integrates seamlessly with the `data.table` syntax). If one of the variables has degenerate dimensions (dimensions of length 1) then it will be recycled. That means that if the same file has Sea Surface Temperatures (a 2D field) and Air Temperature (a 3D field), then the returned `data.table` fill have an observation of Air Temperature *and* Sea Surface Temperature for each vertical level. 
@@ -67,7 +67,7 @@ The netCDF format is very flexible and this function has not been tested on ever
 
 `GetTopography()` retrieves topographic data from the [ETOPO1 Global Relief Model](https://www.ngdc.noaa.gov/mgg/global/global.html) into a convenient tidy `data.table`. By default, it also stores a cached version. 
 
-As an example, let's look at a global relief map at 1/2° resolution with some ugly color palette. 
+As an example, let's look at a global relief map at 1/2° resolution with some ugly colour palette. 
 
 ```{r}
 # Not run because it needs internet access
@@ -75,7 +75,7 @@ As an example, let's look at a global relief map at 1/2° resolution with some u
 
 # ggplot(world, aes(lon, lat)) +
 #     geom_raster(aes(fill = h/1000)) +
-#     geom_contour(aes(z = h), breaks = 0, color = "black", size = 0.5) +
+#     geom_contour2(aes(z = h), breaks = 0, color = "black", size = 0.5) +
 #     coord_fixed(expand = FALSE) +
 #     scale_fill_gradientn(colors = topo.colors(6)[c(1, 2, 3, 4, 6)], 
 #                          values = scales::rescale(c(-11, 0, 0, 2, 7)),
@@ -91,8 +91,8 @@ Related to this problem, `MaskLand()` returns a logical vector with `TRUE` if a 
 air[, land := MaskLand(lon, lat)]
 
 ggplot(air, aes(lon, lat)) +
-    geom_tile(aes(fill = land)) +
-    coord_quickmap()
+  geom_tile(aes(fill = land)) +
+  coord_quickmap()
 ```
 
 With this, we can compare mean temperature over land and over sea by latitude. 
@@ -100,7 +100,7 @@ With this, we can compare mean temperature over land and over sea by latitude.
 ```{r}
 ggplot(air[, .(air = mean(air) - 273.15), by = .(lat, land)],
        aes(lat, air)) +
-    geom_line(aes(color = land))
+  geom_line(aes(color = land))
 ```
 
 The resolution of `MaskLand()` is, in principle, only limited by the polygons used as mask. Currently it can only use maps from the `maps` package (see `?maps::map`).
@@ -139,14 +139,14 @@ For completion, let's plot each Principal Component.
 
 ```{r}
 ggplot(eof$right, aes(lon, lat)) +
-    geom_contour_fill(aes(z = gh.t.w), binwidth = 0.01) +
-    scale_fill_divergent() +
-    coord_polar() +
-    facet_wrap(~PC) 
+  geom_contour_fill(aes(z = gh.t.w), binwidth = 0.01) +
+  scale_fill_divergent() +
+  coord_polar() +
+  facet_wrap(~PC) 
 
 ggplot(eof$left, aes(date, gh.t.w)) +
-        geom_line(aes(color = PC)) +
-        scale_x_date(expand = c(0, 0))
+  geom_line(aes(color = PC)) +
+  scale_x_date(expand = c(0, 0))
 ```
 
 Where the 1st Principal Component is clearly the [Antarctic Oscillation](http://www.cpc.ncep.noaa.gov/products/precip/CWlink/daily_ao_index/aao/aao.shtml) and the 2nd Principal Component looks like the Pacific–South American Pattern. 
@@ -163,7 +163,7 @@ geopotential[, imputed := ImputeEOF(gh.na ~ lon + lat | date, max.eof = 5)]
 str(geopotential)
 ```
 
-The imputed vector is returned along with the Root Mean Square Error estimated from crossvalidation and the number of EOFs used in the imputation as attributes. In this case, with `r attr(geopotential$imputed, "eof")` EOFs the imputed values have an estimated rmse of `r round(attr(geopotential$imputed, "rmse"), 2)`.
+The imputed vector is returned along with the Root Mean Square Error estimated from cross-validation and the number of EOFs used in the imputation as attributes. In this case, with `r attr(geopotential$imputed, "eof")` EOFs the imputed values have an estimated rmse of `r round(attr(geopotential$imputed, "rmse"), 2)`.
 
 ## Interpolate
 
@@ -195,19 +195,19 @@ Derivation is the bread and butter of the researcher so `Derivate()` offers a co
 
 ```{r}
 geopotential[date == date[1],    # think: gh as a function of lon and lat
-    c("gh.dlon", "gh.dlat") := Derivate(gh ~ lon + lat, 
-                                        cyclical = c(TRUE, FALSE), 
-                                        sphere = TRUE)]
+             c("gh.dlon", "gh.dlat") := Derivate(gh ~ lon + lat, 
+                                                 cyclical = c(TRUE, FALSE), 
+                                                 sphere = TRUE)]
 
 
 ggplot(geopotential[date == date[1]], aes(lon, lat)) +
-    geom_contour_fill(aes(z = gh)) +
-    geom_vector(aes(dx = gh.dlon, dy = gh.dlat), skip = 2, 
-                scale = 3e4) +
-    coord_quickmap()
+  geom_contour_fill(aes(z = gh)) +
+  geom_vector(aes(dx = gh.dlon, dy = gh.dlat), skip = 2) +
+  scale_mag() +
+  coord_quickmap()
 ```
 
-There are several wrapers around `Derivate()` to perform other common related operations, `Laplacian()`, `Divergence()` and `Vorticity()`. 
+There are several wrappers around `Derivate()` to perform other common related operations, `Laplacian()`, `Divergence()` and `Vorticity()`. 
 
 ## GeostrophicWind
 
@@ -217,10 +217,11 @@ Finally, the function `GeostrophicWind()` computes geostrophic wind from geopote
 geopotential[date == date[1], c("u", "v") := GeostrophicWind(gh, lon, lat)]
 
 ggplot(geopotential[date == date[1]], aes(lon, lat)) +
-    geom_contour(aes(z = gh)) +
-    geom_vector(aes(dx = dlon(u, lat), dy = dlat(v)), 
-                skip.y = 1, skip.x = 2, scale = 5e4) +
-    coord_quickmap()
+  geom_contour2(aes(z = gh)) +
+  geom_vector(aes(dx = dlon(u, lat), dy = dlat(v)), 
+              skip.y = 1, skip.x = 2) +
+  scale_mag() +
+  coord_quickmap()
 ```
 
 

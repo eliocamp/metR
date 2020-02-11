@@ -37,13 +37,14 @@ geom_contour2 <- function(mapping = NULL, data = NULL,
                           breaks = MakeBreaks(),
                           bins = NULL,
                           binwidth = NULL,
+                          global.breaks = TRUE,
                           na.rm = FALSE,
                           na.fill = FALSE,
                           # fill.linear = TRUE,
                           show.legend = NA,
                           inherit.aes = TRUE) {
     .check_wrap_param(list(...))
-    layer(
+    ggplot2::layer(
         data = data,
         mapping = mapping,
         stat = stat,
@@ -58,6 +59,7 @@ geom_contour2 <- function(mapping = NULL, data = NULL,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
+            global.breaks = global.breaks,
             na.rm = na.rm,
             na.fill = na.fill,
             # fill.linear = fill.linear,

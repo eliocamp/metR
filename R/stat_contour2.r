@@ -6,6 +6,8 @@
 #'   and returns breaks as output
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
+  #' @param global.breaks Logical indicating whether `breaks` should be computed for the whole
+#' data or for each grouping.
 # #' @param xwrap,ywrap vector of length two used to wrap the circular dimension
 #'
 #' @export
@@ -21,15 +23,13 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
                           breaks = MakeBreaks(),
                           bins = NULL,
                           binwidth = NULL,
+                          global.breaks = TRUE,
                           na.rm = FALSE,
                           na.fill = FALSE,
-                          # fill.linear = TRUE,
-                          # xwrap = NULL,
-                          # ywrap = NULL,
                           show.legend = NA,
                           inherit.aes = TRUE) {
     .check_wrap_param(list(...))
-    layer(
+  ggplot2::layer(
         data = data,
         mapping = mapping,
         stat = StatContour2,
@@ -40,12 +40,10 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
         params = list(
             na.rm = na.rm,
             na.fill = na.fill,
-            # fill.linear = fill.linear,
             breaks = breaks,
             bins = bins,
             binwidth = binwidth,
-            # xwrap = xwrap,
-            # ywrap = ywrap,
+            global.breaks = global.breaks,
             ...
         )
     )
@@ -59,24 +57,13 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
   required_aes = c("x", "y", "z"),
   default_aes = ggplot2::aes(order = ..level..),
   setup_params = function(data, params) {
-      # Check is.null(breaks) for backwards compatibility
-      if (is.null(params$breaks)) {
-          params$breaks <- scales::fullseq
-      }
-
-      if (is.function(params$breaks)) {
-          # If no parameters set, use pretty bins to calculate binwidth
-          if (is.null(params$bins) && is.null(params$binwidth)) {
-              params$binwidth <- diff(pretty(range(data$z, na.rm = TRUE), 10))[1]
-          }
-          # If provided, use bins to calculate binwidth
-          if (!is.null(params$bins)) {
-              params$binwidth <- diff(range(data$z, na.rm = TRUE)) / params$bins
-          }
-
-          params$breaks <- params$breaks(range(data$z, na.rm = TRUE), params$binwidth)
-      }
-      return(params)
+    if (is.null(params$global) || isTRUE(params$global.breaks)) {
+      params$breaks <- setup_breaks(data,
+                                    breaks = params$breaks,
+                                    bins = params$bins,
+                                    binwidth = params$binwidth)
+    }
+    return(params)
   },
   compute_layer = function(self, data, params, layout) {
       ggplot2:::check_required_aesthetics(
@@ -102,7 +89,14 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
   compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                            breaks = scales::fullseq, complete = TRUE,
                            na.rm = FALSE, circular = NULL, xwrap = NULL,
-                           ywrap = NULL, na.fill = FALSE) {
+                           ywrap = NULL, na.fill = FALSE, global.breaks = TRUE) {
+    if (isFALSE(global.breaks)) {
+      breaks <- setup_breaks(data,
+                   breaks = breaks,
+                   bins = bins,
+                   binwidth = binwidth)
+    }
+
       setDT(data)
 
       data <- data[!(is.na(y) | is.na(x)), ]
@@ -121,7 +115,8 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
               warning("data must be a complete regular grid", call. = FALSE)
               return(data.frame())
           } else {
-              data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+              # data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+              data <- .complete(data, x, y)
           }
       }
 
@@ -147,6 +142,13 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 )
 
 
+.complete <- function(data, ...) {
+  l <-  match.call(expand.dots = FALSE)$`...`
+  coord <- with(data, do.call(data.table::CJ, c(l, list(unique = TRUE))))
+
+  data[coord, on = as.character(l), allow.cartesian = TRUE]
+
+}
 
 .order_contour <- function(contours, data) {
     data <- copy(data)
@@ -246,6 +248,31 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     group = groups
   )
 })
+
+
+setup_breaks <- function(data, breaks, bins, binwidth) {
+  # Check is.null(breaks) for backwards compatibility
+  if (is.null(breaks)) {
+    breaks <- scales::fullseq
+  }
+
+  if (is.function(breaks)) {
+    # If no parameters set, use pretty bins to calculate binwidth
+    if (is.null(bins) && is.null(binwidth)) {
+      binwidth <- diff(pretty(range(data$z, na.rm = TRUE), 10))[1]
+    }
+    # If provided, use bins to calculate binwidth
+    if (!is.null(bins)) {
+      binwidth <- diff(range(data$z, na.rm = TRUE)) / bins
+    }
+
+    breaks <- breaks(range(data$z, na.rm = TRUE), binwidth)
+  }
+
+  return(breaks)
+}
+
+
 
 # .contour_lines_irregular <- function(data, breaks, complete = FALSE) {
 #

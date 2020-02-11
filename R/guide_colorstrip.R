@@ -1,4 +1,4 @@
-#' Discretized continuous color guide
+#' Discretized continuous colour guide
 #'
 #' A version of [ggplot2::guide_colourbar] that displays discretized values and,
 #' by default, puts labels in between values.
@@ -7,14 +7,14 @@
 #' @param inside logical indicating where to position labels (see examples).
 #'
 #' @details
-#' The default behaviour works fell for geom_contour_fill in which the colors
+#' The default behaviour works fell for geom_contour_fill in which the colours
 #' represent the value between contour surfaces.
 #'
-#' `inside = TRUE`` works better for geom_tile where the color represents
+#' `inside = TRUE`` works better for geom_tile where the colour represents
 #' the value of the data and is very similar to [ggplot2::guide_legend].
 #'
 #' @examples
-#' # In this example the lowest color represents an area of the data with values
+#' # In this example the lowest colour represents an area of the data with values
 #' # between 80 and 100.
 #' library(ggplot2)
 #' binwidth <- 20
@@ -39,7 +39,6 @@
 #' A guide object.
 #' @family ggplot2 helpers
 #' @export
-#' @importFrom grid is.unit
 guide_colourstrip <- function(
     # title
     title = waiver(),
@@ -74,8 +73,8 @@ guide_colourstrip <- function(
     available_aes = c("colour", "color", "fill"),
     ...) {
 
-    if (!is.null(barwidth) && !is.unit(barwidth)) barwidth <- unit(barwidth, default.unit)
-    if (!is.null(barheight) && !is.unit(barheight)) barheight <- unit(barheight, default.unit)
+    if (!is.null(barwidth) && !grid::is.unit(barwidth)) barwidth <- grid::unit(barwidth, default.unit)
+    if (!is.null(barheight) && !grid::is.unit(barheight)) barheight <- grid::unit(barheight, default.unit)
 
     structure(list(
         # title
@@ -117,8 +116,6 @@ guide_colourstrip <- function(
 
 #' @usage NULL
 #' @format NULL
-#' @importFrom stats setNames
-#' @import gtable
 #' @export
 #' @rdname guide_colourstrip
 #' @keywords internal
@@ -158,7 +155,7 @@ guide_train.colorstrip <- function(guide, scale, aesthetic = NULL) {
     guide$bar <- data.frame(colour = scale$map(.bar), value = .bar,
                             stringsAsFactors = FALSE)
 
-    ticks <- as.data.frame(setNames(list(scale$map(breaks)), scale$aesthetics[1]))
+    ticks <- as.data.frame(stats::setNames(list(scale$map(breaks)), scale$aesthetics[1]))
     ticks$.value <- breaks
     ticks$.label <- scale$get_labels(breaks)
 
@@ -197,7 +194,7 @@ guide_colorstrip <- guide_colourstrip
         return(NULL)
     } else if (identical(scale$breaks, NA)) {
         stop("Invalid breaks specification. Use NULL, not NA")
-    } else if (zero_range(as.numeric(limits))) {
+    } else if (scales::zero_range(as.numeric(limits))) {
         breaks <- limits[1]
     } else if (is.waive(scale$breaks)) {
         breaks <- scale$trans$breaks(limits)
@@ -214,7 +211,6 @@ guide_colorstrip <- guide_colourstrip
 
 #' @usage NULL
 #' @format NULL
-#' @import grid gtable
 #' @export
 #' @rdname guide_colourstrip
 #' @keywords internal
@@ -241,7 +237,7 @@ guide_gengrob.colorstrip <- function(guide, theme) {
     barlength.c <- switch(guide$direction, "horizontal" = barwidth.c, "vertical" = barheight.c)
     nbreak <- nrow(guide$key)
 
-    tic_pos.c <- rescale(guide$key$.value, c(0.5, guide$nbin - 0.5), guide$bar$value[c(1, nrow(guide$bar))]) * barlength.c / guide$nbin
+    tic_pos.c <- scales::rescale(guide$key$.value, c(0.5, guide$nbin - 0.5), guide$bar$value[c(1, nrow(guide$bar))]) * barlength.c / guide$nbin
     grob.bar <-
             switch(guide$direction,
                    horizontal = {
@@ -255,7 +251,7 @@ guide_gengrob.colorstrip <- function(guide, theme) {
                        }
 
                        grid::rectGrob(x = bx, y = 0, vjust = 0, hjust = 0, width = bw, height = barheight.c, default.units = "mm",
-                                      gp = gpar(col = NA, fill = guide$bar$colour))
+                                      gp = grid::gpar(col = NA, fill = guide$bar$colour))
                    },
                    vertical = {
                        if (guide$inside) {
@@ -268,20 +264,20 @@ guide_gengrob.colorstrip <- function(guide, theme) {
                        }
 
                        grid::rectGrob(x = 0, y = by, vjust = 0, hjust = 0, width = barwidth.c, height = bh, default.units = "mm",
-                                      gp = gpar(col = NA, fill = guide$bar$colour))
+                                      gp = grid::gpar(col = NA, fill = guide$bar$colour))
                    })
 
 
     # tick and label position
 
-    label_pos <- unit(tic_pos.c, "mm")
+    label_pos <- grid::unit(tic_pos.c, "mm")
     if (!guide$draw.ulim) tic_pos.c <- tic_pos.c[-1]
     if (!guide$draw.llim) tic_pos.c <- tic_pos.c[-length(tic_pos.c)]
 
     # title
     grob.title <- ggname("guide.title",
                          ggplot2::element_grob(
-                             guide$title.theme %||% calc_element("legend.title", theme),
+                             guide$title.theme %||% ggplot2::calc_element("legend.title", theme),
                              label = guide$title,
                              hjust = guide$title.hjust %||% theme$legend.title.align %||% 0,
                              vjust = guide$title.vjust %||% 0.5
@@ -289,14 +285,14 @@ guide_gengrob.colorstrip <- function(guide, theme) {
     )
 
 
-    title_width <- grid::convertWidth(grobWidth(grob.title), "mm")
+    title_width <- grid::convertWidth(grid::grobWidth(grob.title), "mm")
     title_width.c <- c(title_width)
-    title_height <- grid::convertHeight(grobHeight(grob.title), "mm")
+    title_height <- grid::convertHeight(grid::grobHeight(grob.title), "mm")
     title_height.c <- c(title_height)
 
     # gap between keys etc
-    hgap <- width_cm(theme$legend.spacing.x  %||% unit(0.3, "line"))
-    vgap <- height_cm(theme$legend.spacing.y %||% (0.5 * unit(title_height, "cm")))
+    hgap <- width_cm(theme$legend.spacing.x  %||% grid::unit(0.3, "line"))
+    vgap <- height_cm(theme$legend.spacing.y %||% (0.5 * grid::unit(title_height, "cm")))
 
     # label
     label.theme <- guide$label.theme %||% ggplot2::calc_element("legend.text", theme)
@@ -326,14 +322,14 @@ guide_gengrob.colorstrip <- function(guide, theme) {
         }
     }
 
-    label_width <- grid::convertWidth(grobWidth(grob.label), "mm")
+    label_width <- grid::convertWidth(grid::grobWidth(grob.label), "mm")
     label_width.c <- c(label_width)
-    label_height <- grid::convertHeight(grobHeight(grob.label), "mm")
+    label_height <- grid::convertHeight(grid::grobHeight(grob.label), "mm")
     label_height.c <- c(label_height)
 
     # ticks
     grob.ticks <-
-        if (!guide$ticks) zeroGrob()
+        if (!guide$ticks) ggplot2::zeroGrob()
     else {
         switch(guide$direction,
                "horizontal" = {
@@ -348,8 +344,8 @@ guide_gengrob.colorstrip <- function(guide, theme) {
                    x1 = c(rep(barwidth.c * (1/5), nbreak), rep(barwidth.c, nbreak))
                    y1 = rep(tic_pos.c, 2)
                })
-        segmentsGrob(x0 = x0, y0 = y0, x1 = x1, y1 = y1,
-                     default.units = "mm", gp = gpar(col = "white", lwd = 0.5, lineend = "butt"))
+        grid::segmentsGrob(x0 = x0, y0 = y0, x1 = x1, y1 = y1,
+                     default.units = "mm", gp = grid::gpar(col = "white", lwd = 0.5, lineend = "butt"))
     }
 
     # layout of bar and label
@@ -424,23 +420,23 @@ guide_gengrob.colorstrip <- function(guide, theme) {
     grob.background <- element_render(theme, "legend.background")
 
     # padding
-    padding <- convertUnit(theme$legend.margin %||% margin(), "mm")
+    padding <- grid::convertUnit(theme$legend.margin %||% ggplot2::margin(), "mm")
     widths <- c(padding[4], widths, padding[2])
     heights <- c(padding[1], heights, padding[3])
 
-    gt <- gtable(widths = unit(widths, "mm"), heights = unit(heights, "mm"))
-    gt <- gtable_add_grob(gt, grob.background, name = "background", clip = "off",
+    gt <- gtable::gtable(widths = grid::unit(widths, "mm"), heights = grid::unit(heights, "mm"))
+    gt <- gtable::gtable_add_grob(gt, grob.background, name = "background", clip = "off",
                           t = 1, r = -1, b = -1, l = 1)
-    gt <- gtable_add_grob(gt, grob.bar, name = "bar", clip = "off",
+    gt <- gtable::gtable_add_grob(gt, grob.bar, name = "bar", clip = "off",
                           t = 1 + min(vps$bar.row), r = 1 + max(vps$bar.col),
                           b = 1 + max(vps$bar.row), l = 1 + min(vps$bar.col))
-    gt <- gtable_add_grob(gt, grob.label, name = "label", clip = "off",
+    gt <- gtable::gtable_add_grob(gt, grob.label, name = "label", clip = "off",
                           t = 1 + min(vps$label.row), r = 1 + max(vps$label.col),
                           b = 1 + max(vps$label.row), l = 1 + min(vps$label.col))
-    gt <- gtable_add_grob(gt, grob.title, name = "title", clip = "off",
+    gt <- gtable::gtable_add_grob(gt, grob.title, name = "title", clip = "off",
                           t = 1 + min(vps$title.row), r = 1 + max(vps$title.col),
                           b = 1 + max(vps$title.row), l = 1 + min(vps$title.col))
-    gt <- gtable_add_grob(gt, grob.ticks, name = "ticks", clip = "off",
+    gt <- gtable::gtable_add_grob(gt, grob.ticks, name = "ticks", clip = "off",
                           t = 1 + min(vps$bar.row), r = 1 + max(vps$bar.col),
                           b = 1 + max(vps$bar.row), l = 1 + min(vps$bar.col))
 

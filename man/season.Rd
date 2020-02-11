@@ -3,18 +3,28 @@
 \name{season}
 \alias{season}
 \alias{AssignSeason}
+\alias{seasonaly}
+\alias{is.full_season}
 \title{Assign seasons to months}
 \usage{
 season(x, lang = c("en", "es"))
+
+seasonaly(x)
+
+is.full_season(x)
 }
 \arguments{
-\item{x}{A numeric vector of months or a vector of dates}
+\item{x}{A vector of dates (alternative a numeric vector of months, for \code{season()})}
 
 \item{lang}{Language to use.}
 }
 \value{
-A factor vector of the same length as \code{x} with the trimestre of each
+\code{season()} returns a factor vector of the same length as \code{x} with the trimester of each
 month.
+\code{seasonaly()} returns a date vector of the same length as \code{x} with the date "rounded" up to the centre
+month of each season.
+\code{is.full_season()} returns a logical vector of the same length as \code{x} that is true only if the
+3 months of each season for each year (December counts for the following year) are present in the dataset.
 }
 \description{
 Assign seasons to months
@@ -22,5 +32,9 @@ Assign seasons to months
 \examples{
 season(1, lang = "en")
 season(as.Date("2017-01-01"))
+
+seasonaly(as.Date(c("2017-12-01", "2018-01-01", "2018-02-01")))
+
+is.full_season(as.Date(c("2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01")))
 
 }

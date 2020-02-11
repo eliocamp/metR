@@ -24,7 +24,7 @@ One of the "conceptual branches" of `metR` is the *visualization tools*. These a
 
 Many meteorological fields are defined in a longitude×latitude×level grid, so `metR` includes scales for each dimension. These are glorified wrappers around `scale_*_continuous()` with sensible defaults and, in the case of `scale_*_level()`, the implementation of `reverselog_trans()`. 
 
-There are also `scale_color_divergent()` and `scale_fill_divergent()` which are wrapers around `scale_*_gradient2()` but with sane default colors for positive and negative values --particularly useful for plotting anomaly values. 
+There are also `scale_color_divergent()` and `scale_fill_divergent()` which are wrappers around `scale_*_gradient2()` but with sane default colours for positive and negative values --particularly useful for plotting anomaly values. 
 
 To see how this scales work, let's visualize the vertical distribution of temperature anomalies from the zonal mean. 
 
@@ -37,7 +37,7 @@ temperature[, air.z := Anomaly(air), by = .(lat, lev)]
 
 # Plot made with base ggplot
 (g <- ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
-        geom_contour(aes(color = ..level..)))
+        geom_contour2(aes(color = ..level..)))
 ```
 
 While this is fine, since pressure levels are roughly proportional to $\mathrm{e}^{-z}$ in meteorology we usually plot the vertical coordinate as $-\log(p)$. However, while ggplot2 has `scale_y_log10()` and `scale_y_reverse()`, they don't work together. `metR` defines the new transformation `reverselog_trans()` that can be used with any scale but that is the default for `scale_*_level()`. 
@@ -111,7 +111,7 @@ As an important note, this stat currently only works with rectangular grids.
 
 ## geom_text_contour and geom_label_contour
 
-Labeling contours is also a problematic aspect of `ggplot2`. `geom_text_contour()` and `geom_label_contour()` can be use to automatically add text or labels to the flattest part of a contour. 
+Labelling contours is also a problematic aspect of `ggplot2`. `geom_text_contour()` and `geom_label_contour()` can be use to automatically add text or labels to the flattest part of a contour. 
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
@@ -123,9 +123,9 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     scale_y_latitude()
 ```
 
-By default it labels every 2nd contour (this can be changed by the `skip` parameter) and it rotates to follow the angle of the contour (this is not available on `geom_label_contour()`). Since in some datasets there can be very small contours that should not be labeled for clarity, the `min.size` argument specifies the minimum points a contour has to have in order to be labeled. 
+By default it labels every 2nd contour (this can be changed by the `skip` parameter) and it rotates to follow the angle of the contour (this is not available on `geom_label_contour()`). Since in some datasets there can be very small contours that should not be labelled for clarity, the `min.size` argument specifies the minimum points a contour has to have in order to be labelled. 
 
-Notice how labels are drawn on top of contours? The problem is that `geom_contour()` doesn't know it's being labeled; `geom_text_contour()` addresses this issue by allowing you to draw a stroke around the text.
+Notice how labels are drawn on top of contours? The problem is that `geom_contour()` doesn't know it's being labelled; `geom_text_contour()` addresses this issue by allowing you to draw a stroke around the text.
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
@@ -273,7 +273,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     scale_y_latitude() + theme(legend.position = "bottom")
 ```
 
-This has some limitations as can be seen above. First, in the case of `geom_contour()` the full color scale is replaced by lines. Second, it breaks down if the position of the legend is at the bottom. Finally, the listed colors are the ones mapped to the breaks, which can be a problem in the case of `geom_contour_fill()` in which the colors are actually the values *between* breaks. 
+This has some limitations as can be seen above. First, in the case of `geom_contour()` the full colour scale is replaced by lines. Second, it breaks down if the position of the legend is at the bottom. Finally, the listed colours are the ones mapped to the breaks, which can be a problem in the case of `geom_contour_fill()` in which the colours are actually the values *between* breaks. 
 
 All of these problems are solved in `guide_colorstrip()` as can be seen in the figure below. 
 ```{r}
@@ -286,7 +286,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     theme(legend.position = "bottom")
 ```
 
-By default, colors are mapped to the values *in between* breaks, so there's a one-to-one mapping between colors shown in the plot and in the guide. From an aesthetic standpoint, it's much closer to the `cbarn` command from `GrADS`, which a lot of atmospheric scientists are probably used to.  
+By default, colours are mapped to the values *in between* breaks, so there's a one-to-one mapping between colours shown in the plot and in the guide. From an aesthetic standpoint, it's much closer to the `cbarn` command from `GrADS`, which a lot of atmospheric scientists are probably used to.  
 
 ## geom_relief
 

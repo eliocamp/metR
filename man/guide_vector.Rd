@@ -4,27 +4,43 @@
 \alias{guide_vector}
 \title{Reference arrow for magnitude scales}
 \usage{
-guide_vector(title = waiver(), title.position = NULL,
-  title.theme = NULL, title.hjust = NULL, title.vjust = NULL,
-  label = TRUE, label.position = NULL, label.theme = NULL,
-  label.hjust = NULL, label.vjust = NULL, keywidth = NULL,
-  keyheight = NULL, direction = NULL, default.unit = "cm",
-  override.aes = list(), nrow = NULL, ncol = NULL, byrow = FALSE,
-  reverse = FALSE, order = 0, ...)
+guide_vector(
+  title = waiver(),
+  title.position = NULL,
+  title.theme = NULL,
+  title.hjust = NULL,
+  title.vjust = NULL,
+  label = TRUE,
+  label.position = NULL,
+  label.theme = NULL,
+  label.hjust = NULL,
+  label.vjust = NULL,
+  keywidth = NULL,
+  keyheight = NULL,
+  direction = NULL,
+  default.unit = "cm",
+  override.aes = list(),
+  nrow = NULL,
+  ncol = NULL,
+  byrow = FALSE,
+  reverse = FALSE,
+  order = 0,
+  ...
+)
 }
 \arguments{
 \item{title}{A character string or expression indicating a title of guide.
 If \code{NULL}, the title is not shown. By default
-(\code{\link[=waiver]{waiver()}}), the name of the scale object or the name
-specified in \code{\link[=labs]{labs()}} is used for the title.}
+(\code{\link[ggplot2:waiver]{waiver()}}), the name of the scale object or the name
+specified in \code{\link[ggplot2:labs]{labs()}} is used for the title.}
 
 \item{title.position}{A character string indicating the position of a
 title. One of "top" (default for a vertical guide), "bottom", "left"
 (default for a horizontal guide), or "right."}
 
 \item{title.theme}{A theme object for rendering the title text. Usually the
-object of \code{\link[=element_text]{element_text()}} is expected. By default, the theme is
-specified by \code{legend.title} in \code{\link[=theme]{theme()}} or theme.}
+object of \code{\link[ggplot2:element_text]{element_text()}} is expected. By default, the theme is
+specified by \code{legend.title} in \code{\link[ggplot2:theme]{theme()}} or theme.}
 
 \item{title.hjust}{A number specifying horizontal justification of the
 title text.}
@@ -40,8 +56,8 @@ label. One of "top", "bottom" (default for horizontal guide), "left", or
 "right" (default for vertical guide).}
 
 \item{label.theme}{A theme object for rendering the label text. Usually the
-object of \code{\link[=element_text]{element_text()}} is expected. By default, the theme is
-specified by \code{legend.text} in \code{\link[=theme]{theme()}}.}
+object of \code{\link[ggplot2:element_text]{element_text()}} is expected. By default, the theme is
+specified by \code{legend.text} in \code{\link[ggplot2:theme]{theme()}}.}
 
 \item{label.hjust}{A numeric specifying horizontal justification of the
 label text.}
@@ -51,11 +67,11 @@ text.}
 
 \item{keywidth}{A numeric or a \code{\link[grid:unit]{grid::unit()}} object specifying
 the width of the legend key. Default value is \code{legend.key.width} or
-\code{legend.key.size} in \code{\link[=theme]{theme()}}.}
+\code{legend.key.size} in \code{\link[ggplot2:theme]{theme()}}.}
 
 \item{keyheight}{A numeric or a \code{\link[grid:unit]{grid::unit()}} object specifying
 the height of the legend key. Default value is \code{legend.key.height} or
-\code{legend.key.size} in \code{\link[=theme]{theme()}}.}
+\code{legend.key.size} in \code{\link[ggplot2:theme]{theme()}}.}
 
 \item{direction}{A character string indicating the direction of the guide.
 One of "horizontal" or "vertical."}

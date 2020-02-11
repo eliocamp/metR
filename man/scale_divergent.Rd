@@ -2,17 +2,43 @@
 % Please edit documentation in R/scale_divergent.R
 \name{scale_divergent}
 \alias{scale_divergent}
+\alias{scale_colour_divergent}
 \alias{scale_color_divergent}
 \alias{scale_fill_divergent}
-\title{Divergent color scales}
+\title{Divergent colour scales}
 \usage{
-scale_color_divergent(..., low = scales::muted("blue"), mid = "white",
-  high = scales::muted("red"), midpoint = 0, space = "Lab",
-  na.value = "grey50", guide = "colourbar")
+scale_colour_divergent(
+  ...,
+  low = scales::muted("blue"),
+  mid = "white",
+  high = scales::muted("red"),
+  midpoint = 0,
+  space = "Lab",
+  na.value = "grey50",
+  guide = "colourbar"
+)
 
-scale_fill_divergent(..., low = scales::muted("blue"), mid = "white",
-  high = scales::muted("red"), midpoint = 0, space = "Lab",
-  na.value = "grey50", guide = "colourbar")
+scale_color_divergent(
+  ...,
+  low = scales::muted("blue"),
+  mid = "white",
+  high = scales::muted("red"),
+  midpoint = 0,
+  space = "Lab",
+  na.value = "grey50",
+  guide = "colourbar"
+)
+
+scale_fill_divergent(
+  ...,
+  low = scales::muted("blue"),
+  mid = "white",
+  high = scales::muted("red"),
+  midpoint = 0,
+  space = "Lab",
+  na.value = "grey50",
+  guide = "colourbar"
+)
 }
 \arguments{
 \item{...}{Arguments passed on to \code{continuous_scale}
@@ -60,7 +86,7 @@ Use \code{NA} to refer to the existing minimum or maximum
 new limits
 }}
   \item{rescaler}{Used by diverging and n colour gradients
-(i.e. \code{\link[=scale_colour_gradient2]{scale_colour_gradient2()}}, \code{\link[=scale_colour_gradientn]{scale_colour_gradientn()}}).
+(i.e. \code{\link[ggplot2:scale_colour_gradient2]{scale_colour_gradient2()}}, \code{\link[ggplot2:scale_colour_gradientn]{scale_colour_gradientn()}}).
 A function used to scale the input values to the range [0, 1].}
   \item{oob}{Function that handles limits outside of the scale limits
 (out of bounds). The default replaces out of bounds values with \code{NA}.}
@@ -80,7 +106,7 @@ scales, "top" or "bottom" for horizontal scales}
   \item{super}{The super class to use for the constructed scale}
   \item{expand}{Vector of range expansion constants used to add some
 padding around the data, to ensure that they are placed some distance
-away from the axes. Use the convenience function \code{\link[=expand_scale]{expand_scale()}}
+away from the axes. Use the convenience function \code{\link[ggplot2:expand_scale]{expand_scale()}}
 to generate the values for the \code{expand} argument. The defaults are to
 expand the scale by 5\% on each side for continuous variables, and by
 0.6 units on each side for discrete variables.}
@@ -111,19 +137,25 @@ inverted defaults of \code{high} and \code{low}.
 library(ggplot2)
 ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
   geom_contour(aes(color = ..level..)) +
-  scale_color_divergent(midpoint = 130)
+  scale_colour_divergent(midpoint = 130)
 
 }
 \seealso{
-Other ggplot2 helpers: \code{\link{DivideTimeseries}},
-  \code{\link{MakeBreaks}}, \code{\link{WrapCircular}},
-  \code{\link{geom_arrow}}, \code{\link{geom_contour2}},
-  \code{\link{geom_contour_fill}},
-  \code{\link{geom_label_contour}},
-  \code{\link{geom_relief}}, \code{\link{geom_streamline}},
-  \code{\link{guide_colourstrip}},
-  \code{\link{map_labels}}, \code{\link{reverselog_trans}},
-  \code{\link{scale_longitude}}, \code{\link{stat_na}},
-  \code{\link{stat_subset}}
+Other ggplot2 helpers: 
+\code{\link{DivideTimeseries}()},
+\code{\link{MakeBreaks}()},
+\code{\link{WrapCircular}()},
+\code{\link{geom_arrow}()},
+\code{\link{geom_contour2}()},
+\code{\link{geom_contour_fill}()},
+\code{\link{geom_label_contour}()},
+\code{\link{geom_relief}()},
+\code{\link{geom_streamline}()},
+\code{\link{guide_colourstrip}()},
+\code{\link{map_labels}},
+\code{\link{reverselog_trans}()},
+\code{\link{scale_longitude}},
+\code{\link{stat_na}()},
+\code{\link{stat_subset}()}
 }
 \concept{ggplot2 helpers}

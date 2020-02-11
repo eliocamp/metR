@@ -3,7 +3,7 @@
 #' `geom_relief()` simulates shading caused by relief. Can be useful when
 #' plotting topographic data because relief shading might give a more intuitive
 #' impression of the shape of the terrain than contour lines or mapping height
-#' to color. `geom_shadow()` projects shadows.
+#' to colour. `geom_shadow()` projects shadows.
 #'
 #' @inheritParams ggplot2::geom_tile
 #' @param raster if `TRUE` (the default), uses [ggplot2::geom_raster],
@@ -140,8 +140,8 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", ggplot2::GeomTile,
                     stop("geom_raster only works with Cartesian coordinates", call. = FALSE)
                 }
                 # Convert vector of data to raster
-                x_pos <- as.integer((coords$x - min(coords$x)) / resolution(coords$x, FALSE))
-                y_pos <- as.integer((coords$y - min(coords$y)) / resolution(coords$y, FALSE))
+                x_pos <- as.integer((coords$x - min(coords$x)) / ggplot2::resolution(coords$x, FALSE))
+                y_pos <- as.integer((coords$y - min(coords$y)) / ggplot2::resolution(coords$y, FALSE))
 
                 nrow <- max(y_pos) + 1
                 ncol <- max(x_pos) + 1

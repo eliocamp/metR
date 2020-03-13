@@ -173,7 +173,7 @@ ReadNetCDF <- function(file, vars = NULL,
     if ("time" %in% names(dimensions) && ncfile$dim$time$units != "") {
         time <- .parse_time(dimensions[["time"]],
                             ncfile$dim$time$units)
-        dimensions[["time"]] <- as.character(time)
+        dimensions[["time"]] <- time
         if (.is.somedate(time)) {
             has_timedate <- TRUE
         }
@@ -184,7 +184,6 @@ ReadNetCDF <- function(file, vars = NULL,
     #     # options(OutDec = dec)
     #     return(r)
     # }
-
     ## Hago los subsets
     # Me fijo si faltan dimensiones
     subset <- .expand_chunks(subset)
@@ -228,6 +227,10 @@ ReadNetCDF <- function(file, vars = NULL,
             d <- dimensions[[s]]
             sub <- subset[[s]]
 
+            if (.is.somedate(sub) | s == "time") {
+                sub <- lubridate::as_datetime(sub)
+            }
+
             if (is.na(sub[1])) {
                 sub[1] <- min(d)
             }
@@ -236,15 +239,11 @@ ReadNetCDF <- function(file, vars = NULL,
                 sub[2] <- max(d)
             }
 
-            if (.is.somedate(sub) | s == "time") {
-                start[[s]] <- which(lubridate::as_datetime(d) %~% min(lubridate::as_datetime(sub)))
-                count[[s]] <- abs(which(lubridate::as_datetime(d) %~% max(lubridate::as_datetime(sub))) - start[[s]] + 1)
-            } else {
-                start1 <- which(d %~% sub[1])
-                end <- which(d %~% sub[length(sub)])
-                start[[s]] <- min(start1, end)
-                count[[s]] <- abs(end - start1) + 1
-            }
+            start1 <- which(d %~% sub[1])
+            end <- which(d %~% sub[length(sub)])
+            start[[s]] <- min(start1, end)
+            count[[s]] <- abs(end - start1) + 1
+
 
             if(count[[s]] == 0) count[[s]] <- 1
 
@@ -275,9 +274,10 @@ ReadNetCDF <- function(file, vars = NULL,
                              value.name = names(vars)[first.var])
 
         if ("time" %in% names(dimensions) && has_timedate) {
-            nc.df[, time2 := lubridate::as_datetime(time[1]), by = time]
-            nc.df[, time := NULL]
-            data.table::setnames(nc.df, "time2", "time")
+            # time_out <- time
+            # nc.df[, time2 := time_out[as.character(time_out) == time], by = time]
+            # nc.df[, time := NULL]
+            # data.table::setnames(nc.df, "time2", "time")
         }
 
         for (v in seq_along(vars)[-first.var]) {
@@ -442,7 +442,7 @@ print.ncdim4 <- function(x, ...) {
 
 
 .melt_array <- function(array, dims, value.name = "V1") {
-    dims <- lapply(dims, c)
+    # dims <- lapply(dims, c)
     dims <- c(dims[length(dims):1], sorted = FALSE)
     grid <- do.call(data.table::CJ, dims)
     grid[, c(value.name) := c(array)][]

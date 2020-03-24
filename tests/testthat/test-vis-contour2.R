@@ -1,7 +1,7 @@
-
 library(vdiffr)
 library(ggplot2)
 
+skip_on_travis()
 context("stat_contour2")
 data(geopotential)
 geo <- subset(geopotential, date == date[1])

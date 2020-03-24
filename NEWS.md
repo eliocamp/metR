@@ -1,10 +1,12 @@
 # metR 0.7.0
 
-## New feattures
+## New features
 
 - `FitWave()` and related functions return `NA`s when the inputted signal has `NA`s.
 
+## Bugfixes
 
+- `ReadNetCDF()` won't try to parse "time" dimensions that are not dates. 
 
 # metR 0.6.0 - Pileus
 

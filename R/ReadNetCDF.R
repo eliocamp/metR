@@ -296,6 +296,11 @@ ReadNetCDF <- function(file, vars = NULL,
 }
 
 .parse_time <- function(time, units) {
+    has_since <- grepl(units, "since")
+    if (!has_since) {
+        return(time)
+    }
+
     if (!requireNamespace("udunits2", quietly = TRUE)) {
         message("Time dimension found and package udunits2 is not installed. Trying to parse.")
         fail <- paste0("Time parsing failed. Returing raw values in ", units, ".\n",
@@ -419,6 +424,7 @@ print.ncvar4 <- function(x, ...) {
 #' @export
 print.ncdim4 <- function(x, ...) {
     # cat("$", dim$name, "\n", sep = "")
+    units <- x$units
     if (x$name == "time" & x$units != "") {
         vals <- suppressMessages(suppressWarnings(.parse_time(x$vals, x$units)))
 
@@ -426,10 +432,8 @@ print.ncdim4 <- function(x, ...) {
             units <- ""
         }
 
-
     } else {
         vals <- x$vals
-        units <- x$units
     }
 
     cat("  ", x$name, ": ",

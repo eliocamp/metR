@@ -6,7 +6,8 @@
 
 ## Bugfixes
 
-- `ReadNetCDF()` won't try to parse "time" dimensions that are not dates. 
+- `ReadNetCDF()` won't try to parse "time" dimensions that are not dates and will try 
+to parse as time all dimensions.
 
 # metR 0.6.0 - Pileus
 

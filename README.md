@@ -40,7 +40,9 @@ You can install metR from CRAN with:
 install.packages("metR")
 ```
 
-Or the developement version with:
+Or the developement version ([![Build
+Status](https://travis-ci.org/eliocamp/metR.svg?branch=dev)](https://travis-ci.org/eliocamp/metR))
+with:
 
 ``` r
 # install.packages("devtools")

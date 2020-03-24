@@ -165,19 +165,15 @@ ReadNetCDF <- function(file, vars = NULL,
     ids <- vector()
     dimensions <- list()
     for (i in seq_along(dims)) {
-        dimensions[[dims[i]]] <- ncfile$dim[[dims[i]]]$vals
+        # if (dims[i] == "time" && ncfile$dim[[dims[i]]]$units != "") {
+            dimensions[[dims[i]]] <- .parse_time(ncfile$dim[[dims[i]]]$vals,
+                                                 ncfile$dim[[dims[i]]]$units)
+        # } else {
+        #     dimensions[[dims[i]]] <- ncfile$dim[[dims[i]]]$vals
+        # }
         ids[i] <- ncfile$dim[[i]]$id
     }
     names(dims) <- ids
-    has_timedate <- FALSE
-    if ("time" %in% names(dimensions) && ncfile$dim$time$units != "") {
-        time <- .parse_time(dimensions[["time"]],
-                            ncfile$dim$time$units)
-        dimensions[["time"]] <- time
-        if (.is.somedate(time)) {
-            has_timedate <- TRUE
-        }
-    }
 
     # if (out[1] == "vars") {
     #     r <- list(vars = unname(vars), dimensions = dimensions, dims = dims)
@@ -227,7 +223,7 @@ ReadNetCDF <- function(file, vars = NULL,
             d <- dimensions[[s]]
             sub <- subset[[s]]
 
-            if (.is.somedate(sub) | s == "time") {
+            if (.is.somedate(d)) {
                 sub <- lubridate::as_datetime(sub)
             }
 
@@ -272,13 +268,6 @@ ReadNetCDF <- function(file, vars = NULL,
         first.var <- which.max(dim.length)
         nc.df <- .melt_array(nc[[first.var]], dims = nc_dim[[first.var]],
                              value.name = names(vars)[first.var])
-
-        if ("time" %in% names(dimensions) && has_timedate) {
-            # time_out <- time
-            # nc.df[, time2 := time_out[as.character(time_out) == time], by = time]
-            # nc.df[, time := NULL]
-            # data.table::setnames(nc.df, "time2", "time")
-        }
 
         for (v in seq_along(vars)[-first.var]) {
             this.dim <- names(dimnames(nc[[v]]))
@@ -425,15 +414,10 @@ print.ncvar4 <- function(x, ...) {
 print.ncdim4 <- function(x, ...) {
     # cat("$", dim$name, "\n", sep = "")
     units <- x$units
-    if (x$name == "time" & x$units != "") {
-        vals <- suppressMessages(suppressWarnings(.parse_time(x$vals, x$units)))
+    vals <- suppressMessages(suppressWarnings(.parse_time(x$vals, x$units)))
 
-        if (.is.somedate(vals)) {
-            units <- ""
-        }
-
-    } else {
-        vals <- x$vals
+    if (.is.somedate(vals)) {
+        units <- ""
     }
 
     cat("  ", x$name, ": ",

@@ -34,3 +34,10 @@ test_that("different outs work", {
     expect_is(ReadNetCDF(file, out = "array")[[1]], "array")
     expect_is(ReadNetCDF(file, out = "vector")[[1]], "numeric")
 })
+
+
+test_that("time dimension without 'since' works", {
+    file <- system.file("extdata", "weird_datesmall.nc", package = "metR")
+    read <- ReadNetCDF(file)
+    expect_known_output(ReadNetCDF(file), "readnetcdf_time_hours")
+})

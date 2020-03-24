@@ -296,7 +296,7 @@ ReadNetCDF <- function(file, vars = NULL,
 }
 
 .parse_time <- function(time, units) {
-    has_since <- grepl(units, "since")
+    has_since <- grepl("since", units)
     if (!has_since) {
         return(time)
     }

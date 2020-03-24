@@ -37,7 +37,7 @@ test_that("different outs work", {
 
 
 test_that("time dimension without 'since' works", {
-    file <- system.file("extdata", "weird_datesmall.nc", package = "metR")
+    file <- "weird_datesmall.nc"
     read <- ReadNetCDF(file)
     expect_known_output(ReadNetCDF(file), "readnetcdf_time_hours")
 })

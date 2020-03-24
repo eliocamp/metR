@@ -119,7 +119,7 @@ Finally, `GetSMNData()` retrieves data from Argentina's National Weather Service
 
 
 # Manipulate data
-
+  
 ## EOF
 
 Empirical Orthogonal Functions (also known as Principal Component Analysis) is a widely use technique for dimensional reduction of large datasets. In R there are multiple packages that implement this methodology (in fact, base R has *two* functions) but, IMHO, they have awkward interfaces that don't interact well with `data.table` (or `dplyr`) syntax. `metR`'s `EOF()` essentially performs a Singular Value Decomposition of the data and returns the left and right singular vectors, and singular values in a tidy format.

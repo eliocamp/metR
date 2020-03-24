@@ -61,7 +61,7 @@ maximum value if \code{waiver()}}
 
 \item{guide}{type of legend}
 
-\item{...}{Other arguments passed on to \code{scale_(x|y)_continuous()}}
+\item{...}{Other arguments passed on to \verb{scale_(x|y)_continuous()}}
 }
 \description{
 Allows to control the size of the arrows in \link{geom_arrow}.

@@ -2,6 +2,7 @@ library(vdiffr)
 library(ggplot2)
 
 skip_on_travis()
+
 context("stat_contour2")
 data(geopotential)
 geo <- subset(geopotential, date == date[1])
@@ -19,8 +20,8 @@ test_that("geom_contour2 mimics geom_contour", {
                             guides(fill = "none"))
 })
 
-test_that("accepts function in breaks", {
-    expect_doppelganger("contour2-fun",
+    test_that("accepts function in breaks", {
+        expect_doppelganger("contour2-fun",
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour2(aes(z = gh), breaks = MakeBreaks(50)))
 })

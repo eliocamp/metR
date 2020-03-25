@@ -114,7 +114,6 @@ ReadNetCDF <- function(file, vars = NULL,
              "Install it with 'install.packages(\"ncdf4\")'")
     }
 
-
     out <- out[1]
     checks <- makeAssertCollection()
     assertCharacter(file, len = 1, min.chars = 1, any.missing = FALSE, add = checks)
@@ -273,7 +272,7 @@ ReadNetCDF <- function(file, vars = NULL,
             this.dim <- names(dimnames(nc[[v]]))
             first.dim <- names(dimnames(nc[[first.var]]))
             missing.dim <- first.dim[!(first.dim %in% this.dim)]
-            ..n <- c(nc[[v]])
+            n <- c(nc[[v]])
             nc.df[, names(vars)[v] := ..n, by = c(missing.dim)]
         }
 

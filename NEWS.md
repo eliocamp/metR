@@ -11,8 +11,12 @@
 - `ReadNetCDF()` won't try to parse "time" dimensions that are not dates and will try 
 to parse as time all dimensions.
 
-- `seasonaly()` is now correctly called `seasonally()`. This comes to prove that you don't 
-put an ESL person in charge of naming stuff. This is a **breaking change**.
+
+## Breaking changes
+ 
+- `seasonaly()` is now correctly called `seasonally()`. This proves that you don't 
+put an ESL person in charge of naming stuff.
+
 
 # metR 0.6.0 - Pileus
 
@@ -23,7 +27,7 @@ put an ESL person in charge of naming stuff. This is a **breaking change**.
 - `geom_arrow()` and `geom_vector()` should plot faster. 
 
 - New functions `is.full_season()` and `seasonaly()`. 
-
+    
 - `FitLm()` returns model $r^2$ and adjusted $r^2$.
 
 - `FitLm()` adds names to unnamed terms. 

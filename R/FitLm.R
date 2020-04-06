@@ -78,7 +78,7 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE) {
 
         if (has_weights) {
             weights <- weights/sum(weights)
-            fit <- lm.wfit(X, y, w = weights)
+            fit <- stats::lm.wfit(X, y, w = weights)
         } else {
             fit <- .lm.fit(X, y)
         }
@@ -89,7 +89,7 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE) {
     if (se == TRUE) {
         df <- N - ncol(X)
         res_sum <- sum(weights*fit$residuals^2)
-        ss <- sum(weights*(y - weighted.mean(y, w = weights))^2)
+        ss <- sum(weights*(y - stats::weighted.mean(y, w = weights))^2)
         r_squared <- 1 - res_sum/ss
         adj_r_squared <- 1 - res_sum/ss*(N-1)/df
 

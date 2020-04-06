@@ -6,6 +6,7 @@
 #' @param y numeric vector of observations to model
 #' @param ... numeric vectors of variables used in the modelling
 #' @param se logical indicating whether to compute the standard error
+#' @param weights numerical vector of weights (which doesn't need to be normalised)
 #'
 #' @return
 #' a list with elements
@@ -42,8 +43,10 @@
 #'
 #' @export
 #' @importFrom stats .lm.fit complete.cases
-FitLm <- function(y, ..., se = FALSE) {
+FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE) {
     X <- cbind(`(Intercept)` = 1, ...)
+    has_weights <- data.table::uniqueN(weights) > 1
+
     term <- dimnames(X)[[2]]
     missing <- term == ""
     term[missing] <- paste0("V", seq_len(sum(missing)))
@@ -73,22 +76,34 @@ FitLm <- function(y, ..., se = FALSE) {
             y <- y[-remove]
         }
 
-        a <- .lm.fit(X, y)
-        estimate <- a$coefficients
+        if (has_weights) {
+            weights <- weights/sum(weights)
+            fit <- lm.wfit(X, y, w = weights)
+        } else {
+            fit <- .lm.fit(X, y)
+        }
+
+        estimate <- unname(fit$coefficients)
     }
 
     if (se == TRUE) {
         df <- N - ncol(X)
-        res_sum <- sum(a$residuals^2)
-        ss <- sum((y - mean(y))^2)
+        res_sum <- sum(weights*fit$residuals^2)
+        ss <- sum(weights*(y - weighted.mean(y, w = weights))^2)
         r_squared <- 1 - res_sum/ss
         adj_r_squared <- 1 - res_sum/ss*(N-1)/df
 
-        if (all(a$residuals == 0)) {
+        if (all(fit$residuals == 0)) {
             se <- NA_real_
         } else {
             sigma <- res_sum/(nrow(X) - ncol(X))
-            se <- sqrt(diag(chol2inv(chol(t(X)%*%X)))*sigma)
+            if (has_weights) {
+                W <- diag(weights, nrow = length(weights))
+                se <- sqrt(diag(chol2inv(chol(t(X)%*%W%*%X)))*sigma)
+            } else {
+                se <- sqrt(diag(chol2inv(chol(t(X)%*%X)))*sigma)
+            }
+
         }
         return(list(term = term,
                     estimate = estimate,

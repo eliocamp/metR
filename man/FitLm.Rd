@@ -4,12 +4,14 @@
 \alias{FitLm}
 \title{Fast estimates of linear regression}
 \usage{
-FitLm(y, ..., se = FALSE)
+FitLm(y, ..., weights = rep(1, length(y)), se = FALSE)
 }
 \arguments{
 \item{y}{numeric vector of observations to model}
 
 \item{...}{numeric vectors of variables used in the modelling}
+
+\item{weights}{numerical vector of weights (which doesn't need to be normalised)}
 
 \item{se}{logical indicating whether to compute the standard error}
 }

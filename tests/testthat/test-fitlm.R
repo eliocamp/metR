@@ -34,3 +34,24 @@ test_that("special cases work", {
     x[-1] <- NA
     expect_equal(FitLm(x, y)$estimate, c(NA_real_, NA_real_))
 })
+
+
+test_that("weighted, regression works", {
+    weights <- runif(n, 0.1, 1)
+    good_fit <- lm(x ~ y + z, weights = weights)
+
+    sim_fit <- coef(good_fit)
+    sim_fit <- list(term = names(sim_fit), estimate = unname(sim_fit))
+
+    expect_equal(FitLm(x, y, z, weights = weights), sim_fit)
+
+    summ <- summary(good_fit)
+
+    sim_fit <- c(sim_fit,
+                 list(std.error = unname(summ$coefficients[, 2]),
+                      df = rep(97, 3),
+                      r.squared = rep(summ$r.squared, 3),
+                      adj.r.squared = rep(summ$adj.r.squared, 3)))
+
+    expect_equal(FitLm(x, y, z, se = TRUE, weights = weights), sim_fit)
+})

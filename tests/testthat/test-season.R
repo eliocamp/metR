@@ -17,8 +17,8 @@ test_that("season works", {
 })
 
 
-test_that("seasonaly works", {
-    expect_equal(seasonaly(c("2017-12-01", "2018-01-01", "2018-02-01")),
+test_that("seasonally works", {
+    expect_equal(seasonally(c("2017-12-01", "2018-01-01", "2018-02-01")),
                  as.Date(c("2018-01-01", "2018-01-01", "2018-01-01")))
 
 

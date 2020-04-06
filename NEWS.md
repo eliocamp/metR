@@ -4,6 +4,8 @@
 
 - `FitWave()` and related functions return `NA`s when the inputted signal has `NA`s.
 
+- `FitLm()` accepts a `weights` argument to perform weighted regression.
+
 ## Bugfixes
 
 - `ReadNetCDF()` won't try to parse "time" dimensions that are not dates and will try 

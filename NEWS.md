@@ -9,6 +9,9 @@
 - `ReadNetCDF()` won't try to parse "time" dimensions that are not dates and will try 
 to parse as time all dimensions.
 
+- `seasonaly()` is now correctly called `seasonally()`. This comes to prove that you don't 
+put an ESL person in charge of naming stuff. This is a **breaking change**.
+
 # metR 0.6.0 - Pileus
 
 ## New features

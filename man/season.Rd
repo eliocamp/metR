@@ -3,13 +3,13 @@
 \name{season}
 \alias{season}
 \alias{AssignSeason}
-\alias{seasonaly}
+\alias{seasonally}
 \alias{is.full_season}
 \title{Assign seasons to months}
 \usage{
 season(x, lang = c("en", "es"))
 
-seasonaly(x)
+seasonally(x)
 
 is.full_season(x)
 }

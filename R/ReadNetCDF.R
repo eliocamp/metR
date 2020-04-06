@@ -280,7 +280,7 @@ ReadNetCDF <- function(file, vars = NULL,
     }
 
 
-    return(nc.df[])
+    return(nc.df[][])
 }
 
 .parse_time <- function(time, units) {

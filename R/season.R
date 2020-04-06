@@ -55,7 +55,7 @@ season <- function(x, lang = c("en", "es")) {
 
 #' @export
 #' @rdname season
-seasonaly <- function(x) {
+seasonally <- function(x) {
     checks <- makeAssertCollection()
     assertVector(x, add = checks)
     assert(checkDateish(x))
@@ -73,7 +73,6 @@ seasonaly <- function(x) {
 
     times[match(x, times_org)]
 }
-
 
 #' @export
 #' @rdname season

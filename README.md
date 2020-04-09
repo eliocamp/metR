@@ -27,7 +27,7 @@ such as `Derivate()` or `EOF()`; these are implemented to work in the
 [data.table](https://github.com/Rdatatable/data.table/wiki) paradigm,
 but also work with regular data frames.
 
-Currently metR is in developement but maturing. Most functions check
+Currently metR is in development but maturing. Most functions check
 arguments and there are some tests. However, some functions might change
 it’s interface, and functionality can be moved to other packages, so
 please bear that in mind.

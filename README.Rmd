@@ -25,7 +25,7 @@ metR packages several functions and utilities that make R better for handling  m
 
 Conceptually it's divided into *visualization tools* and *data tools*. The former are geoms, stats and scales that help with plotting using [ggplot2](http://ggplot2.tidyverse.org/index.html), such as `stat_contour_fill()` or `scale_y_level()`, while the later are functions for common data processing tools in the atmospheric sciences, such as `Derivate()` or `EOF()`; these are implemented to work in the [data.table](https://github.com/Rdatatable/data.table/wiki) paradigm, but also work with regular data frames. 
 
-Currently metR is in developement but maturing. Most functions check arguments and there are some tests. However, some functions might change it's interface, and functionality can be moved to other packages, so please bear that in mind. 
+Currently metR is in development but maturing. Most functions check arguments and there are some tests. However, some functions might change it's interface, and functionality can be moved to other packages, so please bear that in mind. 
 
 ## Installation
 

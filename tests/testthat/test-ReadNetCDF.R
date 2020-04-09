@@ -41,3 +41,18 @@ test_that("time dimension without 'since' works", {
     read <- ReadNetCDF(file)
     expect_known_output(ReadNetCDF(file), "readnetcdf_time_hours")
 })
+
+
+test_that("can read from nc_open", {
+    nc <- ncdf4::nc_open(file)
+    expect_known_value(ReadNetCDF(nc), "readnetcdf_nc_open")
+    expect_known_value(ReadNetCDF(nc), "readnetcdf_nc_open2")
+})
+
+
+test_that("can read from urls", {
+    url <- "http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/.GMAO/.GEOS_V2p1/.hindcast/.ua/dods"
+    skip_if_offline()
+    expect_class(GlanceNetCDF(url), "nc_glance")
+})
+

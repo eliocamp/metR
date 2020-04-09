@@ -34,7 +34,8 @@ Imports:
     scales,
     sp,
     stringr,
-    purrr
+    purrr,
+    RCurl
 Suggests: 
     maps,
     maptools,

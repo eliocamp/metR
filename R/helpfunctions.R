@@ -167,7 +167,7 @@ if(getRversion() >= "2.15.1") {
           "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2",
           "group", "step", "point", "change", "end", "level", "m", "rotate",
           "x.d", "y.d", "PC", "step2", "runif", "N", "angle", "var", "head",
-          "col__", "row__", "t1", "z1", "z2", "..nn"))
+          "col__", "row__", "t1", "z1", "z2", "..n"))
 }
 
 
@@ -261,6 +261,19 @@ checkDateish <- function(x, ...) {
 }
 
 assertDateish <- checkmate::makeAssertionFunction(checkDateish)
+
+
+checkURLFile <- function(x) {
+    access <- unname(file.access(x, 4) == 0 | RCurl::url.exists(x))
+
+    if (isFALSE(access)) {
+        return("File or URL not readable")
+    }
+    return(access)
+}
+
+assertURLFile <- checkmate::makeAssertionFunction(checkURLFile)
+
 
 check_packages <- function(packages, fun) {
     installed <- vapply(packages, function(p) {

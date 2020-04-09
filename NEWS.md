@@ -6,6 +6,9 @@
 
 - `FitLm()` accepts a `weights` argument to perform weighted regression.
 
+- `ReadNetCDF()` now can read files directly from DAP servers and other urls, and 
+  objects returned by [ncdf4::nc_open()].
+
 ## Bugfixes
 
 - `ReadNetCDF()` won't try to parse "time" dimensions that are not dates and will try 

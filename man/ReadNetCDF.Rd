@@ -16,7 +16,13 @@ ReadNetCDF(
 GlanceNetCDF(file, ...)
 }
 \arguments{
-\item{file}{file to read from.}
+\item{file}{source to read from. Must be one of:
+\itemize{
+\item A string representing a local file with read access.
+\item A string representing a URL readable by \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.
+(this includes DAP urls).
+\item A netcdf object returned by \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.
+}}
 
 \item{vars}{a character vector with the name of the variables to read. If
 \code{NULL}, then it read all the variables.}
@@ -113,17 +119,36 @@ but demands much less typing.
 }
 
 \examples{
-\dontrun{
-file <- "file.nc"
+file <- system.file("extdata", "temperature.nc", package = "metR")
 # Get a list of variables.
 variables <- GlanceNetCDF(file)
 print(variables)
+
+# The object returned by GlanceNetCDF is a list with lots
+# of information
+str(variables)
 
 # Read only the first one, with name "var".
 field <- ReadNetCDF(file, vars = c(var = names(variables$vars[1])))
 # Add a new variable.
 # ¡Make sure it's on the same exact grid!
-field[, var2 := ReadNerCDF(file2, out = "vector", subset = list(lat = 90:10))]
+field[, var2 := ReadNetCDF(file, out = "vector")]
+
+\dontrun{
+# Using a DAP url
+url <- "http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/.GMAO/.GEOS_V2p1/.hindcast/.ua/dods"
+field <- ReadNetCDF(url, subset = list(M = 1,
+                                       P = 10,
+                                       S = "1999-01-01"))
+
+# In this case, opening the netcdf file takes a non-neglible
+# amount of time. So if you want to iterate over many dimensions,
+# then it's more efficient to open the file first and then read it.
+
+ncfile <- ncdf4::nc_open(url)
+field <- ReadNetCDF(ncfile, subset = list(M = 1,
+                                       P = 10,
+                                       S = "1999-01-01"))
 }
 
 }

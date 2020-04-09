@@ -53,6 +53,7 @@ test_that("can read from nc_open", {
 test_that("can read from urls", {
     url <- "http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/.GMAO/.GEOS_V2p1/.hindcast/.ua/dods"
     skip_if_offline()
+    skip_on_cran()
     expect_class(GlanceNetCDF(url), "nc_glance")
 })
 

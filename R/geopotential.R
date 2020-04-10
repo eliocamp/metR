@@ -12,5 +12,5 @@
 #'   \item{gh}{geopotential height in meters}
 #'   \item{date}{date}
 #'   }
-#' @source \url{https://www.esrl.noaa.gov/psd/data/gridded/data.ncep.reanalysis.derived.pressure.html}
+#' @source \url{https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.derived.pressure.html}
 "geopotential"

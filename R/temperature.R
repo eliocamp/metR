@@ -9,5 +9,5 @@
 #'   \item{lev}{pressure level in hPa)}
 #'   \item{air}{air temperature in Kelvin}
 #' }
-#' @source \url{https://www.esrl.noaa.gov/psd/data/gridded/data.ncep.reanalysis.derived.pressure.html}
+#' @source \url{https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.derived.pressure.html}
 "temperature"

@@ -1,3 +1,10 @@
+# metR 0.8.0
+
+
+## Bugfixes
+
+- `FitLm()` handles `NA`s better.
+
 # metR 0.7.0
 
 ## New features

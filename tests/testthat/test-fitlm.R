@@ -18,7 +18,7 @@ test_that("regression works", {
 
     sim_fit <- c(sim_fit,
                  list(std.error = unname(summ$coefficients[, 2]),
-                      df = rep(97, 3),
+                      df = rep(summ$df[2], 3),
                       r.squared = rep(summ$r.squared, 3),
                       adj.r.squared = rep(summ$adj.r.squared, 3)))
 
@@ -49,9 +49,31 @@ test_that("weighted, regression works", {
 
     sim_fit <- c(sim_fit,
                  list(std.error = unname(summ$coefficients[, 2]),
-                      df = rep(97, 3),
+                      df = rep(summ$df[2], 3),
                       r.squared = rep(summ$r.squared, 3),
                       adj.r.squared = rep(summ$adj.r.squared, 3)))
 
     expect_equal(FitLm(x, y, z, se = TRUE, weights = weights), sim_fit)
+})
+
+
+
+test_that("Supports NAs", {
+    y[10] <- NA
+    good_fit <- lm(x ~ y + z)
+
+    sim_fit <- coef(good_fit)
+    sim_fit <- list(term = names(sim_fit), estimate = unname(sim_fit))
+
+    expect_equal(FitLm(x, y, z), sim_fit)
+
+    summ <- summary(good_fit)
+
+    sim_fit <- c(sim_fit,
+                 list(std.error = unname(summ$coefficients[, 2]),
+                      df = rep(summ$df[2], 3),
+                      r.squared = rep(summ$r.squared, 3),
+                      adj.r.squared = rep(summ$adj.r.squared, 3)))
+
+    expect_equal(FitLm(x, y, z, se = TRUE), sim_fit)
 })

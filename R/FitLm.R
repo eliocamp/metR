@@ -74,6 +74,7 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE) {
         if (length(remove) > 0) {
             X <- X[-remove, ]
             y <- y[-remove]
+            weights <- weights[-remove]
         }
 
         if (has_weights) {

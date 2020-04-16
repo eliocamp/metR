@@ -15,7 +15,7 @@ A data.table with 53224 rows and 5 variables.
 }
 }
 \source{
-\url{https://www.esrl.noaa.gov/psd/data/gridded/data.ncep.reanalysis.derived.pressure.html}
+\url{https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.derived.pressure.html}
 }
 \usage{
 geopotential

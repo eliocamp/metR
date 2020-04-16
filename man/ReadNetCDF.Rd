@@ -3,6 +3,7 @@
 \name{ReadNetCDF}
 \alias{ReadNetCDF}
 \alias{GlanceNetCDF}
+\alias{auto_scale}
 \title{Read NetCDF files.}
 \usage{
 ReadNetCDF(
@@ -14,6 +15,8 @@ ReadNetCDF(
 )
 
 GlanceNetCDF(file, ...)
+
+auto_scale(...)
 }
 \arguments{
 \item{file}{source to read from. Must be one of:
@@ -25,7 +28,8 @@ GlanceNetCDF(file, ...)
 }}
 
 \item{vars}{a character vector with the name of the variables to read. If
-\code{NULL}, then it read all the variables.}
+\code{NULL}, then it reads all the variables. Use \code{\link[=auto_scale]{auto_scale()}} to signal that a
+set of variables needs automatic scaling and offset (see Scaling)`}
 
 \item{out}{character indicating the type of output desired}
 
@@ -33,8 +37,11 @@ GlanceNetCDF(file, ...)
 
 \item{key}{if \code{TRUE}, returns a data.table keyed by the dimensions of the data.}
 
-\item{...}{ignored. Is there for convenience so that a call to \code{\link[=ReadNetCDF]{ReadNetCDF()}} can
-be also valid for \code{\link[=GlanceNetCDF]{GlanceNetCDF()}}.}
+\item{...}{\itemize{
+\item in \code{\link[=GlanceNetCDF]{GlanceNetCDF()}}, ignored. Is there for convenience so that a call to \code{\link[=ReadNetCDF]{ReadNetCDF()}} can
+be also valid for \code{\link[=GlanceNetCDF]{GlanceNetCDF()}}.
+\item in \code{\link[=auto_scale]{auto_scale()}}, variables to read that need automatic scaling and offset (See Scaling).
+}}
 }
 \value{
 The return format is specified by \code{out}. It can be a data table in which each
@@ -59,6 +66,28 @@ Using the \code{\link[ncdf4]{ncdf4-package}} package, it reads a NetCDF file. Th
 over using \code{\link[ncdf4]{ncvar_get}} is that the output is a tidy data.table
 with proper dimensions.
 }
+\section{Functions}{
+\itemize{
+\item \code{auto_scale}: A convenient way to signal variables that need scaling
+}}
+
+\section{Scaling}{
+
+Some NetCDF files pack variables that need to be scaled and offsetted. For backwards
+compatibility, \code{ReadNetCDF()} by default does not apply that scaling (this will change
+in the future). If you want to automatically scale and offset a variable, then you need to
+wrap its name in a \code{auto_scale()} call.
+
+For example, using \code{vars = c("hgt", auto_scale("rad"))}
+will read the variable "hgt" as is but attempt to scale and offset the variable "rad" using
+the attributes packed inside the file.
+
+If you need to rename the variables, name the arguments inside \code{auto_scale()}. Using
+\code{vars = c("hgt", auto_scale(radiance = "rad", temperature = "air"))}, for example, will
+read the "hgt" variable unscaled with name "hgt", and the "rad" and "air" variables
+scaled with names "radiance" and "temperature" respectively.
+}
+
 \section{Subsetting}{
 
 In the most basic form, \code{subset} will be a named list whose names must match

@@ -1,5 +1,10 @@
 # metR 0.8.0
 
+## New features
+
+- `ReadNetCDF()` now can automatically scale and offset variables that need it using the 
+convenience function `auto_scale()` in the `vars` argument. `GlanceNetCDF()` will print 
+"Scaled" for those variables that need to be scaled and offsetted. 
 
 ## Bugfixes
 

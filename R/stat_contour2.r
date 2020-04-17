@@ -89,55 +89,62 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
   compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                            breaks = scales::fullseq, complete = TRUE,
                            na.rm = FALSE, circular = NULL, xwrap = NULL,
-                           ywrap = NULL, na.fill = FALSE, global.breaks = TRUE) {
+                           ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
+                           proj = NULL) {
     if (isFALSE(global.breaks)) {
       breaks <- setup_breaks(data,
-                   breaks = breaks,
-                   bins = bins,
-                   binwidth = binwidth)
+                             breaks = breaks,
+                             bins = bins,
+                             binwidth = binwidth)
     }
 
-      setDT(data)
+    setDT(data)
 
-      data <- data[!(is.na(y) | is.na(x)), ]
+    data <- data[!(is.na(y) | is.na(x)), ]
 
-      if (isFALSE(na.fill)) {
-          data <- data[!is.na(z), ]
+    if (isFALSE(na.fill)) {
+      data <- data[!is.na(z), ]
+    }
+
+    nx <- data[, uniqueN(x), by = y]$V1
+    ny <- data[, uniqueN(y), by = x]$V1
+
+    complete.grid <- abs(max(nx) - min(nx)) == 0 & abs(max(ny) - min(ny)) == 0
+
+    if (complete.grid == FALSE) {
+      if (complete == FALSE) {
+        warning("data must be a complete regular grid", call. = FALSE)
+        return(data.frame())
+      } else {
+        # data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+        data <- .complete(data, x, y)
       }
+    }
 
-      nx <- data[, uniqueN(x), by = y]$V1
-      ny <- data[, uniqueN(y), by = x]$V1
+    data <- .impute_data.m(data, na.fill)
 
-      complete.grid <- abs(max(nx) - min(nx)) == 0 & abs(max(ny) - min(ny)) == 0
+    if (!is.null(xwrap)) {
+      data <- suppressWarnings(WrapCircular(data, "x", xwrap))
+    }
+    if (!is.null(ywrap)) {
+      data <- suppressWarnings(WrapCircular(data, "y", ywrap))
+    }
 
-      if (complete.grid == FALSE) {
-          if (complete == FALSE) {
-              warning("data must be a complete regular grid", call. = FALSE)
-              return(data.frame())
-          } else {
-              # data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
-              data <- .complete(data, x, y)
-          }
-      }
 
-      data <- .impute_data.m(data, na.fill)
+    setDF(data)
+    contours <- as.data.table(.contour_lines(data, breaks, complete = complete))
 
-      if (!is.null(xwrap)) {
-          data <- suppressWarnings(WrapCircular(data, "x", xwrap))
-      }
-      if (!is.null(ywrap)) {
-          data <- suppressWarnings(WrapCircular(data, "y", ywrap))
-      }
-      setDF(data)
-      contours <- as.data.table(.contour_lines(data, breaks, complete = complete))
+    if (length(contours) == 0) {
+      warning("Not possible to generate contour data", call. = FALSE)
+      return(data.frame())
+    }
+    contours <- .order_contour.m(contours, setDT(data))
 
-      if (length(contours) == 0) {
-          warning("Not possible to generate contour data", call. = FALSE)
-          return(data.frame())
-      }
-      contours <- .order_contour.m(contours, setDT(data))
+    if (!is.null(proj)) {
+      contours <- copy(contours)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
+    }
 
-      return(contours)
+    return(contours)
   }
 )
 

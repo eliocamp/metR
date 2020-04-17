@@ -78,7 +78,8 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = scales::fullseq, complete = TRUE,
                              na.rm = FALSE, xwrap = NULL,
-                             ywrap = NULL, na.fill = FALSE, global.breaks = TRUE) {
+                             ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
+                             proj = NULL) {
         data.table::setDT(data)
 
         if (isFALSE(global.breaks)) {
@@ -188,6 +189,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
         # Order pieces according to area.
         cont <- .order_fill(cont)
+
+        if (!is.null(proj)) {
+            cont <- copy(cont)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
+        }
         cont
         }
 )

@@ -141,6 +141,9 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     contours <- .order_contour.m(contours, setDT(data))
 
     if (!is.null(proj)) {
+      if (!requireNamespace("proj4", quietly = TRUE)) {
+        stop("Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`")
+      }
       contours <- copy(contours)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
     }
 

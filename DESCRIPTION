@@ -50,7 +50,8 @@ Suggests:
     viridis,
     udunits2,
     gridExtra,
-    vdiffr
+    vdiffr,
+    proj4
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true

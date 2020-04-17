@@ -284,10 +284,10 @@ check_packages <- function(packages, fun) {
 
     if (length(missing != 0)) {
         text <- paste0(fun, " needs packages ",
-               paste0(missing, collapse = ", "),
-               ". Install with: \n",
-               "`install.packages(c(\"",
-               paste0(missing, collapse = "\", \""), "\"))`")
+                       paste0(missing, collapse = ", "),
+                       ". Install with: \n",
+                       "`install.packages(c(\"",
+                       paste0(missing, collapse = "\", \""), "\"))`")
         stop(text)
     }
 }
@@ -316,6 +316,35 @@ smooth2d <- function(x, y, value, kx = 1, ky = 1) {
 
     c(Re(fft(f1, inverse = TRUE)/length(f1)))
 }
+
+
+downsample <- function(x, y, value, byx = 1, byy = 1) {
+    data <- data.table(x, y, value)
+
+    g <- .tidy2matrix(data, x ~ y, value.var = "value")
+
+    f <- fft(g$matrix)
+    f1 <- f
+
+    kx <- 1/byx
+    ky <- 1/byy
+
+    kx <- c(0, seq_len(floor(nrow(f)/2*kx)))
+    kx <- c(kx + 1, nrow(f) - kx[kx != 0] + 1)
+
+    ky <- c(0, seq_len(floor(ncol(f)/2*ky)))
+    ky <- c(ky + 1, ncol(f) - ky[ky != 0] + 1)
+
+    f1[, -ky] <- 0
+    f1[-kx, ] <- 0
+
+    data$value_smooth <- c(Re(fft(f1, inverse = TRUE)/length(f1)))
+
+    data <- subset(data, x %in% JumpBy(sort(unique(x)), byx) &
+                       y %in% JumpBy(sort(unique(y)), byy))
+    data
+}
+
 # nocov end
 
 

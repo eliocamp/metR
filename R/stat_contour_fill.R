@@ -191,6 +191,9 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         cont <- .order_fill(cont)
 
         if (!is.null(proj)) {
+            if (!requireNamespace("proj4", quietly = TRUE)) {
+                stop("Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`")
+            }
             cont <- copy(cont)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
         }
         cont

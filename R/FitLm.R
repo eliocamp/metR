@@ -90,7 +90,12 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE) {
     if (se == TRUE) {
         df <- N - ncol(X)
         res_sum <- sum(weights*fit$residuals^2)
-        ss <- sum(weights*(y - stats::weighted.mean(y, w = weights))^2)
+        if (has_weights) {
+            ss <- sum(weights*(y - stats::weighted.mean(y, w = weights))^2)
+        } else {
+            ss <- sum(weights*(y - mean(y))^2)
+        }
+
         r_squared <- 1 - res_sum/ss
         adj_r_squared <- 1 - res_sum/ss*(N-1)/df
 

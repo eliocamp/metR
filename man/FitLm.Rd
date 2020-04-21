@@ -4,7 +4,7 @@
 \alias{FitLm}
 \title{Fast estimates of linear regression}
 \usage{
-FitLm(y, ..., weights = rep(1, length(y)), se = FALSE)
+FitLm(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se)
 }
 \arguments{
 \item{y}{numeric vector of observations to model}
@@ -14,6 +14,8 @@ FitLm(y, ..., weights = rep(1, length(y)), se = FALSE)
 \item{weights}{numerical vector of weights (which doesn't need to be normalised)}
 
 \item{se}{logical indicating whether to compute the standard error}
+
+\item{r2}{logical indicating whether to compute r squared}
 }
 \value{
 a list with elements

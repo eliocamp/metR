@@ -99,7 +99,7 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se) {
         if (has_weights) {
             ss <- sum(weights*(y - stats::weighted.mean(y, w = weights))^2)
         } else {
-            ss <- sum(weights*(y - mean(y))^2)
+            ss <- sum((y - mean(y))^2)
         }
 
 

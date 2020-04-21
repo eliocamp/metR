@@ -6,6 +6,7 @@
 #' @param y numeric vector of observations to model
 #' @param ... numeric vectors of variables used in the modelling
 #' @param se logical indicating whether to compute the standard error
+#' @param r2 logical indicating whether to compute r squared
 #' @param weights numerical vector of weights (which doesn't need to be normalised)
 #'
 #' @return
@@ -43,7 +44,7 @@
 #'
 #' @export
 #' @importFrom stats .lm.fit complete.cases
-FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE) {
+FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se) {
     X <- cbind(`(Intercept)` = 1, ...)
     has_weights <- data.table::uniqueN(weights) > 1
 
@@ -57,19 +58,21 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE) {
     # If empty, reurn NA with a warning.
     if (N < 2) {
         estimate <- rep(NA_real_, length(term))
+        out <- list(term = term,
+                    estimate = estimate)
         if (se == TRUE) {
             se <- estimate
             df <- N - ncol(X)
-            return(list(term = term,
-                        estimate = estimate,
-                        std.error = se,
-                        df = rep(df, length(term)),
-                        r.quared = rep(NA_real_, length(term)),
-                        adj.r.squared = rep(NA_real_, length(term))))
-        } else {
-            return(list(term = term,
-                        estimate = estimate))
+            out$std.error <-  estimate
+            out$df <- rep(df, length(term))
         }
+
+        if (r2 == TRUE) {
+            out$r.squared <- estimate
+            out$adj.r.squared <- estimate
+        }
+
+        return(out)
     } else {
         if (length(remove) > 0) {
             X <- X[-remove, ]
@@ -87,7 +90,10 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE) {
         estimate <- unname(fit$coefficients)
     }
 
-    if (se == TRUE) {
+    out <- list(term = term,
+                estimate = estimate)
+
+    if (se == TRUE | r2 == TRUE) {
         df <- N - ncol(X)
         res_sum <- sum(weights*fit$residuals^2)
         if (has_weights) {
@@ -96,29 +102,27 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE) {
             ss <- sum(weights*(y - mean(y))^2)
         }
 
-        r_squared <- 1 - res_sum/ss
-        adj_r_squared <- 1 - res_sum/ss*(N-1)/df
 
-        if (all(fit$residuals == 0)) {
-            se <- NA_real_
-        } else {
-            sigma <- res_sum/(nrow(X) - ncol(X))
-            if (has_weights) {
-                W <- diag(weights, nrow = length(weights))
-                se <- sqrt(diag(chol2inv(chol(t(X)%*%W%*%X)))*sigma)
+        if (se == TRUE) {
+            if (all(fit$residuals == 0)) {
+                se <- NA_real_
             } else {
-                se <- sqrt(diag(chol2inv(chol(t(X)%*%X)))*sigma)
+                p <- seq_len(fit$rank)
+                if (is.qr(fit$qr)) fit$qr <- fit$qr$qr
+                R <- chol2inv(fit$qr[p, p, drop = FALSE])
+                se <- sqrt(diag(R) * res_sum/df)
+                out[["std.error"]] <- se
+                out$df = rep(df, length(term))
             }
-
         }
-        return(list(term = term,
-                    estimate = estimate,
-                    std.error = se,
-                    df = rep(df, length(term)),
-                    r.squared = rep(r_squared, length(term)),
-                    adj.r.squared = rep(adj_r_squared, length(term))))
-    } else {
-        return(list(term = term,
-                    estimate = estimate))
+
+
+        if (r2 == TRUE) {
+            r_squared <- 1 - res_sum/ss
+            adj_r_squared <- 1 - res_sum/ss*(N-1)/df
+            out$r.squared <- rep(r_squared, length(term))
+            out$adj.r.squared = rep(adj_r_squared, length(term))
+        }
     }
+    return(out)
 }

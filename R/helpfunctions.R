@@ -318,11 +318,12 @@ smooth2d <- function(x, y, value, kx = 1, ky = 1) {
 }
 
 
-downsample <- function(x, y, value, byx = 1, byy = 1) {
+downsample <- function(x, y, value, byx = 1, byy = 1, fill = mean) {
     data <- data.table(x, y, value)
-
-    g <- .tidy2matrix(data, x ~ y, value.var = "value")
-
+    browser()
+    fill <- mean(value, na.rm = TRUE)
+    g <- .tidy2matrix(data, x ~ y, value.var = "value", fill = fill)
+    g$matrix[is.na(g$matrix)] <- fill
     f <- fft(g$matrix)
     f1 <- f
 

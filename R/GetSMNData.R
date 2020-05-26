@@ -60,6 +60,7 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
                .var.name = "date", add = checks)
     assertChoice(type, c("hourly", "daily", "radiation"), add = checks)
     assertFlag(bar, add = checks)
+    date <- as.Date(date)
 
     if (isTRUE(cache)) {
         assertAccess(file.dir, add = checks)
@@ -117,7 +118,7 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
         variables <- c("start", "date", "hour", "t", "rh", "slp", "dir", "V", "station")
         charend <- c(1, 9, 15, 21, 26, 34, 39, 44, 101)
 
-        obs <- as.data.table(lapply(seq_along(variables)[-1], function(x) {
+        obs <- data.table::as.data.table(lapply(seq_along(variables)[-1], function(x) {
             s <- stringr::str_squish(stringr::str_sub(obs, charend[x - 1], charend[x] -1))
             if(variables[x] != "station") s <- as.numeric(s)
             s
@@ -126,10 +127,8 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
         setnames(obs, variables[-1])
         obs <- obs[, -1]
         obs <- obs[!is.na(hour)]
+        obs$date <- with(obs, as.POSIXct(paste0(date, " ", hour, ":00:00"), tz = "America/Argentina/Buenos_Aires"))
 
-        date <- lubridate::as_datetime(date, tz = "America/Argentina/Buenos_Aires")
-        lubridate::hour(date) <- obs$hour
-        obs$date <- lubridate::as_datetime(date)
         obs[, hour := NULL]
         return(obs)
     } else {

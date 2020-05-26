@@ -10,6 +10,8 @@ convenience function `auto_scale()` in the `vars` argument. `GlanceNetCDF()` wil
 
 - `FitLm()` handles `NA`s better.
 
+- `GetSMNData` returns the `date` parameter with the correct timezone.
+
 # metR 0.7.0
 
 ## New features

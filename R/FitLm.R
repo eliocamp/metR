@@ -104,13 +104,13 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se) {
 
         if (se == TRUE) {
             if (all(fit$residuals == 0)) {
-                se <- NA_real_
+                std.error <- NA_real_
             } else {
                 p <- seq_len(fit$rank)
                 if (is.qr(fit$qr)) fit$qr <- fit$qr$qr
                 R <- chol2inv(fit$qr[p, p, drop = FALSE])
-                se <- sqrt(diag(R) * res_sum/df)
-                out$std.error <- se
+                std.error <- sqrt(diag(R) * res_sum/df)
+                out$std.error <- std.error
                 out$df <- rep(df, length(term))
             }
         }

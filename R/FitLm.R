@@ -105,7 +105,7 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se) {
         if (se == TRUE) {
             if (all(fit$residuals == 0)) {
                 out$std.error <-  rep(NA_real_, length(term))
-                out$df <-  rep(NA_real_, length(term))
+                out$df <-  rep(NA_integer_, length(term))
             } else {
                 p <- seq_len(fit$rank)
                 if (is.qr(fit$qr)) fit$qr <- fit$qr$qr

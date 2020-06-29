@@ -61,7 +61,6 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se) {
         out <- list(term = term,
                     estimate = estimate)
         if (se == TRUE) {
-            se <- estimate
             df <- N - ncol(X)
             out$std.error <-  estimate
             out$df <- rep(df, length(term))
@@ -111,8 +110,8 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se) {
                 if (is.qr(fit$qr)) fit$qr <- fit$qr$qr
                 R <- chol2inv(fit$qr[p, p, drop = FALSE])
                 se <- sqrt(diag(R) * res_sum/df)
-                out[["std.error"]] <- se
-                out$df = rep(df, length(term))
+                out$std.error <- se
+                out$df <- rep(df, length(term))
             }
         }
 
@@ -121,7 +120,7 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se) {
             r_squared <- 1 - res_sum/ss
             adj_r_squared <- 1 - res_sum/ss*(N-1)/df
             out$r.squared <- rep(r_squared, length(term))
-            out$adj.r.squared = rep(adj_r_squared, length(term))
+            out$adj.r.squared <- rep(adj_r_squared, length(term))
         }
     }
     return(out)

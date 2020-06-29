@@ -22,13 +22,13 @@
 #' g + scale_mag("Seals velocity", max_size = 2)
 #' g + scale_mag("Seals velocity", default_unit = "mm")
 #' @export
-scale_mag <- function(name = waiver(),
+scale_mag <- function(name = ggplot2::waiver(),
                       # breaks = waiver(),
-                      labels = waiver(),
+                      labels = ggplot2::waiver(),
                       # limits = NULL,
                       max_size = 1,
                       default_unit = "cm",
-                      max = waiver(),
+                      max = ggplot2::waiver(),
                       guide =  guide_vector(),
                       ...) {
     # if (!grid::is.unit(length)) length <- ggplot2::unit(length, default_unit)
@@ -63,9 +63,9 @@ scale_mag <- function(name = waiver(),
 #' @rdname scale_mag
 scale_mag_continuous <- scale_mag
 
-#' @export
-#' @rdname scale_mag
-scale_dx_continuous <- scale_mag
+# #' @export
+# #' @rdname scale_mag
+# scale_dx_continuous <- scale_mag
 
 # #' @export
 # scale_dy_continuous <- scale_mag

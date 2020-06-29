@@ -68,7 +68,7 @@ omitted.}
 \link[scales:trans_new]{transformation object}
 \item A numeric vector of positions
 \item A function that takes the limits as input and returns breaks
-as output (e.g., a function returned by \code{\link[scales:extended_breaks]{scales::extended_breaks()}})
+as output (e.g., a function returned by \code{\link[scales:breaks_extended]{scales::extended_breaks()}})
 }}
 
 \item{expand}{For position scales, a vector of range expansion constants used to add some

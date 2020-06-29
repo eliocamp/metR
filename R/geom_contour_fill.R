@@ -55,7 +55,6 @@
 #'
 #' @family ggplot2 helpers
 #' @export
-#' @import ggplot2
 geom_contour_fill <- function(mapping = NULL, data = NULL,
                          stat = "ContourFill", position = "identity",
                          ...,
@@ -74,7 +73,7 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
         data = data,
         mapping = mapping,
         stat = stat,
-        geom = GeomPolygon,
+        geom = ggplot2::GeomPolygon,
         position = position,
         show.legend = show.legend,
         inherit.aes = inherit.aes,

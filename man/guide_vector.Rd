@@ -5,7 +5,7 @@
 \title{Reference arrow for magnitude scales}
 \usage{
 guide_vector(
-  title = waiver(),
+  title = ggplot2::waiver(),
   title.position = NULL,
   title.theme = NULL,
   title.hjust = NULL,

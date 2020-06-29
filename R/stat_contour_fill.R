@@ -1,6 +1,5 @@
 #' @rdname geom_contour_fill
 #' @export
-#' @import ggplot2
 stat_contour_fill <- function(mapping = NULL, data = NULL,
                               geom = "polygon", position = "identity",
                               ...,
@@ -37,7 +36,6 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
     )
 }
 
-#' @import ggplot2
 #' @rdname geom_contour_fill
 #' @usage NULL
 #' @format NULL
@@ -194,7 +192,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             if (!requireNamespace("proj4", quietly = TRUE)) {
                 stop("Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`")
             }
-            cont <- copy(cont)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
+            cont <- data.table::copy(cont)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
         }
         cont
         }
@@ -241,8 +239,6 @@ area <- function(x, y) {
     sum(xdiff * ysum)/2
 }
 
-
-#' @import data.table
 .inner_fill <- function(cont, data, breaks) {
     # Add one more to breaks extremes
     m.level <- -breaks[2] + 2*breaks[1]
@@ -367,6 +363,7 @@ close_path <- function(x, y, range_x, range_y) {
     contours[, close := NULL]
     if (nrow(contours2) == 0) return(contours)
     contours2[, close := NULL]
+    first <- NULL
     contours2[, first := (1 == 1:.N), by = piece]
     pieces <- unique(contours2[, piece])
 

@@ -49,7 +49,6 @@ stat_na <- function(mapping = NULL, data = NULL,
     )
 }
 
-#' @import ggplot2
 #' @rdname stat_na
 #' @usage NULL
 #' @format NULL

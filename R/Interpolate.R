@@ -56,7 +56,6 @@
 #' path <- geopotential[, Interpolate(gh ~ lon + lat, as.path(lons, lats))]
 #'
 #' @export
-#' @import data.table
 Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = FALSE) {
     checks <- makeAssertCollection()
 
@@ -94,7 +93,7 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
     }
 
     formula <- Formula::as.Formula(formula)
-    data <- as.data.table(eval(quote(model.frame(formula, data = data,
+    data <- data.table::as.data.table(eval(quote(model.frame(formula, data = data,
                                                  na.action = NULL))))
     if (!.has_single_value(data, ind.names)) {
         stop("Interpolate need a unique value for each x and y")
@@ -104,13 +103,13 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
     if (length(ind.names) == 1) {
         if (hasArg(y.out)) warning("Only 1 dimension in formula. Ignoring y.out.")
 
-        loc <- data.table(x.out = x.out)
+        loc <- data.table::data.table(x.out = x.out)
         colnames(loc) <- ind.names
-        alloc.col(loc, ncol(data))
+        data.table::alloc.col(loc, ncol(data))
 
         for (v in seq_along(dep.names)) {
             value.var <- dep.names[v]
-            set(loc, NULL, value.var, stats::approx(data[[ind.names]],
+            data.table::set(loc, NULL, value.var, stats::approx(data[[ind.names]],
                                                     data[[value.var]],
                                                     xout = x.out)$y)
         }
@@ -124,22 +123,22 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
         if (length(unique(y.out)) != length(y.out)) {
             stop('duplicate values on y.out. If y.out is a vector of locations, use grid = FALSE')
         }
-        loc <- setDT(expand.grid(x.out = x.out, y.out = y.out))
+        loc <- data.table::setDT(expand.grid(x.out = x.out, y.out = y.out))
     } else if (grid == FALSE) {
         if (length(x.out) != length(y.out)) {
             stop('x.out is not of the same length as y.out.
                  If x.out and y.out define unique points on a regular grid, use grid = TRUE')
         }
-        loc <- data.table(x.out, y.out)
+        loc <- data.table::data.table(x.out, y.out)
         if (!is.null(path) & !isFALSE(path)) {
-            set(loc, NULL, path, index)
+            data.table::set(loc, NULL, path, index)
         }
     } else {
         stop('wrong mode, choose either "grid" or "locations"')
     }
 
     colnames(loc)[seq_along(ind.names)] <- ind.names
-    alloc.col(loc, ncol(data))
+    data.table::alloc.col(loc, ncol(data))
 
     dcast.formula <- as.formula(paste0(ind.names, collapse = " ~ "))
 
@@ -149,10 +148,10 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
         data2 <- list(x = data2$rowdims[[1]],
                       y = data2$coldims[[1]],
                       z = data2$matrix)
-        set(loc, NULL, value.var, fields::interp.surface(data2, as.matrix(loc)))
+        data.table::set(loc, NULL, value.var, fields::interp.surface(data2, as.matrix(loc)))
     }
 
-    return(as.data.table(loc))
+    return(data.table::as.data.table(loc))
 }
 
 

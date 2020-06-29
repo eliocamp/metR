@@ -36,6 +36,7 @@ is.error <- function(x) inherits(x, "try-error")
 
 
 # from data.table
+#' @importFrom data.table %chin%
 guess <- function (x) {
     if ("value" %chin% names(x))
         return("value")
@@ -167,7 +168,7 @@ if(getRversion() >= "2.15.1") {
           "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2",
           "group", "step", "point", "change", "end", "level", "m", "rotate",
           "x.d", "y.d", "PC", "step2", "runif", "N", "angle", "var", "head",
-          "col__", "row__", "t1", "z1", "z2", "..n"))
+          "col__", "row__", "t1", "z1", "z2", "..n", ".N", ":=", ".SD", ".I", ".GRP"))
 }
 
 
@@ -298,7 +299,7 @@ a <- 6371000
 
 
 smooth2d <- function(x, y, value, kx = 1, ky = 1) {
-    data <- data.table(x, y, value)
+    data <- data.table::data.table(x, y, value)
     # browser()
     g <- .tidy2matrix(data, x ~ y, value.var = "value")
 
@@ -319,7 +320,7 @@ smooth2d <- function(x, y, value, kx = 1, ky = 1) {
 
 
 downsample <- function(x, y, value, byx = 1, byy = 1, fill = mean) {
-    data <- data.table(x, y, value)
+    data <- data.table::data.table(x, y, value)
     browser()
     fill <- mean(value, na.rm = TRUE)
     g <- .tidy2matrix(data, x ~ y, value.var = "value", fill = fill)

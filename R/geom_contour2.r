@@ -74,7 +74,7 @@ geom_contour2 <- function(mapping = NULL, data = NULL,
 #' @format NULL
 #' @export
 GeomContour2 <- ggplot2::ggproto("GeomContour2", ggplot2::GeomContour,
-   default_aes = aes(weight = 1, colour = "black", size = 0.5, linetype = 1,
+   default_aes = ggplot2::aes(weight = 1, colour = "black", size = 0.5, linetype = 1,
                      alpha = NA))
 
 .check_wrap_param <- function(params) {

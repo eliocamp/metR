@@ -156,7 +156,7 @@ BuildWave <- function(x, amplitude, phase, k,
         y <- Reduce("+", y)
         return(y)
     } else {
-        field <- setDT(expand.grid(x = x, k = wave$k))
+        field <- data.table::setDT(expand.grid(x = x, k = wave$k))
         field <- field[wave, on = "k"]
         field[, y := amplitude*cos((x - phase)*k), by = k]
         return(as.list(field[, .(k, x, y)]))

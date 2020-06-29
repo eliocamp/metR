@@ -8,8 +8,8 @@ geom_label_contour <- function(mapping = NULL, data = NULL,
                        parse = FALSE,
                        nudge_x = 0,
                        nudge_y = 0,
-                       label.padding = unit(0.25, "lines"),
-                       label.r = unit(0.15, "lines"),
+                       label.padding = grid::unit(0.25, "lines"),
+                       label.r = grid::unit(0.15, "lines"),
                        label.size = 0.25,
                        na.rm = FALSE,
                        show.legend = NA,
@@ -20,7 +20,7 @@ geom_label_contour <- function(mapping = NULL, data = NULL,
                  call. = FALSE)
         }
 
-        position <- position_nudge(nudge_x, nudge_y)
+        position <- ggplot2::position_nudge(nudge_x, nudge_y)
     }
 
     ggplot2::layer(
@@ -68,7 +68,7 @@ GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", ggplot2::Geom,
             min.size <- min.size - 1
         }
         # Get points of labels
-        data <- .label.position(copy(data), min.size, skip, rotate = FALSE)
+        data <- .label.position(data.table::copy(data), min.size, skip, rotate = FALSE)
 
         lab <- data$label
         if (parse) {

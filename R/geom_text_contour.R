@@ -48,7 +48,6 @@
 #'
 #'
 #' @export
-#' @import ggplot2 data.table
 #' @family ggplot2 helpers
 geom_text_contour <- function(mapping = NULL, data = NULL,
                       stat = "text_contour",
@@ -177,7 +176,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
 }
 
 .label.position <- function(data, min.size, skip, rotate) {
-    data <- as.data.table(data)
+    data <- data.table::as.data.table(data)
 
     breaks <- unique(data$level)
     breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]

@@ -66,7 +66,6 @@
 #' geopotential[is.na(gh.gap), sqrt(mean((gh.t - gh.impute)^2))]
 #'
 #'
-#' @import data.table
 #' @export
 #' @importFrom stats as.formula
 ImputeEOF <- function(formula, max.eof = NULL, data = NULL,

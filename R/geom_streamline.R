@@ -140,7 +140,7 @@ geom_streamline <-  function(mapping = NULL, data = NULL,
                              arrow.length = 0.5,
                              arrow.ends = "last",
                              arrow.type = "closed",
-                             arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"),
+                             arrow = grid::arrow(arrow.angle, grid::unit(arrow.length, "lines"),
                                                  ends = arrow.ends, type = arrow.type),
                              lineend = "butt",
                              na.rm = TRUE,
@@ -201,7 +201,7 @@ stat_streamline <- function(mapping = NULL, data = NULL,
                             arrow.length = 0.5,
                             arrow.ends = "last",
                             arrow.type = "closed",
-                            arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"),
+                            arrow = grid::arrow(arrow.angle, grid::unit(arrow.length, "lines"),
                                                 ends = arrow.ends, type = arrow.type),
                             lineend = "butt",
                             na.rm = TRUE,
@@ -282,7 +282,6 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
 #' @usage NULL
 #' @format NULL
 #' @export
-#' @import ggplot2
 GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
   default_aes = ggplot2::aes(colour = "black", size = 0.5, linetype = 1, alpha = NA),
   draw_panel = function(data, panel_params, coord, arrow = NULL,
@@ -301,7 +300,7 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
       # Silently drop lines with less than two points, preserving order
       rows <- stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
       munched <- munched[rows >= 2, ]
-      if (nrow(munched) < 2) return(zeroGrob())
+      if (nrow(munched) < 2) return(ggplot2::zeroGrob())
 
       # Work out whether we should use lines or segments
       attr <- plyr::ddply(munched, "group", function(df) {
@@ -380,6 +379,7 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
 
 
 #' @importFrom stats rnorm
+#' @importFrom data.table %between%
 streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL,
                        ny = NULL, jitter.x = 1, jitter.y = 1, xwrap = NULL,
                        ywrap = NULL) {
@@ -515,7 +515,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     points[, step2 := step]
     if (circ.x == TRUE) {
         points <- points[, .approx_order(x, y, range.x), by = group]
-        points[, piece := as.numeric(rleid(x %between% range.x)), by = group]
+        points[, piece := as.numeric(data.table::rleid(x %between% range.x)), by = group]
         points[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
         points[, step := seq_along(x), by = group]
         points[, x := .fold(x, 1, range.x, circ.x)[[1]]]
@@ -524,7 +524,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
 
     if (circ.y == TRUE) {
         points <- points[, .approx_order(y, x, range.y), by = group]
-        points[, piece := as.numeric(rleid(y %between% range.y)), by = group]
+        points[, piece := as.numeric(data.table::rleid(y %between% range.y)), by = group]
         points[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
         points[, step := seq_along(y), by = group]
         points[, y := .fold(y, 1, range.y, circ.y)[[1]]]

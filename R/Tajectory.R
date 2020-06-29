@@ -55,11 +55,11 @@ Trajectory <- function(formula, x0, y0,
     dt <- diff(times)[1]/res
     ts <- seq(min(times), max(times), by = dt)
 
-    points_out <- list(data.table(x = x0, y = y0, id = seq_along(x0),
+    points_out <- list(data.table::data.table(x = x0, y = y0, id = seq_along(x0),
                                   piece = 1,
                                   t1 = ts[1]))
     points_out[[1]][, c("dx", "dy") := force.fun3d(x, y, t1, times, field)]
-    points <- copy(points_out[[1]])
+    points <- data.table::copy(points_out[[1]])
 
     if (length(cyclical) == 1) {
         cyclical <- rep(cyclical, 2)
@@ -104,17 +104,17 @@ force.fun3d <- function(x, y, ts, times, field) {
         t0 <- t0[length(t0)] # tiempo anterior
         tf <- times[times >= ts][1]  # tiempo siguiente
 
-        t0_force <- setDT(force.fun(x, y, field[t1 == t0]))
-        set(t0_force, NULL, "x", x)
-        set(t0_force, NULL, "y", y)
-        set(t0_force, NULL, "t", t0)
+        t0_force <- data.table::setDT(force.fun(x, y, field[t1 == t0]))
+        data.table::set(t0_force, NULL, "x", x)
+        data.table::set(t0_force, NULL, "y", y)
+        data.table::set(t0_force, NULL, "t", t0)
 
-        tf_force <- setDT(force.fun(x, y, field[t1 == tf]))
-        set(tf_force, NULL, "x", x)
-        set(tf_force, NULL, "y", y)
-        set(tf_force, NULL, "t", tf)
+        tf_force <- data.table::setDT(force.fun(x, y, field[t1 == tf]))
+        data.table::set(tf_force, NULL, "x", x)
+        data.table::set(tf_force, NULL, "y", y)
+        data.table::set(tf_force, NULL, "t", tf)
 
-        force <- rbind(setDT(t0_force), setDT(tf_force))
+        force <- rbind(data.table::setDT(t0_force), data.table::setDT(tf_force))
         force <- force[, .(dx = mean(dx),
                            dy = mean(dy)),
                        by = .(x, y)]

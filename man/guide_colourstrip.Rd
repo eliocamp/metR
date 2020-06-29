@@ -8,7 +8,7 @@
 \title{Discretized continuous colour guide}
 \usage{
 guide_colourstrip(
-  title = waiver(),
+  title = ggplot2::waiver(),
   title.position = NULL,
   title.theme = NULL,
   title.hjust = NULL,
@@ -33,7 +33,7 @@ guide_colourstrip(
 )
 
 guide_colorstrip(
-  title = waiver(),
+  title = ggplot2::waiver(),
   title.position = NULL,
   title.theme = NULL,
   title.hjust = NULL,

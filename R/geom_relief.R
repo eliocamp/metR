@@ -120,7 +120,7 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", ggplot2::GeomTile,
            stop("non lineal coordinates are not implemented in GeomRelief",
                 call. = FALSE)
         } else {
-            coords <- as.data.table(coord$transform(data, panel_scales))
+            coords <- data.table::as.data.table(coord$transform(data, panel_scales))
 
             coords[, sun.angle := (sun.angle + 90)*pi/180]
             coords[, dx := .derv(z, x, fill = TRUE), by = y]

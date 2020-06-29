@@ -145,7 +145,6 @@
 #'
 #' @export
 #' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
-#' @import data.table
 ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {

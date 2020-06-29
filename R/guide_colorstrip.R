@@ -41,7 +41,7 @@
 #' @export
 guide_colourstrip <- function(
     # title
-    title = waiver(),
+    title = ggplot2::waiver(),
     title.position = NULL,
     title.theme = NULL,
     title.hjust = NULL,

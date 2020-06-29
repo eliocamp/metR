@@ -35,10 +35,10 @@ screeplot.eof <- function(x, npcs = "all", type = NULL, main = NULL, ...) {
     var <- attr(x, "suffix")
     r2 <- "r2"
     if (npcs[1] == "all") npcs <- as.numeric(unique(x$sdev[[var]]))
-    ggplot(x$sdev[as.numeric(get(var)) %in% npcs], aes_(as.name(var), as.name(r2))) +
-        geom_point() +
-        geom_line(aes_string(paste0("as.numeric(", var, ")"))) +
-        scale_y_continuous(name = expression(R^2))
+    ggplot2::ggplot(x$sdev[as.numeric(get(var)) %in% npcs], ggplot2::aes_(as.name(var), as.name(r2))) +
+        ggplot2::geom_point() +
+        ggplot2::geom_line(ggplot2::aes_string(paste0("as.numeric(", var, ")"))) +
+        ggplot2::scale_y_continuous(name = expression(R^2))
 }
 
 #' @export
@@ -79,9 +79,9 @@ predict.eof <- function(object, n = NULL, ...) {
 
 .extend.dt <- function(dt, n = NULL, each = NULL) {
     if (!is.null(n)) {
-        r <- as.data.table(lapply(dt, rep, n = n))
+        r <- data.table::as.data.table(lapply(dt, rep, n = n))
     } else {
-        r <- as.data.table(lapply(dt, rep, each = each))
+        r <- data.table::as.data.table(lapply(dt, rep, each = each))
     }
     r
 }
@@ -159,7 +159,7 @@ denormalise <- function(eof, which = c("left", "right")) {
 
     value <- eof[[which]][eof[["sdev"]], on = attr(eof, "suffix")][,  get(name)*sd]
 
-    copy(eof[[which]])[, (name) := value][]
+    data.table::copy(eof[[which]])[, (name) := value][]
 }
 
 

@@ -8,7 +8,7 @@
 #' @export
 guide_vector <- function(
     # title
-    title = waiver(),
+    title = ggplot2::waiver(),
     title.position = NULL,
     title.theme = NULL,
     title.hjust = NULL,
@@ -122,6 +122,7 @@ guide_merge.vector <- function(guide, new_guide) {
 }
 
 #' @export
+#' @importFrom ggplot2 guide_geom guide_merge guide_train
 guide_geom.vector <- function(guide, layers, default_mapping) {
     # arrange common data for vertical and horizontal guide
     guide$geoms <- plyr::llply(layers, function(layer) {
@@ -179,6 +180,7 @@ guide_geom.vector <- function(guide, layers, default_mapping) {
     guide
 }
 
+#' @importFrom ggplot2 guide_gengrob
 #' @export
 guide_gengrob.vector <- function(guide, theme) {
 
@@ -190,8 +192,8 @@ guide_gengrob.vector <- function(guide, theme) {
     nbreak <- nrow(guide$key)
 
     grob.title <- ggname("guide.title",
-                         element_grob(
-                             guide$title.theme %||% calc_element("legend.title", theme),
+                         ggplot2::element_grob(
+                             guide$title.theme %||% ggplot2::calc_element("legend.title", theme),
                              label = guide$title,
                              hjust = guide$title.hjust %||% theme$legend.title.align %||% 0,
                              vjust = guide$title.vjust %||% 0.5,
@@ -204,21 +206,21 @@ guide_gengrob.vector <- function(guide, theme) {
     title_height <- height_cm(grob.title)
 
     # gap between keys etc
-    hgap <- width_cm(theme$legend.spacing.x  %||% unit(0.3, "line"))
-    vgap <- height_cm(theme$legend.spacing.y %||% (0.5 * unit(title_height, "cm")))
+    hgap <- width_cm(theme$legend.spacing.x  %||% grid::unit(0.3, "line"))
+    vgap <- height_cm(theme$legend.spacing.y %||% (0.5 * grid::unit(title_height, "cm")))
 
     # Labels
     if (!guide$label || is.null(guide$key$.label)) {
-        grob.labels <- rep(list(zeroGrob()), nrow(guide$key))
+        grob.labels <- rep(list(grid::zeroGrob()), nrow(guide$key))
     } else {
-        label.theme <- guide$label.theme %||% calc_element("legend.text", theme)
+        label.theme <- guide$label.theme %||% ggplot2::calc_element("legend.text", theme)
 
         hjust <- x <- guide$label.hjust %||% theme$legend.text.align %||%
             if (any(is.expression(guide$key$.label))) 1 else 0
         vjust <- y <- guide$label.vjust %||% 0.5
 
         grob.labels <- lapply(guide$key$.label, function(label, ...) {
-            g <- element_grob(
+            g <- ggplot2::element_grob(
                 element = label.theme,
                 label = label,
                 x = x,
@@ -564,7 +566,7 @@ guide_gengrob.vector <- function(guide, theme) {
 
 #' @export
 guide_vector <- function(# title
-    title = waiver(),
+    title = ggplot2::waiver(),
     title.position = NULL,
     title.theme = NULL,
     title.hjust = NULL,
@@ -746,8 +748,8 @@ guide_gengrob.vector <- function(guide, theme) {
     nbreak <- nrow(guide$key)
 
     grob.title <- ggname("guide.title",
-                         element_grob(
-                             guide$title.theme %||% calc_element("legend.title", theme),
+                         ggplot2::element_grob(
+                             guide$title.theme %||% ggplot2::calc_element("legend.title", theme),
                              label = guide$title,
                              hjust = guide$title.hjust %||% theme$legend.title.align %||% 0,
                              vjust = guide$title.vjust %||% 0.5,
@@ -760,21 +762,21 @@ guide_gengrob.vector <- function(guide, theme) {
     title_height <- height_cm(grob.title)
 
     # gap between keys etc
-    hgap <- width_cm(theme$legend.spacing.x  %||% unit(0.3, "line"))
-    vgap <- height_cm(theme$legend.spacing.y %||% (0.5 * unit(title_height, "cm")))
+    hgap <- width_cm(theme$legend.spacing.x  %||% grid::unit(0.3, "line"))
+    vgap <- height_cm(theme$legend.spacing.y %||% (0.5 * grid::unit(title_height, "cm")))
 
     # Labels
     if (!guide$label || is.null(guide$key$.label)) {
-        grob.labels <- rep(list(zeroGrob()), nrow(guide$key))
+        grob.labels <- rep(list(ggplot2::zeroGrob()), nrow(guide$key))
     } else {
-        label.theme <- guide$label.theme %||% calc_element("legend.text", theme)
+        label.theme <- guide$label.theme %||% ggplot2::calc_element("legend.text", theme)
 
         hjust <- x <- guide$label.hjust %||% theme$legend.text.align %||%
             if (any(is.expression(guide$key$.label))) 1 else 0
         vjust <- y <- guide$label.vjust %||% 0.5
 
         grob.labels <- lapply(guide$key$.label, function(label, ...) {
-            g <- element_grob(
+            g <- ggplot2::element_grob(
                 element = label.theme,
                 label = label,
                 x = x,
@@ -1074,7 +1076,7 @@ guide_gengrob.vector <- function(guide, theme) {
     heights <- c(padding[1], heights, padding[3])
 
     # Create the gtable for the legend
-    gt <- gtable::gtable(widths = unit(widths, "cm"), heights = unit(heights, "cm"))
+    gt <- gtable::gtable(widths = grid::unit(widths, "cm"), heights = grid::unit(heights, "cm"))
     gt <- gtable::gtable_add_grob(
         gt,
         grob.background,

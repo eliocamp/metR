@@ -144,7 +144,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
       if (!requireNamespace("proj4", quietly = TRUE)) {
         stop("Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`")
       }
-      contours <- copy(contours)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
+      contours <- data.table::copy(contours)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
     }
 
     return(contours)
@@ -161,8 +161,8 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 }
 
 .order_contour <- function(contours, data) {
-    data <- copy(data)
-    contours <- copy(contours)
+    data <- data.table::copy(data)
+    contours <- data.table::copy(contours)
     x.data <- unique(data$x)
     x.data <- x.data[order(x.data)]
     x.N <- length(x.data)

@@ -21,7 +21,6 @@
 #' Adapted from \url{https://github.com/marisolosman/Reunion_Clima/blob/master/WAF/Calculo_WAF.ipynb}
 #' @family meteorology functions
 #' @export
-#' @import data.table
 WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
     checks <- makeAssertCollection()
     assertNumeric(gh, add = checks)
@@ -40,10 +39,10 @@ WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
     p0 <- 100000    # normalizo a 100hPa
 
     # Todo en una data.table para que sea más cómodo.
-    dt <- data.table(lon = lon, lat = lat,
+    dt <- data.table::data.table(lon = lon, lat = lat,
                      lonrad = lon*pi/180, latrad = lat*pi/180,
                      gh = gh, u.mean = u, v.mean = v)
-    setkey(dt, lat, lon)
+    data.table::setkey(dt, lat, lon)
     dt[, f := 2*pi/(3600*24)*sin(latrad)]
     dt[, psi := g/f*gh]
 

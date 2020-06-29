@@ -80,7 +80,7 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
 
     if (bar == TRUE) pb <- txtProgressBar(min = 0, max = length(date), style = 3)
 
-    return.data <- rbindlist(lapply(seq_along(date), function(i) {
+    return.data <- data.table::rbindlist(lapply(seq_along(date), function(i) {
         if (bar == TRUE) setTxtProgressBar(pb, i)
         if (type[1] == "hourly") {
             data <- .smnhourly(date[i])
@@ -124,11 +124,11 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
             s
         }))
 
-        setnames(obs, variables[-1])
+        data.table::setnames(obs, variables[-1])
         obs <- obs[, -1]
         obs <- obs[!is.na(hour)]
         obs$date <- with(obs, as.POSIXct(paste0(date, " ", hour, ":00:00"), tz = "America/Argentina/Buenos_Aires"))
-
+        hour <- NULL
         obs[, hour := NULL]
         return(obs)
     } else {

@@ -16,7 +16,6 @@
 #' This is the imputation method used by [geom_contour_fill()].
 #'
 #' @export
-#' @import data.table
 Impute2D <- function(formula, data = NULL, method = "interpolate") {
     checks <- makeAssertCollection()
     assertClass(formula, "formula", add = checks)
@@ -49,7 +48,7 @@ Impute2D <- function(formula, data = NULL, method = "interpolate") {
     for (var in dep.names) {
         data_sub <- data[, c(ind.names, var), with = FALSE]
         data.table::setnames(data_sub, c(ind.names, var), c("x", "y", "z"))
-        set(data, NULL, var, .impute_data(data_sub, na.fill = method, verbose = FALSE)$z)
+        data.table::set(data, NULL, var, .impute_data(data_sub, na.fill = method, verbose = FALSE)$z)
     }
 
     return(as.list(data[, dep.names, with = FALSE]))
@@ -64,18 +63,18 @@ soft_approx <- function(x, y = NULL, xout = x) {
 }
 
 soft_approx2d <- function(x, y, z) {
-    dt <- data.table(x, y, z)
+    dt <- data.table::data.table(x, y, z)
     dt[, z1 := soft_approx(x, z), by = y][, z2 := soft_approx(y, z), by = x]
     dt[, mean(c(z1, z2, z), na.rm = TRUE), by = .(x, y)]$V1
 }
 
 .impute_data <- function(data, na.fill = TRUE, verbose = TRUE) {
     nas <- nrow(data[is.na(z)])
-    data <- copy(data)
+    data <- data.table::copy(data)
     if (nas != 0) {
         if (isTRUE(na.fill)) {
             if(isTRUE(verbose)) warning("imputing missing values", call. = FALSE)
-            data <- copy(data)[, z := soft_approx2d(x, y, z)]
+            data <- data.table::copy(data)[, z := soft_approx2d(x, y, z)]
             if (sum(is.na(data[["z"]])) != 0) {
                 warning("Linear imputation failed. Try passing a constant number or a function (e.g. `na.fill = mean`).")
             }

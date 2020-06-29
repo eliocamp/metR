@@ -26,8 +26,8 @@ geom_arrow(
   arrow.length = 0.5,
   arrow.ends = "last",
   arrow.type = "closed",
-  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends = arrow.ends, type
-    = arrow.type),
+  arrow = grid::arrow(arrow.angle, grid::unit(arrow.length, "lines"), ends =
+    arrow.ends, type = arrow.type),
   lineend = "butt",
   na.rm = FALSE,
   show.legend = NA,
@@ -52,8 +52,8 @@ geom_vector(
   arrow.length = 0.5,
   arrow.ends = "last",
   arrow.type = "closed",
-  arrow = grid::arrow(arrow.angle, unit(arrow.length, "lines"), ends = arrow.ends, type
-    = arrow.type),
+  arrow = grid::arrow(arrow.angle, grid::unit(arrow.length, "lines"), ends =
+    arrow.ends, type = arrow.type),
   lineend = "butt",
   na.rm = FALSE,
   show.legend = NA,

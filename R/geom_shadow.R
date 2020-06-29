@@ -47,7 +47,7 @@ GeomShadow <- ggplot2::ggproto("GeomShadow", ggplot2::GeomTile,
                call. = FALSE)
       } else {
 
-          coords <- as.data.table(coord$transform(data, panel_scales))
+          coords <- data.table::as.data.table(coord$transform(data, panel_scales))
           coords <- coords[x %in% JumpBy(unique(x), skip + 1) &
                            y %in% JumpBy(unique(y), skip + 1)]
           alpha <- .cast_shadow(coords[, .(x, y, z, sun.angle, sun.altitude)], skip)

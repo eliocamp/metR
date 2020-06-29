@@ -40,7 +40,6 @@
 #'
 #' @family ggplot2 helpers
 #' @export
-#' @import data.table
 WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
     warning("WrapCircular is deprecated, use ggperiodic::wrap instead")
 
@@ -52,7 +51,7 @@ WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
 
     if (nrow(x) == 0) return(x)
 
-    x <- as.data.table(x)
+    x <- data.table::as.data.table(x)
     data.table::setorderv(x, circular)
 
     res <- ggplot2::resolution(x[[circular]])

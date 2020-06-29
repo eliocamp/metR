@@ -102,7 +102,6 @@
 #' Fisher, A., Caffo, B., Schwartz, B., & Zipunnikov, V. (2016). Fast, Exact Bootstrap Principal Component Analysis for p > 1 million. Journal of the American Statistical Association, 111(514), 846–860. http://doi.org/10.1080/01621459.2015.1062383
 #' @family meteorology functions
 #' @export
-#' @import data.table
 EOF <- function(formula, n = 1, data = NULL, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
                 rotate = FALSE, suffix = "PC", fill = NULL) {
@@ -140,7 +139,7 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
 
     if (is.null(data)) {
         formula <- Formula::as.Formula(formula)
-        data <- as.data.table(eval(quote(model.frame(formula, data  = data))))
+        data <- data.table::as.data.table(eval(quote(model.frame(formula, data  = data))))
     } else {
         # Check if columns are indata
         all.cols <- c(value.var, row.vars, col.vars)

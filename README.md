@@ -11,6 +11,7 @@ Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.t
 status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg)](https://codecov.io/github/eliocamp/metR/?branch=master)
 [![CRAN
 status](http://www.r-pkg.org/badges/version/metR)](https://cran.r-project.org/package=metR)
+[![DOI](https://zenodo.org/badge/96357263.svg)](https://zenodo.org/badge/latestdoi/96357263)
 
 metR packages several functions and utilities that make R better for
 handling meteorological data in the tidy data paradigm. It started
@@ -66,6 +67,11 @@ the wind with streamlines.
 library(metR)
 library(data.table)
 library(ggplot2)
+#> 
+#> Attaching package: 'ggplot2'
+#> The following object is masked from 'package:data.table':
+#> 
+#>     :=
 data(geopotential)
 # Use Empirical Orthogonal Functions to compute the Antarctic Oscillation
 geopotential <- copy(geopotential)

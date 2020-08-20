@@ -130,10 +130,10 @@ the order of the data. Therefore data should be arranged by the label
 column before calling \code{geom_label()} or \code{geom_text()}.}
 }
 \description{
-Draws labels on contours built with \link[ggplot2:stat_contour]{ggplot2::stat_contour}.
+Draws labels on contours built with \link[ggplot2:geom_contour]{ggplot2::stat_contour}.
 }
 \details{
-Is best used with a previous call to \link[ggplot2:stat_contour]{ggplot2::stat_contour} with the same
+Is best used with a previous call to \link[ggplot2:geom_contour]{ggplot2::stat_contour} with the same
 parameters (e.g. the same \code{binwidth}, \code{breaks}, or \code{bins}).
 Note that while \code{geom_text_contour()} can angle itself to follow the contour,
 this is not the case with \code{geom_label_contour()}.

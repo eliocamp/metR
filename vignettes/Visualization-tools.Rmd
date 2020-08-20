@@ -252,7 +252,7 @@ ggplot(temperature[lev == 500], aes(lon, lat)) +
                     L = 10, res = 2, xwrap = c(0, 360), lineend = "round") + 
     scale_y_latitude(limits = c(-90, 0)) +
     scale_x_longitude() +
-    viridis::scale_color_viridis(guide = "none") +
+    scale_color_viridis_c(guide = "none") +
     scale_size(range = c(0, 1), guide = "none") +
     scale_alpha(guide = "none")
 ```

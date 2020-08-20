@@ -42,7 +42,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
 #' @export
 StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     required_aes = c("x", "y", "z"),
-    default_aes = ggplot2::aes(fill = ..int.level..),
+    default_aes = ggplot2::aes(fill = ..int.level.., order = ..level..),
     setup_params = function(data, params) {
         if (is.null(params$global) || isTRUE(params$global.breaks)) {
             params$breaks <- setup_breaks(data,
@@ -89,29 +89,23 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
         data <- data[!(is.na(y) | is.na(x)), ]
 
-        if (isFALSE(na.fill)) {
-            data <- data[!is.na(z), ]
-        }
 
-        # Check if is a complete grid
-        complete.grid <- with(data, .is.regular_grid(x, y))
-
-        if (complete.grid == FALSE) {
-            if (complete == FALSE) {
-                warning("data must be a complete regular grid", call. = FALSE)
-                return(data.frame())
-            } else {
-                # data <- data.table::setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
-                data <- .complete(data, x, y)
+        if (isTRUE(na.fill)) {
+            # Check if is a complete grid
+            complete.grid <- with(data, .is.regular_grid(x, y))
+            if (complete.grid == FALSE) {
+                if (complete == FALSE) {
+                    warning("data must be a complete regular grid", call. = FALSE)
+                    return(data.frame())
+                } else {
+                    # data <- data.table::setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+                    data <- .complete(data, x, y)
+                }
             }
-        }
 
-        data <- .impute_data(data, na.fill)
-
-        nas <- nrow(data[is.na(z)])
-        if (nas != 0) {
-            warning("data must not have missing values. Use na.fill = TRUE or impute them before plotting.", call. = FALSE)
-            return(data.frame())
+            data <- .impute_data(data, na.fill)
+        } else {
+            data <- data[!is.na(z), ]
         }
 
         if (!is.null(xwrap)) {
@@ -121,72 +115,11 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             data <- suppressWarnings(WrapCircular(data, "y", ywrap))
         }
 
-        # jitter <- diff(range(data$z))*0.000000
-        # data$z <- data$z + rnorm(nrow(data))*jitter
-        data.table::setDF(data)
-        mean.z <- data$z[data$z %~% mean(data$z)][1]
-
-        # mean.z <- min(breaks) - 100*ggplot2::resolution(breaks, zero = FALSE)
-        range.data <- as.data.frame(vapply(data[c("x", "y", "z")], range, c(1, 2)))
-
-        # Expand data by 1 unit in all directions.
-        data <- .expand_data(data, mean.z)
 
         # Make contours
-        cont <- data.table::setDT(.contour_lines(data, breaks, complete = complete))
+        cont <- data.table::setDT(.contour_bands(data, breaks, complete = complete))
 
-        if (length(cont) == 0) {
-            warning("Not possible to generate contour data", call. = FALSE)
-            return(data.frame())
-        }
-
-        # Ugly hack for joining disjointed contours
-        cont <- .join_contours.m(cont)
-
-        # Calculate inner fill
-        cont <- .inner_fill.m(cont, data, breaks)
-
-        # Add bounding contour, if necessary.
-        if (data.table::between(mean.z, min(breaks), max(breaks))) {
-            mean.level <- breaks[breaks %~% mean.z]
-
-            i <-  which(breaks == mean.level)
-            correction <- sign(mean.z - mean.level)
-            if (correction == 0) correction <- 1
-            correction <- (breaks[i + correction] - mean.level)/2
-
-            # Adds bounding contour
-            data.table::setDT(data)
-            Nx <- data.table::uniqueN(data$x)
-            Ny <- data.table::uniqueN(data$y)
-
-            x <- c(rep(range.data$x[1], Ny),
-                   sort(data[y == range.data$y[2], x]),
-                   rep(range.data$x[2], Ny),
-                   sort(data[y == range.data$y[1], x], decreasing = TRUE))
-            y <- c(sort(data[x == range.data$x[1], y]),
-                   rep(range.data$y[2], Nx),
-                   sort(data[x == range.data$x[2], y], decreasing = TRUE),
-                   rep(range.data$y[1], Nx))
-
-            mean.cont  <- data.frame(
-                level = mean.level,
-                x = x,
-                y = y,
-                piece = max(cont$piece) + 1,
-                int.level = mean.level + correction)
-            mean.cont$group <- factor(paste("", sprintf("%03d", mean.cont$piece), sep = "-"))
-            cont <- rbind(cont, mean.cont)
-        }
-
-        # Move contours to range of original data
-        cont$x[cont$x > range.data$x[2]] <- range.data$x[2]
-        cont$x[cont$x < range.data$x[1]] <- range.data$x[1]
-        cont$y[cont$y < range.data$y[1]] <- range.data$y[1]
-        cont$y[cont$y > range.data$y[2]] <- range.data$y[2]
-
-        # Order pieces according to area.
-        cont <- .order_fill(cont)
+        cont[, int.level := (high + low)/2]
 
         if (!is.null(proj)) {
             if (!requireNamespace("proj4", quietly = TRUE)) {
@@ -194,9 +127,48 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             }
             cont <- data.table::copy(cont)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
         }
+
         cont
+
         }
 )
+
+
+
+.contour_bands <- memoise::memoise(function(data, breaks, complete = FALSE) {
+    z <- tapply(data$z, as.data.frame(data)[c("x", "y")], identity)
+
+    if (is.list(z)) {
+        stop("Contour requires single `z` at each combination of `x` and `y`.",
+             call. = FALSE)
+    }
+
+    cl <- isoband::isobands(x = sort(unique(data$x)),
+                            y = sort(unique(data$y)),
+                            z = t(z),
+                            levels_low = breaks[-length(breaks)],
+                            levels_high = breaks[-1])
+
+
+    if (length(cl) == 0) {
+        warning("Not possible to generate contour data", call. = FALSE)
+        return(data.frame())
+    }
+
+    # Convert list of lists into single data frame
+
+    cont <- data.table::rbindlist(lapply(cl, data.table::as.data.table), idcol = "band")
+
+    cont[, band := ordered(band, names(cl))]
+    cont[, c("low", "high") := data.table::tstrsplit(band, ":")]
+    cont[, `:=`(low = as.numeric(low), high = as.numeric(high))]
+    cont[, piece := as.numeric(interaction(band))]
+    cont[, group := factor(paste(data$group[1], sprintf("%03d", piece), sep = "-"))]
+
+
+    cont[, .(level = band, low, high, x, y, piece, group, subgroup = id)]
+
+})
 
 .order_fill <- function(cont) {
     areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][

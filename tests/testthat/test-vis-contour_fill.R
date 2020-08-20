@@ -22,7 +22,6 @@ test_that("interpolation", {
         geom_contour_fill(aes(z = gh)) +
         guides(fill = "none")
 
-    expect_warning(print(g), "data must not have missing values. Use na.fill = TRUE or impute them before plotting.")
     skip_on_ci()
     suppressWarnings(expect_doppelganger("contour_fill-nofill", g))
 
@@ -37,7 +36,7 @@ test_that("interpolation", {
     g2 <- ggplot(data, aes(lon, lat)) +
         geom_contour_fill(aes(z = gh), complete = FALSE) +
         guides(fill = "none")
-    expect_warning(print(g2), "data must be a complete regular grid")
+
 
     suppressWarnings(expect_doppelganger("contour_fill-nofill", g2))
 })

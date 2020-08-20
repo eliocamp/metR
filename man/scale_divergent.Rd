@@ -96,8 +96,8 @@ If the purpose is to zoom, use the limit argument in the coordinate system
 }}
     \item{\code{rescaler}}{A function used to scale the input values to the
 range [0, 1]. This is always \code{\link[scales:rescale]{scales::rescale()}}, except for
-diverging and n colour gradients (i.e., \code{\link[ggplot2:scale_colour_gradient2]{scale_colour_gradient2()}},
-\code{\link[ggplot2:scale_colour_gradientn]{scale_colour_gradientn()}}). The \code{rescaler} is ignored by position
+diverging and n colour gradients (i.e., \code{\link[ggplot2:scale_gradient]{scale_colour_gradient2()}},
+\code{\link[ggplot2:scale_gradient]{scale_colour_gradientn()}}). The \code{rescaler} is ignored by position
 scales, which always use \code{\link[scales:rescale]{scales::rescale()}}.}
     \item{\code{oob}}{One of:
 \itemize{

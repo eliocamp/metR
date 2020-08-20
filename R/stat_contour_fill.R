@@ -42,7 +42,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
 #' @export
 StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     required_aes = c("x", "y", "z"),
-    default_aes = ggplot2::aes(fill = ..int.level.., order = ..level..),
+    default_aes = ggplot2::aes(fill = ..level_mid.., order = ..level..),
     setup_params = function(data, params) {
         if (is.null(params$global) || isTRUE(params$global.breaks)) {
             params$breaks <- setup_breaks(data,
@@ -119,7 +119,9 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         # Make contours
         cont <- data.table::setDT(.contour_bands(data, breaks, complete = complete))
 
-        cont[, int.level := (high + low)/2]
+        cont[, int.level := (level_high + level_low)/2]
+        cont[, level_mid := int.level]
+        cont[, nlevel := level_high/max(level_high)]
 
         if (!is.null(proj)) {
             if (!requireNamespace("proj4", quietly = TRUE)) {
@@ -160,13 +162,17 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     cont <- data.table::rbindlist(lapply(cl, data.table::as.data.table), idcol = "band")
 
     cont[, band := ordered(band, names(cl))]
-    cont[, c("low", "high") := data.table::tstrsplit(band, ":")]
-    cont[, `:=`(low = as.numeric(low), high = as.numeric(high))]
+    cont[, c("level_low", "level_high") := data.table::tstrsplit(band, ":")]
+    cont[, `:=`(level_low = as.numeric(level_low), level_high = as.numeric(level_high))]
+    # cont[, level := paste0("(", format(as.numeric(level_low), digits = 3, trim = TRUE),
+    #                        ", ", format(as.numeric(level_high), digits = 3, trim = TRUE))]
+    # cont[, level := factor(level, ordered = TRUE)]
+
     cont[, piece := as.numeric(interaction(band))]
     cont[, group := factor(paste(data$group[1], sprintf("%03d", piece), sep = "-"))]
 
 
-    cont[, .(level = band, low, high, x, y, piece, group, subgroup = id)]
+    cont[, .(level = band, level_low, level_high, x, y, piece, group, subgroup = id)]
 
 })
 

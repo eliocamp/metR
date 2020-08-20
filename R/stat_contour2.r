@@ -225,38 +225,34 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 }
 
 .contour_lines <- memoise::memoise(function(data, breaks, complete = FALSE) {
-    z <- tapply(data$z, data[c("x", "y")], identity)
+  z <- tapply(data$z, as.data.frame(data)[c("x", "y")], identity)
 
-    if (is.list(z)) {
-        stop("Contour requires single `z` at each combination of `x` and `y`.",
-             call. = FALSE)
-    }
+  if (is.list(z)) {
+    stop("Contour requires single `z` at each combination of `x` and `y`.",
+         call. = FALSE)
+  }
 
-    cl <- grDevices::contourLines(
-        x = sort(unique(data$x)), y = sort(unique(data$y)), z = z,
-        levels = breaks)
+  cl <- isoband::isolines(x = sort(unique(data$x)),
+                          y = sort(unique(data$y)),
+                          z = t(z),
+                          levels = breaks)
 
-    if (length(cl) == 0) {
-        warning("Not possible to generate contour data", call. = FALSE)
-        return(data.frame())
+
+  if (length(cl) == 0) {
+    warning("Not possible to generate contour data", call. = FALSE)
+    return(data.frame())
   }
 
   # Convert list of lists into single data frame
-  lengths <- vapply(cl, function(x) length(x$x), integer(1))
-  levels <- vapply(cl, "[[", "level", FUN.VALUE = double(1))
-  xs <- unlist(lapply(cl, "[[", "x"), use.names = FALSE)
-  ys <- unlist(lapply(cl, "[[", "y"), use.names = FALSE)
-  pieces <- rep(seq_along(cl), lengths)
-  # Add leading zeros so that groups can be properly sorted later
-  groups <- paste(data$group[1], sprintf("%03d", pieces), sep = "-")
 
-  data.frame(
-    level = rep(levels, lengths),
-    x = xs,
-    y = ys,
-    piece = pieces,
-    group = groups
-  )
+  cont <- data.table::rbindlist(lapply(cl, data.table::as.data.table), idcol = "level")
+
+  cont[, level := as.numeric(level)]
+  cont[, piece := as.numeric(factor(level))]
+  cont[, group := factor(paste(data$group[1], sprintf("%03d", piece),  sprintf("%03d", id), sep = "-"))]
+
+  cont[, .(level, x, y, piece, group)]
+
 })
 
 

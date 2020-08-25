@@ -48,7 +48,7 @@
 #' part of the `formula`, respectively.
 #'
 #' It is much faster to compute only some singular vectors, so is advisable not
-#' to set n to \code{NULL}. If the irba package is installed, EOF uses
+#' to set n to \code{NULL}. If the irlba package is installed, EOF uses
 #' [irlba::irlba] instead of [base::svd] since it's much faster.
 #'
 #' The bootsrapping procedure follows Fisher et.al. (2016) and returns the
@@ -213,7 +213,7 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
     if (B > 1) {
         set.seed(42)
         if (!tall) {
-            names(eof) <- c("d", "v", "u", "iter", "mprod")
+            names(eof)[1:3] <- c("d", "v", "u")
         }
         loadings <- with(eof, diag(d, ncol = max(n), nrow = max(n))%*%t(v))
         p <- nrow(eof$v)

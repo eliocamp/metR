@@ -125,7 +125,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
         if (!is.null(proj)) {
             if (is.function(proj)) {
-                contours <- proj_fun(contours)
+                contours <- proj(contours)
             } else {
                 if (is.character(proj)) {
                     if (!requireNamespace("proj4", quietly = TRUE)) {

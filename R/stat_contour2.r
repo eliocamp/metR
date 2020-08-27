@@ -232,7 +232,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     x[order(abs(tmp))][2]
 }
 
-.contour_lines <- memoise::memoise(function(data, breaks, complete = FALSE) {
+.contour_lines <- function(data, breaks, complete = FALSE) {
   z <- tapply(data$z, as.data.frame(data)[c("x", "y")], identity)
 
   if (is.list(z)) {
@@ -261,7 +261,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 
   cont[, .(level, x, y, piece, group)]
 
-})
+}
 
 
 setup_breaks <- function(data, breaks, bins, binwidth) {

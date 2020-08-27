@@ -145,7 +145,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
 
 
-.contour_bands <- memoise::memoise(function(data, breaks, complete = FALSE) {
+.contour_bands <- function(data, breaks, complete = FALSE) {
     z <- tapply(data$z, as.data.frame(data)[c("x", "y")], identity)
 
     if (is.list(z)) {
@@ -182,7 +182,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
     cont[, .(level = band, level_low, level_high, x, y, piece, group, subgroup = id)]
 
-})
+}
 
 .order_fill <- function(cont) {
     areas <- cont[, .(area = abs(area(x, y))), by = .(piece)][

@@ -124,10 +124,18 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         cont[, nlevel := level_high/max(level_high)]
 
         if (!is.null(proj)) {
-            if (!requireNamespace("proj4", quietly = TRUE)) {
-                stop("Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`")
+            if (is.function(proj)) {
+                contours <- proj_fun(contours)
+            } else {
+                if (is.character(proj)) {
+                    if (!requireNamespace("proj4", quietly = TRUE)) {
+                        stop("Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`")
+                    }
+                    contours <- data.table::copy(contours)[, c("x", "y") := proj4::project(list(x, y), proj,
+                                                                                           inverse = TRUE)][]
+
+                }
             }
-            cont <- data.table::copy(cont)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
         }
 
         cont

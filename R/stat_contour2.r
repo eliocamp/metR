@@ -141,10 +141,18 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     contours <- .order_contour.m(contours, setDT(data))
 
     if (!is.null(proj)) {
-      if (!requireNamespace("proj4", quietly = TRUE)) {
-        stop("Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`")
+      if (is.function(proj)) {
+        contours <- proj_fun(contours)
+      } else {
+        if (is.character(proj)) {
+          if (!requireNamespace("proj4", quietly = TRUE)) {
+            stop("Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`")
+          }
+          contours <- data.table::copy(contours)[, c("x", "y") := proj4::project(list(x, y), proj,
+                                                                                 inverse = TRUE)][]
+
+        }
       }
-      contours <- data.table::copy(contours)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
     }
 
     return(contours)

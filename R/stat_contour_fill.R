@@ -147,12 +147,6 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
 .contour_bands <- function(data, breaks, complete = FALSE) {
     band <- level_high <- level_low <- NULL
-    # z <- tapply(data$z, as.data.frame(data)[c("x", "y")], identity)
-    #
-    # if (is.list(z)) {
-    #     stop("Contour requires single `z` at each combination of `x` and `y`.",
-    #          call. = FALSE)
-    # }
 
     # From ggplot2
     x_pos <- as.integer(factor(data$x, levels = sort(unique(data$x))))

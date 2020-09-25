@@ -68,7 +68,7 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
     reportAssertions(checks)
 
     if (cache) {
-        file.name <- paste0(digest::digest(paste0(c(date, type[1]), collapse = "_")), ".csv")
+        file.name <- paste0(digest::digest(list(date, type[1])), ".csv")
         file <- file.path(file.dir, file.name)
         if (file.exists(file)) {
             data <- data.table::fread(file)

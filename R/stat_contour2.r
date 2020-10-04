@@ -98,7 +98,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
                              binwidth = binwidth)
     }
 
-    setDT(data)
+    data.table::setDT(data)
 
     data <- data[!(is.na(y) | is.na(x)), ]
 
@@ -131,14 +131,14 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     }
 
 
-    setDF(data)
-    contours <- as.data.table(.contour_lines(data, breaks, complete = complete))
+    data.table::setDF(data)
+    contours <- data.table::as.data.table(.contour_lines(data, breaks, complete = complete))
 
     if (length(contours) == 0) {
       warning("Not possible to generate contour data", call. = FALSE)
       return(data.frame())
     }
-    contours <- .order_contour.m(contours, setDT(data))
+    contours <- .order_contour.m(contours, data.table::setDT(data))
 
     if (!is.null(proj)) {
       if (!requireNamespace("proj4", quietly = TRUE)) {

@@ -106,8 +106,8 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
       data <- data[!is.na(z), ]
     }
 
-    nx <- data[, uniqueN(x), by = y]$V1
-    ny <- data[, uniqueN(y), by = x]$V1
+    nx <- data[, data.table::uniqueN(x), by = y]$V1
+    ny <- data[, data.table::uniqueN(y), by = x]$V1
 
     complete.grid <- abs(max(nx) - min(nx)) == 0 & abs(max(ny) - min(ny)) == 0
 

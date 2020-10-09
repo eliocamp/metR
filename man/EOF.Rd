@@ -74,7 +74,7 @@ In the result, the left and right vectors have dimensions of the LEFT and RIGHT
 part of the \code{formula}, respectively.
 
 It is much faster to compute only some singular vectors, so is advisable not
-to set n to \code{NULL}. If the irba package is installed, EOF uses
+to set n to \code{NULL}. If the irlba package is installed, EOF uses
 \link[irlba:irlba]{irlba::irlba} instead of \link[base:svd]{base::svd} since it's much faster.
 
 The bootsrapping procedure follows Fisher et.al. (2016) and returns the

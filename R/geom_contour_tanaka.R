@@ -29,8 +29,7 @@
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 #'     geom_contour_fill(aes(z = value)) +
 #'     geom_contour_tanaka(aes(z = value)) +
-#'     theme_void() +
-#'     viridis::scale_fill_viridis(guide = "none")
+#'     theme_void()
 #'
 #' data(geopotential)
 #' geo <- geopotential[date == unique(date)[4]]

@@ -32,7 +32,7 @@ If there's no complete cases in the regression, \code{NA}s are returned with no
 warning.
 }
 \description{
-Computes a linear regression with \link[stats:.lm.fit]{stats::.lm.fit} and returns the estimate
+Computes a linear regression with \link[stats:lmfit]{stats::.lm.fit} and returns the estimate
 and, optionally, standard error for each regressor.
 }
 \examples{

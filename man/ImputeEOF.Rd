@@ -51,7 +51,7 @@ and RIGHT, the columns of the matrix.
 Think it like "VAR \emph{as a function} of LEFT \emph{and} RIGHT".
 
 Alternatively, if \code{value.var} is not \code{NULL}, it's possible to use the
-(probably) more familiar \link[data.table:dcast]{data.table::dcast} formula interface. In that case,
+(probably) more familiar \link[data.table:dcast.data.table]{data.table::dcast} formula interface. In that case,
 \code{data} must be provided.
 
 If \code{data} is a matrix, the \code{formula} argument is ignored and the function

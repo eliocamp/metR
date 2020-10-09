@@ -32,7 +32,7 @@ test_that("global.breaks work", {
 
     expect_doppelganger("contour2-global.breaks",
                         ggplot(df, aes(x=V1, y=V2, z=V3)) +
-                            geom_contour(color = "red") +
+                            geom_contour2(color = "red") +
                             geom_contour2(global.breaks = FALSE) +
                             guides(fill = "none") +
                             facet_grid(. ~ V4))

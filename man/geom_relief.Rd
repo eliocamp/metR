@@ -74,7 +74,7 @@ to the paired geom/stat.}
 \item{sun.angle}{angle from which the sun is shining, in degrees
 counterclockwise from 12 o' clock}
 
-\item{raster}{if \code{TRUE} (the default), uses \link[ggplot2:geom_raster]{ggplot2::geom_raster},
+\item{raster}{if \code{TRUE} (the default), uses \link[ggplot2:geom_tile]{ggplot2::geom_raster},
 if \code{FALSE}, uses \link[ggplot2:geom_tile]{ggplot2::geom_tile}.}
 
 \item{interpolate}{If \code{TRUE} interpolate linearly, if \code{FALSE}

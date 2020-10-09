@@ -28,7 +28,7 @@ ggplot2's continuous scales and in \link{geom_contour_fill}.
 }
 \details{
 \code{MakeBreaks} is essentially an export of the default way
-\link[ggplot2:stat_contour]{ggplot2::stat_contour} makes breaks.
+\link[ggplot2:geom_contour]{ggplot2::stat_contour} makes breaks.
 
 \code{AnchorBreaks} makes breaks starting from an \code{anchor} value and covering
 the range of the data according to \code{binwidth}.

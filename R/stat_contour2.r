@@ -141,10 +141,18 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     contours <- .order_contour.m(contours, data.table::setDT(data))
 
     if (!is.null(proj)) {
-      if (!requireNamespace("proj4", quietly = TRUE)) {
-        stop("Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`")
+      if (is.function(proj)) {
+        contours <- proj(contours)
+      } else {
+        if (is.character(proj)) {
+          if (!requireNamespace("proj4", quietly = TRUE)) {
+            stop("Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`")
+          }
+          contours <- data.table::copy(contours)[, c("x", "y") := proj4::project(list(x, y), proj,
+                                                                                 inverse = TRUE)][]
+
+        }
       }
-      contours <- data.table::copy(contours)[, c("x", "y") := proj4::project(list(x, y), proj, inverse = TRUE)][]
     }
 
     return(contours)
@@ -224,40 +232,36 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     x[order(abs(tmp))][2]
 }
 
-.contour_lines <- memoise::memoise(function(data, breaks, complete = FALSE) {
-    z <- tapply(data$z, data[c("x", "y")], identity)
+.contour_lines <- function(data, breaks, complete = FALSE) {
+  z <- tapply(data$z, as.data.frame(data)[c("x", "y")], identity)
 
-    if (is.list(z)) {
-        stop("Contour requires single `z` at each combination of `x` and `y`.",
-             call. = FALSE)
-    }
+  if (is.list(z)) {
+    stop("Contour requires single `z` at each combination of `x` and `y`.",
+         call. = FALSE)
+  }
 
-    cl <- grDevices::contourLines(
-        x = sort(unique(data$x)), y = sort(unique(data$y)), z = z,
-        levels = breaks)
+  cl <- isoband::isolines(x = sort(unique(data$x)),
+                          y = sort(unique(data$y)),
+                          z = t(z),
+                          levels = breaks)
 
-    if (length(cl) == 0) {
-        warning("Not possible to generate contour data", call. = FALSE)
-        return(data.frame())
+
+  if (length(cl) == 0) {
+    warning("Not possible to generate contour data", call. = FALSE)
+    return(data.frame())
   }
 
   # Convert list of lists into single data frame
-  lengths <- vapply(cl, function(x) length(x$x), integer(1))
-  levels <- vapply(cl, "[[", "level", FUN.VALUE = double(1))
-  xs <- unlist(lapply(cl, "[[", "x"), use.names = FALSE)
-  ys <- unlist(lapply(cl, "[[", "y"), use.names = FALSE)
-  pieces <- rep(seq_along(cl), lengths)
-  # Add leading zeros so that groups can be properly sorted later
-  groups <- paste(data$group[1], sprintf("%03d", pieces), sep = "-")
 
-  data.frame(
-    level = rep(levels, lengths),
-    x = xs,
-    y = ys,
-    piece = pieces,
-    group = groups
-  )
-})
+  cont <- data.table::rbindlist(lapply(cl, data.table::as.data.table), idcol = "level")
+
+  cont[, level := as.numeric(level)]
+  cont[, piece := as.numeric(factor(level))]
+  cont[, group := factor(paste(data$group[1], sprintf("%03d", piece),  sprintf("%03d", id), sep = "-"))]
+
+  cont[, .(level, x, y, piece, group)]
+
+}
 
 
 setup_breaks <- function(data, breaks, bins, binwidth) {

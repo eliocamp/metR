@@ -10,30 +10,12 @@
 #'      (this includes DAP urls).
 #'    * A netcdf object returned by [ncdf4::nc_open()].
 #' @param vars a character vector with the name of the variables to read. If
-#' \code{NULL}, then it reads all the variables. Use [auto_scale()] to signal that a
-#' set of variables needs automatic scaling and offset (see Scaling)`
+#' \code{NULL}, then it reads all the variables.
 #' @param out character indicating the type of output desired
 #' @param subset a list of subsetting objects. See below.
 #' @param key if `TRUE`, returns a data.table keyed by the dimensions of the data.
-#' @param ... * in [GlanceNetCDF()], ignored. Is there for convenience so that a call to [ReadNetCDF()] can
+#' @param ... in [GlanceNetCDF()], ignored. Is there for convenience so that a call to [ReadNetCDF()] can
 #' be also valid for [GlanceNetCDF()].
-#' * in [auto_scale()], variables to read that need automatic scaling and offset (See Scaling).
-#'
-#' @section Scaling:
-#' Some NetCDF files pack variables that need to be scaled and offsetted. For backwards
-#' compatibility, `ReadNetCDF()` by default does not apply that scaling (this will change
-#' in the future). If you want to automatically scale and offset a variable, then you need to
-#' wrap its name in a `auto_scale()` call.
-#'
-#' For example, using `vars = c("hgt", auto_scale("rad"))`
-#' will read the variable "hgt" as is but attempt to scale and offset the variable "rad" using
-#' the attributes packed inside the file.
-#'
-#' If you need to rename the variables, name the arguments inside `auto_scale()`. Using
-#' `vars = c("hgt", auto_scale(radiance = "rad", temperature = "air"))`, for example, will
-#' read the "hgt" variable unscaled with name "hgt", and the "rad" and "air" variables
-#' scaled with names "radiance" and "temperature" respectively.
-#'
 #'
 #' @section Subsetting:
 #' In the most basic form, `subset` will be a named list whose names must match
@@ -192,10 +174,6 @@ ReadNetCDF <- function(file, vars = NULL,
         vars <- as.list(names(ncfile$var))
     }
 
-    scale_var <- vapply(vars, function(x) {
-        attr(x, "auto_scale", TRUE) %||% FALSE
-
-    }, TRUE )
 
     # Vars must be a (fully) named vector.
     varnames <- names(vars)
@@ -289,8 +267,8 @@ ReadNetCDF <- function(file, vars = NULL,
             sub.dimensions[[s]] <- dimensions[[s]][seq.int(start[[s]], start[[s]] + count[[s]] - 1)]
         }
 
-        # scale <- inherits(vars[[v]], "auto_scale")
-        var1 <- .read_vars(varid = vars[[v]], ncfile = ncfile, start = start, count = count, scale = scale_var[v])
+
+        var1 <- .read_vars(varid = vars[[v]], ncfile = ncfile, start = start, count = count)
 
         dimnames(var1) <- sub.dimensions[dims[as.character(order)]]
 
@@ -361,22 +339,10 @@ ReadNetCDF <- function(file, vars = NULL,
     as.POSIXct(time, tz = "UTC", origin = "1970-01-01 00:00:00")
 }
 
-.read_vars <- function(varid, ncfile, start, count, scale = TRUE) {
+.read_vars <- function(varid, ncfile, start, count) {
 
     var <- ncdf4::ncvar_get(nc = ncfile, varid = varid, collapse_degen = FALSE, start = start,
                              count = count)
-
-    if (isTRUE(scale)) {
-        attrs <- ncdf4::ncatt_get(nc = ncfile, varid = varid)
-        if ("scale_factor" %in% names(attrs)) {
-            var <- var*attrs[["scale_factor"]]
-        }
-        if ("add_offset" %in% names(attrs)) {
-            var <- var + attrs[["add_offset"]]
-        }
-
-
-    }
     var
 }
 
@@ -497,15 +463,6 @@ print.ncdim4 <- function(x, ...) {
 }
 
 
-#' @describeIn ReadNetCDF A convenient way to signal variables that need scaling
-#' @export
-auto_scale <- function(...) {
-    x <- list(...)
-    for (i in seq_along(x)) {
-        attr(x[[i]], "auto_scale") <- TRUE
-    }
-    x
-}
 
 .melt_array <- function(array, dims, value.name = "V1") {
     # dims <- lapply(dims, c)

@@ -58,25 +58,3 @@ test_that("can read from urls", {
 })
 
 
-
-test_that("scales variables", {
-    file <- "needs_scale.nc"
-
-    unscaled <- ReadNetCDF(file, vars = "Rad")
-    expect_equal(round(range(unscaled$Rad), 2), c(0.48, 0.60))
-
-    scaled <- ReadNetCDF(file, vars = auto_scale("Rad"))
-    expect_equal(round(range(scaled$Rad), 4), c(-0.0368, -0.0367))
-
-    expect_known_hash(ReadNetCDF(file, vars = c(auto_scale("Rad"), "DQF")), 2020559933)
-
-    expect_equal(ReadNetCDF(file, vars = c(auto_scale("Rad"), "DQF")),
-                 ReadNetCDF(file, vars = c(auto_scale("Rad", "DQF"))))
-
-    expect_equal(ReadNetCDF(file, vars = c(auto_scale(R = "Rad"), D = "DQF")),
-                 ReadNetCDF(file, vars = c(auto_scale(R = "Rad", D = "DQF"))))
-
-    expect_equal(ReadNetCDF(file, vars = c(R = auto_scale("Rad"), D = "DQF")),
-                 ReadNetCDF(file, vars = c(auto_scale(R = "Rad", D = "DQF"))))
-
-})

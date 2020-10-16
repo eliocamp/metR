@@ -211,6 +211,10 @@ Vorticity <- function(formula, cyclical = FALSE, fill = FALSE,
 
 .derv <- function(x, y, order = 1, cyclical = FALSE, fill = FALSE, equispaced = TRUE) {
     N <- length(x)
+
+    if (N < order + 1) {
+        return(rep(NA, length = length(x)))
+    }
     nxt <- function(v) {
         v[c(2:N, 1)]
     }
@@ -237,6 +241,8 @@ Vorticity <- function(formula, cyclical = FALSE, fill = FALSE,
         h2 <- nxt(y) - y
         h1 <- y - prv(y)
     }
+
+
 
     x0 <- prv(x)
     x2 <- nxt(x)

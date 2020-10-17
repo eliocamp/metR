@@ -11,6 +11,8 @@ addons:
       - netcdf-bin
       - libudunits2-dev
       - libproj-dev
+      - libharfbuzz-dev
+      - libfribidi-dev
 
 after_success:
   - Rscript -e 'covr::codecov()'

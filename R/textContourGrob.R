@@ -1,82 +1,191 @@
 # from shadowtext
-shadowtext <- function(label, x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "npc"),
+contourTextGrob <- function(label, x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "npc"),
+                       group = rep(1, length(label)),
                        just = "centre", hjust = NULL, vjust = NULL,
-                       dx = 0, dy = 0,
                        check.overlap = FALSE,
-                       default.units = "npc", name = NULL, gp = grid::gpar(col = "white"),
-                       vp = NULL, bg.color = "black", bg.r = 0.1) {
-    upperGrob <- textContourGrob(label = label, x = x, y = y, just = just,
-                                 hjust = hjust, vjust = vjust,
-                                 dx = dx, dy = dy,
-                                 default.units = default.units,
-                                 check.overlap = check.overlap, name = name, gp = gp,
-                                 vp = vp)
-    if (is.null(bg.color))
-        return(upperGrob)
-    gp$col <- bg.color
-    theta <- seq(pi/8, 2 * pi, length.out = 16)
-    char <- substring(label[1], 1, 1)
-    r <- bg.r[1]
-    if (r != 0) {
-        bgList <- lapply(theta, function(i) {
-            if (!grid::is.unit(x))
-                x <- grid::unit(x, default.units)
-            if (!grid::is.unit(y))
-                y <- grid::unit(y, default.units)
-            x <- x + grid::unit(cos(i) * r, "strwidth", data = char)
-            y <- y + grid::unit(sin(i) * r, "strheight", data = char)
-            textContourGrob(label = label, x = x, y = y, just = just, hjust = hjust,
-                            vjust = vjust,
-                            dx = dx, dy = dy,
-                            default.units = default.units,
-                            check.overlap = check.overlap, name = name, gp = gp,
-                            vp = vp)
-        })
-    } else {
-        bgList <- list()
+                       rotate = TRUE,
+                       default.units = "npc", name = NULL,
+
+                       col = "white",
+                       fontsize = NULL,
+                       fontfamily = NULL,
+                       fontface = NULL,
+                       lineheight = NULL,
+
+
+                       # gp = grid::gpar(col = "white"),
+                       vp = NULL, bg.color = "black", bg.r = 0.1,
+                       position = label_placement_flattest()) {
+
+
+    if (!grid::is.unit(x)) {
+        x <- grid::unit(x, default.units)
     }
-    bgGrob <- do.call(grid::gList, bgList)
-    grobs <- grid::gList(bgGrob, upperGrob)
-    grid::gTree(children = grobs)
-}
+
+    if (!grid::is.unit(y)) {
+        y <- grid::unit(y, default.units)
+    }
 
 
 
-textContourGrob <- function(label, x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "npc"),
-                            just = "centre", hjust = NULL, vjust = NULL,
-                            dx = 0, dy = 0,
-                            bg.r = 0.1, bg.color = "black",
-                            check.overlap = FALSE, default.units = "npc",
-                            name = NULL, gp = grid::gpar(), vp = NULL) {
-    x <- .unit_ifnot(x, default.units)
-    y <- .unit_ifnot(y, default.units)
+    objects <- lapply(unique(group), function(g) {
+        group <- group == g
 
-    dx <- .unit_ifnot(dx, default.units)
-    dy <- .unit_ifnot(dy, default.units)
+        list(label = unique(label[group]),
+             x = x[group], y = y[group],
+             just = just,
+             hjust = hjust, vjust = vjust,
+             default.units = default.units,
+             check.overlap = check.overlap,
+             name = name,
+             position = position,
+             rotate = rotate,
+             bg.r = bg.r,
+             bg.color = bg.color,
+             # gp = grid::gpar(
+             col = col[group][1],
+             fontsize = fontsize[group][1],
+             fontfamily = fontfamily[group][1],
+             fontface = fontface[group][1],
+             lineheight = lineheight[group][1],
+             # ),
+             vp = vp)
+    })
 
-    grid::grob(label = label, x = x, y = y, just = just, hjust = hjust,
-         vjust = vjust,
-         dx = dx, dy = dy,
-         bg.r = bg.r, bg.color = bg.color,
-         check.overlap = check.overlap,
-         name = name, gp = gp, vp = vp, cl = "textContour")
+    grid::gTree(data = objects, cl = "contourTextGrob")
+
 }
 
 #' @export
-#' @importFrom grid makeContent
-makeContent.textContour <- function(x) {
-    x$x <- grid::convertX(x$x, 'mm')
-    x$y <- grid::convertY(x$y, 'mm')
-    x$dx <- grid::convertWidth(x$dx, 'mm')
-    x$dy <- grid::convertHeight(x$dy, 'mm')
+makeContent.contourTextGrob <- function(x) {
+    # browser()
 
-    x$rot <- atan2(as.numeric(x$dy), as.numeric(x$dx))*180/pi
+    payload <- x
 
-    x$rot <- ifelse(x$rot > 180, x$rot - 180, x$rot)
-    x$rot <- ifelse(x$rot > 90, x$rot - 180, x$rot)
-    x$rot <- ifelse(x$rot < -90, x$rot + 180, x$rot)
 
-    x$cl <- "text"
-    class(x)[1] <- "text"
-    x
+    data <- lapply(x$data, content_grob)
+    valid <- lengths(data) != 0
+    data <- data[valid]
+
+    label <- unlist(lapply(data, function(x) x$label))
+    x_coord <- Reduce(grid::unit.c, lapply(data, function(x) x$x))
+    y <- Reduce(grid::unit.c, lapply(data, function(x) x$y))
+    col <- unlist(lapply(data, function(x) x$col))
+    fontsize <- unlist(lapply(data, function(x) x$fontsize))
+    fontfamily <- unlist(lapply(data, function(x) x$fontfamily))
+    fontface <- unlist(lapply(data, function(x) x$fontface))
+    lineheight <- unlist(lapply(data, function(x) x$lineheight))
+    rot <- unlist(lapply(data, function(x) x$rot))
+
+    just <-  unlist(lapply(payload$data, function(x) x$just))[valid]
+    hj <- unlist(lapply(payload$data, function(x)  grid::resolveHJust(x$just, NULL)))[valid]
+    vj <- unlist(lapply(payload$data, function(x)  grid::resolveVJust(x$just, NULL)))[valid]
+
+    default.units <-  unlist(lapply(payload$data, function(x) x$default.units))[1]
+    check.overlap <-  unlist(lapply(payload$data, function(x) x$check.overlap))[1]
+    bg.r <-  unlist(lapply(payload$data, function(x) x$bg.r))[1]
+    bg.color <-  unlist(lapply(payload$data, function(x) x$bg.color))[1]
+
+
+
+
+    grob <- shadowtextGrob(label, x_coord, y, just = c(hj, vj),
+                           default.units = default.units,
+                           check.overlap = check.overlap,
+                           bg.r = bg.r,
+                           rot = rot,
+                           bg.colour = bg.color,
+                           gp = grid::gpar(
+                               col = col,
+                               fontsize = fontsize,
+                               fontfamily = fontfamily,
+                               fontface = fontface,
+                               lineheight = lineheight)
+    )
+
+
+
+    grid::setChildren(x, grid::gList(grob))
+}
+
+
+
+
+content_grob <- function(x) {
+    x_coord <- grid::convertX(x$x, unitTo = "mm", valueOnly = TRUE)
+    y_coord <- grid::convertY(x$y, unitTo = "mm", valueOnly = TRUE)
+
+    # browser()
+    id <- seq_along(y_coord)
+    dx <- .derv(x_coord, id, fill = TRUE)
+    dy <- .derv(y_coord, id, fill = TRUE)
+
+
+    # angle <- atan2(dy, dx)
+    selected <- x$position(x_coord, y_coord)
+
+    if (length(x_coord[selected]) == 0) {
+        return(list())
+    }
+
+    if (x$rotate == TRUE) {
+        rot <-  text_angle(dx, dy)
+    } else {
+        rot <- 0
+    }
+
+    # from shadowtext
+    list(
+        label = rep(x$label, length = length(x$x[selected])),
+        x = x$x[selected], y = x$y[selected],
+        col = x$col,
+        rot = rot[selected],
+        fontsize = x$fontsize,
+        fontfamily = x$fontfamily,
+        fontface = x$fontface,
+        lineheight = x$lineheight
+    )
+}
+
+text_angle <- function(dx, dy) {
+    angle <- atan2(dy, dx)*180/pi
+    angle <- ifelse(angle > 180, angle - 180, angle)
+    angle <- ifelse(angle >= 90, angle - 180, angle)
+    angle <- ifelse(angle <= -90, angle + 180, angle)
+    angle
+}
+
+
+
+# from shadowtext
+shadowtextGrob <- function (label, x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "npc"),
+                            just = "centre", hjust = NULL, vjust = NULL, rot = 0, check.overlap = FALSE,
+                            default.units = "npc", name = NULL, gp = grid::gpar(col = "white"),
+                            vp = NULL, bg.colour = "black", bg.r = 0.1)
+{
+    upperGrob <- grid::textGrob(label = label, x = x, y = y, just = just,
+                                hjust = hjust, vjust = vjust, rot = rot, default.units = default.units,
+                                check.overlap = check.overlap, name = name, gp = gp,
+                                vp = vp)
+    if (bg.r == 0)
+        return(upperGrob)
+    gp$col <- bg.colour
+    theta <- seq(pi/8, 2 * pi, length.out = 16)
+    char <- "X"
+    r <- bg.r[1]
+    bgList <- lapply(theta, function(i) {
+        if (!grid::is.unit(x))
+            x <- grid::unit(x, default.units)
+        if (!grid::is.unit(y))
+            y <- grid::unit(y, default.units)
+        x <- x + grid::unit(cos(i) * r, "strheight", data = char)
+        y <- y + grid::unit(sin(i) * r, "strheight", data = char)
+        grid::textGrob(label = label, x = x, y = y, just = just, hjust = hjust,
+                       vjust = vjust, rot = rot, default.units = default.units,
+                       check.overlap = check.overlap, name = name, gp = gp,
+                       vp = vp)
+    })
+    bgGrob <- do.call(grid::gList, bgList)
+    grobs <- grid::gList(bgGrob, upperGrob)
+    grid::gTree(children = grobs)
 }

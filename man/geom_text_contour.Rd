@@ -38,6 +38,7 @@ geom_text_contour(
   min.size = 5,
   skip = 0,
   rotate = TRUE,
+  label.placement = label_placement_flattest(),
   parse = FALSE,
   nudge_x = 0,
   nudge_y = 0,
@@ -119,6 +120,8 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{rotate}{logical indicating whether to rotate text following the contour.}
 
+\item{label.placement}{A function for placing labels (see \code{label_placement_flattest()}).}
+
 \item{stroke}{numerical indicating width of stroke relative to the size of
 the text. Ignored if less than zero.}
 
@@ -167,6 +170,21 @@ g <- ggplot(v, aes(Var1, Var2)) +
 g + geom_text_contour(aes(z = value))
 
 g + geom_text_contour(aes(z = value), stroke = 0.2)
+
+g + geom_text_contour(aes(z = value),
+                      label.placement = label_placement_random())
+
+g + geom_text_contour(aes(z = value),
+                      label.placement = label_placement_n(3))
+
+
+g + geom_text_contour(aes(z = value),
+                      label.placement = label_placement_flattest())
+
+g + geom_text_contour(aes(z = value),
+                      label.placement = label_placement_flattest(ref_angle = 90))
+
+g + geom_label_contour(aes(z = value))
 
 }
 \seealso{

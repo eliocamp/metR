@@ -2,9 +2,23 @@
 
 ## New features
 
-- `ReadNetCDF()` now can automatically scale and offset variables that need it using the 
-convenience function `auto_scale()` in the `vars` argument. `GlanceNetCDF()` will print 
-"Scaled" for those variables that need to be scaled and offsetted. 
+- `geom_text_contour()` placement of labels is completely redesigned. It gains an
+argument `label.placement` which takes a function that is in charge of positioning 
+the labels. See `label_placement_flattest()` for more details on the possible 
+placement methods and how to build your own. The default method is `label_placement_flattest`, 
+which places the label where the product of the curvature and the angle of the
+contour is minimised. This aims to put labels in a straight segment that is also 
+as horizontal as possible. If more than one point satisfy this condition, then
+it chooses the closest to the midpoint. This is a **breaking change**, as it 
+will change the label position of previous plots. 
+
+- The contour functions also gain a `proj` argument. It can be a proj4 string 
+to project the contours of or an arbitrary function to alter the contours 
+after they are computed. This now makes it possible to compute contours for data
+that is on a regular grid on projected coordinates but want to plot in lon-lat 
+coordinates (or viceversa). Bear in mind that contours that cross the dateline 
+will probably end up mangled.  
+
 
 ## Bugfixes
 

@@ -131,7 +131,7 @@ content_grob <- function(x) {
     if (x$rotate == TRUE) {
         rot <-  text_angle(dx, dy)
     } else {
-        rot <- 0
+        rot <- rep(0, length(x_coord))
     }
 
     # from shadowtext
@@ -150,8 +150,8 @@ content_grob <- function(x) {
 text_angle <- function(dx, dy) {
     angle <- atan2(dy, dx)*180/pi
     angle <- ifelse(angle > 180, angle - 180, angle)
-    angle <- ifelse(angle >= 90, angle - 180, angle)
-    angle <- ifelse(angle <= -90, angle + 180, angle)
+    angle <- ifelse(angle > 90, angle - 180, angle)
+    angle <- ifelse(angle < -90, angle + 180, angle)
     angle
 }
 

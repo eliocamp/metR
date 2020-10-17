@@ -41,8 +41,6 @@
 #' g + geom_text_contour(aes(z = value),
 #'                       label.placement = label_placement_flattest(ref_angle = 90))
 #'
-#' g + geom_label_contour(aes(z = value))
-#'
 #' @section Aesthetics:
 #' \code{geom_text_contour} understands the following aesthetics (required aesthetics are in bold):
 #'

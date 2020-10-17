@@ -44,6 +44,6 @@ test_that("global.breaks work", {
                             geom_text_contour(global.breaks = FALSE) +
                             guides(fill = "none") +
                             facet_grid(. ~ V4))
-
-
 })
+
+

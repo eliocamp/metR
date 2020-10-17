@@ -171,6 +171,8 @@ g + geom_text_contour(aes(z = value))
 
 g + geom_text_contour(aes(z = value), stroke = 0.2)
 
+g + geom_text_contour(aes(z = value), rotate = FALSE)
+
 g + geom_text_contour(aes(z = value),
                       label.placement = label_placement_random())
 
@@ -183,8 +185,6 @@ g + geom_text_contour(aes(z = value),
 
 g + geom_text_contour(aes(z = value),
                       label.placement = label_placement_flattest(ref_angle = 90))
-
-g + geom_label_contour(aes(z = value))
 
 }
 \seealso{

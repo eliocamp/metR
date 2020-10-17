@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 [![Coverage status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg)](https://codecov.io/github/eliocamp/metR/?branch=master)
 [![CRAN status](http://www.r-pkg.org/badges/version/metR)](https://cran.r-project.org/package=metR)
 [![DOI](https://zenodo.org/badge/96357263.svg)](https://zenodo.org/badge/latestdoi/96357263)
+[![R build status](https://github.com/eliocamp/metR/workflows/R-CMD-check/badge.svg)](https://github.com/eliocamp/metR/actions)
 
 
 metR packages several functions and utilities that make R better for handling  meteorological data in the tidy data paradigm. It started mostly sa a packaging of assorted wrappers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since then, it has grown organically and for my own needs and feedback from users. 

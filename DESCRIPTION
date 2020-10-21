@@ -52,7 +52,8 @@ Suggests:
     udunits2,
     gridExtra,
     vdiffr,
-    proj4
+    proj4,
+    kriging
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true

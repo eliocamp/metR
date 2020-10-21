@@ -90,7 +90,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
                            breaks = scales::fullseq, complete = TRUE,
                            na.rm = FALSE, circular = NULL, xwrap = NULL,
                            ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
-                           proj = NULL) {
+                           proj = NULL, kriging = FALSE) {
     if (isFALSE(global.breaks)) {
       breaks <- setup_breaks(data,
                              breaks = breaks,
@@ -105,6 +105,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     if (isFALSE(na.fill)) {
       data <- data[!is.na(z), ]
     }
+
 
     nx <- data[, data.table::uniqueN(x), by = y]$V1
     ny <- data[, data.table::uniqueN(y), by = x]$V1
@@ -122,6 +123,21 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     }
 
     data <- .impute_data.m(data, na.fill)
+
+
+    if (kriging) {
+      check_packages("kriging", "kriging")
+
+      pixels <- 40
+      data <- try(with(data, setNames(kriging::kriging(x, y, z, pixels = pixels)$map,
+                                      c("x", "y", "z"))), silent = TRUE)
+      if (inherits(data, "try-error")) {
+        warning("krigging failed. Perhaps the number of points is too small.")
+        return(data.frame())
+      }
+
+      data.table::setDT(data)
+    }
 
     if (!is.null(xwrap)) {
       data <- suppressWarnings(WrapCircular(data, "x", xwrap))

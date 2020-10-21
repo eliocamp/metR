@@ -77,7 +77,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              breaks = scales::fullseq, complete = TRUE,
                              na.rm = FALSE, xwrap = NULL,
                              ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
-                             proj = NULL) {
+                             proj = NULL, kriging = FALSE) {
         data.table::setDT(data)
 
         if (isFALSE(global.breaks)) {
@@ -88,7 +88,6 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         }
 
         data <- data[!(is.na(y) | is.na(x)), ]
-
 
         if (isTRUE(na.fill)) {
             # Check if is a complete grid
@@ -106,6 +105,20 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             data <- .impute_data(data, na.fill)
         } else {
             data <- data[!is.na(z), ]
+        }
+
+        if (kriging) {
+            check_packages("kriging", "kriging")
+
+            pixels <- 40
+            data <- try(with(data, setNames(kriging::kriging(x, y, z, pixels = pixels)$map,
+                                            c("x", "y", "z"))), silent = TRUE)
+            if (inherits(data, "try-error")) {
+                warning("krigging failed. Perhaps the number of points is too small.")
+                return(data.frame())
+            }
+
+            data.table::setDT(data)
         }
 
         if (!is.null(xwrap)) {

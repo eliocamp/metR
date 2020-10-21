@@ -286,7 +286,7 @@ check_packages <- function(packages, fun) {
     if (length(missing != 0)) {
         text <- paste0(fun, " needs packages ",
                        paste0(missing, collapse = ", "),
-                       ". Install with: \n",
+                       ". Install with: ",
                        "`install.packages(c(\"",
                        paste0(missing, collapse = "\", \""), "\"))`")
         stop(text)

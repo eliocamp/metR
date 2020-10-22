@@ -92,7 +92,9 @@ label_placement_flattest <- function(n = 1, ref_angle = 0) {
         ddy <- .derv(dy, i)
 
         curvature <- abs(dx*ddy - dy*ddx)/(dx^2 + dy^2)^(3/2)
-        angle <- abs(atan2(dy, dx) - ref_angle*pi/180)
+        curvature <- atan(curvature)
+
+        angle <- abs(atan(dy/dx) - ref_angle*pi/180)
 
         optim <- curvature + angle
         min <- min(optim, na.rm = TRUE)

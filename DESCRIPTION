@@ -53,7 +53,8 @@ Suggests:
     gridExtra,
     vdiffr,
     proj4,
-    kriging
+    kriging,
+    raster
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true

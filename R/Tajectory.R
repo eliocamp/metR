@@ -82,7 +82,7 @@ Trajectory <- function(formula, x0, y0,
 
     if (.is.somedate(field$t)) {
         points_out[, t1 := start <- lubridate::ymd_hms("1970-01-01 00:00:00") +
-                       seconds(t1[1]),
+                       lubridate::seconds(t1[1]),
                    by = t1]
     }
 

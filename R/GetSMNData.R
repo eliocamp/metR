@@ -130,6 +130,7 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
         obs$date <- with(obs, as.POSIXct(paste0(date, " ", hour, ":00:00"), tz = "America/Argentina/Buenos_Aires"))
         hour <- NULL
         obs[, hour := NULL]
+        obs[, date := lubridate::with_tz(date, "UTC")][]
         return(obs)
     } else {
         return(NULL)
@@ -181,6 +182,7 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
     ush$station <- "Ushuaia"
 
     obs <- rbind(bs, ush)
-    obs[, date := lubridate::as_datetime(date)]
+    obs[, date := lubridate::as_datetime(date, tz = "America/Argentina/Buenos_Aires")]
+    obs[, date := lubridate::with_tz(date, "UTC")]
     return(obs)
 }

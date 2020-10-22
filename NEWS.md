@@ -32,6 +32,15 @@ ordinary kriging to interpolate irregularly placed data into a regular grid.
 - `WaveFlux()` now only returns the value of the horizontal fluxes. That is, it will
 not return lon and lat. **This is a potentially breaking change**.
 
+- The contour family of functions now use `isoband` to compute contours (thanks to
+@clauswilke for the awesome package) instead of my ugly hack/workaround. As a result, 
+contours are faster and much more reliable. 
+
+- `EOF()` will now work even if {irlba} is not installed.
+
+- `GetTopography()` is now updated to the new ETOPO server. It now requires
+{raster} to work. 
+
 # metR 0.7.0
 
 ## New features

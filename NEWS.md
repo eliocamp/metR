@@ -29,6 +29,9 @@ ordinary kriging to interpolate irregularly placed data into a regular grid.
 
 - `GetSMNData` returns the `date` parameter with the correct timezone.
 
+- `WaveFlux()` now only returns the value of the horizontal fluxes. That is, it will
+not return lon and lat. **This is a potentially breaking change**.
+
 # metR 0.7.0
 
 ## New features

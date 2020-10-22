@@ -108,6 +108,19 @@ geom_arrow <- function(mapping = NULL, data = NULL,
                        na.rm = FALSE,
                        show.legend = NA,
                        inherit.aes = TRUE) {
+
+  # browser()
+
+  if (is.null(mapping$mag) & is.null(mapping$angle)) {
+    dx <- paste0(substr(deparse(mapping$dx), 2, nchar(deparse(mapping$dx))))
+    dy <- paste0(substr(deparse(mapping$dy), 2, nchar(deparse(mapping$dy))))
+    mag <- paste0("sqrt(", dx, "^2 + ", dy, "^2)" )
+    angle <- paste0("atan2(", dy, ", ", dx, ")*180/pi")
+    mapping <- ggplot2::aes_string(mag = mag, angle= angle)
+
+  }
+
+
   ggplot2::layer(geom = GeomArrow,
                  mapping = mapping,
                  data = data,
@@ -154,6 +167,16 @@ geom_vector <- function(mapping = NULL, data = NULL,
                         na.rm = FALSE,
                         show.legend = NA,
                         inherit.aes = TRUE) {
+
+  if (is.null(mapping$mag) & is.null(mapping$angle)) {
+    dx <- paste0(substr(deparse(mapping$dx), 2, nchar(deparse(mapping$dx))))
+    dy <- paste0(substr(deparse(mapping$dy), 2, nchar(deparse(mapping$dy))))
+    mag <- paste0("sqrt(", dx, "^2 + ", dy, "^2)" )
+    angle <- paste0("atan2(", dy, ", ", dx, ")*180/pi")
+    mapping <- ggplot2::aes_string(mag = mag, angle= angle)
+
+  }
+
   ggplot2::layer(geom = GeomArrow,
                  mapping = mapping,
                  data = data,

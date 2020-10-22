@@ -36,7 +36,7 @@ geom_text_contour(
   position = "identity",
   ...,
   min.size = 5,
-  skip = 0,
+  skip = 1,
   rotate = TRUE,
   label.placement = label_placement_flattest(),
   parse = FALSE,

@@ -59,55 +59,97 @@ Note: `scale_*_longitude()` (currently)  assumes the data goes from 0° to 360°
 
 ## geom_contour_fill()
 
-In ggplot2, the 'canonical' way to get filled contours is by using `stat_contour()` with a `polygon` geom and mapping `fill` to `level` (see [this](https://github.com/tidyverse/ggplot2/issues/1066) issue), but this has three important limitations. 
+This geom has a bit of a long story. Before ggplot2 introduced `geom_contour_filled()`, the 'canonical' way to get filled contours was by using `stat_contour()` with a `polygon` geom and mapping `fill` to `level` (see [this](https://github.com/tidyverse/ggplot2/issues/1066) issue). This was ugly and bad and didn't work in most cases, so I threw together some hacks to make it work, and thus `metR::geom_contour_fill()` was born. 
 
-* It doesn't work well for contours that end at the edges
+Then, Claus Wilke created {[isoband](https://github.com/wilkelab/isoband)}, which lead to ggplot2 finally getting a proper implementation of filled contours. Since the implementation worked much better than my Frankenstein's monster hacks and workarounds, I decided to scrub it and adopt {isoband} as well. 
 
-* External contours sometimes hide internal ones (small red contour in the figure below)
+So after all this history the R landscape is left with `metR::geom_contour_fill()` and `ggplot2::geom_contour_filled()` with almost identical implementations. Why should you use one or the other? Why didn't I just deprecate this seemingly redundant function? Because, in the intervening time `metR::geom_contour_fill()` has evolved and it now provides many functionality that is missing from ggplot2's counterpart. 
 
-* There's no distinction between contours with the same level but different internal values (blue contours in the figure below)
 
-`geom_contour_fill()` makes some adjustments to the data and computes an additional variable `int.level` (which is the default mapping for the `fill` aesthetic) that solve these problems.
+### `breaks` can be a function. 
 
-```{r, fig.show='hold', fig.width = 3.3}
-breaks = seq(100, 200, by = 10)
-v <- setDT(reshape2::melt(volcano))
-ggplot(v, aes(Var1, Var2, z = value)) +
-    stat_contour(aes(fill = ..level..), geom = "polygon", breaks = breaks) +
-    geom_contour(color = "red", size = 0.2, breaks = 150) +
-    geom_contour(color = "blue", size = 0.2, breaks = 160) +
-    guides(fill = "none")
+The main control parameter of the contour family of functions it their `breaks` argument, which sets the levels at which to draw contour lines. In `geom_contour_fill()` this argument can be a function that takes a binwidth and the range of the data. This allows for great flexibility. 
 
-ggplot(v, aes(Var1, Var2, z = value)) +
-    geom_contour_fill(breaks = breaks) +
-    guides(fill = "none")
-```
-
-In principle, `geom_contour_fill()` needs a full regular grid with no missing values and by default with fail if otherwise. However it can automatically impute missing values. With the `na.fill` parameter you can have some control over the imputation of `NA`s. Setting it to `TRUE` will impute missing values with spline bivariate interpolation. Other options are passing a constant numeric value or a function that takes the vector of values and return one value (like `mean`).
+For example, is is very common in meteorological science to not draw contours at the zero level. Passing `MakeBreaks()` as the `breaks` argument allows you to control not only the binwidth, but also which levels **not** to draw. 
 
 ```{r}
-# Adding missing values
-v[, value.gap := value]
-v[(Var1 - 40)^2 + (Var2 - 35)^2 < 50, value.gap := NA]
-
-ggplot(v, aes(Var1, Var2, z = value.gap)) +
-    geom_contour_fill(breaks = breaks, na.fill = TRUE) +
-    geom_point(data = v[is.na(value.gap)], size = 0.1, alpha = 0.3)
+ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
+  geom_contour_fill(breaks = MakeBreaks(binwidth = 2, exclude = 0)) +
+  scale_fill_divergent(breaks = MakeBreaks(binwidth = 2, exclude = 0))
 ```
 
-It's probably good practice to mask missing values with `geom_raster()`. See `stat_subset()` for a quick way of selecting missing values.
+### Infilling of missing values
 
-We can apply this to a more realistic dataset 
+Both `geom_contour_fill()` and `geom_contour_filled()` will work fine with missing values, but they will leave a somewhat ugly empty patch when they are found.
+
 
 ```{r}
-ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-    geom_contour_fill() +
-    scale_fill_divergent() +
-    scale_x_longitude() +
-    scale_y_latitude()
+data(volcano)
+volcano <- setDT(reshape2::melt(volcano))
+volcano[, value.gap := value]
+volcano[(Var1 - 40)^2 + (Var2 - 35)^2 < 50, value.gap := NA]
+
+ggplot(volcano, aes(Var1, Var2, z = value.gap)) +
+    geom_contour_fill() 
+```
+This is an OK behaviour, but sometimes it's more visually appealing to fill in these missing areas. The `na.fill` argument allows for some control over how this values are imputed. It can take a number, a function function that takes the vector of values and returns one number, or `TRUE`, in which case it will use `metR::Impute2D()` to interpolate the missing values. 
+
+```{r}
+ggplot(volcano, aes(Var1, Var2, z = value.gap)) +
+    geom_contour_fill(na.fill = TRUE) 
 ```
 
-As an important note, this stat currently only works with rectangular grids.
+### On the fly projecting
+
+
+Contouring only works on regular grids (although see {[contoureR](https://cran.r-project.org/web/packages/contoureR/index.html)} for an implementation that accepts non-regular girds). Sometimes the data is regular in some coordinate system and you need to plot in another. For example, this data is not regular on a a longitude by latitude coordinate system, but it is regular on the x y coordinates which is a lambertian grid. 
+
+```{r}
+ggplot(surface, aes(lon, lat)) +
+  geom_point(aes(color = height))
+
+ggplot(surface, aes(x, y)) +
+  geom_point(aes(color = height))
+```
+
+
+If you know the projection string, you can pass it to the `proj` argument and get filled contours in longitude by latitude space (this needs {[proj4](https://cran.r-project.org/web/packages/proj4/index.html)} to be installed).
+
+```{r}
+proj_string <- "+proj=lcc +lat_1=-30.9659996032715 +lat_2=-30.9659996032715 +lat_0=-30.9660034179688 +lon_0=-63.5670013427734 +a=6370000 +b=6370000"
+
+ggplot(surface, aes(x, y)) +
+  geom_contour_fill(aes(z = height))
+
+ggplot(surface, aes(x, y)) +
+  geom_contour_fill(aes(z = height), proj = proj_string)
+```
+
+You can actually pass any arbitrary function to `proj`. It should take a data.frame with the contour information and return the modified contours. 
+
+
+
+### On the fly kriging
+
+If everything fails and your data is not on a regular grid on any coordinate system, then you can use kriging to interpolate it to a regular grid and then plot it using contours. Setting the `kriging` argument to`TRUE` uses {[kriging](https://cran.r-project.org/package=kriging)} to *krige* (is that a verb?) the data before computing the contours. Here, as an example, the volcano dataset is sampled and perturbed to create a dataset of irregularly spaced points. Using kriging, `geom_contour_fill()` can recover the general shape. 
+
+```{r}
+set.seed(42)
+
+some_volcano <- volcano[sample(.N, .N/7)]   # select 70% of the points
+some_volcano[, Var1 := Var1 + rnorm(.N)]    # add some random noise
+some_volcano[, Var2 := Var2 + rnorm(.N)]
+
+ggplot(some_volcano, aes(Var1, Var2)) +
+  geom_point(aes(color = value))
+
+ggplot(some_volcano, aes(Var1, Var2)) +
+  geom_contour_fill(aes(z = value), kriging = TRUE) +
+  geom_point(size = 0.2)
+```
+
+All of these features are also available to regular contours in the `geom_contour2()` function. 
+
 
 ## geom_text_contour and geom_label_contour
 
@@ -132,6 +174,28 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     geom_contour2(color = "black") +
     geom_text_contour(stroke = 0.2) +
+    scale_fill_divergent() +
+    scale_x_longitude() +
+    scale_y_latitude()
+```
+You can have full control over where labels are placed with the `label.placement` argument. It takes a function that takes a vector of x and y values and returns a logical vector of the same length that indicate the points where labels should be. There are 5 build in placement functions:
+
+* `label_placement_flattest()`: The default. It computes the curvature and the angle at each points and then selects the point which minimizes the sum of both numbers. Therefore, it tries to label the flattest and most horizontal part of the contour. 
+
+* `label_placement_fraction()`: It takes a vector of numbers ranging from 0 to 1 representing where tu put the label in relation to the length of the contour. That is, using 0.5 means to put the label at the midpoint.
+
+* `label_placement_n()`: Places `n` labels approximately equally spaced along the contour
+
+* `label_placement_random()`: It puts the label in random places. ¯\_(ツ)_/¯ 
+
+* `label_placement_all()`: It puts the label at every point. Probably is best not to use it. 
+
+
+```{r}
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
+    geom_contour_fill() +
+    geom_contour2(color = "black") +
+    geom_text_contour(stroke = 0.2, label.placement = label_placement_random()) +
     scale_fill_divergent() +
     scale_x_longitude() +
     scale_y_latitude()
@@ -175,10 +239,10 @@ ggplot(geopotential[, gh.base := gh[lon == 120 & lat == -50], by = date][
 Another possible use it to quickly mask missing values.
 
 ```{r}
-ggplot(v, aes(Var1, Var2, z = value.gap)) +
-    geom_contour_fill(breaks = breaks, na.fill = TRUE) +
+ggplot(volcano, aes(Var1, Var2, z = value.gap)) +
+    geom_contour_fill(na.fill = TRUE) +
     stat_subset(aes(subset = is.na(value.gap)), geom = "raster", 
-                fill = "#EBEBEB")
+                fill = "#a56de2")
 ```
 
 ## geom_vector and geom_arrow
@@ -293,6 +357,6 @@ By default, colours are mapped to the values *in between* breaks, so there's a o
 This geom produces a shaded relief of the data. It doesn't really map the data per se, but it provides an intuitive representation of hills and valleys that can be used as a background for plotting actual data. 
 
 ```{r}
-ggplot(v, aes(Var1, Var2)) +
+ggplot(volcano, aes(Var1, Var2)) +
     geom_relief(aes(z = value))
 ```

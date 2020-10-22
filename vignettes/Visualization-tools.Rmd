@@ -18,7 +18,7 @@ fig.width = 7,
 comment = "#>")
 ```
 
-One of the "conceptual branches" of `metR` is the *visualization tools*. These are a set of functions that interface with [ggplot2](http://ggplot2.tidyverse.org/index.html) for easier and better plotting of meteorological (an other) fields. 
+One of the "conceptual branches" of `metR` is the *visualization tools*. These are a set of functions that interface with [ggplot2](https://ggplot2.tidyverse.org/index.html) for easier and better plotting of meteorological (an other) fields. 
 
 # Scales
 
@@ -103,7 +103,7 @@ ggplot(volcano, aes(Var1, Var2, z = value.gap)) +
 ### On-the-fly projecting
 
 
-Contouring only works on regular grids (although see {[contoureR](https://cran.r-project.org/web/packages/contoureR/index.html)} for an implementation that accepts non-regular girds). Sometimes the data is regular in some coordinate system and you need to plot in another. For example, this data is not regular on a a longitude by latitude coordinate system, but it is regular on the x y coordinates which is a lambertian grid. 
+Contouring only works on regular grids (although see {[contoureR](https://cran.r-project.org/package=contoureR)} for an implementation that accepts non-regular girds). Sometimes the data is regular in some coordinate system and you need to plot in another. For example, this data is not regular on a a longitude by latitude coordinate system, but it is regular on the x y coordinates which is a lambertian grid. 
 
 ```{r}
 ggplot(surface, aes(lon, lat)) +
@@ -114,7 +114,7 @@ ggplot(surface, aes(x, y)) +
 ```
 
 
-If you know the projection string, you can pass it to the `proj` argument and get filled contours in longitude by latitude space (this needs {[proj4](https://cran.r-project.org/web/packages/proj4/index.html)} to be installed).
+If you know the projection string, you can pass it to the `proj` argument and get filled contours in longitude by latitude space (this needs {[proj4](https://cran.r-project.org/package=proj4)} to be installed).
 
 ```{r}
 proj_string <- "+proj=lcc +lat_1=-30.9659996032715 +lat_2=-30.9659996032715 +lat_0=-30.9660034179688 +lon_0=-63.5670013427734 +a=6370000 +b=6370000"

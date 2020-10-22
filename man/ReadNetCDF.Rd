@@ -135,6 +135,7 @@ field <- ReadNetCDF(file, vars = c(var = names(variables$vars[1])))
 field[, var2 := ReadNetCDF(file, out = "vector")]
 
 \dontrun{
+if (!interactive())
 # Using a DAP url
 url <- "http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/.GMAO/.GEOS_V2p1/.hindcast/.ua/dods"
 field <- ReadNetCDF(url, subset = list(M = 1,

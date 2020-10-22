@@ -85,11 +85,11 @@ GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution =
             url <- .BuildETOPORequest(lon.west, lon.east, lat.north, lat.south,
                                       resolution[1], resolution[2])
             temp_file <- tempfile(fileext = ".tif")
-            field <- try(download.file(url, temp_file, quiet = TRUE), silent = TRUE)
+            field <- try(utils::download.file(url, temp_file, quiet = TRUE), silent = TRUE)
 
             if (is.error(field)) stop("Failed to fetch file.")
 
-            check_packages("raster", "GetTopography")
+            check_packages(c("raster", "rgdal"), "GetTopography")
 
             field <- data.table::as.data.table(raster::rasterToPoints(raster::raster(temp_file)))
             colnames(field) <- c("lon", "lat", "h")

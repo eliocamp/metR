@@ -36,6 +36,7 @@ stat_contour2(
   breaks = MakeBreaks(),
   bins = NULL,
   binwidth = NULL,
+  kriging = FALSE,
   global.breaks = TRUE,
   na.rm = FALSE,
   na.fill = FALSE,
@@ -118,6 +119,9 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
+
+\item{kriging}{Logical indicating whether to perform ordinary kriging before contouring.
+Use this if you want to use contours with irregularly spaced data.}
 }
 \description{
 A copy of \link[ggplot2:geom_contour]{ggplot2::geom_contour} that accepts a function as the \code{breaks}

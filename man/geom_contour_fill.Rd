@@ -16,6 +16,8 @@ geom_contour_fill(
   breaks = MakeBreaks(),
   bins = NULL,
   binwidth = NULL,
+  kriging = FALSE,
+  global.breaks = TRUE,
   na.fill = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
@@ -31,6 +33,7 @@ stat_contour_fill(
   bins = NULL,
   binwidth = NULL,
   global.breaks = TRUE,
+  kriging = FALSE,
   na.fill = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
@@ -74,6 +77,12 @@ to the paired geom/stat.}
 
 \item{binwidth}{Distance between breaks.}
 
+\item{kriging}{Logical indicating whether to perform ordinary kriging before contouring.
+Use this if you want to use contours with irregularly spaced data.}
+
+\item{global.breaks}{Logical indicating whether \code{breaks} should be computed for the whole
+data or for each grouping.}
+
 \item{na.fill}{How to fill missing values.
 \itemize{
 \item \code{FALSE} for letting the computation fail with no interpolation
@@ -94,9 +103,6 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
-
-\item{global.breaks}{Logical indicating whether \code{breaks} should be computed for the whole
-data or for each grouping.}
 }
 \description{
 While ggplot2's \code{\link[ggplot2]{geom_contour}} can plot nice contours, it

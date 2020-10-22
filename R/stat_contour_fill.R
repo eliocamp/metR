@@ -7,10 +7,8 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               bins = NULL,
                               binwidth = NULL,
                               global.breaks = TRUE,
-                              # na.rm = FALSE,
+                              kriging = FALSE,
                               na.fill = FALSE,
-                              # xwrap = NULL,
-                              # ywrap = NULL,
                               show.legend = NA,
                               inherit.aes = TRUE) {
     .check_wrap_param(list(...))
@@ -29,8 +27,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
             bins = bins,
             binwidth = binwidth,
             global.breaks = global.breaks,
-            # xwrap = xwrap,
-            # ywrap = ywrap,
+            kriging = kriging,
             ...
         )
     )

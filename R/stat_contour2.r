@@ -6,9 +6,10 @@
 #'   and returns breaks as output
 #' @param bins Number of evenly spaced breaks.
 #' @param binwidth Distance between breaks.
-  #' @param global.breaks Logical indicating whether `breaks` should be computed for the whole
+#' @param global.breaks Logical indicating whether `breaks` should be computed for the whole
 #' data or for each grouping.
-# #' @param xwrap,ywrap vector of length two used to wrap the circular dimension
+#' @param kriging Logical indicating whether to perform ordinary kriging before contouring.
+#' Use this if you want to use contours with irregularly spaced data.
 #'
 #' @export
 #' @section Computed variables:
@@ -23,6 +24,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
                           breaks = MakeBreaks(),
                           bins = NULL,
                           binwidth = NULL,
+                          kriging = FALSE,
                           global.breaks = TRUE,
                           na.rm = FALSE,
                           na.fill = FALSE,
@@ -44,6 +46,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
             bins = bins,
             binwidth = binwidth,
             global.breaks = global.breaks,
+            kriging = kriging,
             ...
         )
     )

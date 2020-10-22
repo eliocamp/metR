@@ -78,6 +78,7 @@ ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
   scale_fill_divergent(breaks = MakeBreaks(binwidth = 2, exclude = 0))
 ```
 
+
 ### Infilling of missing values
 
 Both `geom_contour_fill()` and `geom_contour_filled()` will work fine with missing values, but they will leave a somewhat ugly empty patch when they are found.
@@ -99,7 +100,7 @@ ggplot(volcano, aes(Var1, Var2, z = value.gap)) +
     geom_contour_fill(na.fill = TRUE) 
 ```
 
-### On the fly projecting
+### On-the-fly projecting
 
 
 Contouring only works on regular grids (although see {[contoureR](https://cran.r-project.org/web/packages/contoureR/index.html)} for an implementation that accepts non-regular girds). Sometimes the data is regular in some coordinate system and you need to plot in another. For example, this data is not regular on a a longitude by latitude coordinate system, but it is regular on the x y coordinates which is a lambertian grid. 

@@ -94,7 +94,7 @@ label_placement_flattest <- function(n = 1, ref_angle = 0) {
         curvature <- abs(dx*ddy - dy*ddx)/(dx^2 + dy^2)^(3/2)
         angle <- abs(atan2(dy, dx) - ref_angle*pi/180)
 
-        optim <- curvature*angle
+        optim <- curvature + angle
         min <- min(optim, na.rm = TRUE)
 
         possibile <- which(optim == min)

@@ -19,3 +19,4 @@
 ^pkgdown$
 ^revdep$
 ^\.github$
+^data-raw$

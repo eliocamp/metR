@@ -127,8 +127,6 @@ ggplot(surface, aes(x, y)) +
 
 You can actually pass any arbitrary function to `proj`. It should take a data.frame with the contour information and return the modified contours. 
 
-
-
 ### On the fly kriging
 
 If everything fails and your data is not on a regular grid on any coordinate system, then you can use kriging to interpolate it to a regular grid and then plot it using contours. Setting the `kriging` argument to`TRUE` uses {[kriging](https://cran.r-project.org/package=kriging)} to *krige* (is that a verb?) the data before computing the contours. Here, as an example, the volcano dataset is sampled and perturbed to create a dataset of irregularly spaced points. Using kriging, `geom_contour_fill()` can recover the general shape. 
@@ -199,6 +197,31 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     scale_fill_divergent() +
     scale_x_longitude() +
     scale_y_latitude()
+```
+
+### Unequal `breaks` between facets
+
+ggplot2's `geom_contour_filled()` computes breaks using all the data. This is great because it means that breaks are consistent between panels when using `facet_grid()`. But if you want to compute breaks separatedly for each panel, you can use `geom_contour_fill()`'s `global.breaks` argument. 
+
+With the default, separation between levels is always the same. Good for comparison, but in this case the panel on the left lacks detail. 
+
+```{r}
+ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
+  geom_contour_fill() +
+  scale_fill_divergent() +
+  scale_x_longitude() +
+  scale_y_latitude() +
+  facet_grid(~lev)
+```
+With `global.breaks = FALSE`, binwidth is no longer the same in each panel and now you can see more detail in the leftmost panel.
+
+```{r}
+ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
+  geom_contour_fill(global.breaks = FALSE) +
+  scale_fill_divergent() +
+  scale_x_longitude() +
+  scale_y_latitude() +
+  facet_grid(~lev)
 ```
 
 

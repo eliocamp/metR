@@ -51,7 +51,7 @@
 #' to set n to \code{NULL}. If the irlba package is installed, EOF uses
 #' [irlba::irlba] instead of [base::svd] since it's much faster.
 #'
-#' The bootsrapping procedure follows Fisher et.al. (2016) and returns the
+#' The bootstrapping procedure follows Fisher et.al. (2016) and returns the
 #' standard deviation of each singular value.
 #'
 #' @examples

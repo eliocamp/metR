@@ -26,7 +26,7 @@ cache = FALSE
 
 ## ReadNetCDF 
 
-The function `ReadNetCDF()` relies on the `ncdf4` package to read netCDF files with ease. It intelligently reads dimensions and data and returns a tidy `data.table` with optional keyed columns for faster processing afterwards. It can also return an `array` with named dimensions or a `vector`, for the case of adding new columns to an existing `data.table`.
+The function `ReadNetCDF()` relies on the `ncdf4` package to read NetCDF files with ease. It intelligently reads dimensions and data and returns a tidy `data.table` with optional keyed columns for faster processing afterwards. It can also return an `array` with named dimensions or a `vector`, for the case of adding new columns to an existing `data.table`.
 
 ```{r}
 library(metR)

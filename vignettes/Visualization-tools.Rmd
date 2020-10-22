@@ -202,7 +202,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
 
 ### Unequal `breaks` between facets
 
-ggplot2's `geom_contour_filled()` computes breaks using all the data. This is great because it means that breaks are consistent between panels when using `facet_grid()`. But if you want to compute breaks separatedly for each panel, you can use `geom_contour_fill()`'s `global.breaks` argument. 
+ggplot2's `geom_contour_filled()` computes breaks using all the data. This is great because it means that breaks are consistent between panels when using `facet_grid()`. But if you want to compute breaks separately for each panel, you can use `geom_contour_fill()`'s `global.breaks` argument. 
 
 With the default, separation between levels is always the same. Good for comparison, but in this case the panel on the left lacks detail. 
 
@@ -246,7 +246,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
 For example, it can be used if you have a correlation field and want to mark only the points with significant correlations:
 
 ```{r}
-data(geopotential)    # geopotential height at 700hPa for the southern hemisphere. 
+data(geopotential)    # geopotential height at 700hPa for the Southern Hemisphere. 
 
 ggplot(geopotential[, gh.base := gh[lon == 120 & lat == -50], by = date][
     , .(correlation = cor(gh.base, gh)), 
@@ -306,7 +306,7 @@ ggplot(temperature[lon %between% c(100, 200) & lat == -50], aes(lon, lev)) +
     scale_mag()
 ```
 
-In this case, an arrow at a 45° angle represents temperature gradient from the southwest regardless of the `x` and `y` scales. 
+In this case, an arrow at a 45° angle represents temperature gradient from the Southwest regardless of the `x` and `y` scales. 
 
 The `start` and  `direction` arguments adjust the behaviour of the arrows. This is useful for working with winds in the meteorological standard (in which 0° means wind from the North and 90° means wind from the East). 
 
@@ -350,7 +350,7 @@ ggplot(temperature[lev == 500], aes(lon, lat)) +
 
 ## guide_colorstrip
 
-The use of `geom_contour()` and `geom_contour_fill()` generates a problem because those geoms implicitly discretize a continuous variable, but the default guide (`guide_colourbar()`) still show a continuous scale. This can be partially solved by using `ggplot`'s `guide_legend()`
+The use of `geom_contour()` and `geom_contour_fill()` generates a problem because those geoms implicitly discretise a continuous variable, but the default guide (`guide_colourbar()`) still show a continuous scale. This can be partially solved by using `ggplot`'s `guide_legend()`
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +

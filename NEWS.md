@@ -16,7 +16,7 @@ will change the label position of previous plots.
 to project the contours of or an arbitrary function to alter the contours 
 after they are computed. This now makes it possible to compute contours for data
 that is on a regular grid on projected coordinates but want to plot in lon-lat 
-coordinates (or viceversa). Bear in mind that contours that cross the dateline 
+coordinates (or vice versa). Bear in mind that contours that cross the dateline 
 will probably end up mangled.  
 
 - Contour functions also gain a `kriging` argument. If `TRUE`, will perform 
@@ -27,7 +27,7 @@ ordinary kriging to interpolate irregularly placed data into a regular grid.
 
 - `FitLm()` handles `NA`s better.
 
-- `GetSMNData` returns the `date` parameter with the correct timezone.
+- `GetSMNData` returns the `date` parameter with the correct time zone.
 
 - `WaveFlux()` now only returns the value of the horizontal fluxes. That is, it will
 not return lon and lat. **This is a potentially breaking change**.
@@ -277,7 +277,7 @@ functionality in `Derivate()`
 - New `geom_text_contour()` and `geom_label_contour()` for labelling contours. 
 - New function `GeostrophicWind()`.
 - Fixed? weird bug with `ReadNetCDF()` and `as.POSIXct`.
-- `ReadNetCDF()` now supports timezones via de `udunits2` package.
+- `ReadNetCDF()` now supports time-zones via de `udunits2` package.
 - Fixed bad polygon ordering and extra polygon in `stat_contour_fill()`.
 - New functions `MakeBreaks()` and `AnchorBreaks()`.
 - New guide. `guide_colorstrip()` displays discretized values of a continuous colour 

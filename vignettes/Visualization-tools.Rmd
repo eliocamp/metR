@@ -183,9 +183,9 @@ You can have full control over where labels are placed with the `label.placement
 
 * `label_placement_fraction()`: It takes a vector of numbers ranging from 0 to 1 representing where tu put the label in relation to the length of the contour. That is, using 0.5 means to put the label at the midpoint.
 
-* `label_placement_n()`: Places `n` labels approximately equally spaced along the contour
+* `label_placement_n()`: Places `n` labels approximately equally spaced along the contour.
 
-* `label_placement_random()`: It puts the label in random places. ¯\_(ツ)_/¯ 
+* `label_placement_random()`: It puts the label in random places. ¯\\\_(ツ)\_/¯ .
 
 * `label_placement_all()`: It puts the label at every point. Probably is best not to use it. 
 

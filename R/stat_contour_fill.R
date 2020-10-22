@@ -89,7 +89,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
         data <- data[!(is.na(y) | is.na(x)), ]
 
-        if (isTRUE(na.fill)) {
+        if (!isFALSE(na.fill)) {
             # Check if is a complete grid
             complete.grid <- with(data, .is.regular_grid(x, y))
             if (complete.grid == FALSE) {
@@ -114,7 +114,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             data <- try(with(data, setNames(kriging::kriging(x, y, z, pixels = pixels)$map,
                                             c("x", "y", "z"))), silent = TRUE)
             if (inherits(data, "try-error")) {
-                warning("krigging failed. Perhaps the number of points is too small.")
+                warning("kriging failed. Perhaps the number of points is too small.")
                 return(data.frame())
             }
 

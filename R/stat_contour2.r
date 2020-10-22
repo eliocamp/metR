@@ -132,7 +132,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
       data <- try(with(data, setNames(kriging::kriging(x, y, z, pixels = pixels)$map,
                                       c("x", "y", "z"))), silent = TRUE)
       if (inherits(data, "try-error")) {
-        warning("krigging failed. Perhaps the number of points is too small.")
+        warning("kriging failed. Perhaps the number of points is too small.")
         return(data.frame())
       }
 
@@ -248,8 +248,23 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     x[order(abs(tmp))][2]
 }
 
+# from ggplot2
+isoband_z_matrix <- function(data) {
+  # Convert vector of data to raster
+  x_pos <- as.integer(factor(data$x, levels = sort(unique(data$x))))
+  y_pos <- as.integer(factor(data$y, levels = sort(unique(data$y))))
+
+  nrow <- max(y_pos)
+  ncol <- max(x_pos)
+
+  raster <- matrix(NA_real_, nrow = nrow, ncol = ncol)
+  raster[cbind(y_pos, x_pos)] <- data$z
+
+  raster
+}
+
 .contour_lines <- function(data, breaks, complete = FALSE) {
-  z <- tapply(data$z, as.data.frame(data)[c("x", "y")], identity)
+  z <- isoband_z_matrix(data)
 
   if (is.list(z)) {
     stop("Contour requires single `z` at each combination of `x` and `y`.",
@@ -258,7 +273,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 
   cl <- isoband::isolines(x = sort(unique(data$x)),
                           y = sort(unique(data$y)),
-                          z = t(z),
+                          z = z,
                           levels = breaks)
 
 

@@ -19,6 +19,9 @@ that is on a regular grid on projected coordinates but want to plot in lon-lat
 coordinates (or viceversa). Bear in mind that contours that cross the dateline 
 will probably end up mangled.  
 
+- Contour functions also gain a `kriging` argument. If `TRUE`, will perform 
+ordinary kriging to interpolate irregularly placed data into a regular grid. 
+
 
 ## Bugfixes
 

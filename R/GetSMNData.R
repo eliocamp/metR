@@ -56,7 +56,7 @@
 GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FALSE,
                        cache = TRUE, file.dir = tempdir()) {
     checks <- makeAssertCollection()
-    assertDate(as.Date(date), upper = as.Date(lubridate::now()),
+    assertDate(as.Date(date), upper = as.Date(Sys.Date()),
                .var.name = "date", add = checks)
     assertChoice(type, c("hourly", "daily", "radiation"), add = checks)
     assertFlag(bar, add = checks)

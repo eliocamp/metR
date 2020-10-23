@@ -1,6 +1,7 @@
 
 test_that("hourly works", {
     skip_if_offline()
+    skip_on_cran()
     dates <- seq.Date(lubridate::today() - 2, lubridate::today(), by = "1 day")
     results <- GetSMNData(dates, type = "hourly")
 
@@ -13,6 +14,7 @@ test_that("hourly works", {
 
 test_that("daily works", {
     skip_if_offline()
+    skip_on_cran()
     dates <- seq.Date(lubridate::today() - 15, lubridate::today(), by = "1 day")
     results <- GetSMNData(dates, type = "daily")
 
@@ -26,6 +28,7 @@ test_that("daily works", {
 
 test_that("radiation works", {
     skip_if_offline()
+    skip_on_cran()
     dates <- seq.Date(lubridate::today() - 2, lubridate::today(), by = "1 day")
     results <- GetSMNData(dates, type = "radiation")
 

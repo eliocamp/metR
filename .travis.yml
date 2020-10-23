@@ -13,6 +13,7 @@ addons:
       - libproj-dev
       - libharfbuzz-dev
       - libfribidi-dev
+      - libgdal-dev
 
 after_success:
   - Rscript -e 'covr::codecov()'

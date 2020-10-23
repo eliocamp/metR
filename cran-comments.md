@@ -1,3 +1,7 @@
+## Resubmission
+
+This is a resubmission. In this version I have reduced the size of the package. 
+
 
 ## Test environments
 
@@ -9,9 +13,4 @@
 
 ## R CMD check results
 
-One note on local test:
-
-    installed size is  5.7Mb
-    sub-directories of 1Mb or more:
-      data   1.1Mb
-      doc    3.3Mb
+0 errors ✓ | 0 warnings ✓ | 0 notes ✓

@@ -12,6 +12,7 @@ vignette: >
   
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
+  dev = "jpeg",
 collapse = TRUE,
 message = FALSE,
 fig.width = 7,
@@ -93,6 +94,7 @@ volcano[(Var1 - 40)^2 + (Var2 - 35)^2 < 50, value.gap := NA]
 ggplot(volcano, aes(Var1, Var2, z = value.gap)) +
     geom_contour_fill() 
 ```
+
 This is an OK behaviour, but sometimes it's more visually appealing to fill in these missing areas. The `na.fill` argument allows for some control over how this values are imputed. It can take a number, a function function that takes the vector of values and returns one number, or `TRUE`, in which case it will use `metR::Impute2D()` to interpolate the missing values. 
 
 ```{r}

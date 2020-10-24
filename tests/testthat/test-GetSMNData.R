@@ -2,7 +2,7 @@
 test_that("hourly works", {
     skip_if_offline()
     skip_on_cran()
-    dates <- seq.Date(lubridate::today() - 2, lubridate::today(), by = "1 day")
+    dates <- seq.Date(lubridate::today() - 3, lubridate::today() - 2, by = "1 day")
     results <- GetSMNData(dates, type = "hourly")
 
     expect_true(inherits(results, "data.frame"))
@@ -15,7 +15,7 @@ test_that("hourly works", {
 test_that("daily works", {
     skip_if_offline()
     skip_on_cran()
-    dates <- seq.Date(lubridate::today() - 15, lubridate::today(), by = "1 day")
+    dates <- seq.Date(lubridate::today() - 15, lubridate::today() - 2, by = "1 day")
     results <- GetSMNData(dates, type = "daily")
 
     expect_true(inherits(results, "data.frame"))
@@ -29,7 +29,7 @@ test_that("daily works", {
 test_that("radiation works", {
     skip_if_offline()
     skip_on_cran()
-    dates <- seq.Date(lubridate::today() - 2, lubridate::today(), by = "1 day")
+    dates <- seq.Date(lubridate::today() - 3, lubridate::today() - 2, by = "1 day")
     results <- GetSMNData(dates, type = "radiation")
 
     expect_true(inherits(results, "data.frame"))

@@ -149,6 +149,34 @@ ggplot(some_volcano, aes(Var1, Var2)) +
   geom_point(size = 0.2)
 ```
 
+### Unequal `breaks` between facets
+
+ggplot2's `geom_contour_filled()` computes breaks using all the data. This is great because it means that breaks are consistent between panels when using `facet_grid()`. But if you want to compute breaks separately for each panel, you can use `geom_contour_fill()`'s `global.breaks` argument. 
+
+With the default, separation between levels is always the same. Good for comparison, but in this case the panel on the left lacks detail. 
+
+```{r}
+ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
+  geom_contour_fill() +
+  scale_fill_divergent() +
+  scale_x_longitude() +
+  scale_y_latitude() +
+  facet_grid(~lev)
+```
+
+With `global.breaks = FALSE`, binwidth is no longer the same in each panel and now you can see more detail in the leftmost panel.
+
+```{r}
+ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
+  geom_contour_fill(global.breaks = FALSE) +
+  scale_fill_divergent() +
+  scale_x_longitude() +
+  scale_y_latitude() +
+  facet_grid(~lev)
+```
+
+
+
 All of these features are also available to regular contours in the `geom_contour2()` function. 
 
 
@@ -179,6 +207,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     scale_x_longitude() +
     scale_y_latitude()
 ```
+
 You can have full control over where labels are placed with the `label.placement` argument. It takes a function that takes a vector of x and y values and returns a logical vector of the same length that indicate the points where labels should be. There are 5 build in placement functions:
 
 * `label_placement_flattest()`: The default. It computes the curvature and the angle at each points and then selects the point which minimizes the sum of both numbers. Therefore, it tries to label the flattest and most horizontal part of the contour. 
@@ -201,32 +230,6 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     scale_x_longitude() +
     scale_y_latitude()
 ```
-
-### Unequal `breaks` between facets
-
-ggplot2's `geom_contour_filled()` computes breaks using all the data. This is great because it means that breaks are consistent between panels when using `facet_grid()`. But if you want to compute breaks separately for each panel, you can use `geom_contour_fill()`'s `global.breaks` argument. 
-
-With the default, separation between levels is always the same. Good for comparison, but in this case the panel on the left lacks detail. 
-
-```{r}
-ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
-  geom_contour_fill() +
-  scale_fill_divergent() +
-  scale_x_longitude() +
-  scale_y_latitude() +
-  facet_grid(~lev)
-```
-With `global.breaks = FALSE`, binwidth is no longer the same in each panel and now you can see more detail in the leftmost panel.
-
-```{r}
-ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
-  geom_contour_fill(global.breaks = FALSE) +
-  scale_fill_divergent() +
-  scale_x_longitude() +
-  scale_y_latitude() +
-  facet_grid(~lev)
-```
-
 
 ## geom_contour_tanaka
 

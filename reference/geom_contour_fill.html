@@ -87,7 +87,7 @@ have all the same binwidth." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -157,34 +157,37 @@ It also computes breaks globally instead of per panel, so that faceted plots
 have all the same binwidth.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>geom_contour_fill</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"ContourFill"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='MakeBreaks.html'>MakeBreaks</a></span>(),
-  <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+    <pre class="usage"><span class='fu'>geom_contour_fill</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stat <span class='op'>=</span> <span class='st'>"ContourFill"</span>,
+  position <span class='op'>=</span> <span class='st'>"identity"</span>,
+  <span class='va'>...</span>,
+  breaks <span class='op'>=</span> <span class='fu'><a href='MakeBreaks.html'>MakeBreaks</a></span><span class='op'>(</span><span class='op'>)</span>,
+  bins <span class='op'>=</span> <span class='cn'>NULL</span>,
+  binwidth <span class='op'>=</span> <span class='cn'>NULL</span>,
+  kriging <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  global.breaks <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  na.fill <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>stat_contour_fill</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"polygon"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='MakeBreaks.html'>MakeBreaks</a></span>(),
-  <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>global.breaks</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>na.fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+<span class='fu'>stat_contour_fill</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  geom <span class='op'>=</span> <span class='st'>"polygon"</span>,
+  position <span class='op'>=</span> <span class='st'>"identity"</span>,
+  <span class='va'>...</span>,
+  breaks <span class='op'>=</span> <span class='fu'><a href='MakeBreaks.html'>MakeBreaks</a></span><span class='op'>(</span><span class='op'>)</span>,
+  bins <span class='op'>=</span> <span class='cn'>NULL</span>,
+  binwidth <span class='op'>=</span> <span class='cn'>NULL</span>,
+  global.breaks <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  kriging <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  na.fill <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -240,6 +243,16 @@ to the paired geom/stat.</p></td>
       <td><p>Distance between breaks.</p></td>
     </tr>
     <tr>
+      <th>kriging</th>
+      <td><p>Logical indicating whether to perform ordinary kriging before contouring.
+Use this if you want to use contours with irregularly spaced data.</p></td>
+    </tr>
+    <tr>
+      <th>global.breaks</th>
+      <td><p>Logical indicating whether <code>breaks</code> should be computed for the whole
+data or for each grouping.</p></td>
+    </tr>
+    <tr>
       <th>na.fill</th>
       <td><p>How to fill missing values.</p><ul>
 <li><p><code>FALSE</code> for letting the computation fail with no interpolation</p></li>
@@ -267,11 +280,6 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
       <th>geom</th>
       <td><p>The geometric object to use display the data</p></td>
     </tr>
-    <tr>
-      <th>global.breaks</th>
-      <td><p>Logical indicating whether <code>breaks</code> should be computed for the whole
-data or for each grouping.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="aesthetics"><a class="anchor" href="#aesthetics"></a>Aesthetics</h2>
@@ -294,7 +302,7 @@ data or for each grouping.</p></td>
 
     
 
-<dl'>
+<dl>
 <dt>int.level</dt><dd><p>value of the interior contour</p></dd>
 
 </dl>
@@ -307,7 +315,7 @@ data or for each grouping.</p></td>
 <code><a href='WrapCircular.html'>WrapCircular</a>()</code>,
 <code><a href='geom_arrow.html'>geom_arrow</a>()</code>,
 <code><a href='geom_contour2.html'>geom_contour2</a>()</code>,
-<code><a href='geom_text_contour.html'>geom_label_contour</a>()</code>,
+<code><a href='geom_label_contour.html'>geom_label_contour</a>()</code>,
 <code><a href='geom_relief.html'>geom_relief</a>()</code>,
 <code><a href='geom_streamline.html'>geom_streamline</a>()</code>,
 <code><a href='guide_colourstrip.html'>guide_colourstrip</a>()</code>,
@@ -319,15 +327,17 @@ data or for each grouping.</p></td>
 <code><a href='stat_subset.html'>stat_subset</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='no'>surface</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>reshape2</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span>(<span class='no'>volcano</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>surface</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-  <span class='fu'>geom_contour_fill</span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)</div><div class='img'><img src='geom_contour_fill-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='va'>surface</span> <span class='op'>&lt;-</span> <span class='fu'>reshape2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span><span class='op'>(</span><span class='va'>volcano</span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>surface</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Var1</span>, <span class='va'>Var2</span>, z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_contour_fill</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"black"</span>, size <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_contour_fill-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># If one uses level instead of int.level, one of the small</span>
 <span class='co'># contours near the crater disapears</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>surface</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>Var1</span>, <span class='no'>Var2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
-  <span class='fu'>geom_contour_fill</span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>..level..</span>))</div><div class='img'><img src='geom_contour_fill-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>surface</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Var1</span>, <span class='va'>Var2</span>, z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_contour_fill</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_contour_fill-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -344,7 +354,7 @@ data or for each grouping.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

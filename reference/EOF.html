@@ -81,7 +81,7 @@ Analysis or Empirical Orthogonal Functions)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -145,16 +145,16 @@ Analysis or Empirical Orthogonal Functions)." />
 Analysis or Empirical Orthogonal Functions).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>EOF</span>(
-  <span class='no'>formula</span>,
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0.025</span>, <span class='kw'>mid</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>0.975</span>),
-  <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>EOF</span><span class='op'>(</span>
+  <span class='va'>formula</span>,
+  n <span class='op'>=</span> <span class='fl'>1</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  B <span class='op'>=</span> <span class='fl'>0</span>,
+  probs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>lower <span class='op'>=</span> <span class='fl'>0.025</span>, mid <span class='op'>=</span> <span class='fl'>0.5</span>, upper <span class='op'>=</span> <span class='fl'>0.975</span><span class='op'>)</span>,
+  rotate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  suffix <span class='op'>=</span> <span class='st'>"PC"</span>,
+  fill <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,7 +199,7 @@ data is dense.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code>eof</code> object which is just a named list of <code>data.table</code>s</p><dl'>
+    <p>An <code>eof</code> object which is just a named list of <code>data.table</code>s</p><dl>
 <dt>left</dt><dd><p>data.table with left singular vectors</p></dd>
 <dt>right</dt><dd><p>data.table with right singular vectors</p></dd>
 <dt>sdev</dt><dd><p>data.table with singular values, their explained variance,
@@ -229,9 +229,9 @@ each combination of <code>x</code> and <code>y</code> and one row for each <code
 <p>In the result, the left and right vectors have dimensions of the LEFT and RIGHT
 part of the <code>formula</code>, respectively.</p>
 <p>It is much faster to compute only some singular vectors, so is advisable not
-to set n to <code>NULL</code>. If the irba package is installed, EOF uses
+to set n to <code>NULL</code>. If the irlba package is installed, EOF uses
 <a href='https://rdrr.io/pkg/irlba/man/irlba.html'>irlba::irlba</a> instead of <a href='https://rdrr.io/r/base/svd.html'>base::svd</a> since it's much faster.</p>
-<p>The bootsrapping procedure follows Fisher et.al. (2016) and returns the
+<p>The bootstrapping procedure follows Fisher et.al. (2016) and returns the
 standard deviation of each singular value.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -248,11 +248,12 @@ standard deviation of each singular value.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># The Antarctic Oscillation is computed from the</span>
 <span class='co'># monthly geopotential height anomalies weigthed by latitude.</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geopotential</span>[, <span class='no'>gh.t.w</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>)*<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>)),
-      <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html'>month</a></span>(<span class='no'>date</span>))]</div><div class='output co'>#&gt;           lon   lat lev       gh       date        gh.t.w
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-datatable.com'>data.table</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>)</span>
+<span class='va'>geopotential</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>)</span>
+<span class='va'>geopotential</span><span class='op'>[</span>, <span class='va'>gh.t.w</span> <span class='op'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span><span class='op'>(</span><span class='va'>gh</span><span class='op'>)</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span><span class='op'>(</span><span class='va'>lat</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>/</span><span class='fl'>180</span><span class='op'>)</span><span class='op'>)</span>,
+      by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span>, <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html'>month</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;           lon   lat lev       gh       date        gh.t.w
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01 -3.824174e+00
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01 -3.591582e+00
 #&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01 -2.862909e+00
@@ -264,41 +265,47 @@ standard deviation of each singular value.</p>
 #&gt; 290302: 352.5 -90.0 700 2671.484 1995-12-01 -1.449750e-07
 #&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 -1.449750e-07
 #&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -1.449750e-07</div><div class='input'>
-<span class='no'>eof</span> <span class='kw'>&lt;-</span> <span class='fu'>EOF</span>(<span class='no'>gh.t.w</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='fl'>1</span>:<span class='fl'>5</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>,
-           <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>probs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>hig</span> <span class='kw'>=</span> <span class='fl'>0.9</span>))
+<span class='va'>eof</span> <span class='op'>&lt;-</span> <span class='fu'>EOF</span><span class='op'>(</span><span class='va'>gh.t.w</span> <span class='op'>~</span> <span class='va'>lat</span> <span class='op'>+</span> <span class='va'>lon</span> <span class='op'>|</span> <span class='va'>date</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, data <span class='op'>=</span> <span class='va'>geopotential</span>,
+           B <span class='op'>=</span> <span class='fl'>100</span>, probs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>low <span class='op'>=</span> <span class='fl'>0.1</span>, hig <span class='op'>=</span> <span class='fl'>0.9</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># Inspect the explained variance of each component</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>eof</span>)</div><div class='output co'>#&gt; Importance of components:
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>eof</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Importance of components:
 #&gt; Component Explained variance Cumulative variance
 #&gt;       1                   32%                 32%
 #&gt;       2                   11%                 43%
 #&gt;       3                    8%                 51%
 #&gt;       4                    7%                 58%
-#&gt;       5                    6%                 64%</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/screeplot.html'>screeplot</a></span>(<span class='no'>eof</span>)</div><div class='img'><img src='EOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;       5                    6%                 64%</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/screeplot.html'>screeplot</a></span><span class='op'>(</span><span class='va'>eof</span><span class='op'>)</span>
+</div><div class='img'><img src='EOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Keep only the 1st.</span>
-<span class='no'>aao</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cut.html'>cut</a></span>(<span class='no'>eof</span>, <span class='fl'>1</span>)
+<span class='va'>aao</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cut.html'>cut</a></span><span class='op'>(</span><span class='va'>eof</span>, <span class='fl'>1</span><span class='op'>)</span>
 
 <span class='co'># AAO field</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>aao</span>$<span class='no'>left</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='img'><img src='EOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>aao</span><span class='op'>$</span><span class='va'>left</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span>, z <span class='op'>=</span> <span class='va'>gh.t.w</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='EOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># AAO signal</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>aao</span>$<span class='no'>right</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>date</span>, <span class='no'>gh.t.w</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()</div><div class='img'><img src='EOF-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>aao</span><span class='op'>$</span><span class='va'>right</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>gh.t.w</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='EOF-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># standard deviation, % of explained variance and</span>
 <span class='co'># confidence intervals.</span>
-<span class='no'>aao</span>$<span class='no'>sdev</span></div><div class='output co'>#&gt;     PC       sd        r2     low      hig
+<span class='va'>aao</span><span class='op'>$</span><span class='va'>sdev</span>
+</div><div class='output co'>#&gt;     PC       sd        r2     low      hig
 #&gt; 1: PC1 7050.352 0.3176266 6284.91 7899.572</div><div class='input'>
 <span class='co'># Reconstructed fields based only on the two first</span>
 <span class='co'># principal components</span>
-<span class='no'>field</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>eof</span>, <span class='fl'>1</span>:<span class='fl'>2</span>)
+<span class='va'>field</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>eof</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
 
 <span class='co'># Compare it to the real field.</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>field</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]]) +
-    <span class='fu'><a href='geom_contour2.html'>geom_contour2</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t.w</span>, <span class='kw'>linetype</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(-<span class='fu'><a href='https://rdrr.io/r/base/sign.html'>sign</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>stat</a></span>(<span class='no'>level</span>))))) +
-    <span class='fu'><a href='scale_divergent.html'>scale_fill_divergent</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='img'><img src='EOF-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>field</span><span class='op'>[</span><span class='va'>date</span> <span class='op'>==</span> <span class='va'>date</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.t.w</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>geopotential</span><span class='op'>[</span><span class='va'>date</span> <span class='op'>==</span> <span class='va'>date</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='geom_contour2.html'>geom_contour2</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.t.w</span>, linetype <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/sign.html'>sign</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>stat</a></span><span class='op'>(</span><span class='va'>level</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='scale_divergent.html'>scale_fill_divergent</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='EOF-4.png' alt='' width='700' height='433' /></div><div class='input'>
 
 </div></pre>
   </div>
@@ -316,7 +323,7 @@ standard deviation of each singular value.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -81,7 +81,7 @@ on latitude." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -145,13 +145,13 @@ on latitude." />
 on latitude.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dlon</span>(<span class='no'>dx</span>, <span class='no'>lat</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6731000</span>)
+    <pre class="usage"><span class='fu'>dlon</span><span class='op'>(</span><span class='va'>dx</span>, <span class='va'>lat</span>, a <span class='op'>=</span> <span class='fl'>6731000</span><span class='op'>)</span>
 
-<span class='fu'>dlat</span>(<span class='no'>dy</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6731000</span>)
+<span class='fu'>dlat</span><span class='op'>(</span><span class='va'>dy</span>, a <span class='op'>=</span> <span class='fl'>6731000</span><span class='op'>)</span>
 
-<span class='fu'>dx</span>(<span class='no'>dlon</span>, <span class='no'>lat</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6731000</span>)
+<span class='fu'>dx</span><span class='op'>(</span><span class='va'>dlon</span>, <span class='va'>lat</span>, a <span class='op'>=</span> <span class='fl'>6731000</span><span class='op'>)</span>
 
-<span class='fu'>dy</span>(<span class='no'>dlat</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6731000</span>)</pre>
+<span class='fu'>dy</span><span class='op'>(</span><span class='va'>dlat</span>, a <span class='op'>=</span> <span class='fl'>6731000</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,12 +177,13 @@ on latitude.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]]
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-datatable.com'>data.table</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>)</span>
+<span class='va'>geopotential</span> <span class='op'>&lt;-</span> <span class='va'>geopotential</span><span class='op'>[</span><span class='va'>date</span> <span class='op'>==</span> <span class='va'>date</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
 
 <span class='co'># Geostrophic wind</span>
-<span class='no'>geopotential</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]  <span class='co'># in meters/second</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date  u           v
+<span class='va'>geopotential</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"u"</span>, <span class='st'>"v"</span><span class='op'>)</span> <span class='op'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span><span class='op'>(</span><span class='va'>gh</span>, <span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>]</span>  <span class='co'># in meters/second</span>
+</div><div class='output co'>#&gt;         lon   lat lev       gh       date  u           v
 #&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.08181190
 #&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.55189199
 #&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 NA  0.06625043
@@ -193,7 +194,8 @@ on latitude.</p>
 #&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000
 #&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000</div><div class='input'><span class='no'>geopotential</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"dlon"</span>, <span class='st'>"dlat"</span>) <span class='kw'>:=</span> <span class='fu'>.</span>(<span class='fu'>dlon</span>(<span class='no'>u</span>, <span class='no'>lat</span>), <span class='fu'>dlat</span>(<span class='no'>v</span>))] <span class='co'># in degrees/second</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date  u           v dlon          dlat
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000</div><div class='input'><span class='va'>geopotential</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"dlon"</span>, <span class='st'>"dlat"</span><span class='op'>)</span> <span class='op'>:=</span> <span class='fu'>.</span><span class='op'>(</span><span class='fu'>dlon</span><span class='op'>(</span><span class='va'>u</span>, <span class='va'>lat</span><span class='op'>)</span>, <span class='fu'>dlat</span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span> <span class='co'># in degrees/second</span>
+</div><div class='output co'>#&gt;         lon   lat lev       gh       date  u           v dlon          dlat
 #&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.08181190   NA  9.208625e-06
 #&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.55189199   NA  4.697828e-06
 #&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 NA  0.06625043   NA  5.639385e-07
@@ -204,7 +206,8 @@ on latitude.</p>
 #&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00
 #&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00</div><div class='input'><span class='no'>geopotential</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"u2"</span>, <span class='st'>"v2"</span>) <span class='kw'>:=</span> <span class='fu'>.</span>(<span class='fu'>dx</span>(<span class='no'>dlon</span>, <span class='no'>lat</span>), <span class='fu'>dy</span>(<span class='no'>dlat</span>))]   <span class='co'># again in degrees/second</span></div><div class='output co'>#&gt;         lon   lat lev       gh       date  u           v dlon          dlat u2
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00</div><div class='input'><span class='va'>geopotential</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"u2"</span>, <span class='st'>"v2"</span><span class='op'>)</span> <span class='op'>:=</span> <span class='fu'>.</span><span class='op'>(</span><span class='fu'>dx</span><span class='op'>(</span><span class='va'>dlon</span>, <span class='va'>lat</span><span class='op'>)</span>, <span class='fu'>dy</span><span class='op'>(</span><span class='va'>dlat</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span>   <span class='co'># again in degrees/second</span>
+</div><div class='output co'>#&gt;         lon   lat lev       gh       date  u           v dlon          dlat u2
 #&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.08181190   NA  9.208625e-06 NA
 #&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.55189199   NA  4.697828e-06 NA
 #&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01 NA  0.06625043   NA  5.639385e-07 NA
@@ -244,7 +247,7 @@ on latitude.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

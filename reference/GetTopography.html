@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -143,16 +143,16 @@
     <p>Retrieves topographic data from ETOPO1 Global Relief Model (see references).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>GetTopography</span>(
-  <span class='no'>lon.west</span>,
-  <span class='no'>lon.east</span>,
-  <span class='no'>lat.north</span>,
-  <span class='no'>lat.south</span>,
-  <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>3.5</span>,
-  <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>file.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()
-)</pre>
+    <pre class="usage"><span class='fu'>GetTopography</span><span class='op'>(</span>
+  <span class='va'>lon.west</span>,
+  <span class='va'>lon.east</span>,
+  <span class='va'>lat.north</span>,
+  <span class='va'>lat.south</span>,
+  resolution <span class='op'>=</span> <span class='fl'>3.5</span>,
+  cache <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  file.dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>,
+  verbose <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,15 +194,16 @@ If the function fails, try with a smaller bounding box or coarser resolution.</p
     <p>Source: Amante, C. and B.W. Eakins, 2009. ETOPO1 1 Arc-Minute Global Relief Model: Procedures, Data Sources and Analysis. NOAA Technical Memorandum NESDIS NGDC-24. National Geophysical Data Center, NOAA. doi:10.7289/V5C8276M</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>topo</span> <span class='kw'>&lt;-</span> <span class='fu'>GetTopography</span>(<span class='fl'>280</span>, <span class='fl'>330</span>, <span class='fl'>0</span>, -<span class='fl'>60</span>, <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>topo</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>geom_raster</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>h</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>h</span>), <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.3</span>) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_gradient.html'>scale_fill_gradient2</a></span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"steelblue"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"goldenrod2"</span>, <span class='kw'>mid</span> <span class='kw'>=</span> <span class='st'>"olivedrab"</span>) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_map.html'>coord_quickmap</a></span>()
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>topo</span> <span class='op'>&lt;-</span> <span class='fu'>GetTopography</span><span class='op'>(</span><span class='fl'>280</span>, <span class='fl'>330</span>, <span class='fl'>0</span>, <span class='op'>-</span><span class='fl'>60</span>, resolution <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>topo</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>geom_raster</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>h</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>h</span><span class='op'>)</span>, breaks <span class='op'>=</span> <span class='fl'>0</span>, color <span class='op'>=</span> <span class='st'>"black"</span>, size <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_gradient.html'>scale_fill_gradient2</a></span><span class='op'>(</span>low <span class='op'>=</span> <span class='st'>"steelblue"</span>, high <span class='op'>=</span> <span class='st'>"goldenrod2"</span>, mid <span class='op'>=</span> <span class='st'>"olivedrab"</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_map.html'>coord_quickmap</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -218,7 +219,7 @@ If the function fails, try with a smaller bounding box or coarser resolution.</p
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

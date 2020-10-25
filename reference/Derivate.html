@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -143,46 +143,46 @@
     <p>Derivate a discrete variable using finite differences</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Derivate</span>(
-  <span class='no'>formula</span>,
-  <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>,
-  <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+    <pre class="usage"><span class='fu'>Derivate</span><span class='op'>(</span>
+  <span class='va'>formula</span>,
+  order <span class='op'>=</span> <span class='fl'>1</span>,
+  cyclical <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fill <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  sphere <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  a <span class='op'>=</span> <span class='fl'>6371000</span>,
+  equispaced <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>Laplacian</span>(
-  <span class='no'>formula</span>,
-  <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>,
-  <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>Laplacian</span><span class='op'>(</span>
+  <span class='va'>formula</span>,
+  cyclical <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fill <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  sphere <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  a <span class='op'>=</span> <span class='fl'>6371000</span>,
+  equispaced <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>Divergence</span>(
-  <span class='no'>formula</span>,
-  <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>,
-  <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>Divergence</span><span class='op'>(</span>
+  <span class='va'>formula</span>,
+  cyclical <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fill <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  sphere <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  a <span class='op'>=</span> <span class='fl'>6371000</span>,
+  equispaced <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>Vorticity</span>(
-  <span class='no'>formula</span>,
-  <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sphere</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>6371000</span>,
-  <span class='kw'>equispaced</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+<span class='fu'>Vorticity</span><span class='op'>(</span>
+  <span class='va'>formula</span>,
+  cyclical <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fill <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  sphere <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  a <span class='op'>=</span> <span class='fl'>6371000</span>,
+  equispaced <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -254,31 +254,35 @@ call <code>Derivate()</code> and make the appropriate sums. For <code>Divergence
 <code><a href='waves.html'>waves</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>theta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>360</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>20</span>)*<span class='no'>pi</span>/<span class='fl'>180</span>
-<span class='no'>theta</span> <span class='kw'>&lt;-</span> <span class='no'>theta</span>[-<span class='fl'>1</span>]
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span>(<span class='no'>theta</span>)
-<span class='no'>dx_analytical</span> <span class='kw'>&lt;-</span> -<span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='no'>theta</span>)
-<span class='no'>dx_finitediff</span> <span class='kw'>&lt;-</span> <span class='fu'>Derivate</span>(<span class='no'>x</span> ~ <span class='no'>theta</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)<span class='kw'>[[</span><span class='fl'>1</span>]]
+    <pre class="examples"><div class='input'><span class='va'>theta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>360</span>, length.out <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>/</span><span class='fl'>180</span>
+<span class='va'>theta</span> <span class='op'>&lt;-</span> <span class='va'>theta</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span><span class='op'>(</span><span class='va'>theta</span><span class='op'>)</span>
+<span class='va'>dx_analytical</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span><span class='op'>(</span><span class='va'>theta</span><span class='op'>)</span>
+<span class='va'>dx_finitediff</span> <span class='op'>&lt;-</span> <span class='fu'>Derivate</span><span class='op'>(</span><span class='va'>x</span> <span class='op'>~</span> <span class='va'>theta</span>, cyclical <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>theta</span>, <span class='no'>dx_analytical</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span>(<span class='no'>theta</span>, <span class='no'>dx_finitediff</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='Derivate-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>theta</span>, <span class='va'>dx_analytical</span>, type <span class='op'>=</span> <span class='st'>"l"</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='va'>theta</span>, <span class='va'>dx_finitediff</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+</div><div class='img'><img src='Derivate-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Curvature (Laplacian)</span>
 <span class='co'># Note the different boundary conditions for each dimension</span>
-<span class='no'>variable</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>360</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>3</span>)[-<span class='fl'>1</span>],
-                        <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(-<span class='fl'>90</span>, <span class='fl'>90</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>3</span>))
-<span class='no'>variable</span>$<span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>variable</span>, <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>*<span class='fl'>3</span>) + <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>*<span class='fl'>2</span>))
-<span class='no'>variable</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(
-     <span class='no'>variable</span>,
-     <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>Derivate</span>(<span class='no'>z</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>variable</span>,
-                          <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>), <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>2</span>)))
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>variable</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z.ddlon</span> + <span class='no'>z.ddlat</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 480 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='Derivate-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>variable</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span><span class='op'>(</span>lon <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>360</span>, by <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span>,
+                        lat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>90</span>, <span class='fl'>90</span>, by <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>variable</span><span class='op'>$</span><span class='va'>z</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>variable</span>, <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span><span class='op'>(</span><span class='va'>lat</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>/</span><span class='fl'>180</span><span class='op'>*</span><span class='fl'>3</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span><span class='op'>(</span><span class='va'>lon</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>/</span><span class='fl'>180</span><span class='op'>*</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>variable</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span>
+     <span class='va'>variable</span>,
+     <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'>Derivate</span><span class='op'>(</span><span class='va'>z</span> <span class='op'>~</span> <span class='va'>lon</span> <span class='op'>+</span> <span class='va'>lat</span>, data <span class='op'>=</span> <span class='va'>variable</span>,
+                          cyclical <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>, order <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>variable</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>z</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>z.ddlon</span> <span class='op'>+</span> <span class='va'>z.ddlat</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 480 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='Derivate-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># The same as</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>variable</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>z</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'>Laplacian</span>(<span class='no'>z</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='kw'>cyclical</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>))),
-                 <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='Derivate-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>variable</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>z</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='fu'>Laplacian</span><span class='op'>(</span><span class='va'>z</span> <span class='op'>~</span> <span class='va'>lon</span> <span class='op'>+</span> <span class='va'>lat</span>, cyclical <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+                 color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+</div><div class='img'><img src='Derivate-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -295,7 +299,7 @@ call <code>Derivate()</code> and make the appropriate sums. For <code>Divergence
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

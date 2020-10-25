@@ -81,7 +81,7 @@ maps." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -145,9 +145,9 @@ maps." />
 maps.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>LonLabel</span>(<span class='no'>lon</span>, <span class='kw'>east</span> <span class='kw'>=</span> <span class='st'>"°E"</span>, <span class='kw'>west</span> <span class='kw'>=</span> <span class='st'>"°W"</span>, <span class='kw'>zero</span> <span class='kw'>=</span> <span class='st'>"°"</span>)
+    <pre class="usage"><span class='fu'>LonLabel</span><span class='op'>(</span><span class='va'>lon</span>, east <span class='op'>=</span> <span class='st'>"°E"</span>, west <span class='op'>=</span> <span class='st'>"°W"</span>, zero <span class='op'>=</span> <span class='st'>"°"</span><span class='op'>)</span>
 
-<span class='fu'>LatLabel</span>(<span class='no'>lat</span>, <span class='kw'>north</span> <span class='kw'>=</span> <span class='st'>"°N"</span>, <span class='kw'>south</span> <span class='kw'>=</span> <span class='st'>"°S"</span>, <span class='kw'>zero</span> <span class='kw'>=</span> <span class='st'>"°"</span>)</pre>
+<span class='fu'>LatLabel</span><span class='op'>(</span><span class='va'>lat</span>, north <span class='op'>=</span> <span class='st'>"°N"</span>, south <span class='op'>=</span> <span class='st'>"°S"</span>, zero <span class='op'>=</span> <span class='st'>"°"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,7 +178,7 @@ maps.</p>
 <code><a href='geom_arrow.html'>geom_arrow</a>()</code>,
 <code><a href='geom_contour2.html'>geom_contour2</a>()</code>,
 <code><a href='geom_contour_fill.html'>geom_contour_fill</a>()</code>,
-<code><a href='geom_text_contour.html'>geom_label_contour</a>()</code>,
+<code><a href='geom_label_contour.html'>geom_label_contour</a>()</code>,
 <code><a href='geom_relief.html'>geom_relief</a>()</code>,
 <code><a href='geom_streamline.html'>geom_streamline</a>()</code>,
 <code><a href='guide_colourstrip.html'>guide_colourstrip</a>()</code>,
@@ -190,7 +190,8 @@ maps.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>LonLabel</span>(<span class='fl'>0</span>:<span class='fl'>360</span>)</div><div class='output co'>#&gt;   [1] "0°"    "1°E"   "2°E"   "3°E"   "4°E"   "5°E"   "6°E"   "7°E"   "8°E"  
+<span class='fu'>LonLabel</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>360</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   [1] "0°"    "1°E"   "2°E"   "3°E"   "4°E"   "5°E"   "6°E"   "7°E"   "8°E"  
 #&gt;  [10] "9°E"   "10°E"  "11°E"  "12°E"  "13°E"  "14°E"  "15°E"  "16°E"  "17°E" 
 #&gt;  [19] "18°E"  "19°E"  "20°E"  "21°E"  "22°E"  "23°E"  "24°E"  "25°E"  "26°E" 
 #&gt;  [28] "27°E"  "28°E"  "29°E"  "30°E"  "31°E"  "32°E"  "33°E"  "34°E"  "35°E" 
@@ -247,7 +248,7 @@ maps.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

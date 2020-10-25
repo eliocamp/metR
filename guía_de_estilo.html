@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -261,8 +261,8 @@ convertir_fecha &lt;- function(x) {
 <div id="sintaxis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sintaxis" class="anchor"></a>Sintaxis</h2>
-<p>Usar espacios alrededor de: <code>=</code>, <code><a href="https://rdrr.io/r/base/Comparison.html">==</a></code> , <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, <code>&lt;-</code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code>.</p>
-<p>No usar espacios alrededor de: <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code>, <code>:</code>, <code>::</code></p>
+<p>Usar espacios alrededor de: <code><a href="https://rdrr.io/r/base/assignOps.html">=</a></code>, <code><a href="https://rdrr.io/r/base/Comparison.html">==</a></code> , <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code>.</p>
+<p>No usar espacios alrededor de: <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code>, <code><a href="https://rdrr.io/r/base/Colon.html">:</a></code>, <code><a href="https://rdrr.io/r/base/ns-dblcolon.html">::</a></code></p>
 <p>(listas sujetas a ampliación a medida que se me vayan ocurriendo casos)</p>
 <p>No poner espacio antes de la coma pero sí después de la coma. Poner espacios antes de los paréntesis y las llaves excepto al llamar funciones.</p>
 <pre class="{r}"><code># Bien.
@@ -300,7 +300,7 @@ if (i == 1)
 
 if (i == 5) 
     stop("i = 5!") knit</code></pre>
-<p>Usar <code>&lt;-</code> para asignación (esto es lo más controversial de la guía ya que hubiera preferido aprender R usando <code>=</code>; pero lo hecho hecho está y el código usando <code>=</code> me resulta feo).</p>
+<p>Usar <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> para asignación (esto es lo más controversial de la guía ya que hubiera preferido aprender R usando <code><a href="https://rdrr.io/r/base/assignOps.html">=</a></code>; pero lo hecho hecho está y el código usando <code><a href="https://rdrr.io/r/base/assignOps.html">=</a></code> me resulta feo).</p>
 <p>Respetar la identación usando 4 espacios. Se puede poner espaciado extra para alinear asignación de varias variables o la asiganción de muchos argumentos en una función. Acá está bien ser flexible si el código termina con demasiado espaciado innecesario. Algunos ejempos donde puede obviarse es al usar <code><a href="https://rdrr.io/r/base/invisible.html">invisible()</a></code> para arreglar los problemas entre data.table y knitr o código muy largo dentro del <em>j</em> de un data.table.</p>
 <p>Usar nuevas líneas para estructurar el código. Tratar el código como si fuera texto y separarlo en párrafos con una temática consistente. Por ejemplo, líneas donde se lee y prepara una fuente de datos, por ejemplo, van todos juntos, pero separados de otro bloque donde se leen otros datos.</p>
 <p>Los <strong>comentarios</strong> pueden ir en su propia línea o en una línea de código. En el primer caso, empiezan con sólo un “#” y un espacio y se escriben en mayúscula y terminando con un punto (como si fuera una oración normal de toda la vida). En el segundo caso, se separan del código con 4 espacios y un “#” y van en minúscula y sin punto final.</p>
@@ -356,7 +356,7 @@ ice.grid &lt;- as.data.table(ice.grid.temp)    # no tan malo. </code></pre>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

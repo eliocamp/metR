@@ -81,7 +81,7 @@ grid with bilinear interpolation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@ grid with bilinear interpolation." />
 grid with bilinear interpolation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Interpolate</span>(<span class='no'>formula</span>, <span class='no'>x.out</span>, <span class='no'>y.out</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>Interpolate</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>x.out</span>, <span class='va'>y.out</span>, data <span class='op'>=</span> <span class='cn'>NULL</span>, grid <span class='op'>=</span> <span class='cn'>TRUE</span>, path <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,19 +194,20 @@ that will be used in place of the <code>path</code> argument. This helps when cr
 path with <a href='as.path.html'>as.path</a> (see Examples)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]]
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-datatable.com'>data.table</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>)</span>
+<span class='va'>geopotential</span> <span class='op'>&lt;-</span> <span class='va'>geopotential</span><span class='op'>[</span><span class='va'>date</span> <span class='op'>==</span> <span class='va'>date</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
 <span class='co'># new grid</span>
-<span class='no'>x.out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>360</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='no'>y.out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(-<span class='fl'>90</span>, <span class='fl'>0</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='va'>x.out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>360</span>, by <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>y.out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>90</span>, <span class='fl'>0</span>, by <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 
 <span class='co'># Interpolate values to a new grid</span>
-<span class='no'>interpolated</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>Interpolate</span>(<span class='no'>gh</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='no'>x.out</span>, <span class='no'>y.out</span>)]
+<span class='va'>interpolated</span> <span class='op'>&lt;-</span> <span class='va'>geopotential</span><span class='op'>[</span>, <span class='fu'>Interpolate</span><span class='op'>(</span><span class='va'>gh</span> <span class='op'>~</span> <span class='va'>lon</span> <span class='op'>+</span> <span class='va'>lat</span>, <span class='va'>x.out</span>, <span class='va'>y.out</span><span class='op'>)</span><span class='op'>]</span>
 
 <span class='co'># Add values to an existing grid</span>
-<span class='no'>geopotential</span>[, <span class='no'>gh.new</span> <span class='kw'>:=</span> <span class='fu'>Interpolate</span>(<span class='no'>gh</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='no'>lon</span>, <span class='no'>lat</span>,
-                                     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>interpolated</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)$<span class='no'>gh</span>]</div><div class='output co'>#&gt;         lon   lat lev       gh       date   gh.new
+<span class='va'>geopotential</span><span class='op'>[</span>, <span class='va'>gh.new</span> <span class='op'>:=</span> <span class='fu'>Interpolate</span><span class='op'>(</span><span class='va'>gh</span> <span class='op'>~</span> <span class='va'>lon</span> <span class='op'>+</span> <span class='va'>lat</span>, <span class='va'>lon</span>, <span class='va'>lat</span>,
+                                     data <span class='op'>=</span> <span class='va'>interpolated</span>, grid <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>$</span><span class='va'>gh</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;         lon   lat lev       gh       date   gh.new
 #&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01       NA
 #&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01       NA
 #&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01       NA
@@ -219,7 +220,8 @@ path with <a href='as.path.html'>as.path</a> (see Examples)</p>
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01       NA
 #&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01       NA</div><div class='input'>
 <span class='co'># Interpolate multiple values</span>
-<span class='no'>geopotential</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"u"</span>, <span class='st'>"v"</span>) <span class='kw'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span>(<span class='no'>gh</span>, <span class='no'>lon</span>, <span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat lev       gh       date   gh.new  u           v
+<span class='va'>geopotential</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"u"</span>, <span class='st'>"v"</span><span class='op'>)</span> <span class='op'>:=</span> <span class='fu'><a href='GeostrophicWind.html'>GeostrophicWind</a></span><span class='op'>(</span><span class='va'>gh</span>, <span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;         lon   lat lev       gh       date   gh.new  u           v
 #&gt;    1:   0.0 -22.5 700 3163.839 1990-01-01       NA NA  1.08181190
 #&gt;    2:   2.5 -22.5 700 3162.516 1990-01-01       NA NA  0.55189199
 #&gt;    3:   5.0 -22.5 700 3162.226 1990-01-01       NA NA  0.06625043
@@ -230,12 +232,14 @@ path with <a href='as.path.html'>as.path</a> (see Examples)</p>
 #&gt; 4029: 350.0 -90.0 700 2715.936 1990-01-01       NA NA  0.00000000
 #&gt; 4030: 352.5 -90.0 700 2715.936 1990-01-01       NA NA  0.00000000
 #&gt; 4031: 355.0 -90.0 700 2715.936 1990-01-01       NA NA  0.00000000
-#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01       NA NA  0.00000000</div><div class='input'><span class='no'>interpolated</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>Interpolate</span>(<span class='no'>u</span> <span class='kw'>|</span> <span class='no'>v</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='no'>x.out</span>, <span class='no'>y.out</span>)]
+#&gt; 4032: 357.5 -90.0 700 2715.936 1990-01-01       NA NA  0.00000000</div><div class='input'><span class='va'>interpolated</span> <span class='op'>&lt;-</span> <span class='va'>geopotential</span><span class='op'>[</span>, <span class='fu'>Interpolate</span><span class='op'>(</span><span class='va'>u</span> <span class='op'>|</span> <span class='va'>v</span> <span class='op'>~</span> <span class='va'>lon</span> <span class='op'>+</span> <span class='va'>lat</span>, <span class='va'>x.out</span>, <span class='va'>y.out</span><span class='op'>)</span><span class='op'>]</span>
 
 <span class='co'># Interpolate values following a path</span>
-<span class='no'>lats</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>34</span>, -<span class='fl'>54</span>, -<span class='fl'>30</span>)   <span class='co'># start and end latitudes</span>
-<span class='no'>lons</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>302</span>, <span class='fl'>290</span>, <span class='fl'>180</span>)   <span class='co'># start and end longituded</span>
-<span class='no'>path</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[, <span class='fu'>Interpolate</span>(<span class='no'>gh</span> ~ <span class='no'>lon</span> + <span class='no'>lat</span>, <span class='fu'><a href='as.path.html'>as.path</a></span>(<span class='no'>lons</span>, <span class='no'>lats</span>))]</div></pre>
+<span class='va'>lats</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>34</span>, <span class='op'>-</span><span class='fl'>54</span>, <span class='op'>-</span><span class='fl'>30</span><span class='op'>)</span>   <span class='co'># start and end latitudes</span>
+<span class='va'>lons</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>302</span>, <span class='fl'>290</span>, <span class='fl'>180</span><span class='op'>)</span>   <span class='co'># start and end longituded</span>
+<span class='va'>path</span> <span class='op'>&lt;-</span> <span class='va'>geopotential</span><span class='op'>[</span>, <span class='fu'>Interpolate</span><span class='op'>(</span><span class='va'>gh</span> <span class='op'>~</span> <span class='va'>lon</span> <span class='op'>+</span> <span class='va'>lat</span>, <span class='fu'><a href='as.path.html'>as.path</a></span><span class='op'>(</span><span class='va'>lons</span>, <span class='va'>lats</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -251,7 +255,7 @@ path with <a href='as.path.html'>as.path</a> (see Examples)</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

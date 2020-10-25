@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@
     <p>Creates a  mask</p>
     </div>
 
-    <pre class="usage"><span class='fu'>MaskLand</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>mask</span> <span class='kw'>=</span> <span class='st'>"world"</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>360</span>))</pre>
+    <pre class="usage"><span class='fu'>MaskLand</span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span>, mask <span class='op'>=</span> <span class='st'>"world"</span>, wrap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>360</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,28 +176,30 @@ map (the default), this means that the point is over land.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Make a sea-land mask</span>
-<span class='no'>mask</span> <span class='kw'>&lt;-</span> <span class='no'>temperature</span>[<span class='no'>lev</span> <span class='kw'>==</span> <span class='fl'>1000</span>, <span class='fu'>.</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='no'>lon</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='no'>lat</span>, <span class='kw'>land</span> <span class='kw'>=</span> <span class='fu'>MaskLand</span>(<span class='no'>lon</span>, <span class='no'>lat</span>))]
-<span class='no'>temperature</span> <span class='kw'>&lt;-</span> <span class='no'>temperature</span>[<span class='no'>mask</span>, <span class='kw'>on</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lon"</span>, <span class='st'>"lat"</span>)]
+<span class='va'>mask</span> <span class='op'>&lt;-</span> <span class='va'>temperature</span><span class='op'>[</span><span class='va'>lev</span> <span class='op'>==</span> <span class='fl'>1000</span>, <span class='fu'>.</span><span class='op'>(</span>lon <span class='op'>=</span> <span class='va'>lon</span>, lat <span class='op'>=</span> <span class='va'>lat</span>, land <span class='op'>=</span> <span class='fu'>MaskLand</span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span>
+<span class='va'>temperature</span> <span class='op'>&lt;-</span> <span class='va'>temperature</span><span class='op'>[</span><span class='va'>mask</span>, on <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lon"</span>, <span class='st'>"lat"</span><span class='op'>)</span><span class='op'>]</span>
 
 <span class='co'># Take the temperature difference between land and ocean</span>
-<span class='no'>diftemp</span> <span class='kw'>&lt;-</span> <span class='no'>temperature</span>[,
-          <span class='fu'>.</span>(<span class='kw'>tempdif</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>air</span>[<span class='no'>land</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>]) - <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>air</span>[<span class='no'>land</span> <span class='kw'>==</span> <span class='fl'>FALSE</span>])),
-           <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lev</span>)]
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>diftemp</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lat</span>, <span class='no'>lev</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>tempdif</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='scale_longitude.html'>scale_y_level</a></span>() +
-    <span class='fu'><a href='scale_longitude.html'>scale_x_latitude</a></span>() +
-    <span class='fu'><a href='scale_divergent.html'>scale_color_divergent</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 136 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='MaskLand-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>diftemp</span> <span class='op'>&lt;-</span> <span class='va'>temperature</span><span class='op'>[</span>,
+          <span class='fu'>.</span><span class='op'>(</span>tempdif <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>air</span><span class='op'>[</span><span class='va'>land</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>air</span><span class='op'>[</span><span class='va'>land</span> <span class='op'>==</span> <span class='cn'>FALSE</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>,
+           by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lat</span>, <span class='va'>lev</span><span class='op'>)</span><span class='op'>]</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>diftemp</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lat</span>, <span class='va'>lev</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>tempdif</span>, color <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='scale_longitude.html'>scale_y_level</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='scale_longitude.html'>scale_x_latitude</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='scale_divergent.html'>scale_color_divergent</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 136 rows containing non-finite values (stat_contour).</span></div><div class='img'><img src='MaskLand-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Mean temperature in the USA</span>
-<span class='no'>usatemp</span> <span class='kw'>&lt;-</span> <span class='no'>temperature</span>[, <span class='no'>usa</span> <span class='kw'>:=</span> <span class='fu'>MaskLand</span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>mask</span> <span class='kw'>=</span> <span class='st'>"usa"</span>)][
-    , <span class='fu'>.</span>(<span class='kw'>air</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/weighted.mean.html'>weighted.mean</a></span>(<span class='no'>air</span>, <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span>(<span class='no'>lat</span>*<span class='no'>pi</span>/<span class='fl'>180</span>))), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>usa</span>, <span class='no'>lev</span>)][
-        <span class='no'>usa</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>]
+<span class='va'>usatemp</span> <span class='op'>&lt;-</span> <span class='va'>temperature</span><span class='op'>[</span>, <span class='va'>usa</span> <span class='op'>:=</span> <span class='fu'>MaskLand</span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span>, mask <span class='op'>=</span> <span class='st'>"usa"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>[</span>
+    , <span class='fu'>.</span><span class='op'>(</span>air <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/weighted.mean.html'>weighted.mean</a></span><span class='op'>(</span><span class='va'>air</span>, <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span><span class='op'>(</span><span class='va'>lat</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>/</span><span class='fl'>180</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>usa</span>, <span class='va'>lev</span><span class='op'>)</span><span class='op'>]</span><span class='op'>[</span>
+        <span class='va'>usa</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>]</span>
 
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>usatemp</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lev</span>, <span class='no'>air</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>() +
-    <span class='fu'><a href='scale_longitude.html'>scale_x_level</a></span>() +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span>()</div><div class='img'><img src='MaskLand-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>usatemp</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lev</span>, <span class='va'>air</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='scale_longitude.html'>scale_x_level</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='MaskLand-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -214,7 +216,7 @@ map (the default), this means that the point is over land.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

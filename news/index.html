@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -137,22 +137,48 @@
       <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metr-0-7-0" class="section level1">
-<h1 class="page-header" data-toc-text="0.7.0">
-<a href="#metr-0-7-0" class="anchor"></a>metR 0.7.0<small> 2020-04-10 </small>
+    <div id="metr-0-8-0" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.0">
+<a href="#metr-0-8-0" class="anchor"></a>metR 0.8.0<small> 2020-10-25 </small>
 </h1>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features</h2>
+<ul>
+<li><p><code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code> placement of labels is completely redesigned. It gains an argument <code>label.placement</code> which takes a function that is in charge of positioning the labels. See <code><a href="../reference/label_placement_fraction.html">label_placement_flattest()</a></code> for more details on the possible placement methods and how to build your own. The default method is <code>label_placement_flattest</code>, which places the label where the product of the curvature and the angle of the contour is minimised. This aims to put labels in a straight segment that is also as horizontal as possible. If more than one point satisfy this condition, then it chooses the closest to the midpoint. This is a <strong>breaking change</strong>, as it will change the label position of previous plots.</p></li>
+<li><p>The contour functions also gain a <code>proj</code> argument. It can be a proj4 string to project the contours of or an arbitrary function to alter the contours after they are computed. This now makes it possible to compute contours for data that is on a regular grid on projected coordinates but want to plot in lon-lat coordinates (or vice versa). Bear in mind that contours that cross the dateline will probably end up mangled.</p></li>
+<li><p>Contour functions also gain a <code>kriging</code> argument. If <code>TRUE</code>, will perform ordinary kriging to interpolate irregularly placed data into a regular grid.</p></li>
+</ul>
+</div>
+<div id="bugfixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bugfixes" class="anchor"></a>Bugfixes</h2>
+<ul>
+<li><p><code><a href="../reference/FitLm.html">FitLm()</a></code> handles <code>NA</code>s better.</p></li>
+<li><p><code>GetSMNData</code> returns the <code>date</code> parameter with the correct time zone.</p></li>
+<li><p><code><a href="../reference/WaveFlux.html">WaveFlux()</a></code> now only returns the value of the horizontal fluxes. That is, it will not return lon and lat. <strong>This is a potentially breaking change</strong>.</p></li>
+<li><p>The contour family of functions now use <code>isoband</code> to compute contours (thanks to <a href='https://github.com/clauswilke'>@clauswilke</a> for the awesome package) instead of my ugly hack/workaround. As a result, contours are faster and much more reliable.</p></li>
+<li><p><code><a href="../reference/EOF.html">EOF()</a></code> will now work even if {irlba} is not installed.</p></li>
+<li><p><code><a href="../reference/GetTopography.html">GetTopography()</a></code> is now updated to the new ETOPO server. It now requires {raster} to work.</p></li>
+</ul>
+</div>
+</div>
+    <div id="metr-0-7-0" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.0">
+<a href="#metr-0-7-0" class="anchor"></a>metR 0.7.0<small> 2020-04-10 </small>
+</h1>
+<div id="new-features-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features-1" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/waves.html">FitWave()</a></code> and related functions return <code>NA</code>s when the inputted signal has <code>NA</code>s.</p></li>
 <li><p><code><a href="../reference/FitLm.html">FitLm()</a></code> accepts a <code>weights</code> argument to perform weighted regression.</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now can read files directly from DAP servers and other urls, and objects returned by [ncdf4::nc_open()].</p></li>
 </ul>
 </div>
-<div id="bugfixes" class="section level2">
+<div id="bugfixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-1" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li>
 <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> won’t try to parse “time” dimensions that are not dates and will try to parse as time all dimensions.</li>
@@ -171,9 +197,9 @@
 <h1 class="page-header" data-toc-text="0.6.0">
 <a href="#metr-0-6-0---pileus" class="anchor"></a>metR 0.6.0 - Pileus<small> 2020-02-10 </small>
 </h1>
-<div id="new-features-1" class="section level2">
+<div id="new-features-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-1" class="anchor"></a>New features</h2>
+<a href="#new-features-2" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/EPflux.html">EPflux()</a></code> computes Eliassen-Palm fluxes (experimental).</p></li>
 <li><p><code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> and <code><a href="../reference/geom_arrow.html">geom_vector()</a></code> should plot faster.</p></li>
@@ -181,12 +207,12 @@
 <li><p><code><a href="../reference/FitLm.html">FitLm()</a></code> returns model <span class="math inline"><em>r</em><sup>2</sup></span> and adjusted <span class="math inline"><em>r</em><sup>2</sup></span>.</p></li>
 <li><p><code><a href="../reference/FitLm.html">FitLm()</a></code> adds names to unnamed terms.</p></li>
 <li><p>New function <code><a href="../reference/waves.html">WaveEnvelope()</a></code> that computes… the wave envelope.</p></li>
-<li><p><code><a href="../reference/geom_contour2.html">geom_contour2()</a></code>, <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> and <code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> now accept a <code>global.breaks</code> argument that controls whether breaks should be computed once using the range of the whole dataset or once for every grouping (e.g. faceting). <code>TRUE</code> (the default) ensures that intervals between contours are comparable between panels. Setting it to <code>FALSE</code> computes contours compatible with <code>ggplot2::geom_conotur()</code> (<a href='https://github.com/eliocamp/metR/issues/109'>#109</a>, thanks <a href='https://github.com/freeseek'>@freeseek</a>)</p></li>
+<li><p><code><a href="../reference/geom_contour2.html">geom_contour2()</a></code>, <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> and <code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code> now accept a <code>global.breaks</code> argument that controls whether breaks should be computed once using the range of the whole dataset or once for every grouping (e.g. faceting). <code>TRUE</code> (the default) ensures that intervals between contours are comparable between panels. Setting it to <code>FALSE</code> computes contours compatible with <code>ggplot2::geom_conotur()</code> (<a href='https://github.com/eliocamp/metR/issues/109'>#109</a>, thanks <a href='https://github.com/freeseek'>@freeseek</a>)</p></li>
 </ul>
 </div>
-<div id="bugfixes-1" class="section level2">
+<div id="bugfixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes-1" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-2" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li><p>A reworked non-equispaced derivative gives better results in <code><a href="../reference/Derivate.html">Derivate()</a></code>.</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> will not fail if the first variable was called “v” (yeah, I know.. weird error related to data.table’s non standard evaluation).</p></li>
@@ -206,9 +232,9 @@
 <h1 class="page-header" data-toc-text="0.5.0">
 <a href="#metr-0-5-0---incus" class="anchor"></a>metR 0.5.0 - Incus<small> 2019-11-12 </small>
 </h1>
-<div id="new-features-2" class="section level2">
+<div id="new-features-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-2" class="anchor"></a>New features</h2>
+<a href="#new-features-3" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> supports using <code>NA</code> in subset to refer to max or min value.</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code>’s subset argument supports more complex queries. (see the help section at<code>?ReadNetCDF()</code>).</p></li>
@@ -217,9 +243,9 @@
 <li><p><code><a href="../reference/Derivate.html">Derivate()</a></code> now can derive in a non-equispaced grid.</p></li>
 </ul>
 </div>
-<div id="bugfixes-2" class="section level2">
+<div id="bugfixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes-2" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-3" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li><p><code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> imputation method is fixed for some special cases (<a href='https://github.com/eliocamp/metR/issues/96'>#96</a>; thanks <a href='https://github.com/bergmul'>@bergmul</a>).</p></li>
 <li><p><code>predict.eof()</code> handles complex value svd correctly.</p></li>
@@ -231,9 +257,9 @@
 <h1 class="page-header" data-toc-text="0.4.0">
 <a href="#metr-0-4-0---cumulonimbus" class="anchor"></a>metR 0.4.0 - Cumulonimbus<small> 2019-07-08 </small>
 </h1>
-<div id="new-features-3" class="section level2">
+<div id="new-features-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-3" class="anchor"></a>New features</h2>
+<a href="#new-features-4" class="anchor"></a>New features</h2>
 <ul>
 <li><p>New <code><a href="../reference/ReadNetCDF.html">GlanceNetCDF()</a></code> function that is an alias for <code><a href="../reference/ReadNetCDF.html">ReadNetCDF(out = "vars")</a></code> but now prints a human readable summary of the contents of the NetCDF file.</p></li>
 <li><p><code><a href="../reference/geom_streamline.html">geom_streamline()</a></code> now uses 4th order Runge-Kutta instead of plain old Euler. It also draws arrows in the middle of the streamline.</p></li>
@@ -242,9 +268,9 @@
 <li><p>The <code>df</code> element returned by <code><a href="../reference/FitLm.html">FitLm()</a></code> now has the same length as the rest.</p></li>
 </ul>
 </div>
-<div id="bugfixes-3" class="section level2">
+<div id="bugfixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes-3" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-4" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li>
 <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> result will print correctly.</li>
@@ -255,17 +281,17 @@
 <h1 class="page-header" data-toc-text="0.3.0">
 <a href="#metr-0-3-0---cumulonimbus" class="anchor"></a>metR 0.3.0 - Cumulonimbus<small> 2019-03-12 </small>
 </h1>
-<div id="new-features-4" class="section level2">
+<div id="new-features-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-4" class="anchor"></a>New features</h2>
+<a href="#new-features-5" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/Anomaly.html">Anomaly()</a></code> has a new <code>baseline</code> argument.</p></li>
 <li><p>New function <code><a href="../reference/Trajectory.html">Trajectory()</a></code> that computes trajectories in time-varying velocity fields.</p></li>
 </ul>
 </div>
-<div id="bugfixes-4" class="section level2">
+<div id="bugfixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes-4" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-5" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now accepts dates as elements for <code>subset</code>.</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> will read all dates correctly (<a href='https://github.com/eliocamp/metR/issues/91'>#91</a>; thanks to <a href='https://github.com/m-saenger'>@m-saenger</a>).</p></li>
@@ -293,7 +319,7 @@
 <li><p>In <code><a href="../reference/EOF.html">EOF()</a></code> the dcast-style formula interface has been removed. The <code>data</code> argument was also moved back so you can use the <code>n</code> argument more easily without naming it.</p></li>
 <li><p><code><a href="../reference/ImputeEOF.html">ImputeEOF()</a></code> follows the same conventions. The dcast-style interface has been removed and the <code>data</code> argument has been moved after the <code>max.eof</code> argument.</p></li>
 <li><p><code>BuildQsWave()</code> and <code>FitQsWave()</code> have been removed and should had never even existed.</p></li>
-<li><p>The default <code>skip</code> argument for <code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> is now 0.</p></li>
+<li><p>The default <code>skip</code> argument for <code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code> is now 0.</p></li>
 <li><p>Removed <code>hemisphere</code> argument from <code><a href="../reference/season.html">season()</a></code> since the function returns the trimester so it made no sense.</p></li>
 <li><p>Contour functions now compute breaks globally (using all the data) instead of per panel. This means default intercomparabilty between faceted plots but also a considerable deviation from <code><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">ggplot2::geom_contour()</a></code>.</p></li>
 <li><p>The <code>Between</code> operators are removed since they were already implemented in <code>data.table</code>.</p></li>
@@ -335,7 +361,7 @@
 <li>
 <code><a href="../reference/EOF.html">EOF()</a></code> gains a <code>fill</code> argument for sparse-ish data.</li>
 <li>
-<code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> now has the ability to draw a stroke around text.</li>
+<code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code> now has the ability to draw a stroke around text.</li>
 <li>
 <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> now can impute missing values with bivariate interpolation.</li>
 <li>
@@ -362,7 +388,7 @@
 <li>Faster <code><a href="../reference/Anomaly.html">Anomaly()</a></code> (can’t believe I did that).</li>
 <li>
 <code><a href="../reference/EOF.html">EOF()</a></code> principal components are numeric instead of “PC1”, etc…</li>
-<li>For consistency with <code>stat_contour()</code> created <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> which works just like <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code>.</li>
+<li>For consistency with <code><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">stat_contour()</a></code> created <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> which works just like <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code>.</li>
 <li>Added <code><a href="../reference/stat_na.html">stat_na()</a></code> for easy masking of <code>NA</code> values.</li>
 <li>
 <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> now is <code><a href="../reference/geom_arrow.html">geom_vector()</a></code> with better documentation and more parameters and <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> is a new geom for arrows that preserve direction.</li>
@@ -374,11 +400,11 @@
 <code>DerivatePhysical()</code> is removed since it was made redundant by the extended functionality in <code><a href="../reference/Derivate.html">Derivate()</a></code>
 </li>
 <li>New functions related to several physical processes (see ?physics).</li>
-<li>New <code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code> and <code><a href="../reference/geom_text_contour.html">geom_label_contour()</a></code> for labelling contours.</li>
+<li>New <code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code> and <code><a href="../reference/geom_label_contour.html">geom_label_contour()</a></code> for labelling contours.</li>
 <li>New function <code><a href="../reference/GeostrophicWind.html">GeostrophicWind()</a></code>.</li>
 <li>Fixed? weird bug with <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> and <code>as.POSIXct</code>.</li>
 <li>
-<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now supports timezones via de <code>udunits2</code> package.</li>
+<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now supports time-zones via de <code>udunits2</code> package.</li>
 <li>Fixed bad polygon ordering and extra polygon in <code><a href="../reference/geom_contour_fill.html">stat_contour_fill()</a></code>.</li>
 <li>New functions <code><a href="../reference/MakeBreaks.html">MakeBreaks()</a></code> and <code><a href="../reference/MakeBreaks.html">AnchorBreaks()</a></code>.</li>
 <li>New guide. <code><a href="../reference/guide_colourstrip.html">guide_colorstrip()</a></code> displays discretized values of a continuous colour or fill scale.</li>
@@ -433,7 +459,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

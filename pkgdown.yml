@@ -1,8 +1,8 @@
 pandoc: '2.2'
-pkgdown: 1.5.1
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   Visualization-tools: Visualization-tools.html
   Working-with-data: Working-with-data.html
-last_built: 2020-07-29T18:04Z
+last_built: 2020-10-25T14:36Z
 

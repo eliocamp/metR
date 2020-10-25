@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -143,20 +143,20 @@
     <p>Perform a fourier transform of the data and return the</p>
     </div>
 
-    <pre class="usage"><span class='fu'>FitWave</span>(<span class='no'>y</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+    <pre class="usage"><span class='fu'>FitWave</span><span class='op'>(</span><span class='va'>y</span>, k <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
-<span class='fu'>BuildWave</span>(
-  <span class='no'>x</span>,
-  <span class='no'>amplitude</span>,
-  <span class='no'>phase</span>,
-  <span class='no'>k</span>,
-  <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>amplitude</span> <span class='kw'>=</span> <span class='no'>amplitude</span>, <span class='kw'>phase</span> <span class='kw'>=</span> <span class='no'>phase</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='no'>k</span>),
-  <span class='kw'>sum</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>BuildWave</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>amplitude</span>,
+  <span class='va'>phase</span>,
+  <span class='va'>k</span>,
+  wave <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>amplitude <span class='op'>=</span> <span class='va'>amplitude</span>, phase <span class='op'>=</span> <span class='va'>phase</span>, k <span class='op'>=</span> <span class='va'>k</span><span class='op'>)</span>,
+  sum <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>FilterWave</span>(<span class='no'>y</span>, <span class='no'>k</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sign.html'>sign</a></span>(<span class='no'>k</span>[<span class='no'>k</span> <span class='kw'>!=</span> <span class='fl'>0</span>][<span class='fl'>1</span>]))
+<span class='fu'>FilterWave</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>k</span>, action <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sign.html'>sign</a></span><span class='op'>(</span><span class='va'>k</span><span class='op'>[</span><span class='va'>k</span> <span class='op'>!=</span> <span class='fl'>0</span><span class='op'>]</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>WaveEnvelope</span>(<span class='no'>y</span>)</pre>
+<span class='fu'>WaveEnvelope</span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,7 +197,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>FitWaves</code> returns a a named list with components</p><dl'>
+    <p><code>FitWaves</code> returns a a named list with components</p><dl>
 <dt>k</dt><dd><p>wavenumbers</p></dd>
 <dt>amplitude</dt><dd><p>amplitude of each wavenumber</p></dd>
 <dt>phase</dt><dd><p>phase of each wavenumber in radians</p></dd>
@@ -206,7 +206,7 @@
 </dl>
 
 <p><code>BuildWave</code> returns a vector of the same length of x with the reconstructed
-vector if <code>sum</code> is <code>TRUE</code> or, instead, a list with components</p><dl'>
+vector if <code>sum</code> is <code>TRUE</code> or, instead, a list with components</p><dl>
 <dt>k</dt><dd><p>wavenumbers</p></dd>
 <dt>x</dt><dd><p>the vector of locations</p></dd>
 <dt>y</dt><dd><p>the reconstructed signal of each wavenumber</p></dd>
@@ -248,18 +248,20 @@ the envelope of only a restricted band, first filter it with <code>FilterWave</c
 <code><a href='thermodynamics.html'>thermodynamics</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-datatable.com'>data.table</a></span><span class='op'>)</span>
 <span class='co'># January mean of geopotential height</span>
-<span class='no'>jan</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html'>month</a></span>(<span class='no'>date</span>) <span class='kw'>==</span> <span class='fl'>1</span>, <span class='fu'>.</span>(<span class='kw'>gh</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>gh</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lon</span>, <span class='no'>lat</span>)]
+<span class='va'>jan</span> <span class='op'>&lt;-</span> <span class='va'>geopotential</span><span class='op'>[</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html'>month</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='fu'>.</span><span class='op'>(</span>gh <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>gh</span><span class='op'>)</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>]</span>
 
 <span class='co'># Stationary waves for each latitude</span>
-<span class='no'>jan.waves</span> <span class='kw'>&lt;-</span> <span class='no'>jan</span>[, <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>1</span>:<span class='fl'>4</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>jan.waves</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lat</span>, <span class='no'>amplitude</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>k</span>))) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()</div><div class='img'><img src='waves-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>jan.waves</span> <span class='op'>&lt;-</span> <span class='va'>jan</span><span class='op'>[</span>, <span class='fu'>FitWave</span><span class='op'>(</span><span class='va'>gh</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lat</span><span class='op'>)</span><span class='op'>]</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>jan.waves</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lat</span>, <span class='va'>amplitude</span>, color <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>k</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='waves-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Build field of wavenumber 1</span>
-<span class='no'>jan</span>[, <span class='no'>gh.1</span> <span class='kw'>:=</span> <span class='fu'>BuildWave</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>1</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1
+<span class='va'>jan</span><span class='op'>[</span>, <span class='va'>gh.1</span> <span class='op'>:=</span> <span class='fu'>BuildWave</span><span class='op'>(</span><span class='va'>lon</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>/</span><span class='fl'>180</span>, wave <span class='op'>=</span> <span class='fu'>FitWave</span><span class='op'>(</span><span class='va'>gh</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lat</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;         lon   lat       gh     gh.1
 #&gt;    1:   0.0 -22.5 3167.817 11.73417
 #&gt;    2:   2.5 -22.5 3166.253 11.84884
 #&gt;    3:   5.0 -22.5 3165.204 11.94097
@@ -270,12 +272,14 @@ the envelope of only a restricted band, first filter it with <code>FilterWave</c
 #&gt; 4029: 350.0 -90.0 2701.129  0.00000
 #&gt; 4030: 352.5 -90.0 2701.129  0.00000
 #&gt; 4031: 355.0 -90.0 2701.129  0.00000
-#&gt; 4032: 357.5 -90.0 2701.129  0.00000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>jan</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.1</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='img'><img src='waves-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 4032: 357.5 -90.0 2701.129  0.00000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>jan</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.1</span>, color <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='waves-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Build fields of wavenumber 1 and 2</span>
-<span class='no'>waves</span> <span class='kw'>&lt;-</span> <span class='no'>jan</span>[, <span class='fu'>BuildWave</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>1</span>:<span class='fl'>2</span>), <span class='kw'>sum</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]
-<span class='no'>waves</span>[, <span class='no'>lon</span> <span class='kw'>:=</span> <span class='no'>x</span>*<span class='fl'>180</span>/<span class='no'>pi</span>]</div><div class='output co'>#&gt;         lat k          x        y   lon
+<span class='va'>waves</span> <span class='op'>&lt;-</span> <span class='va'>jan</span><span class='op'>[</span>, <span class='fu'>BuildWave</span><span class='op'>(</span><span class='va'>lon</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>/</span><span class='fl'>180</span>, wave <span class='op'>=</span> <span class='fu'>FitWave</span><span class='op'>(</span><span class='va'>gh</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>, sum <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lat</span><span class='op'>)</span><span class='op'>]</span>
+<span class='va'>waves</span><span class='op'>[</span>, <span class='va'>lon</span> <span class='op'>:=</span> <span class='va'>x</span><span class='op'>*</span><span class='fl'>180</span><span class='op'>/</span><span class='va'>pi</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;         lat k          x        y   lon
 #&gt;    1: -22.5 1 0.00000000 11.73417   0.0
 #&gt;    2: -22.5 1 0.04363323 11.84884   2.5
 #&gt;    3: -22.5 1 0.08726646 11.94097   5.0
@@ -286,12 +290,14 @@ the envelope of only a restricted band, first filter it with <code>FilterWave</c
 #&gt; 8061: -90.0 2 6.10865238  0.00000 350.0
 #&gt; 8062: -90.0 2 6.15228561  0.00000 352.5
 #&gt; 8063: -90.0 2 6.19591884  0.00000 355.0
-#&gt; 8064: -90.0 2 6.23955208  0.00000 357.5</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>waves</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span>(~<span class='no'>k</span>) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='img'><img src='waves-3.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 8064: -90.0 2 6.23955208  0.00000 357.5</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>waves</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>y</span>, color <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>k</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='waves-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Field with waves 0 to 2 filtered</span>
-<span class='no'>jan</span>[, <span class='no'>gh.no12</span> <span class='kw'>:=</span> <span class='no'>gh</span> - <span class='fu'>BuildWave</span>(<span class='no'>lon</span>*<span class='no'>pi</span>/<span class='fl'>180</span>, <span class='kw'>wave</span> <span class='kw'>=</span> <span class='fu'>FitWave</span>(<span class='no'>gh</span>, <span class='fl'>0</span>:<span class='fl'>2</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12
+<span class='va'>jan</span><span class='op'>[</span>, <span class='va'>gh.no12</span> <span class='op'>:=</span> <span class='va'>gh</span> <span class='op'>-</span> <span class='fu'>BuildWave</span><span class='op'>(</span><span class='va'>lon</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>/</span><span class='fl'>180</span>, wave <span class='op'>=</span> <span class='fu'>FitWave</span><span class='op'>(</span><span class='va'>gh</span>, <span class='fl'>0</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lat</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12
 #&gt;    1:   0.0 -22.5 3167.817 11.73417 5.858149
 #&gt;    2:   2.5 -22.5 3166.253 11.84884 4.006104
 #&gt;    3:   5.0 -22.5 3165.204 11.94097 2.689758
@@ -302,11 +308,13 @@ the envelope of only a restricted band, first filter it with <code>FilterWave</c
 #&gt; 4029: 350.0 -90.0 2701.129  0.00000 0.000000
 #&gt; 4030: 352.5 -90.0 2701.129  0.00000 0.000000
 #&gt; 4031: 355.0 -90.0 2701.129  0.00000 0.000000
-#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>jan</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.no12</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='img'><img src='waves-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>jan</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.no12</span>, color <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='waves-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Much faster</span>
-<span class='no'>jan</span>[, <span class='no'>gh.no12</span> <span class='kw'>:=</span> <span class='fu'>FilterWave</span>(<span class='no'>gh</span>, -<span class='fl'>2</span>:<span class='fl'>0</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12
+<span class='va'>jan</span><span class='op'>[</span>, <span class='va'>gh.no12</span> <span class='op'>:=</span> <span class='fu'>FilterWave</span><span class='op'>(</span><span class='va'>gh</span>, <span class='op'>-</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>0</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lat</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12
 #&gt;    1:   0.0 -22.5 3167.817 11.73417 5.858149
 #&gt;    2:   2.5 -22.5 3166.253 11.84884 4.006104
 #&gt;    3:   5.0 -22.5 3165.204 11.94097 2.689758
@@ -317,11 +325,13 @@ the envelope of only a restricted band, first filter it with <code>FilterWave</c
 #&gt; 4029: 350.0 -90.0 2701.129  0.00000 0.000000
 #&gt; 4030: 352.5 -90.0 2701.129  0.00000 0.000000
 #&gt; 4031: 355.0 -90.0 2701.129  0.00000 0.000000
-#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>jan</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.no12</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='img'><img src='waves-5.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>jan</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.no12</span>, color <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='waves-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Using positive numbers returns the field</span>
-<span class='no'>jan</span>[, <span class='no'>gh.only12</span> <span class='kw'>:=</span> <span class='fu'>FilterWave</span>(<span class='no'>gh</span>, <span class='fl'>2</span>:<span class='fl'>1</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12 gh.only12
+<span class='va'>jan</span><span class='op'>[</span>, <span class='va'>gh.only12</span> <span class='op'>:=</span> <span class='fu'>FilterWave</span><span class='op'>(</span><span class='va'>gh</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lat</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12 gh.only12
 #&gt;    1:   0.0 -22.5 3167.817 11.73417 5.858149  11.17110
 #&gt;    2:   2.5 -22.5 3166.253 11.84884 4.006104  11.45865
 #&gt;    3:   5.0 -22.5 3165.204 11.94097 2.689758  11.72661
@@ -332,11 +342,13 @@ the envelope of only a restricted band, first filter it with <code>FilterWave</c
 #&gt; 4029: 350.0 -90.0 2701.129  0.00000 0.000000   0.00000
 #&gt; 4030: 352.5 -90.0 2701.129  0.00000 0.000000   0.00000
 #&gt; 4031: 355.0 -90.0 2701.129  0.00000 0.000000   0.00000
-#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000   0.00000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>jan</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.only12</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>..level..</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span>()</div><div class='img'><img src='waves-6.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000   0.00000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>jan</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.only12</span>, color <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_polar.html'>coord_polar</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='waves-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Compute the envelope of the geopotential</span>
-<span class='no'>jan</span>[, <span class='no'>envelope</span> <span class='kw'>:=</span> <span class='fu'>WaveEnvelope</span>(<span class='no'>gh.no12</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>)]</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12 gh.only12  envelope
+<span class='va'>jan</span><span class='op'>[</span>, <span class='va'>envelope</span> <span class='op'>:=</span> <span class='fu'>WaveEnvelope</span><span class='op'>(</span><span class='va'>gh.no12</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lat</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;         lon   lat       gh     gh.1  gh.no12 gh.only12  envelope
 #&gt;    1:   0.0 -22.5 3167.817 11.73417 5.858149  11.17110 10.834194
 #&gt;    2:   2.5 -22.5 3166.253 11.84884 4.006104  11.45865  9.544124
 #&gt;    3:   5.0 -22.5 3165.204 11.94097 2.689758  11.72661  8.173016
@@ -347,9 +359,10 @@ the envelope of only a restricted band, first filter it with <code>FilterWave</c
 #&gt; 4029: 350.0 -90.0 2701.129  0.00000 0.000000   0.00000  0.000000
 #&gt; 4030: 352.5 -90.0 2701.129  0.00000 0.000000   0.00000  0.000000
 #&gt; 4031: 355.0 -90.0 2701.129  0.00000 0.000000   0.00000  0.000000
-#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000   0.00000  0.000000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>jan</span>[<span class='no'>lat</span> <span class='kw'>==</span> -<span class='fl'>60</span>], <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>gh.no12</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>() +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>envelope</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='waves-7.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 4032: 357.5 -90.0 2701.129  0.00000 0.000000   0.00000  0.000000</div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>jan</span><span class='op'>[</span><span class='va'>lat</span> <span class='op'>==</span> <span class='op'>-</span><span class='fl'>60</span><span class='op'>]</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>gh.no12</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>envelope</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+</div><div class='img'><img src='waves-7.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -366,7 +379,7 @@ the envelope of only a restricted band, first filter it with <code>FilterWave</c
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@
     <p>Converts longitude from [0, 360) to [-180, 180) and vice versa.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ConvertLongitude</span>(<span class='no'>lon</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>ConvertLongitude</span><span class='op'>(</span><span class='va'>lon</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, from <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,14 +169,16 @@ that will be split on the edges (see examples)</p></td>
 Else, a list with vectors <code>lon</code> and <code>group</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>ConvertLongitude</span>(<span class='no'>lon</span>)))</div><div class='img'><img src='ConvertLongitude-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>map</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/setDT.html'>setDT</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/map_data.html'>map_data</a></span>(<span class='st'>"world"</span>))
-<span class='no'>map</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lon"</span>, <span class='st'>"group2"</span>) <span class='kw'>:=</span> <span class='fu'>ConvertLongitude</span>(<span class='no'>long</span>, <span class='no'>group</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fl'>180</span>)]</div><div class='output co'>#&gt;             long      lat group  order  region subregion       lon group2
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-datatable.com'>data.table</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>[</span><span class='va'>date</span> <span class='op'>==</span> <span class='va'>date</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span>, z <span class='op'>=</span> <span class='va'>gh</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'>ConvertLongitude</span><span class='op'>(</span><span class='va'>lon</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='ConvertLongitude-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>map</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/setDT.html'>setDT</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/map_data.html'>map_data</a></span><span class='op'>(</span><span class='st'>"world"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>map</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lon"</span>, <span class='st'>"group2"</span><span class='op'>)</span> <span class='op'>:=</span> <span class='fu'>ConvertLongitude</span><span class='op'>(</span><span class='va'>long</span>, <span class='va'>group</span>, from <span class='op'>=</span> <span class='fl'>180</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;             long      lat group  order  region subregion       lon group2
 #&gt;     1: -69.89912 12.45200     1      1   Aruba      &lt;NA&gt; 290.10088    1_2
 #&gt;     2: -69.89571 12.42300     1      2   Aruba      &lt;NA&gt; 290.10429    1_2
 #&gt;     3: -69.94219 12.43853     1      3   Aruba      &lt;NA&gt; 290.05781    1_2
@@ -188,8 +190,9 @@ Else, a list with vectors <code>lon</code> and <code>group</code>.</p>
 #&gt; 99336:  12.42754 41.90073  1627 100962 Vatican   enclave  12.42754 1627_2
 #&gt; 99337:  12.43057 41.89756  1627 100963 Vatican   enclave  12.43057 1627_2
 #&gt; 99338:  12.43916 41.89839  1627 100964 Vatican   enclave  12.43916 1627_2</div><div class='input'>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>map</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>group2</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_path</a></span>()</div><div class='img'><img src='ConvertLongitude-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>map</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span>, group <span class='op'>=</span> <span class='va'>group2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_path</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='ConvertLongitude-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -206,7 +209,7 @@ Else, a list with vectors <code>lon</code> and <code>group</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

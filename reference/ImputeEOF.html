@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -145,16 +145,16 @@
 (DINEOF).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ImputeEOF</span>(
-  <span class='no'>formula</span>,
-  <span class='kw'>max.eof</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>min.eof</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
-  <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>10000</span>,
-  <span class='kw'>validation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()
-)</pre>
+    <pre class="usage"><span class='fu'>ImputeEOF</span><span class='op'>(</span>
+  <span class='va'>formula</span>,
+  max.eof <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  min.eof <span class='op'>=</span> <span class='fl'>1</span>,
+  tol <span class='op'>=</span> <span class='fl'>0.01</span>,
+  max.iter <span class='op'>=</span> <span class='fl'>10000</span>,
+  validation <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -215,10 +215,11 @@ returns a matrix.</p>
     <p>Beckers, J.-M., Barth, A., and Alvera-Azcárate, A.: DINEOF reconstruction of clouded images including error maps – application to the Sea-Surface Temperature around Corsican Island, Ocean Sci., 2, 183-199, https://doi.org/10.5194/os-2-183-2006, 2006.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geopotential</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span>(<span class='no'>geopotential</span>)
-<span class='no'>geopotential</span>[, <span class='no'>gh.t</span> <span class='kw'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span>(<span class='no'>gh</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lon</span>, <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html'>month</a></span>(<span class='no'>date</span>))]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-datatable.com'>data.table</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>)</span>
+<span class='va'>geopotential</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>)</span>
+<span class='va'>geopotential</span><span class='op'>[</span>, <span class='va'>gh.t</span> <span class='op'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span><span class='op'>(</span><span class='va'>gh</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lat</span>, <span class='va'>lon</span>, <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html'>month</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  -3.978597
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  -3.736613
 #&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  -2.978516
@@ -231,7 +232,8 @@ returns a matrix.</p>
 #&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 -18.526896
 #&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -18.526896</div><div class='input'>
 <span class='co'># Add gaps to field</span>
-<span class='no'>geopotential</span>[, <span class='no'>gh.gap</span> <span class='kw'>:=</span> <span class='no'>gh.t</span>]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap
+<span class='va'>geopotential</span><span class='op'>[</span>, <span class='va'>gh.gap</span> <span class='op'>:=</span> <span class='va'>gh.t</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  -3.978597  -3.978597
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  -3.736613  -3.736613
 #&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  -2.978516  -2.978516
@@ -242,8 +244,9 @@ returns a matrix.</p>
 #&gt; 290301: 350.0 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896
 #&gt; 290302: 352.5 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896
 #&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896
-#&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>42</span>)
-<span class='no'>geopotential</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='no'>.N</span>, <span class='no'>.N</span>*<span class='fl'>0.3</span>), <span class='no'>gh.gap</span> <span class='kw'>:=</span> <span class='fl'>NA</span>]</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap
+#&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>42</span><span class='op'>)</span>
+<span class='va'>geopotential</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>.N</span>, <span class='va'>.N</span><span class='op'>*</span><span class='fl'>0.3</span><span class='op'>)</span>, <span class='va'>gh.gap</span> <span class='op'>:=</span> <span class='cn'>NA</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  -3.978597         NA
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  -3.736613  -3.736613
 #&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  -2.978516  -2.978516
@@ -255,9 +258,10 @@ returns a matrix.</p>
 #&gt; 290302: 352.5 -90.0 700 2671.484 1995-12-01 -18.526896         NA
 #&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896
 #&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896</div><div class='input'>
-<span class='no'>max.eof</span> <span class='kw'>&lt;-</span> <span class='fl'>5</span>    <span class='co'># change to a higher value</span>
-<span class='no'>geopotential</span>[, <span class='no'>gh.impute</span> <span class='kw'>:=</span> <span class='fu'>ImputeEOF</span>(<span class='no'>gh.gap</span> ~ <span class='no'>lat</span> + <span class='no'>lon</span> <span class='kw'>|</span> <span class='no'>date</span>, <span class='no'>max.eof</span>,
-                                      <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max.iter</span> <span class='kw'>=</span> <span class='fl'>2000</span>)]</div><div class='output co'>#&gt;  With 1 eof - rmse =  27.14717 With 2 eof - rmse =  25.13858 With 3 eof - rmse =  23.65751 With 4 eof - rmse =  22.26365 With 5 eof - rmse =  21.10459</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap  gh.impute
+<span class='va'>max.eof</span> <span class='op'>&lt;-</span> <span class='fl'>5</span>    <span class='co'># change to a higher value</span>
+<span class='va'>geopotential</span><span class='op'>[</span>, <span class='va'>gh.impute</span> <span class='op'>:=</span> <span class='fu'>ImputeEOF</span><span class='op'>(</span><span class='va'>gh.gap</span> <span class='op'>~</span> <span class='va'>lat</span> <span class='op'>+</span> <span class='va'>lon</span> <span class='op'>|</span> <span class='va'>date</span>, <span class='va'>max.eof</span>,
+                                      verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, max.iter <span class='op'>=</span> <span class='fl'>2000</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;  With 1 eof - rmse =  27.14717 With 2 eof - rmse =  25.13858 With 3 eof - rmse =  23.65751 With 4 eof - rmse =  22.26365 With 5 eof - rmse =  21.10459</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap  gh.impute
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  -3.978597         NA   1.214005
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  -3.736613  -3.736613  -3.736613
 #&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  -2.978516  -2.978516  -2.978516
@@ -269,17 +273,21 @@ returns a matrix.</p>
 #&gt; 290302: 352.5 -90.0 700 2671.484 1995-12-01 -18.526896         NA -26.276939
 #&gt; 290303: 355.0 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896 -18.526896
 #&gt; 290304: 357.5 -90.0 700 2671.484 1995-12-01 -18.526896 -18.526896 -18.526896</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>geopotential</span>[<span class='no'>date</span> <span class='kw'>==</span> <span class='no'>date</span>[<span class='fl'>1</span>]], <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>lon</span>, <span class='no'>lat</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.t</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>gh.impute</span>))</div><div class='img'><img src='ImputeEOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>[</span><span class='va'>date</span> <span class='op'>==</span> <span class='va'>date</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.t</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.impute</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='ImputeEOF-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Scatterplot with a sample.</span>
-<span class='no'>na.sample</span> <span class='kw'>&lt;-</span> <span class='no'>geopotential</span>[<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>gh.gap</span>)][<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span>:<span class='no'>.N</span>, <span class='no'>.N</span>*<span class='fl'>0.1</span>)]
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>na.sample</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>gh.t</span>, <span class='no'>gh.impute</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>()</div><div class='img'><img src='ImputeEOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>na.sample</span> <span class='op'>&lt;-</span> <span class='va'>geopotential</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>gh.gap</span><span class='op'>)</span><span class='op'>]</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>.N</span>, <span class='va'>.N</span><span class='op'>*</span><span class='fl'>0.1</span><span class='op'>)</span><span class='op'>]</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>na.sample</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>gh.t</span>, <span class='va'>gh.impute</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='ImputeEOF-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Estimated RMSE</span>
-<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>geopotential</span>$<span class='no'>gh.impute</span>, <span class='st'>"rmse"</span>)</div><div class='output co'>#&gt; [1] 21.10459</div><div class='input'><span class='co'># Real RMSE</span>
-<span class='no'>geopotential</span>[<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>gh.gap</span>), <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>((<span class='no'>gh.t</span> - <span class='no'>gh.impute</span>)^<span class='fl'>2</span>))]</div><div class='output co'>#&gt; [1] 20.95526</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>$</span><span class='va'>gh.impute</span>, <span class='st'>"rmse"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 21.10459</div><div class='input'><span class='co'># Real RMSE</span>
+<span class='va'>geopotential</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>gh.gap</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='op'>(</span><span class='va'>gh.t</span> <span class='op'>-</span> <span class='va'>gh.impute</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; [1] 20.95526</div><div class='input'>
 
 </div></pre>
   </div>
@@ -297,7 +305,7 @@ returns a matrix.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

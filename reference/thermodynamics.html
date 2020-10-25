@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -143,17 +143,17 @@
     <p>Functions related to common atmospheric thermodynamic relationships.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>IdealGas</span>(<span class='no'>p</span>, <span class='no'>t</span>, <span class='no'>rho</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fl'>287.058</span>)
+    <pre class="usage"><span class='fu'>IdealGas</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>t</span>, <span class='va'>rho</span>, R <span class='op'>=</span> <span class='fl'>287.058</span><span class='op'>)</span>
 
-<span class='fu'>Adiabat</span>(<span class='no'>p</span>, <span class='no'>t</span>, <span class='no'>theta</span>, <span class='kw'>p0</span> <span class='kw'>=</span> <span class='fl'>1e+05</span>, <span class='kw'>kappa</span> <span class='kw'>=</span> <span class='fl'>2</span>/<span class='fl'>7</span>)
+<span class='fu'>Adiabat</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>t</span>, <span class='va'>theta</span>, p0 <span class='op'>=</span> <span class='fl'>1e+05</span>, kappa <span class='op'>=</span> <span class='fl'>2</span><span class='op'>/</span><span class='fl'>7</span><span class='op'>)</span>
 
-<span class='fu'>VirtualTemperature</span>(<span class='no'>p</span>, <span class='no'>t</span>, <span class='no'>e</span>, <span class='no'>tv</span>, <span class='kw'>epsilon</span> <span class='kw'>=</span> <span class='fl'>0.622</span>)
+<span class='fu'>VirtualTemperature</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>t</span>, <span class='va'>e</span>, <span class='va'>tv</span>, epsilon <span class='op'>=</span> <span class='fl'>0.622</span><span class='op'>)</span>
 
-<span class='fu'>MixingRatio</span>(<span class='no'>p</span>, <span class='no'>e</span>, <span class='no'>w</span>, <span class='kw'>epsilon</span> <span class='kw'>=</span> <span class='fl'>0.622</span>)
+<span class='fu'>MixingRatio</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>e</span>, <span class='va'>w</span>, epsilon <span class='op'>=</span> <span class='fl'>0.622</span><span class='op'>)</span>
 
-<span class='fu'>ClausiusClapeyron</span>(<span class='no'>t</span>, <span class='no'>es</span>)
+<span class='fu'>ClausiusClapeyron</span><span class='op'>(</span><span class='va'>t</span>, <span class='va'>es</span><span class='op'>)</span>
 
-<span class='fu'>DewPoint</span>(<span class='no'>p</span>, <span class='no'>ws</span>, <span class='no'>td</span>, <span class='kw'>epsilon</span> <span class='kw'>=</span> <span class='fl'>0.622</span>)</pre>
+<span class='fu'>DewPoint</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>ws</span>, <span class='va'>td</span>, epsilon <span class='op'>=</span> <span class='fl'>0.622</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -256,17 +256,23 @@ temperature.</p>
 <code><a href='waves.html'>waves</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>IdealGas</span>(<span class='fl'>1013</span>*<span class='fl'>100</span>, <span class='fl'>20</span> + <span class='fl'>273.15</span>)</div><div class='output co'>#&gt; [1] 1.203788</div><div class='input'><span class='fu'>IdealGas</span>(<span class='fl'>1013</span>*<span class='fl'>100</span>, <span class='kw'>rho</span> <span class='kw'>=</span> <span class='fl'>1.15</span>) - <span class='fl'>273.15</span></div><div class='output co'>#&gt; [1] 33.71118</div><div class='input'>
-(<span class='no'>theta</span> <span class='kw'>&lt;-</span> <span class='fu'>Adiabat</span>(<span class='fl'>70000</span>, <span class='fl'>20</span> + <span class='fl'>273.15</span>))</div><div class='output co'>#&gt; [1] 324.5993</div><div class='input'><span class='fu'>Adiabat</span>(<span class='fl'>70000</span>, <span class='kw'>theta</span> <span class='kw'>=</span> <span class='no'>theta</span>) - <span class='fl'>273.15</span></div><div class='output co'>#&gt; [1] 20</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>IdealGas</span><span class='op'>(</span><span class='fl'>1013</span><span class='op'>*</span><span class='fl'>100</span>, <span class='fl'>20</span> <span class='op'>+</span> <span class='fl'>273.15</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1.203788</div><div class='input'><span class='fu'>IdealGas</span><span class='op'>(</span><span class='fl'>1013</span><span class='op'>*</span><span class='fl'>100</span>, rho <span class='op'>=</span> <span class='fl'>1.15</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>273.15</span>
+</div><div class='output co'>#&gt; [1] 33.71118</div><div class='input'>
+<span class='op'>(</span><span class='va'>theta</span> <span class='op'>&lt;-</span> <span class='fu'>Adiabat</span><span class='op'>(</span><span class='fl'>70000</span>, <span class='fl'>20</span> <span class='op'>+</span> <span class='fl'>273.15</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 324.5993</div><div class='input'><span class='fu'>Adiabat</span><span class='op'>(</span><span class='fl'>70000</span>, theta <span class='op'>=</span> <span class='va'>theta</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>273.15</span>
+</div><div class='output co'>#&gt; [1] 20</div><div class='input'>
 <span class='co'># Relative humidity from T and Td</span>
-<span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fl'>25</span> + <span class='fl'>273.15</span>
-<span class='no'>td</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span> + <span class='fl'>273.15</span>
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fl'>1000000</span>
-(<span class='no'>rh</span> <span class='kw'>&lt;-</span> <span class='fu'>ClausiusClapeyron</span>(<span class='no'>td</span>)/<span class='fu'>ClausiusClapeyron</span>(<span class='no'>t</span>))</div><div class='output co'>#&gt; [1] 0.7380251</div><div class='input'>
+<span class='va'>t</span> <span class='op'>&lt;-</span> <span class='fl'>25</span> <span class='op'>+</span> <span class='fl'>273.15</span>
+<span class='va'>td</span> <span class='op'>&lt;-</span> <span class='fl'>20</span> <span class='op'>+</span> <span class='fl'>273.15</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fl'>1000000</span>
+<span class='op'>(</span><span class='va'>rh</span> <span class='op'>&lt;-</span> <span class='fu'>ClausiusClapeyron</span><span class='op'>(</span><span class='va'>td</span><span class='op'>)</span><span class='op'>/</span><span class='fu'>ClausiusClapeyron</span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.7380251</div><div class='input'>
 <span class='co'># Mixing ratio</span>
-<span class='no'>ws</span> <span class='kw'>&lt;-</span> <span class='fu'>MixingRatio</span>(<span class='no'>p</span>, <span class='fu'>ClausiusClapeyron</span>(<span class='no'>t</span>))
-<span class='no'>w</span> <span class='kw'>&lt;-</span> <span class='no'>ws</span>*<span class='no'>rh</span>
-<span class='fu'>DewPoint</span>(<span class='no'>p</span>, <span class='no'>w</span>) - <span class='fl'>273.15</span>    <span class='co'># Recover Td</span></div><div class='output co'>#&gt; [1] 20.01339</div><div class='input'>
+<span class='va'>ws</span> <span class='op'>&lt;-</span> <span class='fu'>MixingRatio</span><span class='op'>(</span><span class='va'>p</span>, <span class='fu'>ClausiusClapeyron</span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>w</span> <span class='op'>&lt;-</span> <span class='va'>ws</span><span class='op'>*</span><span class='va'>rh</span>
+<span class='fu'>DewPoint</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>w</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>273.15</span>    <span class='co'># Recover Td</span>
+</div><div class='output co'>#&gt; [1] 20.01339</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -283,7 +289,7 @@ temperature.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

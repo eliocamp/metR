@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@
     <p>Saves keystrokes for computing anomalies.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Anomaly</span>(<span class='no'>x</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span>(<span class='no'>x</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>Anomaly</span><span class='op'>(</span><span class='va'>x</span>, baseline <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,8 +177,9 @@ mean.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Zonal temperature anomaly</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
-<span class='no'>temperature</span>[, <span class='fu'>.</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='no'>lon</span>, <span class='kw'>air.z</span> <span class='kw'>=</span> <span class='fu'>Anomaly</span>(<span class='no'>air</span>)), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>.</span>(<span class='no'>lat</span>, <span class='no'>lev</span>)]</div><div class='output co'>#&gt;         lat  lev   lon air.z
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-datatable.com'>data.table</a></span><span class='op'>)</span>
+<span class='va'>temperature</span><span class='op'>[</span>, <span class='fu'>.</span><span class='op'>(</span>lon <span class='op'>=</span> <span class='va'>lon</span>, air.z <span class='op'>=</span> <span class='fu'>Anomaly</span><span class='op'>(</span><span class='va'>air</span><span class='op'>)</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='fu'>.</span><span class='op'>(</span><span class='va'>lat</span>, <span class='va'>lev</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;         lat  lev   lon air.z
 #&gt;      1:  90 1000   0.0     0
 #&gt;      2:  90 1000   2.5     0
 #&gt;      3:  90 1000   5.0     0
@@ -206,7 +207,7 @@ mean.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

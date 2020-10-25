@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -100,16 +100,18 @@
 </h1></div>
 
 <p>metR packages several functions and utilities that make R better for handling meteorological data in the tidy data paradigm. It started mostly sa a packaging of assorted wrappers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since then, it has grown organically and for my own needs and feedback from users.</p>
-<p>Conceptually it’s divided into <em>visualization tools</em> and <em>data tools</em>. The former are geoms, stats and scales that help with plotting using <a href="http://ggplot2.tidyverse.org/index.html">ggplot2</a>, such as <code><a href="reference/geom_contour_fill.html">stat_contour_fill()</a></code> or <code><a href="reference/scale_longitude.html">scale_y_level()</a></code>, while the later are functions for common data processing tools in the atmospheric sciences, such as <code><a href="reference/Derivate.html">Derivate()</a></code> or <code><a href="reference/EOF.html">EOF()</a></code>; these are implemented to work in the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> paradigm, but also work with regular data frames.</p>
+<p>Conceptually it’s divided into <em>visualization tools</em> and <em>data tools</em>. The former are geoms, stats and scales that help with plotting using <a href="https://ggplot2.tidyverse.org/index.html">ggplot2</a>, such as <code><a href="reference/geom_contour_fill.html">stat_contour_fill()</a></code> or <code><a href="reference/scale_longitude.html">scale_y_level()</a></code>, while the later are functions for common data processing tools in the atmospheric sciences, such as <code><a href="reference/Derivate.html">Derivate()</a></code> or <code><a href="reference/EOF.html">EOF()</a></code>; these are implemented to work in the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> paradigm, but also work with regular data frames.</p>
 <p>Currently metR is in development but maturing. Most functions check arguments and there are some tests. However, some functions might change it’s interface, and functionality can be moved to other packages, so please bear that in mind.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install metR from CRAN with:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"metR"</span>)</pre></div>
-<p>Or the developement version (<a href="https://travis-ci.org/eliocamp/metR"><img src="https://travis-ci.org/eliocamp/metR.svg?branch=dev" alt="Build Status"></a>) with:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"eliocamp/metR@dev"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"metR"</span><span class="op">)</span></pre></div>
+<p>Or the development version (<a href="https://travis-ci.org/eliocamp/metR"><img src="https://travis-ci.org/eliocamp/metR.svg?branch=dev" alt="Build Status"></a>) with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"eliocamp/metR@dev"</span><span class="op">)</span></pre></div>
 <p>If you need to read netcdf files, you might need to install the netcdf and udunits2 libraries. On Ubuntu and it’s derivatives this can be done by typing</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">sudo apt install libnetcdf<span class="op">-</span>dev netcdf<span class="op">-</span>bin libudunits2<span class="op">-</span>dev</a></code></pre></div>
 </div>
@@ -117,41 +119,38 @@
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
 <p>In this example we easily perform Principal Components Decomposition (EOF) on monthly geopotential height, then compute the geostrophic wind associated with this field and plot the field with filled contours and the wind with streamlines.</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">metR</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">data.table</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'ggplot2'</span>
-<span class="co">#&gt; The following object is masked from 'package:data.table':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     :=</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">geopotential</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eliocamp/metR">metR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://r-datatable.com">data.table</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span>
 <span class="co"># Use Empirical Orthogonal Functions to compute the Antarctic Oscillation</span>
-<span class="no">geopotential</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html">copy</a></span>(<span class="no">geopotential</span>)
-<span class="no">geopotential</span>[, <span class="no">gh.t.w</span> <span class="kw">:=</span> <span class="fu"><a href="reference/Anomaly.html">Anomaly</a></span>(<span class="no">gh</span>)*<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span>(<span class="no">lat</span>*<span class="no">pi</span>/<span class="fl">180</span>)),
-      <span class="kw">by</span> <span class="kw">=</span> <span class="fu">.</span>(<span class="no">lon</span>, <span class="no">lat</span>, <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html">month</a></span>(<span class="no">date</span>))]
-<span class="no">aao</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/EOF.html">EOF</a></span>(<span class="no">gh.t.w</span> ~ <span class="no">lat</span> + <span class="no">lon</span> <span class="kw">|</span> <span class="no">date</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">geopotential</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="no">aao</span>$<span class="no">left</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"u"</span>, <span class="st">"v"</span>) <span class="kw">:=</span> <span class="fu"><a href="reference/GeostrophicWind.html">GeostrophicWind</a></span>(<span class="no">gh.t.w</span>, <span class="no">lon</span>, <span class="no">lat</span>)]
+<span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html">copy</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span>
+<span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.t.w</span> <span class="op">:=</span> <span class="fu"><a href="reference/Anomaly.html">Anomaly</a></span><span class="op">(</span><span class="va">gh</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">lat</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">)</span>,
+      by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+<span class="va">aao</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/EOF.html">EOF</a></span><span class="op">(</span><span class="va">gh.t.w</span> <span class="op">~</span> <span class="va">lat</span> <span class="op">+</span> <span class="va">lon</span> <span class="op">|</span> <span class="va">date</span>, data <span class="op">=</span> <span class="va">geopotential</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">aao</span><span class="op">$</span><span class="va">left</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"v"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="reference/GeostrophicWind.html">GeostrophicWind</a></span><span class="op">(</span><span class="va">gh.t.w</span>, <span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span>
 
 <span class="co"># AAO field</span>
-<span class="no">binwidth</span> <span class="kw">&lt;-</span> <span class="fl">0.01</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">aao</span>$<span class="no">left</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">lon</span>, <span class="no">lat</span>, <span class="kw">z</span> <span class="kw">=</span> <span class="no">gh.t.w</span>)) +
-    <span class="fu"><a href="reference/geom_contour_fill.html">geom_contour_fill</a></span>(<span class="kw">binwidth</span> <span class="kw">=</span> <span class="no">binwidth</span>, <span class="kw">xwrap</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">360</span>)) +    <span class="co"># filled contours!</span>
-    <span class="fu"><a href="reference/geom_streamline.html">geom_streamline</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">dx</span> <span class="kw">=</span> <span class="fu"><a href="reference/spherical.html">dlon</a></span>(<span class="no">u</span>, <span class="no">lat</span>), <span class="kw">dy</span> <span class="kw">=</span> <span class="fu"><a href="reference/spherical.html">dlat</a></span>(<span class="no">v</span>)),
-                    <span class="kw">size</span> <span class="kw">=</span> <span class="fl">0.4</span>, <span class="kw">L</span> <span class="kw">=</span> <span class="fl">80</span>, <span class="kw">skip</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">xwrap</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">360</span>)) +
-    <span class="fu"><a href="reference/scale_longitude.html">scale_x_longitude</a></span>() +
-    <span class="fu"><a href="reference/scale_longitude.html">scale_y_latitude</a></span>(<span class="kw">limits</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">90</span>, -<span class="fl">20</span>)) +
-    <span class="fu"><a href="reference/scale_divergent.html">scale_fill_divergent</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">"AAO pattern"</span>,
-                         <span class="kw">breaks</span> <span class="kw">=</span> <span class="fu"><a href="reference/MakeBreaks.html">MakeBreaks</a></span>(<span class="no">binwidth</span>),
-                         <span class="kw">guide</span> <span class="kw">=</span> <span class="fu"><a href="reference/guide_colourstrip.html">guide_colorstrip</a></span>()) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span>()
+<span class="va">binwidth</span> <span class="op">&lt;-</span> <span class="fl">0.01</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">aao</span><span class="op">$</span><span class="va">left</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">gh.t.w</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="va">binwidth</span>, xwrap <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>    <span class="co"># filled contours!</span>
+    <span class="fu"><a href="reference/geom_streamline.html">geom_streamline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="fu"><a href="reference/spherical.html">dlon</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span>, dy <span class="op">=</span> <span class="fu"><a href="reference/spherical.html">dlat</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span>, 
+                    size <span class="op">=</span> <span class="fl">0.4</span>, L <span class="op">=</span> <span class="fl">80</span>, skip <span class="op">=</span> <span class="fl">3</span>, xwrap <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="reference/scale_longitude.html">scale_x_longitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="reference/scale_longitude.html">scale_y_latitude</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">90</span>, <span class="op">-</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"AAO pattern"</span>, 
+                         breaks <span class="op">=</span> <span class="fu"><a href="reference/MakeBreaks.html">MakeBreaks</a></span><span class="op">(</span><span class="va">binwidth</span><span class="op">)</span>,
+                         guide <span class="op">=</span> <span class="fu"><a href="reference/guide_colourstrip.html">guide_colorstrip</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be deprecated.</span>
 <span class="co">#&gt; Use ggperiodic::periodic insead.</span></pre></div>
 <p><img src="reference/figures/field-1.png"><!-- --></p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="co"># AAO signal</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">aao</span>$<span class="no">right</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">date</span>, <span class="no">gh.t.w</span>)) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">span</span> <span class="kw">=</span> <span class="fl">0.4</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="co"># AAO signal</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">aao</span><span class="op">$</span><span class="va">right</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">gh.t.w</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>span <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span>
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></pre></div>
 <p><img src="reference/figures/timeseries-1.png"><!-- --></p>
 <p>You can read more in the vignettes: <a href="https://eliocamp.github.io/metR/articles/Visualization-tools.html">Visualization tools</a> and <a href="https://eliocamp.github.io/metR/articles/Working-with-data.html">Working with data</a>.</p>
@@ -177,6 +176,12 @@
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
 </ul>
 </div>
+<div class="citation">
+<h2>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html">Citing metR</a></li>
+</ul>
+</div>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
@@ -192,6 +197,7 @@
 <li><a href="https://codecov.io/github/eliocamp/metR/?branch=master"><img src="https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 <li><a href="https://cran.r-project.org/package=metR"><img src="http://www.r-pkg.org/badges/version/metR" alt="CRAN status"></a></li>
 <li><a href="https://zenodo.org/badge/latestdoi/96357263"><img src="https://zenodo.org/badge/96357263.svg" alt="DOI"></a></li>
+<li><a href="https://github.com/eliocamp/metR/actions"><img src="https://github.com/eliocamp/metR/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
 </div>
@@ -203,7 +209,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

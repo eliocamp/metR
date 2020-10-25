@@ -221,6 +221,29 @@
   <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">value</span><span class="op">)</span>, kriging <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-8-2.png" width="672"></p>
+</div>
+<div id="unequal-breaks-between-facets" class="section level3">
+<h3 class="hasAnchor">
+<a href="#unequal-breaks-between-facets" class="anchor"></a>Unequal <code>breaks</code> between facets</h3>
+<p>ggplot2’s <code><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">geom_contour_filled()</a></code> computes breaks using all the data. This is great because it means that breaks are consistent between panels when using <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code>. But if you want to compute breaks separately for each panel, you can use <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code>’s <code>global.breaks</code> argument.</p>
+<p>With the default, separation between levels is always the same. Good for comparison, but in this case the panel on the left lacks detail.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">300</span><span class="op">)</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">lev</span><span class="op">)</span></pre></div>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<p>With <code>global.breaks = FALSE</code>, binwidth is no longer the same in each panel and now you can see more detail in the leftmost panel.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">300</span><span class="op">)</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span>global.breaks <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">lev</span><span class="op">)</span></pre></div>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 <p>All of these features are also available to regular contours in the <code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> function.</p>
 </div>
 </div>
@@ -228,7 +251,7 @@
 <h2 class="hasAnchor">
 <a href="#geom_text_contour-and-geom_label_contour" class="anchor"></a>geom_text_contour and geom_label_contour</h2>
 <p>Labelling contours is also a problematic aspect of <code>ggplot2</code>. <code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code> and <code><a href="../reference/geom_label_contour.html">geom_label_contour()</a></code> can be use to automatically add text or labels to the flattest part of a contour.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
+<div class="sourceCode" id="cb14"><pre class="downlit">
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">geom_contour</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
@@ -236,10 +259,10 @@
     <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <p>By default it labels every 2nd contour (this can be changed by the <code>skip</code> parameter) and it rotates to follow the angle of the contour (this is not available on <code><a href="../reference/geom_label_contour.html">geom_label_contour()</a></code>). Since in some datasets there can be very small contours that should not be labelled for clarity, the <code>min.size</code> argument specifies the minimum points a contour has to have in order to be labelled.</p>
 <p>Notice how labels are drawn on top of contours? The problem is that <code><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">geom_contour()</a></code> doesn’t know it’s being labelled; <code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code> addresses this issue by allowing you to draw a stroke around the text.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
+<div class="sourceCode" id="cb15"><pre class="downlit">
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
@@ -247,7 +270,8 @@
     <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-10-1.png" width="672"> You can have full control over where labels are placed with the <code>label.placement</code> argument. It takes a function that takes a vector of x and y values and returns a logical vector of the same length that indicate the points where labels should be. There are 5 build in placement functions:</p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
+<p>You can have full control over where labels are placed with the <code>label.placement</code> argument. It takes a function that takes a vector of x and y values and returns a logical vector of the same length that indicate the points where labels should be. There are 5 build in placement functions:</p>
 <ul>
 <li><p><code><a href="../reference/label_placement_fraction.html">label_placement_flattest()</a></code>: The default. It computes the curvature and the angle at each points and then selects the point which minimizes the sum of both numbers. Therefore, it tries to label the flattest and most horizontal part of the contour.</p></li>
 <li><p><code><a href="../reference/label_placement_fraction.html">label_placement_fraction()</a></code>: It takes a vector of numbers ranging from 0 to 1 representing where tu put the label in relation to the length of the contour. That is, using 0.5 means to put the label at the midpoint.</p></li>
@@ -255,7 +279,7 @@
 <li><p><code><a href="../reference/label_placement_fraction.html">label_placement_random()</a></code>: It puts the label in random places. ¯\_(ツ)_/¯ .</p></li>
 <li><p><code><a href="../reference/label_placement_fraction.html">label_placement_all()</a></code>: It puts the label at every point. Probably is best not to use it.</p></li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="downlit">
+<div class="sourceCode" id="cb16"><pre class="downlit">
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
@@ -263,29 +287,7 @@
     <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
-<div id="unequal-breaks-between-facets" class="section level3">
-<h3 class="hasAnchor">
-<a href="#unequal-breaks-between-facets" class="anchor"></a>Unequal <code>breaks</code> between facets</h3>
-<p>ggplot2’s <code><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">geom_contour_filled()</a></code> computes breaks using all the data. This is great because it means that breaks are consistent between panels when using <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code>. But if you want to compute breaks separately for each panel, you can use <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code>’s <code>global.breaks</code> argument.</p>
-<p>With the default, separation between levels is always the same. Good for comparison, but in this case the panel on the left lacks detail.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">300</span><span class="op">)</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">lev</span><span class="op">)</span></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-12-1.png" width="672"> With <code>global.breaks = FALSE</code>, binwidth is no longer the same in each panel and now you can see more detail in the leftmost panel.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">300</span><span class="op">)</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span>global.breaks <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_longitude.html">scale_x_longitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_longitude.html">scale_y_latitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">lev</span><span class="op">)</span></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
-</div>
 </div>
 <div id="geom_contour_tanaka" class="section level2">
 <h2 class="hasAnchor">

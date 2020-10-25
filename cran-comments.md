@@ -1,7 +1,7 @@
+
 ## Resubmission
 
-This is a resubmission. In this version I have reduced the size of the package. 
-
+This is a resubmission. In this version I have fixed errors with reverse dependencies.
 
 ## Test environments
 

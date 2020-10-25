@@ -65,6 +65,7 @@
 #'
 #' @export
 #' @family ggplot2 helpers
+#' @importFrom ggplot2 .pt
 geom_text_contour <- function(mapping = NULL, data = NULL,
                       stat = "text_contour",
                       position = "identity",
@@ -173,8 +174,6 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
        } else {
            hjust <- data$hjust[1]
        }
-
-
 
        contourTextGrob(
            lab,

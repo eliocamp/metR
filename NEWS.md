@@ -1,3 +1,12 @@
+# metR 0.9.9000
+
+
+## Bugfixes
+
+- Fixes error introduced in previous version when `geom_arrow()` had mappings other
+than `dx` and `dy`. (Thanks Santiago!)
+
+
 # metR 0.8.0
 
 ## New features

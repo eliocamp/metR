@@ -28,8 +28,12 @@ Trajectory <- function(formula, x0, y0,
     dep.names <- formula.tools::lhs.vars(formula)
     if (length(dep.names) == 0) stop("LHS of formula must have at least one variable")
 
+    if (length(dep.names) != 2) {
+        stop("LHS of formula must be of the form dx + dy")
+    }
+
     ind.names <- formula.tools::rhs.vars(formula)
-    if (length(ind.names) > 3) {
+    if (length(ind.names) != 3) {
         stop("RHS of formula must be of the form x + y + t")
     }
 
@@ -88,7 +92,7 @@ Trajectory <- function(formula, x0, y0,
 
     data.table::setnames(points_out, c("x", "y", "t1", "dx", "dy"), c(ind.names, dep.names))
 
-    return(points_out)
+    return(points_out[])
 }
 
 force.fun3d <- function(x, y, ts, times, field) {

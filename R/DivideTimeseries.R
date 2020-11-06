@@ -25,6 +25,7 @@
 #' DivideTimeseries(g, gdata$date, n = 2, "Date", "Max Temperature")
 #' @family ggplot2 helpers
 #' @export
+# nocov start
 DivideTimeseries <- function(g, x, n = 2, xlab = "x", ylab = "y") {
     warning("'DivideTimeseries' is deprecated, use ggwrap instead",
             ' (https://github.com/wilkox/ggwrap)')
@@ -60,3 +61,4 @@ DivideTimeseries <- function(g, x, n = 2, xlab = "x", ylab = "y") {
     gridExtra::grid.arrange(grobs = plots, ncol = 1, heights = c(rep(10, n), 2),
                             bottom = xlab, left = ylab)
 }
+# nocov end

@@ -5,6 +5,10 @@
 - `AnchorBreaks()` gains a `bins` argument to mimic the default functionality of 
 `MakeBreaks()`. 
 
+- New `label_placement_minmax()` to label contours at the maximum and minimum 
+points of a contour (mimicking [isoband's behaviour](https://wilkelab.org/isoband/articles/isoband3.html))
+
+
 ## Bugfixes
 
 - Fixes error introduced in previous version when `geom_arrow()` had mappings other

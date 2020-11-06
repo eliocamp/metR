@@ -6,6 +6,7 @@
 \alias{label_placement_random}
 \alias{label_placement_all}
 \alias{label_placement_flattest}
+\alias{label_placement_minmax}
 \title{Functions to place contour labels}
 \usage{
 label_placement_fraction(frac = 0.5)
@@ -17,6 +18,8 @@ label_placement_random(seed = 42, n = 1)
 label_placement_all()
 
 label_placement_flattest(n = 1, ref_angle = 0)
+
+label_placement_minmax(direction = c("vertical", "horizontal"))
 }
 \arguments{
 \item{frac}{A numeric vector with values between 0 and 1 representing
@@ -29,6 +32,8 @@ at the midpoint).}
 
 \item{ref_angle}{Angle (in degrees counter-clockwise from East) to try
 to approximate labels.}
+
+\item{direction}{Direction in which to compute the maximum and minimum.}
 }
 \description{
 These functions compute the position of contour labels

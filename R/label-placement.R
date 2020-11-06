@@ -109,3 +109,20 @@ label_placement_flattest <- function(n = 1, ref_angle = 0) {
         return(best)
     }
 }
+
+#' @param direction Direction in which to compute the maximum and minimum.
+#' @export
+#' @rdname contour_placement
+label_placement_minmax <- function(direction = c("vertical", "horizontal")) {
+    direction <- direction[1]
+    assertChoice(direction, c("vertical", "horizontal"))
+
+    function(x, y) {
+        if (direction == "vertical") {
+            return(c(which.max(y), which.min(y)))
+        } else if (direction == "horizontal") {
+            return(c(which.max(x), which.min(x)))
+        }
+    }
+
+}

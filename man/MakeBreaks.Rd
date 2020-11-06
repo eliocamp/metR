@@ -7,7 +7,7 @@
 \usage{
 MakeBreaks(binwidth = NULL, bins = 10, exclude = NULL)
 
-AnchorBreaks(anchor = 0, binwidth = NULL, exclude = NULL)
+AnchorBreaks(anchor = 0, binwidth = NULL, exclude = NULL, bins = 10)
 }
 \arguments{
 \item{binwidth}{width of breaks}

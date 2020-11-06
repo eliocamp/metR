@@ -1,5 +1,9 @@
 # metR 0.9.9000
 
+## New Features
+
+- `AnchorBreaks()` gains a `bins` argument to mimic the default functionality of 
+`MakeBreaks()`. 
 
 ## Bugfixes
 

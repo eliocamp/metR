@@ -11,6 +11,8 @@
 #' @param sun.angle angle of the sun in degrees counterclockwise from 12 o' clock
 #' @param light,dark valid colour representing the light and dark shading
 #' @param range numeric vector of length 2 with the minimum and maximum size of lines
+#' @param smooth numeric indicating the degree of smoothing of illumination and size.
+#' Larger
 #'
 #' @section Aesthetics:
 #' `geom_contour_tanaka` understands the following aesthetics (required aesthetics are in bold)
@@ -29,6 +31,13 @@
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 #'     geom_contour_fill(aes(z = value)) +
 #'     geom_contour_tanaka(aes(z = value)) +
+#'     theme_void()
+#'
+#' # If the transition between segments feels too abrupt,
+#' # smooth it a bit with smooth
+#' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
+#'     geom_contour_fill(aes(z = value)) +
+#'     geom_contour_tanaka(aes(z = value), smooth = 1) +
 #'     theme_void()
 #'
 #' data(geopotential)
@@ -68,9 +77,8 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
                                 light = "white",
                                 dark = "gray20",
                                 range = c(0.01, 0.5),
+                                smooth = 0,
                                 na.rm = FALSE,
-                                # xwrap = NULL,
-                                # ywrap = NULL,
                                 show.legend = NA,
                                 inherit.aes = TRUE) {
     .check_wrap_param(list(...))
@@ -87,12 +95,11 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
             bins = bins,
             binwidth = binwidth,
             na.rm = na.rm,
-            # xwrap = xwrap,
-            # ywrap = ywrap,
             sun.angle = sun.angle,
             light = light,
             dark = dark,
             range = range,
+            smooth = smooth,
             ...
         )
     )
@@ -106,7 +113,7 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
   draw_panel = function(data, panel_params, coord, arrow = NULL,
                         lineend = "butt", linejoin = "round", linemitre = 1,
                         na.rm = FALSE, sun.angle = 60, light = "gray20", dark = "black",
-                        range = c(0.01, 0.5)) {
+                        range = c(0.01, 0.5), smooth = 0) {
       if (!anyDuplicated(data$group)) {
           message_wrap("geom_path: Each group consists of only one observation. ",
                        "Do you need to adjust the group aesthetic?")
@@ -115,8 +122,6 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
       # must be sorted on group
       data <- data[order(data$group), , drop = FALSE]
 
-      rx <- ggplot2::resolution(data$x, zero = FALSE)
-      ry <- ggplot2::resolution(data$y, zero = FALSE)
       data.table::setDT(data)
 
       data[, dx := c(diff(x), 0), by = group]
@@ -124,21 +129,52 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
 
       munched <- ggplot2::coord_munch(coord, data, panel_params)
 
-      # munched <- subset(munched, is.na(remove))
       # Silently drop lines with less than two points, preserving order
       rows <- stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
       munched <- munched[rows >= 2, ]
       if (nrow(munched) < 2) return(ggplot2::zeroGrob())
 
       munched <- data.table::setDT(munched)
-      munched[, dx := c(diff(x), 0), by = group]
-      munched[, dy := c(diff(y), 0), by = group]
+      munched[, dx := c(diff(x), NA), by = group]
+      munched[, dy := c(diff(y), NA), by = group]
+      # Remove duplicated points.
+      munched <- munched[is.na(dx + dy) | !(dx == 0 & dy == 0)]
+      munched <- munched[, .SD[.N >=  2], by = group]
 
       munched[, sun.angle := (sun.angle + 90)*pi/180]
       munched[, relative.angle := sun.angle - atan2(dy, dx)]
+      munched[, relative.angle := c(relative.angle[-.N], relative.angle[.N]), by = group]
       munched[, shade := (sin(relative.angle))]
+
+
+      if (smooth > 0) {
+        smooth <- 2 + floor(2*smooth)
+
+        munched[is.na(alpha), alpha := 1]
+        munched <- munched[, c(supersample_path(x, y, smooth),
+                               list(shade = approx(seq_len(.N), shade, method = "constant",
+                                                   n = 1 + (.N-1)*smooth)[["y"]],
+                                    alpha = approx(seq_len(.N),  method = "constant",
+                                                   alpha, n =  1 + (.N-1)*smooth)[["y"]],
+                                    linetype = approx(seq_len(.N), linetype, method = "constant",
+                                                      n =  1 + (.N-1)*smooth)[["y"]])),
+                           by = .(group)]
+
+        smooth <- max(3, smooth - 1)
+        d <- seq(1, smooth)
+        d <- d - d[ceiling(smooth/2)]
+        d <- d/(max(d)+1)
+
+        w <- (1 - abs(d)^3)^3
+        w <- w/sum(w)
+
+        munched[, shade := as.vector(stats::filter(shade, w, circular = TRUE)),
+                by = group]
+      }
+
+
+      munched[, size := abs(shade)]
       munched[, shade := scales::rescale(shade, c(0, 1), c(-1, 1))]
-      munched[, size := abs(sin(relative.angle))]
 
       munched[, dark := dark][, light := light]
 
@@ -149,8 +185,8 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
 
       # Work out whether we should use lines or segments
       attr <- plyr::ddply(munched, "group", function(df) {
-          linetype <- unique(df$linetype)
-          data.frame(
+        linetype <- unique(df$linetype)
+        data.frame(
               solid = identical(linetype, 1) || identical(linetype, "solid"),
               constant = nrow(unique(df[, c("alpha", "colour","size", "linetype")])) == 1
           )
@@ -212,3 +248,10 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
     }))
 }
 
+supersample_path <- function(x, y, n) {
+  dx <- diff(x)
+  dy <- diff(y)
+  new_x <- c(x[1], x[1] + cumsum(rep(dx, each = n)/n))
+  new_y <- c(y[1], y[1] + cumsum(rep(dy, each = n)/n))
+  return(list(x = new_x, y = new_y))
+}

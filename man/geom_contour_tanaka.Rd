@@ -19,6 +19,7 @@ geom_contour_tanaka(
   light = "white",
   dark = "gray20",
   range = c(0.01, 0.5),
+  smooth = 0,
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
@@ -73,6 +74,9 @@ and returns breaks as output
 
 \item{range}{numeric vector of length 2 with the minimum and maximum size of lines}
 
+\item{smooth}{numeric indicating the degree of smoothing of illumination and size.
+Larger}
+
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
 
@@ -113,6 +117,13 @@ library(data.table)
 ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
     geom_contour_fill(aes(z = value)) +
     geom_contour_tanaka(aes(z = value)) +
+    theme_void()
+
+# If the transition between segments feels too abrupt,
+# smooth it a bit with smooth
+ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
+    geom_contour_fill(aes(z = value)) +
+    geom_contour_tanaka(aes(z = value), smooth = 1) +
     theme_void()
 
 data(geopotential)

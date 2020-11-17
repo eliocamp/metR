@@ -159,9 +159,9 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     }
 # browser()
 
-    contours[, start := 1:.N %in% 1 , by = .(piece, group)]
-    contours <- contours[, unique(.SD), by = .(group, piece)]
-    contours[, start := NULL]
+    # contours[, start := 1:.N %in% 1 , by = .(piece, group)]
+    # contours <- contours[, unique(.SD), by = .(group, piece)]
+    # contours[, start := NULL]
     contours <- .order_contour.m(contours, data.table::setDT(data))
 
     if (!is.null(proj)) {

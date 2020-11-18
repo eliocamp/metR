@@ -17,6 +17,10 @@ the transition between segments.
 - Fixes error introduced in previous version when `geom_arrow()` had mappings other
 than `dx` and `dy`. (Thanks Santiago!)
 
+- The `level` derived aesthetic from `geom_contour_fill()` now returns and ordered factor
+with the correct labels that can be interpreted by `ggplot2::guide_colorsteps()`. This might 
+a breaking change!
+
 
 # metR 0.8.0
 

@@ -184,20 +184,34 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
     # Convert list of lists into single data frame
 
+    bands <- pretty_isoband_levels(names(cl))
     cont <- data.table::rbindlist(lapply(cl, data.table::as.data.table), idcol = "band")
 
-    cont[, band := ordered(band, names(cl))]
+
     cont[, c("level_low", "level_high") := data.table::tstrsplit(band, ":")]
     cont[, `:=`(level_low = as.numeric(level_low), level_high = as.numeric(level_high))]
-    # cont[, level := paste0("(", format(as.numeric(level_low), digits = 3, trim = TRUE),
-    #                        ", ", format(as.numeric(level_high), digits = 3, trim = TRUE))]
+
+    cont[, level := ordered(pretty_isoband_levels(band), bands)]
     # cont[, level := factor(level, ordered = TRUE)]
 
     cont[, piece := as.numeric(interaction(band))]
     cont[, group := factor(paste(data$group[1], sprintf("%03d", piece), sep = "-"))]
 
 
-    cont[, .(level = band, level_low, level_high, x, y, piece, group, subgroup = id)]
+    cont[, .(level = level, level_low, level_high, x, y, piece, group, subgroup = id)]
 
 }
 
+#  from ggplot2
+pretty_isoband_levels <- function(isoband_levels, dig.lab = 3) {
+    interval_low <- gsub(":.*$", "", isoband_levels)
+    interval_high <- gsub("^[^:]*:", "", isoband_levels)
+
+    label_low <- format(as.numeric(interval_low), digits = dig.lab, trim = TRUE)
+    label_high <- format(as.numeric(interval_high), digits = dig.lab, trim = TRUE)
+
+    # from the isoband::isobands() docs:
+    # the intervals specifying isobands are closed at their lower boundary
+    # and open at their upper boundary
+    sprintf("(%s, %s]", label_low, label_high)
+}

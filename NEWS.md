@@ -2,6 +2,14 @@
 
 ## New Features
 
+- I'm very happy with `discretised_scale()`, which is a type of scale which takes a 
+discrete values that are the result of some discretisation and treats them as 
+continuous. It's, in a sense, the inverse of the new `ggplot2::binned_scale()`. 
+Whereas. `ggplot2::binned_scale()` takes continuous values and then discretises
+them, `discretised_scale()` takes discrete values which where the result of some
+discretisation procedure (such as the levels of `geom_contour_fill()`/`ggplot2::geom_contour_filled()`) and allows you to treat
+them as continuous. 
+
 - `AnchorBreaks()` gains a `bins` argument to mimic the default functionality of 
 `MakeBreaks()`. 
 

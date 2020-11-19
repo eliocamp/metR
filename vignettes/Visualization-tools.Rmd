@@ -21,40 +21,14 @@ comment = "#>")
 
 One of the "conceptual branches" of `metR` is the *visualization tools*. These are a set of functions that interface with [ggplot2](https://ggplot2.tidyverse.org/index.html) for easier and better plotting of meteorological (an other) fields. 
 
-# Scales
-
-Many meteorological fields are defined in a longitude×latitude×level grid, so `metR` includes scales for each dimension. These are glorified wrappers around `scale_*_continuous()` with sensible defaults and, in the case of `scale_*_level()`, the implementation of `reverselog_trans()`. 
-
-There are also `scale_color_divergent()` and `scale_fill_divergent()` which are wrappers around `scale_*_gradient2()` but with sane default colours for positive and negative values --particularly useful for plotting anomaly values. 
-
-To see how this scales work, let's visualize the vertical distribution of temperature anomalies from the zonal mean. 
-
 ```{r, message = FALSE}
+# Packages and data use throught 
 library(metR)
 library(ggplot2)
 library(data.table)
 temperature <- copy(temperature)
 temperature[, air.z := Anomaly(air), by = .(lat, lev)]
-
-# Plot made with base ggplot
-(g <- ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
-        geom_contour2(aes(color = ..level..)))
 ```
-
-While this is fine, since pressure levels are roughly proportional to $\mathrm{e}^{-z}$ in meteorology we usually plot the vertical coordinate as $-\log(p)$. However, while ggplot2 has `scale_y_log10()` and `scale_y_reverse()`, they don't work together. `metR` defines the new transformation `reverselog_trans()` that can be used with any scale but that is the default for `scale_*_level()`. 
-
-On the other hand, `scale_*_latitude()` (and `scale_*_longitude()`) not only defaults `expand` to `c(0, 0)`, but also has a `ticks` argument that specifies the spacing of breaks between -90 and 90 in the case of `scale_*_latitude()`, and between 0 and 360 in the case of `scale_*_longitude()`.
-
-These scales default to printing no label, since usually the dimensions are understood by the shape of the plot.
-
-```{r}
-g + 
-    scale_y_level() +
-    scale_x_latitude(ticks = 15, limits = c(-90, 90)) +
-    scale_color_divergent()
-```
-
-Note: `scale_*_longitude()` (currently)  assumes the data goes from 0° to 360° but puts labels between -180° and 180°. This very idiosyncratic choice stems from the fact that model output is usually in the [0; 360) range but it's easier to read maps in the (-180; 180] range. This may change in the future. 
 
 # Geoms and stats
 
@@ -159,8 +133,6 @@ With the default, separation between levels is always the same. Good for compari
 ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
   geom_contour_fill() +
   scale_fill_divergent() +
-  scale_x_longitude() +
-  scale_y_latitude() +
   facet_grid(~lev)
 ```
 
@@ -170,8 +142,6 @@ With `global.breaks = FALSE`, binwidth is no longer the same in each panel and n
 ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
   geom_contour_fill(global.breaks = FALSE) +
   scale_fill_divergent() +
-  scale_x_longitude() +
-  scale_y_latitude() +
   facet_grid(~lev)
 ```
 
@@ -179,6 +149,20 @@ ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
 
 All of these features are also available to regular contours in the `geom_contour2()` function. 
 
+
+### Computed variables
+
+Like `ggplot::geom_contour_filled()`, `geom_contour_fill()` computes several relevant variables. The two most important ones are `level_mid` (also called `int.level` for backwards compatibility reasons) and `level`. The former (the default) is a numeric value that corresponds to the midpoint of the levels while the latter is an ordered factor that represents the range of the contour.
+
+```{r}
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
+    geom_contour_fill()
+
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
+    geom_contour_fill(aes(fill = stat(level)))
+```
+
+A big difference between the two variables is that one is compatible with continuous scales while the other only works with discrete scales. The advantage of using `level_mid` is that it preserves the actual continous nature of the data, which allows the use of meaningful continuous scales such as `scale_fill_divergent()` and results in proper colours when breaks are not equally spaced. The disadvantage is that the scale function has no information about the discretisation, and thus is very hard to use *synchronise* the breaks that define the levels of the contours and the breaks shown in the color guide. See the [discretised_scale](#discretised_scale) section for a way of using continuous sales for discretised data.
 
 ## geom_text_contour and geom_label_contour
 
@@ -189,9 +173,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     geom_contour(color = "black") +
     geom_text_contour() +
-    scale_fill_divergent() +
-    scale_x_longitude() +
-    scale_y_latitude()
+    scale_fill_divergent() 
 ```
 
 By default it labels every 2nd contour (this can be changed by the `skip` parameter) and it rotates to follow the angle of the contour (this is not available on `geom_label_contour()`). Since in some datasets there can be very small contours that should not be labelled for clarity, the `min.size` argument specifies the minimum points a contour has to have in order to be labelled. 
@@ -203,9 +185,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     geom_contour2(color = "black") +
     geom_text_contour(stroke = 0.2) +
-    scale_fill_divergent() +
-    scale_x_longitude() +
-    scale_y_latitude()
+    scale_fill_divergent() 
 ```
 
 You can have full control over where labels are placed with the `label.placement` argument. It takes a function that takes a vector of x and y values and returns a logical vector of the same length that indicate the points where labels should be. There are 5 build in placement functions:
@@ -226,9 +206,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     geom_contour2(color = "black") +
     geom_text_contour(stroke = 0.2, label.placement = label_placement_random()) +
-    scale_fill_divergent() +
-    scale_x_longitude() +
-    scale_y_latitude()
+    scale_fill_divergent() 
 ```
 
 ## geom_contour_tanaka
@@ -239,9 +217,7 @@ Illuminated contours (aka Tanaka contours) use varying brightness and width to c
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
      geom_contour_fill() +
      geom_contour_tanaka() +
-     scale_fill_divergent() +
-     scale_x_longitude() +
-     scale_y_latitude()
+     scale_fill_divergent()
 ```
 
 ## stat_subset
@@ -260,9 +236,7 @@ ggplot(geopotential[, gh.base := gh[lon == 120 & lat == -50], by = date][
     geom_contour_fill(breaks = MakeBreaks(0.1)) +
     stat_subset(aes(subset = correlation > 0.5),
                 geom = "point", size = 0.1) +
-    scale_fill_divergent() +
-    scale_x_longitude() +
-    scale_y_latitude()
+    scale_fill_divergent() 
 ```
 
 Another possible use it to quickly mask missing values.
@@ -291,8 +265,6 @@ temperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat,
     geom_contour_fill(aes(z = air.z)) +
     geom_vector(aes(dx = t.dx, dy = t.dy), skip.x = 2, 
                 skip.y = 1) +
-    scale_y_latitude(limits = c(-90, 0)) +
-    scale_x_longitude() +
     scale_mag())
 ```
 
@@ -323,9 +295,7 @@ Streamlines are paths tangential to a vector field and provide an intuitive way 
 (g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
      geom_contour_fill(aes(z = air.z)) +
      geom_streamline(aes(dx = t.dy, dy = -t.dx), L = 10, res = 2,   
-                     arrow.length = 0.3, xwrap = c(0, 360)) + 
-     scale_y_latitude(limits = c(-90, 0)) +
-     scale_x_longitude())
+                     arrow.length = 0.3, xwrap = c(0, 360)))
 ```
 
 There are several parameters that control the feel of the result. `L` and `res` control the length and resolution, while the `skip` parameters change the amount of the streamlines. More in depth control over the simulation can be accomplished by the `S` and `dt` parameters. 
@@ -343,43 +313,74 @@ ggplot(temperature[lev == 500], aes(lon, lat)) +
     geom_streamline(aes(dx = t.dy, dy = -t.dx, size = ..step.., alpha = ..step..,
                         color = sqrt(..dx..^2 + ..dy..^2)), arrow = NULL,
                     L = 10, res = 2, xwrap = c(0, 360), lineend = "round") + 
-    scale_y_latitude(limits = c(-90, 0)) +
-    scale_x_longitude() +
     scale_color_viridis_c(guide = "none") +
     scale_size(range = c(0, 1), guide = "none") +
     scale_alpha(guide = "none")
 ```
 
 
+# Scales
+
+## discretised_scale()
+
+The use of `geom_contour()` and `geom_contour_fill()` generates a problem because those geoms implicitly discretise a continuous variable, but it's hard to communicate that discretisation to the colour scale. In particular, it would be handy to show a discretised version of the colour scale in which the values labelled are in sync with the contour levels.
+
+One way of achieving this is to use the `level` stat, which --as discussed previously-- is a discrete variable. With that, one can use `ggplot2::guide_colorsteps()` to get a nice looking guide. 
+```{r}
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
+    geom_contour_fill(aes(fill = stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
+  guides(fill = guide_colorsteps())
+```
+
+This can work, but this example shows its limitations. Since the scale has no real understanding of the underlying numbers, breaks and colours are always distributed evenly even when they shouldn't. For the same reason it's also not possible to use diverging colour scales with a set midpoint. 
+
+For that, the solution is to use `scale_fill_discretised()`:
+
+```{r}
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
+  geom_contour_fill(aes(fill = stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
+  scale_fill_discretised()
+```
+
+This type of scale understand discrete values that have an underlying continuous nature. This means that the scale can be modified by referencing the continuous values. For example, using a divergent scale and setting the midpoint.  
+
+```{r}
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
+  geom_contour_fill(aes(fill = stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
+  scale_fill_divergent_discretised(midpoint = 3)
+```
+
+## Other scales
+
+Many meteorological fields are defined in a longitude×latitude×level grid, so `metR` includes scales for each dimension. These are glorified wrappers around `scale_*_continuous()` with sensible defaults and, in the case of `scale_*_level()`, the implementation of `reverselog_trans()`. 
+
+There are also `scale_color_divergent()` and `scale_fill_divergent()` which are wrappers around `scale_*_gradient2()` but with sane default colours for positive and negative values --particularly useful for plotting anomaly values. 
+
+To see how this scales work, let's visualize the vertical distribution of temperature anomalies from the zonal mean. 
+
+```{r, message = FALSE}
+# Plot made with base ggplot
+(g <- ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
+        geom_contour2(aes(color = ..level..)))
+```
+
+While this is fine, since pressure levels are roughly proportional to $\mathrm{e}^{-z}$ in meteorology we usually plot the vertical coordinate as $-\log(p)$. However, while ggplot2 has `scale_y_log10()` and `scale_y_reverse()`, they don't work together. `metR` defines the new transformation `reverselog_trans()` that can be used with any scale but that is the default for `scale_*_level()`. 
+
+On the other hand, `scale_*_latitude()` (and `scale_*_longitude()`) not only defaults `expand` to `c(0, 0)`, but also has a `ticks` argument that specifies the spacing of breaks between -90 and 90 in the case of `scale_*_latitude()`, and between 0 and 360 in the case of `scale_*_longitude()`.
+
+These scales default to printing no label, since usually the dimensions are understood by the shape of the plot.
+
+```{r}
+g + 
+    scale_y_level() +
+    scale_x_latitude(ticks = 15, limits = c(-90, 90)) +
+    scale_color_divergent()
+```
+
+Note: `scale_*_longitude()` (currently)  assumes the data goes from 0° to 360° but puts labels between -180° and 180°. This very idiosyncratic choice stems from the fact that model output is usually in the [0; 360) range but it's easier to read maps in the (-180; 180] range. This may change in the future. 
+
 # Other goodies
 
-## guide_colorstrip
-
-The use of `geom_contour()` and `geom_contour_fill()` generates a problem because those geoms implicitly discretise a continuous variable, but the default guide (`guide_colourbar()`) still show a continuous scale. This can be partially solved by using `ggplot`'s `guide_legend()`
-
-```{r}
-ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-    geom_contour2(aes(color = ..level..), breaks = MakeBreaks(2)) +
-    scale_color_divergent(guide = "legend",
-                          breaks = MakeBreaks(2)) +
-    scale_x_longitude() +
-    scale_y_latitude() + theme(legend.position = "bottom")
-```
-
-This has some limitations as can be seen above. First, in the case of `geom_contour()` the full colour scale is replaced by lines. Second, it breaks down if the position of the legend is at the bottom. Finally, the listed colours are the ones mapped to the breaks, which can be a problem in the case of `geom_contour_fill()` in which the colours are actually the values *between* breaks. 
-
-All of these problems are solved in `guide_colorstrip()` as can be seen in the figure below. 
-```{r}
-ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-    geom_contour_fill(breaks = MakeBreaks(2)) +
-    scale_fill_divergent(guide = "colorstrip",
-                         breaks = MakeBreaks(2)) +
-    scale_x_longitude() +
-    scale_y_latitude() + 
-    theme(legend.position = "bottom")
-```
-
-By default, colours are mapped to the values *in between* breaks, so there's a one-to-one mapping between colours shown in the plot and in the guide. From an aesthetic standpoint, it's much closer to the `cbarn` command from `GrADS`, which a lot of atmospheric scientists are probably used to.  
 
 ## geom_relief
 

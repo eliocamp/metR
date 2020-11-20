@@ -14,7 +14,7 @@ basic_stat_streamline <- ggplot(geo, aes(lon, lat)) +
     stat_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), res = 1/3, L = 10, skip = 2)
 
 test_that("Streamline works", {
-    skip_on_ci()
+    # skip_on_ci()
     writer_warnings <- function(...) suppressWarnings(vdiffr::write_svg(...))
 
     expect_warning(print(basic_geom_streamline), "performing only 1 integration step")
@@ -23,7 +23,7 @@ test_that("Streamline works", {
 })
 
 test_that("Streamline wraps in x amd y", {
-    skip_on_ci()
+    # skip_on_ci()
     expect_doppelganger("streamline-xwrapped",
                         ggplot(geo, aes(lon, lat)) +
                             geom_streamline(aes(dx = u, dy = v), L = 20,

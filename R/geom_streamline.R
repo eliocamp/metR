@@ -274,7 +274,7 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
       distance <- distance[, .(distance = sum(sqrt(dx^2 + dy^2))), by = line]
       keep <- distance[distance >= min.L, line]
 
-      return(setDF(data[line %in% keep]))
+      return(data.table::setDF(data[line %in% keep]))
   }
 )
 

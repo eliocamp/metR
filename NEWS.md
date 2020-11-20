@@ -7,8 +7,11 @@ discrete values that are the result of some discretisation and treats them as
 continuous. It's, in a sense, the inverse of the new `ggplot2::binned_scale()`. 
 Whereas. `ggplot2::binned_scale()` takes continuous values and then discretises
 them, `discretised_scale()` takes discrete values which where the result of some
-discretisation procedure (such as the levels of `geom_contour_fill()`/`ggplot2::geom_contour_filled()`) and allows you to treat
-them as continuous. 
+discretisation procedure (such as the levels of `geom_contour_fill()`/`ggplot2::geom_contour_filled()`) 
+and allows you to treat them as continuous. 
+
+- Related to that, `geom_contour_fill()` now gains a new computed aesthetic called `level_d`,
+which is the same as `level` but forces the scale to automatically be discretised. 
 
 - `AnchorBreaks()` gains a `bins` argument to mimic the default functionality of 
 `MakeBreaks()`. 

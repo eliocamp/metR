@@ -53,6 +53,24 @@ mid_rescaler <- function(mid) {
     }
 }
 
+
+
+#' @importFrom ggplot2 scale_type
+#' @export
+scale_type.metR_discretised <- function(x) {
+  c("discretised", "ordinal")
+}
+
+as.discretised <- function(x) {
+  new_x <- get_middle(x)
+  if (anyNA(is.na(new_x))) {
+    stop('Breaks not formatted correctly for a bin legend. Use `(<lower>, <upper>]` format to indicate bins')
+  }
+
+  class(x) <- c("metR_discretised", class(x))
+  x
+}
+
 #' Discretised scale
 #'
 #' This scale allows ggplot to understand data that has been discretised with
@@ -107,6 +125,7 @@ mid_rescaler <- function(mid) {
 scale_fill_discretised <- function (..., low = "#132B43", high = "#56B1F7", space = "Lab",
                                  na.value = "grey50", guide = ggplot2::guide_colorsteps(even.steps = FALSE, show.limits = TRUE),
                                  aesthetics = "fill") {
+
     discretised_scale(aesthetics, "gradient",
                    scales::seq_gradient_pal(low, high, space),
                    na.value = na.value, guide = guide, super = ScaleDiscretised, ...)
@@ -143,7 +162,6 @@ discretised_scale <- function(aesthetics, scale_name, palette, name = ggplot2::w
                               rescaler = scales::rescale,
                               oob = scales::squish,
                               super = ScaleDiscretised) {
-
     aesthetics <- ggplot2::standardise_aes_names(aesthetics)
 
     check_breaks_labels(breaks, labels)
@@ -164,7 +182,7 @@ discretised_scale <- function(aesthetics, scale_name, palette, name = ggplot2::w
                      scale_name = scale_name,
                      palette = palette,
                      oob = oob,
-                     range =  ggplot2::ggproto(NULL, RangeDiscrete),
+                     range =  ggplot2::ggproto(NULL, RangeContinuous),
                      limits = limits,
                      na.value = na.value,
 
@@ -202,7 +220,6 @@ ScaleDiscretised <-  ggplot2::ggproto("ScaleDiscretised", ggplot2::ScaleBinned,
 
        limits <- range(self$get_limits())
 
-       # browser()
        limits <- cut(limits[1], c(-Inf, breaks, Inf),  ordered_result = TRUE)
 
        if (is.numeric(self$get_limits())) {
@@ -261,8 +278,10 @@ Range <- ggplot2::ggproto("Range", NULL,
        }
 )
 
-RangeDiscrete <- ggplot2::ggproto("RangeDiscrete", Range,
-  train = function(self, x, drop = FALSE, na.rm = FALSE) {
-      self$range <- scales::train_discrete(x, self$range, drop = drop, na.rm = na.rm)
-      }
+RangeContinuous <- ggplot2::ggproto("RangeContinuous", Range,
+                           train = function(self, x) {
+                             self$range <- scales::train_continuous(x, self$range)
+                           }
 )
+
+

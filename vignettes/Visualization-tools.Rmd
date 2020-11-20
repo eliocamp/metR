@@ -82,6 +82,7 @@ ggplot(volcano, aes(Var1, Var2, z = value.gap)) +
 Contouring only works on regular grids (although see {[contoureR](https://cran.r-project.org/package=contoureR)} for an implementation that accepts non-regular girds). Sometimes the data is regular in some coordinate system and you need to plot in another. For example, this data is not regular on a a longitude by latitude coordinate system, but it is regular on the x y coordinates which is a lambertian grid. 
 
 ```{r}
+data(surface)
 ggplot(surface, aes(lon, lat)) +
   geom_point(aes(color = height))
 
@@ -162,7 +163,16 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill(aes(fill = stat(level)))
 ```
 
-A big difference between the two variables is that one is compatible with continuous scales while the other only works with discrete scales. The advantage of using `level_mid` is that it preserves the actual continous nature of the data, which allows the use of meaningful continuous scales such as `scale_fill_divergent()` and results in proper colours when breaks are not equally spaced. The disadvantage is that the scale function has no information about the discretisation, and thus is very hard to use *synchronise* the breaks that define the levels of the contours and the breaks shown in the color guide. See the [discretised_scale](#discretised_scale) section for a way of using continuous sales for discretised data.
+A big difference between the two variables is that one is compatible with continuous scales while the other only works with discrete scales. The advantage of using `level_mid` is that it preserves the actual continous nature of the data, which allows the use of meaningful continuous scales such as `scale_fill_divergent()` and results in proper colours when breaks are not equally spaced. The disadvantage is that the scale function has no information about the discretisation, and thus is very hard to use *synchronise* the breaks that define the levels of the contours and the breaks shown in the color guide.
+
+A third important computed variable is `level_d`, which is identical to `level` but forces the scale to match the breaks in the data automatically.
+
+```{r}
+ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
+    geom_contour_fill(aes(fill = stat(level_d)))
+```
+
+See the [discretised_scale](#discretised_scale) section for a way of using continuous sales for discretised data.
 
 ## geom_text_contour and geom_label_contour
 

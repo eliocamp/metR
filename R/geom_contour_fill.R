@@ -38,7 +38,9 @@
 #'
 #' @section Computed variables:
 #' \describe{
-#'  \item{int.level}{value of the interior contour}
+#'  \item{level}{An ordered factor that represents bin ranges.}
+#'  \item{level_d}{Same as `level`, but autimatically uses [scale_fill_discretised()]}
+#'  \item{level_low,level_high,level_mid}{Lower and upper bin boundaries for each band, as well the mid point between the boundaries.}
 #'  }
 #'
 #' @examples
@@ -48,10 +50,11 @@
 #'   geom_contour_fill() +
 #'   geom_contour(color = "black", size = 0.1)
 #'
-#' # If one uses level instead of int.level, one of the small
-#' # contours near the crater disapears
 #' ggplot(surface, aes(Var1, Var2, z = value)) +
-#'   geom_contour_fill(aes(fill = ..level..))
+#'   geom_contour_fill(aes(fill = stat(level)))
+#'
+#' ggplot(surface, aes(Var1, Var2, z = value)) +
+#'   geom_contour_fill(aes(fill = stat(level_d)))
 #'
 #' @family ggplot2 helpers
 #' @export

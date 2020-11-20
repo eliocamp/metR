@@ -60,7 +60,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         params <- params[intersect(names(params), self$parameters())]
 
         args <- c(list(data = quote(data), scales = quote(scales)), params)
-        plyr::ddply(data, "PANEL", function(data) {
+        data <- plyr::ddply(data, "PANEL", function(data) {
             scales <- layout$get_scales(data$PANEL[1])
             tryCatch(do.call(self$compute_panel, args), error = function(e) {
                 warning("Computation failed in `", ggplot2:::snake_class(self),
@@ -69,6 +69,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                 data.frame()
             })
         })
+
+        data$level_d <- data$level
+        class(data$level_d) <- c("metR_discretised", class(data$level_d))
+        data
     },
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,
                              breaks = scales::fullseq, complete = TRUE,
@@ -148,11 +152,11 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             }
         }
 
+
         cont
 
         }
 )
-
 
 
 .contour_bands <- function(data, breaks, complete = FALSE) {

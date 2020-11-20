@@ -40,7 +40,7 @@ install.packages("metR")
 ```
 
 Or the development version ([![Build
-Status](https://travis-ci.org/eliocamp/metR.svg?branch=dev)](https://travis-ci.org/eliocamp/metR))
+Status](https://github.com/eliocamp/metR/workflows/R-CMD-check/badge.svg?branch=dev)](https://github.com/eliocamp/metR/actions?query=workflow%3AR-CMD-check))
 with:
 
 ``` r

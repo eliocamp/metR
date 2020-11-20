@@ -1,6 +1,8 @@
 library(vdiffr)
 library(data.table)
 
+skip_on_ci()
+
 context("contour_fill")
 
 test_that("geom_contour_fill works", {

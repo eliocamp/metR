@@ -1,7 +1,7 @@
 library(vdiffr)
 library(ggplot2)
 
-skip_on_travis()
+skip_on_ci()
 
 context("stat_contour2")
 data(geopotential)

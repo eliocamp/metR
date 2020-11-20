@@ -2,7 +2,7 @@ library(metR)
 library(vdiffr)
 library(ggplot2)
 
-skip_on_travis()
+skip_on_ci()
 
 context("guide_colourstrip")
 data(geopotential)

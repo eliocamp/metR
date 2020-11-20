@@ -1,6 +1,7 @@
 library(vdiffr)
 library(ggplot2)
 context("guide_vector and scale_mag")
+skip_on_ci()
 
 library(ggplot2)
 base <- ggplot(seals, aes(long, lat)) +

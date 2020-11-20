@@ -2,6 +2,7 @@ library(ggplot2)
 library(data.table)
 library(vdiffr)
 
+skip_on_ci()
 
 context("Streamline")
 geo <- geopotential[date == date[1]]

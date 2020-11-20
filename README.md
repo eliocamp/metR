@@ -54,6 +54,30 @@ by typing
 
     sudo apt install libnetcdf-dev netcdf-bin libudunits2-dev
 
+## Citing the package
+
+If you use metR in your research, please consider citing it. You can get
+citation information with
+
+``` r
+citation("metR")
+#> 
+#> To cite metR in publications use:
+#> 
+#> 
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {metR: Tools for Easier Analysis of Meteorological Fields},
+#>     author = {Elio Campitelli},
+#>     year = {2020},
+#>     note = {R package version 0.8.9000},
+#>     url = {https://github.com/eliocamp/metR},
+#>     doi = {10.5281/zenodo.2593516},
+#>   }
+```
+
 ## Examples
 
 In this example we easily perform Principal Components Decomposition

@@ -17,7 +17,8 @@ geom_label_contour(
   position = "identity",
   ...,
   min.size = 5,
-  skip = 0,
+  skip = 1,
+  label.placement = label_placement_flattest(),
   parse = FALSE,
   nudge_x = 0,
   nudge_y = 0,
@@ -87,6 +88,8 @@ to the paired geom/stat.}
 
 \item{skip}{number of contours to skip}
 
+\item{label.placement}{A function for placing labels (see \code{label_placement_flattest()}).}
+
 \item{parse}{If \code{TRUE}, the labels will be parsed into expressions and
 displayed as described in \code{?plotmath}.}
 
@@ -119,8 +122,6 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{rotate}{logical indicating whether to rotate text following the contour.}
-
-\item{label.placement}{A function for placing labels (see \code{label_placement_flattest()}).}
 
 \item{stroke}{numerical indicating width of stroke relative to the size of
 the text. Ignored if less than zero.}

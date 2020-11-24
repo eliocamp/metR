@@ -177,6 +177,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
 
        contourTextGrob(
            lab,
+           type = "text",
            data$x, data$y,
            group = interaction(data$group, data$piece),
            default.units = "native",

@@ -32,6 +32,9 @@ than `dx` and `dy`. (Thanks Santiago!)
 with the correct labels that can be interpreted by `ggplot2::guide_colorsteps()`. This might 
 a breaking change!
 
+- `geom_label_contour()` lives! The previous release rewrote much of the way `geom_text_contour()` 
+worked, but I messed up and didn't realised that the new code had broken `geom_label_contour()` 
+(to be honest, I'd almost totally forgotten about it :P). (fixes #126, thanks @kongdd)
 
 # metR 0.8.0
 

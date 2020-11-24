@@ -59,5 +59,25 @@ test_that("contour_text wokrs", {
     )
 
 
+})
+
+
+test_that("geom_label_contour also work", {
+
+    expect_doppelganger("labels",
+                        ggplot(geo, aes(lon, lat)) +
+                            geom_contour(aes(z = gh))+
+                            geom_label_contour(aes(z = gh, fill = ..level..),
+                                               label.r = unit(0.25, "lines"),
+                                               label.padding = unit(0.15, "lines"),
+                                               label.size = 0)
+    )
+    expect_doppelganger("labels+text",
+                        ggplot(geo, aes(lon, lat)) +
+                            geom_contour(aes(z = gh)) +
+                            geom_label_contour(aes(z = gh)) +
+                            geom_text_contour(aes(z = gh), color = "red", rotate = FALSE)
+    )
+
 
 })

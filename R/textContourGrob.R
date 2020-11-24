@@ -1,5 +1,5 @@
 # from shadowtext
-contourTextGrob <- function(label, x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "npc"),
+contourTextGrob <- function(label, type = "text", x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "npc"),
                        group = rep(1, length(label)),
                        just = "centre", hjust = NULL, vjust = NULL,
                        check.overlap = FALSE,
@@ -11,6 +11,13 @@ contourTextGrob <- function(label, x = grid::unit(0.5, "npc"), y = grid::unit(0.
                        fontfamily = NULL,
                        fontface = NULL,
                        lineheight = NULL,
+
+                       # for labels
+                       label.padding =  grid::unit(0.25, "lines"),
+                       label.r = grid::unit(0.15, "lines"),
+                       label.size = 0.25,
+                       fill = "white",   # aes
+                       alpha = 1,        # aes
 
 
                        # gp = grid::gpar(col = "white"),
@@ -34,6 +41,7 @@ contourTextGrob <- function(label, x = grid::unit(0.5, "npc"), y = grid::unit(0.
         list(label = unique(label[group]),
              x = x[group], y = y[group],
              just = just,
+             type = type,
              hjust = hjust, vjust = vjust,
              default.units = default.units,
              check.overlap = check.overlap,
@@ -42,6 +50,14 @@ contourTextGrob <- function(label, x = grid::unit(0.5, "npc"), y = grid::unit(0.
              rotate = rotate,
              bg.r = bg.r,
              bg.color = bg.color,
+
+             label.padding = label.padding,
+             label.r = label.r,
+             label.size = label.size,
+             alpha = alpha[group],
+             fill = fill[group],
+
+
              # gp = grid::gpar(
              col = col[group][1],
              fontsize = fontsize[group][1],
@@ -87,6 +103,43 @@ makeContent.contourTextGrob <- function(x) {
     bg.color <-  unlist(lapply(payload$data, function(x) x$bg.color))[1]
 
 
+    if (payload$data[[1]]$type == "label") {
+
+        label.r <- data[[1]]$label.r
+        label.size <- data[[1]]$label.size
+        label.padding <- data[[1]]$label.padding
+        fill <-  vapply(data, function(x) x$fill, character(1))
+        alpha <- vapply(data, function(x) x$alpha, numeric(1))
+        grobs <- lapply(seq_along(label), function(i) {
+
+            ggplot2:::labelGrob(label[i],
+                      x = x_coord[i],
+                      y = y[i],
+                      just = c(hj[i], vj[i]),
+
+                      padding = label.padding,
+                      r = label.r,
+
+                      text.gp = grid::gpar(
+                          col = col[i],
+                          fontsize = fontsize[i],
+                          fontfamily = fontfamily[i],
+                          fontface = fontface[i],
+                          lineheight = lineheight[i]
+                      ),
+                      rect.gp = grid::gpar(
+                          col = if (isTRUE(all.equal(label.size, 0))) NA else col[i],
+                          fill = scales::alpha(fill[i], alpha[i]),
+                          lwd = label.size * .pt
+                      )
+            )
+        })
+
+        class(grobs) <- "gList"
+
+        grobs <- ggplot2:::ggname("geom_label", grid::grobTree(children = grobs))
+        return(grobs)
+    }
 
 
     grob <- shadowtextGrob(label, x_coord, y, just = c(hj, vj),
@@ -143,7 +196,12 @@ content_grob <- function(x) {
         fontsize = x$fontsize,
         fontfamily = x$fontfamily,
         fontface = x$fontface,
-        lineheight = x$lineheight
+        lineheight = x$lineheight,
+        label.padding = x$label.padding,
+        label.size = x$label.size,
+        label.r = x$label.r,
+        alpha = x$alpha[selected],
+        fill = x$fill[selected]
     )
 }
 

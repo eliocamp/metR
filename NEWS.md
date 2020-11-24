@@ -19,7 +19,7 @@ which is the same as `level` but forces the scale to automatically be discretise
 - New `label_placement_minmax()` to label contours at the maximum and minimum 
 points of a contour (mimicking [isoband's behaviour](https://wilkelab.org/isoband/articles/isoband3.html))
 
-- `geom_tanaka()` now has a (rather experimental) argument `smooth` which allows to smooth
+- `geom_contour_tanaka()` now has a (rather experimental) argument `smooth` which allows to smooth
 the transition between segments. 
 
 

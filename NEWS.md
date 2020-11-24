@@ -11,7 +11,7 @@ discretisation procedure (such as the levels of `geom_contour_fill()`/`ggplot2::
 and allows you to treat them as continuous. 
 
 - Related to that, `geom_contour_fill()` now gains a new computed aesthetic called `level_d`,
-which is the same as `level` but forces the scale to automatically be discretised. 
+which is the same as `level` but forces ggplot2 to automaticallly use the new discretised scale.
 
 - `AnchorBreaks()` gains a `bins` argument to mimic the default functionality of 
 `MakeBreaks()`. 

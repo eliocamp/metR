@@ -341,8 +341,10 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
     data <- subset(data, x %in% JumpBy(sort(unique(x)), params$skip.x + 1) &
                      y %in% JumpBy(sort(unique(y)), params$skip.y + 1) &
                      mag >= params$min.mag)
+    if (nrow(data) > 0){
+      data$norm_mag <- with(data, mag/max(mag, na.rm = TRUE))
+    }
 
-    data$norm_mag <- with(data, mag/max(mag, na.rm = TRUE))
     data
   },
   compute_panel = function(self, data, scales,

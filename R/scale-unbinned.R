@@ -71,6 +71,27 @@ as.discretised <- function(x) {
   x
 }
 
+as.discretised_scale <- function(fun) {
+  new_fun <- function(...) {
+    call <- match.call()
+
+    if (is.null(call$super)) {
+      call$super <- ScaleDiscretised
+    }
+
+    if (is.null(call$guide)) {
+      call$guide <- ggplot2::guide_colorsteps()
+    }
+
+    call[[1]] <- fun
+
+    eval(call)
+  }
+
+  formals(new_fun) <- formals(fun)
+  new_fun
+}
+
 #' Discretised scale
 #'
 #' This scale allows ggplot to understand data that has been discretised with

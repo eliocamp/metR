@@ -112,7 +112,7 @@ makeContent.contourTextGrob <- function(x) {
         alpha <- vapply(data, function(x) x$alpha, numeric(1))
         grobs <- lapply(seq_along(label), function(i) {
 
-            ggplot2:::labelGrob(label[i],
+            labelGrob(label[i],
                       x = x_coord[i],
                       y = y[i],
                       just = c(hj[i], vj[i]),
@@ -137,7 +137,7 @@ makeContent.contourTextGrob <- function(x) {
 
         class(grobs) <- "gList"
 
-        grobs <- ggplot2:::ggname("geom_label", grid::grobTree(children = grobs))
+        grobs <- ggname("geom_label", grid::grobTree(children = grobs))
         return(grobs)
     }
 
@@ -211,6 +211,30 @@ text_angle <- function(dx, dy) {
     angle <- ifelse(angle > 90, angle - 180, angle)
     angle <- ifelse(angle < -90, angle + 180, angle)
     angle
+}
+
+
+# From ggplot2
+labelGrob <- function (label, x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "npc"),
+          just = "center", padding = grid::unit(0.25, "lines"), r = grid::unit(0.1,
+                                                                   "snpc"),
+          default.units = "npc", name = NULL, text.gp = grid::gpar(),
+          rect.gp = grid::gpar(fill = "white"), vp = NULL) {
+    if (length(label) != 1) {
+        stop("label must be of length 1")
+    }
+    if (!grid::is.unit(x))
+        x <- grid::unit(x, default.units)
+    if (!grid::is.unit(y))
+        y <- grid::unit(y, default.units)
+    grid::gTree(label = label, x = x, y = y, just = just, padding = padding,
+          r = r, name = name, text.gp = text.gp, rect.gp = rect.gp,
+          vp = vp, cl = "labelgrob")
+}
+
+ggname <- function (prefix, grob) {
+    grob$name <- grid::grobName(grob, prefix)
+    grob
 }
 
 

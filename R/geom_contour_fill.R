@@ -39,7 +39,7 @@
 #' @section Computed variables:
 #' \describe{
 #'  \item{level}{An ordered factor that represents bin ranges.}
-#'  \item{level_d}{Same as `level`, but autimatically uses [scale_fill_discretised()]}
+#'  \item{level_d}{Same as `level`, but automatically uses [scale_fill_discretised()]}
 #'  \item{level_low,level_high,level_mid}{Lower and upper bin boundaries for each band, as well the mid point between the boundaries.}
 #'  }
 #'

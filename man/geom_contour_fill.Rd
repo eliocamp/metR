@@ -134,7 +134,7 @@ have all the same binwidth.
 
 \describe{
 \item{level}{An ordered factor that represents bin ranges.}
-\item{level_d}{Same as \code{level}, but autimatically uses \code{\link[=scale_fill_discretised]{scale_fill_discretised()}}}
+\item{level_d}{Same as \code{level}, but automatically uses \code{\link[=scale_fill_discretised]{scale_fill_discretised()}}}
 \item{level_low,level_high,level_mid}{Lower and upper bin boundaries for each band, as well the mid point between the boundaries.}
 }
 }

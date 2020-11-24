@@ -11,7 +11,7 @@ discretisation procedure (such as the levels of `geom_contour_fill()`/`ggplot2::
 and allows you to treat them as continuous. 
 
 - Related to that, `geom_contour_fill()` now gains a new computed aesthetic called `level_d`,
-which is the same as `level` but forces ggplot2 to automaticallly use the new discretised scale.
+which is the same as `level` but forces ggplot2 to automatically use the new discretised scale.
 
 - `AnchorBreaks()` gains a `bins` argument to mimic the default functionality of 
 `MakeBreaks()`. 
@@ -212,7 +212,7 @@ the rest of the variables. Sorry, thermodynamics is not my forte! (thanks @PaoCo
 There has been some changes in the interface of some functions for the sake of 
 consistency.
 
-- In `Derivate()` (and it's derivated functions --see what I did there?), the
+- In `Derivate()` (and it's derived functions --see what I did there?), the
 `data` argument has been moved back. This is because this function is intended to
 be called inside a `data.table` of `mutate()` call, where you don't need to 
 explicitly specify the data.

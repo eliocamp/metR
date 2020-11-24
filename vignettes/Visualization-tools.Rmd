@@ -163,7 +163,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill(aes(fill = stat(level)))
 ```
 
-A big difference between the two variables is that one is compatible with continuous scales while the other only works with discrete scales. The advantage of using `level_mid` is that it preserves the actual continous nature of the data, which allows the use of meaningful continuous scales such as `scale_fill_divergent()` and results in proper colours when breaks are not equally spaced. The disadvantage is that the scale function has no information about the discretisation, and thus is very hard to use *synchronise* the breaks that define the levels of the contours and the breaks shown in the color guide.
+A big difference between the two variables is that one is compatible with continuous scales while the other only works with discrete scales. The advantage of using `level_mid` is that it preserves the actual continuous nature of the data, which allows the use of meaningful continuous scales such as `scale_fill_divergent()` and results in proper colours when breaks are not equally spaced. The disadvantage is that the scale function has no information about the discretisation, and thus is very hard to use *synchronise* the breaks that define the levels of the contours and the breaks shown in the color guide.
 
 A third important computed variable is `level_d`, which is identical to `level` but forces the scale to match the breaks in the data automatically.
 

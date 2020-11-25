@@ -307,11 +307,11 @@
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text x='507.58' y='556.11' style='font-size: 8.80px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='17.59px' lengthAdjust='spacingAndGlyphs'>-120</text></g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text x='281.16' y='568.24' style='font-size: 11.00px; font-family: Liberation Sans;' textLength='20.81px' lengthAdjust='spacingAndGlyphs'>long</text></g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text transform='translate(13.04,289.76) rotate(-90)' style='font-size: 11.00px; font-family: Liberation Sans;' textLength='11.62px' lengthAdjust='spacingAndGlyphs'>lat</text></g>
-<rect x='561.32' y='267.93' width='153.20' height='32.05' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text x='561.32' y='276.63' style='font-size: 11.00px; font-family: Liberation Sans;' textLength='153.20px' lengthAdjust='spacingAndGlyphs'>sqrt(delta_long^2 + delta_lat^2)</text></g>
-<rect x='561.32' y='282.69' width='85.04' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
-<line x1='569.82' y1='291.33' x2='637.85' y2='291.33' style='stroke-width: 1.07; stroke-linecap: butt;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
-<polygon points='630.90,293.20 637.85,291.33 630.90,289.47 ' style='stroke-width: 1.07; stroke-linecap: butt; fill: #FFFFFF;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text x='648.52' y='294.36' style='font-size: 8.80px; font-family: Liberation Sans;' textLength='36.02px' lengthAdjust='spacingAndGlyphs'>2.114832</text></g>
+<rect x='561.32' y='267.65' width='153.20' height='32.60' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text x='561.32' y='276.35' style='font-size: 11.00px; font-family: Liberation Sans;' textLength='153.20px' lengthAdjust='spacingAndGlyphs'>sqrt(delta_long^2 + delta_lat^2)</text></g>
+<rect x='561.32' y='282.97' width='85.04' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
+<line x1='569.82' y1='291.61' x2='637.85' y2='291.61' style='stroke-width: 1.07; stroke-linecap: butt;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
+<polygon points='630.90,293.48 637.85,291.61 630.90,289.75 ' style='stroke-width: 1.07; stroke-linecap: butt; fill: #FFFFFF;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text x='651.84' y='294.64' style='font-size: 8.80px; font-family: Liberation Sans;' textLength='36.02px' lengthAdjust='spacingAndGlyphs'>2.114832</text></g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text x='32.78' y='14.56' style='font-size: 13.20px; font-family: Liberation Sans;' textLength='54.95px' lengthAdjust='spacingAndGlyphs'>big-arrow</text></g>
 </svg>

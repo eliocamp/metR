@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -94,9 +94,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="metr" class="section level1">
+<div id="metr-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#metr" class="anchor"></a>metR <img src="reference/figures/logo.png" align="right">
+<a href="#metr-" class="anchor"></a>metR <img src="reference/figures/logo.png" align="right">
 </h1></div>
 
 <p>metR packages several functions and utilities that make R better for handling meteorological data in the tidy data paradigm. It started mostly sa a packaging of assorted wrappers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since then, it has grown organically and for my own needs and feedback from users.</p>
@@ -106,21 +106,43 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install metR from CRAN with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"metR"</span><span class="op">)</span></pre></div>
-<p>Or the development version (<a href="https://travis-ci.org/eliocamp/metR"><img src="https://travis-ci.org/eliocamp/metR.svg?branch=dev" alt="Build Status"></a>) with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"eliocamp/metR@dev"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"metR"</span><span class="op">)</span></code></pre></div>
+<p>Or the development version (<a href="https://github.com/eliocamp/metR/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/eliocamp/metR/workflows/R-CMD-check/badge.svg?branch=dev" alt="Build Status"></a>) with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"eliocamp/metR@dev"</span><span class="op">)</span></code></pre></div>
 <p>If you need to read netcdf files, you might need to install the netcdf and udunits2 libraries. On Ubuntu and it’s derivatives this can be done by typing</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">sudo apt install libnetcdf<span class="op">-</span>dev netcdf<span class="op">-</span>bin libudunits2<span class="op">-</span>dev</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>sudo apt install libnetcdf<span class="op">-</span>dev netcdf<span class="op">-</span>bin libudunits2<span class="op">-</span>dev</span></code></pre></div>
+</div>
+<div id="citing-the-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#citing-the-package" class="anchor"></a>Citing the package</h2>
+<p>If you use metR in your research, please consider citing it. You can get citation information with</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span><span class="st">"metR"</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; To cite metR in publications use:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; A BibTeX entry for LaTeX users is</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   @Manual{,</span>
+<span class="co">#&gt;     title = {metR: Tools for Easier Analysis of Meteorological Fields},</span>
+<span class="co">#&gt;     author = {Elio Campitelli},</span>
+<span class="co">#&gt;     year = {2020},</span>
+<span class="co">#&gt;     note = {R package version 0.8.9000},</span>
+<span class="co">#&gt;     url = {https://github.com/eliocamp/metR},</span>
+<span class="co">#&gt;     doi = {10.5281/zenodo.2593516},</span>
+<span class="co">#&gt;   }</span></code></pre></div>
 </div>
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
 <p>In this example we easily perform Principal Components Decomposition (EOF) on monthly geopotential height, then compute the geostrophic wind associated with this field and plot the field with filled contours and the wind with streamlines.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eliocamp/metR">metR</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eliocamp/metR">metR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://r-datatable.com">data.table</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span>
@@ -134,24 +156,23 @@
 <span class="co"># AAO field</span>
 <span class="va">binwidth</span> <span class="op">&lt;-</span> <span class="fl">0.01</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">aao</span><span class="op">$</span><span class="va">left</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">gh.t.w</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="va">binwidth</span>, xwrap <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>    <span class="co"># filled contours!</span>
+    <span class="fu"><a href="reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="va">binwidth</span>,
+                      xwrap <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>    <span class="co"># filled contours!</span>
     <span class="fu"><a href="reference/geom_streamline.html">geom_streamline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="fu"><a href="reference/spherical.html">dlon</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span>, dy <span class="op">=</span> <span class="fu"><a href="reference/spherical.html">dlat</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span>, 
                     size <span class="op">=</span> <span class="fl">0.4</span>, L <span class="op">=</span> <span class="fl">80</span>, skip <span class="op">=</span> <span class="fl">3</span>, xwrap <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="reference/scale_longitude.html">scale_x_longitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="reference/scale_longitude.html">scale_y_latitude</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">90</span>, <span class="op">-</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"AAO pattern"</span>, 
-                         breaks <span class="op">=</span> <span class="fu"><a href="reference/MakeBreaks.html">MakeBreaks</a></span><span class="op">(</span><span class="va">binwidth</span><span class="op">)</span>,
-                         guide <span class="op">=</span> <span class="fu"><a href="reference/guide_colourstrip.html">guide_colorstrip</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="reference/scale_fill_discretised.html">scale_fill_divergent_discretised</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"AAO pattern"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be deprecated.</span>
-<span class="co">#&gt; Use ggperiodic::periodic insead.</span></pre></div>
+<span class="co">#&gt; Use ggperiodic::periodic insead.</span></code></pre></div>
 <p><img src="reference/figures/field-1.png"><!-- --></p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="co"># AAO signal</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># AAO signal</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">aao</span><span class="op">$</span><span class="va">right</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">gh.t.w</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>span <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span>
-<span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></pre></div>
+<span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></code></pre></div>
 <p><img src="reference/figures/timeseries-1.png"><!-- --></p>
 <p>You can read more in the vignettes: <a href="https://eliocamp.github.io/metR/articles/Visualization-tools.html">Visualization tools</a> and <a href="https://eliocamp.github.io/metR/articles/Working-with-data.html">Working with data</a>.</p>
 </div>
@@ -192,12 +213,10 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/eliocamp/metR"><img src="https://travis-ci.org/eliocamp/metR.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Package Status"></a></li>
+<li><a href="https://github.com/eliocamp/metR/actions"><img src="https://github.com/eliocamp/metR/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://codecov.io/github/eliocamp/metR/?branch=master"><img src="https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 <li><a href="https://cran.r-project.org/package=metR"><img src="http://www.r-pkg.org/badges/version/metR" alt="CRAN status"></a></li>
 <li><a href="https://zenodo.org/badge/latestdoi/96357263"><img src="https://zenodo.org/badge/96357263.svg" alt="DOI"></a></li>
-<li><a href="https://github.com/eliocamp/metR/actions"><img src="https://github.com/eliocamp/metR/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
 </div>

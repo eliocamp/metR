@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -151,7 +151,9 @@
 
 <span class='fu'>label_placement_all</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>label_placement_flattest</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>1</span>, ref_angle <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre>
+<span class='fu'>label_placement_flattest</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>1</span>, ref_angle <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+
+<span class='fu'>label_placement_minmax</span><span class='op'>(</span>direction <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vertical"</span>, <span class='st'>"horizontal"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,6 +176,10 @@ at the midpoint).</p></td>
       <th>ref_angle</th>
       <td><p>Angle (in degrees counter-clockwise from East) to try
 to approximate labels.</p></td>
+    </tr>
+    <tr>
+      <th>direction</th>
+      <td><p>Direction in which to compute the maximum and minimum.</p></td>
     </tr>
     </table>
 

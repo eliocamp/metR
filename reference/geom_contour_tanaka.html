@@ -84,7 +84,7 @@ a more aesthetically pleasing representation of topography." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -164,6 +164,7 @@ a more aesthetically pleasing representation of topography.</p>
   light <span class='op'>=</span> <span class='st'>"white"</span>,
   dark <span class='op'>=</span> <span class='st'>"gray20"</span>,
   range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.01</span>, <span class='fl'>0.5</span><span class='op'>)</span>,
+  smooth <span class='op'>=</span> <span class='fl'>0</span>,
   na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
   show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
   inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
@@ -239,6 +240,11 @@ and returns breaks as output</p></li>
       <td><p>numeric vector of length 2 with the minimum and maximum size of lines</p></td>
     </tr>
     <tr>
+      <th>smooth</th>
+      <td><p>numeric indicating the degree of smoothing of illumination and size.
+Larger</p></td>
+    </tr>
+    <tr>
       <th>na.rm</th>
       <td><p>If <code>FALSE</code>, the default, missing values are removed with
 a warning. If <code>TRUE</code>, missing values are silently removed.</p></td>
@@ -282,6 +288,13 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
     <span class='fu'>geom_contour_tanaka</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_void</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_contour_tanaka-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># If the transition between segments feels too abrupt,</span>
+<span class='co'># smooth it a bit with smooth</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'>reshape2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span><span class='op'>(</span><span class='va'>volcano</span><span class='op'>)</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Var1</span>, <span class='va'>Var2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_contour_tanaka</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>, smooth <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_void</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_contour_tanaka-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>geopotential</span><span class='op'>)</span>
 <span class='va'>geo</span> <span class='op'>&lt;-</span> <span class='va'>geopotential</span><span class='op'>[</span><span class='va'>date</span> <span class='op'>==</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/duplicated.html'>unique</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>]</span>
 <span class='va'>geo</span><span class='op'>[</span>, <span class='va'>gh.z</span> <span class='op'>:=</span> <span class='fu'><a href='Anomaly.html'>Anomaly</a></span><span class='op'>(</span><span class='va'>gh</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='va'>lat</span><span class='op'>]</span>
@@ -301,13 +314,13 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
 <span class='co'># local maximums or minimums.</span>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>geo</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'><a href='geom_contour2.html'>geom_contour2</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.z</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"black"</span>, xwrap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>360</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: 'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead.</span></div><div class='img'><img src='geom_contour_tanaka-2.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: 'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead.</span></div><div class='img'><img src='geom_contour_tanaka-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># With tanaka contours, they are obvious.</span>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>geo</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>geom_contour_tanaka</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.z</span><span class='op'>)</span>, dark <span class='op'>=</span> <span class='st'>"black"</span>,
                         xwrap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>360</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'><a href='scale_divergent.html'>scale_fill_divergent</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: 'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead.</span></div><div class='img'><img src='geom_contour_tanaka-3.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: 'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead.</span></div><div class='img'><img src='geom_contour_tanaka-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># A good divergent color palette has the same luminosity for positive</span>
 <span class='co'># and negative values.But that means that printed in grayscale (Desaturated),</span>
 <span class='co'># they are indistinguishable.</span>
@@ -315,10 +328,10 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
     <span class='fu'><a href='geom_contour_fill.html'>geom_contour_fill</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.z</span><span class='op'>)</span>, xwrap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>360</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_gradient.html'>scale_fill_gradientn</a></span><span class='op'>(</span>colours <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#767676"</span>, <span class='st'>"white"</span>, <span class='st'>"#484848"</span><span class='op'>)</span>,
                          values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.415</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: 'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead.</span></div><div class='img'><img src='geom_contour_tanaka-4.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: 'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead.</span></div><div class='img'><img src='geom_contour_tanaka-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Tanaka contours can solve this issue.</span>
 <span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_contour_tanaka</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>gh.z</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='geom_contour_tanaka-5.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='geom_contour_tanaka-6.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

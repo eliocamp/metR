@@ -5,6 +5,10 @@
 - `as.discretised_scale()` is a quick way of created a discretised version of any 
 continuous scale. 
 
+## Bugfixes
+
+- The computations in `MixingRatio()` were wrong. Now they are fixed. 
+
 
 # metR 0.9.0
 

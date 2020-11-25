@@ -20,7 +20,7 @@ test_that("Streamline works", {
 
     expect_warning(invisible(print(basic_geom_streamline)), "performing only 1 integration step")
     expect_doppelganger("streamline-base", basic_geom_streamline, writer = writer_warnings)
-    expect_doppelganger("streamline-base", basic_stat_streamline, writer = writer_warnings)
+    expect_doppelganger("streamline-base-stat", basic_stat_streamline, writer = writer_warnings)
 })
 
 test_that("Streamline wraps in x amd y", {

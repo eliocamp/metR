@@ -7,6 +7,11 @@ test_that("returns a data.table", {
                         "readnetcdf_default")
 })
 
+test_that("GlanceNetCDF prints nicely", {
+    expect_known_output(print(GlanceNetCDF(file)), "GlanceNetCDF")
+
+})
+
 test_that("subsetting works", {
     expect_known_output(ReadNetCDF(file,
                                    subset = list(lat = -90:20)),
@@ -54,7 +59,9 @@ test_that("can read from urls", {
     url <- "http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/.GMAO/.GEOS_V2p1/.hindcast/.ua/dods"
     skip_if_offline()
     skip_on_cran()
-    expect_class(GlanceNetCDF(url), "nc_glance")
+    expect_s3_class(GlanceNetCDF(url), "nc_glance")
+
 })
+
 
 

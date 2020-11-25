@@ -1,4 +1,4 @@
-
+# nocov start
 theme_field <- function(base_size = 11, base_family = "",
                         base_line_size = base_size/22, base_rect_size = base_size/22,
                         legend.position = "bottom") {
@@ -19,3 +19,4 @@ theme_field <- function(base_size = 11, base_family = "",
         panel.ontop = TRUE)
 }
 
+# nocov end

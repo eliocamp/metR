@@ -1,0 +1,11 @@
+----- Variables ----- 
+air:
+    mean Daily Air temperature in degK
+    Dimensions: lon by lat by level by time
+
+
+----- Dimensions ----- 
+  time: 1 values from 2010-07-09 to 2010-07-09 
+  level: 17 values from 10 to 1000 millibar
+  lat: 73 values from -90 to 90 degrees_north
+  lon: 144 values from 0 to 357.5 degrees_east

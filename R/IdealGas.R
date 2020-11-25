@@ -85,7 +85,7 @@ IdealGas <- function(p, t, rho, R = 287.058) {
     } else if (hasArg(p) & hasArg(t) & hasArg(rho)) {
         stop("Too many state variables.")
     } else {
-        stop("Too few stat variables.")
+        stop("Too few state variables.")
     }
 }
 
@@ -101,7 +101,7 @@ Adiabat <- function(p, t, theta, p0 = 100000, kappa = 2/7) {
     } else if (hasArg(p) & hasArg(t) & hasArg(theta)) {
         stop("Too many state variables.")
     } else {
-        stop("Too few stat variables.")
+        stop("Too few state variables.")
     }
 }
 
@@ -120,7 +120,7 @@ VirtualTemperature <- function(p, t, e, tv, epsilon = 0.622) {
     } else if (hasArg(tv) & hasArg(p) & hasArg(t) & hasArg(e)) {
         stop("Too many state variables.")
     } else {
-        stop("Too few stat variables.")
+        stop("Too few state variables.")
     }
 }
 
@@ -130,13 +130,13 @@ MixingRatio <- function(p, e, w, epsilon = 0.622) {
     if (hasArg(p) & !hasArg(w) & hasArg(e)) {
         return(epsilon*(e/(p - e)))
     } else if (!hasArg(p) & hasArg(w) & hasArg(e)) {
-        return(e/(w*epsilon) + e)
+        return(e*epsilon/w + e)
     } else if (hasArg(p) & hasArg(w) & !hasArg(e)) {
-        return(p*w*epsilon/(1 + w*epsilon))
+        return(p/(epsilon/w + 1))
     } else if (hasArg(p) & hasArg(w) & hasArg(e)) {
         stop("Too many state variables.")
     } else {
-        stop("Too few stat variables.")
+        stop("Too few state variables.")
     }
 }
 
@@ -156,7 +156,7 @@ ClausiusClapeyron <- function(t, es) {
     } else if (hasArg(t) & hasArg(es)) {
         stop("Too many state variables.")
     } else {
-        stop("Too few stat variables.")
+        stop("Too few state variables.")
     }
 }
 
@@ -179,6 +179,6 @@ DewPoint <- function(p, ws, td, epsilon = 0.622) {
     } else if (hasArg(p) & hasArg(ws) & hasArg(td)) {
         stop("Too many state variables.")
     } else {
-        stop("Too few stat variables.")
+        stop("Too few state variables.")
     }
 }

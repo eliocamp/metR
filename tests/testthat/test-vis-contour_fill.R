@@ -52,7 +52,7 @@ test_that("interpolation", {
         guides(fill = "none")
 
 
-    suppressWarnings(expect_doppelganger("contour_fill-nofill", g2))
+    suppressWarnings(expect_doppelganger("contour_fill-nofill2", g2))
 })
 
 

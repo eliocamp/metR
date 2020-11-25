@@ -55,7 +55,8 @@ Suggests:
     proj4,
     kriging,
     raster,
-    rgdal
+    rgdal,
+    here
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true

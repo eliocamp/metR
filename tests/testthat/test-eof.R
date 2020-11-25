@@ -1,10 +1,8 @@
-library(metR)
 
 context("EOF")
-
+data(geopotential)
 test_that("EOF runs", {
     expect_s3_class({
-        data(geopotential)
         EOF(gh ~ lat + lon | date, data = geopotential, n = 1)
     }, "eof")
 })
@@ -46,3 +44,28 @@ test_that("EOF fails gracefully", {
                  "The formula  gh ~ lon | date  does not identify an unique observation for each cell.")
 })
 
+test_that("eof methods", {
+    eof <- EOF(gh ~ lat + lon | date, data = geopotential, n = 1:5)
+
+    eof_12 <- cut(eof, 1:2)
+    expect_s3_class(eof_12, "eof")
+    expect_equal(as.character(unique(eof_12$left$PC)), c("PC1", "PC2"))
+    expect_equal(as.character(unique(eof_12$right$PC)), c("PC1", "PC2"))
+    expect_equal(as.character(unique(eof_12$sdev$PC)), c("PC1", "PC2"))
+
+    expect_true(inherits(screeplot(eof), "gg"))
+    expect_true(inherits(autoplot(eof), "gg"))
+
+
+
+    eof_all <- EOF(gh ~ lat + lon | date, data = geopotential, n = NULL)
+    expect_equal(geopotential[, .(lat, lon, date, gh)][order(lat, lon, date)],
+                 predict(eof_all)[order(lat, lon, date)])
+
+    expect_equal(predict(eof_all, n = 1:5), predict(eof))
+
+    expect_known_output(print(eof), file = "eof_print")
+
+    expect_known_output(summary(eof), file = "eof_summary")
+
+})

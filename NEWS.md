@@ -1,5 +1,11 @@
 # metR (development version)
 
+## New Features
+
+- `as.discretised_scale()` is a quick way of created a discretised version of any 
+continuous scale. 
+
+
 # metR 0.9.0
 
 ## New Features

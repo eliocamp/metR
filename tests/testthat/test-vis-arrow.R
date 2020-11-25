@@ -7,7 +7,10 @@ test_that("arrow guide works", {
 
     g <- ggplot(seals, aes(long, lat)) +
         geom_vector(aes(dx = delta_long, dy = delta_lat), skip = 2)
-
+    expect_doppelganger("no-scale",
+                        g)
+    expect_doppelganger("with-scale",
+                        g + scale_mag())
     expect_doppelganger("guide-default", g + scale_mag("Seals velocity"))
     expect_doppelganger("guide-name-guide",
                         g + scale_mag(guide = guide_legend(title = "Velocity (m/s)")))

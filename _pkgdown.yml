@@ -20,6 +20,7 @@ reference:
       - stat_na
       - scale_longitude
       - scale_divergent
+      - discretised_scale
       - guide_colorstrip
       - reverselog_trans
   - title: ggplot2 helpers
@@ -29,6 +30,7 @@ reference:
       - WrapCircular
       - DivideTimeseries
       - map_labels
+      - contour_placement
   - title: Physics
     desc: functions related to physical processes
     contents:
@@ -37,6 +39,7 @@ reference:
       - Derivate
       - GeostrophicWind
       - WaveFlux
+      - EPflux
   - title: Data Manipulation
     desc: get and manipulate data
     contents:

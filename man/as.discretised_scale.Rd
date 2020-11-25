@@ -7,7 +7,7 @@
 as.discretised_scale(scale_function)
 }
 \arguments{
-\item{scale_funcion}{a scale function (e.g. \code{scale_fill_divergent})}
+\item{scale_function}{a scale function (e.g. \code{scale_fill_divergent})}
 }
 \value{
 A function with the same arguments as \code{sacle_function} that works with discreteised

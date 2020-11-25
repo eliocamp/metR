@@ -1,6 +1,6 @@
 #' Create discretised versions of continuous scales
 #'
-#' @param scale_funcion a scale function (e.g. `scale_fill_divergent`)
+#' @param scale_function a scale function (e.g. `scale_fill_divergent`)
 #'
 #'
 #' @return

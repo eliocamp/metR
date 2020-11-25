@@ -71,13 +71,3 @@ ConvertLongitude <- function(lon, group = NULL, from = NULL) {
 }
 
 
-
-
-fold.circular <- function(x) {
-    r <- get.range(x)
-    dr <- diff(r)
-    x <- ifelse(x >= r[2] | x < r[1], x %% dr, x)
-    class(x) <- c(class(x), "circular")
-    x <- set.range(x, r)
-    x
-}

@@ -77,11 +77,12 @@ guide_vector <- function(# title
             ...,
             name = "vector"
         ),
-        class = c("guide", "vector")
+        class = c("guide", "vector", "legend")
     )
 }
 
 
+#' @importFrom ggplot2 guide_train
 #' @export
 guide_train.vector <- function(guide, scale, output = NULL) {
     limits <- scale$get_limits()
@@ -110,18 +111,7 @@ guide_train.vector <- function(guide, scale, output = NULL) {
     guide
 }
 
-#' @export
-guide_merge.vector <- function(guide, new_guide) {
-    guide$key <- merge(guide$key, new_guide$key, sort = FALSE)
-    guide$override.aes <- c(guide$override.aes, new_guide$override.aes)
-    if (any(duplicated(names(guide$override.aes)))) {
-        warning("Duplicated override.aes is ignored.")
-    }
-    guide$override.aes <- guide$override.aes[!duplicated(names(guide$override.aes))]
-    guide
-}
-
-#' @importFrom ggplot2 guide_geom guide_merge guide_train
+#' @importFrom ggplot2 guide_geom
 #' @export
 guide_geom.vector <- function(guide, layers, default_mapping) {
     # arrange common data for vertical and horizontal guide

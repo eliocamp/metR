@@ -119,6 +119,7 @@ guide_colourstrip <- function(
 #' @export
 #' @rdname guide_colourstrip
 #' @keywords internal
+#' @importFrom ggplot2 guide_train
 guide_train.colorstrip <- function(guide, scale, aesthetic = NULL) {
     # do nothing if scale are inappropriate
     if (length(intersect(scale$aesthetics, guide$available_aes)) == 0) {
@@ -214,6 +215,7 @@ guide_colorstrip <- guide_colourstrip
 #' @export
 #' @rdname guide_colourstrip
 #' @keywords internal
+#' @importFrom ggplot2 guide_gengrob
 guide_gengrob.colorstrip <- function(guide, theme) {
     # settings of location and size
     switch(guide$direction,

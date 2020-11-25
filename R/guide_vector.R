@@ -111,64 +111,6 @@ guide_train.vector <- function(guide, scale, output = NULL) {
     guide
 }
 
-#' @importFrom ggplot2 guide_geom
-#' @export
-guide_geom.vector <- function(guide, layers, default_mapping) {
-    # arrange common data for vertical and horizontal guide
-    guide$geoms <- plyr::llply(layers, function(layer) {
-        matched <- matched_aes(layer, guide, default_mapping)
-
-        if (length(matched) > 0) {
-            # This layer contributes to the legend
-
-            # check if this layer should be included, different behaviour depending on
-            # if show.legend is a logical or a named logical vector
-            if (!is.null(names(layer$show.legend))) {
-                layer$show.legend <- rename_aes(layer$show.legend)
-                include <- is.na(layer$show.legend[matched]) ||
-                    layer$show.legend[matched]
-            } else {
-                include <- is.na(layer$show.legend) || layer$show.legend
-            }
-
-            if (include) {
-                # Default is to include it
-
-                # Filter out set aesthetics that can't be applied to the legend
-                n <- vapply(layer$aes_params, length, integer(1))
-                params <- layer$aes_params[n == 1]
-
-                data <- layer$geom$use_defaults(guide$key[matched], params)
-            } else {
-                return(NULL)
-            }
-        } else {
-            # This layer does not contribute to the legend
-            if (is.na(layer$show.legend) || !layer$show.legend) {
-                # Default is to exclude it
-                return(NULL)
-            } else {
-                data <- layer$geom$use_defaults(NULL, layer$aes_params)[rep(1, nrow(guide$key)), ]
-            }
-        }
-
-        # override.aes in guide_legend manually changes the geom
-        data <- utils::modifyList(data, guide$override.aes)
-
-        list(
-            draw_key = layer$geom$draw_key,
-            data = data,
-            params = c(layer$geom_params, layer$stat_params)
-        )
-    })
-
-    # remove null geom
-    guide$geoms <- plyr::compact(guide$geoms)
-
-    # Finally, remove this guide if no layer is drawn
-    if (length(guide$geoms) == 0) guide <- NULL
-    guide
-}
 
 #' @importFrom ggplot2 guide_gengrob
 #' @export

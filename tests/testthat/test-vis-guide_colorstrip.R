@@ -20,5 +20,9 @@ test_that("guide works", {
     expect_doppelganger("horizontal-direction",
                         base + guides(fill = guide_colourstrip(direction = "horizontal", barwidth = 10)) +
                             theme(legend.position = "bottom"))
+
+    expect_doppelganger("colorstrip_inside",
+        base + guides(fill = guide_colourstrip(inside = TRUE))
+    )
 })
 

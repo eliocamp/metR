@@ -5,6 +5,8 @@
 - `as.discretised_scale()` is a quick way of created a discretised version of any 
 continuous scale. 
 
+-  `stroke.colour` is now an acceptes aesthetic for `geom_text_contour()`. 
+
 ## Bugfixes
 
 - The computations in `MixingRatio()` were wrong. Now they are fixed. 

@@ -10,7 +10,6 @@
 #' @param rotate logical indicating whether to rotate text following the contour.
 #' @param stroke numerical indicating width of stroke relative to the size of
 #' the text. Ignored if less than zero.
-#' @param stroke.color any valid colour.
 #' @param label.placement A function for placing labels (see `label_placement_flattest()`).
 #'
 #' @details
@@ -208,4 +207,15 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
    draw_key = ggplot2::draw_key_text
 )
 
-
+#' Scale for stroke.colour
+#'
+#' @param ... parameters sent to [ggplot2::scale_color_continuous]
+#'
+#'
+#' @export
+#' @keywords internal
+#' @usage NULL
+#' @format NULL
+scale_stroke.colour_continuous <- function(...) {
+    ggplot2::scale_color_continuous(aesthetics = "stroke.colour", guide = "none")
+}

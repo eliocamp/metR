@@ -44,7 +44,6 @@ geom_text_contour(
   nudge_x = 0,
   nudge_y = 0,
   stroke = 0,
-  stroke.color = "white",
   check_overlap = FALSE,
   na.rm = FALSE,
   show.legend = NA,
@@ -126,8 +125,6 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 \item{stroke}{numerical indicating width of stroke relative to the size of
 the text. Ignored if less than zero.}
 
-\item{stroke.color}{any valid colour.}
-
 \item{check_overlap}{If \code{TRUE}, text that overlaps previous text in the
 same layer will not be plotted. \code{check_overlap} happens at draw time and in
 the order of the data. Therefore data should be arranged by the label
@@ -153,6 +150,7 @@ this is not the case with \code{geom_label_contour()}.
 \item \code{alpha}
 \item \code{angle}
 \item \code{colour}
+\item \code{stroke.color}
 \item \code{family}
 \item \code{fontface}
 \item \code{group}
@@ -171,6 +169,11 @@ g <- ggplot(v, aes(Var1, Var2)) +
 g + geom_text_contour(aes(z = value))
 
 g + geom_text_contour(aes(z = value), stroke = 0.2)
+
+g + geom_text_contour(aes(z = value), stroke = 0.2, stroke.colour = "red")
+
+g + geom_text_contour(aes(z = value, stroke.colour = ..level..), stroke = 0.2) +
+    scale_colour_gradient(aesthetics = "stroke.colour", guide = "none")
 
 g + geom_text_contour(aes(z = value), rotate = FALSE)
 

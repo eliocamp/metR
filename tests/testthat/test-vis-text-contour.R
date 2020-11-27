@@ -67,9 +67,9 @@ test_that("stroke.colour is aesthetic", {
     expect_doppelganger("stroke-aes",
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour(aes(z = gh)) +
-                            geom_text_contour(aes(z = gh, stroke.colour = ..level..), stroke = 0.2) +
-                            scale_color_gradient(aesthetics = "stroke.colour", guide = "none")
-)
+                            geom_text_contour(aes(z = gh, stroke.colour = ..level..),
+                                              stroke = 0.2)
+                        )
 })
 
 

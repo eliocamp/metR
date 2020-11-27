@@ -49,7 +49,7 @@ contourTextGrob <- function(label, type = "text", x = grid::unit(0.5, "npc"), y 
              position = position,
              rotate = rotate,
              bg.r = bg.r,
-             bg.color = bg.color,
+             bg.color = bg.color[group],
 
              label.padding = label.padding,
              label.r = label.r,
@@ -92,6 +92,8 @@ makeContent.contourTextGrob <- function(x) {
     fontface <- unlist(lapply(data, function(x) x$fontface))
     lineheight <- unlist(lapply(data, function(x) x$lineheight))
     rot <- unlist(lapply(data, function(x) x$rot))
+    bg.color <-  unlist(lapply(data, function(x) x$bg.color))
+
 
     just <-  unlist(lapply(payload$data, function(x) x$just))[valid]
     hj <- unlist(lapply(payload$data, function(x)  grid::resolveHJust(x$just, NULL)))[valid]
@@ -100,7 +102,7 @@ makeContent.contourTextGrob <- function(x) {
     default.units <-  unlist(lapply(payload$data, function(x) x$default.units))[1]
     check.overlap <-  unlist(lapply(payload$data, function(x) x$check.overlap))[1]
     bg.r <-  unlist(lapply(payload$data, function(x) x$bg.r))[1]
-    bg.color <-  unlist(lapply(payload$data, function(x) x$bg.color))[1]
+
 
 
     if (payload$data[[1]]$type == "label") {
@@ -193,6 +195,7 @@ content_grob <- function(x) {
         x = x$x[selected], y = x$y[selected],
         col = x$col,
         rot = rot[selected],
+        bg.color = x$bg.color[selected],
         fontsize = x$fontsize,
         fontfamily = x$fontfamily,
         fontface = x$fontface,

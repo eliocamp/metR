@@ -28,6 +28,11 @@
 #'
 #' g + geom_text_contour(aes(z = value), stroke = 0.2)
 #'
+#' g + geom_text_contour(aes(z = value), stroke = 0.2, stroke.colour = "red")
+#'
+#' g + geom_text_contour(aes(z = value, stroke.colour = ..level..), stroke = 0.2) +
+#'     scale_colour_gradient(aesthetics = "stroke.colour", guide = "none")
+#'
 #' g + geom_text_contour(aes(z = value), rotate = FALSE)
 #'
 #' g + geom_text_contour(aes(z = value),
@@ -53,6 +58,7 @@
 #' \item \code{alpha}
 #' \item \code{angle}
 #' \item \code{colour}
+#' \item \code{stroke.color}
 #' \item \code{family}
 #' \item \code{fontface}
 #' \item \code{group}
@@ -78,7 +84,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
                       nudge_x = 0,
                       nudge_y = 0,
                       stroke = 0,
-                      stroke.color = "white",
+                      # stroke.color = "white",
                       check_overlap = FALSE,
                       # xwrap = NULL,
                       # ywrap = NULL,
@@ -110,7 +116,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
             parse = parse,
             check_overlap = check_overlap,
             stroke = stroke,
-            stroke.color = stroke.color,
+            # stroke.color = stroke.color,
             # xwrap = xwrap,
             # ywrap = ywrap,
             label.placement = label.placement,
@@ -129,18 +135,20 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
    required_aes = c("x", "y", "label"),
    default_aes = ggplot2::aes(colour = "black", size = 3.88, angle = 0,
                               hjust = 0.5, vjust = 0.5, alpha = NA, family = "",
-                              fontface = 1, lineheight = 1.2),
+                              fontface = 1, lineheight = 1.2,
+                              stroke.colour = "white"),
 
    draw_panel = function(data, panel_params, coord, parse = FALSE,
                          na.rm = FALSE, check_overlap = FALSE, min.size = 20,
                          skip = 1, rotate = FALSE, gap = NULL,
                          label.placement = label_placement_flattest(),
-                         stroke = 0, stroke.colour = "white") {
+                         stroke = 0) {
        data <- data.table::as.data.table(coord$transform(data, panel_params))
        min.size <- ceiling(min.size)
        if (min.size %% 2 == 0) {
            min.size <- min.size - 1
        }
+
 
        breaks <- unique(data$level)
        breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]
@@ -182,7 +190,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
            group = interaction(data$group, data$piece),
            default.units = "native",
            hjust = hjust, vjust = vjust,
-           bg.r = stroke, bg.color = stroke.colour,
+           bg.r = stroke, bg.color = data$stroke.colour,
            position = label.placement,
 
                col = scales::alpha(data$colour, data$alpha),

@@ -156,8 +156,10 @@ denormalise <- function(eof, which = c("left", "right")) {
     .check_eof(eof)
     which <- which[1]
     name <-  attr(eof, "value.var")
+    suffix <- attr(eof, "suffix")
+    sdev <- eof[["sdev"]]
 
-    value <- eof[[which]][eof[["sdev"]], on = attr(eof, "suffix")][,  get(name)*sd]
+    value <- eof[[which]][sdev, on = suffix][,  get(name)*sd]
 
     data.table::copy(eof[[which]])[, (name) := value][]
 }

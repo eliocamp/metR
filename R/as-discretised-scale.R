@@ -1,17 +1,18 @@
 #' Create discretised versions of continuous scales
 #'
+#'
 #' @param scale_function a scale function (e.g. `scale_fill_divergent`)
 #'
 #'
 #' @return
-#' A function with the same arguments as `sacle_function` that works with discreteised
-#' values
+#' A function with the same arguments as `scale_function` that works with discretised
+#' values.
 #'
 #' @examples
 #' library(ggplot2)
 #' scale_fill_brewer_discretised <- as.discretised_scale(scale_fill_distiller)
 #'
-#' @seealso scale_fill_discreteised
+#' @seealso scale_fill_discretised
 #'
 #' @export
 as.discretised_scale <- function(scale_function) {

@@ -10,8 +10,8 @@ as.discretised_scale(scale_function)
 \item{scale_function}{a scale function (e.g. \code{scale_fill_divergent})}
 }
 \value{
-A function with the same arguments as \code{sacle_function} that works with discreteised
-values
+A function with the same arguments as \code{scale_function} that works with discretised
+values.
 }
 \description{
 Create discretised versions of continuous scales
@@ -22,5 +22,5 @@ scale_fill_brewer_discretised <- as.discretised_scale(scale_fill_distiller)
 
 }
 \seealso{
-scale_fill_discreteised
+scale_fill_discretised
 }

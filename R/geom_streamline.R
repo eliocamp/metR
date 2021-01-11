@@ -295,7 +295,7 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
       # browser()
       # must be sorted on group
       data <- data[order(data$group), , drop = FALSE]
-      munched <- coord_munch(coord, data, panel_params)
+      munched <- ggplot2::coord_munch(coord, data, panel_params)
 
       # Silently drop lines with less than two points, preserving order
       rows <- stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)

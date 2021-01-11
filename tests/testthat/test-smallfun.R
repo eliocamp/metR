@@ -18,7 +18,7 @@ test_that("Mag supports multiple dimensions", {
 })
 
 
-test_thtat("Angle works", {
+test_that("Angle works", {
     y <- rnorm(10)
     x <- rnorm(10)
 

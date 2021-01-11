@@ -13,10 +13,10 @@ continuous scale.
 
 - I really wanted `geom_arrow()` to automatically add the arrow legend, but the
 workarounds I managed to write were brittle and couldn't handle even slight 
-changes in people's code (https://github.com/eliocamp/metR/issues/130). The definitive 
-answer is that it is not possible (see https://github.com/tidyverse/ggplot2/issues/4291).
-This release then backtracks those workarounds and tries o live peacefully with the 
-limitations imposed by ggplot2. 
+changes in people's code (see https://github.com/eliocamp/metR/issues/130). The definitive 
+answer is that this is simply not possible due to limitations on how ggplot2 works
+(see https://github.com/tidyverse/ggplot2/issues/4291).
+This release, then, backtracks those workarounds and tries to accept the things I cannot change.
 
 
 

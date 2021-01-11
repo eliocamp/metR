@@ -42,15 +42,19 @@ Percentile <- function(x) {
     ecdf(x)(x)
 }
 
-#' Magnitude of a vector
+#' Magnitude and angle of a vector
 #'
-#' Computes the magnitude of a vector of any dimension.
+#' Computes the magnitude of a vector of any dimension. Or angle (in degrees)
+#' in 2 dimensions.
 #'
+#' @param x,y, x and y directions of the vector
 #' @param ... numeric vectors of coordinates or list of coordinates
 #'
 #' @return
-#' A numeric vector the same length as each element of ...
+#' `Mag`: A numeric vector the same length as each element of ...
 #' that is \eqn{\sqrt(x^2 + y^2 + ...)}.
+#' `Angle`: A numeric vector of the same length as x and y that is
+#' `atan2(y, x)*180/pi`.
 #'
 #' @details
 #' Helpful to save keystrokes and gain readability when computing wind
@@ -58,6 +62,7 @@ Percentile <- function(x) {
 #'
 #' @examples
 #' Mag(10, 10)
+#' Angle(10, 10)
 #' Mag(10, 10, 10, 10)
 #' Mag(list(10, 10, 10, 10))
 #'
@@ -76,6 +81,13 @@ Mag <- function(...) {
 
     coords <- lapply(coords, `^`, 2)
     sqrt(Reduce(`+`, coords))
+}
+
+#' @family utilities
+#' @export
+#' @rdname Mag
+Angle <- function(x, y) {
+    atan2(y, x)*180/pi
 }
 
 #' Extended logical operators

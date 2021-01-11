@@ -17,6 +17,14 @@ test_that("Mag supports multiple dimensions", {
                  Mag(1, 2, 3, 4, 5))
 })
 
+
+test_thtat("Angle works", {
+    y <- rnorm(10)
+    x <- rnorm(10)
+
+    expect_equal(atan2(y, x)*180/pi, Angle(x, y))
+})
+
 test_that("Similar things are similar", {
     expect_equal(c(3, 5) %~% 4.5,
                  c(FALSE, TRUE))

@@ -2,19 +2,27 @@
 % Please edit documentation in R/small_funs.R
 \name{Mag}
 \alias{Mag}
-\title{Magnitude of a vector}
+\alias{Angle}
+\title{Magnitude and angle of a vector}
 \usage{
 Mag(...)
+
+Angle(x, y)
 }
 \arguments{
 \item{...}{numeric vectors of coordinates or list of coordinates}
+
+\item{x, y, }{x and y directions of the vector}
 }
 \value{
-A numeric vector the same length as each element of ...
+\code{Mag}: A numeric vector the same length as each element of ...
 that is \eqn{\sqrt(x^2 + y^2 + ...)}.
+\code{Angle}: A numeric vector of the same length as x and y that is
+\code{atan2(y, x)*180/pi}.
 }
 \description{
-Computes the magnitude of a vector of any dimension.
+Computes the magnitude of a vector of any dimension. Or angle (in degrees)
+in 2 dimensions.
 }
 \details{
 Helpful to save keystrokes and gain readability when computing wind
@@ -22,6 +30,7 @@ Helpful to save keystrokes and gain readability when computing wind
 }
 \examples{
 Mag(10, 10)
+Angle(10, 10)
 Mag(10, 10, 10, 10)
 Mag(list(10, 10, 10, 10))
 
@@ -32,6 +41,12 @@ Mag(1, 1:2)
 
 }
 \seealso{
+Other utilities: 
+\code{\link{Anomaly}()},
+\code{\link{JumpBy}()},
+\code{\link{Percentile}()},
+\code{\link{logic}}
+
 Other utilities: 
 \code{\link{Anomaly}()},
 \code{\link{JumpBy}()},

@@ -20,7 +20,6 @@ test_that("arrow guide works", {
     expect_doppelganger("guide-mm",  g + scale_mag("Seals velocity", default_unit = "mm"))
 
 
-
      g <- ggplot(seals, aes(long, lat)) +
          geom_arrow(aes(dx = delta_long, dy = delta_lat), skip = 1, color = "red") +
          geom_vector(aes(dx = delta_long, dy = delta_lat), skip = 1) +
@@ -30,3 +29,14 @@ test_that("arrow guide works", {
 
 })
 
+test_that("mag and angle equal dx and dy", {
+    dxdy <- ggplot(seals, aes(long, lat)) +
+        geom_vector(aes(dx = delta_long, dy = delta_lat), skip = 2) +
+        scale_mag("Mag(delta_long, delta_lat)")
+
+    magangle <- ggplot(seals, aes(long, lat)) +
+        geom_vector(aes(mag = Mag(delta_long, delta_lat),
+                        angle = Angle(delta_long, delta_lat)), skip = 2)
+    expect_doppelganger("mag and angle", magangle)
+    expect_doppelganger("dx and dy", dxdy)
+})

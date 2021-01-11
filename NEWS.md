@@ -11,6 +11,15 @@ continuous scale.
 
 - The computations in `MixingRatio()` were wrong. Now they are fixed. 
 
+- I really wanted `geom_arrow()` to automatically add the arrow legend, but the
+workarounds I managed to write were brittle and couldn't handle even slight 
+changes in people's code (https://github.com/eliocamp/metR/issues/130). The definitive 
+answer is that it is not possible (see https://github.com/tidyverse/ggplot2/issues/4291).
+This release then backtracks those workarounds and tries o live peacefully with the 
+limitations imposed by ggplot2. 
+
+
+
 
 # metR 0.9.0
 

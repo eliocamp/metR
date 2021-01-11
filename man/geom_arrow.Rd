@@ -202,6 +202,18 @@ grid[, Mx := -pi^2/b^2*cos(pi*y/b)*(d - x)]
 ggplot(grid, aes(x, y)) +
     geom_arrow(aes(dx = Mx, dy = My))
 
+# Due to limitations in ggplot2 (see: https://github.com/tidyverse/ggplot2/issues/4291),
+# if you define the vector with the dx and dy aesthetics, you need
+# to explicitly add scale_mag() in order to show the arrow legend.
+
+ggplot(grid, aes(x, y)) +
+    geom_arrow(aes(dx = Mx, dy = My)) +
+    scale_mag()
+
+# Alternative, use Mag and Angle.
+ggplot(grid, aes(x, y)) +
+    geom_arrow(aes(mag = Mag(Mx, My), angle = Angle(Mx, My)))
+
 }
 \seealso{
 Other ggplot2 helpers: 

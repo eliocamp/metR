@@ -64,9 +64,9 @@ test_that("contour_tanaka works", {
                             geom_contour_filled(aes(z = gh)) +
                             geom_contour_tanaka(aes(z = gh))
     )
-    expect_doppelganger("tanaka_smooth",
-                        ggplot(geo, aes(lon, lat)) +
-                            geom_contour_filled(aes(z = gh)) +
-                            geom_contour_tanaka(aes(z = gh), smooth = TRUE)
-    )
+    # expect_doppelganger("tanaka_smooth",
+    #                     ggplot(geo, aes(lon, lat)) +
+    #                         geom_contour_filled(aes(z = gh)) +
+    #                         geom_contour_tanaka(aes(z = gh), smooth = TRUE)
+    # )
 })

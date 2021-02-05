@@ -11,10 +11,10 @@ test_that("geom-relief", {
                             geom_relief(aes(z = value))
     )
 
-    expect_doppelganger("volcano-relief-noraster",
-                        ggplot(v, aes(Var1, Var2)) +
-                            geom_relief(aes(z = value), raster = FALSE)
-    )
+    # expect_doppelganger("volcano-relief-noraster",
+    #                     ggplot(v, aes(Var1, Var2)) +
+    #                         geom_relief(aes(z = value), raster = FALSE)
+    # )
 
     expect_doppelganger("volcano-relief-sun.angle",
                         ggplot(v, aes(Var1, Var2)) +

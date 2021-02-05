@@ -138,7 +138,7 @@ ggplot(jan[lat == -60], aes(lon, gh.no12)) +
 
 }
 \references{
-Zimin, A.V., I. Szunyogh, D.J. Patil, B.R. Hunt, and E. Ott, 2003: Extracting Envelopes of Rossby Wave Packets. Mon. Wea. Rev., 131, 1011–1017, https://doi.org/10.1175/1520-0493(2003)131<1011:EEORWP>2.0.CO;2
+Zimin, A.V., I. Szunyogh, D.J. Patil, B.R. Hunt, and E. Ott, 2003: Extracting Envelopes of Rossby Wave Packets. Mon. Wea. Rev., 131, 1011–1017, \doi{10.1175/1520-0493(2003)131<1011:EEORWP>2.0.CO;2}
 }
 \seealso{
 Other meteorology functions: 

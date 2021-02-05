@@ -34,7 +34,7 @@ Calculate wave-activity flux
 Calculates Plum-like wave activity fluxes
 }
 \references{
-Takaya, K. and H. Nakamura, 2001: A Formulation of a Phase-Independent Wave-Activity Flux for Stationary and Migratory Quasigeostrophic Eddies on a Zonally Varying Basic Flow. J. Atmos. Sci., 58, 608–627, \url{https://journals.ametsoc.org/doi/abs/10.1175/1520-0469(2001)058\%3C0608\%3AAFOAPI\%3E2.0.CO\%3B2} \cr
+Takaya, K. and H. Nakamura, 2001: A Formulation of a Phase-Independent Wave-Activity Flux for Stationary and Migratory Quasigeostrophic Eddies on a Zonally Varying Basic Flow. J. Atmos. Sci., 58, 608–627, \doi{10.1175/1520-0469(2001)058<0608:AFOAPI>2.0.CO;2} \cr
 Adapted from \url{https://github.com/marisolosman/Reunion_Clima/blob/master/WAF/Calculo_WAF.ipynb}
 }
 \seealso{

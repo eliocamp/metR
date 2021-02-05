@@ -17,7 +17,7 @@
 #' of the wave activity flux.
 #'
 #' @references
-#' Takaya, K. and H. Nakamura, 2001: A Formulation of a Phase-Independent Wave-Activity Flux for Stationary and Migratory Quasigeostrophic Eddies on a Zonally Varying Basic Flow. J. Atmos. Sci., 58, 608–627, \url{https://journals.ametsoc.org/doi/abs/10.1175/1520-0469(2001)058\%3C0608\%3AAFOAPI\%3E2.0.CO\%3B2} \cr
+#' Takaya, K. and H. Nakamura, 2001: A Formulation of a Phase-Independent Wave-Activity Flux for Stationary and Migratory Quasigeostrophic Eddies on a Zonally Varying Basic Flow. J. Atmos. Sci., 58, 608–627, \doi{10.1175/1520-0469(2001)058<0608:AFOAPI>2.0.CO;2} \cr
 #' Adapted from \url{https://github.com/marisolosman/Reunion_Clima/blob/master/WAF/Calculo_WAF.ipynb}
 #' @family meteorology functions
 #' @export
@@ -89,8 +89,8 @@ WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
 #' and vertical components of the EP Fluxes at each longitude, latitude and level.
 #'
 #' @references
-#' Plumb, R. A. (1985). On the Three-Dimensional Propagation of Stationary Waves. Journal of the Atmospheric Sciences, 42(3), 217–229. \url{https://doi.org/10.1175/1520-0469(1985)042<0217:OTTDPO>2.0.CO;2}
-#' Cohen, J., Barlow, M., Kushner, P. J., & Saito, K. (2007). Stratosphere–Troposphere Coupling and Links with Eurasian Land Surface Variability. Journal of Climate, 20(21), 5335–5343. \url{https://doi.org/10.1175/2007JCLI1725.1}
+#' Plumb, R. A. (1985). On the Three-Dimensional Propagation of Stationary Waves. Journal of the Atmospheric Sciences, 42(3), 217–229. \doi{10.1175/1520-0469(1985)042<0217:OTTDPO>2.0.CO;2}
+#' Cohen, J., Barlow, M., Kushner, P. J., & Saito, K. (2007). Stratosphere–Troposphere Coupling and Links with Eurasian Land Surface Variability. Journal of Climate, 20(21), 5335–5343. \doi{10.1175/2007JCLI1725.1}
 #' @export
 EPflux <- function(lon, lat, lev, t, u, v) {
     # Ecuación 7.1 plumb 1984

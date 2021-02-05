@@ -99,7 +99,7 @@
 #'
 #'
 #' @references
-#' Fisher, A., Caffo, B., Schwartz, B., & Zipunnikov, V. (2016). Fast, Exact Bootstrap Principal Component Analysis for p > 1 million. Journal of the American Statistical Association, 111(514), 846–860. http://doi.org/10.1080/01621459.2015.1062383
+#' Fisher, A., Caffo, B., Schwartz, B., & Zipunnikov, V. (2016). Fast, Exact Bootstrap Principal Component Analysis for p > 1 million. Journal of the American Statistical Association, 111(514), 846–860. \doi{10.1080/01621459.2015.1062383}
 #' @family meteorology functions
 #' @export
 EOF <- function(formula, n = 1, data = NULL, B = 0,

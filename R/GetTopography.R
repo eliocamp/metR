@@ -30,7 +30,7 @@
 #'     coord_quickmap()
 #' }
 #' @references
-#' Source: Amante, C. and B.W. Eakins, 2009. ETOPO1 1 Arc-Minute Global Relief Model: Procedures, Data Sources and Analysis. NOAA Technical Memorandum NESDIS NGDC-24. National Geophysical Data Center, NOAA. doi:10.7289/V5C8276M
+#' Source: Amante, C. and B.W. Eakins, 2009. ETOPO1 1 Arc-Minute Global Relief Model: Procedures, Data Sources and Analysis. NOAA Technical Memorandum NESDIS NGDC-24. National Geophysical Data Center, NOAA.  \doi{10.7289/V5C8276M}
 #'
 #' @export
 GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution = 3.5,
@@ -98,7 +98,7 @@ GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution =
         field[, lon := ConvertLongitude(lon, from = 180)]
         if (cache == TRUE) write.csv(field, file = file)    # cache data
     }
-    return(field)
+    return(field[])
 }
 
 .BuildETOPORequest <- function(lon.west, lon.east, lat.north, lat.south, resx, resy) {

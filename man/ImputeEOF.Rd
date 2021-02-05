@@ -90,5 +90,5 @@ geopotential[is.na(gh.gap), sqrt(mean((gh.t - gh.impute)^2))]
 
 }
 \references{
-Beckers, J.-M., Barth, A., and Alvera-Azcárate, A.: DINEOF reconstruction of clouded images including error maps – application to the Sea-Surface Temperature around Corsican Island, Ocean Sci., 2, 183-199, https://doi.org/10.5194/os-2-183-2006, 2006.
+Beckers, J.-M., Barth, A., and Alvera-Azcárate, A.: DINEOF reconstruction of clouded images including error maps – application to the Sea-Surface Temperature around Corsican Island, Ocean Sci., 2, 183-199, \doi{10.5194/os-2-183-2006}, 2006.
 }

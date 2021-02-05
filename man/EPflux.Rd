@@ -27,6 +27,6 @@ and vertical components of the EP Fluxes at each longitude, latitude and level.
 Computes Eliassen-Palm fluxes.
 }
 \references{
-Plumb, R. A. (1985). On the Three-Dimensional Propagation of Stationary Waves. Journal of the Atmospheric Sciences, 42(3), 217–229. \url{https://doi.org/10.1175/1520-0469(1985)042<0217:OTTDPO>2.0.CO;2}
-Cohen, J., Barlow, M., Kushner, P. J., & Saito, K. (2007). Stratosphere–Troposphere Coupling and Links with Eurasian Land Surface Variability. Journal of Climate, 20(21), 5335–5343. \url{https://doi.org/10.1175/2007JCLI1725.1}
+Plumb, R. A. (1985). On the Three-Dimensional Propagation of Stationary Waves. Journal of the Atmospheric Sciences, 42(3), 217–229. \doi{10.1175/1520-0469(1985)042<0217:OTTDPO>2.0.CO;2}
+Cohen, J., Barlow, M., Kushner, P. J., & Saito, K. (2007). Stratosphere–Troposphere Coupling and Links with Eurasian Land Surface Variability. Journal of Climate, 20(21), 5335–5343. \doi{10.1175/2007JCLI1725.1}
 }

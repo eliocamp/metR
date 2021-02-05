@@ -5,7 +5,7 @@ citEntry(
   entry    = "Manual",
   title    = paste0("metR: ", meta$Title),
   author   = meta$Author,
-  year     = 2020,
+  year     = 2021,
   note     = note,
   url      = meta$URL,
   doi      = "10.5281/zenodo.2593516",

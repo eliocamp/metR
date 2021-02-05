@@ -6,9 +6,9 @@ geopotential[, `:=`(dlon = dlon(u, lat),
                     dlat = dlat(v))]
 
 test_that("trajectory works", {
-    expect_known_hash(Trajectory(dlon + dlat ~ lon + lat + date, x0 = 180, y0 = -60,
+    expect_known_value(Trajectory(dlon + dlat ~ lon + lat + date, x0 = 180, y0 = -60,
                                  data = na.omit(geopotential), res = 3,
-                                 cyclical = c(TRUE, FALSE)), "913c834207")
+                                 cyclical = c(TRUE, FALSE)), "trajectory1")
 
     expect_error(
     Trajectory(dlon  ~ lon + lat + date, x0 = 180, y0 = -60,

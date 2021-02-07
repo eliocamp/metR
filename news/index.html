@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -116,7 +116,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/eliocamp/metR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -137,13 +137,34 @@
       <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metr-090" class="section level1">
-<h1 class="page-header" data-toc-text="0.9.0">
-<a href="#metr-090" class="anchor"></a>metR 0.9.0<small> 2020-11-25 </small>
+    <div id="metr-091" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.1">
+<a href="#metr-091" class="anchor"></a>metR 0.9.1<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New Features</h2>
+<ul>
+<li><p><code><a href="../reference/as.discretised_scale.html">as.discretised_scale()</a></code> is a quick way of created a discretised version of any continuous scale.</p></li>
+<li><p><code>stroke.colour</code> is now an accepted aesthetic for <code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code>.</p></li>
+</ul>
+</div>
+<div id="bugfixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bugfixes" class="anchor"></a>Bugfixes</h2>
+<ul>
+<li><p>The computations in <code><a href="../reference/thermodynamics.html">MixingRatio()</a></code> were wrong. Now they are fixed.</p></li>
+<li><p>I really wanted <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> to automatically add the arrow legend, but the workarounds I managed to write were brittle and couldn’t handle even slight changes in people’s code (see <a href="https://github.com/eliocamp/metR/issues/130" class="uri">https://github.com/eliocamp/metR/issues/130</a>). The definitive answer is that this is simply not possible due to limitations on how ggplot2 works (see <a href="https://github.com/tidyverse/ggplot2/issues/4291" class="uri">https://github.com/tidyverse/ggplot2/issues/4291</a>). This release, then, backtracks those workarounds and tries to accept the things I cannot change.</p></li>
+</ul>
+</div>
+</div>
+    <div id="metr-090" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.0">
+<a href="#metr-090" class="anchor"></a>metR 0.9.0<small> 2020-11-25 </small>
+</h1>
+<div id="new-features-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features-1" class="anchor"></a>New Features</h2>
 <ul>
 <li><p>I’m very happy with <code><a href="../reference/scale_fill_discretised.html">discretised_scale()</a></code>, which is a type of scale which takes a discrete values that are the result of some discretisation and treats them as continuous. It’s, in a sense, the inverse of the new <code><a href="https://ggplot2.tidyverse.org/reference/binned_scale.html">ggplot2::binned_scale()</a></code>. Whereas. <code><a href="https://ggplot2.tidyverse.org/reference/binned_scale.html">ggplot2::binned_scale()</a></code> takes continuous values and then discretises them, <code><a href="../reference/scale_fill_discretised.html">discretised_scale()</a></code> takes discrete values which where the result of some discretisation procedure (such as the levels of <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code>/<code><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">ggplot2::geom_contour_filled()</a></code>) and allows you to treat them as continuous.</p></li>
 <li><p>Related to that, <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> now gains a new computed aesthetic called <code>level_d</code>, which is the same as <code>level</code> but forces ggplot2 to automatically use the new discretised scale.</p></li>
@@ -152,9 +173,9 @@
 <li><p><code><a href="../reference/geom_contour_tanaka.html">geom_contour_tanaka()</a></code> now has a (rather experimental) argument <code>smooth</code> which allows to smooth the transition between segments.</p></li>
 </ul>
 </div>
-<div id="bugfixes" class="section level2">
+<div id="bugfixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-1" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li><p>Fixes error introduced in previous version when <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> had mappings other than <code>dx</code> and <code>dy</code>. (Thanks Santiago!)</p></li>
 <li><p>The <code>level</code> derived aesthetic from <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> now returns and ordered factor with the correct labels that can be interpreted by <code><a href="https://ggplot2.tidyverse.org/reference/guide_coloursteps.html">ggplot2::guide_colorsteps()</a></code>. This might a breaking change!</p></li>
@@ -166,18 +187,18 @@
 <h1 class="page-header" data-toc-text="0.8.0">
 <a href="#metr-080" class="anchor"></a>metR 0.8.0<small> 2020-10-25 </small>
 </h1>
-<div id="new-features-1" class="section level2">
+<div id="new-features-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-1" class="anchor"></a>New features</h2>
+<a href="#new-features-2" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code> placement of labels is completely redesigned. It gains an argument <code>label.placement</code> which takes a function that is in charge of positioning the labels. See <code><a href="../reference/label_placement_fraction.html">label_placement_flattest()</a></code> for more details on the possible placement methods and how to build your own. The default method is <code>label_placement_flattest</code>, which places the label where the product of the curvature and the angle of the contour is minimised. This aims to put labels in a straight segment that is also as horizontal as possible. If more than one point satisfy this condition, then it chooses the closest to the midpoint. This is a <strong>breaking change</strong>, as it will change the label position of previous plots.</p></li>
 <li><p>The contour functions also gain a <code>proj</code> argument. It can be a proj4 string to project the contours of or an arbitrary function to alter the contours after they are computed. This now makes it possible to compute contours for data that is on a regular grid on projected coordinates but want to plot in lon-lat coordinates (or vice versa). Bear in mind that contours that cross the dateline will probably end up mangled.</p></li>
 <li><p>Contour functions also gain a <code>kriging</code> argument. If <code>TRUE</code>, will perform ordinary kriging to interpolate irregularly placed data into a regular grid.</p></li>
 </ul>
 </div>
-<div id="bugfixes-1" class="section level2">
+<div id="bugfixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes-1" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-2" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li><p><code><a href="../reference/FitLm.html">FitLm()</a></code> handles <code>NA</code>s better.</p></li>
 <li><p><code>GetSMNData</code> returns the <code>date</code> parameter with the correct time zone.</p></li>
@@ -192,18 +213,18 @@
 <h1 class="page-header" data-toc-text="0.7.0">
 <a href="#metr-070" class="anchor"></a>metR 0.7.0<small> 2020-04-10 </small>
 </h1>
-<div id="new-features-2" class="section level2">
+<div id="new-features-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-2" class="anchor"></a>New features</h2>
+<a href="#new-features-3" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/waves.html">FitWave()</a></code> and related functions return <code>NA</code>s when the inputted signal has <code>NA</code>s.</p></li>
 <li><p><code><a href="../reference/FitLm.html">FitLm()</a></code> accepts a <code>weights</code> argument to perform weighted regression.</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now can read files directly from DAP servers and other urls, and objects returned by [ncdf4::nc_open()].</p></li>
 </ul>
 </div>
-<div id="bugfixes-2" class="section level2">
+<div id="bugfixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes-2" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-3" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li>
 <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> won’t try to parse “time” dimensions that are not dates and will try to parse as time all dimensions.</li>
@@ -222,9 +243,9 @@
 <h1 class="page-header" data-toc-text="0.6.0">
 <a href="#metr-060---pileus" class="anchor"></a>metR 0.6.0 - Pileus<small> 2020-02-10 </small>
 </h1>
-<div id="new-features-3" class="section level2">
+<div id="new-features-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-3" class="anchor"></a>New features</h2>
+<a href="#new-features-4" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/EPflux.html">EPflux()</a></code> computes Eliassen-Palm fluxes (experimental).</p></li>
 <li><p><code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> and <code><a href="../reference/geom_arrow.html">geom_vector()</a></code> should plot faster.</p></li>
@@ -235,9 +256,9 @@
 <li><p><code><a href="../reference/geom_contour2.html">geom_contour2()</a></code>, <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> and <code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code> now accept a <code>global.breaks</code> argument that controls whether breaks should be computed once using the range of the whole dataset or once for every grouping (e.g. faceting). <code>TRUE</code> (the default) ensures that intervals between contours are comparable between panels. Setting it to <code>FALSE</code> computes contours compatible with <code>ggplot2::geom_conotur()</code> (<a href='https://github.com/eliocamp/metR/issues/109'>#109</a>, thanks <a href='https://github.com/freeseek'>@freeseek</a>)</p></li>
 </ul>
 </div>
-<div id="bugfixes-3" class="section level2">
+<div id="bugfixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes-3" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-4" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li><p>A reworked non-equispaced derivative gives better results in <code><a href="../reference/Derivate.html">Derivate()</a></code>.</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> will not fail if the first variable was called “v” (yeah, I know.. weird error related to data.table’s non standard evaluation).</p></li>
@@ -257,9 +278,9 @@
 <h1 class="page-header" data-toc-text="0.5.0">
 <a href="#metr-050---incus" class="anchor"></a>metR 0.5.0 - Incus<small> 2019-11-12 </small>
 </h1>
-<div id="new-features-4" class="section level2">
+<div id="new-features-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-4" class="anchor"></a>New features</h2>
+<a href="#new-features-5" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> supports using <code>NA</code> in subset to refer to max or min value.</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code>’s subset argument supports more complex queries. (see the help section at<code>?ReadNetCDF()</code>).</p></li>
@@ -268,9 +289,9 @@
 <li><p><code><a href="../reference/Derivate.html">Derivate()</a></code> now can derive in a non-equispaced grid.</p></li>
 </ul>
 </div>
-<div id="bugfixes-4" class="section level2">
+<div id="bugfixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes-4" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-5" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li><p><code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> imputation method is fixed for some special cases (<a href='https://github.com/eliocamp/metR/issues/96'>#96</a>; thanks <a href='https://github.com/bergmul'>@bergmul</a>).</p></li>
 <li><p><code>predict.eof()</code> handles complex value svd correctly.</p></li>
@@ -282,9 +303,9 @@
 <h1 class="page-header" data-toc-text="0.4.0">
 <a href="#metr-040---cumulonimbus" class="anchor"></a>metR 0.4.0 - Cumulonimbus<small> 2019-07-08 </small>
 </h1>
-<div id="new-features-5" class="section level2">
+<div id="new-features-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-5" class="anchor"></a>New features</h2>
+<a href="#new-features-6" class="anchor"></a>New features</h2>
 <ul>
 <li><p>New <code><a href="../reference/ReadNetCDF.html">GlanceNetCDF()</a></code> function that is an alias for <code><a href="../reference/ReadNetCDF.html">ReadNetCDF(out = "vars")</a></code> but now prints a human readable summary of the contents of the NetCDF file.</p></li>
 <li><p><code><a href="../reference/geom_streamline.html">geom_streamline()</a></code> now uses 4th order Runge-Kutta instead of plain old Euler. It also draws arrows in the middle of the streamline.</p></li>
@@ -293,9 +314,9 @@
 <li><p>The <code>df</code> element returned by <code><a href="../reference/FitLm.html">FitLm()</a></code> now has the same length as the rest.</p></li>
 </ul>
 </div>
-<div id="bugfixes-5" class="section level2">
+<div id="bugfixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes-5" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-6" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li>
 <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> result will print correctly.</li>
@@ -306,17 +327,17 @@
 <h1 class="page-header" data-toc-text="0.3.0">
 <a href="#metr-030---cumulonimbus" class="anchor"></a>metR 0.3.0 - Cumulonimbus<small> 2019-03-12 </small>
 </h1>
-<div id="new-features-6" class="section level2">
+<div id="new-features-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-6" class="anchor"></a>New features</h2>
+<a href="#new-features-7" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/Anomaly.html">Anomaly()</a></code> has a new <code>baseline</code> argument.</p></li>
 <li><p>New function <code><a href="../reference/Trajectory.html">Trajectory()</a></code> that computes trajectories in time-varying velocity fields.</p></li>
 </ul>
 </div>
-<div id="bugfixes-6" class="section level2">
+<div id="bugfixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugfixes-6" class="anchor"></a>Bugfixes</h2>
+<a href="#bugfixes-7" class="anchor"></a>Bugfixes</h2>
 <ul>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now accepts dates as elements for <code>subset</code>.</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> will read all dates correctly (<a href='https://github.com/eliocamp/metR/issues/91'>#91</a>; thanks to <a href='https://github.com/m-saenger'>@m-saenger</a>).</p></li>

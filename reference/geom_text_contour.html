@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -117,7 +117,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/eliocamp/metR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -177,7 +177,6 @@
   nudge_x <span class='op'>=</span> <span class='fl'>0</span>,
   nudge_y <span class='op'>=</span> <span class='fl'>0</span>,
   stroke <span class='op'>=</span> <span class='fl'>0</span>,
-  stroke.color <span class='op'>=</span> <span class='st'>"white"</span>,
   check_overlap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
   show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -297,10 +296,6 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
 the text. Ignored if less than zero.</p></td>
     </tr>
     <tr>
-      <th>stroke.color</th>
-      <td><p>any valid colour.</p></td>
-    </tr>
-    <tr>
       <th>check_overlap</th>
       <td><p>If <code>TRUE</code>, text that overlaps previous text in the
 same layer will not be plotted. <code>check_overlap</code> happens at draw time and in
@@ -327,6 +322,7 @@ this is not the case with <code>geom_label_contour()</code>.</p>
 <li><p><code>alpha</code></p></li>
 <li><p><code>angle</code></p></li>
 <li><p><code>colour</code></p></li>
+<li><p><code>stroke.color</code></p></li>
 <li><p><code>family</code></p></li>
 <li><p><code>fontface</code></p></li>
 <li><p><code>group</code></p></li>
@@ -356,7 +352,7 @@ this is not the case with <code>geom_label_contour()</code>.</p>
 <code><a href='stat_subset.html'>stat_subset</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 <span class='va'>v</span> <span class='op'>&lt;-</span> <span class='fu'>reshape2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span><span class='op'>(</span><span class='va'>volcano</span><span class='op'>)</span>
 <span class='va'>g</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>v</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Var1</span>, <span class='va'>Var2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span><span class='op'>)</span>
@@ -364,21 +360,26 @@ this is not the case with <code>geom_label_contour()</code>.</p>
 </div><div class='img'><img src='geom_text_contour-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>, stroke <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_text_contour-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>, rotate <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>, stroke <span class='op'>=</span> <span class='fl'>0.2</span>, stroke.colour <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_text_contour-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span>, stroke.colour <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span>, stroke <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_gradient.html'>scale_colour_gradient</a></span><span class='op'>(</span>aesthetics <span class='op'>=</span> <span class='st'>"stroke.colour"</span>, guide <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_text_contour-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>, rotate <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_text_contour-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>,
                       label.placement <span class='op'>=</span> <span class='fu'><a href='label_placement_fraction.html'>label_placement_random</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='geom_text_contour-4.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='geom_text_contour-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>,
                       label.placement <span class='op'>=</span> <span class='fu'><a href='label_placement_fraction.html'>label_placement_n</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='geom_text_contour-5.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='geom_text_contour-7.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>,
                       label.placement <span class='op'>=</span> <span class='fu'><a href='label_placement_fraction.html'>label_placement_flattest</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='geom_text_contour-6.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='geom_text_contour-8.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>,
                       label.placement <span class='op'>=</span> <span class='fu'><a href='label_placement_fraction.html'>label_placement_flattest</a></span><span class='op'>(</span>ref_angle <span class='op'>=</span> <span class='fl'>90</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='geom_text_contour-7.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='geom_text_contour-9.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

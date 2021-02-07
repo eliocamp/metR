@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Geopotential height — geopotential • metR</title>
+<title>Scale for stroke.colour — scale_stroke.colour_continuous • metR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,9 +46,8 @@
 
 
 
-<meta property="og:title" content="Geopotential height — geopotential" />
-<meta property="og:description" content="Monthly geopotential field at 700hPa south of 20°S from January 1990 to
-December 2000." />
+<meta property="og:title" content="Scale for stroke.colour — scale_stroke.colour_continuous" />
+<meta property="og:description" content="Scale for stroke.colour" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -135,33 +134,25 @@ December 2000." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Geopotential height</h1>
-    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/geopotential.R'><code>R/geopotential.R</code></a></small>
-    <div class="hidden name"><code>geopotential.Rd</code></div>
+    <h1>Scale for stroke.colour</h1>
+    <small class="dont-index">Source: <a href='https://github.com/eliocamp/metR/blob/master/R/geom_text_contour.R'><code>R/geom_text_contour.R</code></a></small>
+    <div class="hidden name"><code>scale_stroke.colour_continuous.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Monthly geopotential field at 700hPa south of 20°S from January 1990 to
-December 2000.</p>
+    <p>Scale for stroke.colour</p>
     </div>
 
-    <pre class="usage"><span class='va'>geopotential</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>parameters sent to <a href='https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html'>ggplot2::scale_color_continuous</a></p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data.table with 53224 rows and 5 variables.</p><dl>
-<dt>lon</dt><dd><p>longitude in degrees</p></dd>
-<dt>lat</dt><dd><p>latitude in degrees</p></dd>
-<dt>lev</dt><dd><p>level in hPa</p></dd>
-<dt>gh</dt><dd><p>geopotential height in meters</p></dd>
-<dt>date</dt><dd><p>date</p></dd>
-
-</dl>
-
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.derived.pressure.html'>https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.derived.pressure.html</a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

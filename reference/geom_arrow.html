@@ -83,7 +83,7 @@ transformation and different plot ratios." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@ transformation and different plot ratios." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -120,7 +120,7 @@ transformation and different plot ratios." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/eliocamp/metR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -343,8 +343,8 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 <code><a href='stat_subset.html'>stat_subset</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-datatable.com'>data.table</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://Rdatatable.gitlab.io/data.table'>data.table</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>seals</span><span class='op'>)</span>
 <span class='co'># If the velocity components are in the same units as the axis,</span>
@@ -402,7 +402,7 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
     <span class='fu'><a href='scale_mag.html'>scale_mag</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_arrow-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Sverdrup transport</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-datatable.com'>data.table</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://Rdatatable.gitlab.io/data.table'>data.table</a></span><span class='op'>)</span>
 <span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
 <span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
 <span class='va'>grid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='va'>d</span>, by <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>,
@@ -435,6 +435,18 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>grid</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>geom_arrow</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>dx <span class='op'>=</span> <span class='va'>Mx</span>, dy <span class='op'>=</span> <span class='va'>My</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_arrow-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Due to limitations in ggplot2 (see: https://github.com/tidyverse/ggplot2/issues/4291),</span>
+<span class='co'># if you define the vector with the dx and dy aesthetics, you need</span>
+<span class='co'># to explicitly add scale_mag() in order to show the arrow legend.</span>
+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>grid</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_arrow</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>dx <span class='op'>=</span> <span class='va'>Mx</span>, dy <span class='op'>=</span> <span class='va'>My</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='scale_mag.html'>scale_mag</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_arrow-6.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Alternative, use Mag and Angle.</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>grid</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_arrow</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>mag <span class='op'>=</span> <span class='fu'><a href='Mag.html'>Mag</a></span><span class='op'>(</span><span class='va'>Mx</span>, <span class='va'>My</span><span class='op'>)</span>, angle <span class='op'>=</span> <span class='fu'><a href='Mag.html'>Angle</a></span><span class='op'>(</span><span class='va'>Mx</span>, <span class='va'>My</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_arrow-7.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

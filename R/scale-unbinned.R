@@ -1,77 +1,3 @@
-
-get_middle <- function(x) {
-    if (is.numeric(x)) {
-        return(x)
-    }
-    breaks <- levels(x)
-    splitted <- strsplit(gsub("[\\(\\[\\)\\]]", "", as.character(breaks), perl = TRUE), ",")
-
-
-    low <- vapply(splitted, function(x) min(as.numeric(x)), FUN.VALUE =  numeric(1))
-    high <- vapply(splitted, function(x) max(as.numeric(x)), FUN.VALUE =  numeric(1))
-
-    if (low[1] == -Inf) {
-        low[1] <- high[1] - (high[2] - low[2])
-    }
-    n <- length(breaks)
-    if (high[n] == Inf) {
-        high[n] <- high[n-1] + (high[n-1] - low[n-1])
-    }
-
-    middle <- (high + low)/2
-    names(middle) <- breaks
-    middle <- middle[x]
-    middle
-}
-
-
-uncut <- function(x, squash_infinite = TRUE) {
-
-    splitted <- strsplit(gsub("[\\(\\[\\)\\]]", "", as.character(x), perl = TRUE), ",")
-
-    low <- vapply(splitted, function(x) as.numeric(x[1]), FUN.VALUE =  numeric(1))
-    high <- vapply(splitted, function(x) as.numeric(x[2]), FUN.VALUE =  numeric(1))
-
-    if (squash_infinite) {
-        if (low[1] == -Inf) {
-            low[1] <- high[1] - (high[2] - low[2])
-        }
-        n <- length(x)
-        if (high[n] == Inf) {
-            high[n] <- high[n-1] + (high[n-1] - low[n-1])
-        }
-    }
-
-    sort(c(low, high))
-
-}
-
-
-mid_rescaler <- function(mid) {
-    function(x, from) {
-        scales::rescale_mid(x, to = c(0, 1), from = from, mid)
-    }
-}
-
-
-
-#' @importFrom ggplot2 scale_type
-#' @export
-scale_type.metR_discretised <- function(x) {
-  c("discretised", "ordinal")
-}
-
-as.discretised <- function(x) {
-  new_x <- get_middle(x)
-  if (anyNA(is.na(new_x))) {
-    stop('Breaks not formatted correctly for a bin legend. Use `(<lower>, <upper>]` format to indicate bins')
-  }
-
-  class(x) <- c("metR_discretised", class(x))
-  x
-}
-
-
 #' Discretised scale
 #'
 #' This scale allows ggplot to understand data that has been discretised with
@@ -101,15 +27,25 @@ as.discretised <- function(x) {
 #' v + geom_contour_fill(aes(fill = stat(level))) +
 #'   scale_fill_discretised(low = "#a62100", high = "#fff394")
 #'
+#' # Setting limits explicitly will truncate the scale
+#' # (if any limit is inside the range of the breaks but doesn't
+#' # coincide with any range, it will be rounded with a warning)
+#' v + geom_contour_fill(aes(fill = stat(level))) +
+#'   scale_fill_discretised(low = "#a62100", high = "#fff394",
+#'                          limits = c(0.01, 0.028))
+#'
+#' # Or extend it.
+#' v + geom_contour_fill(aes(fill = stat(level))) +
+#'   scale_fill_discretised(low = "#a62100", high = "#fff394",
+#'                          limits = c(0, 0.07))
 #'
 #' v + geom_contour_fill(aes(fill = stat(level))) +
 #'   scale_fill_divergent_discretised(midpoint = 0.02)
 #'
-#'
 #' # Existing continous scales can be "retrofitted" by changing the `super`
 #' # and `guide` arguments.
 #' v + geom_contour_fill(aes(fill = stat(level))) +
-#'     scale_fill_distiller(super = ScaleDiscretised, guide = guide_colorsteps())
+#'     scale_fill_distiller(super = ScaleDiscretised)
 #'
 #' # Unequal breaks will, by default, map to unequal spacing in the guide
 #' v + geom_contour_fill(aes(fill = stat(level)), breaks = c(0, 0.005, 0.01, 0.02, 0.04)) +
@@ -123,7 +59,7 @@ as.discretised <- function(x) {
 #' @inheritParams ggplot2::scale_fill_gradient
 #' @rdname discretised_scale
 #' @export
-scale_fill_discretised <- function (..., low = "#132B43", high = "#56B1F7", space = "Lab",
+scale_fill_discretised <- function(..., low = "#132B43", high = "#56B1F7", space = "Lab",
                                  na.value = "grey50", guide = ggplot2::guide_colorsteps(even.steps = FALSE, show.limits = TRUE),
                                  aesthetics = "fill") {
 
@@ -155,13 +91,15 @@ scale_fill_divergent_discretised <- function(..., low = scales::muted("blue"),
 #' @rdname discretised_scale
 #' @export
 discretised_scale <- function(aesthetics, scale_name, palette, name = ggplot2::waiver(),
-                              breaks = ggplot2::waiver(), labels = ggplot2::waiver(),
+                              breaks = ggplot2::waiver(),
+                              labels = ggplot2::waiver(),
                               limits = NULL,
                               trans = scales::identity_trans(),
                               na.value = NA, drop = FALSE,
-                              guide = ggplot2::guide_colorsteps(FALSE), position = "left",
+                              guide = ggplot2::guide_colorsteps(even.steps = FALSE),
+                              position = "left",
                               rescaler = scales::rescale,
-                              oob = scales::squish,
+                              oob = scales::censor,
                               super = ScaleDiscretised) {
     aesthetics <- ggplot2::standardise_aes_names(aesthetics)
 
@@ -172,6 +110,10 @@ discretised_scale <- function(aesthetics, scale_name, palette, name = ggplot2::w
     # If the scale is non-positional, break = NULL means removing the guide
     if (is.null(breaks) && all(!is_position_aes(aesthetics))) {
         guide <- "none"
+    }
+
+    if (!is.waive(breaks)) {
+      stop("User-supplied breaks are not allowed in discretised scales.")
     }
 
     trans <- scales::as.trans(trans)
@@ -216,47 +158,161 @@ ScaleDiscretised <-  ggplot2::ggproto("ScaleDiscretised", ggplot2::ScaleBinned,
        breaks <- unique(uncut(levels(x), squash_infinite = TRUE))
        breaks <- self$trans$transform(breaks)
 
-       self$breaks <- breaks
-       self$range$range <- range(breaks)
+       self$data_breaks <- breaks
 
-       limits <- range(self$get_limits())
+       if (is.numeric(self$limits)) {
+         limits <- resolve_limits(self$limits, breaks)
 
-       limits <- cut(limits[1], c(-Inf, breaks, Inf),  ordered_result = TRUE)
+         if (!identical(limits, self$limits)) {
+           warning("User supplied limits don't correspond to valid breaks.",
+                   paste0("[", paste(self$limits, collapse = ", "), "]"),
+                          " rounded to ",
+                   paste0("[", paste(limits, collapse = ", "), "]"))
+         }
 
-       if (is.numeric(self$get_limits())) {
-           self$scale_limits <- range(self$get_limits())
+         self$limits <- limits
+         self$range$range <- limits
+
+         # stop("not implemented")
        } else {
-           self$scale_limits <- range(get_middle(limits))
+         self$limits <- range(breaks)
+         self$range$range <- range(breaks)
        }
 
-       self$limits <- self$scale_limits
-       self$breaks <- setdiff(self$breaks, self$limits)
+       self$breaks <- sort(unique(c(breaks[breaks >= self$limits[1] & breaks <= self$limits[2]],
+                                    self$limits)))
+
+       self$scale_limits <- c(diff(self$breaks)[1]/2 + self$breaks[1],
+                              rev(diff(self$breaks))[1]/2 + rev(self$breaks)[2])
+       self$breaks <- breaks[breaks > self$limits[1] & breaks < self$limits[2]]
+
 
        axis <- if ("x" %in% self$aesthetics) "x" else "y"
        ggplot2:::check_transformation(x, new_x, self$scale_name, axis)
        new_x
 
    },
-   map = function(self, x, limits = self$get_limits()) {
-       limits <-  self$scale_limits
-       ggplot2::ggproto_parent(ggplot2::ScaleBinned,
-                               self)$map(x, limits)
+
+    map = function(self, x, limits = self$get_limits()) {
+      # If a value is right at the limits, put it back into range
+      # browser()
+      breaks <-  sort(unique(c(self$breaks, self$limits)))
+      x[x == self$limits[1]] <- x[x == self$limits[1]] + diff(breaks)[1]/2
+      x[x == self$limits[2]] <- x[x == self$limits[2]] - rev(diff(breaks))[1]/2
+
+     new_x <- get_middle(cut(x, breaks = breaks, include.lowest = TRUE))
+
+
+     a <- ggplot2::ggproto_parent(ggplot2::ScaleContinuous,
+                                    self)$map(new_x, self$scale_limits)
+     a
    }
 )
 
+
+get_middle <- function(x) {
+  if (is.numeric(x)) {
+    return(x)
+  }
+  breaks <- levels(x)
+  splitted <- strsplit(gsub("[\\(\\[\\)\\]]", "", as.character(breaks), perl = TRUE), ",")
+
+
+  low <- vapply(splitted, function(x) min(as.numeric(x)), FUN.VALUE =  numeric(1))
+  high <- vapply(splitted, function(x) max(as.numeric(x)), FUN.VALUE =  numeric(1))
+
+  if (low[1] == -Inf) {
+    low[1] <- high[1] - (high[2] - low[2])
+  }
+  n <- length(breaks)
+  if (high[n] == Inf) {
+    high[n] <- high[n-1] + (high[n-1] - low[n-1])
+  }
+
+  middle <- (high + low)/2
+  names(middle) <- breaks
+  middle <- middle[x]
+  middle
+}
+
+
+uncut <- function(x, squash_infinite = TRUE) {
+
+  splitted <- strsplit(gsub("[\\(\\[\\)\\]]", "", as.character(x), perl = TRUE), ",")
+
+  low <- vapply(splitted, function(x) as.numeric(x[1]), FUN.VALUE =  numeric(1))
+  high <- vapply(splitted, function(x) as.numeric(x[2]), FUN.VALUE =  numeric(1))
+
+  if (squash_infinite) {
+    if (low[1] == -Inf) {
+      low[1] <- high[1] - (high[2] - low[2])
+    }
+    n <- length(x)
+    if (high[n] == Inf) {
+      high[n] <- high[n-1] + (high[n-1] - low[n-1])
+    }
+  }
+
+  sort(c(low, high))
+
+}
+
+
+mid_rescaler <- function(mid) {
+  function(x, from) {
+    scales::rescale_mid(x, to = c(0, 1), from = from, mid)
+  }
+}
+
+
+
+#' @importFrom ggplot2 scale_type
+#' @export
+scale_type.metR_discretised <- function(x) {
+  c("discretised", "ordinal")
+}
+
+as.discretised <- function(x) {
+  new_x <- get_middle(x)
+  if (anyNA(is.na(new_x))) {
+    stop('Breaks not formatted correctly for a bin legend. Use `(<lower>, <upper>]` format to indicate bins')
+  }
+
+  class(x) <- c("metR_discretised", class(x))
+  x
+}
+
+
+
+resolve_limits <- function(limits, breaks) {
+  if (limits[1] > min(breaks)) {
+    # Round to the lower break
+    dif <- breaks - limits[1]
+    limits[1] <- breaks[which(dif <= 0 & abs(dif) == min(abs(dif[dif <= 0])))]
+  }
+
+  if (limits[2] < max(breaks)) {
+    # Round up to upper break
+    dif <- breaks - limits[2]
+    limits[2] <- breaks[which(dif >= 0 & abs(dif) == min(abs(dif[dif >= 0])))]
+  }
+
+  limits
+}
+
 # From ggplot2
-is_position_aes <- function (vars) {
+is_position_aes <- function(vars) {
     aes_to_scale(vars) %in% c("x", "y")
 }
 
-aes_to_scale <- function (var) {
+aes_to_scale <- function(var) {
     var[var %in% c("x", "xmin", "xmax", "xend", "xintercept")] <- "x"
     var[var %in% c("y", "ymin", "ymax", "yend", "yintercept")] <- "y"
     var
 }
 
 
-check_breaks_labels <- function (breaks, labels) {
+check_breaks_labels <- function(breaks, labels) {
     if (is.null(breaks)) {
         return(TRUE)
     }

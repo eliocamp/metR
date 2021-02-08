@@ -1,12 +1,13 @@
 # nocov start
 
 .tidy2matrix <- function(data, formula, value.var, fill = NULL, ...) {
+    # browser()
     row.vars <- all.vars(formula[[2]])
     col.vars <- all.vars(formula[[3]])
     data <- data.table::as.data.table(data)
     data[, row__ := .GRP, by = c(row.vars)]
     data[, col__ := .GRP, by = c(col.vars)]
-    if (is.null(fill)){
+    if (is.null(fill)) {
         fill <- 0
         # rowdims <- data[col__ == 1, (row.vars), with = FALSE]
         # coldims <- data[row__ == 1, (col.vars), with = FALSE]
@@ -26,7 +27,7 @@
 }
 
 
-seq_range <- function(x, by = ggplot2::resolution(x, zero = FALSE),...) {
+seq_range <- function(x, by = ggplot2::resolution(x, zero = FALSE), ...) {
     r <- range(x)
     seq.int(r[1], r[2], by = by, ...)
 }
@@ -52,7 +53,7 @@ guess <- function (x) {
     if (!is.null(a)) a else b
 }
 # from ggplot2
-is.waive <- function (x) {
+is.waive <- function(x) {
     inherits(x, "waiver")
 }
 

@@ -40,10 +40,10 @@ discretised_scale(
   trans = scales::identity_trans(),
   na.value = NA,
   drop = FALSE,
-  guide = ggplot2::guide_colorsteps(FALSE),
+  guide = ggplot2::guide_colorsteps(even.steps = FALSE),
   position = "left",
   rescaler = scales::rescale,
-  oob = scales::squish,
+  oob = scales::censor,
   super = ScaleDiscretised
 )
 }
@@ -268,15 +268,25 @@ v + geom_contour_fill(aes(fill = stat(level))) +
 v + geom_contour_fill(aes(fill = stat(level))) +
   scale_fill_discretised(low = "#a62100", high = "#fff394")
 
+# Setting limits explicitly will truncate the scale
+# (if any limit is inside the range of the breaks but doesn't
+# coincide with any range, it will be rounded with a warning)
+v + geom_contour_fill(aes(fill = stat(level))) +
+  scale_fill_discretised(low = "#a62100", high = "#fff394",
+                         limits = c(0.01, 0.028))
+
+# Or extend it.
+v + geom_contour_fill(aes(fill = stat(level))) +
+  scale_fill_discretised(low = "#a62100", high = "#fff394",
+                         limits = c(0, 0.07))
 
 v + geom_contour_fill(aes(fill = stat(level))) +
   scale_fill_divergent_discretised(midpoint = 0.02)
 
-
 # Existing continous scales can be "retrofitted" by changing the `super`
 # and `guide` arguments.
 v + geom_contour_fill(aes(fill = stat(level))) +
-    scale_fill_distiller(super = ScaleDiscretised, guide = guide_colorsteps())
+    scale_fill_distiller(super = ScaleDiscretised)
 
 # Unequal breaks will, by default, map to unequal spacing in the guide
 v + geom_contour_fill(aes(fill = stat(level)), breaks = c(0, 0.005, 0.01, 0.02, 0.04)) +

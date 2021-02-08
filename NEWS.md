@@ -1,5 +1,8 @@
 # metR (development version)
 
+- discretised scales now work better when passing user-supplied limits. 
+
+
 # metR 0.9.1
 
 ## New Features

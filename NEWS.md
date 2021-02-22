@@ -1,6 +1,11 @@
 # metR (development version)
 
+## New Features
+
 - discretised scales now work better when passing user-supplied limits. 
+
+- New functions to use the International Standard Atmosphere to get height from 
+pressure and vice versa, as well as to use as secondary axis. 
 
 
 # metR 0.9.1

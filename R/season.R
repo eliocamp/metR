@@ -69,6 +69,7 @@ seasonally <- function(x) {
     lubridate::year(times[m == 12]) <- data.table::year(times[m == 12]) + 1
     s <- season(times)
 
+    lubridate::day(times) <- 15
     lubridate::month(times) <- (as.numeric(s) - 1)*3 + 1
 
     times[match(x, times_org)]

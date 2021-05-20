@@ -71,7 +71,7 @@ citation("metR")
 #>   @Manual{,
 #>     title = {metR: Tools for Easier Analysis of Meteorological Fields},
 #>     author = {Elio Campitelli},
-#>     year = {2020},
+#>     year = {2021},
 #>     note = {R package version 0.9.1},
 #>     url = {https://github.com/eliocamp/metR},
 #>     doi = {10.5281/zenodo.2593516},
@@ -89,11 +89,6 @@ the wind with streamlines.
 library(metR)
 library(data.table)
 library(ggplot2)
-#> 
-#> Attaching package: 'ggplot2'
-#> The following object is masked from 'package:data.table':
-#> 
-#>     :=
 data(geopotential)
 # Use Empirical Orthogonal Functions to compute the Antarctic Oscillation
 geopotential <- copy(geopotential)

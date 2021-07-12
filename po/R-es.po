@@ -1,15 +1,29 @@
-#' @section Overview:
-#' Conceptually it's divided into *visualization tools* and *data tools*.
-#' The former are geoms, stats and scales that help with plotting using
-#' [ggplot2], such as [stat_contour_fill] or [scale_y_level], while the
-#' later are functions for common data processing tools in the atmospheric
-#' sciences, such as [Derivate] or [EOF]; these are implemented to work in the
-#' [data.table] paradigm, but also work with regular data frames.
+#' Reverse log transform
 #'
-#' To get started, check the vignettes:
-#' * Visualization Tools: `vignette("Visualization-tools", package = "metR")`
-#' * Working with Data: `vignette("Working-with-data", package = "metR")`
+#' Reverse log transformation. Useful when plotting and one axis is in pressure
+#' levels.
 #'
-#' @name metR
-#' @docType package
-"_PACKAGE"
+#' @param base Base of the logarithm
+#'
+#' @examples
+#' # Adiabatic temperature profile
+#' gamma <- 0.286
+#' t <- data.frame(p = c(1000, 950, 850, 700, 500, 300, 200, 100))
+#' t$t <- 300*(t$p/1000)^gamma
+#'
+#' library(ggplot2)
+#' ggplot(t, aes(p, t)) +
+#'    geom_line() +
+#'    coord_flip() +
+#'    scale_x_continuous(trans = "reverselog")
+#'
+#' @family ggplot2 helpers
+#' @export
+reverselog_trans <- function(base = 10) {
+    trans <- function(x) -log(x, base)
+    inv <- function(x) base^(-x)
+
+    scales::trans_new(paste0("reverselog-", format(base)), trans, inv,
+              scales::log_breaks(base = base),
+              domain = c(1e-100, Inf))
+}

@@ -1,14 +1,13 @@
-#' Surface height
+#' Air temperature
 #'
-#' Surface height of central Argentina on a lambert grid.
+#' A global air temperature field for 2017-07-09.
 #'
-#' @format
-#' A data.table with 53224 rows and 5 variables.
+#' @format A data.table with 10512 rows and 3 variables:
 #' \describe{
-#'   \item{lon}{longitude in degrees}
+#'   \item{lon}{longitude in degrees from 0 to 360}
 #'   \item{lat}{latitude in degrees}
-#'   \item{height}{height in meters}
-#'   \item{x}{x coordinates of projection}
-#'   \item{y}{y coordinates of projection}
-#'   }
-"surface"
+#'   \item{lev}{pressure level in hPa)}
+#'   \item{air}{air temperature in Kelvin}
+#' }
+#' @source \url{https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.derived.pressure.html}
+"temperature"

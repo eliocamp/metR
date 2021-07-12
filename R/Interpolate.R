@@ -126,8 +126,7 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
         loc <- data.table::setDT(expand.grid(x.out = x.out, y.out = y.out))
     } else if (grid == FALSE) {
         if (length(x.out) != length(y.out)) {
-            stop('x.out is not of the same length as y.out.
-                 If x.out and y.out define unique points on a regular grid, use grid = TRUE')
+            stop('x.out is not of the same length as y.out.\nIf x.out and y.out define unique points on a regular grid, use grid = TRUE')
         }
         loc <- data.table::data.table(x.out, y.out)
         if (!is.null(path) & !isFALSE(path)) {

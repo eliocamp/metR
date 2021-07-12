@@ -27,8 +27,7 @@
 #' @export
 # nocov start
 DivideTimeseries <- function(g, x, n = 2, xlab = "x", ylab = "y") {
-    warning("'DivideTimeseries' is deprecated, use ggwrap instead",
-            ' (https://github.com/wilkox/ggwrap)')
+    warning("'DivideTimeseries' is deprecated, use ggwrap instead (https://github.com/wilkox/ggwrap)")
 
     if (!requireNamespace("gridExtra", quietly = TRUE)) {
         stop("DivideTimeseries needs the gridExtra package. Install it with `install.packages(\"gridExtra\")`")

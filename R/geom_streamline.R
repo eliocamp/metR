@@ -313,9 +313,8 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
       solid_lines <- all(attr$solid)
       constant <- all(attr$constant)
       if (!solid_lines && !constant) {
-          stop("geom_streamline: If you are using dotted or dashed lines",
-               ", colour, size and linetype must be constant over the line",
-               call. = FALSE)
+        stop(gettextf("%s: If you are using dotted or dashed lines, colour, size and linetype must be constant over the line.",
+                      "geom_streamline"), call. = FALSE)
       }
 
       # Work out grouping variables for grobs

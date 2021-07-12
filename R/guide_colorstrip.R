@@ -221,14 +221,14 @@ guide_gengrob.colorstrip <- function(guide, theme) {
     switch(guide$direction,
            "horizontal" = {
                label.position <- guide$label.position %||% "bottom"
-               if (!label.position %in% c("top", "bottom")) stop("label position \"", label.position, "\" is invalid")
+               if (!label.position %in% c("top", "bottom")) stop(gettextf("Label position \"%s\" is invalid.", label.position))
 
                barwidth <- grid::convertWidth(guide$barwidth %||% (theme$legend.key.width * 5), "mm")
                barheight <- grid::convertHeight(guide$barheight %||% theme$legend.key.height, "mm")
            },
            "vertical" = {
                label.position <- guide$label.position %||% "right"
-               if (!label.position %in% c("left", "right")) stop("label position \"", label.position, "\" is invalid")
+               if (!label.position %in% c("left", "right")) stop(gettextf("Label position \"%s\" is invalid.", label.position))
 
                barwidth <- grid::convertWidth(guide$barwidth %||% theme$legend.key.width, "mm")
                barheight <- grid::convertHeight(guide$barheight %||% (theme$legend.key.height * 5), "mm")

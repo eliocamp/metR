@@ -117,11 +117,11 @@ print.eof <- function(x, ...) {
 #' @method summary eof
 #' @export
 summary.eof <- function(object, ...) {
-    cat("Importance of components:\n")
+    cat(gettext("Importance of components:\n"))
     pc <- attr(object, "suffix")
     sdev <- object$sdev[, .(PC = get(pc), sd, r2)]
     sdev[, cum.r2 := cumsum(r2)]
-    cat("Component", "Explained variance", "Cumulative variance\n")
+    cat(gettext("Component"), gettext("Explained variance"), gettext("Cumulative variance\n"))
     p <- lapply(seq_len(nrow(sdev)), function(x) {
         cat(formatC(sdev[x, ]$PC, width = 7), "  ",
             formatC(scales::percent(sdev[x, ]$r2), width = 18),

@@ -92,7 +92,7 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
         if (is.null(data)) {
             formula <- Formula::as.Formula(formula)
             data <- data.table::as.data.table(eval(quote(model.frame(formula, data  = data,
-                                                         na.action = NULL))))
+                                                                     na.action = NULL))))
         }
         f <- as.character(formula)
 
@@ -150,15 +150,18 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
     for (i in 2:length(eofs)) {
         # After first guess, impute gaps and validation.
         X.rec <- .ImputeEOF1(X.rec, c(gaps, validation), eofs[i],
-                                  tol = tol, max.iter = max.iter,
-                                  verbose = verbose, prev = prev)
+                             tol = tol, max.iter = max.iter,
+                             verbose = verbose, prev = prev)
         prev <- X.rec$prval
         X.rec <- X.rec$X.rec
 
         rmse <- c(rmse, sqrt(mean((X[validation] - X.rec[validation])^2)))
 
         if (verbose == TRUE) {
-            cat("\r", "With", eofs[i], "eof - rmse = ", rmse[i])
+            message(paste0(gettextf(ngettext(eofs[i],
+                                             "With %d eof  - rmse = %.3f",
+                                             "With %d eofs - rmse = %.3f"),
+                                    eofs[i], rmse[i]),"\r"),  appendLF=FALSE)
         }
 
         # Break the loop if we are over the minimum eof asked and, either

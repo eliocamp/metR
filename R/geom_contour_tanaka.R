@@ -194,9 +194,8 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
       solid_lines <- all(attr$solid)
       constant <- all(attr$constant)
       if (!solid_lines && !constant) {
-          stop("geom_path: If you are using dotted or dashed lines",
-               ", colour, size and linetype must be constant over the line",
-               call. = FALSE)
+        stop(gettextf("%s: If you are using dotted or dashed lines, colour, size and linetype must be constant over the line.",
+             "geom_path"), call. = FALSE)
       }
 
       # munched[delta > 0, fill := .rgb2

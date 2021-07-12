@@ -43,7 +43,7 @@ guess <- function (x) {
     if ("(all)" %chin% names(x))
         return("(all)")
     var <- names(x)[ncol(x)]
-    message("Using '", var, "' as value column. Use 'value.var' to override")
+    message(gettextf("Using \"%s\" as value column. Use 'value.var' to override", var))
     return(var)
 }
 
@@ -61,7 +61,7 @@ element_render <- function(theme, element, ..., name = NULL) {
     # Get the element from the theme, calculating inheritance
     el <- ggplot2::calc_element(element, theme)
     if (is.null(el)) {
-        message("Theme element ", element, " missing")
+        message(gettextf("Theme element %s missing", element))
         return(ggplot2::zeroGrob())
     }
 
@@ -151,7 +151,7 @@ rename_aes <- function(x) {
     if (length(duplicated_names) > 0L) {
         duplicated_message <- paste0(unique(duplicated_names), collapse = ", ")
         warning(
-            "Duplicated aesthetics after name standardisation: ", duplicated_message, call. = FALSE
+            gettextf("Duplicated aesthetics after name standardisation: %s", duplicated_message), call. = FALSE
         )
     }
     x

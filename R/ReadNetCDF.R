@@ -133,8 +133,7 @@ ReadNetCDF <- function(file, vars = NULL,
                        subset = NULL, key = FALSE) {
     ncdf4.available <- requireNamespace("ncdf4", quietly = TRUE)
     if (!ncdf4.available) {
-        stop("ReadNetCDF needs package'ncdf4'. ",
-             "Install it with 'install.packages(\"ncdf4\")'")
+        stop("ReadNetCDF needs package'ncdf4'. Install it with 'install.packages(\"ncdf4\")'")
     }
 
     out <- out[1]
@@ -314,8 +313,7 @@ ReadNetCDF <- function(file, vars = NULL,
 
     if (!requireNamespace("udunits2", quietly = TRUE)) {
         message("Time dimension found and package udunits2 is not installed. Trying to parse.")
-        fail <- paste0("Time parsing failed. Returing raw values in ", units, ".\n",
-                       "Install udunits2 with `install_packages(\"udunits2\")` to parse it automatically.")
+        fail <- gettextf("Time parsing failed. Returing raw values in %s.\nInstall udunits2 with `install_packages(\"udunits2\")` to parse it automatically.", units)
 
         units <- trimws(strsplit(units, "since")[[1]])
 
@@ -414,11 +412,11 @@ GlanceNetCDF <- function(file, ...) {
 
 #' @export
 print.nc_glance <- function(x, ...) {
-    cat("----- Variables ----- \n")
+    cat(gettextf("----- Variables ----- \n"))
     out <- lapply(x$vars, print)
 
     cat("\n\n")
-    cat("----- Dimensions ----- \n")
+    cat(gettext("----- Dimensions ----- \n"))
     out <- lapply(x$dim, print)
 }
 
@@ -433,12 +431,12 @@ print.ncvar4 <- function(x, ...) {
     cat("\n")
     dims <- vapply(x$dim, function(x) x$name, "a")
 
-    cat("    Dimensions: ")
+    cat(gettext("    Dimensions: "))
     cat(paste0(dims, collapse = " by "), sep = "")
     cat("\n")
 
     if (x$hasScaleFact) {
-        cat("    (Scaled)")
+        cat(gettext("    (Scaled)"))
         cat("\n")
     }
 
@@ -455,11 +453,8 @@ print.ncdim4 <- function(x, ...) {
         units <- ""
     }
 
-    cat("  ", x$name, ": ",
-        x$len, " values from ",
-        as.character(min(vals)), " to ",
-        as.character(max(vals)), " ",
-        units,"\n", sep = "")
+    cat(gettextf("  %s: %d values from %s to %s %s\n",
+             x$name, x$len, as.character(min(vals)), as.character(max(vals)), units))
     return(invisible(x))
 }
 

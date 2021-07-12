@@ -88,8 +88,6 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
             data <- .smnobs(date[i])
         } else if (type[1] == "radiation") {
             data <- .smnrad(date[i])
-        } else {
-            stop("wrong type", .call = FALSE)
         }
         if (is.null(data)) no_data <- i
         return(data)
@@ -99,7 +97,8 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
 
     if (length(return.data) == 0) stop("No data available for any of selected dates")
     if (length(no_data) != 0) {
-        warning(paste0("No data for available for these dates: "), date[no_data])
+        dates_no_data <- paste0(date[no_data], collapse = ", ")
+        warning(gettextf("%s", paste0("No data for available for these dates: "), dates_no_data))
     }
 
     if (cache) {

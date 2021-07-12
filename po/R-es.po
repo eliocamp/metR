@@ -1,93 +1,148 @@
-#' Wrap periodic data to any range
+#' Compute trajectories
 #'
-#' Periodic data can be defined only in one period and be extended to any arbitrary
-#' range.
+#' Computes trajectories of particles in a time-varying velocity field.
 #'
-#' @param x a data.frame
-#' @param circular the name of the circular dimension
-#' @param wrap the wrap for the data to be extended to
+#' @param formula a formula indicating dependent and independent variables
+#' in the form of dx + dy ~ x + y + t.
+#' @param x0,y0 starting coordinates of the particles.
+#' @param cyclical logical vector of boundary condition for x and y.
+#' @param data optional data.frame containing the variables.
+#' @param res resolution parameter (higher numbers increases the resolution)
 #'
-#' @return
-#' A data.frame.
 #'
-#' @examples
-#' library(ggplot2)
-#' library(data.table)
-#' data(geopotential)
-#' g <- ggplot(geopotential[date == date[1]], aes(lon, lat)) +
-#'     geom_contour(aes(z = gh)) +
-#'     coord_polar() +
-#'     ylim(c(-90, -10))
-#'
-#' # This plot has problems in lon = 0
-#' g
-#'
-#' # But using WrapCircular solves it.
-#' g %+% WrapCircular(geopotential[date == date[1]], "lon", c(0, 360))
-#'
-#' # Aditionally data can be just repeatet to the right and
-#' # left
-#' ggplot(WrapCircular(geopotential[date == date[1]], wrap = c(-180, 360 + 180)),
-#'        aes(lon, lat)) +
-#'     geom_contour(aes(z = gh))
-#'
-#' # The same behaviour is now implemented directly in geom_contour2
-#' # and geom_contour_fill
-#' ggplot(geopotential[date == date[1]], aes(lon, lat)) +
-#'     geom_contour2(aes(z = gh), xwrap = c(-180, 360 + 180))
-#'
-#' @seealso geom_contour2
-#'
-#' @family ggplot2 helpers
 #' @export
-WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
-    warning("WrapCircular is deprecated, use ggperiodic::wrap instead")
+Trajectory <- function(formula, x0, y0,
+                       cyclical = FALSE,
+                       data = NULL, res = 2) {
 
     checks <- makeAssertCollection()
-    assertDataFrame(x, add = checks)
-    assertCharacter(circular, len = 1, any.missing = FALSE, add = checks)
-    assertNumeric(wrap, len = 2)
+
+    assertClass(formula, "formula", add = checks)
+    assertSameLength(list(x0 = length(x0), y0 = length(y0)), add = checks)
+    assertLogical(cyclical, add = checks)
+    assertDataFrame(data, null.ok = TRUE, add = checks)
+    assertNumeric(res, len = 1, add = checks)
+
     reportAssertions(checks)
 
-    if (nrow(x) == 0) return(x)
+    dep.names <- formula.tools::lhs.vars(formula)
+    if (length(dep.names) == 0) stop("LHS of formula must have at least one variable")
 
-    x <- data.table::as.data.table(x)
-    data.table::setorderv(x, circular)
+    if (length(dep.names) != 2) {
+        stop("LHS of formula must be of the form dx + dy")
+    }
 
-    res <- ggplot2::resolution(x[[circular]])
-    m <- min(x[[circular]])
-    M <- max(x[[circular]])
+    ind.names <- formula.tools::rhs.vars(formula)
+    if (length(ind.names) != 3) {
+        stop("RHS of formula must be of the form x + y + t")
+    }
 
-    # How many steps form the left and right extremes
-    # represent the range
-    right <- trunc((max(wrap) - M)/res)
-    left <- trunc((min(wrap) - m)/res)
+    formula <- Formula::as.Formula(formula)
+    field <- data.table::as.data.table(eval(quote(model.frame(formula, data = data,
+                                                  na.action = NULL))))
 
-    # New "grid"
-    x.new <- seq(m + left*res, M + right*res, by = res)
+    data.table::setorderv(field, ind.names)
+    data.table::setnames(field, c(ind.names, dep.names), c("x", "y", "t", "dx", "dy"))
 
-    right <- right + data.table::uniqueN(x[[circular]]) - 1
+    if (.is.somedate(field$t)) {
+        field[, t1 := to_seconds(t[1]), by = t]
+    } else {
+        field[, t1 := t]
+    }
 
-    # The old coord of the new grid
-    index <- seq(left, right)
-    index <- index %% length(unique(x[[circular]])) + 1
-    x.old <- unique(x[[circular]])[index]
+    field <- field[!is.na(dx) & !is.na(dy)]
 
-    x.new <- data.table::data.table(x.old, x.new)
-    colnames(x.new) <- c(circular, paste0(circular, "new"))
+    range.x <- range(field$x)
+    range.y <- range(field$y)
 
-    # Add values according to the old grid and then
-    # remove it.
-    y <- x[x.new, on = circular, allow.cartesian = TRUE]
-    data.table::set(y, NULL, circular, NULL )
-    data.table::setnames(y, paste0(circular, "new"), circular)
-    return(y)
+    times <- unique(field$t1)
+    dt <- diff(times)[1]/res
+    ts <- seq(min(times), max(times), by = dt)
+
+    points_out <- list(data.table::data.table(x = x0, y = y0, id = seq_along(x0),
+                                  piece = 1,
+                                  t1 = ts[1]))
+    points_out[[1]][, c("dx", "dy") := force.fun3d(x, y, t1, times, field)]
+    points <- data.table::copy(points_out[[1]])
+
+    if (length(cyclical) == 1) {
+        cyclical <- rep(cyclical, 2)
+    }
+    circ.x <-  cyclical[1]
+    circ.y <-  cyclical[2]
+
+    for (ti in seq_along(ts)[-1]) {
+        points[, c("x", "y", "t1") := .(x + dx*dt, y + dy*dt, ts[ti])]
+        points[, c("x", "piece") := .fold(x, piece, range.x, circ.x)]
+        points[, c("y", "piece") := .fold(y, piece, range.y, circ.y)]
+        points[, c("dx", "dy") := force.fun3d(x, y, ts, times, field)]
+        points <- points[!is.na(dx) & !is.na(dy)]
+        points_out[[ti]] <- points
+        points <- points[dx + dy != 0]
+        if(nrow(points) == 0) break
+    }
+
+    points_out <- do.call(rbind, points_out)
+
+    if (.is.somedate(field$t)) {
+        points_out[, t1 := start <- lubridate::ymd_hms("1970-01-01 00:00:00") +
+                       lubridate::seconds(t1[1]),
+                   by = t1]
+    }
+
+    data.table::setnames(points_out, c("x", "y", "t1", "dx", "dy"), c(ind.names, dep.names))
+
+    return(points_out[])
 }
 
-#' @rdname WrapCircular
-#' @usage NULL
-#' @format NULL
-#' @export
-RepeatCircular <- function(x, circular = "lon", max = NULL) {
-    .Deprecated("WrapCircular")
+force.fun3d <- function(x, y, ts, times, field) {
+    # si t justo está en times, es el mismo, así que no hace falta
+    # interpolar nada
+    ts <- ts[1]
+    if (isTRUE(ts %in% times)) {
+        force.fun(x, y, field[t1 == ts])
+    } else {
+        # Agarro los tiempos anteriores y siguientes, calculo las fuerzas
+        # en x e y y luego interpolo a ts
+        t0 <- times[times <= ts]
+        t0 <- t0[length(t0)] # tiempo anterior
+        tf <- times[times >= ts][1]  # tiempo siguiente
+
+        t0_force <- data.table::setDT(force.fun(x, y, field[t1 == t0]))
+        data.table::set(t0_force, NULL, "x", x)
+        data.table::set(t0_force, NULL, "y", y)
+        data.table::set(t0_force, NULL, "t", t0)
+
+        tf_force <- data.table::setDT(force.fun(x, y, field[t1 == tf]))
+        data.table::set(tf_force, NULL, "x", x)
+        data.table::set(tf_force, NULL, "y", y)
+        data.table::set(tf_force, NULL, "t", tf)
+
+        force <- rbind(data.table::setDT(t0_force), data.table::setDT(tf_force))
+        force <- force[, .(dx = mean(dx),
+                           dy = mean(dy)),
+                       by = .(x, y)]
+        return(force[, .(dx, dy)])
+    }
+}
+
+force.fun <- function(x, y, field) {
+    matrix <- .tidy2matrix(field, x ~ y, value.var = "dx", fill = 0)
+    dx.field <- list(x = matrix$rowdims$x,
+                     y = matrix$coldims$y,
+                     z = matrix$matrix)
+
+    matrix <- .tidy2matrix(field, x ~ y, value.var = "dy", fill = 0)
+    dy.field <- list(x = matrix$rowdims$x,
+                     y = matrix$coldims$y,
+                     z = matrix$matrix)
+
+    dx <- fields::interp.surface(dx.field, cbind(x, y))
+    dy <- fields::interp.surface(dy.field, cbind(x, y))
+    return(list(dx = dx, dy = dy))
+}
+
+to_seconds <- function(date) {
+    start <- lubridate::ymd_hms("1970-01-01 00:00:00")
+    lubridate::time_length(lubridate::interval(start, date), "second")
 }

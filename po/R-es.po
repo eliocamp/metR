@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: metr\n"
-"POT-Creation-Date: 2021-07-12 18:15:10\n"
-"PO-Revision-Date: 2021-07-12 18:26\n"
+"POT-Creation-Date: 2021-07-12 18:31:11\n"
+"PO-Revision-Date: 2021-07-12 18:31\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -77,94 +77,94 @@ msgstr "No hay datos para ninguna de las fechas seleccionadas"
 #: GetSMNData.R:101
 #, c-format
 msgid "No data for available for these dates: %s"
-msgstr ""
+msgstr "No hay datos disponibles para las siguientes fechas: %s"
 
 #: GetTopography.R:54
 msgid "lat.north can't be smaller than lat.south"
-msgstr ""
+msgstr "lat.north no puede ser menor que lat.south"
 
 #: GetTopography.R:55
 msgid "lon.east can't be smaller than lon.west"
-msgstr ""
+msgstr "lon.east no puede ser menor que lon.west"
 
 #: GetTopography.R:81
 msgid "Fetching cached field."
-msgstr ""
+msgstr "Buscando campo en cache."
 
 #: GetTopography.R:90
 msgid "Failed to fetch file."
-msgstr ""
+msgstr "No se pudo leer el archivo."
 
 #: IdealGas.R:86 IdealGas.R:102 IdealGas.R:121 IdealGas.R:137 IdealGas.R:157 IdealGas.R:180
 msgid "Too many state variables."
-msgstr ""
+msgstr "Demasiadas variables de estado."
 
 #: IdealGas.R:88 IdealGas.R:104 IdealGas.R:123 IdealGas.R:139 IdealGas.R:159 IdealGas.R:182
 msgid "Too few state variables."
-msgstr ""
+msgstr "Muy pocas variables de estado."
 
 #: Impute2D.R:35 Interpolate.R:88 Tajectory.R:29
 msgid "LHS of formula must have at least one variable"
-msgstr ""
+msgstr "El lado izquierdo de la fórmula debe tener al menos una variable"
 
 #: Impute2D.R:39 Interpolate.R:92
 msgid "RHS of formula must be of the form x + y"
-msgstr ""
+msgstr "El lado derecho de la fórmula debe ser de la forma x + y"
 
 #: Impute2D.R:76 Impute2D.R:82 Impute2D.R:85
 msgid "imputing missing values"
-msgstr ""
+msgstr "imputando valores faltantes"
 
 #: Impute2D.R:79
 msgid "Linear imputation failed. Try passing a constant number or a function (e.g. `na.fill = mean`)."
-msgstr ""
+msgstr "Imputación linear falló. Intente pasando una constante o una función (p.e. `na.fill = mean`)."
 
 #: ImputeEOF.R:111 ImputeEOF.R:125
 msgid "data has no missing values"
-msgstr ""
+msgstr "'data' no tiene valores faltantes"
 
 #: ImputeEOF.R:129
 msgid "data argument must be matrix or data frame"
-msgstr ""
+msgstr "el argumento 'data' debe ser una matriz o un data frame"
 
 #: Interpolate.R:80
 msgid "`order` must be logical or character"
-msgstr ""
+msgstr "`order` tiene que ser un caracter o un valor lógico"
 
 #: Interpolate.R:99
 msgid "Interpolate need a unique value for each x and y"
-msgstr ""
+msgstr "Interpolate necesida un valor único para cada combinación de x e y"
 
 #: Interpolate.R:104
 msgid "Only 1 dimension in formula. Ignoring y.out."
-msgstr ""
+msgstr "Sólo una dimensión en 'formula'. Ignorando y.out."
 
 #: Interpolate.R:121
 msgid "duplicate values on x.out. If x.out is a vector of locations, use grid = FALSE"
-msgstr ""
+msgstr "valores duplicados en x.out. Si x.out es un vector de puntos, usar grid = FALSE"
 
 #: Interpolate.R:124
 msgid "duplicate values on y.out. If y.out is a vector of locations, use grid = FALSE"
-msgstr ""
+msgstr "valores duplicados en y.out. Si y.out es un vector de puntos, usar grid = FALSE"
 
 #: Interpolate.R:129
 msgid "x.out is not of the same length as y.out.\n"
-"                 If x.out and y.out define unique points on a regular grid, use grid = TRUE"
+"If x.out and y.out define unique points on a regular grid, use grid = TRUE"
 msgstr ""
 
-#: Interpolate.R:137
+#: Interpolate.R:136
 msgid "wrong mode, choose either \"grid\" or \"locations\""
 msgstr ""
 
-#: Interpolate.R:183
+#: Interpolate.R:182
 msgid "either `xs` or `ys` must be of length greater than 1"
 msgstr ""
 
-#: Interpolate.R:187
+#: Interpolate.R:186
 msgid "`x` must be a numeric vector"
 msgstr ""
 
-#: Interpolate.R:191
+#: Interpolate.R:190
 msgid "`y` must be a numeric vector"
 msgstr ""
 

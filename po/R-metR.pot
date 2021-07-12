@@ -1,0 +1,370 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: metR 0.9.1\n"
+"POT-Creation-Date: 2021-07-12 14:10:40\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ConvertLongitude.R:40
+msgid "lon lower than 180, not a valid longitude"
+msgstr ""
+
+#: ConvertLongitude.R:43
+msgid "lon greater than 360, not a valid longitude"
+msgstr ""
+
+#: Derivate.R:102
+msgid "One boundary condition per variable needed."
+msgstr ""
+
+#: Derivate.R:236
+msgid "cyclical derivatives on a non-equispaced grid not yet supported"
+msgstr ""
+
+#: DivideTimeseries.R:30
+msgid "'DivideTimeseries' is deprecated, use ggwrap instead"
+msgstr ""
+
+#: DivideTimeseries.R:31
+msgid "(https://github.com/wilkox/ggwrap)"
+msgstr ""
+
+#: DivideTimeseries.R:34
+msgid "DivideTimeseries needs the gridExtra package. Install it with `install.packages(\"gridExtra\")`"
+msgstr ""
+
+#: EOF.R:148
+msgid "Columns not found in data:"
+msgstr ""
+
+#: EOF.R:148 ReadNetCDF.R:213
+msgid ","
+msgstr ""
+
+#: EOF.R:161
+msgid "The formula"
+msgstr ""
+
+#: EOF.R:161
+msgid "does not identify an unique observation for each cell."
+msgstr ""
+
+#: EOF_methods.R:136
+msgid "eof must be an EOF object"
+msgstr ""
+
+#: GetSMNData.R:92
+msgid "wrong type"
+msgstr ""
+
+#: GetSMNData.R:100
+msgid "No data available for any of selected dates"
+msgstr ""
+
+#: GetSMNData.R:102
+msgid "No data for available for these dates:"
+msgstr ""
+
+#: GetTopography.R:54
+msgid "lat.north can't be smaller than lat.south"
+msgstr ""
+
+#: GetTopography.R:55
+msgid "lon.east can't be smaller than lon.west"
+msgstr ""
+
+#: GetTopography.R:81
+msgid "Fetching cached field."
+msgstr ""
+
+#: GetTopography.R:90
+msgid "Failed to fetch file."
+msgstr ""
+
+#: IdealGas.R:86 IdealGas.R:102 IdealGas.R:121 IdealGas.R:137 IdealGas.R:157 IdealGas.R:180
+msgid "Too many state variables."
+msgstr ""
+
+#: IdealGas.R:88 IdealGas.R:104 IdealGas.R:123 IdealGas.R:139 IdealGas.R:159 IdealGas.R:182
+msgid "Too few state variables."
+msgstr ""
+
+#: Impute2D.R:35 Interpolate.R:88 Tajectory.R:29
+msgid "LHS of formula must have at least one variable"
+msgstr ""
+
+#: Impute2D.R:39 Interpolate.R:92
+msgid "RHS of formula must be of the form x + y"
+msgstr ""
+
+#: Impute2D.R:76 Impute2D.R:82 Impute2D.R:85
+msgid "imputing missing values"
+msgstr ""
+
+#: Impute2D.R:79
+msgid "Linear imputation failed. Try passing a constant number or a function (e.g. `na.fill = mean`)."
+msgstr ""
+
+#: ImputeEOF.R:111 ImputeEOF.R:125
+msgid "data has no missing values"
+msgstr ""
+
+#: ImputeEOF.R:129
+msgid "data argument must be matrix or data frame"
+msgstr ""
+
+#: Interpolate.R:80
+msgid "`order` must be logical or character"
+msgstr ""
+
+#: Interpolate.R:99
+msgid "Interpolate need a unique value for each x and y"
+msgstr ""
+
+#: Interpolate.R:104
+msgid "Only 1 dimension in formula. Ignoring y.out."
+msgstr ""
+
+#: Interpolate.R:121
+msgid "duplicate values on x.out. If x.out is a vector of locations, use grid = FALSE"
+msgstr ""
+
+#: Interpolate.R:124
+msgid "duplicate values on y.out. If y.out is a vector of locations, use grid = FALSE"
+msgstr ""
+
+#: Interpolate.R:129
+msgid ""
+"x.out is not of the same length as y.out.\n"
+"                 If x.out and y.out define unique points on a regular grid, use grid = TRUE"
+msgstr ""
+
+#: Interpolate.R:137
+msgid "wrong mode, choose either \"grid\" or \"locations\""
+msgstr ""
+
+#: Interpolate.R:183
+msgid "either `xs` or `ys` must be of length greater than 1"
+msgstr ""
+
+#: Interpolate.R:187
+msgid "`x` must be a numeric vector"
+msgstr ""
+
+#: Interpolate.R:191
+msgid "`y` must be a numeric vector"
+msgstr ""
+
+#: ReadCtl.R:260
+msgid "not implemented yet."
+msgstr ""
+
+#: ReadNetCDF.R:136
+msgid "ReadNetCDF needs package'ncdf4'."
+msgstr ""
+
+#: ReadNetCDF.R:137
+msgid "Install it with 'install.packages(\"ncdf4\")'"
+msgstr ""
+
+#: ReadNetCDF.R:212
+msgid "Subsetting dimensions not found:"
+msgstr ""
+
+#: ReadNetCDF.R:213
+msgid "."
+msgstr ""
+
+#: ReadNetCDF.R:218
+msgid "Multiple subsets only supported for `out = \"data.frame\""
+msgstr ""
+
+#: ReadNetCDF.R:316
+msgid "Time dimension found and package udunits2 is not installed. Trying to parse."
+msgstr ""
+
+#: RepeatCircular.R:44
+msgid "WrapCircular is deprecated, use ggperiodic::wrap instead"
+msgstr ""
+
+#: Tajectory.R:32
+msgid "LHS of formula must be of the form dx + dy"
+msgstr ""
+
+#: Tajectory.R:37
+msgid "RHS of formula must be of the form x + y + t"
+msgstr ""
+
+#: geom_arrow.R:217
+msgid "pivot must be a number between 0 and 1"
+msgstr ""
+
+#: geom_arrow.R:221
+msgid "pivot greater than 1, setting it to 1"
+msgstr ""
+
+#: geom_arrow.R:225
+msgid "pivot less than 0, setting it to 0"
+msgstr ""
+
+#: geom_arrow.R:308
+msgid "direction must be either ccw or cw"
+msgstr ""
+
+#: geom_arrow.R:312
+msgid "stat_arrow needs wither mag and angle or dx and dy"
+msgstr ""
+
+#: geom_arrow.R:358
+msgid "the use of preserve.dir = FALSE with discrete scales is not recommended"
+msgstr ""
+
+#: geom_arrow.R:362
+msgid "the use of preserve.dir = FALSE with date scales is not recommended"
+msgstr ""
+
+#: geom_contour2.r:82
+msgid "'xwrap' and 'ywrap' will be deprecated."
+msgstr ""
+
+#: geom_contour2.r:83
+msgid "Use ggperiodic::periodic insead."
+msgstr ""
+
+#: geom_contour_tanaka.R:197
+msgid "geom_path: If you are using dotted or dashed lines"
+msgstr ""
+
+#: geom_contour_tanaka.R:198 geom_streamline.R:317
+msgid ", colour, size and linetype must be constant over the line"
+msgstr ""
+
+#: geom_label_contour.R:20 geom_text_contour.R:96
+msgid "Specify either `position` or `nudge_x`/`nudge_y`"
+msgstr ""
+
+#: geom_relief.R:120
+msgid "non lineal coordinates are not implemented in GeomRelief"
+msgstr ""
+
+#: geom_relief.R:140 geom_shadow.R:60
+msgid "geom_raster only works with Cartesian coordinates"
+msgstr ""
+
+#: geom_shadow.R:46
+msgid "non lineal coordinates are not implemented in GeomShadow"
+msgstr ""
+
+#: geom_streamline.R:256
+msgid "performing only 1 integration step, please consider increasing the resolution"
+msgstr ""
+
+#: geom_streamline.R:316
+msgid "geom_streamline: If you are using dotted or dashed lines"
+msgstr ""
+
+#: geom_streamline.R:391
+msgid "x and y do not define a regular grid"
+msgstr ""
+
+#: guide_colorstrip.R:126
+msgid "colorstrip guide needs colour or fill scales."
+msgstr ""
+
+#: guide_colorstrip.R:130
+msgid "colorstrip guide needs continuous scales."
+msgstr ""
+
+#: guide_colorstrip.R:197
+msgid "Invalid breaks specification. Use NULL, not NA"
+msgstr ""
+
+#: guide_colorstrip.R:224 guide_colorstrip.R:231
+msgid "label position \""
+msgstr ""
+
+#: guide_colorstrip.R:224 guide_colorstrip.R:231
+msgid "\" is invalid"
+msgstr ""
+
+#: helpfunctions.R:46
+msgid "Using '"
+msgstr ""
+
+#: helpfunctions.R:46
+msgid "' as value column. Use 'value.var' to override"
+msgstr ""
+
+#: helpfunctions.R:64
+msgid "Theme element"
+msgstr ""
+
+#: helpfunctions.R:64
+msgid "missing"
+msgstr ""
+
+#: helpfunctions.R:86 helpfunctions.R:97
+msgid "Unknown input"
+msgstr ""
+
+#: helpfunctions.R:154
+msgid "Duplicated aesthetics after name standardisation:"
+msgstr ""
+
+#: scale-unbinned.R:67
+msgid "Breaks not formatted correctly for a bin legend. Use `(<lower>, <upper>]` format to indicate bins"
+msgstr ""
+
+#: scale-unbinned.R:211
+msgid "Discretised scales only support discrete data"
+msgstr ""
+
+#: scale-unbinned.R:269
+msgid "`breaks` and `labels` must have the same length"
+msgstr ""
+
+#: small_funs.R:80
+msgid "all variables must have the same length"
+msgstr ""
+
+#: stat_contour2.r:85 stat_contour_fill.R:66 stat_na.R:70
+msgid "Computation failed in `"
+msgstr ""
+
+#: stat_contour2.r:86 stat_contour_fill.R:67 stat_na.R:71
+msgid "()`:"
+msgstr ""
+
+#: stat_contour2.r:120 stat_contour_fill.R:98
+msgid "data must be a complete regular grid"
+msgstr ""
+
+#: stat_contour2.r:138 stat_contour_fill.R:118
+msgid "kriging failed. Perhaps the number of points is too small."
+msgstr ""
+
+#: stat_contour2.r:157 stat_contour2.r:289 stat_contour_fill.R:185
+msgid "Not possible to generate contour data"
+msgstr ""
+
+#: stat_contour2.r:173 stat_contour_fill.R:146
+msgid "Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`"
+msgstr ""
+
+#: stat_contour2.r:278
+msgid "Contour requires single `z` at each combination of `x` and `y`."
+msgstr ""
+
+#: textContourGrob.R:227
+msgid "label must be of length 1"
+msgstr ""

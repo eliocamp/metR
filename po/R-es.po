@@ -1,276 +1,167 @@
-# from shadowtext
-contourTextGrob <- function(label, type = "text", x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "npc"),
-                       group = rep(1, length(label)),
-                       just = "centre", hjust = NULL, vjust = NULL,
-                       check.overlap = FALSE,
-                       rotate = TRUE,
-                       default.units = "npc", name = NULL,
-
-                       col = "white",
-                       fontsize = NULL,
-                       fontfamily = NULL,
-                       fontface = NULL,
-                       lineheight = NULL,
-
-                       # for labels
-                       label.padding =  grid::unit(0.25, "lines"),
-                       label.r = grid::unit(0.15, "lines"),
-                       label.size = 0.25,
-                       fill = "white",   # aes
-                       alpha = 1,        # aes
-
-
-                       # gp = grid::gpar(col = "white"),
-                       vp = NULL, bg.color = "black", bg.r = 0.1,
-                       position = label_placement_flattest()) {
-
-
-    if (!grid::is.unit(x)) {
-        x <- grid::unit(x, default.units)
-    }
-
-    if (!grid::is.unit(y)) {
-        y <- grid::unit(y, default.units)
-    }
-
-
-
-    objects <- lapply(unique(group), function(g) {
-        group <- group == g
-
-        list(label = unique(label[group]),
-             x = x[group], y = y[group],
-             just = just,
-             type = type,
-             hjust = hjust, vjust = vjust,
-             default.units = default.units,
-             check.overlap = check.overlap,
-             name = name,
-             position = position,
-             rotate = rotate,
-             bg.r = bg.r,
-             bg.color = bg.color[group],
-
-             label.padding = label.padding,
-             label.r = label.r,
-             label.size = label.size,
-             alpha = alpha[group],
-             fill = fill[group],
-
-
-             # gp = grid::gpar(
-             col = col[group][1],
-             fontsize = fontsize[group][1],
-             fontfamily = fontfamily[group][1],
-             fontface = fontface[group][1],
-             lineheight = lineheight[group][1],
-             # ),
-             vp = vp)
-    })
-
-    grid::gTree(data = objects, cl = "contourTextGrob")
-
-}
-
+#' @rdname geom_relief
 #' @export
-makeContent.contourTextGrob <- function(x) {
-    # browser()
+geom_shadow <- function(mapping = NULL, data = NULL,
+                        stat = "identity", position = "identity",
+                        ...,
+                        sun.angle = 60,
+                        range = c(0, 1),
+                        skip = 0,
+                        raster = TRUE,
+                        interpolate = TRUE,
+                        na.rm = FALSE,
+                        show.legend = NA,
+                        inherit.aes = TRUE) {
 
-    payload <- x
-
-
-    data <- lapply(x$data, content_grob)
-    valid <- lengths(data) != 0
-    data <- data[valid]
-
-    label <- unlist(lapply(data, function(x) x$label))
-    x_coord <- Reduce(grid::unit.c, lapply(data, function(x) x$x))
-    y <- Reduce(grid::unit.c, lapply(data, function(x) x$y))
-    col <- unlist(lapply(data, function(x) x$col))
-    fontsize <- unlist(lapply(data, function(x) x$fontsize))
-    fontfamily <- unlist(lapply(data, function(x) x$fontfamily))
-    fontface <- unlist(lapply(data, function(x) x$fontface))
-    lineheight <- unlist(lapply(data, function(x) x$lineheight))
-    rot <- unlist(lapply(data, function(x) x$rot))
-    bg.color <-  unlist(lapply(data, function(x) x$bg.color))
-
-
-    just <-  unlist(lapply(payload$data, function(x) x$just))[valid]
-    hj <- unlist(lapply(payload$data, function(x)  grid::resolveHJust(x$just, NULL)))[valid]
-    vj <- unlist(lapply(payload$data, function(x)  grid::resolveVJust(x$just, NULL)))[valid]
-
-    default.units <-  unlist(lapply(payload$data, function(x) x$default.units))[1]
-    check.overlap <-  unlist(lapply(payload$data, function(x) x$check.overlap))[1]
-    bg.r <-  unlist(lapply(payload$data, function(x) x$bg.r))[1]
-
-
-
-    if (payload$data[[1]]$type == "label") {
-
-        label.r <- data[[1]]$label.r
-        label.size <- data[[1]]$label.size
-        label.padding <- data[[1]]$label.padding
-        fill <-  vapply(data, function(x) x$fill, character(1))
-        alpha <- vapply(data, function(x) x$alpha, numeric(1))
-        grobs <- lapply(seq_along(label), function(i) {
-
-            labelGrob(label[i],
-                      x = x_coord[i],
-                      y = y[i],
-                      just = c(hj[i], vj[i]),
-
-                      padding = label.padding,
-                      r = label.r,
-
-                      text.gp = grid::gpar(
-                          col = col[i],
-                          fontsize = fontsize[i],
-                          fontfamily = fontfamily[i],
-                          fontface = fontface[i],
-                          lineheight = lineheight[i]
-                      ),
-                      rect.gp = grid::gpar(
-                          col = if (isTRUE(all.equal(label.size, 0))) NA else col[i],
-                          fill = scales::alpha(fill[i], alpha[i]),
-                          lwd = label.size * .pt
-                      )
-            )
-        })
-
-        class(grobs) <- "gList"
-
-        grobs <- ggname("geom_label", grid::grobTree(children = grobs))
-        return(grobs)
-    }
-
-
-    grob <- shadowtextGrob(label, x_coord, y, just = c(hj, vj),
-                           default.units = default.units,
-                           check.overlap = check.overlap,
-                           bg.r = bg.r,
-                           rot = rot,
-                           bg.colour = bg.color,
-                           gp = grid::gpar(
-                               col = col,
-                               fontsize = fontsize,
-                               fontfamily = fontfamily,
-                               fontface = fontface,
-                               lineheight = lineheight)
+    ggplot2::layer(
+        data = data,
+        mapping = mapping,
+        stat = stat,
+        geom = GeomShadow,
+        position = position,
+        show.legend = show.legend,
+        inherit.aes = inherit.aes,
+        params = list(
+            raster = raster,
+            interpolate = interpolate,
+            na.rm = na.rm,
+            alpha.range = range,
+            skip = skip,
+            ...
+        )
     )
-
-
-
-    grid::setChildren(x, grid::gList(grob))
 }
 
+#' @rdname geom_relief
+#' @usage NULL
+#' @format NULL
+#' @export
+GeomShadow <- ggplot2::ggproto("GeomShadow", ggplot2::GeomTile,
+  required_aes = c("x", "y", "z"),
+  default_aes = ggplot2::aes(color = NA, fill = "black", size = 0.5, linetype = 1,
+                             sun.angle = 60, sun.altitude = 20),
+  draw_panel = function(data, panel_scales, coord, raster, interpolate,
+                        alpha.range = c(0, 1), skip = 0, alpha = NULL) {
+
+      if (!coord$is_linear()) {
+          stop("non lineal coordinates are not implemented in GeomShadow",
+               call. = FALSE)
+      } else {
+
+          coords <- data.table::as.data.table(coord$transform(data, panel_scales))
+          coords <- coords[x %in% JumpBy(unique(x), skip + 1) &
+                           y %in% JumpBy(unique(y), skip + 1)]
+          alpha <- .cast_shadow(coords[, .(x, y, z, sun.angle, sun.altitude)], skip)
+          alpha.range <- scales::squish(alpha.range)
+          coords[, alpha := scales::rescale(alpha, to = alpha.range)]
 
 
+          if (raster == TRUE){
+              if (!inherits(coord, "CoordCartesian")) {
+                  stop("geom_raster only works with Cartesian coordinates", call. = FALSE)
+              }
+              # Convert vector of data to raster
+              x_pos <- as.integer((coords$x - min(coords$x)) / ggplot2::resolution(coords$x, FALSE))
+              y_pos <- as.integer((coords$y - min(coords$y)) / ggplot2::resolution(coords$y, FALSE))
 
-content_grob <- function(x) {
-    x_coord <- grid::convertX(x$x, unitTo = "mm", valueOnly = TRUE)
-    y_coord <- grid::convertY(x$y, unitTo = "mm", valueOnly = TRUE)
+              nrow <- max(y_pos) + 1
+              ncol <- max(x_pos) + 1
 
-    # browser()
-    id <- seq_along(y_coord)
-    dx <- .derv(x_coord, id, fill = TRUE)
-    dy <- .derv(y_coord, id, fill = TRUE)
+              raster <- matrix(NA_character_, nrow = nrow, ncol = ncol)
+              raster[cbind(nrow - y_pos, x_pos + 1)] <- alpha(coords$fill, coords$alpha)
+
+              # Figure out dimensions of raster on plot
+              x_rng <- c(min(coords$xmin, na.rm = TRUE),
+                         max(coords$xmax, na.rm = TRUE))
+              y_rng <- c(min(coords$ymin, na.rm = TRUE),
+                         max(coords$ymax, na.rm = TRUE))
+
+              grid::rasterGrob(raster,
+                               x = mean(x_rng), y = mean(y_rng),
+                               width = diff(x_rng), height = diff(y_rng),
+                               default.units = "native", interpolate = interpolate
+              )
+
+          } else {
+              ggplot2:::ggname("geom_rect", grid::rectGrob(
+                  coords$xmin, coords$ymax,
+                  width = coords$xmax - coords$xmin,
+                  height = coords$ymax - coords$ymin,
+                  default.units = "native",
+                  just = c("left", "top"),
+                  gp = grid::gpar(
+                      col = coords$fill,
+                      fill = alpha(coords$fill, coords$alpha),
+                      lwd = coords$size * .pt,
+                      lty = coords$linetype,
+                      lineend = "butt"
+                  )
+              ))
+
+          }
+      }
+  }
+)
 
 
-    # angle <- atan2(dy, dx)
-    selected <- x$position(x_coord, y_coord)
+.cast_shadow <- memoise::memoise(function(coords, skip) {
+    coords[, z1 := scales::rescale(z)]
 
-    if (length(x_coord[selected]) == 0) {
-        return(list())
+    m <- data.table::dcast(coords, x ~ y, value.var = "z1")
+    xdim <- m$x
+    ydim <- as.numeric(colnames(m)[-1])
+    m <- as.matrix(m[, -1])
+    coords[, alpha := .shadow(x, y, m, xdim, ydim, sun.angle, sun.altitude),
+           by = .(x, y)]
+    return(coords$alpha)
+})
+
+.shadow <- function(x, y, m, xdim, ydim, azimuth, altitude) {
+    rx <- range(xdim)
+    ry <- range(ydim)
+
+    a <- tan(azimuth*pi/180)
+    xs <- x - (ydim - y)*a
+    ys <- y - (xdim - x)/a
+
+    xs <- c(xs, xdim)
+    ys <- c(ydim, ys)
+
+    azimuth <- azimuth %% 360
+    # Cut irrelevant cuadrants
+    if (azimuth >= 0 & azimuth < 90) {
+        keep <- xs <= x & ys > y
+    } else if (azimuth >= 90 & azimuth < 180) {
+        keep <- xs < x & ys <= y
+    } else if (azimuth >= 180 & azimuth < 270) {
+        keep <- xs >= x & ys < y
+    } else{
+        keep <- xs > x & ys >= y
+    }
+    xs <- xs[keep]
+    ys <- ys[keep]
+    # Cut data outside range
+    keep <- xs %between% rx & ys %between% ry
+    ys <- ys[keep]
+    xs <- xs[keep]
+
+    z.interpol <- function(x, y, m) {
+        fields::interp.surface(list(x = xdim, y = ydim, z = m),
+                               matrix(c(x, y), ncol = 2))
     }
 
-    if (x$rotate == TRUE) {
-        rot <-  text_angle(dx, dy)
+    h <- z.interpol(c(x, xs), c(y, ys), m)
+    h0 <- h[1]
+    h <- h[-1]
+    # h0 <- z.interpol(x, y, m)
+
+    angle <- suppressWarnings(max((h - h0)/sqrt((xs - x)^2 + (ys - y)^2)/10, na.rm = TRUE))
+
+    if (!is.finite(angle)){
+        d <- 0
+    } else if (angle < tan(altitude*pi/180)) {
+        d <- 0
     } else {
-        rot <- rep(0, length(x_coord))
+        d <- sqrt(angle - tan(altitude*pi/180))
     }
-
-    # from shadowtext
-    list(
-        label = rep(x$label, length = length(x$x[selected])),
-        x = x$x[selected], y = x$y[selected],
-        col = x$col,
-        rot = rot[selected],
-        bg.color = x$bg.color[selected],
-        fontsize = x$fontsize,
-        fontfamily = x$fontfamily,
-        fontface = x$fontface,
-        lineheight = x$lineheight,
-        label.padding = x$label.padding,
-        label.size = x$label.size,
-        label.r = x$label.r,
-        alpha = x$alpha[selected],
-        fill = x$fill[selected]
-    )
-}
-
-text_angle <- function(dx, dy) {
-    angle <- atan2(dy, dx)*180/pi
-    angle <- ifelse(angle > 180, angle - 180, angle)
-    angle <- ifelse(angle > 90, angle - 180, angle)
-    angle <- ifelse(angle < -90, angle + 180, angle)
-    angle
-}
-
-
-# From ggplot2
-labelGrob <- function (label, x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "npc"),
-          just = "center", padding = grid::unit(0.25, "lines"), r = grid::unit(0.1,
-                                                                   "snpc"),
-          default.units = "npc", name = NULL, text.gp = grid::gpar(),
-          rect.gp = grid::gpar(fill = "white"), vp = NULL) {
-    if (length(label) != 1) {
-        stop("label must be of length 1")
-    }
-    if (!grid::is.unit(x))
-        x <- grid::unit(x, default.units)
-    if (!grid::is.unit(y))
-        y <- grid::unit(y, default.units)
-    grid::gTree(label = label, x = x, y = y, just = just, padding = padding,
-          r = r, name = name, text.gp = text.gp, rect.gp = rect.gp,
-          vp = vp, cl = "labelgrob")
-}
-
-ggname <- function (prefix, grob) {
-    grob$name <- grid::grobName(grob, prefix)
-    grob
-}
-
-
-
-# from shadowtext
-shadowtextGrob <- function (label, x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "npc"),
-                            just = "centre", hjust = NULL, vjust = NULL, rot = 0, check.overlap = FALSE,
-                            default.units = "npc", name = NULL, gp = grid::gpar(col = "white"),
-                            vp = NULL, bg.colour = "black", bg.r = 0.1)
-{
-    upperGrob <- grid::textGrob(label = label, x = x, y = y, just = just,
-                                hjust = hjust, vjust = vjust, rot = rot, default.units = default.units,
-                                check.overlap = check.overlap, name = name, gp = gp,
-                                vp = vp)
-    if (bg.r == 0)
-        return(upperGrob)
-    gp$col <- bg.colour
-    theta <- seq(pi/8, 2 * pi, length.out = 16)
-    char <- "X"
-    r <- bg.r[1]
-    bgList <- lapply(theta, function(i) {
-        if (!grid::is.unit(x))
-            x <- grid::unit(x, default.units)
-        if (!grid::is.unit(y))
-            y <- grid::unit(y, default.units)
-        x <- x + grid::unit(cos(i) * r, "strheight", data = char)
-        y <- y + grid::unit(sin(i) * r, "strheight", data = char)
-        grid::textGrob(label = label, x = x, y = y, just = just, hjust = hjust,
-                       vjust = vjust, rot = rot, default.units = default.units,
-                       check.overlap = check.overlap, name = name, gp = gp,
-                       vp = vp)
-    })
-    bgGrob <- do.call(grid::gList, bgList)
-    grobs <- grid::gList(bgGrob, upperGrob)
-    grid::gTree(children = grobs)
+    d
 }

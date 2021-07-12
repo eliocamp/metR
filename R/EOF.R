@@ -145,7 +145,7 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
         all.cols <- c(value.var, row.vars, col.vars)
         missing.cols <- all.cols[!(all.cols %in% colnames(data))]
         if (length(missing.cols) != 0) {
-            stop(paste0("Columns not found in data: ", paste0(missing.cols, collapse = ", ")))
+            stop(gettextf("Columns not found in data: %s.", paste0(missing.cols, collapse = ", ")))
         }
         data <- data.table::setDT(data)[, (all.cols), with = FALSE]
     }

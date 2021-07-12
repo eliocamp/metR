@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: metR 0.9.1\n"
-"POT-Creation-Date: 2021-07-12 17:49:00\n"
+"POT-Creation-Date: 2021-07-12 17:54:57\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,11 +41,8 @@ msgid "DivideTimeseries needs the gridExtra package. Install it with `install.pa
 msgstr ""
 
 #: EOF.R:148
-msgid "Columns not found in data:"
-msgstr ""
-
-#: EOF.R:148 ReadNetCDF.R:212
-msgid ","
+#, c-format
+msgid "Columns not found in data: %s."
 msgstr ""
 
 #: EOF.R:161
@@ -194,11 +191,8 @@ msgid "ReadNetCDF needs package'ncdf4'. Install it with 'install.packages(\"ncdf
 msgstr ""
 
 #: ReadNetCDF.R:211
-msgid "Subsetting dimensions not found:"
-msgstr ""
-
-#: ReadNetCDF.R:212
-msgid "."
+#, c-format
+msgid "Subsetting dimensions not found: %s."
 msgstr ""
 
 #: ReadNetCDF.R:217

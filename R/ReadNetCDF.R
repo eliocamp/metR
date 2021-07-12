@@ -208,8 +208,8 @@ ReadNetCDF <- function(file, vars = NULL,
     subset_names <- .names_recursive(subset)
     subset.extra <- subset_names[!(subset_names %in% names(dimensions))]
     if (length(subset.extra) != 0) {
-        stop(paste0("Subsetting dimensions not found: ",
-                    paste0(subset.extra, collapse = ", "), "."))
+        stop(gettextf("Subsetting dimensions not found: %s.",
+                    paste0(subset.extra, collapse = ", ")))
     }
 
     if (length(subset) > 1) {

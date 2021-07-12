@@ -1,37 +1,35 @@
-#' Create discretised versions of continuous scales
+#' Effects of the Earth's rotation
 #'
+#' Coriolis and beta parameters by latitude.
 #'
-#' @param scale_function a scale function (e.g. `scale_fill_divergent`)
+#' @param lat latitude in degrees
+#' @param a radius of the earth
 #'
-#'
-#' @return
-#' A function with the same arguments as `scale_function` that works with discretised
-#' values.
-#'
-#' @examples
-#' library(ggplot2)
-#' scale_fill_brewer_discretised <- as.discretised_scale(scale_fill_distiller)
-#'
-#' @seealso scale_fill_discretised
+#' @details
+#' All functions use the correct sidereal day (24hs 56mins 4.091s) instead of
+#' the incorrect solar day (24hs) for 0.3\% more precision and 1000\% more
+#' pedantry.
 #'
 #' @export
-as.discretised_scale <- function(scale_function) {
-    new_fun <- function(...) {
-        call <- match.call()
-
-        if (is.null(call$super)) {
-            call$super <- ScaleDiscretised
-        }
-
-        if (is.null(call$guide)) {
-            call$guide <- ggplot2::guide_colorsteps()
-        }
-
-        call[[1]] <- scale_function
-
-        eval(call)
-    }
-
-    formals(new_fun) <- formals(scale_function)
-    new_fun
+coriolis <- function(lat) {
+    assertNumeric(lat, -90, 90)
+    2*.omega*sin(lat*pi/180)
 }
+
+
+#' @export
+#' @rdname coriolis
+f <- coriolis
+
+#' @export
+#' @rdname  coriolis
+coriolis.dy <- function(lat, a = 6371000) {
+    assertNumeric(lat, -90, 90)
+    2*.omega*cos(lat*pi/180)/a
+}
+
+#' @export
+#' @rdname coriolis
+f.dy <- coriolis.dy
+
+.omega <- 2*pi/(23*3600 + 56*60 + 4.091)

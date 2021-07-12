@@ -1,18 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# This file is put in the public domain.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: metR 0.9.1\n"
-"POT-Creation-Date: 2021-07-12 14:10:48\n"
-"PO-Revision-Date: 2021-07-12 14:10:48\n"
-"Last-Translator: elio <elio>\n"
+"Project-Id-Version: metr\n"
+"POT-Creation-Date: 2021-07-12 14:10:40\n"
+"PO-Revision-Date: 2021-07-12 14:13\n"
+"Last-Translator: \n"
 "Language-Team: Spanish\n"
-"Language: Spanish\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: metr\n"
+"X-Crowdin-Project-ID: 464902\n"
+"X-Crowdin-Language: es-ES\n"
+"X-Crowdin-File: /translate-test/po/R-metR.pot\n"
+"X-Crowdin-File-ID: 122\n"
 
 #: ConvertLongitude.R:40
 msgid "lon lower than 180, not a valid longitude"
@@ -143,8 +145,7 @@ msgid "duplicate values on y.out. If y.out is a vector of locations, use grid = 
 msgstr ""
 
 #: Interpolate.R:129
-msgid ""
-"x.out is not of the same length as y.out.\n"
+msgid "x.out is not of the same length as y.out.\n"
 "                 If x.out and y.out define unique points on a regular grid, use grid = TRUE"
 msgstr ""
 
@@ -367,3 +368,4 @@ msgstr ""
 #: textContourGrob.R:227
 msgid "label must be of length 1"
 msgstr ""
+

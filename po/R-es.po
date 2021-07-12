@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metr\n"
 "POT-Creation-Date: 2021-07-12 14:10:40\n"
-"PO-Revision-Date: 2021-07-12 14:13\n"
+"PO-Revision-Date: 2021-07-12 14:16\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -167,19 +167,19 @@ msgstr ""
 
 #: ReadCtl.R:260
 msgid "not implemented yet."
-msgstr ""
+msgstr "no implementado aún."
 
 #: ReadNetCDF.R:136
 msgid "ReadNetCDF needs package'ncdf4'."
-msgstr ""
+msgstr "ReadNetCDF necesita el paquete 'ncdf4'."
 
 #: ReadNetCDF.R:137
 msgid "Install it with 'install.packages(\"ncdf4\")'"
-msgstr ""
+msgstr "Instálalo con 'install.packages(\"ncdf4\")'"
 
 #: ReadNetCDF.R:212
 msgid "Subsetting dimensions not found:"
-msgstr ""
+msgstr "Dimensiones de subajuste no encontradas:"
 
 #: ReadNetCDF.R:213
 msgid "."

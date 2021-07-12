@@ -158,7 +158,7 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
     g <- .tidy2matrix(data, dcast.formula, value.var, fill = fill)
 
     if (length(g$matrix) < nrow(data)) {
-        stop(paste("The formula ", as.character(formula), " does not identify an unique observation for each cell."))
+        stop(gettextf("The formula %s does not identify an unique observation for each cell.",  as.character(formula)))
     }
 
     tall <- dim(g$matrix)[1] > dim(g$matrix)[2]

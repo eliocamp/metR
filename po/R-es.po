@@ -1,232 +1,124 @@
-#' Anomalies
-#'
-#' Saves keystrokes for computing anomalies.
-#'
-#' @param x numeric vector
-#' @param baseline logical or numerical vector used for subsetting x before
-#' computing the mean
-#' @param ... other arguments passed to \code{\link{mean}} such as `na.rm`
-#'
-#' @return
-#' A numeric vector of the same length as x with each value's distance to the
-#' mean.
-#'
-#' @examples
-#' # Zonal temperature anomaly
-#' library(data.table)
-#' temperature[, .(lon = lon, air.z = Anomaly(air)), by = .(lat, lev)]
-#'
-#' @family utilities
-#' @export
-Anomaly <- function(x, baseline = seq_along(x), ...) {
-    x - mean(x[baseline], ...)
-}
-
-#' Percentiles
-#'
-#' Computes percentiles.
-#'
-#' @param x numeric vector
-#'
-#' @return
-#' A numeric vector of the same length as x with the percentile of each value
-#' of x.
-#'
-#' @examples
-#' x <- rnorm(100)
-#' p <- Percentile(x)
-#'
-#' @family utilities
-#' @export
-Percentile <- function(x) {
-    ecdf(x)(x)
-}
-
-#' Magnitude and angle of a vector
-#'
-#' Computes the magnitude of a vector of any dimension. Or angle (in degrees)
-#' in 2 dimensions.
-#'
-#' @param x,y, x and y directions of the vector
-#' @param ... numeric vectors of coordinates or list of coordinates
-#'
-#' @return
-#' `Mag`: A numeric vector the same length as each element of ...
-#' that is \eqn{\sqrt(x^2 + y^2 + ...)}.
-#' `Angle`: A numeric vector of the same length as x and y that is
-#' `atan2(y, x)*180/pi`.
-#'
-#' @details
-#' Helpful to save keystrokes and gain readability when computing wind
-#' (or any other vector quantity) magnitude.
-#'
-#' @examples
-#' Mag(10, 10)
-#' Angle(10, 10)
-#' Mag(10, 10, 10, 10)
-#' Mag(list(10, 10, 10, 10))
-#'
-#' # There's no vector recicling!
-#' \dontrun{
-#' Mag(1, 1:2)
-#' }
-#'
-#' @family utilities
-#' @export
-Mag <- function(...) {
-    coords <- list(...)
-    if (is.list(coords[[1]])) coords <- coords[[1]]
-    N <- lengths(coords, use.names = FALSE)
-    if (any(N != N[1])) stop("all variables must have the same length")
-
-    coords <- lapply(coords, `^`, 2)
-    sqrt(Reduce(`+`, coords))
-}
-
-#' @family utilities
-#' @export
-#' @rdname Mag
-Angle <- function(x, y) {
-    atan2(y, x)*180/pi
-}
-
-#' Extended logical operators
-#'
-#' Extended binary operators for easy subsetting.
-#'
-#' @param x,target numeric vectors
-#' @param tol tolerance for similarity
-#'
-#'
-#' @return
-#' A logical vector of the same length of x.
-#'
-#' @details
-#' \code{\%~\%} can be thought as a "similar" operator. It's a fuzzy version of
-#' \code{\link{\%in\%}} in that returns \code{TRUE} for the element of \code{x}
-#' which is the (first) closest to any element of \code{target}.
-#'
-#' \code{Similar} is a functional version of \code{\%~\%} that also has a
-#' \code{tol} parameter that indicates the maximum allowed tolerance.
-#'
-#' @examples
-#' set.seed(198)
-#' x <- rnorm(100)
-#' x[x %~% c(0.3, 0.5, 1)]
-#'
-#' # Practical use case: vertical cross-section at
-#' # approximately 36W between 50S and 50N.
-#' cross.lon <- -34 + 360
-#' library(ggplot2)
-#' library(data.table)
-#' ggplot(temperature[lon %~% cross.lon & lat %between% c(-50, 50)],
-#'        aes(lat, lev)) +
-#'     geom_contour(aes(z = air))
-#'
-#' @family utilities
-#' @name logic
-#' @export
-`%~%` <- function(x, target) {
-    r <- rep(FALSE, length(x))
-    for (i in seq_along(target)) {
-        dif <- abs(as.numeric(x - target[i]))
-        x.select <- x[which.min(dif)]
-        r <- r | (x == x.select)
-    }
-    return(r)
-}
-
-#' @rdname logic
-#' @export
-Similar <- function(x, target, tol = Inf) {
-    r <- rep(FALSE, length(x))
-    if (is.null(tol)) tol <- NA
-    for (i in seq_along(target)) {
-        dif <- abs(as.numeric(x - target[i]))
-        x.select <- x[which.min(dif)]
-        r <- r | (x == x.select & (is.na(tol) | x.select < abs(tol)))
-    }
-    return(r)
-}
-
-
-#' Skip observations
-#'
-#'
-#' @param x vector
-#' @param by numeric interval between elements to keep
-#' @param start index to start from
-#' @param fill how observations are skipped
-#'
-#' @return
-#' A vector of the same class as x and, if \code{fill} is not \code{null},
-#' the same length.
-#'
-#' @details
-#' Mostly useful for labelling only every \code{by}th element.
-#'
-#' @examples
-#' x <- 1:50
-#' JumpBy(x, 2)   # only odd numbers
-#' JumpBy(x, 2, start = 2)   # only even numbers
-#' JumpBy(x, 2, fill = NA)   # even numbers replaced by NA
-#' JumpBy(x, 2, fill = 6)   # even numbers replaced by 6
-#'
-#' @family utilities
-#' @export
-JumpBy <- function(x, by, start = 1, fill = NULL) {
-    if (!is.null(fill)) {
-        x[-seq.int(start, length(x), by = by)] <- fill
-    } else {
-        x <- x[seq.int(start, length(x), by = by)]
-    }
-    return(x)
-}
-
-
-
-
-#' Transform between spherical coordinates and physical coordinates
-#'
-#' Transform a longitude or latitude interval into the equivalent in meters depending
-#' on latitude.
-#'
-#' @param dx,dy interval in meters
-#' @param dlon,dlat interval in degrees
-#' @param lat latitude, in degrees
-#' @param a radius of the Earth
-#'
-#' @examples
-#'
-#' library(data.table)
-#' data(geopotential)
-#' geopotential <- geopotential[date == date[1]]
-#'
-#' # Geostrophic wind
-#' geopotential[, c("u", "v") := GeostrophicWind(gh, lon, lat)]  # in meters/second
-#' geopotential[, c("dlon", "dlat") := .(dlon(u, lat), dlat(v))] # in degrees/second
-#' geopotential[, c("u2", "v2") := .(dx(dlon, lat), dy(dlat))]   # again in degrees/second
-#'
-#' @name spherical
-#' @export
-dlon <- function(dx, lat, a = 6731000) {
-    return(dx/(a*cos(lat*pi/180))*180/pi)
-}
-
-#' @export
-#' @rdname spherical
-dlat <- function(dy, a = 6731000) {
-    return(dy/a*180/pi)
-}
-
-#' @export
-#' @rdname spherical
-dx <- function(dlon, lat, a = 6731000) {
-    return(dlon*pi/180*a*cos(lat*pi/180))
-}
-
-#' @export
-#' @rdname spherical
-dy <- function(dlat, a = 6731000) {
-    return(dlat*a*pi/180)
-}
+#
+# stat_bin_circular <- function(mapping = NULL, data = NULL,
+#                      geom = "bar", position = "stack",
+#                      ...,
+#                      range = NULL,
+#                      binwidth = NULL,
+#                      bins = NULL,
+#                      center = NULL,
+#                      boundary = NULL,
+#                      breaks = NULL,
+#                      closed = c("right", "left"),
+#                      pad = FALSE,
+#                      na.rm = FALSE,
+#                      show.legend = NA,
+#                      inherit.aes = TRUE) {
+#
+#     ggplot2::layer(
+#         data = data,
+#         mapping = mapping,
+#         stat = StatBinCircular,
+#         geom = geom,
+#         position = position,
+#         show.legend = show.legend,
+#         inherit.aes = inherit.aes,
+#         params = list(
+#             range = range,
+#             binwidth = binwidth,
+#             bins = bins,
+#             center = center,
+#             boundary = boundary,
+#             breaks = breaks,
+#             closed = closed,
+#             pad = pad,
+#             na.rm = na.rm,
+#             ...
+#         )
+#     )
+# }
+#
+# StatBinCircular <- ggplot2::ggproto("StatBinCircular", StatBin,
+#   setup_data = function(data, params) {
+#       if (is.null(params$range)) params$range <- range(data$x)
+#       d <- diff(params$range)
+#
+#       data1 <- data
+#       data1$x <- data1$x - d
+#
+#       data2 <- data
+#       data2$x <- data2$x + d
+#       rbind(data1, data, data2)
+#   },
+#   compute_group = function(data, scales, binwidth = NULL, bins = NULL,
+#                            center = NULL, boundary = NULL,
+#                            closed = c("right", "left"), pad = FALSE,
+#                            # The following arguments are not used, but must
+#                            # be listed so parameters are computed correctly
+#                            breaks = NULL, origin = NULL, right = NULL,
+#                            drop = NULL, width = NULL, range = NULL) {
+#
+#       StatBin$compute_group(data, scales, binwidth = binwidth, bins = bins,
+#                             center = center, boundary = boundary,
+#                             closed = closed, pad = pad,
+#                             # The following arguments are not used, but must
+#                             # be listed so parameters are computed correctly
+#                             breaks = breaks, origin = origin, right = right,
+#                             drop = drop, width = width)
+#   })
+#
+#
+#
+#
+# # w <- data.frame(u = rnorm(1000, 4, 2),
+# #                 v = rnorm(1000, -0.5, 3))
+# # w$dir <- with(w, ConvertLongitude(atan2(v, u)*180/pi, from = 180))
+# # # w$dir <- runif(100, 0, 360)
+# #
+# # ggplot(w, aes(dir, fill = cut(sqrt(u^2 + v^2), 2))) +
+# #     # stat_bin(breaks = seq(0, 360, by = 22.5) - 22.5/2) +
+# #     stat_bin_circular(breaks = seq(0, 360, by = 22.5) - 22.5/2, range = c(0, 360)) +
+# #     # geom_rug() +
+# #     scale_x_continuous(breaks = seq(0, 360, by = 22.5)) +
+# #     coord_polar(start = -22.5/2*pi/180)
+#
+#
+#
+# library(ggplot2)
+# library(data.table)
+#
+# # Datos de este link: http://midcdmz.nrel.gov/apps/plot.pl?site=NWTC&start=20010824&edy=26&emo=3&eyr=2062&year=2013&month=1&day=1&endyear=2013&endmonth=12&endday=31&time=0&inst=21&inst=39&type=data&wrlevel=2&preset=0&first=3&math=0&second=-1&value=0.0&user=0&axis=1
+# wind <- fread("~/Downloads/20130101.csv")
+#
+# # La función cut me da los intervalos en orden decresciente, pero
+# # los necesito en orden cresciente.
+# ReverseCut <- function(x, ...) {
+#     f <- cut(x, ...)
+#     n <- length(levels(f))
+#     levels(f) <- levels(f)[n:1]
+#     f
+# }
+#
+# # Truquito: mover el dominio de la dirección a (-22.5/2, 360 - 22.5/2).
+# wind[, new.dir := ifelse(direction > 360 - 22.5/2, direction - 360, direction)]
+#
+# # Me quedo con 1000 al azar para que no tarde tanto en plotear.
+# set.seed(1)
+# wind <- wind[sample(1:.N, 1000)]
+#
+# ggplot(wind, aes(new.dir, fill = ReverseCut(speed, breaks = 5))) +
+#     # geom_histogram(binwidth = 22.5, center = 0, aes(y = ..count../1000*100)) +
+#     stat_bin_circular(binwidth = 22.5, center = 0, range = c(0, 360), aes(x = direction, y = ..count../1000*100)) +
+#     coord_polar(start = -22.5/2*pi/180) +    # para que el norte quede arriba
+#     scale_fill_viridis_d(name = "Velocidad", direction = -1) +
+#     scale_y_continuous(name = "Frecuencia",
+#                        limits = c(-0.50, NA)) +
+#     annotate(geom = "rect", ymin = -0.5, ymax = 0, xmin = 0-22.5/2, xmax =360-22.5/2,
+#              fill = "white") +    # círculo blanco del centro
+#     scale_x_continuous(name = "", limits = c(0 - 22.5/2, 360 - 22.5/2),
+#                        breaks = seq(0, 360 - 22.5, by = 22.5),
+#                        minor_breaks = NULL,
+#                        labels = c("N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+#                                   "S", "SSO", "SO", "OSO", "O", "ONO", "NO", "NNO")) +
+#     # geom_text(data = data.frame(x = 0, y = seq(0, 12, by = 3)), aes(x = x, y = y, label = y),
+#               # inherit.aes = F) +
+#     theme_minimal()

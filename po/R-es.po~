@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: metR 0.9.1\n"
-"POT-Creation-Date: 2021-07-12 20:27:19\n"
+"POT-Creation-Date: 2021-07-12 20:19:12\n"
 "PO-Revision-Date: 2021-07-12 17:24-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -208,22 +208,21 @@ msgstr ""
 "packages(\"ncdf4\")'"
 
 #: ReadNetCDF.R:211
-#, c-format
 msgid "Subsetting dimensions not found: %s."
 msgstr "Dimensiones para filtrar no encontradas: %s."
 
-#: ReadNetCDF.R:217
+#: ReadNetCDF.R:216
 msgid "Multiple subsets only supported for `out = \"data.frame\""
 msgstr "Múltiples filtros sólo soportados para `out = \"data.frame\"`"
 
-#: ReadNetCDF.R:315
+#: ReadNetCDF.R:314
 msgid ""
 "Time dimension found and package udunits2 is not installed. Trying to parse."
 msgstr ""
 "Dimensión temporal encontrada y paquete udunits2 no está instalado. Tratando "
 "de parsear."
 
-#: ReadNetCDF.R:316
+#: ReadNetCDF.R:315
 #, c-format
 msgid ""
 "Time parsing failed. Returing raw values in %s.\n"
@@ -234,23 +233,24 @@ msgstr ""
 "Instale udunits2 con `install_packages(\"udunits2\")` para parsear "
 "automáticamente."
 
-#: ReadNetCDF.R:415
+#: ReadNetCDF.R:414
+#, c-format
 msgid "----- Variables -----"
 msgstr "----- Variables -----"
 
-#: ReadNetCDF.R:419
+#: ReadNetCDF.R:418
 msgid "----- Dimensions -----"
 msgstr "----- Dimensiones -----"
 
-#: ReadNetCDF.R:434
+#: ReadNetCDF.R:433
 msgid "Dimensions:"
 msgstr "Dimensiones:"
 
-#: ReadNetCDF.R:439
+#: ReadNetCDF.R:438
 msgid "(Scaled)"
 msgstr "(Escalado)"
 
-#: ReadNetCDF.R:456
+#: ReadNetCDF.R:455
 #, c-format
 msgid "%s: %d values from %s to %s %s"
 msgstr "%s: %d valores de %s a %s %s"

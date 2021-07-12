@@ -412,7 +412,7 @@ GlanceNetCDF <- function(file, ...) {
 
 #' @export
 print.nc_glance <- function(x, ...) {
-    cat(gettextf("----- Variables ----- \n"))
+    cat(gettext("----- Variables ----- \n"))
     out <- lapply(x$vars, print)
 
     cat("\n\n")

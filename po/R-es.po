@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: metr\n"
-"POT-Creation-Date: 2021-07-12 14:10:40\n"
-"PO-Revision-Date: 2021-07-12 17:51\n"
+"POT-Creation-Date: 2021-07-12 17:58:52\n"
+"PO-Revision-Date: 2021-07-12 18:00\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -17,12 +17,12 @@ msgstr ""
 "X-Crowdin-File-ID: 122\n"
 
 #: ConvertLongitude.R:40
-msgid "lon lower than 180, not a valid longitude"
-msgstr "lon menor a 180, no es una longitud válida"
+msgid "'lon' lower than 180 is not a valid longitude"
+msgstr ""
 
 #: ConvertLongitude.R:43
-msgid "lon greater than 360, not a valid longitude"
-msgstr "lon mayor a 360, no es una longitud válida"
+msgid "'lon' greater than 360 is not a valid longitude"
+msgstr ""
 
 #: Derivate.R:102
 msgid "One boundary condition per variable needed."
@@ -33,23 +33,16 @@ msgid "cyclical derivatives on a non-equispaced grid not yet supported"
 msgstr "derivadas cíclicas en grillas no equiespaciadas no soportadas"
 
 #: DivideTimeseries.R:30
-msgid "'DivideTimeseries' is deprecated, use ggwrap instead"
-msgstr "'DivideTimeseries' está deprecado, use el paquete ggwrap"
-
-#: DivideTimeseries.R:31
-msgid "(https://github.com/wilkox/ggwrap)"
+msgid "'DivideTimeseries' is deprecated, use ggwrap instead (https://github.com/wilkox/ggwrap)"
 msgstr ""
 
-#: DivideTimeseries.R:34
+#: DivideTimeseries.R:33
 msgid "DivideTimeseries needs the gridExtra package. Install it with `install.packages(\"gridExtra\")`"
 msgstr "DivideTimeseries necesita el paquete gridExtra. Instalarlo con `install.packages(\"gridExtra\")`"
 
 #: EOF.R:148
-msgid "Columns not found in data:"
-msgstr "Columnas no encontradas en data:"
-
-#: EOF.R:148 ReadNetCDF.R:213
-msgid ","
+#, c-format
+msgid "Columns not found in data: %s."
 msgstr ""
 
 #: EOF.R:161
@@ -60,20 +53,33 @@ msgstr "La fórmula"
 msgid "does not identify an unique observation for each cell."
 msgstr "no identifica una observación única para cada celda."
 
+#: EOF_methods.R:120
+msgid "Importance of components:"
+msgstr ""
+
+#: EOF_methods.R:124
+msgid "Component"
+msgstr ""
+
+#: EOF_methods.R:124
+msgid "Explained variance"
+msgstr ""
+
+#: EOF_methods.R:124
+msgid "Cumulative variance"
+msgstr ""
+
 #: EOF_methods.R:136
 msgid "eof must be an EOF object"
 msgstr "eof tiene que ser un objeto EOF"
 
-#: GetSMNData.R:92
-msgid "wrong type"
-msgstr "'type' incorrecto"
-
-#: GetSMNData.R:100
+#: GetSMNData.R:98
 msgid "No data available for any of selected dates"
 msgstr ""
 
-#: GetSMNData.R:102
-msgid "No data for available for these dates:"
+#: GetSMNData.R:101
+#, c-format
+msgid "%s"
 msgstr ""
 
 #: GetTopography.R:54
@@ -170,27 +176,48 @@ msgid "not implemented yet."
 msgstr "no implementado aún."
 
 #: ReadNetCDF.R:136
-msgid "ReadNetCDF needs package'ncdf4'."
-msgstr "ReadNetCDF necesita el paquete 'ncdf4'."
-
-#: ReadNetCDF.R:137
-msgid "Install it with 'install.packages(\"ncdf4\")'"
-msgstr "Instálalo con 'install.packages(\"ncdf4\")'"
-
-#: ReadNetCDF.R:212
-msgid "Subsetting dimensions not found:"
-msgstr "Dimensiones de subajuste no encontradas:"
-
-#: ReadNetCDF.R:213
-msgid "."
+msgid "ReadNetCDF needs package'ncdf4'. Install it with 'install.packages(\"ncdf4\")'"
 msgstr ""
 
-#: ReadNetCDF.R:218
+#: ReadNetCDF.R:211
+#, c-format
+msgid "Subsetting dimensions not found: %s."
+msgstr ""
+
+#: ReadNetCDF.R:217
 msgid "Multiple subsets only supported for `out = \"data.frame\""
 msgstr ""
 
-#: ReadNetCDF.R:316
+#: ReadNetCDF.R:315
 msgid "Time dimension found and package udunits2 is not installed. Trying to parse."
+msgstr ""
+
+#: ReadNetCDF.R:316
+#, c-format
+msgid "Time parsing failed. Returing raw values in %s.\n"
+"Install udunits2 with `install_packages(\"udunits2\")` to parse it automatically."
+msgstr ""
+
+#: ReadNetCDF.R:415
+#, c-format
+msgid "----- Variables -----"
+msgstr ""
+
+#: ReadNetCDF.R:419
+msgid "----- Dimensions -----"
+msgstr ""
+
+#: ReadNetCDF.R:434
+msgid "Dimensions:"
+msgstr ""
+
+#: ReadNetCDF.R:439
+msgid "(Scaled)"
+msgstr ""
+
+#: ReadNetCDF.R:456
+#, c-format
+msgid "%s: %d values from %s to %s %s"
 msgstr ""
 
 #: RepeatCircular.R:44
@@ -234,19 +261,12 @@ msgid "the use of preserve.dir = FALSE with date scales is not recommended"
 msgstr ""
 
 #: geom_contour2.r:82
-msgid "'xwrap' and 'ywrap' will be deprecated."
+msgid "'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead."
 msgstr ""
 
-#: geom_contour2.r:83
-msgid "Use ggperiodic::periodic insead."
-msgstr ""
-
-#: geom_contour_tanaka.R:197
-msgid "geom_path: If you are using dotted or dashed lines"
-msgstr ""
-
-#: geom_contour_tanaka.R:198 geom_streamline.R:317
-msgid ", colour, size and linetype must be constant over the line"
+#: geom_contour_tanaka.R:197 geom_streamline.R:316
+#, c-format
+msgid "%s: If you are using dotted or dashed lines, colour, size and linetype must be constant over the line."
 msgstr ""
 
 #: geom_label_contour.R:20 geom_text_contour.R:96
@@ -269,11 +289,7 @@ msgstr ""
 msgid "performing only 1 integration step, please consider increasing the resolution"
 msgstr ""
 
-#: geom_streamline.R:316
-msgid "geom_streamline: If you are using dotted or dashed lines"
-msgstr ""
-
-#: geom_streamline.R:391
+#: geom_streamline.R:390
 msgid "x and y do not define a regular grid"
 msgstr ""
 
@@ -290,27 +306,18 @@ msgid "Invalid breaks specification. Use NULL, not NA"
 msgstr ""
 
 #: guide_colorstrip.R:224 guide_colorstrip.R:231
-msgid "label position \""
-msgstr ""
-
-#: guide_colorstrip.R:224 guide_colorstrip.R:231
-msgid "\" is invalid"
+#, c-format
+msgid "Label position \"%s\" is invalid."
 msgstr ""
 
 #: helpfunctions.R:46
-msgid "Using '"
-msgstr ""
-
-#: helpfunctions.R:46
-msgid "' as value column. Use 'value.var' to override"
+#, c-format
+msgid "Using \"%s\" as value column. Use 'value.var' to override"
 msgstr ""
 
 #: helpfunctions.R:64
-msgid "Theme element"
-msgstr ""
-
-#: helpfunctions.R:64
-msgid "missing"
+#, c-format
+msgid "Theme element %s missing"
 msgstr ""
 
 #: helpfunctions.R:86 helpfunctions.R:97
@@ -318,7 +325,8 @@ msgid "Unknown input"
 msgstr ""
 
 #: helpfunctions.R:154
-msgid "Duplicated aesthetics after name standardisation:"
+#, c-format
+msgid "Duplicated aesthetics after name standardisation: %s"
 msgstr ""
 
 #: scale-unbinned.R:67
@@ -338,11 +346,9 @@ msgid "all variables must have the same length"
 msgstr ""
 
 #: stat_contour2.r:85 stat_contour_fill.R:66 stat_na.R:70
-msgid "Computation failed in `"
-msgstr ""
-
-#: stat_contour2.r:86 stat_contour_fill.R:67 stat_na.R:71
-msgid "()`:"
+#, c-format
+msgid "Computation failed in `%s()`:\n"
+" %s"
 msgstr ""
 
 #: stat_contour2.r:120 stat_contour_fill.R:98
@@ -368,4 +374,10 @@ msgstr ""
 #: textContourGrob.R:227
 msgid "label must be of length 1"
 msgstr ""
+
+#: ImputeEOF.R:161
+msgid "With %d eof  - rmse = %.3f"
+msgid_plural "With %d eofs - rmse = %.3f"
+msgstr[0] ""
+msgstr[1] ""
 

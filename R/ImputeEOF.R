@@ -158,10 +158,10 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
         rmse <- c(rmse, sqrt(mean((X[validation] - X.rec[validation])^2)))
 
         if (verbose == TRUE) {
-            message(paste0(gettextf(ngettext(eofs[i],
-                                             "With %d eof  - rmse = %.3f",
-                                             "With %d eofs - rmse = %.3f"),
-                                    eofs[i], rmse[i]),"\r"),  appendLF=FALSE)
+            message(paste0(sprintf(ngettext(eofs[i],
+                                            "With %d eof  - rmse = %.3f",
+                                            "With %d eofs - rmse = %.3f"),
+                                   eofs[i], rmse[i]), "\r"),  appendLF=FALSE)
         }
 
         # Break the loop if we are over the minimum eof asked and, either

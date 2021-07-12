@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: metR 0.9.1\n"
-"POT-Creation-Date: 2021-07-12 17:54:57\n"
+"POT-Creation-Date: 2021-07-12 17:58:52\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,16 +128,6 @@ msgstr ""
 
 #: ImputeEOF.R:129
 msgid "data argument must be matrix or data frame"
-msgstr ""
-
-#: ImputeEOF.R:162
-#, c-format
-msgid "With %d eof  - rmse = %.3f"
-msgstr ""
-
-#: ImputeEOF.R:163
-#, c-format
-msgid "With %d eofs - rmse = %.3f"
 msgstr ""
 
 #: Interpolate.R:80

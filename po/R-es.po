@@ -1,95 +1,108 @@
-#' Scale for vector magnitudes
+#' Assign seasons to months
 #'
-#' Allows to control the size of the arrows in [geom_arrow].
-#' Highly experimental.
+#' @param x A vector of dates (alternative a numeric vector of months, for `season()`)
+#' @param lang Language to use.
 #'
-#' @inheritParams ggplot2::scale_x_continuous
-#' @param max_size size of the arrow in centimetres
-#' @param max magnitude of the reference arrow in data units. Will be the
-#' maximum value if `waiver()`
-#' @param guide type of legend
-#' @param default_unit ignored
+#' @return
+#' `season()` returns a factor vector of the same length as `x` with the trimester of each
+#' month.
+#' `seasonaly()` returns a date vector of the same length as `x` with the date "rounded" up to the centre
+#' month of each season.
+#' `is.full_season()` returns a logical vector of the same length as `x` that is true only if the
+#' 3 months of each season for each year (December counts for the following year) are present in the dataset.
 #'
 #' @examples
-#' library(ggplot2)
-#' g <- ggplot(seals, aes(long, lat)) +
-#'     geom_vector(aes(dx = delta_long, dy = delta_lat), skip = 2)
+#' season(1, lang = "en")
+#' season(as.Date("2017-01-01"))
 #'
-#' g + scale_mag("Seals velocity")
+#' seasonally(as.Date(c("2017-12-01", "2018-01-01", "2018-02-01")))
 #'
-#' g + scale_mag("Seals velocity", max = 1)
+#' is.full_season(as.Date(c("2017-12-01", "2018-01-01", "2018-02-01", "2018-03-01")))
 #'
-#' g + scale_mag("Seals velocity", max_size = 2)
-#' g + scale_mag("Seals velocity", default_unit = "mm")
+#' @aliases AssignSeason
 #' @export
-scale_mag <- function(name = ggplot2::waiver(),
-                      # breaks = waiver(),
-                      labels = ggplot2::waiver(),
-                      # limits = NULL,
-                      max_size = 1,
-                      default_unit = "cm",
-                      max = ggplot2::waiver(),
-                      guide =  guide_vector(),
-                      ...) {
-    # if (!grid::is.unit(length)) length <- ggplot2::unit(length, default_unit)
-    # if (is.waive(breaks)) {
-    if (is.waive(max)) {
-        breaks <- function(range) return(range[2])
+season <- function(x, lang = c("en", "es")) {
+    checks <- makeAssertCollection()
+    assertChoice(lang[1], c("en", "es"), .var.name = "lang", add = checks)
+    assertVector(x, any.missing = FALSE, add = checks)
+    assert(
+        checkIntegerish(x, lower = 1, upper = 12),
+        checkDateish(x),
+        .var.name = "month")
+
+    reportAssertions(checks)
+
+    if (is.character(x)) x <- as.Date(x)
+    if (.is.somedate(x)) x <- lubridate::month(x)
+
+    if (lang[1] == "en") {
+        djf <- "DJF" #"Summer"
+
     } else {
-        breaks <- function(range) return(max)
+        djf <- "DEF" # "Verano"
+        # win <- "Invierno"
+        # aut <- "Oto\u00f1o"
+        # spr <- "Primavera"
     }
-    # }
+    jja <- "JJA" # "Winter"
+    mam <-  "MAM"#  "Autumn"
+    son <- "SON" #"Spring"spr
 
-    # default_unit <- formals(guide)$default_unit
-    # max_size <- units::con
-    # guide <- guide_vector(default )
-    # guide = guide_vector(default.unit = "cm")
+    seasons <- c(djf, djf, rep(c(mam, jja, son), each = 3), djf)
+    return(factor(seasons[x], levels = c(djf, mam, jja, son)))
+}
 
-    ggplot2::continuous_scale("mag",
-                              "mag",
-                              identity,
-                              name = name,
-                              breaks = breaks,
-                              labels = labels,
-                              limits = NULL,
-                              rescaler = rescale_mag(max_size, max),
-                              oob = no_censor,
-                              guide = guide,
-                              ...
-    )
+
+#' @export
+#' @rdname season
+seasonally <- function(x) {
+    checks <- makeAssertCollection()
+    assertVector(x, add = checks)
+    assert(checkDateish(x))
+    reportAssertions(checks)
+    if (is.character(x)) x <- as.Date(x)
+
+
+    times <- unique(x)
+    m <- data.table::month(times)
+    times_org <- times
+    lubridate::year(times[m == 12]) <- data.table::year(times[m == 12]) + 1
+    s <- season(times)
+
+    lubridate::month(times) <- (as.numeric(s) - 1)*3 + 1
+
+    times[match(x, times_org)]
 }
 
 #' @export
-#' @rdname scale_mag
-scale_mag_continuous <- scale_mag
+#' @rdname season
+is.full_season <- function(x) {
+    checks <- makeAssertCollection()
+    assertVector(x, add = checks)
+    assert(checkDateish(x))
+    reportAssertions(checks)
+    if (is.character(x)) x <- as.Date(x)
 
-# #' @export
-# #' @rdname scale_mag
-# scale_dx_continuous <- scale_mag
+    times <- unique(x)
 
-# #' @export
-# scale_dy_continuous <- scale_mag
+    times_org <- times
+    m <- data.table::month(times)
+    lubridate::year(times[m == 12]) <- data.table::year(times[m == 12]) + 1
+    season <- season(times)
+    year <- data.table::year(times)
+    n <- NULL
+    complete <- data.table::data.table(times, year, season)[
+        , n := .N, by = .(year, season)][n == 3][
+        , n := NULL]
 
-# scale_type.mag <- function(x) "vector"
-
-vector_breaks <- function(max_size, max) {
-    function(range) {
-        if (is.waive(max)) return(range[2])
-        return(max)
-    }
+    x %in% times_org[times %in% complete$times]
 }
 
 
-no_censor <- function(x, range) {
-    x
+#' @export
+AssignSeason <- season
+
+
+.is.somedate <- function(x) {
+    inherits(x, "Date") | inherits(x, "POSIXct") | inherits(x, "POSIXlt")
 }
-
-
-rescale_mag <- function(max_size, max) {
-    function(x, from) {
-        if (is.waive(max)) max <- max(x, na.rm = TRUE)
-        scales::rescale(x, c(0, max_size), c(0, max))
-    }
-}
-
-

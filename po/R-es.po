@@ -1,128 +1,67 @@
-#' Functions to place contour labels
-#'
-#' These functions compute the position of contour labels
-#'
-#' @param frac A numeric vector with values between 0 and 1 representing
-#' where in the contour to put labels (i.e. `frac = 0.5` puts labels
-#' at the midpoint).
-#' @param n Number of labels to put.
-#' @param seed Seed to use for randomly choosing where to put labels.
-#' @param ref_angle Angle (in degrees counter-clockwise from East) to try
-#' to approximate labels.
-#'
-#'
-#'
-#'
-#' @export
-#' @rdname contour_placement
-label_placement_fraction <- function(frac = 0.5) {
-    checkmate::assert_numeric(frac, lower = 0, upper = 1)
-    range(frac)
-    force(frac)
-    function(x, y) {
-        d <-  cumsum(sqrt(c(0, diff(x))^2 + c(0, diff(y))^2))
-        places <- vapply(frac, function(x) which.min(abs(d - max(d*x))), numeric(1))
-        return(places)
-    }
-}
-
-#' @export
-#' @rdname contour_placement
-label_placement_n <- function(n = 2) {
-    force(n)
-    force(start)
-    start <- 1/(n*2)
-    function(x, y) {
-        N <- length(x)
-        start <- start*N + 1
-        by <- floor(N/n)
-        seq(start, N, by = by)
-    }
-}
-
-
-#' @export
-#' @rdname contour_placement
-label_placement_random <- function(seed = 42, n = 1) {
-    force(n)
-    force(seed)
-    function(x, y) {
-        i <- seq_along(x)
-        selected <- with_seed(seed, sample(i, n))
-        i %in% selected
-    }
-}
-
-with_seed <- function(seed, expr) {
-    old_seed <- get(".Random.seed", globalenv(), mode = "integer", inherits = FALSE)
-
-    on.exit({
-        if (is.null(old_seed)) {
-            rm(".Random.seed", envir = globalenv())
-        } else {
-            assign(".Random.seed", old_seed, globalenv())
-        }
-    })
-    set.seed(seed)
-    expr
-}
-
-#' @export
-#' @rdname contour_placement
-label_placement_all <- function() {
-    function(x, y) {
-        rep(TRUE, length(x))
-    }
-}
-
-#' @export
-#' @rdname contour_placement
-label_placement_flattest <- function(n = 1, ref_angle = 0) {
-    force(ref_angle)
-    function(x, y) {
-        if (length(x) < 6) {
-            return(FALSE)
-        }
-        i <- seq_along(x)
-
-        # from https://www.math24.net/curvature-radius/
-        dx <- .derv(x, i)
-        dy <- .derv(y, i)
-        ddx <- .derv(dx, i)
-        ddy <- .derv(dy, i)
-
-        curvature <- abs(dx*ddy - dy*ddx)/(dx^2 + dy^2)^(3/2)
-        curvature <- atan(curvature)
-
-        angle <- abs(atan(dy/dx) - ref_angle*pi/180)
-
-        optim <- curvature + angle
-        min <- min(optim, na.rm = TRUE)
-
-        possibile <- which(optim == min)
-
-        distance <- cumsum(sqrt(c(0, diff(x))^2 + c(0, diff(y))^2))
-        midpoint <- which.min(abs(distance - max(distance)/2))
-
-        best <- possibile[which.min(abs(distance[possibile] - midpoint))]
-
-        return(best)
-    }
-}
-
-#' @param direction Direction in which to compute the maximum and minimum.
-#' @export
-#' @rdname contour_placement
-label_placement_minmax <- function(direction = c("vertical", "horizontal")) {
-    direction <- direction[1]
-    assertChoice(direction, c("vertical", "horizontal"))
-
-    function(x, y) {
-        if (direction == "vertical") {
-            return(c(which.max(y), which.min(y)))
-        } else if (direction == "horizontal") {
-            return(c(which.max(x), which.min(x)))
-        }
-    }
-
-}
+# # Switch between longitude conventions
+# #
+# # Transform longitude coordinates from and to [0, 360) and [-180, 180). Similar
+# # to [ConverLongitude] but suitable for using in [ggplot2::scale_x_continuous] or,
+# # better still, [scale_x_longitude].
+# #
+# # @param to convention to transform to.
+# #
+# # @examples
+# # library(ggplot2)
+# #
+# # (g <- ggplot(geopotential[date == date[1]], aes(lon, lat)) +
+# #     geom_contour2(aes(z = gh)))
+# #
+# # g + scale_x_longitude(trans = lon_trans(180))
+# #
+# # # Same as
+# # g + scale_x_longitude(trans = "lon180")
+# #
+# # # @export
+# # @importFrom scales trans_new
+# lon_trans <- function(to = c(180, 360)) {
+#     if (to[1] == 180) {
+#         scales::trans_new("lon180",
+#                           lon180,
+#                           lon360)
+#     } else if (to[1] == 360) {
+#         scales::trans_new("lon360",
+#                           lon360,
+#                           lon180)
+#     } else {
+#         stop("from must be 360 or 180")
+#     }
+# }
+#
+# # #' @export
+# # #' @rdname lon_trans
+# lon180_trans <- function() {
+#     lon_trans(180)
+# }
+#
+# # #' @export
+# # #' @rdname lon_trans
+# lon360_trans <- function() {
+#     lon_trans(360)
+# }
+#
+# # #' @export
+# # #' @rdname lon_trans
+# lon180 <- function(lon) {
+#     lower <- lon[is.finite(lon)] == -180
+#     lon[!lower] <- lon[!lower] %% 360
+#     trans <- lon > 180 & is.finite(lon)
+#     lon[trans] <- lon[trans] - 360
+#     lon
+# }
+#
+# # #' @export
+# # #' @rdname lon_trans
+# lon360 <- function(lon) {
+#     upper <- lon[is.finite(lon)] == 360
+#     lon[!upper] <- (lon[!upper] + 180) %% 360 - 180
+#     trans <- lon < 0 & is.finite(lon)
+#     lon[trans] <- lon[trans] + 360
+#     lon
+# }
+#

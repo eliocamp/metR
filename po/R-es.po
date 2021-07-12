@@ -1,128 +1,95 @@
-#' Helpful scales for maps
+#' Scale for vector magnitudes
 #'
-#' These functions are simple wrappers around
-#' \code{\link[ggplot2]{scale_x_continuous}} and
-#' \code{\link[ggplot2]{scale_y_continuous}} with
-#' helpful defaults for plotting longitude, latitude and pressure levels.
+#' Allows to control the size of the arrows in [geom_arrow].
+#' Highly experimental.
 #'
 #' @inheritParams ggplot2::scale_x_continuous
-#' @param ticks spacing between breaks
+#' @param max_size size of the arrow in centimetres
+#' @param max magnitude of the reference arrow in data units. Will be the
+#' maximum value if `waiver()`
+#' @param guide type of legend
+#' @param default_unit ignored
 #'
-#'
-#' @name scale_longitude
-#' @aliases scale_latitude
 #' @examples
-#' data(geopotential)
 #' library(ggplot2)
-#' ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
-#'     geom_contour() +
-#'     scale_x_longitude() +
-#'     scale_y_latitude()
+#' g <- ggplot(seals, aes(long, lat)) +
+#'     geom_vector(aes(dx = delta_long, dy = delta_lat), skip = 2)
 #'
-#' @family ggplot2 helpers
-#' @export
-scale_x_longitude <- function(name = "", ticks = 30,
-                              breaks = seq(-180, 360, by = ticks),
-                              expand = c(0, 0),
-                              labels = LonLabel,
-                              trans = "identity",
-                              ...) {
-    # labels = waiver()
-    ggplot2::scale_x_continuous(name = name, expand = expand,
-                                breaks = breaks,
-                                labels = labels,
-                                trans = trans,
-                                ...)
-}
-
-#' @rdname scale_longitude
-#' @export
-scale_y_longitude <- function(name = "", ticks = 60,
-                              breaks = seq(-180, 360, by = ticks),
-                              expand = c(0, 0),
-                              labels = LonLabel,
-                              trans = "identity",
-                              ...) {
-    ggplot2::scale_y_continuous(name = name, expand = expand,
-                       breaks = breaks,
-                       labels = labels,
-                       ...)
-}
-
-
-#' @rdname scale_longitude
-#' @export
-scale_x_latitude <- function(name = "", ticks = 30,
-                             breaks = seq(-90, 90, by = ticks),
-                             expand = c(0, 0),
-                             labels = LatLabel, ...) {
-    ggplot2::scale_x_continuous(name = name, expand = expand,
-                                breaks = breaks, labels = labels,
-                                ...)
-}
-
-#' @rdname scale_longitude
-#' @export
-scale_y_latitude <- function(name = "", ticks = 30,
-                             breaks = seq(-90, 90, by = ticks),
-                             expand = c(0, 0),
-                             labels = LatLabel, ...) {
-    ggplot2::scale_y_continuous(name = name, expand = expand,
-                       breaks = breaks, labels = labels,
-                       ...)
-}
-
-#' @rdname scale_longitude
-#' @export
-scale_x_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...) {
-    ggplot2::scale_x_continuous(name = name, expand = expand,
-                       trans = trans,
-                       ...)
-}
-
-#' @rdname scale_longitude
-#' @export
-scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...) {
-    ggplot2::scale_y_continuous(name = name, expand = expand,
-                       trans = trans,
-                       ...)
-}
-
-
-
-#' Label longitude and latitude
+#' g + scale_mag("Seals velocity")
 #'
-#' Provide easy functions for adding suffixes to longitude and latitude for labelling
-#' maps.
+#' g + scale_mag("Seals velocity", max = 1)
 #'
-#' @param lon longitude in degrees
-#' @param lat latitude in degrees
-#' @param east,west,north,south,zero text to append for each quadrant
-#'
-#' @details
-#' The default values are for Spanish.
-#'
-#' @examples
-#'
-#' LonLabel(0:360)
-#'
+#' g + scale_mag("Seals velocity", max_size = 2)
+#' g + scale_mag("Seals velocity", default_unit = "mm")
 #' @export
-#' @name map_labels
-#' @family ggplot2 helpers
-LonLabel <- function(lon, east = "\u00B0E", west = "\u00B0W", zero = "\u00B0") {
-    lon <- as.numeric(lon)
-    lon <- ifelse(lon > 180, ConvertLongitude(lon), lon)
-    newlon <- ifelse(lon < 0, paste0(abs(lon), west), paste0(lon, east))
-    newlon[lon == 0 & !is.na(lon)] <- paste0(lon[lon == 0 & !is.na(lon)], zero)
-    newlon[lon == 180 & !is.na(lon)] <- paste0(lon[lon == 180 & !is.na(lon)], zero)
-    return(newlon)
+scale_mag <- function(name = ggplot2::waiver(),
+                      # breaks = waiver(),
+                      labels = ggplot2::waiver(),
+                      # limits = NULL,
+                      max_size = 1,
+                      default_unit = "cm",
+                      max = ggplot2::waiver(),
+                      guide =  guide_vector(),
+                      ...) {
+    # if (!grid::is.unit(length)) length <- ggplot2::unit(length, default_unit)
+    # if (is.waive(breaks)) {
+    if (is.waive(max)) {
+        breaks <- function(range) return(range[2])
+    } else {
+        breaks <- function(range) return(max)
+    }
+    # }
+
+    # default_unit <- formals(guide)$default_unit
+    # max_size <- units::con
+    # guide <- guide_vector(default )
+    # guide = guide_vector(default.unit = "cm")
+
+    ggplot2::continuous_scale("mag",
+                              "mag",
+                              identity,
+                              name = name,
+                              breaks = breaks,
+                              labels = labels,
+                              limits = NULL,
+                              rescaler = rescale_mag(max_size, max),
+                              oob = no_censor,
+                              guide = guide,
+                              ...
+    )
 }
 
 #' @export
-#' @rdname map_labels
-LatLabel <- function(lat, north = "\u00B0N", south = "\u00B0S", zero = "\u00B0") {
-    lat <- as.numeric(lat)
-    newlat <- ifelse(lat < 0, paste0(abs(lat), south), paste0(lat, north))
-    newlat[lat == 0 & !is.na(lat)] <- paste0(lat[lat == 0 & !is.na(lat)], zero)
-    return(newlat)
+#' @rdname scale_mag
+scale_mag_continuous <- scale_mag
+
+# #' @export
+# #' @rdname scale_mag
+# scale_dx_continuous <- scale_mag
+
+# #' @export
+# scale_dy_continuous <- scale_mag
+
+# scale_type.mag <- function(x) "vector"
+
+vector_breaks <- function(max_size, max) {
+    function(range) {
+        if (is.waive(max)) return(range[2])
+        return(max)
+    }
 }
+
+
+no_censor <- function(x, range) {
+    x
+}
+
+
+rescale_mag <- function(max_size, max) {
+    function(x, from) {
+        if (is.waive(max)) max <- max(x, na.rm = TRUE)
+        scales::rescale(x, c(0, max_size), c(0, max))
+    }
+}
+
+

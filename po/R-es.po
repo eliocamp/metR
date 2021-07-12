@@ -1,31 +1,28 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: metr\n"
-"POT-Creation-Date: 2021-07-12 15:05-0300\n"
-"PO-Revision-Date: 2021-07-12 18:07\n"
+"POT-Creation-Date: 2021-07-12 18:11:27\n"
+"PO-Revision-Date: 2021-07-12 18:12\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
-"X-Poedit-Basepath: ../R\n"
-"X-Poedit-SearchPath-0: .\n"
 "X-Crowdin-Project: metr\n"
 "X-Crowdin-Project-ID: 464902\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: /translate-test/po/R-metR.pot\n"
 "X-Crowdin-File-ID: 122\n"
-"Language: es_ES\n"
 
 #: ConvertLongitude.R:40
 msgid "'lon' lower than 180 is not a valid longitude"
-msgstr ""
+msgstr "'lon' menor a 180 no es una longitud válida"
 
 #: ConvertLongitude.R:43
 msgid "'lon' greater than 360 is not a valid longitude"
-msgstr ""
+msgstr "'lon' mayor a 360 no es una longitud válida"
 
 #: Derivate.R:102
 msgid "One boundary condition per variable needed."
@@ -37,7 +34,7 @@ msgstr "derivadas cíclicas en grillas no equiespaciadas no soportadas"
 
 #: DivideTimeseries.R:30
 msgid "'DivideTimeseries' is deprecated, use ggwrap instead (https://github.com/wilkox/ggwrap)"
-msgstr ""
+msgstr "'DivideTimeseries' está deprecada, usar ggwrap (https://github.com/wilkox/ggwrap)"
 
 #: DivideTimeseries.R:33
 msgid "DivideTimeseries needs the gridExtra package. Install it with `install.packages(\"gridExtra\")`"
@@ -46,15 +43,12 @@ msgstr "DivideTimeseries necesita el paquete gridExtra. Instalarlo con `install.
 #: EOF.R:148
 #, c-format
 msgid "Columns not found in data: %s."
+msgstr "Columnas no encontradas en 'data': %s."
+
+#: EOF.R:161
+#, c-format
+msgid "The formula %s does not identify an unique observation for each cell."
 msgstr ""
-
-#: EOF.R:161
-msgid "The formula"
-msgstr "La fórmula"
-
-#: EOF.R:161
-msgid "does not identify an unique observation for each cell."
-msgstr "no identifica una observación única para cada celda."
 
 #: EOF_methods.R:120
 msgid "Importance of components:"
@@ -101,13 +95,11 @@ msgstr ""
 msgid "Failed to fetch file."
 msgstr ""
 
-#: IdealGas.R:86 IdealGas.R:102 IdealGas.R:121 IdealGas.R:137 IdealGas.R:157
-#: IdealGas.R:180
+#: IdealGas.R:86 IdealGas.R:102 IdealGas.R:121 IdealGas.R:137 IdealGas.R:157 IdealGas.R:180
 msgid "Too many state variables."
 msgstr ""
 
-#: IdealGas.R:88 IdealGas.R:104 IdealGas.R:123 IdealGas.R:139 IdealGas.R:159
-#: IdealGas.R:182
+#: IdealGas.R:88 IdealGas.R:104 IdealGas.R:123 IdealGas.R:139 IdealGas.R:159 IdealGas.R:182
 msgid "Too few state variables."
 msgstr ""
 

@@ -1,354 +1,128 @@
-# nocov start
-
-.tidy2matrix <- function(data, formula, value.var, fill = NULL, ...) {
-    row.vars <- all.vars(formula[[2]])
-    col.vars <- all.vars(formula[[3]])
-    data <- data.table::as.data.table(data)
-    data[, row__ := .GRP, by = c(row.vars)]
-    data[, col__ := .GRP, by = c(col.vars)]
-    if (is.null(fill)){
-        fill <- 0
-        # rowdims <- data[col__ == 1, (row.vars), with = FALSE]
-        # coldims <- data[row__ == 1, (col.vars), with = FALSE]
-    } else {
-        # rowdims <- unique(data[, (row.vars), with = FALSE])
-        # coldims <- unique(data[, (col.vars), with = FALSE])
-    }
-    rowdims <- unique(data[, (row.vars), with = FALSE])
-    coldims <- unique(data[, (col.vars), with = FALSE])
-    data.m <- matrix(fill[1], nrow = max(data[["row__"]]),
-                     ncol = max(data[["col__"]]))
-    data.m[cbind(data[["row__"]], data[["col__"]])] <- data[[value.var]]
-
-    return(list(matrix = data.m,
-                coldims = coldims,
-                rowdims = rowdims))
-}
-
-
-seq_range <- function(x, by = ggplot2::resolution(x, zero = FALSE),...) {
-    r <- range(x)
-    seq.int(r[1], r[2], by = by, ...)
-}
-
-is.error <- function(x) inherits(x, "try-error")
-
-
-
-# from data.table
-#' @importFrom data.table %chin%
-guess <- function (x) {
-    if ("value" %chin% names(x))
-        return("value")
-    if ("(all)" %chin% names(x))
-        return("(all)")
-    var <- names(x)[ncol(x)]
-    message("Using '", var, "' as value column. Use 'value.var' to override")
-    return(var)
-}
-
-# from ggplot2
-`%||%` <- function(a, b) {
-    if (!is.null(a)) a else b
-}
-# from ggplot2
-is.waive <- function (x) {
-    inherits(x, "waiver")
-}
-
-element_render <- function(theme, element, ..., name = NULL) {
-
-    # Get the element from the theme, calculating inheritance
-    el <- ggplot2::calc_element(element, theme)
-    if (is.null(el)) {
-        message("Theme element ", element, " missing")
-        return(ggplot2::zeroGrob())
-    }
-
-    grob <- ggplot2::element_grob(el, ...)
-    ggname(paste(element, name, sep = "."), grob)
-}
-
-ggname <- function(prefix, grob) {
-    grob$name <- grid::grobName(grob, prefix)
-    grob
-}
-
-
-width_cm <- function(x) {
-    if (grid::is.grob(x)) {
-        grid::convertWidth(grid::grobWidth(x), "cm", TRUE)
-    } else if (grid::is.unit(x)) {
-        grid::convertWidth(x, "cm", TRUE)
-    } else if (is.list(x)) {
-        vapply(x, width_cm, numeric(1))
-    } else {
-        stop("Unknown input")
-    }
-}
-height_cm <- function(x) {
-    if (grid::is.grob(x)) {
-        grid::convertHeight(grid::grobHeight(x), "cm", TRUE)
-    } else if (grid::is.unit(x)) {
-        grid::convertHeight(x, "cm", TRUE)
-    } else if (is.list(x)) {
-        vapply(x, height_cm, numeric(1))
-    } else {
-        stop("Unknown input")
-    }
-}
-
-message_wrap <- function(...) {
-    msg <- paste(..., collapse = "", sep = "")
-    wrapped <- strwrap(msg, width = getOption("width") - 2)
-    message(paste0(wrapped, collapse = "\n"))
-}
-
-.seq_range <- function(x, by = ggplot2::resolution(x, zero = FALSE),...) {
-    r <- range(x)
-    seq.int(r[1], r[2], by = by, ...)
-}
-
-
-
-# Interleave (or zip) multiple units into one vector
-interleave <- function(...) UseMethod("interleave")
+#' Functions to place contour labels
+#'
+#' These functions compute the position of contour labels
+#'
+#' @param frac A numeric vector with values between 0 and 1 representing
+#' where in the contour to put labels (i.e. `frac = 0.5` puts labels
+#' at the midpoint).
+#' @param n Number of labels to put.
+#' @param seed Seed to use for randomly choosing where to put labels.
+#' @param ref_angle Angle (in degrees counter-clockwise from East) to try
+#' to approximate labels.
+#'
+#'
+#'
+#'
 #' @export
-interleave.unit <- function(...) {
-    do.call("grid::unit.c", do.call("interleave.default", plyr::llply(list(...), as.list)))
+#' @rdname contour_placement
+label_placement_fraction <- function(frac = 0.5) {
+    checkmate::assert_numeric(frac, lower = 0, upper = 1)
+    range(frac)
+    force(frac)
+    function(x, y) {
+        d <-  cumsum(sqrt(c(0, diff(x))^2 + c(0, diff(y))^2))
+        places <- vapply(frac, function(x) which.min(abs(d - max(d*x))), numeric(1))
+        return(places)
+    }
 }
+
 #' @export
-interleave.default <- function(...) {
-    vectors <- list(...)
-
-    # Check lengths
-    lengths <- unique(setdiff(plyr::laply(vectors, length), 1))
-    if (length(lengths) == 0) lengths <- 1
-    stopifnot(length(lengths) <= 1)
-
-    # Replicate elements of length one up to correct length
-    singletons <- plyr::laply(vectors, length) == 1
-    vectors[singletons] <- plyr::llply(vectors[singletons], rep, lengths)
-
-    # Interleave vectors
-    n <- lengths
-    p <- length(vectors)
-    interleave <- rep(1:n, each = p) + seq(0, p - 1) * n
-    unlist(vectors, recursive = FALSE)[interleave]
-}
-
-matched_aes <- function(layer, guide, defaults) {
-    all <- names(c(layer$mapping, if (layer$inherit.aes) defaults, layer$stat$default_aes))
-    geom <- c(layer$geom$required_aes, names(layer$geom$default_aes))
-    matched <- intersect(intersect(all, geom), names(guide$key))
-    matched <- setdiff(matched, names(layer$geom_params))
-    setdiff(matched, names(layer$aes_params))
-}
-
-rename_aes <- function(x) {
-    names(x) <- ggplot2::standardise_aes_names(names(x))
-    duplicated_names <- names(x)[duplicated(names(x))]
-    if (length(duplicated_names) > 0L) {
-        duplicated_message <- paste0(unique(duplicated_names), collapse = ", ")
-        warning(
-            "Duplicated aesthetics after name standardisation: ", duplicated_message, call. = FALSE
-        )
-    }
-    x
-}
-
-#' @importFrom stats line runif var
-#' @importFrom utils head
-if(getRversion() >= "2.15.1") {
-    utils::globalVariables(
-        c("as", "dep.names", "ecdf", "equal", "fft", "hasArg", "id",
-          "ind.names", "inside", "int.level", "land", "latrad", "lon", "lonrad",
-          "piece", "psi", "psi.dx", "psi.dxx", "psi.dxy", "psi.dy", "psi.dyy",
-          "r2", "sd", "setTxtProgressBar", "time", "txtProgressBar",
-          "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2",
-          "group", "step", "point", "change", "end", "level", "m", "rotate",
-          "x.d", "y.d", "PC", "step2", "runif", "N", "angle", "var", "head",
-          "col__", "row__", "t1", "z1", "z2", "..n", ".N", ":=", ".SD", ".I", ".GRP"))
-}
-
-
-.has_single_value <- function(data, coords) {
-    lengths <- data[, .N, by = coords]$N
-    !any(lengths > 1)
-}
-
-
-.is.regular_grid <- function(x, y) {
-    data <- data.table::data.table(x = x, y = y)
-    nx <- data[, data.table::uniqueN(x), by = y]$V1
-    ny <- data[, data.table::uniqueN(y), by = x]$V1
-
-    xs <- data.table::uniqueN(data$x)
-    ys <- data.table::uniqueN(data$y)
-
-
-    # Conditinos for regular grid
-    # 1. each y has the same number of unique values of x
-    # 2. each x has the same number of unique values of y
-    regularity <- sum(abs(ys - ny)) == 0 & sum(abs(xs - nx)) == 0
-
-    # 3. there are no duplicated values
-    lengths <- data[, .N, by = .(x, y)]$N
-    unicity <- !any(lengths > 1)
-
-    regularity & unicity
-}
-
-.simple.scale <- function(x) {
-    r <- range(x)
-    (x - r[1])/diff(r)
-}
-
-isFALSE <- function (x) {
-    is.logical(x) && length(x) == 1L && !is.na(x) && !x
-}
-
-.pasteand <- function(x) {
-    l <- length(x)
-    paste0(paste0(x[-l], collapse = ", ")," and ", x[l])
-}
-
-checkListSameLengh <- function(x, names = "x") {
-    l <- lengths(x)
-    if (slow_equal(l)) {
-        return(TRUE)
-    }
-
-    if (isTRUE(names)) {
-        names <- .pasteand(names(x))
-    } else {
-        names <- paste0("Elements of ", names)
-    }
-
-    return(paste0(names, " must have the same length"))
-}
-
-assertListSameLength <- checkmate::makeAssertionFunction(checkListSameLengh)
-
-# fast_equal = inline::cxxfunction(signature(x = 'numeric', y = 'numeric'), '
-#   NumericVector var(x);
-#   double precision = as<double>(y);
-#
-#   for (int i = 0, size = var.size(); i < size; ++i) {
-#     if (var[i] - var[0] > precision || var[0] - var[i] > precision)
-#       return Rcpp::wrap(false);
-#   }
-#
-#   return Rcpp::wrap(true);
-# ', plugin = 'Rcpp')
-
-slow_equal <- function(x) diff(range(x)) < sqrt(.Machine$double.eps)
-
-checkSameLength <- function(x) {
-    if (!slow_equal(x)) {
-        return(paste0(.pasteand(names(x)), " must have the same length"))
-    }
-    return(TRUE)
-}
-
-assertSameLength <- checkmate::makeAssertionFunction(checkSameLength)
-
-checkDateish <- function(x, ...) {
-    x <- try(as.Date(x), TRUE)
-    if (is.error(x)) {
-        return("Must be coercible to date")
-    }
-    checkDate(x, ...)
-}
-
-assertDateish <- checkmate::makeAssertionFunction(checkDateish)
-
-
-checkURLFile <- function(x) {
-    access <- unname(file.access(x, 4) == 0 | RCurl::url.exists(x))
-
-    if (isFALSE(access)) {
-        return("File or URL not readable")
-    }
-    return(access)
-}
-
-assertURLFile <- checkmate::makeAssertionFunction(checkURLFile)
-
-
-check_packages <- function(packages, fun) {
-    installed <- vapply(packages, function(p) {
-        requireNamespace(p, quietly = TRUE)
-    }, TRUE)
-
-    missing <- packages[!installed]
-
-    if (length(missing != 0)) {
-        text <- paste0(fun, " needs packages ",
-                       paste0(missing, collapse = ", "),
-                       ". Install with: ",
-                       "`install.packages(c(\"",
-                       paste0(missing, collapse = "\", \""), "\"))`")
-        stop(text)
+#' @rdname contour_placement
+label_placement_n <- function(n = 2) {
+    force(n)
+    force(start)
+    start <- 1/(n*2)
+    function(x, y) {
+        N <- length(x)
+        start <- start*N + 1
+        by <- floor(N/n)
+        seq(start, N, by = by)
     }
 }
 
-.datatable.aware <- TRUE
 
-a <- 6371000
-
-
-smooth2d <- function(x, y, value, kx = 1, ky = 1) {
-    data <- data.table::data.table(x, y, value)
-    # browser()
-    g <- .tidy2matrix(data, x ~ y, value.var = "value")
-
-    f <- fft(g$matrix)
-    f1 <- f
-
-    kx <- c(0, seq_len(floor(nrow(f)/2*kx)))
-    kx <- c(kx + 1, nrow(f) - kx[kx != 0] + 1)
-
-    ky <- c(0, seq_len(floor(ncol(f)/2*ky)))
-    ky <- c(ky + 1, ncol(f) - ky[ky != 0] + 1)
-
-    f1[, -ky] <- 0
-    f1[-kx, ] <- 0
-
-    c(Re(fft(f1, inverse = TRUE)/length(f1)))
+#' @export
+#' @rdname contour_placement
+label_placement_random <- function(seed = 42, n = 1) {
+    force(n)
+    force(seed)
+    function(x, y) {
+        i <- seq_along(x)
+        selected <- with_seed(seed, sample(i, n))
+        i %in% selected
+    }
 }
 
+with_seed <- function(seed, expr) {
+    old_seed <- get(".Random.seed", globalenv(), mode = "integer", inherits = FALSE)
 
-downsample <- function(x, y, value, byx = 1, byy = 1, fill = mean) {
-    data <- data.table::data.table(x, y, value)
-    browser()
-    fill <- mean(value, na.rm = TRUE)
-    g <- .tidy2matrix(data, x ~ y, value.var = "value", fill = fill)
-    g$matrix[is.na(g$matrix)] <- fill
-    f <- fft(g$matrix)
-    f1 <- f
-
-    kx <- 1/byx
-    ky <- 1/byy
-
-    kx <- c(0, seq_len(floor(nrow(f)/2*kx)))
-    kx <- c(kx + 1, nrow(f) - kx[kx != 0] + 1)
-
-    ky <- c(0, seq_len(floor(ncol(f)/2*ky)))
-    ky <- c(ky + 1, ncol(f) - ky[ky != 0] + 1)
-
-    f1[, -ky] <- 0
-    f1[-kx, ] <- 0
-
-    data$value_smooth <- c(Re(fft(f1, inverse = TRUE)/length(f1)))
-
-    data <- subset(data, x %in% JumpBy(sort(unique(x)), byx) &
-                       y %in% JumpBy(sort(unique(y)), byy))
-    data
+    on.exit({
+        if (is.null(old_seed)) {
+            rm(".Random.seed", envir = globalenv())
+        } else {
+            assign(".Random.seed", old_seed, globalenv())
+        }
+    })
+    set.seed(seed)
+    expr
 }
 
-# nocov end
+#' @export
+#' @rdname contour_placement
+label_placement_all <- function() {
+    function(x, y) {
+        rep(TRUE, length(x))
+    }
+}
 
+#' @export
+#' @rdname contour_placement
+label_placement_flattest <- function(n = 1, ref_angle = 0) {
+    force(ref_angle)
+    function(x, y) {
+        if (length(x) < 6) {
+            return(FALSE)
+        }
+        i <- seq_along(x)
 
+        # from https://www.math24.net/curvature-radius/
+        dx <- .derv(x, i)
+        dy <- .derv(y, i)
+        ddx <- .derv(dx, i)
+        ddy <- .derv(dy, i)
 
+        curvature <- abs(dx*ddy - dy*ddx)/(dx^2 + dy^2)^(3/2)
+        curvature <- atan(curvature)
 
+        angle <- abs(atan(dy/dx) - ref_angle*pi/180)
+
+        optim <- curvature + angle
+        min <- min(optim, na.rm = TRUE)
+
+        possibile <- which(optim == min)
+
+        distance <- cumsum(sqrt(c(0, diff(x))^2 + c(0, diff(y))^2))
+        midpoint <- which.min(abs(distance - max(distance)/2))
+
+        best <- possibile[which.min(abs(distance[possibile] - midpoint))]
+
+        return(best)
+    }
+}
+
+#' @param direction Direction in which to compute the maximum and minimum.
+#' @export
+#' @rdname contour_placement
+label_placement_minmax <- function(direction = c("vertical", "horizontal")) {
+    direction <- direction[1]
+    assertChoice(direction, c("vertical", "horizontal"))
+
+    function(x, y) {
+        if (direction == "vertical") {
+            return(c(which.max(y), which.min(y)))
+        } else if (direction == "horizontal") {
+            return(c(which.max(x), which.min(x)))
+        }
+    }
+
+}

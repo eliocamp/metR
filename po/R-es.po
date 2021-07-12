@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metr\n"
 "POT-Creation-Date: 2021-07-12 18:31:11\n"
-"PO-Revision-Date: 2021-07-12 18:31\n"
+"PO-Revision-Date: 2021-07-12 18:57\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -133,7 +133,7 @@ msgstr "`order` tiene que ser un caracter o un valor lógico"
 
 #: Interpolate.R:99
 msgid "Interpolate need a unique value for each x and y"
-msgstr "Interpolate necesida un valor único para cada combinación de x e y"
+msgstr "Interpolate necesita un valor único para cada combinación de x e y"
 
 #: Interpolate.R:104
 msgid "Only 1 dimension in formula. Ignoring y.out."
@@ -150,23 +150,24 @@ msgstr "valores duplicados en y.out. Si y.out es un vector de puntos, usar grid 
 #: Interpolate.R:129
 msgid "x.out is not of the same length as y.out.\n"
 "If x.out and y.out define unique points on a regular grid, use grid = TRUE"
-msgstr ""
+msgstr "x.out no tiene la misma longitud que y.out.\n"
+"Si x.out e y.out definen puntos único en una grilla regular, use grid = TRUE"
 
 #: Interpolate.R:136
 msgid "wrong mode, choose either \"grid\" or \"locations\""
-msgstr ""
+msgstr "modo incorrecto, debe ser \"grid\" o \"locations\""
 
 #: Interpolate.R:182
 msgid "either `xs` or `ys` must be of length greater than 1"
-msgstr ""
+msgstr "`xs` o `ys`debe tener una longitud mayor a 1"
 
 #: Interpolate.R:186
 msgid "`x` must be a numeric vector"
-msgstr ""
+msgstr "`x` debe ser un vector numérico"
 
 #: Interpolate.R:190
 msgid "`y` must be a numeric vector"
-msgstr ""
+msgstr "`y` debe ser un vector numérico"
 
 #: ReadCtl.R:260
 msgid "not implemented yet."
@@ -174,207 +175,209 @@ msgstr "no implementado aún."
 
 #: ReadNetCDF.R:136
 msgid "ReadNetCDF needs package'ncdf4'. Install it with 'install.packages(\"ncdf4\")'"
-msgstr ""
+msgstr "ReadNetCDF necesita el paquete 'ncdf4'. Instálelo con 'install.packages(\"ncdf4\")'"
 
 #: ReadNetCDF.R:211
 #, c-format
 msgid "Subsetting dimensions not found: %s."
-msgstr ""
+msgstr "Dimensiones para filtrar no encontradas: %s."
 
 #: ReadNetCDF.R:217
 msgid "Multiple subsets only supported for `out = \"data.frame\""
-msgstr ""
+msgstr "Múltiples filtros sólo soportados para `out = \"data.frame\"`"
 
 #: ReadNetCDF.R:315
 msgid "Time dimension found and package udunits2 is not installed. Trying to parse."
-msgstr ""
+msgstr "Dimensión temporal encontrada y paquete udunits2 no está instalado. Tratando de parsear."
 
 #: ReadNetCDF.R:316
 #, c-format
 msgid "Time parsing failed. Returing raw values in %s.\n"
 "Install udunits2 with `install_packages(\"udunits2\")` to parse it automatically."
-msgstr ""
+msgstr "Falló el parseo del tiempo. Devolviendo valores crudos en %s.\n"
+"Instale udunits2 con `install_packages(\"udunits2\")` para parsear automáticamente."
 
 #: ReadNetCDF.R:415
 #, c-format
 msgid "----- Variables -----"
-msgstr ""
+msgstr "----- Variables -----"
 
 #: ReadNetCDF.R:419
 msgid "----- Dimensions -----"
-msgstr ""
+msgstr "----- Dimensiones -----"
 
 #: ReadNetCDF.R:434
 msgid "Dimensions:"
-msgstr ""
+msgstr "Dimensiones:"
 
 #: ReadNetCDF.R:439
 msgid "(Scaled)"
-msgstr ""
+msgstr "(Escalado)"
 
 #: ReadNetCDF.R:456
 #, c-format
 msgid "%s: %d values from %s to %s %s"
-msgstr ""
+msgstr "%s: %d valores de %s a %s %s"
 
 #: RepeatCircular.R:44
 msgid "WrapCircular is deprecated, use ggperiodic::wrap instead"
-msgstr ""
+msgstr "WrapCircular está deprecada, use ggperiodic::wrap"
 
 #: Tajectory.R:32
 msgid "LHS of formula must be of the form dx + dy"
-msgstr ""
+msgstr "El lado izquierdo de la fórmula debe ser de la forma dx + dy"
 
 #: Tajectory.R:37
 msgid "RHS of formula must be of the form x + y + t"
-msgstr ""
+msgstr "El lado derecho de la fórmula debe ser de la forma x+ y + t"
 
 #: geom_arrow.R:217
 msgid "pivot must be a number between 0 and 1"
-msgstr ""
+msgstr "pivot debe ser un número entre 0 y 1"
 
 #: geom_arrow.R:221
 msgid "pivot greater than 1, setting it to 1"
-msgstr ""
+msgstr "pivot mayor a 1, reemplazándolo por 1"
 
 #: geom_arrow.R:225
 msgid "pivot less than 0, setting it to 0"
-msgstr ""
+msgstr "pivot menor a 0, reemplazándolo por 0"
 
 #: geom_arrow.R:308
 msgid "direction must be either ccw or cw"
-msgstr ""
+msgstr "direction debe ser \"ccw\" o \"cw\""
 
 #: geom_arrow.R:312
 msgid "stat_arrow needs wither mag and angle or dx and dy"
-msgstr ""
+msgstr "stat_arrow necesita mag y angle, o dx y dy"
 
 #: geom_arrow.R:358
 msgid "the use of preserve.dir = FALSE with discrete scales is not recommended"
-msgstr ""
+msgstr "usar preserve.dir = FALSE con escalas discretas no es recomendable"
 
 #: geom_arrow.R:362
 msgid "the use of preserve.dir = FALSE with date scales is not recommended"
-msgstr ""
+msgstr "usar preserve.dir = FALSE con escalas de fecha no es recomendable"
 
 #: geom_contour2.r:82
 msgid "'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead."
-msgstr ""
+msgstr "'xwrap' y 'ywrap' serán deprecadas. Use ggperiodic::periodic."
 
 #: geom_contour_tanaka.R:197 geom_streamline.R:316
 #, c-format
 msgid "%s: If you are using dotted or dashed lines, colour, size and linetype must be constant over the line."
-msgstr ""
+msgstr "%s: Si está usando lineas punteadas o con líneas, entonces 'colour', 'size' y 'linetype' tiene que ser constante para cada línea."
 
 #: geom_label_contour.R:20 geom_text_contour.R:96
 msgid "Specify either `position` or `nudge_x`/`nudge_y`"
-msgstr ""
+msgstr "Especificar 'posición' o 'nudge_x' o 'nudge_y'"
 
 #: geom_relief.R:120
 msgid "non lineal coordinates are not implemented in GeomRelief"
-msgstr ""
+msgstr "coordenadas no lineales no implementadas en GeomRelief"
 
 #: geom_relief.R:140 geom_shadow.R:60
 msgid "geom_raster only works with Cartesian coordinates"
-msgstr ""
+msgstr "geom_raster sólo funciona con coordenadas cartesianas"
 
 #: geom_shadow.R:46
 msgid "non lineal coordinates are not implemented in GeomShadow"
-msgstr ""
+msgstr "coordenadas no lineales no implementadas en GeomShadow"
 
 #: geom_streamline.R:256
 msgid "performing only 1 integration step, please consider increasing the resolution"
-msgstr ""
+msgstr "realizando sólo 1 paso de integración, considere aumentar la resolución"
 
 #: geom_streamline.R:390
 msgid "x and y do not define a regular grid"
-msgstr ""
+msgstr "x e y no definen una grilla regular"
 
 #: guide_colorstrip.R:126
 msgid "colorstrip guide needs colour or fill scales."
-msgstr ""
+msgstr "la guía 'colorstrip' necesita escalas 'colour' o 'fill'."
 
 #: guide_colorstrip.R:130
 msgid "colorstrip guide needs continuous scales."
-msgstr ""
+msgstr "la guía 'colorstrip' necesita escalas continuas."
 
 #: guide_colorstrip.R:197
 msgid "Invalid breaks specification. Use NULL, not NA"
-msgstr ""
+msgstr "Especificación de 'breaks' inválida. Use NULL, no NA"
 
 #: guide_colorstrip.R:224 guide_colorstrip.R:231
 #, c-format
 msgid "Label position \"%s\" is invalid."
-msgstr ""
+msgstr "La posición de la etiqueta \"%s\" no es válida."
 
 #: helpfunctions.R:46
 #, c-format
 msgid "Using \"%s\" as value column. Use 'value.var' to override"
-msgstr ""
+msgstr "Usando \"%s\" como columna de valor. Use 'value.var' para anular"
 
 #: helpfunctions.R:64
 #, c-format
 msgid "Theme element %s missing"
-msgstr ""
+msgstr "Falta elemento %s en el tema"
 
 #: helpfunctions.R:86 helpfunctions.R:97
 msgid "Unknown input"
-msgstr ""
+msgstr "Entrada desconocida"
 
 #: helpfunctions.R:154
 #, c-format
 msgid "Duplicated aesthetics after name standardisation: %s"
-msgstr ""
+msgstr "Estéticas duplicadas luego de estandarización de nombres: %s"
 
 #: scale-unbinned.R:67
 msgid "Breaks not formatted correctly for a bin legend. Use `(<lower>, <upper>]` format to indicate bins"
-msgstr ""
+msgstr "Los valores de corte no tienen el formato correcto para una leyenda discretizada. Use `(<minimo>, <máximo>]` para indicar cada corte"
 
 #: scale-unbinned.R:211
 msgid "Discretised scales only support discrete data"
-msgstr ""
+msgstr "Escalas discretizadas no suportan datos discretos"
 
 #: scale-unbinned.R:269
 msgid "`breaks` and `labels` must have the same length"
-msgstr ""
+msgstr "`breaks` y `labels`deben ser de la misma longitud"
 
 #: small_funs.R:80
 msgid "all variables must have the same length"
-msgstr ""
+msgstr "todas las variables tienen que tener la misma longitud"
 
 #: stat_contour2.r:85 stat_contour_fill.R:66 stat_na.R:70
 #, c-format
 msgid "Computation failed in `%s()`:\n"
 " %s"
-msgstr ""
+msgstr "Computación falló en `%s()`:\n"
+"%s"
 
 #: stat_contour2.r:120 stat_contour_fill.R:98
 msgid "data must be a complete regular grid"
-msgstr ""
+msgstr "'data' debe ser una grilla regular completa"
 
 #: stat_contour2.r:138 stat_contour_fill.R:118
 msgid "kriging failed. Perhaps the number of points is too small."
-msgstr ""
+msgstr "kriging falló. Quizás el número de puntos es demasiado pequeño."
 
 #: stat_contour2.r:157 stat_contour2.r:289 stat_contour_fill.R:185
 msgid "Not possible to generate contour data"
-msgstr ""
+msgstr "No es posible generar líneas de contorno"
 
 #: stat_contour2.r:173 stat_contour_fill.R:146
 msgid "Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`"
-msgstr ""
+msgstr "Proyectar requiere el paquete 'proj4'. Instálelo con `install.packages(\"proj4\")`"
 
 #: stat_contour2.r:278
 msgid "Contour requires single `z` at each combination of `x` and `y`."
-msgstr ""
+msgstr "Para calcular contornos se requiere un único valor de `z`en cada combinación de `x` e `y`."
 
 #: textContourGrob.R:227
 msgid "label must be of length 1"
-msgstr ""
+msgstr "'label' tiene que ser de longitud 1"
 
 #: ImputeEOF.R:161
 msgid "With %d eof  - rmse = %.3f"
 msgid_plural "With %d eofs - rmse = %.3f"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Con %d eof  - rmse = %.3f"
+msgstr[1] "Con %d eofs - rmse = %.3f"
 

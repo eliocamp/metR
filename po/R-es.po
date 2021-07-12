@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metr\n"
 "POT-Creation-Date: 2021-07-12 18:11:27\n"
-"PO-Revision-Date: 2021-07-12 18:12\n"
+"PO-Revision-Date: 2021-07-12 18:17\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Crowdin-Project: metr\n"
 "X-Crowdin-Project-ID: 464902\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /translate-test/po/R-metR.pot\n"
+"X-Crowdin-File: /[eliocamp.metR] translate-test/po/R-metR.pot\n"
 "X-Crowdin-File-ID: 122\n"
 
 #: ConvertLongitude.R:40
@@ -48,7 +48,7 @@ msgstr "Columnas no encontradas en 'data': %s."
 #: EOF.R:161
 #, c-format
 msgid "The formula %s does not identify an unique observation for each cell."
-msgstr ""
+msgstr "La fórmula %s no identifica una observación única para cada celda."
 
 #: EOF_methods.R:120
 msgid "Importance of components:"

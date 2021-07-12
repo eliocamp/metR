@@ -1,148 +1,140 @@
-#' Compute trajectories
+#' Calculate wave-activity flux
 #'
-#' Computes trajectories of particles in a time-varying velocity field.
+#' @param gh geopotential height
+#' @param u mean zonal velocity
+#' @param v mean meridional velocity
+#' @param lon longitude (in degrees)
+#' @param lat latitude (in degrees)
+#' @param lev pressure level (in hPa)
+#' @param g acceleration of gravity
+#' @param a Earth's radius
 #'
-#' @param formula a formula indicating dependent and independent variables
-#' in the form of dx + dy ~ x + y + t.
-#' @param x0,y0 starting coordinates of the particles.
-#' @param cyclical logical vector of boundary condition for x and y.
-#' @param data optional data.frame containing the variables.
-#' @param res resolution parameter (higher numbers increases the resolution)
+#' @details
+#' Calculates Plum-like wave activity fluxes
 #'
+#' @return
+#' A list with elements: longitude, latitude, and the two horizontal components
+#' of the wave activity flux.
 #'
+#' @references
+#' Takaya, K. and H. Nakamura, 2001: A Formulation of a Phase-Independent Wave-Activity Flux for Stationary and Migratory Quasigeostrophic Eddies on a Zonally Varying Basic Flow. J. Atmos. Sci., 58, 608–627, \doi{10.1175/1520-0469(2001)058<0608:AFOAPI>2.0.CO;2} \cr
+#' Adapted from \url{https://github.com/marisolosman/Reunion_Clima/blob/master/WAF/Calculo_WAF.ipynb}
+#' @family meteorology functions
 #' @export
-Trajectory <- function(formula, x0, y0,
-                       cyclical = FALSE,
-                       data = NULL, res = 2) {
-
+WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
     checks <- makeAssertCollection()
-
-    assertClass(formula, "formula", add = checks)
-    assertSameLength(list(x0 = length(x0), y0 = length(y0)), add = checks)
-    assertLogical(cyclical, add = checks)
-    assertDataFrame(data, null.ok = TRUE, add = checks)
-    assertNumeric(res, len = 1, add = checks)
-
+    assertNumeric(gh, add = checks)
+    assertNumeric(u, add = checks)
+    assertNumeric(v, add = checks)
+    assertNumeric(lon, add = checks)
+    assertNumeric(lat, add = checks)
+    assertNumber(lev, add = checks)
+    lengths <- c(gh = length(gh), lon = length(lon), lat = length(lat),
+                 y = length(u), v = length(v))
+    assertSameLength(lengths, add = checks)
+    assertNumber(g, finite = TRUE, add = checks)
+    assertNumber(a, finite = TRUE, add = checks)
     reportAssertions(checks)
 
-    dep.names <- formula.tools::lhs.vars(formula)
-    if (length(dep.names) == 0) stop("LHS of formula must have at least one variable")
+    p0 <- 100000    # normalizo a 100hPa
 
-    if (length(dep.names) != 2) {
-        stop("LHS of formula must be of the form dx + dy")
-    }
+    # Todo en una data.table para que sea más cómodo.
+    dt <- data.table::data.table(lon = lon, lat = lat,
+                     lonrad = lon*pi/180, latrad = lat*pi/180,
+                     gh = gh, u.mean = u, v.mean = v)
+    data.table::setkey(dt, lat, lon)
+    dt[, f := 2*pi/(3600*24)*sin(latrad)]
+    dt[, psi := g/f*gh]
 
-    ind.names <- formula.tools::rhs.vars(formula)
-    if (length(ind.names) != 3) {
-        stop("RHS of formula must be of the form x + y + t")
-    }
+    # Derivadas
+    dt[, `:=`(psi.dx  = Derivate(psi ~ lonrad, cyclical = TRUE)[[1]],
+              psi.dxx = Derivate(psi ~ lonrad, 2, cyclical = TRUE)[[1]]), by = lat]
+    dt[, `:=`(psi.dy  = Derivate(psi ~ latrad, cyclical = FALSE)[[1]],
+              psi.dyy = Derivate(psi ~ latrad, 2, cyclical = FALSE)[[1]],
+              psi.dxy = Derivate(psi.dx ~ latrad, cyclical = FALSE)[[1]]), by = lon]
 
-    formula <- Formula::as.Formula(formula)
-    field <- data.table::as.data.table(eval(quote(model.frame(formula, data = data,
-                                                  na.action = NULL))))
+    # Cálculo del flujo (al fin!)
+    flux <- dt[, {
+        wind <- sqrt(u.mean^2 + v.mean^2)
 
-    data.table::setorderv(field, ind.names)
-    data.table::setnames(field, c(ind.names, dep.names), c("x", "y", "t", "dx", "dy"))
+        xu <- psi.dx^2      - psi*psi.dxx
+        xv <- psi.dx*psi.dy - psi*psi.dxy
+        yv <- psi.dy^2      - psi*psi.dyy
 
-    if (.is.somedate(field$t)) {
-        field[, t1 := to_seconds(t[1]), by = t]
-    } else {
-        field[, t1 := t]
-    }
+        coslat <- cos(latrad)
+        coeff <- lev*100/p0/(2*wind*a^2)
 
-    field <- field[!is.na(dx) & !is.na(dy)]
+        w.x <- coeff*(u.mean/coslat*xu + v.mean*xv)
+        w.y <- coeff*(u.mean*xv + v.mean*coslat*yv)
 
-    range.x <- range(field$x)
-    range.y <- range(field$y)
-
-    times <- unique(field$t1)
-    dt <- diff(times)[1]/res
-    ts <- seq(min(times), max(times), by = dt)
-
-    points_out <- list(data.table::data.table(x = x0, y = y0, id = seq_along(x0),
-                                  piece = 1,
-                                  t1 = ts[1]))
-    points_out[[1]][, c("dx", "dy") := force.fun3d(x, y, t1, times, field)]
-    points <- data.table::copy(points_out[[1]])
-
-    if (length(cyclical) == 1) {
-        cyclical <- rep(cyclical, 2)
-    }
-    circ.x <-  cyclical[1]
-    circ.y <-  cyclical[2]
-
-    for (ti in seq_along(ts)[-1]) {
-        points[, c("x", "y", "t1") := .(x + dx*dt, y + dy*dt, ts[ti])]
-        points[, c("x", "piece") := .fold(x, piece, range.x, circ.x)]
-        points[, c("y", "piece") := .fold(y, piece, range.y, circ.y)]
-        points[, c("dx", "dy") := force.fun3d(x, y, ts, times, field)]
-        points <- points[!is.na(dx) & !is.na(dy)]
-        points_out[[ti]] <- points
-        points <- points[dx + dy != 0]
-        if(nrow(points) == 0) break
-    }
-
-    points_out <- do.call(rbind, points_out)
-
-    if (.is.somedate(field$t)) {
-        points_out[, t1 := start <- lubridate::ymd_hms("1970-01-01 00:00:00") +
-                       lubridate::seconds(t1[1]),
-                   by = t1]
-    }
-
-    data.table::setnames(points_out, c("x", "y", "t1", "dx", "dy"), c(ind.names, dep.names))
-
-    return(points_out[])
+        list(
+             w.x = w.x, w.y = w.y)
+        }]
+    return(flux)
 }
 
-force.fun3d <- function(x, y, ts, times, field) {
-    # si t justo está en times, es el mismo, así que no hace falta
-    # interpolar nada
-    ts <- ts[1]
-    if (isTRUE(ts %in% times)) {
-        force.fun(x, y, field[t1 == ts])
-    } else {
-        # Agarro los tiempos anteriores y siguientes, calculo las fuerzas
-        # en x e y y luego interpolo a ts
-        t0 <- times[times <= ts]
-        t0 <- t0[length(t0)] # tiempo anterior
-        tf <- times[times >= ts][1]  # tiempo siguiente
 
-        t0_force <- data.table::setDT(force.fun(x, y, field[t1 == t0]))
-        data.table::set(t0_force, NULL, "x", x)
-        data.table::set(t0_force, NULL, "y", y)
-        data.table::set(t0_force, NULL, "t", t0)
 
-        tf_force <- data.table::setDT(force.fun(x, y, field[t1 == tf]))
-        data.table::set(tf_force, NULL, "x", x)
-        data.table::set(tf_force, NULL, "y", y)
-        data.table::set(tf_force, NULL, "t", tf)
+#' Computes Eliassen-Palm fluxes.
+#'
+#' @param lon longitudes in degrees.
+#' @param lat latitudes in degrees.
+#' @param lev pressure levels.
+#' @param t temperature in Kelvin.
+#' @param u zonal wind in m/s.
+#' @param v meridional wind in m/s.
+#'
+#' @return
+#' A data.table with columns `Flon`, `Flat` and `Flev` giving the zonal, meridional
+#' and vertical components of the EP Fluxes at each longitude, latitude and level.
+#'
+#' @references
+#' Plumb, R. A. (1985). On the Three-Dimensional Propagation of Stationary Waves. Journal of the Atmospheric Sciences, 42(3), 217–229. \doi{10.1175/1520-0469(1985)042<0217:OTTDPO>2.0.CO;2}
+#' Cohen, J., Barlow, M., Kushner, P. J., & Saito, K. (2007). Stratosphere–Troposphere Coupling and Links with Eurasian Land Surface Variability. Journal of Climate, 20(21), 5335–5343. \doi{10.1175/2007JCLI1725.1}
+#' @export
+EPflux <- function(lon, lat, lev, t, u, v) {
+    # Ecuación 7.1 plumb 1984
+    # https://journals.ametsoc.org/doi/pdf/10.1175/1520-0469%281985%29042%3C0217%3AOTTDPO%3E2.0.CO%3B2
+    a <-  6371000
+    H <- 8000
 
-        force <- rbind(data.table::setDT(t0_force), data.table::setDT(tf_force))
-        force <- force[, .(dx = mean(dx),
-                           dy = mean(dy)),
-                       by = .(x, y)]
-        return(force[, .(dx, dy)])
-    }
-}
+    data <- data.table::data.table(
+        lon = lon,
+        lat = lat,
+        lev = lev,
+        t = t,
+        u = u,
+        v = v)
 
-force.fun <- function(x, y, field) {
-    matrix <- .tidy2matrix(field, x ~ y, value.var = "dx", fill = 0)
-    dx.field <- list(x = matrix$rowdims$x,
-                     y = matrix$coldims$y,
-                     z = matrix$matrix)
+    # Cáclulo de S: Cohen et.al.
+    # https://journals.ametsoc.org/doi/pdf/10.1175/2007JCLI1725.1
 
-    matrix <- .tidy2matrix(field, x ~ y, value.var = "dy", fill = 0)
-    dy.field <- list(x = matrix$rowdims$x,
-                     y = matrix$coldims$y,
-                     z = matrix$matrix)
+    data[, tita := Adiabat(lev, t) ][
+         , dtp := .derv(t, lev), by = .(lon, lat) ][
+         , `:=`(S = mean(-lev*H*dtp + 2/7*t/H, na.rm = TRUE)),
+            by = .(lev, sign(lat)) ][
+         , `:=`(tita_z = Anomaly(tita),
+                 t_z = Anomaly(t),
+                 u_z = Anomaly(u),
+                 v_z = Anomaly(v)),
+            by = .(lev, lat)][
+         , `:=`(vtita = v_z*tita_z,
+                 utita = u_z*tita_z,
+                 vt = v_z*t_z,
+                 uv = u_z*v_z,
+                 ttita = t_z*tita_z)][
+         , `:=`(dvtita = .derv(vtita, lon*pi/180, cyclical = TRUE),
+                 dutita = .derv(utita, lon*pi/180, cyclical = TRUE),
+                 dttita = .derv(ttita, lon*pi/180, cyclical = TRUE),
+                 p = lev/1000),
+            by = .(lev, lat)][
+         , `:=`(Flat = p*cos(lat*pi/180)*(v_z^2 - dvtita*2*.omega*a*sin(2*lat*pi/180)),
+                 Flon = p*cos(lat*pi/180)*(-uv   + dutita*2*.omega*a*sin(2*lat*pi/180)),
+                 Flev   = p*cos(lat*pi/180)/S*coriolis(lat)*(vt  - dttita*2*.omega*a*sin(2*lat*pi/180)))]
 
-    dx <- fields::interp.surface(dx.field, cbind(x, y))
-    dy <- fields::interp.surface(dy.field, cbind(x, y))
-    return(list(dx = dx, dy = dy))
-}
-
-to_seconds <- function(date) {
-    start <- lubridate::ymd_hms("1970-01-01 00:00:00")
-    lubridate::time_length(lubridate::interval(start, date), "second")
+    # Undefined global blah blah blah
+    tita <- dtp <- S <- tita_z  <-
+        t_z <- u_z <- v_z <- vtita <- utita <- vt <- uv <- ttita <- dvtita <-
+        dutita <- dttita <- p <- Flat <- Flon <- Flev <- NULL
+    data[, .(Flon, Flat, Flev)][]
 }

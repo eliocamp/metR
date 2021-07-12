@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: metr\n"
-"POT-Creation-Date: 2021-07-12 18:31:11\n"
-"PO-Revision-Date: 2021-07-12 18:57\n"
+"POT-Creation-Date: 2021-07-12 20:27:19\n"
+"PO-Revision-Date: 2021-07-12 20:54\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -198,7 +198,6 @@ msgstr "Falló el parseo del tiempo. Devolviendo valores crudos en %s.\n"
 "Instale udunits2 con `install_packages(\"udunits2\")` para parsear automáticamente."
 
 #: ReadNetCDF.R:415
-#, c-format
 msgid "----- Variables -----"
 msgstr "----- Variables -----"
 

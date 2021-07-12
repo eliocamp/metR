@@ -1,94 +1,22 @@
-#' Filled 2d contours of a 3d surface
-#'
-#' While ggplot2's \code{\link[ggplot2]{geom_contour}} can plot nice contours, it
-#' doesn't work with the polygon geom. This stat makes some small manipulation
-#' of the data to ensure that all contours are closed and also computes a new
-#' aesthetic \code{int.level}, which differs from \code{level} (computed by
-#' [ggplot2::geom_contour]) in that represents
-#' the value of the \code{z} aesthetic *inside* the contour instead of at the edge.
-#' It also computes breaks globally instead of per panel, so that faceted plots
-#' have all the same binwidth.
-#'
-#' @inheritParams ggplot2::geom_contour
-#' @inheritParams geom_contour2
-#' @param breaks numeric vector of breaks
-#' @param bins Number of evenly spaced breaks.
-#' @param binwidth Distance between breaks.
-#' @param na.fill How to fill missing values.
-#'    - `FALSE` for letting the computation fail with no interpolation
-#'    - `TRUE` for imputing missing values with [Impute2D]
-#'    - A numeric value for constant imputation
-#'    - A function that takes a vector and returns a numeric (e.g. `mean`)
-# #' @param xwrap,ywrap vector of length two used to wrap the circular dimension.
-#'
-#' @section Aesthetics:
-#' \code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):
-#'
-#' \itemize{
-#' \item \strong{x}
-#' \item \strong{y}
-#'  \item \code{alpha}
-#'  \item \code{colour}
-#'  \item \code{group}
-#'  \item \code{linetype}
-#'  \item \code{size}
-#'  \item \code{weight}
-#'}
-#'
-#'
-#' @section Computed variables:
-#' \describe{
-#'  \item{level}{An ordered factor that represents bin ranges.}
-#'  \item{level_d}{Same as `level`, but automatically uses [scale_fill_discretised()]}
-#'  \item{level_low,level_high,level_mid}{Lower and upper bin boundaries for each band, as well the mid point between the boundaries.}
-#'  }
-#'
-#' @examples
-#' library(ggplot2)
-#' surface <- reshape2::melt(volcano)
-#' ggplot(surface, aes(Var1, Var2, z = value)) +
-#'   geom_contour_fill() +
-#'   geom_contour(color = "black", size = 0.1)
-#'
-#' ggplot(surface, aes(Var1, Var2, z = value)) +
-#'   geom_contour_fill(aes(fill = stat(level)))
-#'
-#' ggplot(surface, aes(Var1, Var2, z = value)) +
-#'   geom_contour_fill(aes(fill = stat(level_d)))
-#'
-#' @family ggplot2 helpers
-#' @export
-geom_contour_fill <- function(mapping = NULL, data = NULL,
-                         stat = "ContourFill", position = "identity",
-                         ...,
-                         breaks = MakeBreaks(),
-                         bins = NULL,
-                         binwidth = NULL,
-                         kriging = FALSE,
-                         global.breaks = TRUE,
-                         na.fill = FALSE,
-                         show.legend = NA,
-                         inherit.aes = TRUE) {
-    .check_wrap_param(list(...))
-    ggplot2::layer(
-        data = data,
-        mapping = mapping,
-        stat = stat,
-        geom = ggplot2::GeomPolygon,
-        position = position,
-        show.legend = show.legend,
-        inherit.aes = inherit.aes,
-        params = list(
-            breaks = breaks,
-            bins = bins,
-            binwidth = binwidth,
-            na.rm = FALSE,
-            na.fill = na.fill,
-            kriging = kriging,
-            global.breaks = global.breaks,
-            ...
-        )
-    )
+# nocov start
+theme_field <- function(base_size = 11, base_family = "",
+                        base_line_size = base_size/22, base_rect_size = base_size/22,
+                        legend.position = "bottom") {
+    ggplot2::theme_minimal(base_size = base_size, base_family = base_family,
+                  base_line_size = base_line_size, base_rect_size = base_rect_size) +
+        ggplot2::theme(
+        # text = element_text(family = font_rc),
+        legend.position = "bottom",
+        legend.box = "vertical",
+        panel.spacing.y = grid::unit(5, "mm"),
+        panel.spacing.x = grid::unit(5, "mm"),
+        legend.spacing = grid::unit(2, "mm"),
+        plot.margin = grid::unit(rep(3, 4), "mm"),
+        # legend.title = element_blank(),
+        legend.box.spacing = grid::unit(3, "mm"),
+        legend.margin = ggplot2::margin(t = -5),
+        panel.grid = ggplot2::element_line(color = "gray50", size = 0.2, linetype = 3),
+        panel.ontop = TRUE)
 }
 
-
+# nocov end

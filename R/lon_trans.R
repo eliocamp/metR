@@ -29,7 +29,7 @@
 #                           lon360,
 #                           lon180)
 #     } else {
-#         stop("from must be 360 or 180")
+#         stopf("From must be 360 or 180.")
 #     }
 # }
 #

@@ -64,7 +64,7 @@ scale_type.metR_discretised <- function(x) {
 as.discretised <- function(x) {
   new_x <- get_middle(x)
   if (anyNA(is.na(new_x))) {
-    stop('Breaks not formatted correctly for a bin legend. Use `(<lower>, <upper>]` format to indicate bins')
+    stopf("Breaks not formatted correctly for a bin legend. Use '(<lower>, <upper>]' format to indicate bins.")
   }
 
   class(x) <- c("metR_discretised", class(x))
@@ -208,7 +208,7 @@ discretised_scale <- function(aesthetics, scale_name, palette, name = ggplot2::w
 ScaleDiscretised <-  ggplot2::ggproto("ScaleDiscretised", ggplot2::ScaleBinned,
    transform = function(self, x) {
        if (is.numeric(x)) {
-           stop("Discretised scales only support discrete data")
+           stopf("Discretised scales only support discrete data.")
        }
 
        new_x <- get_middle(x)
@@ -266,7 +266,7 @@ check_breaks_labels <- function (breaks, labels) {
     bad_labels <- is.atomic(breaks) && is.atomic(labels) &&
         length(breaks) != length(labels)
     if (bad_labels) {
-        stop("`breaks` and `labels` must have the same length")
+        stopf("'breaks' and 'labels' must have the same length.")
     }
     TRUE
 }

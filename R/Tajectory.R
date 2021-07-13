@@ -26,15 +26,15 @@ Trajectory <- function(formula, x0, y0,
     reportAssertions(checks)
 
     dep.names <- formula.tools::lhs.vars(formula)
-    if (length(dep.names) == 0) stop("LHS of formula must have at least one variable")
+    if (length(dep.names) == 0) stopf("LHS of formula must have at least one variable.")
 
     if (length(dep.names) != 2) {
-        stop("LHS of formula must be of the form dx + dy")
+        stopf("LHS of formula must be of the form dx + dy.")
     }
 
     ind.names <- formula.tools::rhs.vars(formula)
     if (length(ind.names) != 3) {
-        stop("RHS of formula must be of the form x + y + t")
+        stopf("RHS of formula must be of the form x + y + t.")
     }
 
     formula <- Formula::as.Formula(formula)

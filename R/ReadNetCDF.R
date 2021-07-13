@@ -133,7 +133,7 @@ ReadNetCDF <- function(file, vars = NULL,
                        subset = NULL, key = FALSE) {
     ncdf4.available <- requireNamespace("ncdf4", quietly = TRUE)
     if (!ncdf4.available) {
-        stop("ReadNetCDF needs package'ncdf4'. Install it with 'install.packages(\"ncdf4\")'")
+        stopf("ReadNetCDF needs package'ncdf4'. Install it with 'install.packages(\"ncdf4\")'")
     }
 
     out <- out[1]
@@ -208,13 +208,13 @@ ReadNetCDF <- function(file, vars = NULL,
     subset_names <- .names_recursive(subset)
     subset.extra <- subset_names[!(subset_names %in% names(dimensions))]
     if (length(subset.extra) != 0) {
-        stop(gettextf("Subsetting dimensions not found: %s.",
-                    paste0(subset.extra, collapse = ", ")))
+        stopf("Subsetting dimensions not found: %s.",
+                    paste0(subset.extra, collapse = ", "))
     }
 
     if (length(subset) > 1) {
         if (out != "data.frame") {
-            stop('Multiple subsets only supported for `out = "data.frame"')
+            stopf('Multiple subsets only supported for `out = "data.frame"')
         }
         reads <- lapply(subset, function(this_subset) {
             ReadNetCDF(file = file, vars = vars, out = out, key = key, subset = this_subset)
@@ -312,14 +312,14 @@ ReadNetCDF <- function(file, vars = NULL,
     }
 
     if (!requireNamespace("udunits2", quietly = TRUE)) {
-        message("Time dimension found and package udunits2 is not installed. Trying to parse.")
-        fail <- gettextf("Time parsing failed. Returing raw values in %s.\nInstall udunits2 with `install_packages(\"udunits2\")` to parse it automatically.", units)
+        messagef("Time dimension found and package udunits2 is not installed. Trying to parse.", domain = "R-metR")
+        fail <- gettextf("Time parsing failed. Returing raw values in %s.\nInstall udunits2 with 'install_packages(\"udunits2\")' to parse it automatically.", units, domain = "R-metR")
 
         units <- trimws(strsplit(units, "since")[[1]])
 
         period_fun <- try(match.fun(units[1]), silent = TRUE)
         if (is.error(period_fun)) {
-            warning(fail)
+            warning(fail)  # No need to translate here.
             return(time)
         }
 
@@ -327,7 +327,7 @@ ReadNetCDF <- function(file, vars = NULL,
                             period_fun(time),
                         silent = TRUE)
         if (is.error(time_try)) {
-            warning(fail)
+            warning(fail) # No need to translate here.
             return(time)
         }
         return(time_try)
@@ -412,11 +412,11 @@ GlanceNetCDF <- function(file, ...) {
 
 #' @export
 print.nc_glance <- function(x, ...) {
-    cat(gettext("----- Variables ----- \n"))
+    cat(gettext("----- Variables ----- \n", domain = "R-metR"))
     out <- lapply(x$vars, print)
 
     cat("\n\n")
-    cat(gettext("----- Dimensions ----- \n"))
+    cat(gettext("----- Dimensions ----- \n", domain = "R-metR"))
     out <- lapply(x$dim, print)
 }
 
@@ -431,12 +431,12 @@ print.ncvar4 <- function(x, ...) {
     cat("\n")
     dims <- vapply(x$dim, function(x) x$name, "a")
 
-    cat(gettext("    Dimensions: "))
-    cat(paste0(dims, collapse = " by "), sep = "")
+    cat(gettext("    Dimensions: ", domain = "R-metR"))
+    cat(paste0(dims, collapse = gettext(" by ", domain = "R-metR")), sep = "")
     cat("\n")
 
     if (x$hasScaleFact) {
-        cat(gettext("    (Scaled)"))
+        cat(gettext("    (Scaled)", domain = "R-metR"))
         cat("\n")
     }
 
@@ -453,8 +453,8 @@ print.ncdim4 <- function(x, ...) {
         units <- ""
     }
 
-    cat(gettextf("  %s: %d values from %s to %s %s\n",
-             x$name, x$len, as.character(min(vals)), as.character(max(vals)), units))
+    catf("  %s: %d values from %s to %s %s\n",
+         x$name, x$len, as.character(min(vals)), as.character(max(vals)), units)
     return(invisible(x))
 }
 

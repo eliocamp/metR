@@ -42,7 +42,7 @@ test_that("interpolation", {
     g1 <- ggplot(data, aes(lon, lat)) +
         geom_contour_fill(aes(z = gh), na.fill = TRUE) +
         guides(fill = "none")
-    expect_warning(invisible(print(g1)), "imputing missing values")
+    expect_warning(invisible(print(g1)), "missing values")
     suppressWarnings(expect_doppelganger("contour_fill-fill", g1))
 
     data <- geopotential[date == date[1]][!(lat %between% c(-60, -30) & lon %between% c(90, 120))]

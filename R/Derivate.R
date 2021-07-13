@@ -99,7 +99,7 @@ Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
         if (length(cyclical) == 1) {
             cyclical <- rep(cyclical, length(ind.names))
         } else if (length(cyclical) < length(ind.names)) {
-            stop("One boundary condition per variable needed.")
+            stopf("One boundary condition per variable needed.")
         }
     }
 
@@ -233,7 +233,7 @@ Vorticity <- function(formula, cyclical = FALSE, fill = FALSE,
         }
         if (!equispaced) {
             # TODO
-            stop("cyclical derivatives on a non-equispaced grid not yet supported")
+            stopf("Cyclical derivatives on a non-equispaced grid not yet supported.")
         }
         h1 <- rep(h1[1], N)
         h2 <- h1

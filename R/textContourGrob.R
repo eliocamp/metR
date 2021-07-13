@@ -224,7 +224,7 @@ labelGrob <- function (label, x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "n
           default.units = "npc", name = NULL, text.gp = grid::gpar(),
           rect.gp = grid::gpar(fill = "white"), vp = NULL) {
     if (length(label) != 1) {
-        stop("label must be of length 1")
+        stopf("label must be of length 1")
     }
     if (!grid::is.unit(x))
         x <- grid::unit(x, default.units)

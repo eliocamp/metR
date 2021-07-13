@@ -133,7 +133,7 @@ summary.eof <- function(object, ...) {
 
 .check_eof <- function(object) {
     if (!inherits(object, "eof")) {
-        stop("eof must be an EOF object")
+        stopf("'object' must be an EOF object.")
     }
 }
 

@@ -18,7 +18,7 @@ test_that("Streamline works", {
     # skip_on_ci()
     writer_warnings <- function(...) suppressWarnings(vdiffr::write_svg(...))
 
-    expect_warning(invisible(print(basic_geom_streamline)), "performing only 1 integration step")
+    expect_warning(invisible(print(basic_geom_streamline)), "Performing only 1 integration step")
     expect_doppelganger("streamline-base", basic_geom_streamline, writer = writer_warnings)
     expect_doppelganger("streamline-base-stat", basic_stat_streamline, writer = writer_warnings)
 })
@@ -49,8 +49,8 @@ test_that("Streamline ignores irregular grids", {
     g2 <- ggplot(geo, aes(lon, lat)) +
         geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), L = 20)
 
-    expect_warning(invisible(print(g)), "x and y do not define a regular grid")
-    expect_warning(invisible(print(g2)), "x and y do not define a regular grid")
+    expect_warning(invisible(print(g)), "'x' and 'y' do not define a regular grid.")
+    expect_warning(invisible(print(g2)), "'x' and 'y' do not define a regular grid.")
 
     skip_on_ci()
 })

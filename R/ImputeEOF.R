@@ -108,7 +108,7 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
 
         nas <- sum(is.na(data[[value.var]]))
         if (nas == 0) {
-            warning("data has no missing values")
+            warningf("%s column has no missing values. Returning unchanged vector.", value.var)
             return(data[[value.var]])
         }
         g <- .tidy2matrix(data, dcast.formula, value.var)
@@ -122,11 +122,11 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
         X <- data
         nas <- sum(is.na(data))
         if (nas == 0) {
-            warning("data has no missing values")
+            warningf("'data' has no missing values. Returning unchanged matrix.")
             return(data)
         }
     } else {
-        stop("data argument must be matrix or data frame")
+        stopf("'data' must be matrix or data frame if not NULL.")
     }
     if (is.null(max.eof)) max.eof <- min(ncol(X), nrow(X))
     gaps <- which(is.na(X))
@@ -160,7 +160,7 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
         if (verbose == TRUE) {
             message(paste0(sprintf(ngettext(eofs[i],
                                             "With %d eof  - rmse = %.3f",
-                                            "With %d eofs - rmse = %.3f"),
+                                            "With %d eofs - rmse = %.3f", domain = "R-metR"),
                                    eofs[i], rmse[i]), "\r"),  appendLF=FALSE)
         }
 

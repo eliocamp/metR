@@ -95,10 +95,10 @@ GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FA
 
     if (bar == TRUE) close(pb)
 
-    if (length(return.data) == 0) stop("No data available for any of selected dates")
+    if (length(return.data) == 0) stopf("No data available for any of selected dates.")
     if (length(no_data) != 0) {
         dates_no_data <- paste0(date[no_data], collapse = ", ")
-        warning(gettextf("No data for available for these dates: %s", dates_no_data))
+        warningf("No data for available for these dates: %s.", dates_no_data)
     }
 
     if (cache) {

@@ -41,7 +41,7 @@
 #' @family ggplot2 helpers
 #' @export
 WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
-    warning("WrapCircular is deprecated, use ggperiodic::wrap instead")
+    warningf("'WrapCircular' is deprecated, use ggperiodic::wrap instead.")
 
     checks <- makeAssertCollection()
     assertDataFrame(x, add = checks)

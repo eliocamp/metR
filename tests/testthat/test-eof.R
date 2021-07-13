@@ -41,7 +41,7 @@ test_that("EOF fails gracefully", {
     expect_error(EOF(gh ~ lon1 + lat2 | date, data = geopotential),
                  "Columns not found in data: lon1, lat2")
     expect_error(EOF(gh ~ lon | date, data = geopotential),
-                 "The formula  gh ~ lon | date  does not identify an unique observation for each cell.")
+                 "The formula gh ~ lon | date  does not identify an unique observation for each cell.")
 })
 
 test_that("eof methods", {

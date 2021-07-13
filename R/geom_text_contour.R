@@ -93,7 +93,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
 {
     if (!missing(nudge_x) || !missing(nudge_y)) {
         if (!missing(position)) {
-            stop("Specify either `position` or `nudge_x`/`nudge_y`",
+            stopf("Specify either 'position' or 'nudge_x'/'nudge_y'.",
                  call. = FALSE)
         }
 

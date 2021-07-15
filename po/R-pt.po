@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metr\n"
 "POT-Creation-Date: 2021-07-14 20:58:40\n"
-"PO-Revision-Date: 2021-07-15 21:59\n"
+"PO-Revision-Date: 2021-07-15 23:04\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: ConvertLongitude.R:40
 msgid "'lon' lower than 180 is not a valid longitude"
-msgstr "'lon' menor que 180 é uma longitude válida"
+msgstr "'lon' menor que 180 não é uma longitude válida"
 
 #: ConvertLongitude.R:43
 msgid "'lon' greater than 360 is not a valid longitude"
@@ -50,11 +50,11 @@ msgstr ""
 
 #: EOF_methods.R:120
 msgid "Importance of components:"
-msgstr ""
+msgstr "Importância dos componentes:"
 
 #: EOF_methods.R:124
 msgid "Component"
-msgstr ""
+msgstr "Componente"
 
 #: EOF_methods.R:124
 msgid "Explained variance"
@@ -213,7 +213,7 @@ msgstr ""
 
 #: RepeatCircular.R:44
 msgid "'WrapCircular' is deprecated, use ggperiodic::wrap instead."
-msgstr ""
+msgstr "'WarpCircular' está descontinuada, use ggperiodic::wrap como alternativa."
 
 #: Tajectory.R:29
 msgid "LHS of formula must have at least one variable."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metr\n"
 "POT-Creation-Date: 2021-07-14 20:58:40\n"
-"PO-Revision-Date: 2021-07-14 21:09\n"
+"PO-Revision-Date: 2021-07-15 20:47\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -18,15 +18,15 @@ msgstr ""
 
 #: ConvertLongitude.R:40
 msgid "'lon' lower than 180 is not a valid longitude"
-msgstr ""
+msgstr "'lon' menor que 180 é uma longitude válida"
 
 #: ConvertLongitude.R:43
 msgid "'lon' greater than 360 is not a valid longitude"
-msgstr ""
+msgstr "'lon' maior que 360 não é uma longitude válida"
 
 #: Derivate.R:102
 msgid "One boundary condition per variable needed."
-msgstr ""
+msgstr "É necessário uma condição de contorno por variável."
 
 #: Derivate.R:236
 msgid "Cyclical derivatives on a non-equispaced grid not yet supported."
@@ -58,11 +58,11 @@ msgstr ""
 
 #: EOF_methods.R:124
 msgid "Explained variance"
-msgstr ""
+msgstr "Variância explicada"
 
 #: EOF_methods.R:124
 msgid "Cumulative variance"
-msgstr ""
+msgstr "Variância acumulada"
 
 #: EOF_methods.R:136
 msgid "'object' must be an EOF object."
@@ -70,7 +70,7 @@ msgstr ""
 
 #: GetSMNData.R:98
 msgid "No data available for any of selected dates."
-msgstr ""
+msgstr "Nenhum dado disponível para as datas selecionadas."
 
 #: GetSMNData.R:101
 msgid "No data for available for these dates: %s."

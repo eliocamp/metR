@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metr\n"
 "POT-Creation-Date: 2021-07-14 20:58:40\n"
-"PO-Revision-Date: 2021-07-15 20:47\n"
+"PO-Revision-Date: 2021-07-15 21:59\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -34,11 +34,11 @@ msgstr ""
 
 #: DivideTimeseries.R:30
 msgid "'DivideTimeseries' is deprecated, use ggwrap instead (https://github.com/wilkox/ggwrap)."
-msgstr ""
+msgstr "'DivideTimeseries' está descontinuada, use ggwrap (https://github.com/wilkox/ggwrap) como alternativa."
 
 #: DivideTimeseries.R:33
 msgid "'DivideTimeseries' needs the gridExtra package. Install it with 'install.packages(\"gridExtra\")'."
-msgstr ""
+msgstr "'DivideTimeseries' precisa do pacote gridExtra. Instale-o usando 'install.packages(\"gridExtra\")'."
 
 #: EOF.R:148
 msgid "Columns not found in data: %s."
@@ -159,15 +159,15 @@ msgstr ""
 
 #: Interpolate.R:186
 msgid "`x` must be a numeric vector"
-msgstr ""
+msgstr "`x` deve ser um vetor numérico"
 
 #: Interpolate.R:190
 msgid "`y` must be a numeric vector"
-msgstr ""
+msgstr "`y` deve ser um vetor numérico"
 
 #: ReadCtl.R:260
 msgid "%s not implemented yet."
-msgstr ""
+msgstr "%s ainda não está implementado."
 
 #: ReadNetCDF.R:136
 msgid "ReadNetCDF needs package'ncdf4'. Install it with 'install.packages(\"ncdf4\")'"

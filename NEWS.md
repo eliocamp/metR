@@ -13,6 +13,12 @@ pressure and vice versa, as well as to use as secondary axis.
 This makes the date more representative of the time span and also solves a bug in which dates on the 
 31st would return `NA`. This is a **potentially breaking change**.
 
+# metR 0.9.2
+
+## Bugfixes
+
+- Fixes a bug in `geom_contour_tanaka()` in R >= 4.1.0.
+
 # metR 0.9.1
 
 ## New Features

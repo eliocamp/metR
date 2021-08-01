@@ -70,8 +70,11 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             })
         })
 
-        data$level_d <- data$level
-        class(data$level_d) <- c("metR_discretised", class(data$level_d))
+        if (nrow(data) > 0) {
+            data$level_d <- data$level
+            class(data$level_d) <- c("metR_discretised", class(data$level_d))
+        }
+
         data
     },
     compute_group = function(data, scales, bins = NULL, binwidth = NULL,

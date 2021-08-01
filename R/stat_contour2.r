@@ -157,7 +157,6 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
       warning("Not possible to generate contour data", call. = FALSE)
       return(data.frame())
     }
-# browser()
 
     # contours[, start := 1:.N %in% 1 , by = .(piece, group)]
     # contours <- contours[, unique(.SD), by = .(group, piece)]
@@ -193,7 +192,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 }
 
 .order_contour <- function(contours, data) {
-    data <- data.table::copy(data)
+  data <- data.table::copy(data)
     contours <- data.table::copy(contours)
     x.data <- unique(data$x)
     x.data <- x.data[order(x.data)]
@@ -223,7 +222,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     x.axis[dx > 0, rotate := (sign(level - z) == sign(m))]
     x.axis[dx < 0, rotate := (sign(level - z) != sign(m))]
 
-    # x axisd
+    # x axis
     y.axis <- segments[y.axis == TRUE]
     y.axis[, y.axis := NULL]
     y.axis[, x.d := .second(x.data, x), by = .(x, group)]
@@ -237,8 +236,8 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     y.axis[dy > 0, rotate := (sign(level - z) != sign(m))]
     y.axis[dy < 0, rotate := (sign(level - z) == sign(m))]
 
-    rot.groups <- c(y.axis[rotate == TRUE]$group,
-                    x.axis[rotate == TRUE]$group)
+    rot.groups <- c(as.numeric(y.axis[rotate == TRUE]$group),
+                    as.numeric(x.axis[rotate == TRUE]$group))
 
     # rot.groups <- c(as.character(y.axis$group), as.character(x.axis$group))
 

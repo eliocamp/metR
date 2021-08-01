@@ -23,6 +23,10 @@ test_that("regression works", {
                       adj.r.squared = rep(summ$adj.r.squared, 3)))
 
     expect_equal(FitLm(x, y, z, se = TRUE), sim_fit)
+
+    expect_equal(ResidLm(x, y, z),
+                 unname(residuals(good_fit)))
+
 })
 
 
@@ -54,6 +58,10 @@ test_that("weighted, regression works", {
                       adj.r.squared = rep(summ$adj.r.squared, 3)))
 
     expect_equal(FitLm(x, y, z, se = TRUE, weights = weights), sim_fit)
+
+
+    expect_equal(ResidLm(x, y, z,  weights = weights),
+                 unname(residuals(good_fit)))
 })
 
 
@@ -76,4 +84,9 @@ test_that("Supports NAs", {
                       adj.r.squared = rep(summ$adj.r.squared, 3)))
 
     expect_equal(FitLm(x, y, z, se = TRUE), sim_fit)
+
+    expect_equal(ResidLm(x, y, z),
+                 unname(residuals(good_fit)))
 })
+
+

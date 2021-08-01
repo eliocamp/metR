@@ -8,9 +8,11 @@
 #' @param se logical indicating whether to compute the standard error
 #' @param r2 logical indicating whether to compute r squared
 #' @param weights numerical vector of weights (which doesn't need to be normalised)
+#' @param time time vector to use for detrending. Only necessary in the case of
+#' irregularly sampled timeseries
 #'
 #' @return
-#' a list with elements
+#' FitLm returns a list with elements
 #' \describe{
 #'    \item{term}{the name of the regressor}
 #'    \item{estimate}{estimate of the regression}
@@ -19,6 +21,8 @@
 #'    \item{r.squared}{Percent of variance explained by the model (repeated in each term)}
 #'    \item{adj.r.squared}{ r.squared` adjusted based on the degrees of freedom)}
 #' }
+#'
+#' ResidLm and Detrend returns a vector of the same length
 #'
 #' If there's no complete cases in the regression, `NA`s are returned with no
 #' warning.
@@ -43,20 +47,39 @@
 #' }
 #'
 #' @export
-#' @importFrom stats .lm.fit complete.cases
-FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se) {
+FitLm <- function(y, ..., weights = NULL, se = FALSE, r2 = se) {
+    .FitLm(y = y, ..., weights = weights, se = se, r2 = r2, resid = FALSE)
+}
+
+#' @export
+#' @rdname FitLm
+ResidLm <- function(y, ..., weights = NULL) {
+    .FitLm(y = y, ..., weights = weights, resid = TRUE)
+}
+
+#' @export
+#' @rdname FitLm
+Detrend <- function(y, time = seq_along(y)) {
+    m <- mean(y, na.rm = TRUE)
+    ResidLm(y, time) + m
+}
+
+.FitLm <- function(y, ..., weights = NULL, se = FALSE, r2 = se, resid = FALSE) {
     X <- cbind(`(Intercept)` = 1, ...)
-    has_weights <- data.table::uniqueN(weights) > 1
+    has_weights <- !is.null(weights)
 
     term <- dimnames(X)[[2]]
     missing <- term == ""
     term[missing] <- paste0("V", seq_len(sum(missing)))
 
-    remove <- which(!complete.cases(X) | is.na(y))
+    remove <- which(!stats::complete.cases(X) | is.na(y))
     N <- length(y) - length(remove)
-
-    # If empty, reurn NA with a warning.
+    residuals <- rep(NA_real_, length(y))
+    # If empty, return NA
     if (N < 2) {
+        if (resid) {
+            return(residuals)
+        }
         estimate <- rep(NA_real_, length(term))
         out <- list(term = term,
                     estimate = estimate)
@@ -76,17 +99,29 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se) {
         if (length(remove) > 0) {
             X <- X[-remove, ]
             y <- y[-remove]
-            weights <- weights[-remove]
+            if (has_weights) {
+                weights <- weights[-remove]
+            }
+
         }
 
         if (has_weights) {
             weights <- weights/sum(weights)
             fit <- stats::lm.wfit(X, y, w = weights)
         } else {
-            fit <- .lm.fit(X, y)
+            fit <- stats::.lm.fit(X, y)
         }
 
         estimate <- unname(fit$coefficients)
+    }
+
+    if (resid) {
+        if (length(remove) > 0) {
+            residuals[-remove] <- fit$residuals
+        }
+        residuals <- fit$residuals
+
+        return(residuals)
     }
 
     out <- list(term = term,
@@ -94,10 +129,12 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se) {
 
     if (se == TRUE | r2 == TRUE) {
         df <- N - ncol(X)
-        res_sum <- sum(weights*fit$residuals^2)
+
         if (has_weights) {
+            res_sum <- sum(weights*fit$residuals^2)
             ss <- sum(weights*(y - stats::weighted.mean(y, w = weights))^2)
         } else {
+            res_sum <- sum(fit$residuals^2)
             ss <- sum((y - mean(y))^2)
         }
 
@@ -124,5 +161,6 @@ FitLm <- function(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se) {
             out$adj.r.squared <- rep(adj_r_squared, length(term))
         }
     }
+
     return(out)
 }

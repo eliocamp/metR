@@ -64,7 +64,6 @@ test_that("eof methods", {
 
     expect_equal(predict(eof_all, n = 1:5), predict(eof))
 
-    expect_known_output(print(eof), file = "eof_print")
 
     expect_known_output(summary(eof), file = "eof_summary")
 

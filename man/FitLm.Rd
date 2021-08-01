@@ -2,9 +2,15 @@
 % Please edit documentation in R/FitLm.R
 \name{FitLm}
 \alias{FitLm}
+\alias{ResidLm}
+\alias{Detrend}
 \title{Fast estimates of linear regression}
 \usage{
-FitLm(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se)
+FitLm(y, ..., weights = NULL, se = FALSE, r2 = se)
+
+ResidLm(y, ..., weights = NULL)
+
+Detrend(y, time = seq_along(y))
 }
 \arguments{
 \item{y}{numeric vector of observations to model}
@@ -16,9 +22,12 @@ FitLm(y, ..., weights = rep(1, length(y)), se = FALSE, r2 = se)
 \item{se}{logical indicating whether to compute the standard error}
 
 \item{r2}{logical indicating whether to compute r squared}
+
+\item{time}{time vector to use for detrending. Only necessary in the case of
+irregularly sampled timeseries}
 }
 \value{
-a list with elements
+FitLm returns a list with elements
 \describe{
 \item{term}{the name of the regressor}
 \item{estimate}{estimate of the regression}
@@ -27,6 +36,8 @@ a list with elements
 \item{r.squared}{Percent of variance explained by the model (repeated in each term)}
 \item{adj.r.squared}{ r.squared` adjusted based on the degrees of freedom)}
 }
+
+ResidLm and Detrend returns a vector of the same length
 
 If there's no complete cases in the regression, \code{NA}s are returned with no
 warning.

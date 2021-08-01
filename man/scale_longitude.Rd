@@ -49,9 +49,9 @@ scale_y_latitude(
   ...
 )
 
-scale_x_level(name = "", expand = c(0, 0), trans = "reverselog", ...)
+scale_x_level(name = "", expand = c(0, 0), trans = "sa_height", ...)
 
-scale_y_level(name = "", expand = c(0, 0), trans = "reverselog", ...)
+scale_y_level(name = "", expand = c(0, 0), trans = "sa_height", ...)
 }
 \arguments{
 \item{name}{The name of the scale. Used as the axis or legend title. If

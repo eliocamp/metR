@@ -214,15 +214,15 @@ GeomArrow <- ggplot2::ggproto("GeomArrow", ggplot2::Geom,
                                                     start = start, direction = direction,
                                                     preserve.dir = FALSE, pivot = 0.5) {
                                 if (!is.finite(pivot)) {
-                                  stop("pivot must be a number between 0 and 1", call. = FALSE)
+                                  stopf("'pivot' must be a number between 0 and 1.", call. = FALSE)
                                 }
                                 if (pivot > 1) {
                                   pivot <- 1
-                                  warning("pivot greater than 1, setting it to 1", call. = FALSE)
+                                  warningf("'pivot' greater than 1, setting it to 1.", call. = FALSE)
                                 }
                                 if (pivot < 0) {
                                   pivot <- 0
-                                  warning("pivot less than 0, setting it to 0", call. = FALSE)
+                                  warningf("'pivot' less than 0, setting it to 0.", call. = FALSE)
                                 }
                                 mag <- data$norm_mag
 
@@ -305,11 +305,11 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
                                 params$direction <- switch(params$direction[1],
                                                            ccw = -1,
                                                            cw = 1,
-                                                           stop("direction must be either ccw or cw", call. = FALSE)
+                                                           stopf("'direction' must be either \"ccw\" or \"cw\"", call. = FALSE)
                                 )
                                 if (is.null(data$mag) | is.null(data$angle)) {
                                   if (is.null(data$dx) | is.null(data$dy)) {
-                                    stop("stat_arrow needs wither mag and angle or dx and dy", call. = FALSE)
+                                    stopf("stat_arrow needs wither 'mag' and 'angle' or 'dx' and 'dy'.", call. = FALSE)
                                   }
                                   data$mag <- with(data, Mag(dx, dy))
                                   data$angle <- with(data, atan2(dy, dx)*180/pi)
@@ -355,11 +355,11 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
                                 # Warnings for good usage
                                 if (preserve.dir == FALSE) {
                                   if (scales$x$is_discrete() | scales$y$is_discrete()) {
-                                    warning("the use of preserve.dir = FALSE with discrete scales is not recommended", call. = FALSE)
+                                    warningf("The use of preserve.dir = FALSE with discrete scales is not recommended.", call. = FALSE)
                                   }
 
                                   if (scales$x$scale_name == "date" | scales$x$scale_name == "date") {
-                                    warning("the use of preserve.dir = FALSE with date scales is not recommended", call. = FALSE)
+                                    warningf("The use of preserve.dir = FALSE with date scales is not recommended.", call. = FALSE)
                                   }
                                 }
 

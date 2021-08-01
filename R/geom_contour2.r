@@ -79,7 +79,6 @@ GeomContour2 <- ggplot2::ggproto("GeomContour2", ggplot2::GeomContour,
 
 .check_wrap_param <- function(params) {
     if (!is.null(params$xwrap) | !is.null(params$ywrap)) {
-        warning("'xwrap' and 'ywrap' will be deprecated.",
-                " Use ggperiodic::periodic insead.")
+        warningf("'xwrap' and 'ywrap' will be deprecated. Use ggperiodic::periodic insead.")
     }
 }

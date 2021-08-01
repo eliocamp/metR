@@ -37,7 +37,7 @@ geopotential[, gh.impute := ImputeEOF(gh.gap ~ lat + lon | date, max.eof = 5, ma
 test_that("returns ok if there's no missing values", {
     expect_warning(gh <<- geopotential[, ImputeEOF(gh ~ lat + lon | date, max.eof = 5,
                                                    max.iter = 2000)],
-                   "data has no missing values")
+                   "no missing values")
     expect_equal(gh,
                  geopotential$gh)
 })

@@ -63,9 +63,9 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         data <- plyr::ddply(data, "PANEL", function(data) {
             scales <- layout$get_scales(data$PANEL[1])
             tryCatch(do.call(self$compute_panel, args), error = function(e) {
-                warning("Computation failed in `", ggplot2:::snake_class(self),
-                        "()`:\n",
-                        e$message, call. = FALSE)
+                warningf("Computation failed in `%s()`:\n %s",
+                                 ggplot2:::snake_class(self), e$message,
+                        call. = FALSE)
                 data.frame()
             })
         })
@@ -98,7 +98,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             complete.grid <- with(data, .is.regular_grid(x, y))
             if (complete.grid == FALSE) {
                 if (complete == FALSE) {
-                    warning("data must be a complete regular grid", call. = FALSE)
+                    warningf("The data must be a complete regular grid.", call. = FALSE)
                     return(data.frame())
                 } else {
                     # data <- data.table::setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
@@ -118,7 +118,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             data <- try(with(data, setNames(kriging::kriging(x, y, z, pixels = pixels)$map,
                                             c("x", "y", "z"))), silent = TRUE)
             if (inherits(data, "try-error")) {
-                warning("kriging failed. Perhaps the number of points is too small.")
+                warningf("kriging failed. Perhaps the number of points is too small.")
                 return(data.frame())
             }
 
@@ -146,7 +146,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             } else {
                 if (is.character(proj)) {
                     if (!requireNamespace("proj4", quietly = TRUE)) {
-                        stop("Projection requires the proj4 package. Install it with `install.packages(\"proj4\")`")
+                        stopf("Projection requires the proj4 package. Install it with 'install.packages(\"proj4\")'.")
                     }
                     cont <- data.table::copy(cont)[, c("x", "y") := proj4::project(list(x, y), proj,
                                                                                            inverse = TRUE)][]
@@ -185,7 +185,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
 
     if (length(cl) == 0) {
-        warning("Not possible to generate contour data", call. = FALSE)
+        warningf("Not possible to generate contour data.", call. = FALSE)
         return(data.frame())
     }
 

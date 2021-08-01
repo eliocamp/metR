@@ -145,7 +145,7 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
         all.cols <- c(value.var, row.vars, col.vars)
         missing.cols <- all.cols[!(all.cols %in% colnames(data))]
         if (length(missing.cols) != 0) {
-            stop(paste0("Columns not found in data: ", paste0(missing.cols, collapse = ", ")))
+            stopf("Columns not found in data: %s.", paste0(missing.cols, collapse = ", "))
         }
         data <- data.table::setDT(data)[, (all.cols), with = FALSE]
     }
@@ -158,7 +158,7 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
     g <- .tidy2matrix(data, dcast.formula, value.var, fill = fill)
 
     if (length(g$matrix) < nrow(data)) {
-        stop(paste("The formula ", as.character(formula), " does not identify an unique observation for each cell."))
+        stopf("The formula %s does not identify an unique observation for each cell.",  as.character(formula))
     }
 
     tall <- dim(g$matrix)[1] > dim(g$matrix)[2]

@@ -257,7 +257,7 @@ template <- "attm_%y4.ctl"
 .NotImplemented <- function(date) {
     m <- match.call()[[1]]
     m <- m[[length(m)]]
-    stop(paste0(m, " not implemented yet."))
+    stopf("%s not implemented yet.", m)
 }
 
 

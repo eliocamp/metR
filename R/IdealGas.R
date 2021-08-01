@@ -83,9 +83,9 @@ IdealGas <- function(p, t, rho, R = 287.058) {
     } else if (hasArg(p) & !hasArg(t) & hasArg(rho)) {
         return(p/(rho*R))
     } else if (hasArg(p) & hasArg(t) & hasArg(rho)) {
-        stop("Too many state variables.")
+        stopf("Too many state variables.")
     } else {
-        stop("Too few state variables.")
+        stopf("Too few state variables.")
     }
 }
 
@@ -99,9 +99,9 @@ Adiabat <- function(p, t, theta, p0 = 100000, kappa = 2/7) {
     } else if (hasArg(p) & hasArg(t) & !hasArg(theta)) {
         return(t*(p0/p)^kappa)
     } else if (hasArg(p) & hasArg(t) & hasArg(theta)) {
-        stop("Too many state variables.")
+        stopf("Too many state variables.")
     } else {
-        stop("Too few state variables.")
+        stopf("Too few state variables.")
     }
 }
 
@@ -118,9 +118,9 @@ VirtualTemperature <- function(p, t, e, tv, epsilon = 0.622) {
     } else if (hasArg(tv) & hasArg(p) & hasArg(t) & !hasArg(e)) {
         return(p/a*(1 - t/tv))
     } else if (hasArg(tv) & hasArg(p) & hasArg(t) & hasArg(e)) {
-        stop("Too many state variables.")
+        stopf("Too many state variables.")
     } else {
-        stop("Too few state variables.")
+        stopf("Too few state variables.")
     }
 }
 
@@ -134,9 +134,9 @@ MixingRatio <- function(p, e, w, epsilon = 0.622) {
     } else if (hasArg(p) & hasArg(w) & !hasArg(e)) {
         return(p/(epsilon/w + 1))
     } else if (hasArg(p) & hasArg(w) & hasArg(e)) {
-        stop("Too many state variables.")
+        stopf("Too many state variables.")
     } else {
-        stop("Too few state variables.")
+        stopf("Too few state variables.")
     }
 }
 
@@ -154,9 +154,9 @@ ClausiusClapeyron <- function(t, es) {
         d <- log(es/a)
         return(d*c/b/(1 - d/b) + 273.15)
     } else if (hasArg(t) & hasArg(es)) {
-        stop("Too many state variables.")
+        stopf("Too many state variables.")
     } else {
-        stop("Too few state variables.")
+        stopf("Too few state variables.")
     }
 }
 
@@ -177,8 +177,8 @@ DewPoint <- function(p, ws, td, epsilon = 0.622) {
         es <- ClausiusClapeyron(td)
         return(es*(1 + epsilon/ws))
     } else if (hasArg(p) & hasArg(ws) & hasArg(td)) {
-        stop("Too many state variables.")
+        stopf("Too many state variables.")
     } else {
-        stop("Too few state variables.")
+        stopf("Too few state variables.")
     }
 }

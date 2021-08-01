@@ -253,7 +253,7 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
 
       if (is.null(params$S)) params$S <- ceiling(params$L/params$dt/m/2)
       if (params$S == 1) {
-          warning("performing only 1 integration step, please consider increasing the resolution")
+          warningf("Performing only 1 integration step, please consider increasing the resolution.")
       }
 
       return(params)
@@ -288,8 +288,7 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
                         lineend = "butt", linejoin = "round", linemitre = 1,
                         na.rm = FALSE) {
       if (!anyDuplicated(data$group)) {
-          message_wrap("geom_path: Each group consists of only one observation. ",
-                       "Do you need to adjust the group aesthetic?")
+          messagef("%s: Each group consists of only one observation.\nDo you need to adjust the group aesthetic?", "geom_path")
       }
 
       # browser()
@@ -313,9 +312,8 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
       solid_lines <- all(attr$solid)
       constant <- all(attr$constant)
       if (!solid_lines && !constant) {
-          stop("geom_streamline: If you are using dotted or dashed lines",
-               ", colour, size and linetype must be constant over the line",
-               call. = FALSE)
+        stopf("%s: If you are using dotted or dashed lines, colour, size and linetype must be constant over the line.",
+                      "geom_streamline", call. = FALSE)
       }
 
       # Work out grouping variables for grobs
@@ -388,7 +386,7 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     is.grid <- with(field, .is.regular_grid(x, y))
 
     if (!is.grid) {
-      stop("x and y do not define a regular grid")
+      stopf("'x' and 'y' do not define a regular grid.")
     }
 
     data.table::setorder(field, x, y)

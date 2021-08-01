@@ -77,7 +77,7 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
         if (isTRUE(path)) {
             path <- ".order"
         } else if (!is.character(path)) {
-            stop("`order` must be logical or character")
+            stopf("`order` must be logical or character")
         }
         grid <- FALSE
 
@@ -85,23 +85,23 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
     }
 
     dep.names <- formula.tools::lhs.vars(formula)
-    if (length(dep.names) == 0) stop("LHS of formula must have at least one variable")
+    if (length(dep.names) == 0) stopf("LHS of formula must have at least one variable")
 
     ind.names <- formula.tools::rhs.vars(formula)
     if (length(ind.names) > 2) {
-        stop("RHS of formula must be of the form x + y")
+        stopf("RHS of formula must be of the form x + y")
     }
 
     formula <- Formula::as.Formula(formula)
     data <- data.table::as.data.table(eval(quote(model.frame(formula, data = data,
                                                  na.action = NULL))))
     if (!.has_single_value(data, ind.names)) {
-        stop("Interpolate need a unique value for each x and y")
+        stopf("Interpolate need a unique value for each x and y")
     }
 
     # Accomodate 1D interpolation
     if (length(ind.names) == 1) {
-        if (hasArg(y.out)) warning("Only 1 dimension in formula. Ignoring y.out.")
+        if (hasArg(y.out)) warningf("Only 1 dimension in 'formula'. Ignoring 'y.out'.")
 
         loc <- data.table::data.table(x.out = x.out)
         colnames(loc) <- ind.names
@@ -118,23 +118,22 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
 
     if (grid == TRUE) {
         if (length(unique(x.out)) != length(x.out)) {
-            stop('duplicate values on x.out. If x.out is a vector of locations, use grid = FALSE')
+            stopf('duplicate values on x.out. If x.out is a vector of locations, use grid = FALSE')
         }
         if (length(unique(y.out)) != length(y.out)) {
-            stop('duplicate values on y.out. If y.out is a vector of locations, use grid = FALSE')
+            stopf('duplicate values on y.out. If y.out is a vector of locations, use grid = FALSE')
         }
         loc <- data.table::setDT(expand.grid(x.out = x.out, y.out = y.out))
     } else if (grid == FALSE) {
         if (length(x.out) != length(y.out)) {
-            stop('x.out is not of the same length as y.out.
-                 If x.out and y.out define unique points on a regular grid, use grid = TRUE')
+            stopf('x.out is not of the same length as y.out.\nIf x.out and y.out define unique points on a regular grid, use grid = TRUE')
         }
         loc <- data.table::data.table(x.out, y.out)
         if (!is.null(path) & !isFALSE(path)) {
             data.table::set(loc, NULL, path, index)
         }
     } else {
-        stop('wrong mode, choose either "grid" or "locations"')
+        stopf('wrong mode, choose either "grid" or "locations"')
     }
 
     colnames(loc)[seq_along(ind.names)] <- ind.names
@@ -180,15 +179,15 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
 #' @importFrom stats approx
 as.path <- function(x, y, n = 10, path = TRUE) {
     if (length(x) < 2 & length(y) < 2) {
-        stop("either `xs` or `ys` must be of length greater than 1")
+        stopf("either `xs` or `ys` must be of length greater than 1")
     }
 
     if (!is.numeric(x)) {
-        stop("`x` must be a numeric vector")
+        stopf("`x` must be a numeric vector")
     }
 
     if (!is.numeric(y)) {
-        stop("`y` must be a numeric vector")
+        stopf("`y` must be a numeric vector")
     }
 
     if (length(x) == 1) {

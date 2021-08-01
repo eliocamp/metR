@@ -37,10 +37,10 @@ ConvertLongitude <- function(lon, group = NULL, from = NULL) {
     if (all(is.na(lon))) return(lon)
 
     m <- min(lon, na.rm = TRUE)
-    if (m < -180) stop("lon lower than 180, not a valid longitude")
+    if (m < -180) stopf("'lon' lower than 180 is not a valid longitude")
 
     M <- max(lon, na.rm = TRUE)
-    if (M > 360) stop("lon greater than 360, not a valid longitude")
+    if (M > 360) stopf("'lon' greater than 360 is not a valid longitude")
 
     lon360 <- FALSE
     lon180 <- FALSE

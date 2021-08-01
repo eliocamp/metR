@@ -32,11 +32,11 @@ Impute2D <- function(formula, data = NULL, method = "interpolate") {
     reportAssertions(checks)
 
     dep.names <- formula.tools::lhs.vars(formula)
-    if (length(dep.names) == 0) stop("LHS of formula must have at least one variable")
+    if (length(dep.names) == 0) stopf("LHS of formula must have at least one variable")
 
     ind.names <- formula.tools::rhs.vars(formula)
     if (length(ind.names) > 2) {
-        stop("RHS of formula must be of the form x + y")
+        stopf("RHS of formula must be of the form x + y")
     }
 
     formula <- Formula::as.Formula(formula)
@@ -73,16 +73,16 @@ soft_approx2d <- function(x, y, z) {
     data <- data.table::copy(data)
     if (nas != 0) {
         if (isTRUE(na.fill)) {
-            if(isTRUE(verbose)) warning("imputing missing values", call. = FALSE)
+            if(isTRUE(verbose)) warningf("Imputing missing values.", call. = FALSE)
             data <- data.table::copy(data)[, z := soft_approx2d(x, y, z)]
             if (sum(is.na(data[["z"]])) != 0) {
-                warning("Linear imputation failed. Try passing a constant number or a function (e.g. `na.fill = mean`).")
+                warningf("Linear imputation failed. Try passing a constant number or a function (e.g. 'na.fill = mean').")
             }
         } else if (is.numeric(na.fill)) {
-            if(isTRUE(verbose)) warning("imputing missing values", call. = FALSE)
+            if(isTRUE(verbose)) warningf("Imputing missing values.", call. = FALSE)
             data[is.na(z), z := na.fill[1]]
         } else if (is.function(na.fill)) {
-            if(isTRUE(verbose)) warning("imputing missing values", call. = FALSE)
+            if(isTRUE(verbose)) warningf("Imputing missing values.", call. = FALSE)
             z.fill <- data[is.finite(z), na.fill(z)]
             data[is.na(z), z := z.fill]
         }

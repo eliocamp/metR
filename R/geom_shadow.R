@@ -43,7 +43,7 @@ GeomShadow <- ggplot2::ggproto("GeomShadow", ggplot2::GeomTile,
                         alpha.range = c(0, 1), skip = 0, alpha = NULL) {
 
       if (!coord$is_linear()) {
-          stop("non lineal coordinates are not implemented in GeomShadow",
+          stopf("Non lineal coordinates are not implemented in GeomShadow.",
                call. = FALSE)
       } else {
 
@@ -57,7 +57,7 @@ GeomShadow <- ggplot2::ggproto("GeomShadow", ggplot2::GeomTile,
 
           if (raster == TRUE){
               if (!inherits(coord, "CoordCartesian")) {
-                  stop("geom_raster only works with Cartesian coordinates", call. = FALSE)
+                  stopf("geom_raster only works with Cartesian coordinates.", call. = FALSE)
               }
               # Convert vector of data to raster
               x_pos <- as.integer((coords$x - min(coords$x)) / ggplot2::resolution(coords$x, FALSE))

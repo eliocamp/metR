@@ -117,7 +117,7 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", ggplot2::GeomTile,
                           sun.altitude = NULL, skip = NULL, alpha.range = NULL) {
 
         if (!coord$is_linear()) {
-           stop("non lineal coordinates are not implemented in GeomRelief",
+           stopf("Non lineal coordinates are not implemented in GeomRelief.",
                 call. = FALSE)
         } else {
             coords <- data.table::as.data.table(coord$transform(data, panel_scales))
@@ -137,7 +137,7 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", ggplot2::GeomTile,
 
             if (raster == TRUE){
                 if (!inherits(coord, "CoordCartesian")) {
-                    stop("geom_raster only works with Cartesian coordinates", call. = FALSE)
+                    stopf("geom_raster only works with Cartesian coordinates.", call. = FALSE)
                 }
                 # Convert vector of data to raster
                 x_pos <- as.integer((coords$x - min(coords$x)) / ggplot2::resolution(coords$x, FALSE))

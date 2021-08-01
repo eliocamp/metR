@@ -92,7 +92,7 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
         if (is.null(data)) {
             formula <- Formula::as.Formula(formula)
             data <- data.table::as.data.table(eval(quote(model.frame(formula, data  = data,
-                                                         na.action = NULL))))
+                                                                     na.action = NULL))))
         }
         f <- as.character(formula)
 
@@ -108,7 +108,7 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
 
         nas <- sum(is.na(data[[value.var]]))
         if (nas == 0) {
-            warning("data has no missing values")
+            warningf("%s column has no missing values. Returning unchanged vector.", value.var)
             return(data[[value.var]])
         }
         g <- .tidy2matrix(data, dcast.formula, value.var)
@@ -122,11 +122,11 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
         X <- data
         nas <- sum(is.na(data))
         if (nas == 0) {
-            warning("data has no missing values")
+            warningf("'data' has no missing values. Returning unchanged matrix.")
             return(data)
         }
     } else {
-        stop("data argument must be matrix or data frame")
+        stopf("'data' must be matrix or data frame if not NULL.")
     }
     if (is.null(max.eof)) max.eof <- min(ncol(X), nrow(X))
     gaps <- which(is.na(X))
@@ -150,15 +150,18 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
     for (i in 2:length(eofs)) {
         # After first guess, impute gaps and validation.
         X.rec <- .ImputeEOF1(X.rec, c(gaps, validation), eofs[i],
-                                  tol = tol, max.iter = max.iter,
-                                  verbose = verbose, prev = prev)
+                             tol = tol, max.iter = max.iter,
+                             verbose = verbose, prev = prev)
         prev <- X.rec$prval
         X.rec <- X.rec$X.rec
 
         rmse <- c(rmse, sqrt(mean((X[validation] - X.rec[validation])^2)))
 
         if (verbose == TRUE) {
-            cat("\r", "With", eofs[i], "eof - rmse = ", rmse[i])
+            message(paste0(sprintf(ngettext(eofs[i],
+                                            "With %d eof  - rmse = %.3f",
+                                            "With %d eofs - rmse = %.3f", domain = "R-metR"),
+                                   eofs[i], rmse[i]), "\r"),  appendLF=FALSE)
         }
 
         # Break the loop if we are over the minimum eof asked and, either

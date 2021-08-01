@@ -1,3 +1,77 @@
+
+get_middle <- function(x) {
+    if (is.numeric(x)) {
+        return(x)
+    }
+    breaks <- levels(x)
+    splitted <- strsplit(gsub("[\\(\\[\\)\\]]", "", as.character(breaks), perl = TRUE), ",")
+
+
+    low <- vapply(splitted, function(x) min(as.numeric(x)), FUN.VALUE =  numeric(1))
+    high <- vapply(splitted, function(x) max(as.numeric(x)), FUN.VALUE =  numeric(1))
+
+    if (low[1] == -Inf) {
+        low[1] <- high[1] - (high[2] - low[2])
+    }
+    n <- length(breaks)
+    if (high[n] == Inf) {
+        high[n] <- high[n-1] + (high[n-1] - low[n-1])
+    }
+
+    middle <- (high + low)/2
+    names(middle) <- breaks
+    middle <- middle[x]
+    middle
+}
+
+
+uncut <- function(x, squash_infinite = TRUE) {
+
+    splitted <- strsplit(gsub("[\\(\\[\\)\\]]", "", as.character(x), perl = TRUE), ",")
+
+    low <- vapply(splitted, function(x) as.numeric(x[1]), FUN.VALUE =  numeric(1))
+    high <- vapply(splitted, function(x) as.numeric(x[2]), FUN.VALUE =  numeric(1))
+
+    if (squash_infinite) {
+        if (low[1] == -Inf) {
+            low[1] <- high[1] - (high[2] - low[2])
+        }
+        n <- length(x)
+        if (high[n] == Inf) {
+            high[n] <- high[n-1] + (high[n-1] - low[n-1])
+        }
+    }
+
+    sort(c(low, high))
+
+}
+
+
+mid_rescaler <- function(mid) {
+    function(x, from) {
+        scales::rescale_mid(x, to = c(0, 1), from = from, mid)
+    }
+}
+
+
+
+#' @importFrom ggplot2 scale_type
+#' @export
+scale_type.metR_discretised <- function(x) {
+  c("discretised", "ordinal")
+}
+
+as.discretised <- function(x) {
+  new_x <- get_middle(x)
+  if (anyNA(is.na(new_x))) {
+    stopf("Breaks not formatted correctly for a bin legend. Use '(<lower>, <upper>]' format to indicate bins.")
+  }
+
+  class(x) <- c("metR_discretised", class(x))
+  x
+}
+
+
 #' Discretised scale
 #'
 #' This scale allows ggplot to understand data that has been discretised with
@@ -150,7 +224,7 @@ discretised_scale <- function(aesthetics, scale_name, palette, name = ggplot2::w
 ScaleDiscretised <-  ggplot2::ggproto("ScaleDiscretised", ggplot2::ScaleBinned,
    transform = function(self, x) {
        if (is.numeric(x)) {
-           stop("Discretised scales only support discrete data")
+           stopf("Discretised scales only support discrete data.")
        }
 
        new_x <- get_middle(x)
@@ -322,7 +396,7 @@ check_breaks_labels <- function(breaks, labels) {
     bad_labels <- is.atomic(breaks) && is.atomic(labels) &&
         length(breaks) != length(labels)
     if (bad_labels) {
-        stop("`breaks` and `labels` must have the same length")
+        stopf("'breaks' and 'labels' must have the same length.")
     }
     TRUE
 }

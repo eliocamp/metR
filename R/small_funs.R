@@ -77,7 +77,7 @@ Mag <- function(...) {
     coords <- list(...)
     if (is.list(coords[[1]])) coords <- coords[[1]]
     N <- lengths(coords, use.names = FALSE)
-    if (any(N != N[1])) stop("all variables must have the same length")
+    if (any(N != N[1])) stopf("All variables must have the same length")
 
     coords <- lapply(coords, `^`, 2)
     sqrt(Reduce(`+`, coords))

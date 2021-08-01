@@ -51,8 +51,8 @@ GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution =
 
     reportAssertions(checks)
 
-    if (lat.north < lat.south) stop("lat.north can't be smaller than lat.south")
-    if (lon.west > lon.east) stop("lon.east can't be smaller than lon.west")
+    if (lat.north < lat.south) stopf("'lat.north' can't be smaller than 'lat.south'.")
+    if (lon.west > lon.east) stopf("'lon.east' can't be smaller than '.lon.west'.")
 
     d <- 1/60
     if (length(resolution) == 1) resolution[2] <- resolution[1]
@@ -78,7 +78,7 @@ GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution =
             files <- list.files(file.dir, full.names = TRUE)
         }
         if (cache == TRUE && file %in% files) {
-            if (verbose == TRUE) message("Fetching cached field.")
+            if (verbose == TRUE) messagef("Fetching cached field.")
             field <- data.table::fread(file)[, -1]
         } else {
             # Get data
@@ -87,7 +87,7 @@ GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution =
             temp_file <- tempfile(fileext = ".tif")
             field <- try(utils::download.file(url, temp_file, quiet = TRUE), silent = TRUE)
 
-            if (is.error(field)) stop("Failed to fetch file.")
+            if (is.error(field)) stopf("Failed to fetch file.")
 
             check_packages(c("raster", "rgdal"), "GetTopography")
 

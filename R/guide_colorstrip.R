@@ -123,11 +123,11 @@ guide_colourstrip <- function(
 guide_train.colorstrip <- function(guide, scale, aesthetic = NULL) {
     # do nothing if scale are inappropriate
     if (length(intersect(scale$aesthetics, guide$available_aes)) == 0) {
-        warning("colorstrip guide needs colour or fill scales.")
+        warningf("colorstrip guide needs colour or fill scales.")
         return(NULL)
     }
     if (scale$is_discrete()) {
-        warning("colorstrip guide needs continuous scales.")
+        warningf("colorstrip guide needs continuous scales.")
         return(NULL)
     }
 
@@ -194,7 +194,7 @@ guide_colorstrip <- guide_colourstrip
     if (is.null(scale$breaks)) {
         return(NULL)
     } else if (identical(scale$breaks, NA)) {
-        stop("Invalid breaks specification. Use NULL, not NA")
+        stopf("Invalid breaks specification. Use NULL, not NA")
     } else if (scales::zero_range(as.numeric(limits))) {
         breaks <- limits[1]
     } else if (is.waive(scale$breaks)) {
@@ -221,14 +221,14 @@ guide_gengrob.colorstrip <- function(guide, theme) {
     switch(guide$direction,
            "horizontal" = {
                label.position <- guide$label.position %||% "bottom"
-               if (!label.position %in% c("top", "bottom")) stop("label position \"", label.position, "\" is invalid")
+               if (!label.position %in% c("top", "bottom")) stopf("Label position \"%s\" is invalid.", label.position)
 
                barwidth <- grid::convertWidth(guide$barwidth %||% (theme$legend.key.width * 5), "mm")
                barheight <- grid::convertHeight(guide$barheight %||% theme$legend.key.height, "mm")
            },
            "vertical" = {
                label.position <- guide$label.position %||% "right"
-               if (!label.position %in% c("left", "right")) stop("label position \"", label.position, "\" is invalid")
+               if (!label.position %in% c("left", "right")) stopf("Label position \"%s\" is invalid.", label.position)
 
                barwidth <- grid::convertWidth(guide$barwidth %||% theme$legend.key.width, "mm")
                barheight <- grid::convertHeight(guide$barheight %||% (theme$legend.key.height * 5), "mm")

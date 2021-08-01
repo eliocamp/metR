@@ -115,8 +115,7 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
                         na.rm = FALSE, sun.angle = 60, light = "gray20", dark = "black",
                         range = c(0.01, 0.5), smooth = 0) {
       if (!anyDuplicated(data$group)) {
-          message_wrap("geom_path: Each group consists of only one observation. ",
-                       "Do you need to adjust the group aesthetic?")
+        messagef("%s: Each group consists of only one observation.\nDo you need to adjust the group aesthetic?", "geom_path")
       }
 
       # must be sorted on group
@@ -194,9 +193,8 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
       solid_lines <- all(attr$solid)
       constant <- all(attr$constant)
       if (!solid_lines && !constant) {
-          stop("geom_path: If you are using dotted or dashed lines",
-               ", colour, size and linetype must be constant over the line",
-               call. = FALSE)
+        stopf("%s: If you are using dotted or dashed lines, colour, size and linetype must be constant over the line.",
+             "geom_path", call. = FALSE)
       }
 
       # munched[delta > 0, fill := .rgb2

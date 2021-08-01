@@ -5,6 +5,10 @@
 -   discretised scales now work better when passing user-supplied limits.
 
 -   New functions to use the International Standard Atmosphere to get height from pressure and vice versa, as well as to use as secondary axis.
+    See `?standard_atmosphere`.
+
+-    `scale_y_level()` and `scale_x_level()` now print more breaks by default.
+    These functions will probably use this transformation instead of the reverse log transformation in a future release.
 
 -   Translation!
     Thanks to @MichaelChirico priceless guidance, metR messages are now translatable and already translated to Spanish.

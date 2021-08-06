@@ -267,14 +267,23 @@ ReadNetCDF <- function(file, vars = NULL,
             sub.dimensions[[s]] <- dimensions[[s]][seq.int(start[[s]], start[[s]] + count[[s]] - 1)]
         }
 
-
+        if (all(is.na(order))) {
+            start <- NA
+            count <- NA
+            s <- 1
+        }
         var1 <- .read_vars(varid = vars[[v]], ncfile = ncfile, start = start, count = count)
 
-        dimnames(var1) <- sub.dimensions[dims[as.character(order)]]
+        if (!all(is.na(order))) {
+            dimnames(var1) <- sub.dimensions[dims[as.character(order)]]
+            nc_dim[[v]] <- as.vector(sub.dimensions[dims[as.character(order)]])
+        } else {
+            nc_dim[[v]] <- 0
+        }
 
         dim.length[v] <- length(order)
         nc[[v]] <- var1
-        nc_dim[[v]] <- as.vector(sub.dimensions[dims[as.character(order)]])
+
     }
 
     if (out[1] == "array") {
@@ -461,6 +470,10 @@ print.ncdim4 <- function(x, ...) {
 
 
 .melt_array <- function(array, dims, value.name = "V1") {
+    if (!is.array(array)) {
+        return(array)
+    }
+
     # dims <- lapply(dims, c)
     dims <- c(dims[length(dims):1], sorted = FALSE)
     grid <- do.call(data.table::CJ, dims)

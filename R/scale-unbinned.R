@@ -186,9 +186,9 @@ discretised_scale <- function(aesthetics, scale_name, palette, name = ggplot2::w
         guide <- "none"
     }
 
-    if (!is.waive(breaks)) {
-      stop("User-supplied breaks are not allowed in discretised scales.")
-    }
+    # if (!is.waive(breaks)) {
+    #   stop("User-supplied breaks are not allowed in discretised scales.")
+    # }
 
     trans <- scales::as.trans(trans)
 
@@ -226,10 +226,16 @@ ScaleDiscretised <-  ggplot2::ggproto("ScaleDiscretised", ggplot2::ScaleBinned,
        if (is.numeric(x)) {
            stopf("Discretised scales only support discrete data.")
        }
-
+# browser()
        new_x <- get_middle(x)
        new_x <- self$trans$transform(new_x)
-       breaks <- unique(uncut(levels(x), squash_infinite = TRUE))
+       if (is.waive(self$breaks)) {
+         breaks <- unique(uncut(levels(x), squash_infinite = TRUE))
+       } else {
+         breaks <- self$breaks
+       }
+
+
        breaks <- self$trans$transform(breaks)
 
        self$data_breaks <- breaks

@@ -5,8 +5,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: metR 0.9.1\n"
-"POT-Creation-Date: 2021-07-14 20:58:40\n"
+"Project-Id-Version: metR 0.9.2.9000\n"
+"POT-Creation-Date: 2021-08-06 20:16:46\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,46 +170,54 @@ msgstr ""
 msgid "%s not implemented yet."
 msgstr ""
 
-#: ReadNetCDF.R:136
+#: ReadNetCDF.R:144
 msgid "ReadNetCDF needs package'ncdf4'. Install it with 'install.packages(\"ncdf4\")'"
 msgstr ""
 
-#: ReadNetCDF.R:211
+#: ReadNetCDF.R:198
+msgid "No variables selected. Returning NULL"
+msgstr ""
+
+#: ReadNetCDF.R:206
+msgid "Invalid variables selected. Bad variables: %s."
+msgstr ""
+
+#: ReadNetCDF.R:242
 msgid "Subsetting dimensions not found: %s."
 msgstr ""
 
-#: ReadNetCDF.R:217
+#: ReadNetCDF.R:248
 msgid "Multiple subsets only supported for `out = \"data.frame\""
 msgstr ""
 
-#: ReadNetCDF.R:316
+#: ReadNetCDF.R:360
 #, c-format
 msgid ""
 "Time parsing failed. Returing raw values in %s.\n"
 "Install udunits2 with 'install_packages(\"udunits2\")' to parse it automatically."
 msgstr ""
 
-#: ReadNetCDF.R:415
+#: ReadNetCDF.R:459
 msgid "----- Variables -----"
 msgstr ""
 
-#: ReadNetCDF.R:419
+#: ReadNetCDF.R:463
 msgid "----- Dimensions -----"
 msgstr ""
 
-#: ReadNetCDF.R:434
+#: ReadNetCDF.R:478
 msgid "Dimensions:"
 msgstr ""
 
-#: ReadNetCDF.R:435
+#: ReadNetCDF.R:479
 msgid "by"
 msgstr ""
 
-#: ReadNetCDF.R:439
+#: ReadNetCDF.R:483
 msgid "(Scaled)"
 msgstr ""
 
-#: ReadNetCDF.R:456
+#: ReadNetCDF.R:500
 msgid "%s: %d values from %s to %s %s"
 msgstr ""
 
@@ -309,15 +317,15 @@ msgstr ""
 msgid "Label position \"%s\" is invalid."
 msgstr ""
 
-#: helpfunctions.R:122 helpfunctions.R:133
+#: helpfunctions.R:123 helpfunctions.R:134
 msgid "Unknown input."
 msgstr ""
 
-#: helpfunctions.R:189
+#: helpfunctions.R:190
 msgid "Duplicated aesthetics after name standardisation: %s"
 msgstr ""
 
-#: helpfunctions.R:321
+#: helpfunctions.R:322
 msgid "%s needs packages %s. Install them with: 'install.packages(c(\"%s\"))'."
 msgstr ""
 
@@ -325,11 +333,19 @@ msgstr ""
 msgid "Breaks not formatted correctly for a bin legend. Use '(<lower>, <upper>]' format to indicate bins."
 msgstr ""
 
-#: scale-unbinned.R:211
+#: scale-unbinned.R:227
 msgid "Discretised scales only support discrete data."
 msgstr ""
 
-#: scale-unbinned.R:269
+#: scale-unbinned.R:250
+msgid "User supplied limits don't correspond to valid breaks. %s rounded to %s"
+msgstr ""
+
+#: scale-unbinned.R:359
+msgid "Breaks not formatted correctly for a bin legend. Use `(<lower>, <upper>]` format to indicate bins."
+msgstr ""
+
+#: scale-unbinned.R:406
 msgid "'breaks' and 'labels' must have the same length."
 msgstr ""
 
@@ -343,23 +359,23 @@ msgid ""
 " %s"
 msgstr ""
 
-#: stat_contour2.r:120 stat_contour_fill.R:98
+#: stat_contour2.r:120 stat_contour_fill.R:101
 msgid "The data must be a complete regular grid."
 msgstr ""
 
-#: stat_contour2.r:138 stat_contour_fill.R:118
+#: stat_contour2.r:138 stat_contour_fill.R:121
 msgid "kriging failed. Perhaps the number of points is too small."
 msgstr ""
 
-#: stat_contour2.r:157 stat_contour2.r:289 stat_contour_fill.R:185
+#: stat_contour2.r:157 stat_contour2.r:288 stat_contour_fill.R:188
 msgid "Not possible to generate contour data."
 msgstr ""
 
-#: stat_contour2.r:173 stat_contour_fill.R:146
+#: stat_contour2.r:172 stat_contour_fill.R:149
 msgid "Projection requires the proj4 package. Install it with 'install.packages(\"proj4\")'."
 msgstr ""
 
-#: stat_contour2.r:278
+#: stat_contour2.r:277
 msgid "Contour requires single 'z' at each combination of 'x' and 'y'."
 msgstr ""
 

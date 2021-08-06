@@ -244,10 +244,11 @@ ScaleDiscretised <-  ggplot2::ggproto("ScaleDiscretised", ggplot2::ScaleBinned,
          limits <- resolve_limits(self$limits, breaks)
 
          if (!identical(limits, self$limits)) {
-           warning("User supplied limits don't correspond to valid breaks.",
-                   paste0("[", paste(self$limits, collapse = ", "), "]"),
-                          " rounded to ",
-                   paste0("[", paste(limits, collapse = ", "), "]"))
+           original_limits <- paste0("[", paste(self$limits, collapse = ", "), "]")
+           new_limits <- paste0("[", paste(limits, collapse = ", "), "]")
+
+           warningf("User supplied limits don't correspond to valid breaks. %s rounded to %s",
+                    original_limits, new_limits)
          }
 
          self$limits <- limits
@@ -355,7 +356,7 @@ scale_type.metR_discretised <- function(x) {
 as.discretised <- function(x) {
   new_x <- get_middle(x)
   if (anyNA(is.na(new_x))) {
-    stop('Breaks not formatted correctly for a bin legend. Use `(<lower>, <upper>]` format to indicate bins')
+    stopf('Breaks not formatted correctly for a bin legend. Use `(<lower>, <upper>]` format to indicate bins.')
   }
 
   class(x) <- c("metR_discretised", class(x))

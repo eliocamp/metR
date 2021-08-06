@@ -64,3 +64,8 @@ test_that("can read from urls", {
 
 
 
+test_that("can read variables with no dimension", {
+    # issue #141
+    file <- "no-dim.nc"
+    expect_equal(ReadNetCDF(file, "projection"), 1)
+})

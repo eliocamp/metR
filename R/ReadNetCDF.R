@@ -9,8 +9,12 @@
 #'    * A string representing a URL readable by [ncdf4::nc_open()].
 #'      (this includes DAP urls).
 #'    * A netcdf object returned by [ncdf4::nc_open()].
-#' @param vars a character vector with the name of the variables to read. If
-#' \code{NULL}, then it reads all the variables.
+#' @param vars one of:
+#'    * `NULL`: reads all variables.
+#'    * a character vector with the name of the variables to read.
+#'    * a function that takes a vector with all the variables and returns either
+#'    a character vector with the name of variables to read or a numeric/logical
+#'    vector that indicates a subset of variables.
 #' @param out character indicating the type of output desired
 #' @param subset a list of subsetting objects. See below.
 #' @param key if `TRUE`, returns a data.table keyed by the dimensions of the data.
@@ -109,7 +113,6 @@
 #' field[, var2 := ReadNetCDF(file, out = "vector")]
 #'
 #' \dontrun{
-#' if (!interactive())
 #' # Using a DAP url
 #' url <- "http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/.GMAO/.GEOS_V2p1/.hindcast/.ua/dods"
 #' field <- ReadNetCDF(url, subset = list(M = 1,
@@ -124,8 +127,13 @@
 #' field <- ReadNetCDF(ncfile, subset = list(M = 1,
 #'                                        P = 10,
 #'                                        S = "1999-01-01"))
-#' }
 #'
+#'
+#' # Using a function in `vars` to read all variables that
+#' # start with "radar_".
+#' ReadNetCDF(radar_file, vars = \(x) startsWith(x, "radar_"))
+#'
+#' }
 #' @export
 #' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
 ReadNetCDF <- function(file, vars = NULL,
@@ -170,10 +178,33 @@ ReadNetCDF <- function(file, vars = NULL,
         return(r)
     }
 
+    all_vars <- names(ncfile$var)
+
     if (is.null(vars)) {
-        vars <- as.list(names(ncfile$var))
+        vars <- as.list(all_vars)
+    } else if (is.function(vars)) {
+
+        vars_result <- vars(all_vars)
+
+        if (!is.character(vars_result)) {
+            vars <- all_vars[vars_result]
+        } else {
+            vars <- vars_result
+        }
     }
 
+    empty_vars <- length(vars) == 0
+    if (empty_vars) {
+        warningf("No variables selected. Returning NULL")
+        return(NULL)
+    }
+
+    not_valid <- !(vars %in% all_vars)
+
+    if (any(not_valid)) {
+        bad_vars <- paste0(vars[not_valid], collapse = ", ")
+        stopf("Invalid variables selected. Bad variables: %s.", bad_vars)
+    }
 
     # Vars must be a (fully) named vector.
     varnames <- names(vars)
@@ -275,8 +306,12 @@ ReadNetCDF <- function(file, vars = NULL,
         var1 <- .read_vars(varid = vars[[v]], ncfile = ncfile, start = start, count = count)
 
         if (!all(is.na(order))) {
-            dimnames(var1) <- sub.dimensions[dims[as.character(order)]]
-            nc_dim[[v]] <- as.vector(sub.dimensions[dims[as.character(order)]])
+            # Even with collapse_degen = FALSE, deegenerate dimensions are still an issue
+            correct_dims <- sub.dimensions[dims[as.character(order)]]
+            var1 <- array(var1, dim = lengths(correct_dims))
+
+            dimnames(var1) <- correct_dims
+            nc_dim[[v]] <- as.vector(correct_dims)
         } else {
             nc_dim[[v]] <- 0
         }

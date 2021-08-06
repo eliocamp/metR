@@ -21,6 +21,11 @@
 
 -   New function `Detrend()` that, you guessed it, returns a (linearly) detrended version of the input vector.
 
+-   In `ReadNetCDF()`, the "vars" argument now can take a function.
+    (\#142)
+
+-   Discretised scales now support user-defined breaks.
+
 ## Bugfixes
 
 -   `seasonally()` result will be on the 15th of the centre month of each season instead of on the 1st. This makes the date more representative of the time span and also solves a bug in which dates on the 31st would return `NA`. This is a **potentially breaking change**.

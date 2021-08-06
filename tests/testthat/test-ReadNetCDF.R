@@ -69,3 +69,17 @@ test_that("can read variables with no dimension", {
     file <- "no-dim.nc"
     expect_equal(ReadNetCDF(file, "projection"), 1)
 })
+
+test_that("function in vars works", {
+    file <- "weird_datesmall.nc"
+
+    read_benchmark <- ReadNetCDF(file, vars = "o3_conc")
+    expect_identical(ReadNetCDF(file, vars = function(x) startsWith(x, "o3")),
+                     read_benchmark)
+    expect_identical(ReadNetCDF(file, vars = function(x) x[startsWith(x, "o3")]),
+                     read_benchmark)
+
+    expect_warning(expect_null(ReadNetCDF(file, vars = function(x) startsWith(x, "o5"))))
+    expect_error(ReadNetCDF(file, "o5"))
+    expect_error(ReadNetCDF(file, vars = function(x) "o5"))
+})

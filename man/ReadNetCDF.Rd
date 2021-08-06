@@ -24,8 +24,14 @@ GlanceNetCDF(file, ...)
 \item A netcdf object returned by \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.
 }}
 
-\item{vars}{a character vector with the name of the variables to read. If
-\code{NULL}, then it reads all the variables.}
+\item{vars}{one of:
+\itemize{
+\item \code{NULL}: reads all variables.
+\item a character vector with the name of the variables to read.
+\item a function that takes a vector with all the variables and returns either
+a character vector with the name of variables to read or a numeric/logical
+vector that indicates a subset of variables.
+}}
 
 \item{out}{character indicating the type of output desired}
 
@@ -135,7 +141,6 @@ field <- ReadNetCDF(file, vars = c(var = names(variables$vars[1])))
 field[, var2 := ReadNetCDF(file, out = "vector")]
 
 \dontrun{
-if (!interactive())
 # Using a DAP url
 url <- "http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/.GMAO/.GEOS_V2p1/.hindcast/.ua/dods"
 field <- ReadNetCDF(url, subset = list(M = 1,
@@ -150,6 +155,11 @@ ncfile <- ncdf4::nc_open(url)
 field <- ReadNetCDF(ncfile, subset = list(M = 1,
                                        P = 10,
                                        S = "1999-01-01"))
-}
 
+
+# Using a function in `vars` to read all variables that
+# start with "radar_".
+ReadNetCDF(radar_file, vars = \(x) startsWith(x, "radar_"))
+
+}
 }

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
       </span>
     </div>
 
@@ -262,7 +262,7 @@ returns a matrix.</p>
 <span class='va'>max.eof</span> <span class='op'>&lt;-</span> <span class='fl'>5</span>    <span class='co'># change to a higher value</span>
 <span class='va'>geopotential</span><span class='op'>[</span>, <span class='va'>gh.impute</span> <span class='op'>:=</span> <span class='fu'>ImputeEOF</span><span class='op'>(</span><span class='va'>gh.gap</span> <span class='op'>~</span> <span class='va'>lat</span> <span class='op'>+</span> <span class='va'>lon</span> <span class='op'>|</span> <span class='va'>date</span>, <span class='va'>max.eof</span>,
                                       verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, max.iter <span class='op'>=</span> <span class='fl'>2000</span><span class='op'>)</span><span class='op'>]</span>
-</div><div class='output co'>#&gt;  With 1 eof - rmse =  27.14717 With 2 eof - rmse =  25.13858 With 3 eof - rmse =  23.65751 With 4 eof - rmse =  22.26365 With 5 eof - rmse =  21.10459</div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap  gh.impute
+</div><div class='output co'>#&gt; <span class='message'>With 1 eof  - rmse = 27.147</span></div><div class='output co'>#&gt; <span class='message'>With 2 eofs - rmse = 25.139</span></div><div class='output co'>#&gt; <span class='message'>With 3 eofs - rmse = 23.658</span></div><div class='output co'>#&gt; <span class='message'>With 4 eofs - rmse = 22.264</span></div><div class='output co'>#&gt; <span class='message'>With 5 eofs - rmse = 21.105</span></div><div class='output co'>#&gt;           lon   lat lev       gh       date       gh.t     gh.gap  gh.impute
 #&gt;      1:   0.0 -22.5 700 3163.839 1990-01-01  -3.978597         NA   1.214005
 #&gt;      2:   2.5 -22.5 700 3162.516 1990-01-01  -3.736613  -3.736613  -3.736613
 #&gt;      3:   5.0 -22.5 700 3162.226 1990-01-01  -2.978516  -2.978516  -2.978516

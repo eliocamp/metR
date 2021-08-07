@@ -82,7 +82,7 @@ with proper dimensions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
       </span>
     </div>
 
@@ -171,8 +171,13 @@ with proper dimensions.</p>
     </tr>
     <tr>
       <th>vars</th>
-      <td><p>a character vector with the name of the variables to read. If
-<code>NULL</code>, then it reads all the variables.</p></td>
+      <td><p>one of:</p><ul>
+<li><p><code>NULL</code>: reads all variables.</p></li>
+<li><p>a character vector with the name of the variables to read.</p></li>
+<li><p>a function that takes a vector with all the variables and returns either
+a character vector with the name of variables to read or a numeric/logical
+vector that indicates a subset of variables.</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>out</th>
@@ -473,7 +478,6 @@ have.</p>
 #&gt; 178703: 2010-07-09    10 -90 355.0 188.25 188.25
 #&gt; 178704: 2010-07-09    10 -90 357.5 188.25 188.25</div><div class='input'>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># Using a DAP url</span>
 <span class='va'>url</span> <span class='op'>&lt;-</span> <span class='st'>"http://iridl.ldeo.columbia.edu/SOURCES/.Models/.SubX/.GMAO/.GEOS_V2p1/.hindcast/.ua/dods"</span>
 <span class='va'>field</span> <span class='op'>&lt;-</span> <span class='fu'>ReadNetCDF</span><span class='op'>(</span><span class='va'>url</span>, subset <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>M <span class='op'>=</span> <span class='fl'>1</span>,
@@ -488,8 +492,13 @@ have.</p>
 <span class='va'>field</span> <span class='op'>&lt;-</span> <span class='fu'>ReadNetCDF</span><span class='op'>(</span><span class='va'>ncfile</span>, subset <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>M <span class='op'>=</span> <span class='fl'>1</span>,
                                        P <span class='op'>=</span> <span class='fl'>10</span>,
                                        S <span class='op'>=</span> <span class='st'>"1999-01-01"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span>
 
+
+<span class='co'># Using a function in `vars` to read all variables that</span>
+<span class='co'># start with "radar_".</span>
+<span class='fu'>ReadNetCDF</span><span class='op'>(</span><span class='va'>radar_file</span>, vars <span class='op'>=</span> \<span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/startsWith.html'>startsWith</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"radar_"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

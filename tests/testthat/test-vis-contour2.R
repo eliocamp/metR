@@ -30,13 +30,6 @@ test_that("accepts function in breaks", {
 file <- system.file("extdata", "met.txt", package = "metR")
 df <- read.table(file, header = FALSE)
 
-test_that("df was read correctly",
-          expect_known_hash(df, "7a56064fc1")
-)
-
-
-
-
 test_that("global.breaks work", {
 
     expect_doppelganger("contour2-global.breaks",

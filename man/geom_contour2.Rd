@@ -23,6 +23,9 @@ geom_contour2(
   global.breaks = TRUE,
   na.rm = FALSE,
   na.fill = FALSE,
+  skip = 1,
+  margin = grid::unit(c(1, 1, 1, 1), "pt"),
+  label.placer = label_placer_flattest(),
   show.legend = NA,
   inherit.aes = TRUE
 )
@@ -107,6 +110,14 @@ a warning. If \code{TRUE}, missing values are silently removed.}
 \item A function that takes a vector and returns a numeric (e.g. \code{mean})
 }}
 
+\item{skip}{number of contours to skip for labelling
+(e.g. \code{skip = 1} will skip 1 contour line between labels).}
+
+\item{margin}{the margin around labels around which contour lines
+are clipped to avoid overlapping.}
+
+\item{label.placer}{a label placer function. See \code{\link[=label_placer_flattest]{label_placer_flattest()}}.}
+
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.
@@ -124,23 +135,35 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 Use this if you want to use contours with irregularly spaced data.}
 }
 \description{
-A copy of \link[ggplot2:geom_contour]{ggplot2::geom_contour} that accepts a function as the \code{breaks}
-argument and makes gaps for labels and computes breaks globally instead of
-per panel.
+Similar to \link[ggplot2:geom_contour]{ggplot2::geom_contour} but it can label contour lines,
+accepts accepts a function as the \code{breaks} argument and and computes
+breaks globally instead of per panel.
 }
 \section{Aesthetics}{
 
 \code{geom_contour2} understands the following aesthetics (required aesthetics are in bold):
 
+Aesthetics related to contour lines:
 \itemize{
 \item \strong{x}
 \item \strong{y}
+\item \strong{z}
 \item \code{alpha}
 \item \code{colour}
 \item \code{group}
 \item \code{linetype}
 \item \code{size}
 \item \code{weight}
+}
+
+Aesthetics related to labels:
+\itemize{
+\item \code{label}
+\item \code{label_colour}
+\item \code{label_alpha}
+\item \code{label_size}
+\item \code{family}
+\item \code{fontface}
 }
 }
 
@@ -153,9 +176,31 @@ per panel.
 
 \examples{
 library(ggplot2)
+
+# Breaks can be a function.
 ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
     geom_contour2(aes(z = value, color = ..level..),
-                  breaks = AnchorBreaks(130, binwidth = 11))
+                  breaks = AnchorBreaks(130, binwidth = 10))
+
+# Add labels by supplying the label aes.
+ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
+    geom_contour2(aes(z = value, label = ..level..))
+
+ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
+    geom_contour2(aes(z = value, label = ..level..),
+                  skip = 0)
+
+# Use label.placer to control where contours are labelled.
+ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
+    geom_contour2(aes(z = value, label = ..level..),
+                      label.placer = label_placer_n(n = 2))
+
+# Use the rot_adjuster argument of the placer function to
+# control the angle. For example, to fix it to some angle:
+ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
+    geom_contour2(aes(z = value, label = ..level..),
+                  skip = 0,
+                  label.placer = label_placer_flattest(rot_adjuster = 0))
 
 }
 \seealso{

@@ -26,21 +26,21 @@ test_that("contour_text wokrs", {
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour(aes(z = gh)) +
                             geom_text_contour(aes(z = gh),
-                                              label.placement = label_placement_fraction(c(0.25, 0.75)))
+                                              label.placer = label_placer_fraction(c(0.25, 0.75)))
     )
 
     expect_doppelganger("placement_minmax-vertical",
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour(aes(z = gh)) +
                             geom_text_contour(aes(z = gh),
-                                              label.placement = label_placement_minmax())
+                                              label.placer = label_placer_minmax())
     )
 
     expect_doppelganger("placement_minmax-horizontal",
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour(aes(z = gh)) +
                             geom_text_contour(aes(z = gh),
-                                              label.placement = label_placement_minmax("horizontal"))
+                                              label.placer = label_placer_minmax("horizontal"))
     )
 
 
@@ -48,7 +48,7 @@ test_that("contour_text wokrs", {
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour(aes(z = gh)) +
                             geom_text_contour(aes(z = gh),
-                                              label.placement = label_placement_n(2))
+                                              label.placer = label_placer_n(2))
     )
 
 

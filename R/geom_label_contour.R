@@ -5,7 +5,7 @@ geom_label_contour <- function(mapping = NULL, data = NULL,
                        ...,
                        min.size = 5,
                        skip = 1,
-                       label.placement = label_placement_flattest(),
+                       label.placer = label_placer_flattest(),
                        parse = FALSE,
                        nudge_x = 0,
                        nudge_y = 0,
@@ -24,6 +24,11 @@ geom_label_contour <- function(mapping = NULL, data = NULL,
         position <- ggplot2::position_nudge(nudge_x, nudge_y)
     }
 
+    if (!is.null(list(...)$label.placement)) {
+        warningf("The 'label.placement' argument is now 'label.placer'.")
+        label.placer <- list(...)$label.placement
+    }
+
     ggplot2::layer(
         data = data,
         mapping = mapping,
@@ -39,7 +44,7 @@ geom_label_contour <- function(mapping = NULL, data = NULL,
             label.padding = label.padding,
             label.r = label.r,
             label.size = label.size,
-            label.placement = label.placement,
+            label.placer = label.placer,
             na.rm = na.rm,
             ...
         )
@@ -63,7 +68,7 @@ GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", ggplot2::Geom,
                           label.padding = unit(0.25, "lines"),
                           label.r = unit(0.15, "lines"),
                           label.size = 0.25, min.size = 20,
-                          skip = 1, gap = 0, label.placement = label_placement_flattest()) {
+                          skip = 1, gap = 0, label.placer = label_placemer_flattest()) {
 
 
         data <- data.table::as.data.table(coord$transform(data, panel_params))
@@ -113,7 +118,7 @@ GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", ggplot2::Geom,
             default.units = "native",
             hjust = hjust, vjust = vjust,
             bg.r = 0, bg.color = "black",
-            position = label.placement,
+            position = label.placer,
 
             col = scales::alpha(data$colour, data$alpha),
             fontsize = data$size * .pt,

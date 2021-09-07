@@ -1,3 +1,14 @@
+# metR (development version)
+
+## New Features
+
+-   `geom_contour2()` gains the ability to draw --and leave space for-- labels!
+    This is finally proper labelling support without having to use a different geom (`geom_text_contour()`).
+    Thanks to the isoband package for this.
+
+-   Following [isoband's naming convention](https://wilkelab.org/isoband/reference/label_placer.html), the family of functions that decide where to place labels have been renamed as `label_placer_` and the corresponding argument is now `label.placer` .
+    The `label_placement_` family of functions will be deprecated in future releases.
+
 # metR 0.10.0
 
 ## New Features

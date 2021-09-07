@@ -93,6 +93,10 @@ is.waive <- function(x) {
     inherits(x, "waiver")
 }
 
+# from ggplot2s
+waiver <- function ()
+    structure(list(), class = "waiver")
+
 element_render <- function(theme, element, ..., name = NULL) {
 
     # Get the element from the theme, calculating inheritance

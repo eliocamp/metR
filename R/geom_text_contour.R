@@ -10,7 +10,7 @@
 #' @param rotate logical indicating whether to rotate text following the contour.
 #' @param stroke numerical indicating width of stroke relative to the size of
 #' the text. Ignored if less than zero.
-#' @param label.placement A function for placing labels (see `label_placement_flattest()`).
+#' @param label.placer a label placer function. See [label_placer_flattest()].
 #'
 #' @details
 #' Is best used with a previous call to [ggplot2::stat_contour] with the same
@@ -35,17 +35,16 @@
 #' g + geom_text_contour(aes(z = value), rotate = FALSE)
 #'
 #' g + geom_text_contour(aes(z = value),
-#'                       label.placement = label_placement_random())
+#'                       label.placer = label_placer_random())
 #'
 #' g + geom_text_contour(aes(z = value),
-#'                       label.placement = label_placement_n(3))
-#'
-#'
-#' g + geom_text_contour(aes(z = value),
-#'                       label.placement = label_placement_flattest())
+#'                       label.placer = label_placer_n(3))
 #'
 #' g + geom_text_contour(aes(z = value),
-#'                       label.placement = label_placement_flattest(ref_angle = 90))
+#'                       label.placer = label_placer_flattest())
+#'
+#' g + geom_text_contour(aes(z = value),
+#'                       label.placer = label_placer_flattest(ref_angle = 90))
 #'
 #' @section Aesthetics:
 #' \code{geom_text_contour} understands the following aesthetics (required aesthetics are in bold):
@@ -78,7 +77,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
                       min.size = 5,
                       skip = 1,
                       rotate = TRUE,
-                      label.placement = label_placement_flattest(),
+                      label.placer = label_placer_flattest(),
                       parse = FALSE,
                       nudge_x = 0,
                       nudge_y = 0,
@@ -89,8 +88,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
                       # ywrap = NULL,
                       na.rm = FALSE,
                       show.legend = NA,
-                      inherit.aes = TRUE)
-{
+                      inherit.aes = TRUE) {
     if (!missing(nudge_x) || !missing(nudge_y)) {
         if (!missing(position)) {
             stopf("Specify either 'position' or 'nudge_x'/'nudge_y'.",
@@ -98,6 +96,11 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
         }
 
         position <- ggplot2::position_nudge(nudge_x, nudge_y)
+    }
+
+    if (!is.null(list(...)$label.placement)) {
+        warningf("The 'label.placement' argument is now 'label.placer'.")
+        label.placer <- list(...)$label.placement
     }
 
     ggplot2::layer(
@@ -118,7 +121,7 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
             # stroke.color = stroke.color,
             # xwrap = xwrap,
             # ywrap = ywrap,
-            label.placement = label.placement,
+            label.placer = label.placer,
             na.rm = na.rm,
             ...
         )
@@ -140,7 +143,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
    draw_panel = function(data, panel_params, coord, parse = FALSE,
                          na.rm = FALSE, check_overlap = FALSE, min.size = 20,
                          skip = 1, rotate = FALSE, gap = NULL,
-                         label.placement = label_placement_flattest(),
+                         label.placer = label_placer_flattest(),
                          stroke = 0) {
        data <- data.table::as.data.table(coord$transform(data, panel_params))
        min.size <- ceiling(min.size)
@@ -190,7 +193,7 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
            default.units = "native",
            hjust = hjust, vjust = vjust,
            bg.r = stroke, bg.color = data$stroke.colour,
-           position = label.placement,
+           position = label.placer,
 
                col = scales::alpha(data$colour, data$alpha),
                fontsize = data$size * .pt,

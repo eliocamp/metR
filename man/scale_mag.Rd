@@ -38,7 +38,8 @@ omitted.}
 transformation object
 \item A character vector giving labels (must be same length as \code{breaks})
 \item A function that takes the breaks as input and returns labels
-as output
+as output. Also accepts rlang \link[rlang:as_function]{lambda} function
+notation.
 }}
 
 \item{max_size}{size of the arrow in centimetres}

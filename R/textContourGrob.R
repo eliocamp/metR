@@ -22,7 +22,7 @@ contourTextGrob <- function(label, type = "text", x = grid::unit(0.5, "npc"), y 
 
                        # gp = grid::gpar(col = "white"),
                        vp = NULL, bg.color = "black", bg.r = 0.1,
-                       position = label_placement_flattest()) {
+                       position = label_placer_flattest()) {
 
 
     if (!grid::is.unit(x)) {
@@ -170,28 +170,33 @@ content_grob <- function(x) {
     x_coord <- grid::convertX(x$x, unitTo = "mm", valueOnly = TRUE)
     y_coord <- grid::convertY(x$y, unitTo = "mm", valueOnly = TRUE)
 
-    # browser()
     id <- seq_along(y_coord)
     dx <- .derv(x_coord, id, fill = TRUE)
     dy <- .derv(y_coord, id, fill = TRUE)
 
+    lines <- list(list(x = x_coord, y = y_coord, id = rep(1, length(x_coord))))
+    names(lines) <- x$label
+    labels_data <- data.frame(index = 1,
+                              break_index = 1,
+                              break_id = x$label,
+                              label = x$label)
+    locations <- x$position(lines, labels_data)
 
-    # angle <- atan2(dy, dx)
-    selected <- x$position(x_coord, y_coord)
+    selected <- which(x_coord %in% locations$x & y_coord %in% locations$y)
 
-    if (length(x_coord[selected]) == 0) {
+    if (nrow(locations) == 0) {
         return(list())
     }
 
     if (x$rotate == TRUE) {
-        rot <-  text_angle(dx, dy)
+        rot <- text_angle(dx, dy)
     } else {
         rot <- rep(0, length(x_coord))
     }
 
     # from shadowtext
     list(
-        label = rep(x$label, length = length(x$x[selected])),
+        label = rep(x$label, length = nrow(locations)),
         x = x$x[selected], y = x$y[selected],
         col = x$col,
         rot = rot[selected],

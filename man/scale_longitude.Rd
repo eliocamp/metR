@@ -68,7 +68,8 @@ omitted.}
 \link[scales:trans_new]{transformation object}
 \item A numeric vector of positions
 \item A function that takes the limits as input and returns breaks
-as output (e.g., a function returned by \code{\link[scales:breaks_extended]{scales::extended_breaks()}})
+as output (e.g., a function returned by \code{\link[scales:breaks_extended]{scales::extended_breaks()}}).
+Also accepts rlang \link[rlang:as_function]{lambda} function notation.
 }}
 
 \item{expand}{For position scales, a vector of range expansion constants used to add some
@@ -85,7 +86,8 @@ expand the scale by 5\% on each side for continuous variables, and by
 transformation object
 \item A character vector giving labels (must be same length as \code{breaks})
 \item A function that takes the breaks as input and returns labels
-as output
+as output. Also accepts rlang \link[rlang:as_function]{lambda} function
+notation.
 }}
 
 \item{trans}{For continuous scales, the name of a transformation object

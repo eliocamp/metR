@@ -18,7 +18,7 @@ geom_label_contour(
   ...,
   min.size = 5,
   skip = 1,
-  label.placement = label_placement_flattest(),
+  label.placer = label_placer_flattest(),
   parse = FALSE,
   nudge_x = 0,
   nudge_y = 0,
@@ -39,7 +39,7 @@ geom_text_contour(
   min.size = 5,
   skip = 1,
   rotate = TRUE,
-  label.placement = label_placement_flattest(),
+  label.placer = label_placer_flattest(),
   parse = FALSE,
   nudge_x = 0,
   nudge_y = 0,
@@ -87,7 +87,7 @@ to the paired geom/stat.}
 
 \item{skip}{number of contours to skip}
 
-\item{label.placement}{A function for placing labels (see \code{label_placement_flattest()}).}
+\item{label.placer}{a label placer function. See \code{\link[=label_placer_flattest]{label_placer_flattest()}}.}
 
 \item{parse}{If \code{TRUE}, the labels will be parsed into expressions and
 displayed as described in \code{?plotmath}.}
@@ -128,7 +128,8 @@ the text. Ignored if less than zero.}
 \item{check_overlap}{If \code{TRUE}, text that overlaps previous text in the
 same layer will not be plotted. \code{check_overlap} happens at draw time and in
 the order of the data. Therefore data should be arranged by the label
-column before calling \code{geom_label()} or \code{geom_text()}.}
+column before calling \code{geom_text()}. Note that this argument is not
+supported by \code{geom_label()}.}
 }
 \description{
 Draws labels on contours built with \link[ggplot2:geom_contour]{ggplot2::stat_contour}.
@@ -178,17 +179,16 @@ g + geom_text_contour(aes(z = value, stroke.colour = ..level..), stroke = 0.2) +
 g + geom_text_contour(aes(z = value), rotate = FALSE)
 
 g + geom_text_contour(aes(z = value),
-                      label.placement = label_placement_random())
+                      label.placer = label_placer_random())
 
 g + geom_text_contour(aes(z = value),
-                      label.placement = label_placement_n(3))
-
-
-g + geom_text_contour(aes(z = value),
-                      label.placement = label_placement_flattest())
+                      label.placer = label_placer_n(3))
 
 g + geom_text_contour(aes(z = value),
-                      label.placement = label_placement_flattest(ref_angle = 90))
+                      label.placer = label_placer_flattest())
+
+g + geom_text_contour(aes(z = value),
+                      label.placer = label_placer_flattest(ref_angle = 90))
 
 }
 \seealso{

@@ -1,4 +1,4 @@
-# metR (development version)
+# metR 0.11.0
 
 ## New Features
 

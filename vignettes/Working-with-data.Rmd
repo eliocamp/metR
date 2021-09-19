@@ -154,7 +154,7 @@ Where the 1st Principal Component is clearly the [Antarctic Oscillation](http://
 
 ## ImputeEOF
 
-As shown above, `EOF()` needs a complete data matrix. Imputing missing values is a huge problem on it's own with a lot of different algorithms. `metR` offers `ImputeEOF()`, which is an implementation of the [DINEOF](http://modb.oce.ulg.ac.be/mediawiki/index.php/DINEOF) algorithm for imputation of missing data. It's interface is similar to that of `EOF()` but it returns a vector of imputed values. 
+As shown above, `EOF()` needs a complete data matrix. Imputing missing values is a huge problem on it's own with a lot of different algorithms. `metR` offers `ImputeEOF()`, which is an implementation of the [DINEOF](https://doi.org/10.12681/mms.64) algorithm for imputation of missing data. Its interface is similar to that of `EOF()` but it returns a vector of imputed values. 
 
 ```{r}
 geopotential <- geopotential[]

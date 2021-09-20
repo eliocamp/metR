@@ -47,9 +47,9 @@
 
 
 <meta property="og:title" content="2d contours of a 3d surface — geom_contour2" />
-<meta property="og:description" content="A copy of ggplot2::geom_contour that accepts a function as the breaks
-argument and makes gaps for labels and computes breaks globally instead of
-per panel." />
+<meta property="og:description" content="Similar to ggplot2::geom_contour but it can label contour lines,
+accepts accepts a function as the breaks argument and and computes
+breaks globally instead of per panel." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -82,7 +82,7 @@ per panel." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.0</span>
       </span>
     </div>
 
@@ -142,9 +142,9 @@ per panel." />
     </div>
 
     <div class="ref-description">
-    <p>A copy of <a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>ggplot2::geom_contour</a> that accepts a function as the <code>breaks</code>
-argument and makes gaps for labels and computes breaks globally instead of
-per panel.</p>
+    <p>Similar to <a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>ggplot2::geom_contour</a> but it can label contour lines,
+accepts accepts a function as the <code>breaks</code> argument and and computes
+breaks globally instead of per panel.</p>
     </div>
 
     <pre class="usage"><span class='fu'>geom_contour2</span><span class='op'>(</span>
@@ -162,6 +162,9 @@ per panel.</p>
   global.breaks <span class='op'>=</span> <span class='cn'>TRUE</span>,
   na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
   na.fill <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  skip <span class='op'>=</span> <span class='fl'>1</span>,
+  margin <span class='op'>=</span> <span class='fu'>grid</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/unit.html'>unit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='st'>"pt"</span><span class='op'>)</span>,
+  label.placer <span class='op'>=</span> <span class='fu'><a href='label_placer_fraction.html'>label_placer_flattest</a></span><span class='op'>(</span><span class='op'>)</span>,
   show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
   inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
@@ -272,6 +275,20 @@ a warning. If <code>TRUE</code>, missing values are silently removed.</p></td>
 </ul></td>
     </tr>
     <tr>
+      <th>skip</th>
+      <td><p>number of contours to skip for labelling
+(e.g. <code>skip = 1</code> will skip 1 contour line between labels).</p></td>
+    </tr>
+    <tr>
+      <th>margin</th>
+      <td><p>the margin around labels around which contour lines
+are clipped to avoid overlapping.</p></td>
+    </tr>
+    <tr>
+      <th>label.placer</th>
+      <td><p>a label placer function. See <code><a href='label_placer_fraction.html'>label_placer_flattest()</a></code>.</p></td>
+    </tr>
+    <tr>
       <th>show.legend</th>
       <td><p>logical. Should this layer be included in the legends?
 <code>NA</code>, the default, includes if any aesthetics are mapped.
@@ -302,15 +319,25 @@ Use this if you want to use contours with irregularly spaced data.</p></td>
     
 
 <p><code>geom_contour2</code> understands the following aesthetics (required aesthetics are in bold):</p>
-<ul>
+<p>Aesthetics related to contour lines:</p><ul>
 <li><p><strong>x</strong></p></li>
 <li><p><strong>y</strong></p></li>
+<li><p><strong>z</strong></p></li>
 <li><p><code>alpha</code></p></li>
 <li><p><code>colour</code></p></li>
 <li><p><code>group</code></p></li>
 <li><p><code>linetype</code></p></li>
 <li><p><code>size</code></p></li>
 <li><p><code>weight</code></p></li>
+</ul>
+
+<p>Aesthetics related to labels:</p><ul>
+<li><p><code>label</code></p></li>
+<li><p><code>label_colour</code></p></li>
+<li><p><code>label_alpha</code></p></li>
+<li><p><code>label_size</code></p></li>
+<li><p><code>family</code></p></li>
+<li><p><code>fontface</code></p></li>
 </ul>
 
     <h2 class="hasAnchor" id="computed-variables"><a class="anchor" href="#computed-variables"></a>Computed variables</h2>
@@ -359,10 +386,32 @@ Use this if you want to use contours with irregularly spaced data.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+
+<span class='co'># Breaks can be a function.</span>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'>reshape2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span><span class='op'>(</span><span class='va'>volcano</span><span class='op'>)</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Var1</span>, <span class='va'>Var2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>geom_contour2</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span>, color <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span>,
-                  breaks <span class='op'>=</span> <span class='fu'><a href='MakeBreaks.html'>AnchorBreaks</a></span><span class='op'>(</span><span class='fl'>130</span>, binwidth <span class='op'>=</span> <span class='fl'>11</span><span class='op'>)</span><span class='op'>)</span>
+                  breaks <span class='op'>=</span> <span class='fu'><a href='MakeBreaks.html'>AnchorBreaks</a></span><span class='op'>(</span><span class='fl'>130</span>, binwidth <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_contour2-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Add labels by supplying the label aes.</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'>reshape2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span><span class='op'>(</span><span class='va'>volcano</span><span class='op'>)</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Var1</span>, <span class='va'>Var2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_contour2</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span>, label <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_contour2-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'>reshape2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span><span class='op'>(</span><span class='va'>volcano</span><span class='op'>)</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Var1</span>, <span class='va'>Var2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_contour2</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span>, label <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span>,
+                  skip <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_contour2-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Use label.placer to control where contours are labelled.</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'>reshape2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span><span class='op'>(</span><span class='va'>volcano</span><span class='op'>)</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Var1</span>, <span class='va'>Var2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_contour2</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span>, label <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span>,
+                      label.placer <span class='op'>=</span> <span class='fu'><a href='label_placer_fraction.html'>label_placer_n</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_contour2-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Use the rot_adjuster argument of the placer function to</span>
+<span class='co'># control the angle. For example, to fix it to some angle:</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'>reshape2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span><span class='op'>(</span><span class='va'>volcano</span><span class='op'>)</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Var1</span>, <span class='va'>Var2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_contour2</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span>, label <span class='op'>=</span> <span class='va'>..level..</span><span class='op'>)</span>,
+                  skip <span class='op'>=</span> <span class='fl'>0</span>,
+                  label.placer <span class='op'>=</span> <span class='fu'><a href='label_placer_fraction.html'>label_placer_flattest</a></span><span class='op'>(</span>rot_adjuster <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_contour2-5.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

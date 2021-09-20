@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.0</span>
       </span>
     </div>
 
@@ -151,7 +151,7 @@
   <span class='va'>...</span>,
   min.size <span class='op'>=</span> <span class='fl'>5</span>,
   skip <span class='op'>=</span> <span class='fl'>1</span>,
-  label.placement <span class='op'>=</span> <span class='fu'><a href='label_placement_fraction.html'>label_placement_flattest</a></span><span class='op'>(</span><span class='op'>)</span>,
+  label.placer <span class='op'>=</span> <span class='fu'><a href='label_placer_fraction.html'>label_placer_flattest</a></span><span class='op'>(</span><span class='op'>)</span>,
   parse <span class='op'>=</span> <span class='cn'>FALSE</span>,
   nudge_x <span class='op'>=</span> <span class='fl'>0</span>,
   nudge_y <span class='op'>=</span> <span class='fl'>0</span>,
@@ -172,7 +172,7 @@
   min.size <span class='op'>=</span> <span class='fl'>5</span>,
   skip <span class='op'>=</span> <span class='fl'>1</span>,
   rotate <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  label.placement <span class='op'>=</span> <span class='fu'><a href='label_placement_fraction.html'>label_placement_flattest</a></span><span class='op'>(</span><span class='op'>)</span>,
+  label.placer <span class='op'>=</span> <span class='fu'><a href='label_placer_fraction.html'>label_placer_flattest</a></span><span class='op'>(</span><span class='op'>)</span>,
   parse <span class='op'>=</span> <span class='cn'>FALSE</span>,
   nudge_x <span class='op'>=</span> <span class='fl'>0</span>,
   nudge_y <span class='op'>=</span> <span class='fl'>0</span>,
@@ -234,8 +234,8 @@ to the paired geom/stat.</p></td>
       <td><p>number of contours to skip</p></td>
     </tr>
     <tr>
-      <th>label.placement</th>
-      <td><p>A function for placing labels (see <code><a href='label_placement_fraction.html'>label_placement_flattest()</a></code>).</p></td>
+      <th>label.placer</th>
+      <td><p>a label placer function. See <code><a href='label_placer_fraction.html'>label_placer_flattest()</a></code>.</p></td>
     </tr>
     <tr>
       <th>parse</th>
@@ -300,7 +300,8 @@ the text. Ignored if less than zero.</p></td>
       <td><p>If <code>TRUE</code>, text that overlaps previous text in the
 same layer will not be plotted. <code>check_overlap</code> happens at draw time and in
 the order of the data. Therefore data should be arranged by the label
-column before calling <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_label()</a></code> or <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text()</a></code>.</p></td>
+column before calling <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text()</a></code>. Note that this argument is not
+supported by <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_label()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -368,17 +369,16 @@ this is not the case with <code>geom_label_contour()</code>.</p>
 <span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>, rotate <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_text_contour-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>,
-                      label.placement <span class='op'>=</span> <span class='fu'><a href='label_placement_fraction.html'>label_placement_random</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+                      label.placer <span class='op'>=</span> <span class='fu'><a href='label_placer_fraction.html'>label_placer_random</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_text_contour-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>,
-                      label.placement <span class='op'>=</span> <span class='fu'><a href='label_placement_fraction.html'>label_placement_n</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+                      label.placer <span class='op'>=</span> <span class='fu'><a href='label_placer_fraction.html'>label_placer_n</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_text_contour-7.png' alt='' width='700' height='433' /></div><div class='input'>
-
 <span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>,
-                      label.placement <span class='op'>=</span> <span class='fu'><a href='label_placement_fraction.html'>label_placement_flattest</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+                      label.placer <span class='op'>=</span> <span class='fu'><a href='label_placer_fraction.html'>label_placer_flattest</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_text_contour-8.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='va'>g</span> <span class='op'>+</span> <span class='fu'>geom_text_contour</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span>,
-                      label.placement <span class='op'>=</span> <span class='fu'><a href='label_placement_fraction.html'>label_placement_flattest</a></span><span class='op'>(</span>ref_angle <span class='op'>=</span> <span class='fl'>90</span><span class='op'>)</span><span class='op'>)</span>
+                      label.placer <span class='op'>=</span> <span class='fu'><a href='label_placer_fraction.html'>label_placer_flattest</a></span><span class='op'>(</span>ref_angle <span class='op'>=</span> <span class='fl'>90</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_text_contour-9.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

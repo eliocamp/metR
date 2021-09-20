@@ -83,7 +83,7 @@ helpful defaults for plotting longitude, latitude and pressure levels." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.0</span>
       </span>
     </div>
 
@@ -213,7 +213,8 @@ omitted.</p></td>
 <a href='https://scales.r-lib.org/reference/trans_new.html'>transformation object</a></p></li>
 <li><p>A numeric vector of positions</p></li>
 <li><p>A function that takes the limits as input and returns breaks
-as output (e.g., a function returned by <code><a href='https://scales.r-lib.org/reference/breaks_extended.html'>scales::extended_breaks()</a></code>)</p></li>
+as output (e.g., a function returned by <code><a href='https://scales.r-lib.org/reference/breaks_extended.html'>scales::extended_breaks()</a></code>).
+Also accepts rlang <a href='https://rlang.r-lib.org/reference/as_function.html'>lambda</a> function notation.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -233,7 +234,8 @@ expand the scale by 5% on each side for continuous variables, and by
 transformation object</p></li>
 <li><p>A character vector giving labels (must be same length as <code>breaks</code>)</p></li>
 <li><p>A function that takes the breaks as input and returns labels
-as output</p></li>
+as output. Also accepts rlang <a href='https://rlang.r-lib.org/reference/as_function.html'>lambda</a> function
+notation.</p></li>
 </ul></td>
     </tr>
     <tr>

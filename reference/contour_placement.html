@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Functions to place contour labels — label_placement_fraction • metR</title>
+<title>Functions to place contour labels — label_placer_fraction • metR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Functions to place contour labels — label_placement_fraction" />
-<meta property="og:description" content="These functions compute the position of contour labels" />
+<meta property="og:title" content="Functions to place contour labels — label_placer_fraction" />
+<meta property="og:description" content="These functions compute the position of contour labels." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.0</span>
       </span>
     </div>
 
@@ -140,20 +140,58 @@
     </div>
 
     <div class="ref-description">
-    <p>These functions compute the position of contour labels</p>
+    <p>These functions compute the position of contour labels.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>label_placement_fraction</span><span class='op'>(</span>frac <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>label_placer_fraction</span><span class='op'>(</span>
+  frac <span class='op'>=</span> <span class='fl'>0.5</span>,
+  rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>label_placement_n</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'>label_placement_fraction</span><span class='op'>(</span>
+  frac <span class='op'>=</span> <span class='fl'>0.5</span>,
+  rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>label_placement_random</span><span class='op'>(</span>seed <span class='op'>=</span> <span class='fl'>42</span>, n <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'>label_placer_n</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>2</span>, rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>label_placement_all</span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>label_placement_n</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>2</span>, rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>label_placement_flattest</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>1</span>, ref_angle <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='fu'>label_placer_random</span><span class='op'>(</span>
+  seed <span class='op'>=</span> <span class='fl'>42</span>,
+  n <span class='op'>=</span> <span class='fl'>1</span>,
+  rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>label_placement_minmax</span><span class='op'>(</span>direction <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vertical"</span>, <span class='st'>"horizontal"</span><span class='op'>)</span><span class='op'>)</span></pre>
+<span class='fu'>label_placement_random</span><span class='op'>(</span>
+  seed <span class='op'>=</span> <span class='fl'>42</span>,
+  n <span class='op'>=</span> <span class='fl'>1</span>,
+  rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='fu'>label_placer_all</span><span class='op'>(</span>rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'>label_placement_all</span><span class='op'>(</span>rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'>label_placer_flattest</span><span class='op'>(</span>
+  ref_angle <span class='op'>=</span> <span class='fl'>0</span>,
+  rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='fu'>label_placement_flattest</span><span class='op'>(</span>
+  ref_angle <span class='op'>=</span> <span class='fl'>0</span>,
+  rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='fu'>label_placer_minmax</span><span class='op'>(</span>
+  direction <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vertical"</span>, <span class='st'>"horizontal"</span><span class='op'>)</span>,
+  rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='fu'>label_placement_minmax</span><span class='op'>(</span>
+  direction <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vertical"</span>, <span class='st'>"horizontal"</span><span class='op'>)</span>,
+  rot_adjuster <span class='op'>=</span> <span class='fu'>isoband</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>angle_halfcircle_bottom</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,6 +201,11 @@
       <td><p>A numeric vector with values between 0 and 1 representing
 where in the contour to put labels (i.e. <code>frac = 0.5</code> puts labels
 at the midpoint).</p></td>
+    </tr>
+    <tr>
+      <th>rot_adjuster</th>
+      <td><p>A function that standardizes the rotation angles of the labels.
+See e.g. <a href='https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html'>isoband::angle_halfcircle_bottom</a>.</p></td>
     </tr>
     <tr>
       <th>n</th>

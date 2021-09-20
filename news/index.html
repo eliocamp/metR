@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.0</span>
       </span>
     </div>
 
@@ -137,13 +137,26 @@
       <small>Source: <a href='https://github.com/eliocamp/metR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="metr-0100" class="section level1">
-<h1 class="page-header" data-toc-text="0.10.0">
-<a href="#metr-0100" class="anchor"></a>metR 0.10.0<small> 2021-08-07 </small>
+    <div id="metr-0110" class="section level1">
+<h1 class="page-header" data-toc-text="0.11.0">
+<a href="#metr-0110" class="anchor"></a>metR 0.11.0<small> Unreleased </small>
 </h1>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New Features</h2>
+<ul>
+<li><p><code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> gains the ability to draw –and leave space for– labels! This is finally proper labelling support without having to use a different geom (<code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code>). Thanks to the isoband package for this.</p></li>
+<li><p>Following <a href="https://wilkelab.org/isoband/reference/label_placer.html">isoband’s naming convention</a>, the family of functions that decide where to place labels have been renamed as <code>label_placer_</code> and the corresponding argument is now <code>label.placer</code> . The <code>label_placement_</code> family of functions will be deprecated in future releases.</p></li>
+</ul>
+</div>
+</div>
+    <div id="metr-0100" class="section level1">
+<h1 class="page-header" data-toc-text="0.10.0">
+<a href="#metr-0100" class="anchor"></a>metR 0.10.0<small> 2021-08-07 </small>
+</h1>
+<div id="new-features-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features-1" class="anchor"></a>New Features</h2>
 <ul>
 <li><p>discretised scales now work better when passing user-supplied limits.</p></li>
 <li><p>New functions to use the International Standard Atmosphere to get height from pressure and vice versa, as well as to use as secondary axis. See <code>?standard_atmosphere</code>.</p></li>
@@ -183,9 +196,9 @@
 <h1 class="page-header" data-toc-text="0.9.1">
 <a href="#metr-091" class="anchor"></a>metR 0.9.1<small> 2021-02-07 </small>
 </h1>
-<div id="new-features-1" class="section level2">
+<div id="new-features-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-1" class="anchor"></a>New Features</h2>
+<a href="#new-features-2" class="anchor"></a>New Features</h2>
 <ul>
 <li><p><code><a href="../reference/as.discretised_scale.html">as.discretised_scale()</a></code> is a quick way of created a discretised version of any continuous scale.</p></li>
 <li><p><code>stroke.colour</code> is now an accepted aesthetic for <code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code>.</p></li>
@@ -204,14 +217,14 @@
 <h1 class="page-header" data-toc-text="0.9.0">
 <a href="#metr-090" class="anchor"></a>metR 0.9.0<small> 2020-11-25 </small>
 </h1>
-<div id="new-features-2" class="section level2">
+<div id="new-features-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-2" class="anchor"></a>New Features</h2>
+<a href="#new-features-3" class="anchor"></a>New Features</h2>
 <ul>
 <li><p>I’m very happy with <code><a href="../reference/scale_fill_discretised.html">discretised_scale()</a></code>, which is a type of scale which takes a discrete values that are the result of some discretisation and treats them as continuous. It’s, in a sense, the inverse of the new <code><a href="https://ggplot2.tidyverse.org/reference/binned_scale.html">ggplot2::binned_scale()</a></code>. Whereas. <code><a href="https://ggplot2.tidyverse.org/reference/binned_scale.html">ggplot2::binned_scale()</a></code> takes continuous values and then discretises them, <code><a href="../reference/scale_fill_discretised.html">discretised_scale()</a></code> takes discrete values which where the result of some discretisation procedure (such as the levels of <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code>/<code><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html">ggplot2::geom_contour_filled()</a></code>) and allows you to treat them as continuous.</p></li>
 <li><p>Related to that, <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> now gains a new computed aesthetic called <code>level_d</code>, which is the same as <code>level</code> but forces ggplot2 to automatically use the new discretised scale.</p></li>
 <li><p><code><a href="../reference/MakeBreaks.html">AnchorBreaks()</a></code> gains a <code>bins</code> argument to mimic the default functionality of <code><a href="../reference/MakeBreaks.html">MakeBreaks()</a></code>.</p></li>
-<li><p>New <code><a href="../reference/label_placement_fraction.html">label_placement_minmax()</a></code> to label contours at the maximum and minimum points of a contour (mimicking <a href="https://wilkelab.org/isoband/articles/isoband3.html">isoband’s behaviour</a>)</p></li>
+<li><p>New <code><a href="../reference/label_placer_fraction.html">label_placement_minmax()</a></code> to label contours at the maximum and minimum points of a contour (mimicking <a href="https://wilkelab.org/isoband/articles/isoband3.html">isoband’s behaviour</a>)</p></li>
 <li><p><code><a href="../reference/geom_contour_tanaka.html">geom_contour_tanaka()</a></code> now has a (rather experimental) argument <code>smooth</code> which allows to smooth the transition between segments.</p></li>
 </ul>
 </div>
@@ -229,11 +242,11 @@
 <h1 class="page-header" data-toc-text="0.8.0">
 <a href="#metr-080" class="anchor"></a>metR 0.8.0<small> 2020-10-25 </small>
 </h1>
-<div id="new-features-3" class="section level2">
+<div id="new-features-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-3" class="anchor"></a>New features</h2>
+<a href="#new-features-4" class="anchor"></a>New features</h2>
 <ul>
-<li><p><code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code> placement of labels is completely redesigned. It gains an argument <code>label.placement</code> which takes a function that is in charge of positioning the labels. See <code><a href="../reference/label_placement_fraction.html">label_placement_flattest()</a></code> for more details on the possible placement methods and how to build your own. The default method is <code>label_placement_flattest</code>, which places the label where the product of the curvature and the angle of the contour is minimised. This aims to put labels in a straight segment that is also as horizontal as possible. If more than one point satisfy this condition, then it chooses the closest to the midpoint. This is a <strong>breaking change</strong>, as it will change the label position of previous plots.</p></li>
+<li><p><code><a href="../reference/geom_label_contour.html">geom_text_contour()</a></code> placement of labels is completely redesigned. It gains an argument <code>label.placement</code> which takes a function that is in charge of positioning the labels. See <code><a href="../reference/label_placer_fraction.html">label_placement_flattest()</a></code> for more details on the possible placement methods and how to build your own. The default method is <code>label_placement_flattest</code>, which places the label where the product of the curvature and the angle of the contour is minimised. This aims to put labels in a straight segment that is also as horizontal as possible. If more than one point satisfy this condition, then it chooses the closest to the midpoint. This is a <strong>breaking change</strong>, as it will change the label position of previous plots.</p></li>
 <li><p>The contour functions also gain a <code>proj</code> argument. It can be a proj4 string to project the contours of or an arbitrary function to alter the contours after they are computed. This now makes it possible to compute contours for data that is on a regular grid on projected coordinates but want to plot in lon-lat coordinates (or vice versa). Bear in mind that contours that cross the dateline will probably end up mangled.</p></li>
 <li><p>Contour functions also gain a <code>kriging</code> argument. If <code>TRUE</code>, will perform ordinary kriging to interpolate irregularly placed data into a regular grid.</p></li>
 </ul>
@@ -255,9 +268,9 @@
 <h1 class="page-header" data-toc-text="0.7.0">
 <a href="#metr-070" class="anchor"></a>metR 0.7.0<small> 2020-04-10 </small>
 </h1>
-<div id="new-features-4" class="section level2">
+<div id="new-features-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-4" class="anchor"></a>New features</h2>
+<a href="#new-features-5" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/waves.html">FitWave()</a></code> and related functions return <code>NA</code>s when the inputted signal has <code>NA</code>s.</p></li>
 <li><p><code><a href="../reference/FitLm.html">FitLm()</a></code> accepts a <code>weights</code> argument to perform weighted regression.</p></li>
@@ -285,9 +298,9 @@
 <h1 class="page-header" data-toc-text="0.6.0">
 <a href="#metr-060---pileus" class="anchor"></a>metR 0.6.0 - Pileus<small> 2020-02-10 </small>
 </h1>
-<div id="new-features-5" class="section level2">
+<div id="new-features-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-5" class="anchor"></a>New features</h2>
+<a href="#new-features-6" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/EPflux.html">EPflux()</a></code> computes Eliassen-Palm fluxes (experimental).</p></li>
 <li><p><code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> and <code><a href="../reference/geom_arrow.html">geom_vector()</a></code> should plot faster.</p></li>
@@ -320,9 +333,9 @@
 <h1 class="page-header" data-toc-text="0.5.0">
 <a href="#metr-050---incus" class="anchor"></a>metR 0.5.0 - Incus<small> 2019-11-12 </small>
 </h1>
-<div id="new-features-6" class="section level2">
+<div id="new-features-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-6" class="anchor"></a>New features</h2>
+<a href="#new-features-7" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> supports using <code>NA</code> in subset to refer to max or min value.</p></li>
 <li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code>’s subset argument supports more complex queries. (see the help section at<code>?ReadNetCDF()</code>).</p></li>
@@ -345,9 +358,9 @@
 <h1 class="page-header" data-toc-text="0.4.0">
 <a href="#metr-040---cumulonimbus" class="anchor"></a>metR 0.4.0 - Cumulonimbus<small> 2019-07-08 </small>
 </h1>
-<div id="new-features-7" class="section level2">
+<div id="new-features-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-7" class="anchor"></a>New features</h2>
+<a href="#new-features-8" class="anchor"></a>New features</h2>
 <ul>
 <li><p>New <code><a href="../reference/ReadNetCDF.html">GlanceNetCDF()</a></code> function that is an alias for <code><a href="../reference/ReadNetCDF.html">ReadNetCDF(out = "vars")</a></code> but now prints a human readable summary of the contents of the NetCDF file.</p></li>
 <li><p><code><a href="../reference/geom_streamline.html">geom_streamline()</a></code> now uses 4th order Runge-Kutta instead of plain old Euler. It also draws arrows in the middle of the streamline.</p></li>
@@ -369,9 +382,9 @@
 <h1 class="page-header" data-toc-text="0.3.0">
 <a href="#metr-030---cumulonimbus" class="anchor"></a>metR 0.3.0 - Cumulonimbus<small> 2019-03-12 </small>
 </h1>
-<div id="new-features-8" class="section level2">
+<div id="new-features-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-8" class="anchor"></a>New features</h2>
+<a href="#new-features-9" class="anchor"></a>New features</h2>
 <ul>
 <li><p><code><a href="../reference/Anomaly.html">Anomaly()</a></code> has a new <code>baseline</code> argument.</p></li>
 <li><p>New function <code><a href="../reference/Trajectory.html">Trajectory()</a></code> that computes trajectories in time-varying velocity fields.</p></li>

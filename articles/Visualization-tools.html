@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.0</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@
       <h1 data-toc-skip>Visualization tools</h1>
                         <h4 class="author">Elio Campitelli</h4>
             
-            <h4 class="date">2021-08-07</h4>
+            <h4 class="date">2021-09-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Visualization-tools.Rmd"><code>vignettes/Visualization-tools.Rmd</code></a></small>
       <div class="hidden name"><code>Visualization-tools.Rmd</code></div>
@@ -162,8 +162,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">height</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">surface</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">surface</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">height</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-5-2.png" width="672"></p>
 <p>If you know the projection string, you can pass it to the <code>proj</code> argument and get filled contours in longitude by latitude space (this needs {<a href="https://cran.r-project.org/package=proj4">proj4</a>} to be installed).</p>
@@ -174,8 +173,7 @@
   <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">height</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">surface</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">surface</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">height</span><span class="op">)</span>, proj <span class="op">=</span> <span class="va">proj_string</span><span class="op">)</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-6-2.png" width="672"></p>
 <p>You can actually pass any arbitrary function to <code>proj</code>. It should take a data.frame with the contour information and return the modified contours.</p>
@@ -195,8 +193,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">some_volcano</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">some_volcano</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">value</span><span class="op">)</span>, kriging <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-7-2.png" width="672"></p>
@@ -230,8 +227,7 @@
     <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-10-2.png" width="672"></p>
 <p>A big difference between the two variables is that one is compatible with continuous scales while the other only works with discrete scales. The advantage of using <code>level_mid</code> is that it preserves the actual continuous nature of the data, which allows the use of meaningful continuous scales such as <code><a href="../reference/scale_divergent.html">scale_fill_divergent()</a></code> and results in proper colours when breaks are not equally spaced. The disadvantage is that the scale function has no information about the discretisation, and thus is very hard to use <em>synchronise</em> the breaks that define the levels of the contours and the breaks shown in the color guide.</p>
@@ -265,18 +261,24 @@
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 <p>You can have full control over where labels are placed with the <code>label.placement</code> argument. It takes a function that takes a vector of x and y values and returns a logical vector of the same length that indicate the points where labels should be. There are 5 build in placement functions:</p>
 <ul>
-<li><p><code><a href="../reference/label_placement_fraction.html">label_placement_flattest()</a></code>: The default. It computes the curvature and the angle at each points and then selects the point which minimizes the sum of both numbers. Therefore, it tries to label the flattest and most horizontal part of the contour.</p></li>
-<li><p><code><a href="../reference/label_placement_fraction.html">label_placement_fraction()</a></code>: It takes a vector of numbers ranging from 0 to 1 representing where tu put the label in relation to the length of the contour. That is, using 0.5 means to put the label at the midpoint.</p></li>
-<li><p><code><a href="../reference/label_placement_fraction.html">label_placement_n()</a></code>: Places <code>n</code> labels approximately equally spaced along the contour.</p></li>
-<li><p><code><a href="../reference/label_placement_fraction.html">label_placement_random()</a></code>: It puts the label in random places. ¯\_(ツ)_/¯ .</p></li>
-<li><p><code><a href="../reference/label_placement_fraction.html">label_placement_all()</a></code>: It puts the label at every point. Probably is best not to use it.</p></li>
+<li><p><code><a href="../reference/label_placer_fraction.html">label_placement_flattest()</a></code>: The default. It computes the curvature and the angle at each points and then selects the point which minimizes the sum of both numbers. Therefore, it tries to label the flattest and most horizontal part of the contour.</p></li>
+<li><p><code><a href="../reference/label_placer_fraction.html">label_placement_fraction()</a></code>: It takes a vector of numbers ranging from 0 to 1 representing where tu put the label in relation to the length of the contour. That is, using 0.5 means to put the label at the midpoint.</p></li>
+<li><p><code><a href="../reference/label_placer_fraction.html">label_placement_n()</a></code>: Places <code>n</code> labels approximately equally spaced along the contour.</p></li>
+<li><p><code><a href="../reference/label_placer_fraction.html">label_placement_random()</a></code>: It puts the label in random places. ¯\_(ツ)_/¯ .</p></li>
+<li><p><code><a href="../reference/label_placer_fraction.html">label_placement_all()</a></code>: It puts the label at every point. Probably is best not to use it.</p></li>
 </ul>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="../reference/geom_label_contour.html">geom_text_contour</a></span><span class="op">(</span>stroke <span class="op">=</span> <span class="fl">0.2</span>, label.placement <span class="op">=</span> <span class="fu"><a href="../reference/label_placement_fraction.html">label_placement_random</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> </code></pre></div>
+    <span class="fu"><a href="../reference/geom_label_contour.html">geom_text_contour</a></span><span class="op">(</span>stroke <span class="op">=</span> <span class="fl">0.2</span>, label.placement <span class="op">=</span> <span class="fu"><a href="../reference/label_placer_fraction.html">label_placement_random</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> 
+<span class="co">#&gt; Warning: 'label_placement_random' is deprecated.</span>
+<span class="co">#&gt; Use 'label_placer_random' instead.</span>
+<span class="co">#&gt; See help("Deprecated")</span>
+<span class="co">#&gt; Warning in geom_text_contour(stroke = 0.2, label.placement =</span>
+<span class="co">#&gt; label_placement_random()): The 'label.placement' argument is now 'label.placer'.</span>
+<span class="co">#&gt; Warning: Ignoring unknown parameters: label.placement</span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 </div>
 <div id="geom_contour_tanaka" class="section level2">

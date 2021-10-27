@@ -18,6 +18,11 @@
 #'     geom_contour() +
 #'     scale_x_longitude() +
 #'     scale_y_latitude()
+#' 
+#' data(temperature)
+#' ggplot(temperature[lon == lon[1] & lat == lat[1]], aes(air, lev)) +
+#'     geom_path() +
+#'     scale_y_level()
 #'
 #' @family ggplot2 helpers
 #' @export

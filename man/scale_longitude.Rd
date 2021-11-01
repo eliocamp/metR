@@ -118,6 +118,11 @@ ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
     scale_x_longitude() +
     scale_y_latitude()
 
+data(temperature)
+ggplot(temperature[lon == lon[1] & lat == lat[1]], aes(air, lev)) +
+    geom_path() +
+    scale_y_level()
+
 }
 \seealso{
 Other ggplot2 helpers: 

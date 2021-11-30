@@ -72,7 +72,7 @@ seasonally <- function(x) {
     lubridate::day(times) <- 15
     lubridate::month(times) <- (as.numeric(s) - 1)*3 + 1
 
-    times[match(x, times_org)]
+    as.Date(times[match(x, times_org)])
 }
 
 #' @export

@@ -12,6 +12,7 @@
 ## Bug Fixes
 
 -   Fixed wrong `sdev` component in `EOF()` when using `base::svd()` in some cases.
+-   `seasonally()` now returns a Date object even if the input is datetime. This avoids issues when the time component of the input was not all the same.
 
 # metR 0.11.0
 

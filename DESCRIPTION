@@ -28,7 +28,6 @@ Imports:
     ggplot2 (>= 3.0.0),
     grid,
     gtable,
-    lubridate,
     memoise,
     plyr,
     scales,
@@ -36,7 +35,8 @@ Imports:
     stringr,
     purrr,
     RCurl,
-    isoband
+    isoband,
+    lubridate
 Suggests: 
     maps,
     maptools,
@@ -50,6 +50,7 @@ Suggests:
     testthat (>= 2.1.0),
     viridis,
     udunits2,
+    PCICt,
     gridExtra,
     vdiffr,
     proj4,

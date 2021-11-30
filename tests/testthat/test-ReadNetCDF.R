@@ -48,6 +48,12 @@ test_that("time dimension without 'since' works", {
     expect_true(!is.null(read$time))
 })
 
+test_that("can parse calendar correcly", {
+    file <- "calendar.nc4"
+    read <- ReadNetCDF(file, vars = "zg")
+    expect_true(all(as.POSIXlt(read$time)$mon == 11))
+})
+
 
 test_that("can read from nc_open", {
     nc <- ncdf4::nc_open(file)

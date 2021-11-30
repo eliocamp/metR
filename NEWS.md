@@ -1,7 +1,11 @@
 # metR (development version)
 
+## New Features
+
 -   Adds example of `scale_y_level()` (\@paocorrales, #153).
 
+-   `ReadNetCDF()` now should parse times correctly even if the use non-standard calendars.
+    This now makes udunits2 and PCICt required to parse time.
 # metR 0.11.0
 
 ## New Features

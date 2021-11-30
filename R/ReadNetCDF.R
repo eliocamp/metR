@@ -139,10 +139,7 @@
 ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {
-    ncdf4.available <- requireNamespace("ncdf4", quietly = TRUE)
-    if (!ncdf4.available) {
-        stopf("ReadNetCDF needs package'ncdf4'. Install it with 'install.packages(\"ncdf4\")'")
-    }
+    check_packages(c("ncdf4", "udunits2", "PCICt"), "ReadNetCDF")
 
     out <- out[1]
     checks <- makeAssertCollection()
@@ -224,7 +221,8 @@ ReadNetCDF <- function(file, vars = NULL,
     for (i in seq_along(dims)) {
         # if (dims[i] == "time" && ncfile$dim[[dims[i]]]$units != "") {
             dimensions[[dims[i]]] <- .parse_time(ncfile$dim[[dims[i]]]$vals,
-                                                 ncfile$dim[[dims[i]]]$units)
+                                                 ncfile$dim[[dims[i]]]$units,
+                                                 ncfile$dim[[dims[i]]]$calendar)
         # } else {
         #     dimensions[[dims[i]]] <- ncfile$dim[[dims[i]]]$vals
         # }
@@ -347,39 +345,28 @@ ReadNetCDF <- function(file, vars = NULL,
     return(nc.df[][])
 }
 
-
-
-.parse_time <- function(time, units) {
+.parse_time <- function(time, units, calendar = NULL) {
     has_since <- grepl("since", units)
     if (!has_since) {
         return(time)
     }
 
-    if (!requireNamespace("udunits2", quietly = TRUE)) {
-        messagef("Time dimension found and package udunits2 is not installed. Trying to parse.", domain = "R-metR")
-        fail <- gettextf("Time parsing failed. Returing raw values in %s.\nInstall udunits2 with 'install_packages(\"udunits2\")' to parse it automatically.", units, domain = "R-metR")
-
-        units <- trimws(strsplit(units, "since")[[1]])
-
-        period_fun <- try(match.fun(units[1]), silent = TRUE)
-        if (is.error(period_fun)) {
-            warning(fail)  # No need to translate here.
-            return(time)
-        }
-
-        time_try <- try(as.POSIXct(units[2],  tz = "UTC", origin = "1970-01-01 00:00:00") +
-                            period_fun(time),
-                        silent = TRUE)
-        if (is.error(time_try)) {
-            warning(fail) # No need to translate here.
-            return(time)
-        }
-        return(time_try)
+    if (!is.null(calendar)) {
+        # For all I know this could fail to actually get the origin.
+        # Is there a more elegant way of extracting the origin?
+        origin <- trimws(strsplit(units, "since")[[1]][2])
+        time <- udunits2::ud.convert(time,
+                                     units,
+                                     paste0("seconds since ", origin))
+        time <- as.POSIXct(PCICt::as.PCICt(time, cal = calendar, origin = origin),
+                           cal = "standard", tz = "UTC", origin = "1970-01-01 00:00:00")
+    } else {
+        time <- udunits2::ud.convert(time, units,
+                                     "seconds since 1970-01-01 00:00:00")
+        time <- as.POSIXct(time, tz = "UTC", origin = "1970-01-01 00:00:00")
     }
 
-    time <- udunits2::ud.convert(time, units,
-                                 "seconds since 1970-01-01 00:00:00")
-    as.POSIXct(time, tz = "UTC", origin = "1970-01-01 00:00:00")
+    return(time)
 }
 
 .read_vars <- function(varid, ncfile, start, count) {
@@ -491,7 +478,7 @@ print.ncvar4 <- function(x, ...) {
 print.ncdim4 <- function(x, ...) {
     # cat("$", dim$name, "\n", sep = "")
     units <- x$units
-    vals <- suppressMessages(suppressWarnings(.parse_time(x$vals, x$units)))
+    vals <- suppressMessages(suppressWarnings(.parse_time(x$vals, x$units, x$calendar)))
 
     if (.is.somedate(vals)) {
         units <- ""

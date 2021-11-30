@@ -7,6 +7,11 @@ test_that("EOF runs", {
     }, "eof")
 })
 
+test_that("EOF, returns correct PCs", {
+    expect_equal(nrow(EOF(gh ~ lat + lon | date, data = geopotential, n = 2)$sdev), 1)
+})
+
+
 test_that("EOF uses bootstrap", {
     expect_s3_class({
         data(geopotential)
@@ -15,17 +20,19 @@ test_that("EOF uses bootstrap", {
 })
 
 
-# test_that("EOF changes probs", {
-#     expect_identical({
-#         data(geopotential)
-#         round(EOF(gh ~ lat + lon | date, data = geopotential, n = 1, B = 10, probs = c(midd = 0.5))$sdev$midd)
-#     }, 1524903)
-# })
 
+test_that("can use differnet engine", {
+    set.seed(40)
+    # with this seed, the base::svd result has a different sign.
+    expect_equal(
+        EOF(gh ~ lat + lon | date, data = geopotential, engine = base::svd)$left[, gh := -gh],
+        EOF(gh ~ lat + lon | date, data = geopotential, n = 1)$left
+    )
+})
 
 test_that("EOF works inside data.table", {
-    expect_identical(geopotential[, EOF(gh ~ lon + lat | date)$left],
-                     EOF(gh ~ lon + lat | date, data = geopotential)$left)
+    expect_equal(geopotential[, EOF(gh ~ lon + lat | date)$left],
+                 EOF(gh ~ lon + lat | date, data = geopotential)$left)
 })
 
 
@@ -45,7 +52,8 @@ test_that("EOF fails gracefully", {
 })
 
 test_that("eof methods", {
-    eof <- EOF(gh ~ lat + lon | date, data = geopotential, n = 1:5)
+    eof <- EOF(gh ~ lat + lon | date, data = geopotential, n = 1:5,
+               engine = base::svd)   # need to force this engine so that predict is exact
 
     eof_12 <- cut(eof, 1:2)
     expect_s3_class(eof_12, "eof")
@@ -58,7 +66,8 @@ test_that("eof methods", {
 
 
 
-    eof_all <- EOF(gh ~ lat + lon | date, data = geopotential, n = NULL)
+    eof_all <- EOF(gh ~ lat + lon | date, data = geopotential, n = NULL,
+                   engine = base::svd)
     expect_equal(geopotential[, .(lat, lon, date, gh)][order(lat, lon, date)],
                  predict(eof_all)[order(lat, lon, date)])
 

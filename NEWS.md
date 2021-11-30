@@ -6,6 +6,13 @@
 
 -   `ReadNetCDF()` now should parse times correctly even if the use non-standard calendars.
     This now makes udunits2 and PCICt required to parse time.
+
+-   `EOF()` gains a new `engine` argument to chose the function to compute the singular value decomposition.
+
+## Bug Fixes
+
+-   Fixed wrong `sdev` component in `EOF()` when using `base::svd()` in some cases.
+
 # metR 0.11.0
 
 ## New Features

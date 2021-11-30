@@ -12,7 +12,8 @@ EOF(
   probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
   rotate = FALSE,
   suffix = "PC",
-  fill = NULL
+  fill = NULL,
+  engine = NULL
 )
 }
 \arguments{
@@ -35,6 +36,12 @@ confidence intervals. If named, it's names will be used as column names.}
 
 \item{fill}{value to infill implicit missing values or \code{NULL} if the
 data is dense.}
+
+\item{engine}{function to use to compute SVD. If \code{NULL} it uses \link[irlba:irlba]{irlba::irlba}
+(if installed) if the largest singular value to compute is lower than half the maximum
+possible value, otherwise it uses \link[base:svd]{base::svd}. If the user provides a function,
+it needs to be a drop-in replacement for \link[base:svd]{base::svd} (the same arguments and
+output format).}
 }
 \value{
 An \code{eof} object which is just a named list of \code{data.table}s

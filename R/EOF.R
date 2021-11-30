@@ -15,6 +15,11 @@
 #' @param suffix character to name the principal components
 #' @param fill value to infill implicit missing values or `NULL` if the
 #' data is dense.
+#' @param engine function to use to compute SVD. If `NULL` it uses [irlba::irlba]
+#' (if installed) if the largest singular value to compute is lower than half the maximum
+#' possible value, otherwise it uses [base::svd]. If the user provides a function,
+#' it needs to be a drop-in replacement for [base::svd] (the same arguments and
+#' output format).
 #'
 #' @return
 #' An `eof` object which is just a named list of `data.table`s
@@ -104,7 +109,8 @@
 #' @export
 EOF <- function(formula, n = 1, data = NULL, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
-                rotate = FALSE, suffix = "PC", fill = NULL) {
+                rotate = FALSE, suffix = "PC", fill = NULL,
+                engine = NULL) {
     checks <- makeAssertCollection()
 
     assertClass(formula, "formula", add = checks)
@@ -166,14 +172,20 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
 
     if (is.null(n)) n <- seq_len(min(ncol(g$matrix), nrow(g$matrix)))
 
-    if (requireNamespace("irlba", quietly = TRUE) &
-        max(n) < 0.5 *  min(ncol(g$matrix), nrow(g$matrix))) {
-        set.seed(42)
-        eof <- irlba::irlba(g$matrix, nv = max(n), nu = max(n), rng = runif)
+    if (is.null(engine)) {
+        if (requireNamespace("irlba", quietly = TRUE) &
+            max(n) < 0.5 *  min(ncol(g$matrix), nrow(g$matrix))) {
+            engine <- function(A, nv, nu) irlba::irlba(A, nv, nu, rng = runif)
+        } else {
+            engine <- base::svd
+        }
     } else {
-        eof <- svd(g$matrix, nu = max(n), nv = max(n))
-        eof$d <- eof$d[1:max(n)]
+        engine <- match.fun(engine)
     }
+
+    eof <- engine(g$matrix, nu = max(n), nv = max(n))
+    eof$d <- eof$d[n]
+
     remove(data)
     gc()
     pcomps <- paste0(suffix, n)
@@ -243,6 +255,7 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
                      call = match.call(),
                      class = c("eof", "list"),
                      suffix = suffix,
-                     value.var = value.var))
+                     value.var = value.var,
+                     engine = engine))
 }
 

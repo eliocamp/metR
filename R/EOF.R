@@ -175,7 +175,7 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
     if (is.null(engine)) {
         if (requireNamespace("irlba", quietly = TRUE) &
             max(n) < 0.5 *  min(ncol(g$matrix), nrow(g$matrix))) {
-            engine <- function(A, nv, nu) irlba::irlba(A, nv, nu, rng = runif)
+            engine <- irlba_engine
         } else {
             engine <- base::svd
         }
@@ -259,3 +259,4 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
                      engine = engine))
 }
 
+irlba_engine <- function(A, nv, nu) irlba::irlba(A, nv, nu, rng = runif)

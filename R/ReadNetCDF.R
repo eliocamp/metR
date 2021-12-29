@@ -309,6 +309,7 @@ ReadNetCDF <- function(file, vars = NULL,
             var1 <- array(var1, dim = lengths(correct_dims))
 
             dimnames(var1) <- correct_dims
+            attr(var1, "dimvalues") <- correct_dims
             nc_dim[[v]] <- as.vector(correct_dims)
         } else {
             nc_dim[[v]] <- 0

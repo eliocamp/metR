@@ -7,6 +7,8 @@
 -   `ReadNetCDF()` now should parse times correctly even if the use non-standard calendars.
     This now makes udunits2 and PCICt required to parse time.
 
+-   Arrays returned by `ReadNetCDF(…, out = "array")` gain a "dimvalues" attribute which is analogous to dimnames but has the correct types (dates are dates, numerics are numerics, etc...).
+
 -   `EOF()` gains a new `engine` argument to chose the function to compute the singular value decomposition.
 
 ## Bug Fixes

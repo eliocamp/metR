@@ -1,26 +1,28 @@
 
 ## Test environments
 
-* local installation of elementary OS 5.1.7 Hera (Built on Ubuntu 18.04.4 LTS) R version 4.1.1
+* local installation of elementary OS 6.1 Jólnir (Built on Ubuntu 20.04.3 LTS) R version 4.1.2
 
-* winbuilder
-  - R Under development (unstable) (2021-09-17 r80929)
-  - Ubuntu Linux 20.04.1 LTS, R-release, GCC
+* winbuilder 
+    - R Under development (unstable) (2022-02-13 r81727 ucrt)
 
-
-* rhub
-  - Windows Server 2008 R2 SP1, R-devel, 32/64 bit
-
++ rhub 
+    - Windows Server 2022, R-devel, 64 bit
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 notes 
+0 errors | 0 warnings | 2 notes 
 
-I get these notes that seem like false positives, since I can browse to those
-URLs with no problems.
+I get this note. It seems like a false positive since I can browse the URLs with no problems.
 
+  Found the following (possibly) invalid URLs:
+    URL: https://glossary.ametsoc.org/wiki/Standard_atmosphere
+      From: man/standard_atmosphere.Rd
+      Status: Error
+      Message: libcurl error code 60:
+        	SSL certificate problem: unable to get local issuer certificate
+        	(Status without verification: OK)
 
-Found the following (possibly) invalid URLs:
   URL: https://doi.org/10.1175/1520-0469(1985)042<0217:OTTDPO>2.0.CO;2
     From: man/EPflux.Rd
     Status: 403
@@ -37,9 +39,13 @@ Found the following (possibly) invalid URLs:
     From: man/EPflux.Rd
     Status: 403
     Message: Forbidden
-  URL: https://glossary.ametsoc.org/wiki/Standard_atmosphere
-    From: man/standard_atmosphere.Rd
-    Status: Error
-    Message: SSL certificate problem: unable to get local issuer certificate
+
+
+I also get 
+
+Suggests orphaned package: ‘udunits2’
+
+I was contacted a few weeks ago. About this. Refactoring is in process, but it's difficult because 
+udunits2 is central to parsing dates. 
 
 Thanks for all the work :)

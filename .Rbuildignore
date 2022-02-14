@@ -21,3 +21,4 @@
 ^\.github$
 ^data-raw$
 ^crowdin\.yml$
+^CRAN-SUBMISSION$

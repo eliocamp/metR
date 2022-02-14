@@ -15,6 +15,7 @@
 
 -   Fixed wrong `sdev` component in `EOF()` when using `base::svd()` in some cases.
 -   `seasonally()` now returns a Date object even if the input is datetime. This avoids issues when the time component of the input was not all the same.
+-   Fixed a bug in `ImputeEOF()` in which the algorithm tried to compute 0 EOFs.
 
 # metR 0.11.0
 
@@ -158,7 +159,7 @@
 
 -   `FitLm()` accepts a `weights` argument to perform weighted regression.
 
--   `ReadNetCDF()` now can read files directly from DAP servers and other urls, and objects returned by \[ncdf4::nc_open()\].
+-   `ReadNetCDF()` now can read files directly from DAP servers and other urls, and objects returned by $$ncdf4::nc_open()$$.
 
 ## Bugfixes
 

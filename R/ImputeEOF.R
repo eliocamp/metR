@@ -139,15 +139,15 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
     validation <- sample(seq_along(X)[!seq_along(X) %in% gaps],
                          validation)
 
-    eofs <- c(0, min.eof:max.eof)
+    eofs <- c(0L, seq(min.eof, max.eof))
     X.rec <- X
-    # First try, imput with mean or something. Rmse is infinite.
+    # First try, input with mean or something. Rmse is infinite.
     fill <- mean(X[!is.na(X)])
     X.rec[c(gaps, validation)] <- fill
-    rmse <- sqrt(mean((X[validation] - X.rec[validation])^2))
+    rmse <- Inf
 
     prev <- NULL
-    for (i in 2:length(eofs)) {
+    for (i in seq_along(eofs)[-1]) {
         # After first guess, impute gaps and validation.
         X.rec <- .ImputeEOF1(X.rec, c(gaps, validation), eofs[i],
                              tol = tol, max.iter = max.iter,
@@ -173,6 +173,7 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
     # Select best eof and make proper imputation.
     eof <- eofs[which.min(rmse)]
     X[gaps] <- fill
+
     X.rec <- .ImputeEOF1(X, gaps, eof, tol = tol, max.iter = max.iter,
                          verbose = verbose)$X.rec
 
@@ -188,6 +189,7 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
 
 .ImputeEOF1 <- function(X, X.na, n.eof, tol = 1e-2, max.iter = 10000,
                         verbose = TRUE, prev = NULL) {
+
     X.rec <- X
     v <- NULL
     rmse <- Inf
@@ -200,6 +202,7 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
             prval$d <- prval$d[1:n.eof]
         }
         v <- prval$v
+        # browser()
         R <- prval$u%*%diag(prval$d, nrow = n.eof)%*%t(v)
         rmse <- c(rmse, sqrt(mean((R[X.na] - X.rec[X.na])^2)))
 

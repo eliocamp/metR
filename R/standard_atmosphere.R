@@ -3,7 +3,9 @@
 #' Utilities to use the International Standard Atmosphere. It uses the
 #' International Standard Atmosphere up to the tropopause (11 km by definition)
 #' and then extends up to the 500 km using the ARDC Model Atmosphere.
-#'
+#' @name standard_atmosphere
+NULL
+
 #' @param height height in meter
 #' @param pressure pressure in pascals
 #' @param height_in,pressure_in units of height and pressure, respectively.

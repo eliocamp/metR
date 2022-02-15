@@ -20,8 +20,11 @@ reference:
       - stat_na
       - scale_longitude
       - scale_divergent
+      - scale_label_colour_continuous
+      - scale_mag
       - discretised_scale
       - guide_colorstrip
+      - guide_vector
       - reverselog_trans
   - title: ggplot2 helpers
     desc: functions that help in plotting
@@ -31,7 +34,7 @@ reference:
       - DivideTimeseries
       - map_labels
       - label_placers
-      - standard-atmosphere
+      - standard_atmosphere
   - title: Physics
     desc: functions related to physical processes
     contents:
@@ -74,4 +77,5 @@ reference:
     contents:
       - geopotential
       - temperature
+      - surface
 

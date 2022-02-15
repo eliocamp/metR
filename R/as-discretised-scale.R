@@ -15,6 +15,7 @@
 #' @seealso scale_fill_discretised
 #'
 #' @export
+#' @rdname discretised_scale
 as.discretised_scale <- function(scale_function) {
     new_fun <- function(...) {
         call <- match.call()

@@ -30,7 +30,7 @@ reference:
       - WrapCircular
       - DivideTimeseries
       - map_labels
-      - contour_placement
+      - label_placers
       - standard-atmosphere
   - title: Physics
     desc: functions related to physical processes

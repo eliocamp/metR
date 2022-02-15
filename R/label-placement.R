@@ -2,6 +2,11 @@
 #'
 #' These functions compute the position of contour labels.
 #'
+#'
+#' @name label_placers
+
+
+
 #' @param frac A numeric vector with values between 0 and 1 representing
 #' where in the contour to put labels (i.e. `frac = 0.5` puts labels
 #' at the midpoint).
@@ -13,14 +18,14 @@
 #' See e.g. [isoband::angle_halfcircle_bottom].
 #'
 #' @export
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placer_fraction <- function(frac = 0.5, rot_adjuster = isoband::angle_halfcircle_bottom()) {
     as_placer(label_placer_fraction_xy(frac = frac), rot_adjuster = rot_adjuster)
 }
 
 #' @export
 #' @keywords internal
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placement_fraction <- function(frac = 0.5, rot_adjuster = isoband::angle_halfcircle_bottom()) {
     .Deprecated("label_placer_fraction")
     label_placer_fraction(frac, rot_adjuster)
@@ -52,7 +57,7 @@ label_placer_n_xy <- function(n = 2) {
 }
 
 #' @export
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placer_n <- function(n = 2, rot_adjuster = isoband::angle_halfcircle_bottom()) {
     as_placer(label_placer_n_xy(n = n), rot_adjuster = rot_adjuster)
 }
@@ -60,7 +65,7 @@ label_placer_n <- function(n = 2, rot_adjuster = isoband::angle_halfcircle_botto
 
 #' @export
 #' @keywords internal
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placement_n <- function(n = 2, rot_adjuster = isoband::angle_halfcircle_bottom()) {
     .Deprecated("label_placer_n")
     label_placer_n(n = n, rot_adjuster = rot_adjuster)
@@ -77,14 +82,14 @@ label_placer_random_xy <- function(seed = 42, n = 1) {
 }
 
 #' @export
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placer_random <- function(seed = 42, n = 1, rot_adjuster = isoband::angle_halfcircle_bottom()) {
     as_placer(label_placer_random_xy(seed = seed, n = n), rot_adjuster = rot_adjuster)
 }
 
 #' @export
 #' @keywords internal
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placement_random <- function(seed = 42, n = 1, rot_adjuster = isoband::angle_halfcircle_bottom()) {
     .Deprecated("label_placer_random")
     label_placer_random(seed = seed, n = n, rot_adjuster = rot_adjuster)
@@ -112,14 +117,14 @@ label_placer_all_xy <- function() {
 }
 
 #' @export
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placer_all <- function(rot_adjuster = isoband::angle_halfcircle_bottom()) {
     as_placer(label_placer_all_xy(), rot_adjuster = rot_adjuster)
 }
 
 #' @export
 #' @keywords internal
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placement_all <- function(rot_adjuster = isoband::angle_halfcircle_bottom()) {
     .Deprecated("label_placer_all")
     label_placer_all(rot_adjuster = rot_adjuster)
@@ -159,14 +164,14 @@ label_placer_flattest_xy <- function(ref_angle = 0) {
 }
 
 #' @export
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placer_flattest <- function(ref_angle = 0, rot_adjuster = isoband::angle_halfcircle_bottom()) {
     as_placer(label_placer_flattest_xy(ref_angle = ref_angle), rot_adjuster = rot_adjuster)
 }
 
 #' @export
 #' @keywords internal
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placement_flattest <-  function(ref_angle = 0, rot_adjuster = isoband::angle_halfcircle_bottom()) {
     .Deprecated("label_placer_flattest")
     label_placer_flattest(ref_angle = ref_angle, rot_adjuster = rot_adjuster)
@@ -188,7 +193,7 @@ label_placer_minmax_xy <- function(direction = c("vertical", "horizontal")) {
 
 #' @param direction Direction in which to compute the maximum and minimum.
 #' @export
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placer_minmax <- function(direction = c("vertical", "horizontal"),
                                 rot_adjuster = isoband::angle_halfcircle_bottom()) {
     as_placer(label_placer_minmax_xy(direction = direction),
@@ -197,7 +202,7 @@ label_placer_minmax <- function(direction = c("vertical", "horizontal"),
 
 #' @export
 #' @keywords internal
-#' @rdname contour_placement
+#' @rdname label_placers
 label_placement_minmax <-  function(direction = c("vertical", "horizontal"),
                                     rot_adjuster = isoband::angle_halfcircle_bottom()) {
     .Deprecated("label_placer_minmax")

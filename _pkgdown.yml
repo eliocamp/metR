@@ -4,27 +4,19 @@ template:
 
 
 reference:
+  - title: Package information
+    contents:
+      - metR
+
   - title: ggplot2 extension
     desc:  stats, geoms and other ggplot2 extensions
     contents:
-      - geom_contour_fill
-      - geom_contour2
-      - geom_contour_tanaka
-      - geom_text_contour
-      - geom_vector
-      - geom_arrow
-      - geom_streamline
-      - geom_relief
-      - stat_subset
+      - starts_with("geom_")
       - is.cross
-      - stat_na
-      - scale_longitude
-      - scale_divergent
-      - scale_label_colour_continuous
-      - scale_mag
+      - starts_with("stat_")
+      - starts_with("scale_")
       - discretised_scale
-      - guide_colorstrip
-      - guide_vector
+      - starts_with("guide_")
       - reverselog_trans
   - title: ggplot2 helpers
     desc: functions that help in plotting
@@ -52,6 +44,7 @@ reference:
       - GetTopography
       - GetSMNData
       - EOF
+      - denormalise
       - ImputeEOF
       - Impute2D
       - Interpolate

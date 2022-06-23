@@ -120,13 +120,7 @@ to the paired geom/stat.}
 
 \item{xwrap, ywrap}{vector of length two used to wrap the circular dimension.}
 
-\item{skip}{numeric specifying number of gridpoints not to draw
-in the x and y direction}
-
-\item{skip.x}{numeric specifying number of gridpoints not to draw
-in the x and y direction}
-
-\item{skip.y}{numeric specifying number of gridpoints not to draw
+\item{skip, skip.x, skip.y}{numeric specifying number of gridpoints not to draw
 in the x and y direction}
 
 \item{n, nx, ny}{optional numeric indicating the number of points to draw in the
@@ -134,16 +128,7 @@ x and y direction (replaces \code{skip} if not \code{NULL})}
 
 \item{jitter, jitter.x, jitter.y}{amount of jitter of the starting points}
 
-\item{arrow.angle}{parameters passed to
-\link[grid:arrow]{grid::arrow}}
-
-\item{arrow.length}{parameters passed to
-\link[grid:arrow]{grid::arrow}}
-
-\item{arrow.ends}{parameters passed to
-\link[grid:arrow]{grid::arrow}}
-
-\item{arrow.type}{parameters passed to
+\item{arrow.length, arrow.angle, arrow.ends, arrow.type}{parameters passed to
 \link[grid:arrow]{grid::arrow}}
 
 \item{arrow}{specification for arrow heads, as created by arrow().}

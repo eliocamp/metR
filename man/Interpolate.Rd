@@ -23,8 +23,7 @@ said path.}
 A data.frame with interpolated values and locations
 }
 \description{
-Uses \link[fields:interp.surface]{fields::interp.surface} to interpolate values defined in a bidimensional
-grid with bilinear interpolation.
+Interpolates values using bilinear interpolation.
 }
 \details{
 \code{formula} must be of the form VAR1 | VAR2 ~ X + Y where VAR1, VAR2, etc...

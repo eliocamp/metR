@@ -135,7 +135,6 @@
 #'
 #' }
 #' @export
-#' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
 ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {
@@ -346,6 +345,7 @@ ReadNetCDF <- function(file, vars = NULL,
     return(nc.df[][])
 }
 
+# #' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
 .parse_time <- function(time, units, calendar = NULL) {
     has_since <- grepl("since", units)
     if (!has_since) {

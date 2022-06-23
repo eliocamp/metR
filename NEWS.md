@@ -71,7 +71,7 @@
 
 ## Bugfixes
 
--   Fixes a bug in `geom_contour_tanaka()` in R >= 4.1.0.
+-   Fixes a bug in `geom_contour_tanaka()` in R \>= 4.1.0.
 
 # metR 0.9.1
 

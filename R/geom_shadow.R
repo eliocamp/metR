@@ -145,7 +145,7 @@ GeomShadow <- ggplot2::ggproto("GeomShadow", ggplot2::GeomTile,
     xs <- xs[keep]
 
     z.interpol <- function(x, y, m) {
-        fields::interp.surface(list(x = xdim, y = ydim, z = m),
+        interpolate_locations(list(x = xdim, y = ydim, z = m),
                                matrix(c(x, y), ncol = 2))
     }
 

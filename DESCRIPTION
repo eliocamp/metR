@@ -22,7 +22,6 @@ Imports:
     checkmate,
     data.table,
     digest,
-    fields,
     Formula,
     formula.tools,
     ggplot2 (>= 3.0.0),
@@ -62,5 +61,5 @@ ByteCompile: yes
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 VignetteBuilder: knitr

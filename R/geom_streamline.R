@@ -418,8 +418,8 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         X[, 1] <- .fold(X[, 1], 1, range.x, circ.x)[[1]]
         X[, 2] <- .fold(X[, 2], 1, range.y, circ.y)[[1]]
 
-        dx <- fields::interp.surface(dx.field, X)
-        dy <- fields::interp.surface(dy.field, X)
+        dx <- interpolate_locations(dx.field, X)
+        dy <- interpolate_locations(dy.field, X)
         return(cbind(dx = dx, dy = dy))
     }
 

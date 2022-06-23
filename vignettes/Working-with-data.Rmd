@@ -168,7 +168,7 @@ The imputed vector is returned along with the Root Mean Square Error estimated f
 
 ## Interpolate
 
-`Interpolate()` is a convenient wrapper of `fields::interp.surface()` that makes it work better inside `data.table`s. It can be used to a new grid or to add interpolated values to an existing grid. It's easy to interpolate multiple values with the formula interface.
+`Interpolate()` performs linear interpolation using a `data.table`-friendly syntax. It can be used to a new grid or to add interpolated values to an existing grid. It's easy to interpolate multiple values with the formula interface.
 
 ```{r}
 # new grid

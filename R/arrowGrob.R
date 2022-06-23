@@ -1,4 +1,3 @@
-#' @importFrom grid grob
 arrowGrob <- function(x, y, angle, length, pivot, default.units = "npc", ...) {
     # angle en grados matemático 0 a 360
     # length en alguna unidad.

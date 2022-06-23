@@ -354,6 +354,29 @@ smooth2d <- function(x, y, value, kx = 1, ky = 1) {
 }
 
 
+# from fields::interp.surface
+interpolate_locations <- function (obj, loc) {
+    x <- obj$x
+    y <- obj$y
+    z <- obj$z
+    nx <- length(x)
+    ny <- length(y)
+    lx <- approx(x, 1:nx, loc[, 1])$y
+    ly <- approx(y, 1:ny, loc[, 2])$y
+    lx1 <- floor(lx)
+    ly1 <- floor(ly)
+    ex <- lx - lx1
+    ey <- ly - ly1
+    ex[lx1 == nx] <- 1
+    ey[ly1 == ny] <- 1
+    lx1[lx1 == nx] <- nx - 1
+    ly1[ly1 == ny] <- ny - 1
+    return(z[cbind(lx1, ly1)] * (1 - ex) * (1 - ey) + z[cbind(lx1 +
+                                                                  1, ly1)] * ex * (1 - ey) + z[cbind(lx1, ly1 + 1)] *
+               (1 - ex) * ey + z[cbind(lx1 + 1, ly1 + 1)] * ex * ey)
+}
+
+
 downsample <- function(x, y, value, byx = 1, byy = 1, fill = mean) {
     data <- data.table::data.table(x, y, value)
     browser()

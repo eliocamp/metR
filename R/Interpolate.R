@@ -1,7 +1,6 @@
 #' Bilinear interpolation
 #'
-#' Uses [fields::interp.surface] to interpolate values defined in a bidimensional
-#' grid with bilinear interpolation.
+#' Interpolates values using bilinear interpolation.
 #'
 #' @param formula a formula indicating dependent and independent variables (see Details)
 #' @param x.out,y.out x and y values where to interpolate (see Details)
@@ -147,7 +146,7 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
         data2 <- list(x = data2$rowdims[[1]],
                       y = data2$coldims[[1]],
                       z = data2$matrix)
-        data.table::set(loc, NULL, value.var, fields::interp.surface(data2, as.matrix(loc)))
+        data.table::set(loc, NULL, value.var, interpolate_locations(data2, as.matrix(loc)))
     }
 
     return(data.table::as.data.table(loc))

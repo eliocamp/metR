@@ -137,8 +137,8 @@ force.fun <- function(x, y, field) {
                      y = matrix$coldims$y,
                      z = matrix$matrix)
 
-    dx <- fields::interp.surface(dx.field, cbind(x, y))
-    dy <- fields::interp.surface(dy.field, cbind(x, y))
+    dx <- interpolate_locations(dx.field, cbind(x, y))
+    dy <- interpolate_locations(dy.field, cbind(x, y))
     return(list(dx = dx, dy = dy))
 }
 

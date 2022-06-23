@@ -1,5 +1,9 @@
 # metR (development version)
 
+## Bug Fixes
+
+-   Fixed a bug in `geom_streamline()` when plotting multiple fields on the same panel.
+
 # metR 0.12.0
 
 ## New Features

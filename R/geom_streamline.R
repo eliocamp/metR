@@ -441,12 +441,11 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         points <- data.table::as.data.table(expand.grid(x = xs, y = ys))
     }
 
-
     set.seed(42)
     points[, x := x + rnorm(.N, 0, rx)*jitter.x]
     points[, y := y + rnorm(.N, 0, ry)*jitter.y]
 
-    points[, group := 1:.N]
+    points[, group := interaction(1:.N, field$group[1])]
     points[, piece := 1]
     points[, step := 0]
     points[, end := FALSE]

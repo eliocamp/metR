@@ -3,6 +3,7 @@
 ## Bug Fixes
 
 -   Fixed a bug in `geom_streamline()` when plotting multiple fields on the same panel.
+-   Fixes a bug with `GetTopography()` on Windows.
 
 # metR 0.12.0
 

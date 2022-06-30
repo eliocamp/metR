@@ -85,7 +85,8 @@ GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution =
             url <- .BuildETOPORequest(lon.west, lon.east, lat.north, lat.south,
                                       resolution[1], resolution[2])
             temp_file <- tempfile(fileext = ".tif")
-            field <- try(utils::download.file(url, temp_file, quiet = TRUE), silent = TRUE)
+
+            field <- try(utils::download.file(url, temp_file, quiet = TRUE, mode = "wb"), silent = TRUE)
 
             if (is.error(field)) stopf("Failed to fetch file.")
 

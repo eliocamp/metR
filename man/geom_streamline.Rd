@@ -34,8 +34,8 @@ geom_streamline(
   arrow.length = 0.5,
   arrow.ends = "last",
   arrow.type = "closed",
-  arrow = grid::arrow(arrow.angle, grid::unit(arrow.length, "lines"), ends =
-    arrow.ends, type = arrow.type),
+  arrow = grid::arrow(arrow.angle, grid::unit(arrow.length, "lines"), ends = arrow.ends,
+    type = arrow.type),
   lineend = "butt",
   na.rm = TRUE,
   show.legend = NA,
@@ -68,8 +68,8 @@ stat_streamline(
   arrow.length = 0.5,
   arrow.ends = "last",
   arrow.type = "closed",
-  arrow = grid::arrow(arrow.angle, grid::unit(arrow.length, "lines"), ends =
-    arrow.ends, type = arrow.type),
+  arrow = grid::arrow(arrow.angle, grid::unit(arrow.length, "lines"), ends = arrow.ends,
+    type = arrow.type),
   lineend = "butt",
   na.rm = TRUE,
   show.legend = NA,
@@ -98,10 +98,14 @@ will be used as the layer data. A \code{function} can be created
 from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
 \item{stat}{The statistical transformation to use on the data for this
-layer, as a string.}
+layer, either as a \code{ggproto} \code{Geom} subclass or as a string naming the
+stat stripped of the \code{stat_} prefix (e.g. \code{"count"} rather than
+\code{"stat_count"})}
 
-\item{position}{Position adjustment, either as a string, or the result of
-a call to a position adjustment function.}
+\item{position}{Position adjustment, either as a string naming the adjustment
+(e.g. \code{"jitter"} to use \code{position_jitter}), or the result of a call to a
+position adjustment function. Use the latter if you need to change the
+settings of the adjustment.}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
@@ -131,7 +135,7 @@ x and y direction (replaces \code{skip} if not \code{NULL})}
 \item{arrow.length, arrow.angle, arrow.ends, arrow.type}{parameters passed to
 \link[grid:arrow]{grid::arrow}}
 
-\item{arrow}{specification for arrow heads, as created by arrow().}
+\item{arrow}{specification for arrow heads, as created by \code{\link[grid:arrow]{grid::arrow()}}.}
 
 \item{lineend}{Line end style (round, butt, square).}
 
@@ -149,7 +153,9 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
-\item{geom}{The geometric object to use display the data}
+\item{geom}{The geometric object to use to display the data, either as a
+\code{ggproto} \code{Geom} subclass or as a string naming the geom stripped of the
+\code{geom_} prefix (e.g. \code{"point"} rather than \code{"geom_point"})}
 }
 \description{
 Streamlines are paths that are always tangential to a vector field. In the

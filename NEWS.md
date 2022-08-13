@@ -4,6 +4,7 @@
 
 -   Fixed a bug in `geom_streamline()` when plotting multiple fields on the same panel.
 -   Fixes a bug with `GetTopography()` on Windows.
+-   Updates documentation to use valid HTML5 per CRAN's new format.
 
 # metR 0.12.0
 

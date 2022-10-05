@@ -79,11 +79,13 @@ smooth_dct <- function(kx = 0.5, ky = kx) {
 smooth_svd <- function(variance_lost = 0.01) {
     force(variance_lost)
     function(matrix) {
+        if (isTRUE(all.equal(variance_lost, 0L))) {
+            return(matrix)
+        }
         m <- mean(matrix)
         matrix <- matrix - m
-        total_variance <- norm(abs(matrix), type = "F")
-
         svd <- svd(matrix)
+        total_variance <- norm(abs(matrix), type = "F")
 
         variance_accumulated <- cumsum(svd$d^2/total_variance^2)
         variance_kept <- 1 - variance_lost

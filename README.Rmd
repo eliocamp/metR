@@ -20,7 +20,6 @@ knitr::opts_chunk$set(
 [![CRAN status](http://www.r-pkg.org/badges/version/metR)](https://cran.r-project.org/package=metR)
 [![DOI](https://zenodo.org/badge/96357263.svg)](https://zenodo.org/badge/latestdoi/96357263)
 
-
 metR packages several functions and utilities that make R better for handling  meteorological data in the tidy data paradigm. It started mostly sa a packaging of assorted wrappers and tricks that I wrote for my day to day work as a researcher in atmospheric sciences. Since then, it has grown organically and for my own needs and feedback from users. 
 
 Conceptually it's divided into *visualization tools* and *data tools*. The former are geoms, stats and scales that help with plotting using [ggplot2](https://ggplot2.tidyverse.org/index.html), such as `stat_contour_fill()` or `scale_y_level()`, while the later are functions for common data processing tools in the atmospheric sciences, such as `Derivate()` or `EOF()`; these are implemented to work in the [data.table](https://github.com/Rdatatable/data.table/wiki) paradigm, but also work with regular data frames. 

@@ -74,8 +74,6 @@ contourTextGrob <- function(label, type = "text", x = grid::unit(0.5, "npc"), y 
 
 #' @export
 makeContent.contourTextGrob <- function(x) {
-    # browser()
-
     payload <- x
 
 

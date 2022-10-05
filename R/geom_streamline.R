@@ -291,7 +291,6 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
           messagef("%s: Each group consists of only one observation.\nDo you need to adjust the group aesthetic?", "geom_path")
       }
 
-      # browser()
       # must be sorted on group
       data <- data[order(data$group), , drop = FALSE]
       munched <- ggplot2::coord_munch(coord, data, panel_params)
@@ -508,7 +507,6 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
     range.select <- function(sign, range) {
         ifelse(sign == 1, range[2], range[1])
     }
-    # browser()
     points[, step2 := step]
     if (circ.x == TRUE) {
         points <- points[, .approx_order(x, y, range.x), by = group]
@@ -526,7 +524,6 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
         points[, step := seq_along(y), by = group]
         points[, y := .fold(y, 1, range.y, circ.y)[[1]]]
     }
-    # browser()
 
     # Me fijo si ese piece tiene el final.
     # Esto luego va al geom que decide si ponerle flecha o no.

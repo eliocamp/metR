@@ -29,8 +29,6 @@
 #'
 #' @export
 is.cross <- function(x, y, skip = 0) {
-    # browser()
-
     x[!(x %in% JumpBy(unique(x), by = skip + 1))] <- NA
     y[!(y %in% JumpBy(unique(y), by = skip + 1))] <- NA
 

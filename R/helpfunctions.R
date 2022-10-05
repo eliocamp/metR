@@ -37,7 +37,6 @@ messagef = function(fmt, ..., appendLF = TRUE, domain = "R-metR") {
 
 
 .tidy2matrix <- function(data, formula, value.var, fill = NULL, ...) {
-    # browser()
     row.vars <- all.vars(formula[[2]])
     col.vars <- all.vars(formula[[3]])
     data <- data.table::as.data.table(data)
@@ -379,7 +378,6 @@ interpolate_locations <- function (obj, loc) {
 
 downsample <- function(x, y, value, byx = 1, byy = 1, fill = mean) {
     data <- data.table::data.table(x, y, value)
-    browser()
     fill <- mean(value, na.rm = TRUE)
     g <- .tidy2matrix(data, x ~ y, value.var = "value", fill = fill)
     g$matrix[is.na(g$matrix)] <- fill

@@ -80,7 +80,6 @@ GeomLabelContour <- ggplot2::ggproto("GeomLabelContour", ggplot2::Geom,
         breaks <- unique(data$level)
         breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]
 
-        # browser()
         data <- data[level %in% breaks.cut]
 
         data <- data[, unique(.SD, by = c("x", "y")),by = .(group, piece)]

@@ -454,7 +454,6 @@ print.nc_glance <- function(x, ...) {
 
 #' @export
 print.ncvar4 <- function(x, ...) {
-    # browser()
     cat(x$name, ":\n", sep = "")
     cat("    ", x$longname, sep = "")
 

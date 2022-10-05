@@ -226,7 +226,6 @@ ScaleDiscretised <-  ggplot2::ggproto("ScaleDiscretised", ggplot2::ScaleBinned,
        if (is.numeric(x)) {
            stopf("Discretised scales only support discrete data.")
        }
-# browser()
        new_x <- get_middle(x)
        new_x <- self$trans$transform(new_x)
        if (is.waive(self$breaks)) {
@@ -276,7 +275,6 @@ ScaleDiscretised <-  ggplot2::ggproto("ScaleDiscretised", ggplot2::ScaleBinned,
 
     map = function(self, x, limits = self$get_limits()) {
       # If a value is right at the limits, put it back into range
-      # browser()
       breaks <-  sort(unique(c(self$breaks, self$limits)))
       x[x == self$limits[1]] <- x[x == self$limits[1]] + diff(breaks)[1]/2
       x[x == self$limits[2]] <- x[x == self$limits[2]] - rev(diff(breaks))[1]/2

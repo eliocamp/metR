@@ -11,7 +11,6 @@ arrowGrob <- function(x, y, angle, length, pivot, default.units = "npc", ...) {
 #' @export
 #' @importFrom grid makeContent
 makeContent.arrow2 <- function(x) {
-# browser()
     x$id <- rep(seq(length(x$x)), 2)
     x$x <- grid::convertX(x$x, 'mm')
     x$y <- grid::convertY(x$y, 'mm')

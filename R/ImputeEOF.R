@@ -202,7 +202,6 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
             prval$d <- prval$d[1:n.eof]
         }
         v <- prval$v
-        # browser()
         R <- prval$u%*%diag(prval$d, nrow = n.eof)%*%t(v)
         rmse <- c(rmse, sqrt(mean((R[X.na] - X.rec[X.na])^2)))
 

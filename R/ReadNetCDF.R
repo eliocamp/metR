@@ -138,7 +138,7 @@
 ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {
-    check_packages(c("ncdf4", "udunits2", "PCICt"), "ReadNetCDF")
+    check_packages(c("ncdf4", "PCICt"), "ReadNetCDF")
 
     out <- out[1]
     checks <- makeAssertCollection()
@@ -345,26 +345,36 @@ ReadNetCDF <- function(file, vars = NULL,
     return(nc.df[][])
 }
 
-# #' @importFrom lubridate years weeks days hours minutes seconds milliseconds ymd_hms
+
+
+time_units_factor <- c("days" = 24*3600,
+                       "hours" = 3600,
+                       "minutes" = 60,
+                       "seconds" = 1,
+                       "milliseconds" = 1/1000)
+
+
 .parse_time <- function(time, units, calendar = NULL) {
     has_since <- grepl("since", units)
     if (!has_since) {
         return(time)
     }
+    # For all I know this could fail to actually get the origin.
+    # Is there a more elegant way of extracting the origin?
+    origin <- trimws(strsplit(units, "since")[[1]][2])
+    time_unit <- trimws(strsplit(units, "since")[[1]])[1]
+
+    if (!(time_unit %in% names(time_units_factor))) {
+        warning(sprintf(gettext("time unit has unrecognised units: %s. Not parsing", domain = "R-metR"), time_unit))
+        return(time)
+    }
+
 
     if (!is.null(calendar)) {
-        # For all I know this could fail to actually get the origin.
-        # Is there a more elegant way of extracting the origin?
-        origin <- trimws(strsplit(units, "since")[[1]][2])
-        time <- udunits2::ud.convert(time,
-                                     units,
-                                     paste0("seconds since ", origin))
-        time <- as.POSIXct(PCICt::as.PCICt(time, cal = calendar, origin = origin),
-                           cal = "standard", tz = "UTC", origin = "1970-01-01 00:00:00")
+        time <- as.POSIXct(PCICt::as.PCICt(time*time_units_factor[time_unit], cal = calendar, origin = origin),
+                           cal = "standard", tz = "UTC", origin = origin)
     } else {
-        time <- udunits2::ud.convert(time, units,
-                                     "seconds since 1970-01-01 00:00:00")
-        time <- as.POSIXct(time, tz = "UTC", origin = "1970-01-01 00:00:00")
+        time <- as.POSIXct(origin, tz = "UTC") + time*time_units_factor[time_unit]
     }
 
     return(time)

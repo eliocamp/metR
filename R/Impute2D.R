@@ -89,5 +89,3 @@ soft_approx2d <- function(x, y, z) {
     }
     return(data)
 }
-
-.impute_data.m <- memoise::memoise(.impute_data)

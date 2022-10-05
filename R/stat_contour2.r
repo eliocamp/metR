@@ -126,7 +126,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
       }
     }
 
-    data <- .impute_data.m(data, na.fill)
+    data <- .impute_data(data, na.fill)
 
 
     if (kriging) {
@@ -162,7 +162,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     # contours[, start := 1:.N %in% 1 , by = .(piece, group)]
     # contours <- contours[, unique(.SD), by = .(group, piece)]
     # contours[, start := NULL]
-    contours <- .order_contour.m(contours, data.table::setDT(data))
+    contours <- .order_contour(contours, data.table::setDT(data))
 
     if (!is.null(proj)) {
       if (is.function(proj)) {
@@ -249,7 +249,6 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     return(contours)
 }
 
-.order_contour.m <- memoise::memoise(.order_contour)
 
 .second <- function(x, target) {
     tmp <- (x - target)

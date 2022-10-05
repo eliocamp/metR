@@ -29,7 +29,6 @@ makeContent.arrow2 <- function(x) {
     x
 }
 
-fast.unit.c <- memoise::memoise(grid::unit.c)
 # fast.unit.c <- grid::unit.c
 
 # fast.unit.c <- function(...) {

@@ -377,7 +377,7 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
 
 #' @importFrom stats rnorm
 #' @importFrom data.table %between%
-streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL,
+streamline.f <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL,
                        ny = NULL, jitter.x = 1, jitter.y = 1, xwrap = NULL,
                        ywrap = NULL) {
     field <- data.table::copy(data.table::as.data.table(field))
@@ -558,8 +558,6 @@ streamline <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NULL
 }
 
 
-
-streamline.f <- memoise::memoise(streamline)
 #
 # xbk <- x
 # ybk <- y

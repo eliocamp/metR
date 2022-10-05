@@ -59,6 +59,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
 StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
   required_aes = c("x", "y", "z"),
   default_aes = ggplot2::aes(order = ..level..),
+  dropped_aes = "z",
   setup_params = function(data, params) {
     if (is.null(params$global) || isTRUE(params$global.breaks)) {
       params$breaks <- setup_breaks(data,
@@ -346,6 +347,7 @@ setup_breaks <- function(data, breaks, bins, binwidth) {
 #' @export
 StatTextContour <- ggplot2::ggproto("StatTextContour", StatContour2,
   required_aes = c("x", "y", "z"),
-  default_aes = ggplot2::aes(order = ..level.., label = ..level..)
+  default_aes = ggplot2::aes(order = ..level.., label = ..level..),
+  dropped_aes = "z"
 )
 

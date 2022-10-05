@@ -55,7 +55,8 @@ Suggests:
     kriging,
     raster,
     rgdal,
-    here
+    here,
+    gsignal
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true

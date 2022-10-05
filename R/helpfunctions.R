@@ -332,27 +332,6 @@ check_packages <- function(packages, fun) {
 a <- 6371000
 
 
-smooth2d <- function(x, y, value, kx = 1, ky = 1) {
-    data <- data.table::data.table(x, y, value)
-    # browser()
-    g <- .tidy2matrix(data, x ~ y, value.var = "value")
-
-    f <- fft(g$matrix)
-    f1 <- f
-
-    kx <- c(0, seq_len(floor(nrow(f)/2*kx)))
-    kx <- c(kx + 1, nrow(f) - kx[kx != 0] + 1)
-
-    ky <- c(0, seq_len(floor(ncol(f)/2*ky)))
-    ky <- c(ky + 1, ncol(f) - ky[ky != 0] + 1)
-
-    f1[, -ky] <- 0
-    f1[-kx, ] <- 0
-
-    c(Re(fft(f1, inverse = TRUE)/length(f1)))
-}
-
-
 # from fields::interp.surface
 interpolate_locations <- function (obj, loc) {
     x <- obj$x

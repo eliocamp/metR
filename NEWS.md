@@ -1,10 +1,17 @@
 # metR (development version)
 
+## New features
+
+-   The new function `Smooth2D()` smooths a 2D field (hence the name). There are two smoothing methods. `smooth_svd()` computes the SVD of the field and reconstructs it keeping only the leading values that ensures a maximum variance lost. `smooth_dct()` computes the Discrete Cosine Transform of the field and sets a proportion of the components to zero.
+
 ## Bug Fixes
 
 -   Fixed a bug in `geom_streamline()` when plotting multiple fields on the same panel.
+
 -   Fixes a bug with `GetTopography()` on Windows.
+
 -   Updates documentation to use valid HTML5 per CRAN's new format.
+
 -   Fixes the "The following aesthetics were dropped during statistical transformation" warning for contours.
 
 ## Breaking changes

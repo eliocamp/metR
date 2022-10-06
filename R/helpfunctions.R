@@ -302,18 +302,6 @@ checkDateish <- function(x, ...) {
 assertDateish <- checkmate::makeAssertionFunction(checkDateish)
 
 
-checkURLFile <- function(x) {
-    access <- unname(file.access(x, 4) == 0 | RCurl::url.exists(x))
-
-    if (isFALSE(access)) {
-        return("File or URL not readable")
-    }
-    return(access)
-}
-
-assertURLFile <- checkmate::makeAssertionFunction(checkURLFile)
-
-
 check_packages <- function(packages, fun) {
     installed <- vapply(packages, function(p) {
         requireNamespace(p, quietly = TRUE)

@@ -145,7 +145,6 @@ ReadNetCDF <- function(file, vars = NULL,
 
     if (!inherits(file, "ncdf4")) {
         assertCharacter(file, len = 1, min.chars = 1, any.missing = FALSE, add = checks)
-        assertURLFile(file, add = checks)
     }
 
     # assertCharacter(vars, null.ok = TRUE, any.missing = FALSE, unique = TRUE,
@@ -158,7 +157,11 @@ ReadNetCDF <- function(file, vars = NULL,
     reportAssertions(checks)
 
     if (!inherits(file, "ncdf4")) {
-        ncfile <- ncdf4::nc_open(file)
+        utils::capture.output(ncfile <- try(ncdf4::nc_open(file), silent = TRUE))
+        if (inherits(ncfile, "try-error")) {
+            ncfile <- strsplit(ncfile, "\n", fixed = TRUE)[[1]][2]
+            stop(ncfile)
+        }
         on.exit({
             ncdf4::nc_close(ncfile)
         })

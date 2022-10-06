@@ -14,11 +14,12 @@
 
 -   Fixes the "The following aesthetics were dropped during statistical transformation" warning for contours.
 
+-   Removes `ReadNetCDF()` file and URL checking because it didn't work in some cases.
+    (#164, thanks @pascaloettli)
+
 ## Breaking changes
 
--   Due to the udunits2 package being orphaned, `ReadNetCDF()` not longer uses it to parse dates and times.
-    The homebrewed parser might be more limited, and the wild variety of netCDF files in the wild makes it hard to fully test.
-    Please report any issues you have!
+-   Due to the udunits2 package being orphaned, `ReadNetCDF()` not longer uses it to parse dates and times. The homebrewed parser might be more limited, and the wild variety of netCDF files in the wild makes it hard to fully test. Please report any issues you have!
 
 # metR 0.12.0
 
@@ -390,4 +391,3 @@ There has been some changes in the interface of some functions for the sake of c
 
 -   Full (not perfect) documentation.
 -   Ready for serious testing.
-

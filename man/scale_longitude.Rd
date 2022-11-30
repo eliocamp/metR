@@ -72,12 +72,11 @@ as output (e.g., a function returned by \code{\link[scales:breaks_extended]{scal
 Also accepts rlang \link[rlang:as_function]{lambda} function notation.
 }}
 
-\item{expand}{For position scales, a vector of range expansion constants used to add some
-padding around the data to ensure that they are placed some distance
-away from the axes. Use the convenience function \code{\link[ggplot2:expansion]{expansion()}}
-to generate the values for the \code{expand} argument. The defaults are to
-expand the scale by 5\% on each side for continuous variables, and by
-0.6 units on each side for discrete variables.}
+\item{expand}{For position scales, a vector of range expansion
+constants used to add some padding around the data to ensure
+that they are placed some distance away from the axes.
+Use the convenience function \code{\link[ggplot2:expansion]{ggplot2::expansion()}} to generate
+the values for the expand argument.}
 
 \item{labels}{One of:
 \itemize{
@@ -85,6 +84,7 @@ expand the scale by 5\% on each side for continuous variables, and by
 \item \code{waiver()} for the default labels computed by the
 transformation object
 \item A character vector giving labels (must be same length as \code{breaks})
+\item An expression vector (must be the same length as breaks). See ?plotmath for details.
 \item A function that takes the breaks as input and returns labels
 as output. Also accepts rlang \link[rlang:as_function]{lambda} function
 notation.

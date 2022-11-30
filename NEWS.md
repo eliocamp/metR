@@ -1,4 +1,14 @@
+---
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
 # metR (development version)
+
+## Bug Fixes
+
+-   Documents the correct default `expand` value in `sale_x_longitude()` and friends (thanks, @tamas-ferenci, #167).
 
 # metR 0.13.0
 

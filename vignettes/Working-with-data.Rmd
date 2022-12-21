@@ -47,7 +47,7 @@ air <- ReadNetCDF(file, subset = list(lat = 90:0, level = 925))
 
 
 ggplot(air, aes(lon, lat)) +
-  geom_contour2(aes(z = air, color = ..level..))
+  geom_contour2(aes(z = air, color = after_stat(level)))
 ```
 
 Since the most consuming part of reading the file is melting a multidimensional array into a tidy `data.table`, if we wanted to add another variable to the same `data.table` we could save time by only returning a vector. **It is of the utmost importance that both variables are on the same exact grid**.
@@ -57,7 +57,7 @@ air[, air2 := ReadNetCDF(file, out = "vector",
                          subset = list(lat = 90:0, level = 300))]
 
 ggplot(air, aes(lon, lat)) +
-  geom_contour2(aes(z = air2, color = ..level..))
+  geom_contour2(aes(z = air2, color = after_stat(level)))
 ```
 
 Because `ReadNetCDF()` can read multiple variables at the same time, the `out = "vector"` output will be actually return a `list` of vectors (which integrates seamlessly with the `data.table` syntax). If one of the variables has degenerate dimensions (dimensions of length 1) then it will be recycled. That means that if the same file has Sea Surface Temperatures (a 2D field) and Air Temperature (a 3D field), then the returned `data.table` fill have an observation of Air Temperature *and* Sea Surface Temperature for each vertical level. 

@@ -8,7 +8,7 @@
 #' @examples
 #' library(ggplot2)
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
-#'   geom_contour(aes(color = ..level..)) +
+#'   geom_contour(aes(color = after_stat(level))) +
 #'   scale_colour_divergent(midpoint = 130)
 #'
 #' @name scale_divergent

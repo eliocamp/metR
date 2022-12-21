@@ -23,11 +23,11 @@ test_that("computed stats", {
 
     expect_doppelganger("contour_fill-level",
     ggplot(geopotential[date == date[1]], aes(lon, lat)) +
-        geom_contour_fill(aes(z = gh, fill = stat(level))))
+        geom_contour_fill(aes(z = gh, fill = after_stat(level))))
 
     expect_doppelganger("contour_fill-level_d",
                         ggplot(geopotential[date == date[1]], aes(lon, lat)) +
-                            geom_contour_fill(aes(z = gh, fill = stat(level_d))))
+                            geom_contour_fill(aes(z = gh, fill = after_stat(level_d))))
 })
 
 test_that("interpolation", {

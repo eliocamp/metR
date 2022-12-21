@@ -51,10 +51,10 @@
 #'   geom_contour(color = "black", size = 0.1)
 #'
 #' ggplot(surface, aes(Var1, Var2, z = value)) +
-#'   geom_contour_fill(aes(fill = stat(level)))
+#'   geom_contour_fill(aes(fill = after_stat(level)))
 #'
 #' ggplot(surface, aes(Var1, Var2, z = value)) +
-#'   geom_contour_fill(aes(fill = stat(level_d)))
+#'   geom_contour_fill(aes(fill = after_stat(level_d)))
 #'
 #' @family ggplot2 helpers
 #' @export

@@ -83,7 +83,7 @@ as.discretised <- function(x) {
 #' and the breaks shown no the colour guide. Bear in mind that when using
 #' [geom_contour_fill()], the default fill aesthetic (`level_mid`) is **not**
 #' discretised. To use this scale with that geom, you need to set
-#' `aes(fill = stat(level))`.
+#' `aes(fill = after_stat(level))`.
 #'
 #' @examples
 #' library(ggplot2)
@@ -92,41 +92,41 @@ as.discretised <- function(x) {
 #' # (or ggplot2::geom_contour_filled()), the default scale is discrete.
 #' # This means that you cannot map colours to the underying numbers.
 #' v <- ggplot(faithfuld, aes(waiting, eruptions, z = density))
-#' v + geom_contour_fill(aes(fill = stat(level)))
+#' v + geom_contour_fill(aes(fill = after_stat(level)))
 #'
-#' v + geom_contour_fill(aes(fill = stat(level))) +
+#' v + geom_contour_fill(aes(fill = after_stat(level))) +
 #'   scale_fill_discretised()
 #'
 #' # The scale can be customised the same as any continuous colour scale
-#' v + geom_contour_fill(aes(fill = stat(level))) +
+#' v + geom_contour_fill(aes(fill = after_stat(level))) +
 #'   scale_fill_discretised(low = "#a62100", high = "#fff394")
 #'
 #' # Setting limits explicitly will truncate the scale
 #' # (if any limit is inside the range of the breaks but doesn't
 #' # coincide with any range, it will be rounded with a warning)
-#' v + geom_contour_fill(aes(fill = stat(level))) +
+#' v + geom_contour_fill(aes(fill = after_stat(level))) +
 #'   scale_fill_discretised(low = "#a62100", high = "#fff394",
 #'                          limits = c(0.01, 0.028))
 #'
 #' # Or extend it.
-#' v + geom_contour_fill(aes(fill = stat(level))) +
+#' v + geom_contour_fill(aes(fill = after_stat(level))) +
 #'   scale_fill_discretised(low = "#a62100", high = "#fff394",
 #'                          limits = c(0, 0.07))
 #'
-#' v + geom_contour_fill(aes(fill = stat(level))) +
+#' v + geom_contour_fill(aes(fill = after_stat(level))) +
 #'   scale_fill_divergent_discretised(midpoint = 0.02)
 #'
 #' # Existing continous scales can be "retrofitted" by changing the `super`
 #' # and `guide` arguments.
-#' v + geom_contour_fill(aes(fill = stat(level))) +
+#' v + geom_contour_fill(aes(fill = after_stat(level))) +
 #'     scale_fill_distiller(super = ScaleDiscretised)
 #'
 #' # Unequal breaks will, by default, map to unequal spacing in the guide
-#' v + geom_contour_fill(aes(fill = stat(level)), breaks = c(0, 0.005, 0.01, 0.02, 0.04)) +
+#' v + geom_contour_fill(aes(fill = after_stat(level)), breaks = c(0, 0.005, 0.01, 0.02, 0.04)) +
 #'   scale_fill_discretised()
 #'
 #' # You can change that by the `even.steps` argument on ggplot2::guide_colorsteps()
-#' v + geom_contour_fill(aes(fill = stat(level)), breaks = c(0, 0.005, 0.01, 0.02, 0.04)) +
+#' v + geom_contour_fill(aes(fill = after_stat(level)), breaks = c(0, 0.005, 0.01, 0.02, 0.04)) +
 #'   scale_fill_discretised(guide = guide_colorsteps(even.steps = TRUE, show.limits = TRUE))
 #'
 #'

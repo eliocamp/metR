@@ -26,7 +26,7 @@ geopotential %>%
     # data = geopotential[lat > -80]) +
     # scale_mag(guide = "none") +
     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v),
-                        size = ..step..^2),
+                        size = after_stat(step)^2),
                     # min.L = 1,
                     dt = 36000/4, S = 40, lineend = "round",
                     skip = 5, xwrap = c(-180, 180),
@@ -57,7 +57,7 @@ geopotential %>%
     # data = geopotential[lat > -80]) +
     # scale_mag(guide = "none") +
     # geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v),
-    #                     size = ..step..^2),
+    #                     size = after_stat(step)^2),
     #                 dt = 36000/4, S = 40, lineend = "round",
     #                 skip = 5, xwrap = c(-180, 180),
     #                 arrow = NULL, data = geopotential[]) +

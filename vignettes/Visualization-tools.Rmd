@@ -160,7 +160,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill()
 
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-    geom_contour_fill(aes(fill = stat(level)))
+    geom_contour_fill(aes(fill = after_stat(level)))
 ```
 
 A big difference between the two variables is that one is compatible with continuous scales while the other only works with discrete scales. The advantage of using `level_mid` is that it preserves the actual continuous nature of the data, which allows the use of meaningful continuous scales such as `scale_fill_divergent()` and results in proper colours when breaks are not equally spaced. The disadvantage is that the scale function has no information about the discretisation, and thus is very hard to use *synchronise* the breaks that define the levels of the contours and the breaks shown in the color guide.
@@ -169,7 +169,7 @@ A third important computed variable is `level_d`, which is identical to `level` 
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-    geom_contour_fill(aes(fill = stat(level_d)))
+    geom_contour_fill(aes(fill = after_stat(level_d)))
 ```
 
 See the [discretised_scale](#discretised_scale) section for a way of using continuous sales for discretised data.
@@ -320,8 +320,9 @@ g + coord_polar()
 
 ```{r}
 ggplot(temperature[lev == 500], aes(lon, lat)) +
-    geom_streamline(aes(dx = t.dy, dy = -t.dx, size = ..step.., alpha = ..step..,
-                        color = sqrt(..dx..^2 + ..dy..^2)), arrow = NULL,
+    geom_streamline(aes(dx = t.dy, dy = -t.dx, size = after_stat(step), 
+                        alpha = after_stat(step),
+                        color = after_stat(sqrt(dx^2 + dy^2))), arrow = NULL,
                     L = 10, res = 2, xwrap = c(0, 360), lineend = "round") + 
     scale_color_viridis_c(guide = "none") +
     scale_size(range = c(0, 1), guide = "none") +
@@ -338,7 +339,7 @@ The use of `geom_contour()` and `geom_contour_fill()` generates a problem becaus
 One way of achieving this is to use the `level` stat, which --as discussed previously-- is a discrete variable. With that, one can use `ggplot2::guide_colorsteps()` to get a nice looking guide. 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-    geom_contour_fill(aes(fill = stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
+    geom_contour_fill(aes(fill = after_stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
   guides(fill = guide_colorsteps())
 ```
 
@@ -348,7 +349,7 @@ For that, the solution is to use `scale_fill_discretised()`:
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-  geom_contour_fill(aes(fill = stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
+  geom_contour_fill(aes(fill = after_stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
   scale_fill_discretised()
 ```
 
@@ -356,7 +357,7 @@ This type of scale understand discrete values that have an underlying continuous
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-  geom_contour_fill(aes(fill = stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
+  geom_contour_fill(aes(fill = after_stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
   scale_fill_divergent_discretised(midpoint = 3)
 ```
 
@@ -371,7 +372,7 @@ To see how this scales work, let's visualize the vertical distribution of temper
 ```{r, message = FALSE}
 # Plot made with base ggplot
 (g <- ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
-        geom_contour2(aes(color = ..level..)))
+        geom_contour2(aes(color = after_stat(level))))
 ```
 
 While this is fine, since pressure levels are roughly proportional to $\mathrm{e}^{-z}$ in meteorology we usually plot the vertical coordinate as $-\log(p)$. However, while ggplot2 has `scale_y_log10()` and `scale_y_reverse()`, they don't work together. `metR` defines the new transformation `reverselog_trans()` that can be used with any scale but that is the default for `scale_*_level()`. 

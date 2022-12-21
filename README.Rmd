@@ -75,7 +75,7 @@ aao$left[, c("u", "v") := GeostrophicWind(gh.t.w, lon, lat)]
 # AAO field
 binwidth <- 0.01
 ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
-    geom_contour_fill(aes(fill = stat(level)), binwidth = binwidth,
+    geom_contour_fill(aes(fill = after_stat(level)), binwidth = binwidth,
                       xwrap = c(0, 360)) +    # filled contours!
     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), 
                     size = 0.4, L = 80, skip = 3, xwrap = c(0, 360)) +

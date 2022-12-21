@@ -44,26 +44,26 @@
 #'
 #' # Breaks can be a function.
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-#'     geom_contour2(aes(z = value, color = ..level..),
+#'     geom_contour2(aes(z = value, color = after_stat(level)),
 #'                   breaks = AnchorBreaks(130, binwidth = 10))
 #'
 #' # Add labels by supplying the label aes.
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-#'     geom_contour2(aes(z = value, label = ..level..))
+#'     geom_contour2(aes(z = value, label = after_stat(level)))
 #'
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-#'     geom_contour2(aes(z = value, label = ..level..),
+#'     geom_contour2(aes(z = value, label = after_stat(level)),
 #'                   skip = 0)
 #'
 #' # Use label.placer to control where contours are labelled.
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-#'     geom_contour2(aes(z = value, label = ..level..),
+#'     geom_contour2(aes(z = value, label = after_stat(level)),
 #'                       label.placer = label_placer_n(n = 2))
 #'
 #' # Use the rot_adjuster argument of the placer function to
 #' # control the angle. For example, to fix it to some angle:
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
-#'     geom_contour2(aes(z = value, label = ..level..),
+#'     geom_contour2(aes(z = value, label = after_stat(level)),
 #'                   skip = 0,
 #'                   label.placer = label_placer_flattest(rot_adjuster = 0))
 #'

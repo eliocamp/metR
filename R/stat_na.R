@@ -55,7 +55,6 @@ stat_na <- function(mapping = NULL, data = NULL,
 #' @export
 StatNa <- ggplot2::ggproto("StatNa", ggplot2::Stat,
     required_aes = c("x", "y", "na"),
-    # default_aes = ggplot2::aes(fill = ..int.level..),
     compute_layer = function(self, data, params, layout) {
         ggplot2:::check_required_aesthetics(self$required_aes,
                                             c(names(data), names(params)),

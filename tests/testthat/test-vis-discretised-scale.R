@@ -19,7 +19,7 @@ test_that("discretized scale works", {
                         v + scale_fill_divergent_discretised(midpoint = 0.02))
 
     expect_error(print(ggplot(faithfuld, aes(waiting, eruptions, z = density)) +
-                           geom_contour_filled(aes(fill = stat(level_mid))) +
+                           geom_contour_filled(aes(fill = after_stat(level_mid))) +
                            scale_fill_discretised()), "Discretised scales only support discrete data")
 
     expect_doppelganger("discretised-retrofitted",

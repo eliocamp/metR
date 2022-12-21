@@ -28,7 +28,7 @@
 #' volcano <- reshape2::melt(volcano, id.vars = c("Var1", "Var2"))
 #'
 #' ggplot(volcano, aes(Var1, Var2)) +
-#'   geom_contour(aes(z = value, color = ..level..)) +
+#'   geom_contour(aes(z = value, color = after_stat(level))) +
 #'   scale_color_viridis_c() +
 #'   coord_equal() +
 #'   facet_wrap(~variable, ncol = 2)

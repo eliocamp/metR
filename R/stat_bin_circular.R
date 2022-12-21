@@ -106,8 +106,8 @@
 # wind <- wind[sample(1:.N, 1000)]
 #
 # ggplot(wind, aes(new.dir, fill = ReverseCut(speed, breaks = 5))) +
-#     # geom_histogram(binwidth = 22.5, center = 0, aes(y = ..count../1000*100)) +
-#     stat_bin_circular(binwidth = 22.5, center = 0, range = c(0, 360), aes(x = direction, y = ..count../1000*100)) +
+#     # geom_histogram(binwidth = 22.5, center = 0, aes(y = after_stat(count)/1000*100)) +
+#     stat_bin_circular(binwidth = 22.5, center = 0, range = c(0, 360), aes(x = direction, y = after_stat(count)/1000*100)) +
 #     coord_polar(start = -22.5/2*pi/180) +    # para que el norte quede arriba
 #     scale_fill_viridis_d(name = "Velocidad", direction = -1) +
 #     scale_y_continuous(name = "Frecuencia",

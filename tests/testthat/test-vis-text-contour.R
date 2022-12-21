@@ -67,7 +67,7 @@ test_that("stroke.colour is aesthetic", {
     expect_doppelganger("stroke-aes",
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour(aes(z = gh)) +
-                            geom_text_contour(aes(z = gh, stroke.colour = ..level..),
+                            geom_text_contour(aes(z = gh, stroke.colour = after_stat(level)),
                                               stroke = 0.2)
                         )
 })
@@ -78,7 +78,7 @@ test_that("geom_label_contour also work", {
     expect_doppelganger("labels",
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour(aes(z = gh))+
-                            geom_label_contour(aes(z = gh, fill = ..level..),
+                            geom_label_contour(aes(z = gh, fill = after_stat(level)),
                                                label.r = unit(0.25, "lines"),
                                                label.padding = unit(0.15, "lines"),
                                                label.size = 0)

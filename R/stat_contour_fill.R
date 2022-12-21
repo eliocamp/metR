@@ -39,7 +39,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
 #' @export
 StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     required_aes = c("x", "y", "z"),
-    default_aes = ggplot2::aes(fill = ..level_mid.., order = ..level..),
+    default_aes = ggplot2::aes(fill = after_stat(level_mid), order = after_stat(level)),
     dropped_aes = "z",
     setup_params = function(data, params) {
         if (is.null(params$global) || isTRUE(params$global.breaks)) {

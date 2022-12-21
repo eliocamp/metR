@@ -90,11 +90,12 @@
 #'     geom_streamline(aes(dx = u, dy = v), L = 50)
 #'
 #' # The step variable can be mapped to size or alpha to
-#' # get cute "drops". It's important to note that ..dx.. (the calculated variable)
+#' # get cute "drops". It's important to note that after_stat(dx) (the calculated variable)
 #' # is NOT the same as dx (from the data).
 #' ggplot(geopotential, aes(lon, lat)) +
-#'     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v), alpha = ..step..,
-#'                         color = sqrt(..dx..^2 + ..dy..^2), size = ..step..),
+#'     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v), alpha = after_stat(step),
+#'                         color = sqrt(after_stat(dx^2) + after_stat(dy^2)),
+#'                         size = after_stat(step)),
 #'                         L = 40, xwrap = c(0, 360), res = 2, arrow = NULL,
 #'                         lineend = "round") +
 #'     scale_size(range = c(0, 0.6))

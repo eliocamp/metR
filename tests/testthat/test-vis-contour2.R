@@ -53,15 +53,15 @@ test_that("global.breaks work", {
 test_that("labels work", {
     expect_doppelganger("contour2-labels",
                         ggplot(geo, aes(lon, lat)) +
-                            geom_contour2(aes(z = gh, label = ..level..))
+                            geom_contour2(aes(z = gh, label = after_stat(level)))
     )
     expect_doppelganger("aesthetics in contour labels",
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour2(aes(z = gh,
-                                              label = ..level..,
-                                              label_color = ..level..,
-                                              label_alpha = ..level..,
-                                              label_size = ..level..))
+                                              label = after_stat(level),
+                                              label_color = after_stat(level),
+                                              label_alpha = after_stat(level),
+                                              label_size = after_stat(level)))
     )
 
 })

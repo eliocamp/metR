@@ -28,7 +28,7 @@
 #'            by = .(lat, lev)]
 #' library(ggplot2)
 #' ggplot(diftemp, aes(lat, lev)) +
-#'     geom_contour(aes(z = tempdif, color = ..level..)) +
+#'     geom_contour(aes(z = tempdif, color = after_stat(level))) +
 #'     scale_y_level() +
 #'     scale_x_latitude() +
 #'     scale_color_divergent()

@@ -45,14 +45,14 @@ MakeBreaks()(c(1, 100), 20)  # but is not ignored if initial binwidth is NULL
 library(ggplot2)
 binwidth <- 20
 ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
-    geom_contour(aes(color = ..level..), binwidth = binwidth) +
+    geom_contour(aes(color = after_stat(level)), binwidth = binwidth) +
     scale_color_continuous(breaks = MakeBreaks(binwidth))
 
 #Two ways of getting the same contours. Better use the second one.
 ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
-    geom_contour2(aes(color = ..level..), breaks = AnchorBreaks(132),
+    geom_contour2(aes(color = after_stat(level)), breaks = AnchorBreaks(132),
                   binwidth = binwidth) +
-    geom_contour2(aes(color = ..level..), breaks = AnchorBreaks(132, binwidth)) +
+    geom_contour2(aes(color = after_stat(level)), breaks = AnchorBreaks(132, binwidth)) +
     scale_color_continuous(breaks = AnchorBreaks(132, binwidth))
 
 }

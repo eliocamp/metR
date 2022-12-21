@@ -55,7 +55,7 @@ system.time({
 })
 
 ggplot(regr[term != "(Intercept)"], aes(lon, lat)) +
-    geom_contour(aes(z = estimate, color = ..level..)) +
+    geom_contour(aes(z = estimate, color = after_stat(level))) +
     stat_subset(aes(subset = abs(estimate) > 2*std.error), size = 0.05)
 
 # Using stats::lm() is much slower and with no names.

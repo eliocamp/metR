@@ -61,7 +61,10 @@ test_that("labels work", {
                                               label = after_stat(level),
                                               label_color = after_stat(level),
                                               label_alpha = after_stat(level),
-                                              label_size = after_stat(level)))
+                                              label_size = after_stat(level))) +
+                            guides(colour = guide_colorbar(order = 2),
+                                   size = guide_legend(order = 1))
+
     )
 
 })

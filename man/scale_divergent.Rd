@@ -82,6 +82,7 @@ number of breaks given by the transformation.}
 \item \code{waiver()} for the default labels computed by the
 transformation object
 \item A character vector giving labels (must be same length as \code{breaks})
+\item An expression vector (must be the same length as breaks). See ?plotmath for details.
 \item A function that takes the breaks as input and returns labels
 as output. Also accepts rlang \link[rlang:as_function]{lambda} function
 notation.
@@ -158,7 +159,7 @@ inverted defaults of \code{high} and \code{low}.
 \examples{
 library(ggplot2)
 ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
-  geom_contour(aes(color = ..level..)) +
+  geom_contour(aes(color = after_stat(level))) +
   scale_colour_divergent(midpoint = 130)
 
 }

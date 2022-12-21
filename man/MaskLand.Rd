@@ -30,13 +30,16 @@ Creates a  mask
 mask <- temperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon, lat))]
 temperature <- temperature[mask, on = c("lon", "lat")]
 
+ggplot(mask, aes(lon, lat)) +
+   geom_raster(aes(fill = land))
+
 # Take the temperature difference between land and ocean
 diftemp <- temperature[,
           .(tempdif = mean(air[land == TRUE]) - mean(air[land == FALSE])),
            by = .(lat, lev)]
 library(ggplot2)
 ggplot(diftemp, aes(lat, lev)) +
-    geom_contour(aes(z = tempdif, color = ..level..)) +
+    geom_contour(aes(z = tempdif, color = after_stat(level))) +
     scale_y_level() +
     scale_x_latitude() +
     scale_color_divergent()

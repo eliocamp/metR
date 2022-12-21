@@ -109,7 +109,7 @@ aao <- cut(eof, 1)
 # AAO field
 library(ggplot2)
 ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
-    geom_contour(aes(color = ..level..)) +
+    geom_contour(aes(color = after_stat(level))) +
     coord_polar()
 
 # AAO signal

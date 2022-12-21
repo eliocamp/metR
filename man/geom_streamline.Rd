@@ -77,10 +77,10 @@ stat_streamline(
 )
 }
 \arguments{
-\item{mapping}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}} or
-\code{\link[ggplot2:aes_]{aes_()}}. If specified and \code{inherit.aes = TRUE} (the
-default), it is combined with the default mapping at the top level of the
-plot. You must supply \code{mapping} if there is no plot mapping.}
+\item{mapping}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}}. If specified and
+\code{inherit.aes = TRUE} (the default), it is combined with the default mapping
+at the top level of the plot. You must supply \code{mapping} if there is no plot
+mapping.}
 
 \item{data}{The data to be displayed in this layer. There are three
 options:
@@ -98,10 +98,14 @@ will be used as the layer data. A \code{function} can be created
 from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
 \item{stat}{The statistical transformation to use on the data for this
-layer, as a string.}
+layer, either as a \code{ggproto} \code{Geom} subclass or as a string naming the
+stat stripped of the \code{stat_} prefix (e.g. \code{"count"} rather than
+\code{"stat_count"})}
 
-\item{position}{Position adjustment, either as a string, or the result of
-a call to a position adjustment function.}
+\item{position}{Position adjustment, either as a string naming the adjustment
+(e.g. \code{"jitter"} to use \code{position_jitter}), or the result of a call to a
+position adjustment function. Use the latter if you need to change the
+settings of the adjustment.}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
@@ -131,7 +135,7 @@ x and y direction (replaces \code{skip} if not \code{NULL})}
 \item{arrow.length, arrow.angle, arrow.ends, arrow.type}{parameters passed to
 \link[grid:arrow]{grid::arrow}}
 
-\item{arrow}{specification for arrow heads, as created by arrow().}
+\item{arrow}{specification for arrow heads, as created by \code{\link[grid:arrow]{grid::arrow()}}.}
 
 \item{lineend}{Line end style (round, butt, square).}
 
@@ -149,7 +153,9 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
-\item{geom}{The geometric object to use display the data}
+\item{geom}{The geometric object to use to display the data, either as a
+\code{ggproto} \code{Geom} subclass or as a string naming the geom stripped of the
+\code{geom_} prefix (e.g. \code{"point"} rather than \code{"geom_point"})}
 }
 \description{
 Streamlines are paths that are always tangential to a vector field. In the
@@ -233,11 +239,12 @@ ggplot(geopotential, aes(lon, lat)) +
     geom_streamline(aes(dx = u, dy = v), L = 50)
 
 # The step variable can be mapped to size or alpha to
-# get cute "drops". It's important to note that ..dx.. (the calculated variable)
+# get cute "drops". It's important to note that after_stat(dx) (the calculated variable)
 # is NOT the same as dx (from the data).
 ggplot(geopotential, aes(lon, lat)) +
-    geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v), alpha = ..step..,
-                        color = sqrt(..dx..^2 + ..dy..^2), size = ..step..),
+    geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v), alpha = after_stat(step),
+                        color = sqrt(after_stat(dx^2) + after_stat(dy^2)),
+                        size = after_stat(step)),
                         L = 40, xwrap = c(0, 360), res = 2, arrow = NULL,
                         lineend = "round") +
     scale_size(range = c(0, 0.6))

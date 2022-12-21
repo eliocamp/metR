@@ -72,7 +72,7 @@ citation("metR")
 #>     title = {metR: Tools for Easier Analysis of Meteorological Fields},
 #>     author = {Elio Campitelli},
 #>     year = {2021},
-#>     note = {R package version 0.12.0.9000},
+#>     note = {R package version 0.13.0.9000},
 #>     url = {https://github.com/eliocamp/metR},
 #>     doi = {10.5281/zenodo.2593516},
 #>   }
@@ -95,15 +95,17 @@ geopotential <- copy(geopotential)
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
       by = .(lon, lat, month(date))]
 aao <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1)
-aao$left[, c("u", "v") := GeostrophicWind(gh.t.w, lon, lat)]
+aao$left[, c("u", "v") := GeostrophicWind(gh.t.w/sqrt(cos(lat*pi/180)), 
+                                                    lon, lat)]
 
 # AAO field
 binwidth <- 0.01
-ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
-    geom_contour_fill(aes(fill = stat(level)), binwidth = binwidth,
-                      xwrap = c(0, 360)) +    # filled contours!
-    geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), 
-                    size = 0.4, L = 80, skip = 3, xwrap = c(0, 360)) +
+ggplot(aao$left, aes(lon, lat)) +
+    geom_contour_fill(aes(z = gh.t.w/sqrt(cos(lat*pi/180)), 
+                          fill = after_stat(level)), binwidth = binwidth,
+                      xwrap = c(0, 360)) +
+    geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)),
+                    linewidth = 0.4, L = 80, skip = 3, xwrap = c(0, 360)) +
     scale_x_longitude() +
     scale_y_latitude(limits = c(-90, -20)) +
     scale_fill_divergent_discretised(name = "AAO pattern") +
@@ -119,7 +121,7 @@ ggplot(aao$left, aes(lon, lat, z = gh.t.w)) +
 ggplot(aao$right, aes(date, gh.t.w)) +
     geom_line() +
     geom_smooth(span = 0.4)
-#> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+#> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 ```
 
 ![](man/figures/timeseries-1.png)<!-- -->

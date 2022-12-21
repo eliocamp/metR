@@ -8,8 +8,8 @@ editor_options:
 
 ## New Features
 
--   Not really a new feature per se, but all geoms now support the new linewidth aesthetic.
-    `geom_relief()` and `geom_shadow()` now don't have a size aesthetic, since they shouldn't have had it anyway.
+-   Not really a new feature per se, but all geoms now support the new linewidth aesthetic. `geom_relief()` and `geom_shadow()` now don't have a size aesthetic, since they shouldn't have had it anyway.
+-   The value of the maximum vector magnitude in `scale_mag()` is now chosen to be a "pretty" number close to the maximum. This will prevent guides with many unnecesary decimal places (thanks, @PanfengZhang #161).
 
 ## Bug Fixes
 

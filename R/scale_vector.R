@@ -34,7 +34,7 @@ scale_mag <- function(name = ggplot2::waiver(),
     # if (!grid::is.unit(length)) length <- ggplot2::unit(length, default_unit)
     # if (is.waive(breaks)) {
     if (is.waive(max)) {
-        breaks <- function(range) return(range[2])
+        breaks <- function(range) return(max(scales::breaks_extended(3)(range)))
     } else {
         breaks <- function(range) return(max)
     }

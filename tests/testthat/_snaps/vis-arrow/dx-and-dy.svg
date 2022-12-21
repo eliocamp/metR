@@ -317,7 +317,7 @@
 <rect x='587.33' y='282.97' width='28.35' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <line x1='590.16' y1='291.61' x2='612.84' y2='291.61' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <polygon points='605.88,293.48 612.84,291.61 605.88,289.75 ' style='stroke-width: 1.07; stroke-linecap: butt; fill: #FFFFFF;' />
-<text x='621.15' y='294.64' style='font-size: 8.80px; font-family: sans;' textLength='36.71px' lengthAdjust='spacingAndGlyphs'>2.114832</text>
+<text x='621.15' y='294.64' style='font-size: 8.80px; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>2</text>
 <text x='32.79' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='57.25px' lengthAdjust='spacingAndGlyphs'>dx and dy</text>
 </g>
 </svg>

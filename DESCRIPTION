@@ -30,14 +30,13 @@ Imports:
     memoise,
     plyr,
     scales,
-    sp,
+    sf,
     stringr,
     purrr,
     isoband,
     lubridate
 Suggests: 
     maps,
-    maptools,
     covr,
     irlba,
     knitr,

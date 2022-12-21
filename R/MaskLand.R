@@ -19,6 +19,9 @@
 #' mask <- temperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon, lat))]
 #' temperature <- temperature[mask, on = c("lon", "lat")]
 #'
+#' ggplot(mask, aes(lon, lat)) +
+#'    geom_raster(aes(fill = land))
+#'
 #' # Take the temperature difference between land and ocean
 #' diftemp <- temperature[,
 #'           .(tempdif = mean(air[land == TRUE]) - mean(air[land == FALSE])),
@@ -53,15 +56,19 @@ MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
 
     seamask <- maps::map(paste0("maps::", mask), fill = TRUE, col = "transparent",
                          plot = FALSE, wrap = wrap)
-    IDs <- vapply(strsplit(seamask$names, ":"), function(x) x[1], "")
-    proj <- sp::CRS("+proj=longlat +datum=WGS84")
-    seamask <- maptools::map2SpatialPolygons(seamask, IDs = IDs, proj4string = proj)
+    proj <- "+proj=longlat +datum=WGS84"
+
+    seamask <- sf::st_as_sf(seamask, fill = TRUE, crs = proj)
+    seamask <- sf::st_make_valid(seamask)
 
     field <- data.table::data.table(lon, lat)
     field.unique <- unique(field)
 
-    points <- sp::SpatialPoints(field.unique, proj4string = proj)
-    field.unique[, land := unname(!is.na(sp::over(points, seamask)))]
+    points <- sf::st_as_sf(field.unique, coords = c("lon", "lat"),
+                           crs = proj)
+
+    field.unique[, land := lengths(sf::st_covered_by(points, seamask)) > 0]
+
     field.unique[!((lat %between% c(-90, 90)) & (lon %between% wrap)), land := NA]
 
     field <- field.unique[, .(lon, lat, land)][field, on = c("lon", "lat")]

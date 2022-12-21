@@ -35,9 +35,9 @@ screeplot.eof <- function(x, npcs = "all", type = NULL, main = NULL, ...) {
     var <- attr(x, "suffix")
     r2 <- "r2"
     if (npcs[1] == "all") npcs <- as.numeric(unique(x$sdev[[var]]))
-    ggplot2::ggplot(x$sdev[as.numeric(get(var)) %in% npcs], ggplot2::aes_(as.name(var), as.name(r2))) +
+    ggplot2::ggplot(x$sdev[as.numeric(get(var)) %in% npcs], ggplot2::aes(.data[[var]], .data[["r2"]])) +
         ggplot2::geom_point() +
-        ggplot2::geom_line(ggplot2::aes_string(paste0("as.numeric(", var, ")"))) +
+        ggplot2::geom_line(ggplot2::aes(as.numeric(.data[[var]]))) +
         ggplot2::scale_y_continuous(name = expression(R^2))
 }
 

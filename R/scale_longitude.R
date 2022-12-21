@@ -85,7 +85,7 @@ scale_y_latitude <- function(name = "", ticks = 30,
 
 #' @rdname scale_longitude
 #' @export
-scale_x_level <- function(name = "", expand = c(0, 0), trans = "sa_height", ...) {
+scale_x_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...) {
     ggplot2::scale_x_continuous(name = name, expand = expand,
                        trans = trans,
                        ...)
@@ -93,7 +93,7 @@ scale_x_level <- function(name = "", expand = c(0, 0), trans = "sa_height", ...)
 
 #' @rdname scale_longitude
 #' @export
-scale_y_level <- function(name = "", expand = c(0, 0), trans = "sa_height", ...) {
+scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...) {
     ggplot2::scale_y_continuous(name = name, expand = expand,
                        trans = trans,
                        ...)

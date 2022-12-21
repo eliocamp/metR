@@ -199,7 +199,7 @@ rename_aes <- function(x) {
 #' @importFrom utils head
 if(getRversion() >= "2.15.1") {
     utils::globalVariables(
-        c("as", "dep.names", "ecdf", "equal", "fft", "hasArg", "id",
+        c(".data", "as", "dep.names", "ecdf", "equal", "fft", "hasArg", "id",
           "ind.names", "inside", "int.level", "land", "latrad", "lon", "lonrad",
           "piece", "psi", "psi.dx", "psi.dxx", "psi.dxy", "psi.dy", "psi.dyy",
           "r2", "sd", "setTxtProgressBar", "time", "txtProgressBar",

@@ -6,6 +6,11 @@ editor_options:
 
 # metR (development version)
 
+## New Features
+
+-   Not really a new feature per se, but all geoms now support the new linewidth aesthetic.
+    `geom_relief()` and `geom_shadow()` now don't have a size aesthetic, since they shouldn't have had it anyway.
+
 ## Bug Fixes
 
 -   Documents the correct default `expand` value in `sale_x_longitude()` and friends (thanks, @tamas-ferenci, #167).

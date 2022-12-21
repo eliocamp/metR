@@ -49,7 +49,6 @@ geom_relief <- function(mapping = NULL, data = NULL,
                         na.rm = FALSE,
                         show.legend = NA,
                         inherit.aes = TRUE) {
-
     if (shadow == TRUE){
         list(ggplot2::layer(
             data = data,
@@ -110,8 +109,9 @@ geom_relief <- function(mapping = NULL, data = NULL,
 #' @format NULL
 #' @export
 GeomRelief <- ggplot2::ggproto("GeomRelief", ggplot2::GeomTile,
+    rename_size = FALSE,
     required_aes = c("x", "y", "z"),
-    default_aes = ggplot2::aes(color = NA, fill = "grey35", size = 0.5, linetype = 1,
+    default_aes = ggplot2::aes(color = NA, fill = "grey35", linetype = 1,
                       alpha = NA, light = "white", dark = "gray20", sun.angle = 60),
     draw_panel = function(data, panel_scales, coord, raster, interpolate, sun.angle = 60,
                           sun.altitude = NULL, skip = NULL, alpha.range = NULL) {
@@ -171,7 +171,7 @@ GeomRelief <- ggplot2::ggproto("GeomRelief", ggplot2::GeomTile,
                     gp = grid::gpar(
                         col = coords$fill,
                         fill = alpha(coords$fill, coords$alpha),
-                        lwd = coords$size * .pt,
+                        lwd = 0,
                         lty = coords$linetype,
                         lineend = "butt"
                     )

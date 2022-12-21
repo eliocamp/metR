@@ -37,7 +37,8 @@ geom_shadow <- function(mapping = NULL, data = NULL,
 #' @export
 GeomShadow <- ggplot2::ggproto("GeomShadow", ggplot2::GeomTile,
   required_aes = c("x", "y", "z"),
-  default_aes = ggplot2::aes(color = NA, fill = "black", size = 0.5, linetype = 1,
+  rename_size = FALSE,
+  default_aes = ggplot2::aes(color = NA, fill = "black", linetype = 1,
                              sun.angle = 60, sun.altitude = 20),
   draw_panel = function(data, panel_scales, coord, raster, interpolate,
                         alpha.range = c(0, 1), skip = 0, alpha = NULL) {
@@ -91,7 +92,7 @@ GeomShadow <- ggplot2::ggproto("GeomShadow", ggplot2::GeomTile,
                   gp = grid::gpar(
                       col = coords$fill,
                       fill = alpha(coords$fill, coords$alpha),
-                      lwd = coords$size * .pt,
+                      lwd = 0,
                       lty = coords$linetype,
                       lineend = "butt"
                   )

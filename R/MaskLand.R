@@ -18,6 +18,7 @@
 #' # Make a sea-land mask
 #' mask <- temperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon, lat))]
 #' temperature <- temperature[mask, on = c("lon", "lat")]
+#' library(ggplot2)
 #'
 #' ggplot(mask, aes(lon, lat)) +
 #'    geom_raster(aes(fill = land))
@@ -26,22 +27,13 @@
 #' diftemp <- temperature[,
 #'           .(tempdif = mean(air[land == TRUE]) - mean(air[land == FALSE])),
 #'            by = .(lat, lev)]
-#' library(ggplot2)
+#'
 #' ggplot(diftemp, aes(lat, lev)) +
 #'     geom_contour(aes(z = tempdif, color = after_stat(level))) +
 #'     scale_y_level() +
 #'     scale_x_latitude() +
 #'     scale_color_divergent()
 #'
-#' # Mean temperature in the USA
-#' usatemp <- temperature[, usa := MaskLand(lon, lat, mask = "usa")][
-#'     , .(air = weighted.mean(air, cos(lat*pi/180))), by = .(usa, lev)][
-#'         usa == TRUE]
-#'
-#' ggplot(usatemp, aes(lev, air)) +
-#'     geom_line() +
-#'     scale_x_level() +
-#'     coord_flip()
 #'
 #' @export
 MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
@@ -52,11 +44,11 @@ MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
     assertNumeric(wrap, len = 2, add = checks)
     reportAssertions(checks)
 
-    check_packages(c("maps", "maptools"), "MaskLand")
+    check_packages(c("maps"), "MaskLand")
 
     seamask <- maps::map(paste0("maps::", mask), fill = TRUE, col = "transparent",
                          plot = FALSE, wrap = wrap)
-    proj <- "+proj=longlat +datum=WGS84"
+    proj <- "+proj=longlat +datum=WGS84 +over"
 
     seamask <- sf::st_as_sf(seamask, fill = TRUE, crs = proj)
     seamask <- sf::st_make_valid(seamask)
@@ -66,7 +58,8 @@ MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
 
     points <- sf::st_as_sf(field.unique, coords = c("lon", "lat"),
                            crs = proj)
-    points <- suppressWarnings(sf::st_make_valid(points))
+
+    points <- suppressMessages(sf::st_make_valid(points))
 
     field.unique[, land := lengths(sf::st_covered_by(points, seamask)) > 0]
 

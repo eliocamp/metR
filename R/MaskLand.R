@@ -66,10 +66,11 @@ MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
 
     points <- sf::st_as_sf(field.unique, coords = c("lon", "lat"),
                            crs = proj)
+    points <- suppressWarnings(sf::st_make_valid(points))
 
     field.unique[, land := lengths(sf::st_covered_by(points, seamask)) > 0]
 
-    field.unique[!((lat %between% c(-90, 90)) & (lon %between% wrap)), land := NA]
+    field.unique[!(lat %between% c(-90, 90)), land := NA]
 
     field <- field.unique[, .(lon, lat, land)][field, on = c("lon", "lat")]
 

@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # metR <img src="man/figures/logo.png" align="right"/>
 
 [![R build status](https://github.com/eliocamp/metR/workflows/R-CMD-check/badge.svg)](https://github.com/eliocamp/metR/actions)
-[![Coverage status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg)](https://codecov.io/github/eliocamp/metR/?branch=master)
+[![Coverage status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg?token=jVznWTMCpz)](https://app.codecov.io/gh/eliocamp/metR)
 [![CRAN status](http://www.r-pkg.org/badges/version/metR)](https://cran.r-project.org/package=metR)
 [![DOI](https://zenodo.org/badge/96357263.svg)](https://zenodo.org/badge/latestdoi/96357263)
 

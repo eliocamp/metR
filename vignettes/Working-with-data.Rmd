@@ -66,7 +66,7 @@ The netCDF format is very flexible and this function has not been tested on ever
 
 ## GetTopography 
 
-`GetTopography()` retrieves topographic data from the [ETOPO1 Global Relief Model](https://www.ngdc.noaa.gov/mgg/global/global.html) into a convenient tidy `data.table`. By default, it also stores a cached version. 
+`GetTopography()` retrieves topographic data from the [ETOPO1 Global Relief Model](https://www.ncei.noaa.gov/products/etopo-global-relief-model) into a convenient tidy `data.table`. By default, it also stores a cached version. 
 
 As an example, let's look at a global relief map at 1/2° resolution with some ugly colour palette. 
 

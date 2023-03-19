@@ -36,7 +36,7 @@ temperature[, air.z := Anomaly(air), by = .(lat, lev)]
 
 This geom has a bit of a long story. Before ggplot2 introduced `geom_contour_filled()`, the 'canonical' way to get filled contours was by using `stat_contour()` with a `polygon` geom and mapping `fill` to `level` (see [this](https://github.com/tidyverse/ggplot2/issues/1066) issue). This was ugly and bad and didn't work in most cases, so I threw together some hacks to make it work, and thus `metR::geom_contour_fill()` was born. 
 
-Then, Claus Wilke created {[isoband](https://github.com/wilkelab/isoband)}, which lead to ggplot2 finally getting a proper implementation of filled contours. Since the implementation worked much better than my Frankenstein's monster hacks and workarounds, I decided to scrub it and adopt {isoband} as well. 
+Then, Claus Wilke created {[isoband](https://github.com/r-lib/isoband)}, which lead to ggplot2 finally getting a proper implementation of filled contours. Since the implementation worked much better than my Frankenstein's monster hacks and workarounds, I decided to scrub it and adopt {isoband} as well. 
 
 So after all this history the R landscape is left with `metR::geom_contour_fill()` and `ggplot2::geom_contour_filled()` with almost identical implementations. Why should you use one or the other? Why didn't I just deprecate this seemingly redundant function? Because, in the intervening time `metR::geom_contour_fill()` has evolved and it now provides many functionality that is missing from ggplot2's counterpart. 
 

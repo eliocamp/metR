@@ -6,7 +6,7 @@
 [![R build
 status](https://github.com/eliocamp/metR/workflows/R-CMD-check/badge.svg)](https://github.com/eliocamp/metR/actions)
 [![Coverage
-status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg)](https://codecov.io/github/eliocamp/metR/?branch=master)
+status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg?token=jVznWTMCpz)](https://app.codecov.io/gh/eliocamp/metR)
 [![CRAN
 status](http://www.r-pkg.org/badges/version/metR)](https://cran.r-project.org/package=metR)
 [![DOI](https://zenodo.org/badge/96357263.svg)](https://zenodo.org/badge/latestdoi/96357263)
@@ -110,8 +110,8 @@ ggplot(aao$left, aes(lon, lat)) +
     scale_y_latitude(limits = c(-90, -20)) +
     scale_fill_divergent_discretised(name = "AAO pattern") +
     coord_polar()
-#> Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be deprecated.
-#> Use ggperiodic::periodic insead.
+#> Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be
+#> deprecated. Use ggperiodic::periodic insead.
 ```
 
 ![](man/figures/field-1.png)<!-- -->

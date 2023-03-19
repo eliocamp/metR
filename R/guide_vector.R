@@ -84,7 +84,7 @@ guide_vector <- function(# title
 
 #' @importFrom ggplot2 guide_train guide_gengrob
 #' @export
-guide_train.vector <- function(guide, scale, output = NULL) {
+guide_train.vector <- function(guide, scale, aesthetic = NULL) {
     limits <- scale$get_limits()
     limits[1] <- 0
     breaks <- .get_breaks(scale, limits)

@@ -14,6 +14,7 @@ editor_options:
 ## Bug Fixes
 
 -   Documents the correct default `expand` value in `sale_x_longitude()` and friends (thanks, @tamas-ferenci, #167).
+-   Fixes inconsistencies in generic methods.
 
 # metR 0.13.0
 

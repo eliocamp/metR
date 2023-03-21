@@ -1,13 +1,5 @@
 # metR 0.14.0
 
----
-editor_options: 
-  markdown: 
-    wrap: sentence
----
-
-# metR (development version)
-
 ## New Features
 
 -   Not really a new feature per se, but all geoms now support the new linewidth aesthetic. `geom_relief()` and `geom_shadow()` now don't have a size aesthetic, since they shouldn't have had it anyway.

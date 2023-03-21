@@ -1,8 +1,8 @@
 citHeader("To cite metR in publications use:")
 note <- sprintf("R package version %s", meta$Version)
 
-citEntry(
-  entry    = "Manual",
+bibentry(
+  bibtype  = "Manual",
   title    = paste0("metR: ", meta$Title),
   author   = meta$Author,
   year     = 2021,

@@ -61,6 +61,7 @@ MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
 
     points <- suppressWarnings(sf::st_make_valid(points))
 
+    points <-  sf::st_transform(points, sf::st_crs(seamask))
     field.unique[, land := lengths(suppressWarnings(sf::st_covered_by(points, seamask))) > 0]
 
     field.unique[!(lat %between% c(-90, 90)), land := NA]

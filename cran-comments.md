@@ -1,5 +1,6 @@
 
-This is a resubmission. In this version I've include code in examples to limit the number of threads used by data.table
+This is a resubmission. In this version I've include code in examples to limit the number of threads used by data.table.
+I've also fixed potential problems in reverse dependencies. 
 
 
 ## Test environments

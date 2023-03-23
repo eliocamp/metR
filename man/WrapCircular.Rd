@@ -22,6 +22,8 @@ Periodic data can be defined only in one period and be extended to any arbitrary
 range.
 }
 \examples{
+\dontshow{data.table::setDTthreads(1)}
+
 library(ggplot2)
 library(data.table)
 data(geopotential)

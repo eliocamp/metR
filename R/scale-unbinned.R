@@ -86,11 +86,13 @@ as.discretised <- function(x) {
 #' `aes(fill = after_stat(level))`.
 #'
 #' @examples
+#' \dontshow{data.table::setDTthreads(1)}
+#'
 #' library(ggplot2)
 #'
 #' # Using the `level` compute aesthetic from `geom_contour_fill()`
 #' # (or ggplot2::geom_contour_filled()), the default scale is discrete.
-#' # This means that you cannot map colours to the underying numbers.
+#' # This means that you cannot map colours to the underlying numbers.
 #' v <- ggplot(faithfuld, aes(waiting, eruptions, z = density))
 #' v + geom_contour_fill(aes(fill = after_stat(level)))
 #'

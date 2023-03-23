@@ -54,6 +54,8 @@
 #' the envelope of only a restricted band, first filter it with `FilterWave`.
 #'
 #' @examples
+#' \dontshow{data.table::setDTthreads(1)}
+#'
 #' data(geopotential)
 #' library(data.table)
 #' # January mean of geopotential height

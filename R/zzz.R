@@ -13,3 +13,5 @@ fast.unit.c <- grid::unit.c
     streamline.f <<- memoise::memoise(streamline.f)
     .order_contour <- memoise::memoise(.order_contour)
 }
+
+

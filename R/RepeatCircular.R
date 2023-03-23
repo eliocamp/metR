@@ -11,6 +11,8 @@
 #' A data.frame.
 #'
 #' @examples
+#' \dontshow{data.table::setDTthreads(1)}
+#'
 #' library(ggplot2)
 #' library(data.table)
 #' data(geopotential)

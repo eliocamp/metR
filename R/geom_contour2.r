@@ -40,6 +40,8 @@
 #'}
 #'
 #' @examples
+#' \dontshow{data.table::setDTthreads(1)}
+#'
 #' library(ggplot2)
 #'
 #' # Breaks can be a function.

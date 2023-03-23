@@ -146,6 +146,8 @@ have all the same binwidth.
 }
 
 \examples{
+\dontshow{data.table::setDTthreads(1)}
+
 library(ggplot2)
 surface <- reshape2::melt(volcano)
 ggplot(surface, aes(Var1, Var2, z = value)) +

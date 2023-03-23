@@ -115,6 +115,8 @@ a more aesthetically pleasing representation of topography.
 }
 
 \examples{
+\dontshow{data.table::setDTthreads(1)}
+
 library(ggplot2)
 library(data.table)
 # A fresh look at the boring old volcano dataset

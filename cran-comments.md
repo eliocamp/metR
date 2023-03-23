@@ -1,4 +1,7 @@
 
+This is a resubmission. In this version I've include code in examples to limit the number of threads used by data.table
+
+
 ## Test environments
 
 * local installation of elementary OS 6.1 Jólnir (Built on Ubuntu 20.04.5 LTS) R version 4.2.3 (2023-03-15) 

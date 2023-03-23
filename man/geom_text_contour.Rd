@@ -161,6 +161,7 @@ this is not the case with \code{geom_label_contour()}.
 }
 
 \examples{
+\dontshow{data.table::setDTthreads(1)}
 library(ggplot2)
 v <- reshape2::melt(volcano)
 g <- ggplot(v, aes(Var1, Var2)) +

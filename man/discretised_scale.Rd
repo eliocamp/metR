@@ -276,11 +276,13 @@ discretised. To use this scale with that geom, you need to set
 library(ggplot2)
 scale_fill_brewer_discretised <- as.discretised_scale(scale_fill_distiller)
 
+\dontshow{data.table::setDTthreads(1)}
+
 library(ggplot2)
 
 # Using the `level` compute aesthetic from `geom_contour_fill()`
 # (or ggplot2::geom_contour_filled()), the default scale is discrete.
-# This means that you cannot map colours to the underying numbers.
+# This means that you cannot map colours to the underlying numbers.
 v <- ggplot(faithfuld, aes(waiting, eruptions, z = density))
 v + geom_contour_fill(aes(fill = after_stat(level)))
 

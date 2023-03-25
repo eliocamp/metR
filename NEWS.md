@@ -1,3 +1,9 @@
+# metR (development version)
+
+## Bug Fixes
+
+-   Fixes error in `Laplacian()` when computing the laplacian of a single variable. (#170, Thanks @pascaloettli)
+
 # metR 0.14.0
 
 ## New Features

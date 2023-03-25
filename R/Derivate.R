@@ -166,15 +166,16 @@ Laplacian <- function(formula, cyclical = FALSE, fill = FALSE,
                     sphere = sphere, a = a, order = 2,
                     equispaced = equispaced)
 
-    dep.names <- as.character(formula.tools::lhs(formula))
-    dep.names <- dep.names[!grepl("+", as.character(dep.names), fixed = TRUE)]
-    ndep <- length(dep.names)
-    lap.name <- paste0(dep.names, ".lap")
+    dep.names <- formula.tools::lhs.vars(formula)
+    lap.names <- paste0(dep.names, ".lap")
+    coord.names <- formula.tools::rhs.vars(formula)
 
-    lap <- lapply(seq(ndep), FUN = function(x) {
-        Reduce("+", der[1:ndep + (x-1)*ndep])
+
+    lap <- lapply(dep.names, function(var) {
+        Reduce("+", der[paste0(var, ".", "dd", coord.names)])
     })
-    names(lap) <- lap.name
+
+    names(lap) <- lap.names
     if(length(lap) == 1) {
         return(lap[[1]])
     } else {

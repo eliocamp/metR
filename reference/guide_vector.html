@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,29 +66,29 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">guide_vector</span><span class="op">(</span>
-  title <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,
-  title.position <span class="op">=</span> <span class="cn">NULL</span>,
-  title.theme <span class="op">=</span> <span class="cn">NULL</span>,
-  title.hjust <span class="op">=</span> <span class="cn">NULL</span>,
-  title.vjust <span class="op">=</span> <span class="cn">NULL</span>,
-  label <span class="op">=</span> <span class="cn">TRUE</span>,
-  label.position <span class="op">=</span> <span class="cn">NULL</span>,
-  label.theme <span class="op">=</span> <span class="cn">NULL</span>,
-  label.hjust <span class="op">=</span> <span class="cn">NULL</span>,
-  label.vjust <span class="op">=</span> <span class="cn">NULL</span>,
-  keywidth <span class="op">=</span> <span class="cn">NULL</span>,
-  keyheight <span class="op">=</span> <span class="cn">NULL</span>,
-  direction <span class="op">=</span> <span class="cn">NULL</span>,
-  default.unit <span class="op">=</span> <span class="st">"cm"</span>,
-  override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  nrow <span class="op">=</span> <span class="cn">NULL</span>,
-  ncol <span class="op">=</span> <span class="cn">NULL</span>,
-  byrow <span class="op">=</span> <span class="cn">FALSE</span>,
-  reverse <span class="op">=</span> <span class="cn">FALSE</span>,
-  order <span class="op">=</span> <span class="fl">0</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">guide_vector</span><span class="op">(</span></span>
+<span>  title <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  title.position <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  title.theme <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  title.hjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  title.vjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  label.position <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label.theme <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label.hjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label.vjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  keywidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  keyheight <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  direction <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  default.unit <span class="op">=</span> <span class="st">"cm"</span>,</span>
+<span>  override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  nrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ncol <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  byrow <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  reverse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  order <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -98,70 +98,112 @@
 If <code>NULL</code>, the title is not shown. By default
 (<code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code>), the name of the scale object or the name
 specified in <code><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs()</a></code> is used for the title.</p></dd>
+
+
 <dt>title.position</dt>
 <dd><p>A character string indicating the position of a
 title. One of "top" (default for a vertical guide), "bottom", "left"
 (default for a horizontal guide), or "right."</p></dd>
+
+
 <dt>title.theme</dt>
 <dd><p>A theme object for rendering the title text. Usually the
 object of <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text()</a></code> is expected. By default, the theme is
 specified by <code>legend.title</code> in <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> or theme.</p></dd>
+
+
 <dt>title.hjust</dt>
 <dd><p>A number specifying horizontal justification of the
 title text.</p></dd>
+
+
 <dt>title.vjust</dt>
 <dd><p>A number specifying vertical justification of the title
 text.</p></dd>
+
+
 <dt>label</dt>
 <dd><p>logical. If <code>TRUE</code> then the labels are drawn. If
 <code>FALSE</code> then the labels are invisible.</p></dd>
+
+
 <dt>label.position</dt>
 <dd><p>A character string indicating the position of a
 label. One of "top", "bottom" (default for horizontal guide), "left", or
 "right" (default for vertical guide).</p></dd>
+
+
 <dt>label.theme</dt>
 <dd><p>A theme object for rendering the label text. Usually the
 object of <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text()</a></code> is expected. By default, the theme is
 specified by <code>legend.text</code> in <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code>.</p></dd>
+
+
 <dt>label.hjust</dt>
 <dd><p>A numeric specifying horizontal justification of the
-label text.</p></dd>
+label text. The default for standard text is 0 (left-aligned) and 1
+(right-aligned) for expressions.</p></dd>
+
+
 <dt>label.vjust</dt>
 <dd><p>A numeric specifying vertical justification of the label
 text.</p></dd>
+
+
 <dt>keywidth</dt>
 <dd><p>A numeric or a <code><a href="https://rdrr.io/r/grid/unit.html" class="external-link">grid::unit()</a></code> object specifying
 the width of the legend key. Default value is <code>legend.key.width</code> or
 <code>legend.key.size</code> in <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code>.</p></dd>
+
+
 <dt>keyheight</dt>
 <dd><p>A numeric or a <code><a href="https://rdrr.io/r/grid/unit.html" class="external-link">grid::unit()</a></code> object specifying
 the height of the legend key. Default value is <code>legend.key.height</code> or
 <code>legend.key.size</code> in <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code>.</p></dd>
+
+
 <dt>direction</dt>
 <dd><p>A character string indicating the direction of the guide.
 One of "horizontal" or "vertical."</p></dd>
+
+
 <dt>default.unit</dt>
 <dd><p>A character string indicating <code><a href="https://rdrr.io/r/grid/unit.html" class="external-link">grid::unit()</a></code>
 for <code>keywidth</code> and <code>keyheight</code>.</p></dd>
+
+
 <dt>override.aes</dt>
 <dd><p>A list specifying aesthetic parameters of legend key.
 See details and examples.</p></dd>
+
+
 <dt>nrow</dt>
 <dd><p>The desired number of rows of legends.</p></dd>
+
+
 <dt>ncol</dt>
 <dd><p>The desired number of column of legends.</p></dd>
+
+
 <dt>byrow</dt>
 <dd><p>logical. If <code>FALSE</code> (the default) the legend-matrix is
 filled by columns, otherwise the legend-matrix is filled by rows.</p></dd>
+
+
 <dt>reverse</dt>
 <dd><p>logical. If <code>TRUE</code> the order of legends is reversed.</p></dd>
+
+
 <dt>order</dt>
 <dd><p>positive integer less than 99 that specifies the order of
 this guide among multiple guides. This controls the order in which
 multiple guides are displayed, not the contents of the guide itself.
 If 0 (default), the order is determined by a secret algorithm.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>ignored.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -180,7 +222,7 @@ If 0 (default), the order is determined by a secret algorithm.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

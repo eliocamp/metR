@@ -18,7 +18,7 @@ ggplot2's continuous scales and in geom_contour_fill."><meta property="og:image"
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@ ggplot2's continuous scales and in geom_contour_fill."><meta property="og:image"
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -68,25 +68,34 @@ ggplot2's continuous scales and in <a href="geom_contour_fill.html">geom_contour
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">MakeBreaks</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="cn">NULL</span>, bins <span class="op">=</span> <span class="fl">10</span>, exclude <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">AnchorBreaks</span><span class="op">(</span>anchor <span class="op">=</span> <span class="fl">0</span>, binwidth <span class="op">=</span> <span class="cn">NULL</span>, exclude <span class="op">=</span> <span class="cn">NULL</span>, bins <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">MakeBreaks</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="cn">NULL</span>, bins <span class="op">=</span> <span class="fl">10</span>, exclude <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">AnchorBreaks</span><span class="op">(</span>anchor <span class="op">=</span> <span class="fl">0</span>, binwidth <span class="op">=</span> <span class="cn">NULL</span>, exclude <span class="op">=</span> <span class="cn">NULL</span>, bins <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>binwidth</dt>
 <dd><p>width of breaks</p></dd>
+
+
 <dt>bins</dt>
 <dd><p>number of bins, used if <code>binwidth = NULL</code></p></dd>
+
+
 <dt>exclude</dt>
 <dd><p>a vector of breaks to exclude</p></dd>
+
+
 <dt>anchor</dt>
 <dd><p>anchor value</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A function that takes a range as argument and a binwidth as an optional argument
+    
+
+<p>A function that takes a range as argument and a binwidth as an optional argument
 and returns a sequence of equally spaced intervals covering the range.</p>
     </div>
     <div id="details">
@@ -118,32 +127,32 @@ the range of the data according to <code>binwidth</code>.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">my_breaks</span> <span class="op">&lt;-</span> <span class="fu">MakeBreaks</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">my_breaks</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">my_breaks</span> <span class="op">&lt;-</span> <span class="fu">MakeBreaks</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">my_breaks</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   0  10  20  30  40  50  60  70  80  90 100</span>
-<span class="r-in"><span class="fu">my_breaks</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span>    <span class="co"># optional new binwidth argument ignored</span></span>
+<span class="r-in"><span><span class="fu">my_breaks</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span>    <span class="co"># optional new binwidth argument ignored</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   0  10  20  30  40  50  60  70  80  90 100</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">MakeBreaks</span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span>  <span class="co"># but is not ignored if initial binwidth is NULL</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">MakeBreaks</span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span>  <span class="co"># but is not ignored if initial binwidth is NULL</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]   0  20  40  60  80 100</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># One to one mapping between contours and breaks</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">binwidth</span> <span class="op">&lt;-</span> <span class="fl">20</span></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html" class="external-link">melt</a></span><span class="op">(</span><span class="va">volcano</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span>, z <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">..level..</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="va">binwidth</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html" class="external-link">scale_color_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">MakeBreaks</span><span class="op">(</span><span class="va">binwidth</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># One to one mapping between contours and breaks</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">binwidth</span> <span class="op">&lt;-</span> <span class="fl">20</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html" class="external-link">melt</a></span><span class="op">(</span><span class="va">volcano</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span>, z <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="va">binwidth</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html" class="external-link">scale_color_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">MakeBreaks</span><span class="op">(</span><span class="va">binwidth</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="MakeBreaks-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Two ways of getting the same contours. Better use the second one.</span></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html" class="external-link">melt</a></span><span class="op">(</span><span class="va">volcano</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span>, z <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">..level..</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu">AnchorBreaks</span><span class="op">(</span><span class="fl">132</span><span class="op">)</span>,</span>
-<span class="r-in">                  binwidth <span class="op">=</span> <span class="va">binwidth</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">..level..</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu">AnchorBreaks</span><span class="op">(</span><span class="fl">132</span>, <span class="va">binwidth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html" class="external-link">scale_color_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">AnchorBreaks</span><span class="op">(</span><span class="fl">132</span>, <span class="va">binwidth</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Two ways of getting the same contours. Better use the second one.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html" class="external-link">melt</a></span><span class="op">(</span><span class="va">volcano</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span>, z <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu">AnchorBreaks</span><span class="op">(</span><span class="fl">132</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                  binwidth <span class="op">=</span> <span class="va">binwidth</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu">AnchorBreaks</span><span class="op">(</span><span class="fl">132</span>, <span class="va">binwidth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html" class="external-link">scale_color_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">AnchorBreaks</span><span class="op">(</span><span class="fl">132</span>, <span class="va">binwidth</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="MakeBreaks-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -158,7 +167,7 @@ the range of the data according to <code>binwidth</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

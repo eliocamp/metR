@@ -20,7 +20,7 @@ transformation and different plot ratios."><meta property="og:image" content="/l
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -29,7 +29,7 @@ transformation and different plot ratios."><meta property="og:image" content="/l
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -72,66 +72,68 @@ transformation and different plot ratios.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">geom_arrow</span><span class="op">(</span>
-  mapping <span class="op">=</span> <span class="cn">NULL</span>,
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  stat <span class="op">=</span> <span class="st">"arrow"</span>,
-  position <span class="op">=</span> <span class="st">"identity"</span>,
-  <span class="va">...</span>,
-  start <span class="op">=</span> <span class="fl">0</span>,
-  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ccw"</span>, <span class="st">"cw"</span><span class="op">)</span>,
-  pivot <span class="op">=</span> <span class="fl">0.5</span>,
-  preserve.dir <span class="op">=</span> <span class="cn">TRUE</span>,
-  min.mag <span class="op">=</span> <span class="fl">0</span>,
-  skip <span class="op">=</span> <span class="fl">0</span>,
-  skip.x <span class="op">=</span> <span class="va">skip</span>,
-  skip.y <span class="op">=</span> <span class="va">skip</span>,
-  arrow.angle <span class="op">=</span> <span class="fl">15</span>,
-  arrow.length <span class="op">=</span> <span class="fl">0.5</span>,
-  arrow.ends <span class="op">=</span> <span class="st">"last"</span>,
-  arrow.type <span class="op">=</span> <span class="st">"closed"</span>,
-  arrow <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/arrow.html" class="external-link">arrow</a></span><span class="op">(</span><span class="va">arrow.angle</span>, <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="va">arrow.length</span>, <span class="st">"lines"</span><span class="op">)</span>, ends <span class="op">=</span>
-    <span class="va">arrow.ends</span>, type <span class="op">=</span> <span class="va">arrow.type</span><span class="op">)</span>,
-  lineend <span class="op">=</span> <span class="st">"butt"</span>,
-  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,
-  show.legend <span class="op">=</span> <span class="cn">NA</span>,
-  inherit.aes <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">geom_vector</span><span class="op">(</span>
-  mapping <span class="op">=</span> <span class="cn">NULL</span>,
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  stat <span class="op">=</span> <span class="st">"arrow"</span>,
-  position <span class="op">=</span> <span class="st">"identity"</span>,
-  <span class="va">...</span>,
-  start <span class="op">=</span> <span class="fl">0</span>,
-  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ccw"</span>, <span class="st">"cw"</span><span class="op">)</span>,
-  pivot <span class="op">=</span> <span class="fl">0.5</span>,
-  preserve.dir <span class="op">=</span> <span class="cn">FALSE</span>,
-  min.mag <span class="op">=</span> <span class="fl">0</span>,
-  skip <span class="op">=</span> <span class="fl">0</span>,
-  skip.x <span class="op">=</span> <span class="va">skip</span>,
-  skip.y <span class="op">=</span> <span class="va">skip</span>,
-  arrow.angle <span class="op">=</span> <span class="fl">15</span>,
-  arrow.length <span class="op">=</span> <span class="fl">0.5</span>,
-  arrow.ends <span class="op">=</span> <span class="st">"last"</span>,
-  arrow.type <span class="op">=</span> <span class="st">"closed"</span>,
-  arrow <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/arrow.html" class="external-link">arrow</a></span><span class="op">(</span><span class="va">arrow.angle</span>, <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="va">arrow.length</span>, <span class="st">"lines"</span><span class="op">)</span>, ends <span class="op">=</span>
-    <span class="va">arrow.ends</span>, type <span class="op">=</span> <span class="va">arrow.type</span><span class="op">)</span>,
-  lineend <span class="op">=</span> <span class="st">"butt"</span>,
-  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,
-  show.legend <span class="op">=</span> <span class="cn">NA</span>,
-  inherit.aes <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">geom_arrow</span><span class="op">(</span></span>
+<span>  mapping <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stat <span class="op">=</span> <span class="st">"arrow"</span>,</span>
+<span>  position <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  start <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ccw"</span>, <span class="st">"cw"</span><span class="op">)</span>,</span>
+<span>  pivot <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  preserve.dir <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  min.mag <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  skip <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  skip.x <span class="op">=</span> <span class="va">skip</span>,</span>
+<span>  skip.y <span class="op">=</span> <span class="va">skip</span>,</span>
+<span>  arrow.angle <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>  arrow.length <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  arrow.ends <span class="op">=</span> <span class="st">"last"</span>,</span>
+<span>  arrow.type <span class="op">=</span> <span class="st">"closed"</span>,</span>
+<span>  arrow <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/arrow.html" class="external-link">arrow</a></span><span class="op">(</span><span class="va">arrow.angle</span>, <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="va">arrow.length</span>, <span class="st">"lines"</span><span class="op">)</span>, ends <span class="op">=</span> <span class="va">arrow.ends</span>,</span>
+<span>    type <span class="op">=</span> <span class="va">arrow.type</span><span class="op">)</span>,</span>
+<span>  lineend <span class="op">=</span> <span class="st">"butt"</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  show.legend <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  inherit.aes <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">geom_vector</span><span class="op">(</span></span>
+<span>  mapping <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stat <span class="op">=</span> <span class="st">"arrow"</span>,</span>
+<span>  position <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  start <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ccw"</span>, <span class="st">"cw"</span><span class="op">)</span>,</span>
+<span>  pivot <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  preserve.dir <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  min.mag <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  skip <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  skip.x <span class="op">=</span> <span class="va">skip</span>,</span>
+<span>  skip.y <span class="op">=</span> <span class="va">skip</span>,</span>
+<span>  arrow.angle <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>  arrow.length <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  arrow.ends <span class="op">=</span> <span class="st">"last"</span>,</span>
+<span>  arrow.type <span class="op">=</span> <span class="st">"closed"</span>,</span>
+<span>  arrow <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/arrow.html" class="external-link">arrow</a></span><span class="op">(</span><span class="va">arrow.angle</span>, <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="va">arrow.length</span>, <span class="st">"lines"</span><span class="op">)</span>, ends <span class="op">=</span> <span class="va">arrow.ends</span>,</span>
+<span>    type <span class="op">=</span> <span class="va">arrow.type</span><span class="op">)</span>,</span>
+<span>  lineend <span class="op">=</span> <span class="st">"butt"</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  show.legend <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  inherit.aes <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>mapping</dt>
-<dd><p>Set of aesthetic mappings created by <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes()</a></code> or
-<code><a href="https://ggplot2.tidyverse.org/reference/aes_.html" class="external-link">aes_()</a></code>. If specified and <code>inherit.aes = TRUE</code> (the
-default), it is combined with the default mapping at the top level of the
-plot. You must supply <code>mapping</code> if there is no plot mapping.</p></dd>
+<dd><p>Set of aesthetic mappings created by <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes()</a></code>. If specified and
+<code>inherit.aes = TRUE</code> (the default), it is combined with the default mapping
+at the top level of the plot. You must supply <code>mapping</code> if there is no plot
+mapping.</p></dd>
+
+
 <dt>data</dt>
 <dd><p>The data to be displayed in this layer. There are three
 options:</p>
@@ -144,52 +146,87 @@ data. All objects will be fortified to produce a data frame. See
 the plot data. The return value must be a <code>data.frame</code>, and
 will be used as the layer data. A <code>function</code> can be created
 from a <code>formula</code> (e.g. <code>~ head(.x, 10)</code>).</p></dd>
+
+
 <dt>stat</dt>
 <dd><p>The statistical transformation to use on the data for this
-layer, as a string.</p></dd>
+layer, either as a <code>ggproto</code> <code>Geom</code> subclass or as a string naming the
+stat stripped of the <code>stat_</code> prefix (e.g. <code>"count"</code> rather than
+<code>"stat_count"</code>)</p></dd>
+
+
 <dt>position</dt>
-<dd><p>Position adjustment, either as a string, or the result of
-a call to a position adjustment function.</p></dd>
+<dd><p>Position adjustment, either as a string naming the adjustment
+(e.g. <code>"jitter"</code> to use <code>position_jitter</code>), or the result of a call to a
+position adjustment function. Use the latter if you need to change the
+settings of the adjustment.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Other arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/layer.html" class="external-link">layer()</a></code>. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 <code>colour = "red"</code> or <code>size = 3</code>. They may also be parameters
 to the paired geom/stat.</p></dd>
+
+
 <dt>start</dt>
 <dd><p>starting angle for rotation in degrees</p></dd>
+
+
 <dt>direction</dt>
 <dd><p>direction of rotation (counter-clockwise or clockwise)</p></dd>
+
+
 <dt>pivot</dt>
 <dd><p>numeric indicating where to pivot the arrow where 0 means at the
 beginning and 1 means at the end.</p></dd>
+
+
 <dt>preserve.dir</dt>
 <dd><p>logical indicating whether to preserve direction or not</p></dd>
+
+
 <dt>min.mag</dt>
 <dd><p>minimum magnitude for plotting vectors</p></dd>
+
+
 <dt>skip, skip.x, skip.y</dt>
 <dd><p>numeric specifying number of gridpoints not to draw
 in the x and y direction</p></dd>
+
+
 <dt>arrow.length, arrow.angle, arrow.ends, arrow.type</dt>
 <dd><p>parameters passed to
 <a href="https://rdrr.io/r/grid/arrow.html" class="external-link">grid::arrow</a></p></dd>
+
+
 <dt>arrow</dt>
-<dd><p>specification for arrow heads, as created by arrow().</p></dd>
+<dd><p>specification for arrow heads, as created by <code><a href="https://rdrr.io/r/grid/arrow.html" class="external-link">grid::arrow()</a></code>.</p></dd>
+
+
 <dt>lineend</dt>
 <dd><p>Line end style (round, butt, square).</p></dd>
+
+
 <dt>na.rm</dt>
 <dd><p>If <code>FALSE</code>, the default, missing values are removed with
 a warning. If <code>TRUE</code>, missing values are silently removed.</p></dd>
+
+
 <dt>show.legend</dt>
 <dd><p>logical. Should this layer be included in the legends?
 <code>NA</code>, the default, includes if any aesthetics are mapped.
 <code>FALSE</code> never includes, and <code>TRUE</code> always includes.
 It can also be a named logical vector to finely select the aesthetics to
 display.</p></dd>
+
+
 <dt>inherit.aes</dt>
 <dd><p>If <code>FALSE</code>, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.org/reference/borders.html" class="external-link">borders()</a></code>.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -232,21 +269,21 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seals</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># If the velocity components are in the same units as the axis,</span></span>
-<span class="r-in"><span class="co"># geom_vector() (or geom_arrow(preserve.dir = TRUE)) might be a better option</span></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">seals</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu">geom_arrow</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">delta_long</span>, dy <span class="op">=</span> <span class="va">delta_lat</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu">geom_vector</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">delta_long</span>, dy <span class="op">=</span> <span class="va">delta_lat</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seals</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># If the velocity components are in the same units as the axis,</span></span></span>
+<span class="r-in"><span><span class="co"># geom_vector() (or geom_arrow(preserve.dir = TRUE)) might be a better option</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">seals</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">geom_arrow</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">delta_long</span>, dy <span class="op">=</span> <span class="va">delta_lat</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">geom_vector</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">delta_long</span>, dy <span class="op">=</span> <span class="va">delta_lat</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="geom_arrow-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span class="r-in"><span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.z</span> <span class="op">:=</span> <span class="fu"><a href="Anomaly.html">Anomaly</a></span><span class="op">(</span><span class="va">gh</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lat</span><span class="op">)</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.z</span> <span class="op">:=</span> <span class="fu"><a href="Anomaly.html">Anomaly</a></span><span class="op">(</span><span class="va">gh</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lat</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lon   lat lev       gh       date     gh.z</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1:   0.0 -22.5 700 3163.839 1990-01-01 13.67219</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2:   2.5 -22.5 700 3162.516 1990-01-01 12.34968</span>
@@ -259,7 +296,7 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4030: 352.5 -90.0 700 2715.936 1990-01-01  0.00000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4031: 355.0 -90.0 700 2715.936 1990-01-01  0.00000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4032: 357.5 -90.0 700 2715.936 1990-01-01  0.00000</span>
-<span class="r-in"><span class="va">geopotential</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"v"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="GeostrophicWind.html">GeostrophicWind</a></span><span class="op">(</span><span class="va">gh.z</span>, <span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span></span>
+<span class="r-in"><span><span class="va">geopotential</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"v"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="GeostrophicWind.html">GeostrophicWind</a></span><span class="op">(</span><span class="va">gh.z</span>, <span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lon   lat lev       gh       date     gh.z  u           v</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1:   0.0 -22.5 700 3163.839 1990-01-01 13.67219 NA  1.08181190</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2:   2.5 -22.5 700 3162.516 1990-01-01 12.34968 NA  0.55189199</span>
@@ -272,37 +309,37 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4030: 352.5 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.00000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4031: 355.0 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.00000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4032: 357.5 -90.0 700 2715.936 1990-01-01  0.00000 NA  0.00000000</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">(</span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">geopotential</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu">geom_arrow</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="fu"><a href="spherical.html">dlon</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span>, dy <span class="op">=</span> <span class="fu"><a href="spherical.html">dlat</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span>, skip.x <span class="op">=</span> <span class="fl">3</span>, skip.y <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">               color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu">geom_vector</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="fu"><a href="spherical.html">dlon</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span>, dy <span class="op">=</span> <span class="fu"><a href="spherical.html">dlat</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span>, skip.x <span class="op">=</span> <span class="fl">3</span>, skip.y <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="scale_mag.html">scale_mag</a></span><span class="op">(</span>max_size <span class="op">=</span> <span class="fl">2</span>, guide <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">geopotential</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">geom_arrow</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="fu"><a href="spherical.html">dlon</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span>, dy <span class="op">=</span> <span class="fu"><a href="spherical.html">dlat</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span>, skip.x <span class="op">=</span> <span class="fl">3</span>, skip.y <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>               color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">geom_vector</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="fu"><a href="spherical.html">dlon</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span>, dy <span class="op">=</span> <span class="fu"><a href="spherical.html">dlat</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span>, skip.x <span class="op">=</span> <span class="fl">3</span>, skip.y <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="scale_mag.html">scale_mag</a></span><span class="op">(</span>max_size <span class="op">=</span> <span class="fl">2</span>, guide <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="geom_arrow-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># A dramatic illustration of the difference between arrow and vector</span></span>
-<span class="r-in"><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># A dramatic illustration of the difference between arrow and vector</span></span></span>
+<span class="r-in"><span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="geom_arrow-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># When plotting winds in a lat-lon grid, a good way to have both</span></span>
-<span class="r-in"><span class="co"># the correct direction and an interpretable magnitude is to define</span></span>
-<span class="r-in"><span class="co"># the angle by the longitud and latitude displacement and the magnitude</span></span>
-<span class="r-in"><span class="co"># by the wind velocity. That way arrows are always parallel to streamlines</span></span>
-<span class="r-in"><span class="co"># and their magnitude are in the correct units.</span></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">geopotential</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu">geom_vector</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">atan2</a></span><span class="op">(</span><span class="fu"><a href="spherical.html">dlat</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>, <span class="fu"><a href="spherical.html">dlon</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">180</span><span class="op">/</span><span class="va">pi</span>,</span>
-<span class="r-in">                   mag <span class="op">=</span> <span class="fu"><a href="Mag.html">Mag</a></span><span class="op">(</span><span class="va">v</span>, <span class="va">u</span><span class="op">)</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">1</span>, pivot <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># When plotting winds in a lat-lon grid, a good way to have both</span></span></span>
+<span class="r-in"><span><span class="co"># the correct direction and an interpretable magnitude is to define</span></span></span>
+<span class="r-in"><span><span class="co"># the angle by the longitud and latitude displacement and the magnitude</span></span></span>
+<span class="r-in"><span><span class="co"># by the wind velocity. That way arrows are always parallel to streamlines</span></span></span>
+<span class="r-in"><span><span class="co"># and their magnitude are in the correct units.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">geopotential</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">geom_vector</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">atan2</a></span><span class="op">(</span><span class="fu"><a href="spherical.html">dlat</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>, <span class="fu"><a href="spherical.html">dlon</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">180</span><span class="op">/</span><span class="va">pi</span>,</span></span>
+<span class="r-in"><span>                   mag <span class="op">=</span> <span class="fu"><a href="Mag.html">Mag</a></span><span class="op">(</span><span class="va">v</span>, <span class="va">u</span><span class="op">)</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">1</span>, pivot <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="geom_arrow-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Sverdrup transport</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
-<span class="r-in"><span class="va">d</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
-<span class="r-in"><span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">d</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span class="r-in">                                  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">b</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">grid</span><span class="op">[</span>, <span class="va">My</span> <span class="op">:=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">pi</span><span class="op">*</span><span class="va">y</span><span class="op">/</span><span class="va">b</span><span class="op">)</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="va">b</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Sverdrup transport</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">d</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">b</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">grid</span><span class="op">[</span>, <span class="va">My</span> <span class="op">:=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">pi</span><span class="op">*</span><span class="va">y</span><span class="op">/</span><span class="va">b</span><span class="op">)</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="va">b</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         x  y            My</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1:  1.0  1 -9.708055e-02</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2:  1.5  1 -9.708055e-02</span>
@@ -315,7 +352,7 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 <span class="r-out co"><span class="r-pr">#&gt;</span> 359:  9.0 10 -3.847341e-17</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 360:  9.5 10 -3.847341e-17</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 361: 10.0 10 -3.847341e-17</span>
-<span class="r-in"><span class="va">grid</span><span class="op">[</span>, <span class="va">Mx</span> <span class="op">:=</span> <span class="op">-</span><span class="va">pi</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="va">b</span><span class="op">^</span><span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">pi</span><span class="op">*</span><span class="va">y</span><span class="op">/</span><span class="va">b</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">d</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span><span class="op">]</span></span>
+<span class="r-in"><span><span class="va">grid</span><span class="op">[</span>, <span class="va">Mx</span> <span class="op">:=</span> <span class="op">-</span><span class="va">pi</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="va">b</span><span class="op">^</span><span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">pi</span><span class="op">*</span><span class="va">y</span><span class="op">/</span><span class="va">b</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">d</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         x  y            My          Mx</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1:  1.0  1 -9.708055e-02 -0.84478964</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2:  1.5  1 -9.708055e-02 -0.79785688</span>
@@ -328,25 +365,25 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 <span class="r-out co"><span class="r-pr">#&gt;</span> 359:  9.0 10 -3.847341e-17  0.09869604</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 360:  9.5 10 -3.847341e-17  0.04934802</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 361: 10.0 10 -3.847341e-17  0.00000000</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">grid</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu">geom_arrow</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">Mx</span>, dy <span class="op">=</span> <span class="va">My</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">grid</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">geom_arrow</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">Mx</span>, dy <span class="op">=</span> <span class="va">My</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="geom_arrow-5.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Due to limitations in ggplot2 (see: https://github.com/tidyverse/ggplot2/issues/4291),</span></span>
-<span class="r-in"><span class="co"># if you define the vector with the dx and dy aesthetics, you need</span></span>
-<span class="r-in"><span class="co"># to explicitly add scale_mag() in order to show the arrow legend.</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">grid</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu">geom_arrow</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">Mx</span>, dy <span class="op">=</span> <span class="va">My</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Due to limitations in ggplot2 (see: https://github.com/tidyverse/ggplot2/issues/4291),</span></span></span>
+<span class="r-in"><span><span class="co"># if you define the vector with the dx and dy aesthetics, you need</span></span></span>
+<span class="r-in"><span><span class="co"># to explicitly add scale_mag() in order to show the arrow legend.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">grid</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">geom_arrow</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">Mx</span>, dy <span class="op">=</span> <span class="va">My</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="geom_arrow-6.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Alternative, use Mag and Angle.</span></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">grid</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu">geom_arrow</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>mag <span class="op">=</span> <span class="fu"><a href="Mag.html">Mag</a></span><span class="op">(</span><span class="va">Mx</span>, <span class="va">My</span><span class="op">)</span>, angle <span class="op">=</span> <span class="fu"><a href="Mag.html">Angle</a></span><span class="op">(</span><span class="va">Mx</span>, <span class="va">My</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Alternative, use Mag and Angle.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">grid</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">geom_arrow</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>mag <span class="op">=</span> <span class="fu"><a href="Mag.html">Mag</a></span><span class="op">(</span><span class="va">Mx</span>, <span class="va">My</span><span class="op">)</span>, angle <span class="op">=</span> <span class="fu"><a href="Mag.html">Angle</a></span><span class="op">(</span><span class="va">Mx</span>, <span class="va">My</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="geom_arrow-7.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -361,7 +398,7 @@ meteorological standard, for example, use <code>star = -90</code> and <code>dire
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

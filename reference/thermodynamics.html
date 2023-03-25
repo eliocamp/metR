@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,53 +66,82 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">IdealGas</span><span class="op">(</span><span class="va">p</span>, <span class="va">t</span>, <span class="va">rho</span>, R <span class="op">=</span> <span class="fl">287.058</span><span class="op">)</span>
-
-<span class="fu">Adiabat</span><span class="op">(</span><span class="va">p</span>, <span class="va">t</span>, <span class="va">theta</span>, p0 <span class="op">=</span> <span class="fl">1e+05</span>, kappa <span class="op">=</span> <span class="fl">2</span><span class="op">/</span><span class="fl">7</span><span class="op">)</span>
-
-<span class="fu">VirtualTemperature</span><span class="op">(</span><span class="va">p</span>, <span class="va">t</span>, <span class="va">e</span>, <span class="va">tv</span>, epsilon <span class="op">=</span> <span class="fl">0.622</span><span class="op">)</span>
-
-<span class="fu">MixingRatio</span><span class="op">(</span><span class="va">p</span>, <span class="va">e</span>, <span class="va">w</span>, epsilon <span class="op">=</span> <span class="fl">0.622</span><span class="op">)</span>
-
-<span class="fu">ClausiusClapeyron</span><span class="op">(</span><span class="va">t</span>, <span class="va">es</span><span class="op">)</span>
-
-<span class="fu">DewPoint</span><span class="op">(</span><span class="va">p</span>, <span class="va">ws</span>, <span class="va">td</span>, epsilon <span class="op">=</span> <span class="fl">0.622</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">IdealGas</span><span class="op">(</span><span class="va">p</span>, <span class="va">t</span>, <span class="va">rho</span>, R <span class="op">=</span> <span class="fl">287.058</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">Adiabat</span><span class="op">(</span><span class="va">p</span>, <span class="va">t</span>, <span class="va">theta</span>, p0 <span class="op">=</span> <span class="fl">1e+05</span>, kappa <span class="op">=</span> <span class="fl">2</span><span class="op">/</span><span class="fl">7</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">VirtualTemperature</span><span class="op">(</span><span class="va">p</span>, <span class="va">t</span>, <span class="va">e</span>, <span class="va">tv</span>, epsilon <span class="op">=</span> <span class="fl">0.622</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">MixingRatio</span><span class="op">(</span><span class="va">p</span>, <span class="va">e</span>, <span class="va">w</span>, epsilon <span class="op">=</span> <span class="fl">0.622</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ClausiusClapeyron</span><span class="op">(</span><span class="va">t</span>, <span class="va">es</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">DewPoint</span><span class="op">(</span><span class="va">p</span>, <span class="va">ws</span>, <span class="va">td</span>, epsilon <span class="op">=</span> <span class="fl">0.622</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>p</dt>
 <dd><p>pressure</p></dd>
+
+
 <dt>t</dt>
 <dd><p>temperature</p></dd>
+
+
 <dt>rho</dt>
 <dd><p>density</p></dd>
+
+
 <dt>R</dt>
 <dd><p>gas constant for air</p></dd>
+
+
 <dt>theta</dt>
 <dd><p>potential temperature</p></dd>
+
+
 <dt>p0</dt>
 <dd><p>reference pressure</p></dd>
+
+
 <dt>kappa</dt>
 <dd><p>ratio of dry air constant and specific heat capacity at constant pressure</p></dd>
+
+
 <dt>e</dt>
 <dd><p>vapour partial pressure</p></dd>
+
+
 <dt>tv</dt>
 <dd><p>virtual temperature</p></dd>
+
+
 <dt>epsilon</dt>
 <dd><p>ratio of dry air constant and vapour constant</p></dd>
+
+
 <dt>w</dt>
 <dd><p>mixing ratio</p></dd>
+
+
 <dt>es</dt>
 <dd><p>saturation vapour partial pressure</p></dd>
+
+
 <dt>ws</dt>
 <dd><p>saturation mixing ratio</p></dd>
+
+
 <dt>td</dt>
 <dd><p>dewpoint</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Each function returns the value of the missing state variable.</p>
+    
+
+<p>Each function returns the value of the missing state variable.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -155,29 +184,29 @@ temperature.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">IdealGas</span><span class="op">(</span><span class="fl">1013</span><span class="op">*</span><span class="fl">100</span>, <span class="fl">20</span> <span class="op">+</span> <span class="fl">273.15</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">IdealGas</span><span class="op">(</span><span class="fl">1013</span><span class="op">*</span><span class="fl">100</span>, <span class="fl">20</span> <span class="op">+</span> <span class="fl">273.15</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.203788</span>
-<span class="r-in"><span class="fu">IdealGas</span><span class="op">(</span><span class="fl">1013</span><span class="op">*</span><span class="fl">100</span>, rho <span class="op">=</span> <span class="fl">1.15</span><span class="op">)</span> <span class="op">-</span> <span class="fl">273.15</span></span>
+<span class="r-in"><span><span class="fu">IdealGas</span><span class="op">(</span><span class="fl">1013</span><span class="op">*</span><span class="fl">100</span>, rho <span class="op">=</span> <span class="fl">1.15</span><span class="op">)</span> <span class="op">-</span> <span class="fl">273.15</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 33.71118</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">(</span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">Adiabat</span><span class="op">(</span><span class="fl">70000</span>, <span class="fl">20</span> <span class="op">+</span> <span class="fl">273.15</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu">Adiabat</span><span class="op">(</span><span class="fl">70000</span>, <span class="fl">20</span> <span class="op">+</span> <span class="fl">273.15</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 324.5993</span>
-<span class="r-in"><span class="fu">Adiabat</span><span class="op">(</span><span class="fl">70000</span>, theta <span class="op">=</span> <span class="va">theta</span><span class="op">)</span> <span class="op">-</span> <span class="fl">273.15</span></span>
+<span class="r-in"><span><span class="fu">Adiabat</span><span class="op">(</span><span class="fl">70000</span>, theta <span class="op">=</span> <span class="va">theta</span><span class="op">)</span> <span class="op">-</span> <span class="fl">273.15</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Relative humidity from T and Td</span></span>
-<span class="r-in"><span class="va">t</span> <span class="op">&lt;-</span> <span class="fl">25</span> <span class="op">+</span> <span class="fl">273.15</span></span>
-<span class="r-in"><span class="va">td</span> <span class="op">&lt;-</span> <span class="fl">20</span> <span class="op">+</span> <span class="fl">273.15</span></span>
-<span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1000000</span></span>
-<span class="r-in"><span class="op">(</span><span class="va">rh</span> <span class="op">&lt;-</span> <span class="fu">ClausiusClapeyron</span><span class="op">(</span><span class="va">td</span><span class="op">)</span><span class="op">/</span><span class="fu">ClausiusClapeyron</span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Relative humidity from T and Td</span></span></span>
+<span class="r-in"><span><span class="va">t</span> <span class="op">&lt;-</span> <span class="fl">25</span> <span class="op">+</span> <span class="fl">273.15</span></span></span>
+<span class="r-in"><span><span class="va">td</span> <span class="op">&lt;-</span> <span class="fl">20</span> <span class="op">+</span> <span class="fl">273.15</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1000000</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">rh</span> <span class="op">&lt;-</span> <span class="fu">ClausiusClapeyron</span><span class="op">(</span><span class="va">td</span><span class="op">)</span><span class="op">/</span><span class="fu">ClausiusClapeyron</span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7380251</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Mixing ratio</span></span>
-<span class="r-in"><span class="va">ws</span> <span class="op">&lt;-</span> <span class="fu">MixingRatio</span><span class="op">(</span><span class="va">p</span>, <span class="fu">ClausiusClapeyron</span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">w</span> <span class="op">&lt;-</span> <span class="va">ws</span><span class="op">*</span><span class="va">rh</span></span>
-<span class="r-in"><span class="fu">DewPoint</span><span class="op">(</span><span class="va">p</span>, <span class="va">w</span><span class="op">)</span> <span class="op">-</span> <span class="fl">273.15</span>    <span class="co"># Recover Td</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Mixing ratio</span></span></span>
+<span class="r-in"><span><span class="va">ws</span> <span class="op">&lt;-</span> <span class="fu">MixingRatio</span><span class="op">(</span><span class="va">p</span>, <span class="fu">ClausiusClapeyron</span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">w</span> <span class="op">&lt;-</span> <span class="va">ws</span><span class="op">*</span><span class="va">rh</span></span></span>
+<span class="r-in"><span><span class="fu">DewPoint</span><span class="op">(</span><span class="va">p</span>, <span class="va">w</span><span class="op">)</span> <span class="op">-</span> <span class="fl">273.15</span>    <span class="co"># Recover Td</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20.01339</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -192,7 +221,7 @@ temperature.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

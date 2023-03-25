@@ -18,7 +18,7 @@ inverted defaults of high and low."><meta property="og:image" content="/logo.png
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@ inverted defaults of high and low."><meta property="og:image" content="/logo.png
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -68,38 +68,38 @@ inverted defaults of <code>high</code> and <code>low</code>.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">scale_colour_divergent</span><span class="op">(</span>
-  <span class="va">...</span>,
-  low <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"blue"</span><span class="op">)</span>,
-  mid <span class="op">=</span> <span class="st">"white"</span>,
-  high <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>,
-  midpoint <span class="op">=</span> <span class="fl">0</span>,
-  space <span class="op">=</span> <span class="st">"Lab"</span>,
-  na.value <span class="op">=</span> <span class="st">"grey50"</span>,
-  guide <span class="op">=</span> <span class="st">"colourbar"</span>
-<span class="op">)</span>
-
-<span class="fu">scale_color_divergent</span><span class="op">(</span>
-  <span class="va">...</span>,
-  low <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"blue"</span><span class="op">)</span>,
-  mid <span class="op">=</span> <span class="st">"white"</span>,
-  high <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>,
-  midpoint <span class="op">=</span> <span class="fl">0</span>,
-  space <span class="op">=</span> <span class="st">"Lab"</span>,
-  na.value <span class="op">=</span> <span class="st">"grey50"</span>,
-  guide <span class="op">=</span> <span class="st">"colourbar"</span>
-<span class="op">)</span>
-
-<span class="fu">scale_fill_divergent</span><span class="op">(</span>
-  <span class="va">...</span>,
-  low <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"blue"</span><span class="op">)</span>,
-  mid <span class="op">=</span> <span class="st">"white"</span>,
-  high <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>,
-  midpoint <span class="op">=</span> <span class="fl">0</span>,
-  space <span class="op">=</span> <span class="st">"Lab"</span>,
-  na.value <span class="op">=</span> <span class="st">"grey50"</span>,
-  guide <span class="op">=</span> <span class="st">"colourbar"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">scale_colour_divergent</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  low <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"blue"</span><span class="op">)</span>,</span>
+<span>  mid <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>  high <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>,</span>
+<span>  midpoint <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  space <span class="op">=</span> <span class="st">"Lab"</span>,</span>
+<span>  na.value <span class="op">=</span> <span class="st">"grey50"</span>,</span>
+<span>  guide <span class="op">=</span> <span class="st">"colourbar"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">scale_color_divergent</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  low <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"blue"</span><span class="op">)</span>,</span>
+<span>  mid <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>  high <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>,</span>
+<span>  midpoint <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  space <span class="op">=</span> <span class="st">"Lab"</span>,</span>
+<span>  na.value <span class="op">=</span> <span class="st">"grey50"</span>,</span>
+<span>  guide <span class="op">=</span> <span class="st">"colourbar"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">scale_fill_divergent</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  low <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"blue"</span><span class="op">)</span>,</span>
+<span>  mid <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>  high <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>,</span>
+<span>  midpoint <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  space <span class="op">=</span> <span class="st">"Lab"</span>,</span>
+<span>  na.value <span class="op">=</span> <span class="st">"grey50"</span>,</span>
+<span>  guide <span class="op">=</span> <span class="st">"colourbar"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -150,6 +150,7 @@ number of breaks given by the transformation.</p></dd>
 <li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default labels computed by the
 transformation object</p></li>
 <li><p>A character vector giving labels (must be same length as <code>breaks</code>)</p></li>
+<li><p>An expression vector (must be the same length as breaks). See ?plotmath for details.</p></li>
 <li><p>A function that takes the breaks as input and returns labels
 as output. Also accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function
 notation.</p></li>
@@ -214,23 +215,34 @@ expand the scale by 5% on each side for continuous variables, and by
 
   
 </dl></dd>
-<dt>low</dt>
+
+
+<dt>low, high</dt>
 <dd><p>Colours for low and high ends of the gradient.</p></dd>
+
+
 <dt>mid</dt>
 <dd><p>colour for mid point</p></dd>
-<dt>high</dt>
-<dd><p>Colours for low and high ends of the gradient.</p></dd>
+
+
 <dt>midpoint</dt>
 <dd><p>The midpoint (in data value) of the diverging scale.
 Defaults to 0.</p></dd>
+
+
 <dt>space</dt>
 <dd><p>colour space in which to calculate gradient. Must be "Lab" -
 other values are deprecated.</p></dd>
+
+
 <dt>na.value</dt>
 <dd><p>Colour to use for missing values</p></dd>
+
+
 <dt>guide</dt>
 <dd><p>Type of legend. Use <code>"colourbar"</code> for continuous
 colour bar, or <code>"legend"</code> for discrete colour legend.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -254,12 +266,12 @@ colour bar, or <code>"legend"</code> for discrete colour legend.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html" class="external-link">melt</a></span><span class="op">(</span><span class="va">volcano</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span>, z <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">..level..</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu">scale_colour_divergent</span><span class="op">(</span>midpoint <span class="op">=</span> <span class="fl">130</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html" class="external-link">melt</a></span><span class="op">(</span><span class="va">volcano</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span>, z <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">scale_colour_divergent</span><span class="op">(</span>midpoint <span class="op">=</span> <span class="fl">130</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="scale_divergent-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -274,7 +286,7 @@ colour bar, or <code>"legend"</code> for discrete colour legend.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

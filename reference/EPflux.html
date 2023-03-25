@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,34 +66,47 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">EPflux</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="va">lev</span>, <span class="va">t</span>, <span class="va">u</span>, <span class="va">v</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">EPflux</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="va">lev</span>, <span class="va">t</span>, <span class="va">u</span>, <span class="va">v</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>lon</dt>
 <dd><p>longitudes in degrees.</p></dd>
+
+
 <dt>lat</dt>
 <dd><p>latitudes in degrees.</p></dd>
+
+
 <dt>lev</dt>
 <dd><p>pressure levels.</p></dd>
+
+
 <dt>t</dt>
 <dd><p>temperature in Kelvin.</p></dd>
+
+
 <dt>u</dt>
 <dd><p>zonal wind in m/s.</p></dd>
+
+
 <dt>v</dt>
 <dd><p>meridional wind in m/s.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.table with columns <code>Flon</code>, <code>Flat</code> and <code>Flev</code> giving the zonal, meridional
+    
+
+<p>A data.table with columns <code>Flon</code>, <code>Flat</code> and <code>Flev</code> giving the zonal, meridional
 and vertical components of the EP Fluxes at each longitude, latitude and level.</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Plumb, R. A. (1985). On the Three-Dimensional Propagation of Stationary Waves. Journal of the Atmospheric Sciences, 42(3), 217–229. doi: <a href="https://doi.org/10.1175/1520-0469(1985)042&lt;0217:OTTDPO&gt;2.0.CO;2" class="external-link">10.1175/1520-0469(1985)042&lt;0217:OTTDPO&gt;2.0.CO;2</a>
+    <p>Plumb, R. A. (1985). On the Three-Dimensional Propagation of Stationary Waves. Journal of the Atmospheric Sciences, 42(3), 217–229. <a href="https://doi.org/10.1175/1520-0469%281985%29042%3C0217%3AOTTDPO%3E2.0.CO%3B2" class="external-link">doi:10.1175/1520-0469(1985)042&lt;0217:OTTDPO&gt;2.0.CO;2</a>
 
-Cohen, J., Barlow, M., Kushner, P. J., &amp; Saito, K. (2007). Stratosphere–Troposphere Coupling and Links with Eurasian Land Surface Variability. Journal of Climate, 20(21), 5335–5343. doi: <a href="https://doi.org/10.1175/2007JCLI1725.1" class="external-link">10.1175/2007JCLI1725.1</a></p>
+Cohen, J., Barlow, M., Kushner, P. J., &amp; Saito, K. (2007). Stratosphere–Troposphere Coupling and Links with Eurasian Land Surface Variability. Journal of Climate, 20(21), 5335–5343. <a href="https://doi.org/10.1175/2007JCLI1725.1" class="external-link">doi:10.1175/2007JCLI1725.1</a></p>
     </div>
 
   </div>
@@ -108,7 +121,7 @@ Cohen, J., Barlow, M., Kushner, P. J., &amp; Saito, K. (2007). Stratosphere–Tr
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

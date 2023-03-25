@@ -18,7 +18,7 @@ Analysis or Empirical Orthogonal Functions)."><meta property="og:image" content=
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@ Analysis or Empirical Orthogonal Functions)."><meta property="og:image" content=
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -68,17 +68,17 @@ Analysis or Empirical Orthogonal Functions).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">EOF</span><span class="op">(</span>
-  <span class="va">formula</span>,
-  n <span class="op">=</span> <span class="fl">1</span>,
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  B <span class="op">=</span> <span class="fl">0</span>,
-  probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0.025</span>, mid <span class="op">=</span> <span class="fl">0.5</span>, upper <span class="op">=</span> <span class="fl">0.975</span><span class="op">)</span>,
-  rotate <span class="op">=</span> <span class="cn">FALSE</span>,
-  suffix <span class="op">=</span> <span class="st">"PC"</span>,
-  fill <span class="op">=</span> <span class="cn">NULL</span>,
-  engine <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">EOF</span><span class="op">(</span></span>
+<span>  <span class="va">formula</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  B <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0.025</span>, mid <span class="op">=</span> <span class="fl">0.5</span>, upper <span class="op">=</span> <span class="fl">0.975</span><span class="op">)</span>,</span>
+<span>  rotate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  suffix <span class="op">=</span> <span class="st">"PC"</span>,</span>
+<span>  fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  engine <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -86,33 +86,52 @@ Analysis or Empirical Orthogonal Functions).</p>
     <dl><dt>formula</dt>
 <dd><p>a formula to build the matrix that will be used in the SVD
 decomposition (see Details)</p></dd>
+
+
 <dt>n</dt>
 <dd><p>which singular values to return (if <code>NULL</code>, returns all)</p></dd>
+
+
 <dt>data</dt>
 <dd><p>a data.frame</p></dd>
+
+
 <dt>B</dt>
 <dd><p>number of bootstrap samples used to estimate confidence intervals.
 Ignored if &lt;= 1.</p></dd>
+
+
 <dt>probs</dt>
 <dd><p>the probabilities of the lower and upper values of estimated
 confidence intervals. If named, it's names will be used as column names.</p></dd>
+
+
 <dt>rotate</dt>
 <dd><p>if <code>TRUE</code>, scores and loadings will be rotated using <a href="https://rdrr.io/r/stats/varimax.html" class="external-link">varimax</a></p></dd>
+
+
 <dt>suffix</dt>
 <dd><p>character to name the principal components</p></dd>
+
+
 <dt>fill</dt>
 <dd><p>value to infill implicit missing values or <code>NULL</code> if the
 data is dense.</p></dd>
+
+
 <dt>engine</dt>
 <dd><p>function to use to compute SVD. If <code>NULL</code> it uses <a href="https://rdrr.io/pkg/irlba/man/irlba.html" class="external-link">irlba::irlba</a>
 (if installed) if the largest singular value to compute is lower than half the maximum
 possible value, otherwise it uses <a href="https://rdrr.io/r/base/svd.html" class="external-link">base::svd</a>. If the user provides a function,
 it needs to be a drop-in replacement for <a href="https://rdrr.io/r/base/svd.html" class="external-link">base::svd</a> (the same arguments and
 output format).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An <code>eof</code> object which is just a named list of <code>data.table</code>s</p><dl><dt>left</dt>
+    
+
+<p>An <code>eof</code> object which is just a named list of <code>data.table</code>s</p><dl><dt>left</dt>
 <dd><p>data.table with left singular vectors</p></dd>
 
 <dt>right</dt>
@@ -150,7 +169,7 @@ standard deviation of each singular value.</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Fisher, A., Caffo, B., Schwartz, B., &amp; Zipunnikov, V. (2016). Fast, Exact Bootstrap Principal Component Analysis for p &gt; 1 million. Journal of the American Statistical Association, 111(514), 846–860. doi: <a href="https://doi.org/10.1080/01621459.2015.1062383" class="external-link">10.1080/01621459.2015.1062383</a></p>
+    <p>Fisher, A., Caffo, B., Schwartz, B., &amp; Zipunnikov, V. (2016). Fast, Exact Bootstrap Principal Component Analysis for p &gt; 1 million. Journal of the American Statistical Association, 111(514), 846–860. <a href="https://doi.org/10.1080/01621459.2015.1062383" class="external-link">doi:10.1080/01621459.2015.1062383</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -164,13 +183,14 @@ standard deviation of each singular value.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># The Antarctic Oscillation is computed from the</span></span>
-<span class="r-in"><span class="co"># monthly geopotential height anomalies weigthed by latitude.</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.t.w</span> <span class="op">:=</span> <span class="fu"><a href="Anomaly.html">Anomaly</a></span><span class="op">(</span><span class="va">gh</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">lat</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">      by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/openmp-utils.html" class="external-link">setDTthreads</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># The Antarctic Oscillation is computed from the</span></span></span>
+<span class="r-in"><span><span class="co"># monthly geopotential height anomalies weighted by latitude.</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.t.w</span> <span class="op">:=</span> <span class="fu"><a href="Anomaly.html">Anomaly</a></span><span class="op">(</span><span class="va">gh</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">lat</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           lon   lat lev       gh       date        gh.t.w</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1:   0.0 -22.5 700 3163.839 1990-01-01 -3.824174e+00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      2:   2.5 -22.5 700 3162.516 1990-01-01 -3.591582e+00</span>
@@ -183,12 +203,12 @@ standard deviation of each singular value.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 290302: 352.5 -90.0 700 2671.484 1995-12-01 -1.449750e-07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 290303: 355.0 -90.0 700 2671.484 1995-12-01 -1.449750e-07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 290304: 357.5 -90.0 700 2671.484 1995-12-01 -1.449750e-07</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">eof</span> <span class="op">&lt;-</span> <span class="fu">EOF</span><span class="op">(</span><span class="va">gh.t.w</span> <span class="op">~</span> <span class="va">lat</span> <span class="op">+</span> <span class="va">lon</span> <span class="op">|</span> <span class="va">date</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, data <span class="op">=</span> <span class="va">geopotential</span>,</span>
-<span class="r-in">           B <span class="op">=</span> <span class="fl">100</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>low <span class="op">=</span> <span class="fl">0.1</span>, hig <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Inspect the explained variance of each component</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">eof</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">eof</span> <span class="op">&lt;-</span> <span class="fu">EOF</span><span class="op">(</span><span class="va">gh.t.w</span> <span class="op">~</span> <span class="va">lat</span> <span class="op">+</span> <span class="va">lon</span> <span class="op">|</span> <span class="va">date</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, data <span class="op">=</span> <span class="va">geopotential</span>,</span></span>
+<span class="r-in"><span>           B <span class="op">=</span> <span class="fl">100</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>low <span class="op">=</span> <span class="fl">0.1</span>, hig <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Inspect the explained variance of each component</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">eof</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Importance of components:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Component Explained variance Cumulative variance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1                   32%                 32%</span>
@@ -196,42 +216,44 @@ standard deviation of each singular value.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       3                    8%                 51%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       4                    7%                 58%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       5                    6%                 64%</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/screeplot.html" class="external-link">screeplot</a></span><span class="op">(</span><span class="va">eof</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/screeplot.html" class="external-link">screeplot</a></span><span class="op">(</span><span class="va">eof</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="EOF-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Keep only the 1st.</span></span>
-<span class="r-in"><span class="va">aao</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">eof</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># AAO field</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">aao</span><span class="op">$</span><span class="va">left</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">gh.t.w</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">..level..</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Keep only the 1st.</span></span></span>
+<span class="r-in"><span><span class="va">aao</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">eof</span>, <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># AAO field</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">aao</span><span class="op">$</span><span class="va">left</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">gh.t.w</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="EOF-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># AAO signal</span></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">aao</span><span class="op">$</span><span class="va">right</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">gh.t.w</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># AAO signal</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">aao</span><span class="op">$</span><span class="va">right</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">gh.t.w</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="EOF-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># standard deviation, % of explained variance and</span></span>
-<span class="r-in"><span class="co"># confidence intervals.</span></span>
-<span class="r-in"><span class="va">aao</span><span class="op">$</span><span class="va">sdev</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># standard deviation, % of explained variance and</span></span></span>
+<span class="r-in"><span><span class="co"># confidence intervals.</span></span></span>
+<span class="r-in"><span><span class="va">aao</span><span class="op">$</span><span class="va">sdev</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     PC       sd        r2     low      hig</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: PC1 7050.352 0.3176266 6284.91 7899.572</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Reconstructed fields based only on the two first</span></span>
-<span class="r-in"><span class="co"># principal components</span></span>
-<span class="r-in"><span class="va">field</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">eof</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Compare it to the real field.</span></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">field</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh.t.w</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh.t.w</span>, linetype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/sign.html" class="external-link">sign</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Reconstructed fields based only on the two first</span></span></span>
+<span class="r-in"><span><span class="co"># principal components</span></span></span>
+<span class="r-in"><span><span class="va">field</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">eof</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Compare it to the real field.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">field</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh.t.w</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh.t.w</span>, linetype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/sign.html" class="external-link">sign</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`stat(level)` was deprecated in ggplot2 3.4.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `after_stat(level)` instead.</span>
 <span class="r-plt img"><img src="EOF-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -246,7 +268,7 @@ standard deviation of each singular value.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -20,7 +20,7 @@ discrete) see ggplot2::binned_scale()."><meta property="og:image" content="/logo
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -29,7 +29,7 @@ discrete) see ggplot2::binned_scale()."><meta property="og:image" content="/logo
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -72,52 +72,54 @@ discrete) see <code><a href="https://ggplot2.tidyverse.org/reference/binned_scal
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">as.discretised_scale</span><span class="op">(</span><span class="va">scale_function</span><span class="op">)</span>
-
-<span class="fu">scale_fill_discretised</span><span class="op">(</span>
-  <span class="va">...</span>,
-  low <span class="op">=</span> <span class="st">"#132B43"</span>,
-  high <span class="op">=</span> <span class="st">"#56B1F7"</span>,
-  space <span class="op">=</span> <span class="st">"Lab"</span>,
-  na.value <span class="op">=</span> <span class="st">"grey50"</span>,
-  guide <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_coloursteps.html" class="external-link">guide_colorsteps</a></span><span class="op">(</span>even.steps <span class="op">=</span> <span class="cn">FALSE</span>, show.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-  aesthetics <span class="op">=</span> <span class="st">"fill"</span>
-<span class="op">)</span>
-
-<span class="fu">scale_fill_divergent_discretised</span><span class="op">(</span>
-  <span class="va">...</span>,
-  low <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"blue"</span><span class="op">)</span>,
-  mid <span class="op">=</span> <span class="st">"white"</span>,
-  high <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>,
-  midpoint <span class="op">=</span> <span class="fl">0</span>,
-  space <span class="op">=</span> <span class="st">"Lab"</span>,
-  na.value <span class="op">=</span> <span class="st">"grey50"</span>,
-  guide <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_coloursteps.html" class="external-link">guide_colorsteps</a></span><span class="op">(</span>even.steps <span class="op">=</span> <span class="cn">FALSE</span>, show.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">discretised_scale</span><span class="op">(</span>
-  <span class="va">aesthetics</span>,
-  <span class="va">scale_name</span>,
-  <span class="va">palette</span>,
-  name <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,
-  breaks <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,
-  labels <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,
-  limits <span class="op">=</span> <span class="cn">NULL</span>,
-  trans <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/identity_trans.html" class="external-link">identity_trans</a></span><span class="op">(</span><span class="op">)</span>,
-  na.value <span class="op">=</span> <span class="cn">NA</span>,
-  drop <span class="op">=</span> <span class="cn">FALSE</span>,
-  guide <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_coloursteps.html" class="external-link">guide_colorsteps</a></span><span class="op">(</span>even.steps <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
-  position <span class="op">=</span> <span class="st">"left"</span>,
-  rescaler <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/rescale.html" class="external-link">rescale</a></span>,
-  oob <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/oob.html" class="external-link">censor</a></span>,
-  super <span class="op">=</span> <span class="va">ScaleDiscretised</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">as.discretised_scale</span><span class="op">(</span><span class="va">scale_function</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">scale_fill_discretised</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  low <span class="op">=</span> <span class="st">"#132B43"</span>,</span>
+<span>  high <span class="op">=</span> <span class="st">"#56B1F7"</span>,</span>
+<span>  space <span class="op">=</span> <span class="st">"Lab"</span>,</span>
+<span>  na.value <span class="op">=</span> <span class="st">"grey50"</span>,</span>
+<span>  guide <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_coloursteps.html" class="external-link">guide_colorsteps</a></span><span class="op">(</span>even.steps <span class="op">=</span> <span class="cn">FALSE</span>, show.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  aesthetics <span class="op">=</span> <span class="st">"fill"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">scale_fill_divergent_discretised</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  low <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"blue"</span><span class="op">)</span>,</span>
+<span>  mid <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>  high <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/muted.html" class="external-link">muted</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>,</span>
+<span>  midpoint <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  space <span class="op">=</span> <span class="st">"Lab"</span>,</span>
+<span>  na.value <span class="op">=</span> <span class="st">"grey50"</span>,</span>
+<span>  guide <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_coloursteps.html" class="external-link">guide_colorsteps</a></span><span class="op">(</span>even.steps <span class="op">=</span> <span class="cn">FALSE</span>, show.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">discretised_scale</span><span class="op">(</span></span>
+<span>  <span class="va">aesthetics</span>,</span>
+<span>  <span class="va">scale_name</span>,</span>
+<span>  <span class="va">palette</span>,</span>
+<span>  name <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  breaks <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  labels <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  limits <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trans <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/identity_trans.html" class="external-link">identity_trans</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  na.value <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  drop <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  guide <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_coloursteps.html" class="external-link">guide_colorsteps</a></span><span class="op">(</span>even.steps <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  position <span class="op">=</span> <span class="st">"left"</span>,</span>
+<span>  rescaler <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/rescale.html" class="external-link">rescale</a></span>,</span>
+<span>  oob <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/oob.html" class="external-link">censor</a></span>,</span>
+<span>  super <span class="op">=</span> <span class="va">ScaleDiscretised</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>scale_function</dt>
 <dd><p>a scale function (e.g. <code>scale_fill_divergent</code>)</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/continuous_scale.html" class="external-link">continuous_scale</a></code></p><dl><dt><code>scale_name</code></dt>
 <dd><p>The name of the scale that should be used for error messages
@@ -164,6 +166,7 @@ number of breaks given by the transformation.</p></dd>
 <li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default labels computed by the
 transformation object</p></li>
 <li><p>A character vector giving labels (must be same length as <code>breaks</code>)</p></li>
+<li><p>An expression vector (must be the same length as breaks). See ?plotmath for details.</p></li>
 <li><p>A function that takes the breaks as input and returns labels
 as output. Also accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function
 notation.</p></li>
@@ -228,40 +231,60 @@ expand the scale by 5% on each side for continuous variables, and by
 
   
 </dl></dd>
-<dt>low</dt>
+
+
+<dt>low, high</dt>
 <dd><p>Colours for low and high ends of the gradient.</p></dd>
-<dt>high</dt>
-<dd><p>Colours for low and high ends of the gradient.</p></dd>
+
+
 <dt>space</dt>
 <dd><p>colour space in which to calculate gradient. Must be "Lab" -
 other values are deprecated.</p></dd>
+
+
 <dt>na.value</dt>
 <dd><p>Colour to use for missing values</p></dd>
+
+
 <dt>guide</dt>
 <dd><p>Type of legend. Use <code>"colourbar"</code> for continuous
 colour bar, or <code>"legend"</code> for discrete colour legend.</p></dd>
+
+
 <dt>aesthetics</dt>
 <dd><p>Character string or vector of character strings listing the
 name(s) of the aesthetic(s) that this scale works with. This can be useful, for
 example, to apply colour settings to the <code>colour</code> and <code>fill</code> aesthetics at the
 same time, via <code>aesthetics = c("colour", "fill")</code>.</p></dd>
+
+
 <dt>mid</dt>
 <dd><p>colour for mid point</p></dd>
+
+
 <dt>midpoint</dt>
 <dd><p>The midpoint (in data value) of the diverging scale.
 Defaults to 0.</p></dd>
+
+
 <dt>scale_name</dt>
 <dd><p>The name of the scale that should be used for error messages
 associated with this scale.</p></dd>
+
+
 <dt>palette</dt>
 <dd><p>A palette function that when called with a numeric vector with
 values between 0 and 1 returns the corresponding output values
 (e.g., <code><a href="https://scales.r-lib.org/reference/area_pal.html" class="external-link">scales::area_pal()</a></code>).</p></dd>
+
+
 <dt>name</dt>
 <dd><p>The name of the scale. Used as the axis or legend title. If
 <code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code>, the default, the name of the scale is taken from the first
 mapping used for that aesthetic. If <code>NULL</code>, the legend title will be
 omitted.</p></dd>
+
+
 <dt>breaks</dt>
 <dd><p>One of:</p><ul><li><p><code>NULL</code> for no breaks</p></li>
 <li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default breaks computed by the
@@ -271,15 +294,20 @@ omitted.</p></dd>
 as output (e.g., a function returned by <code><a href="https://scales.r-lib.org/reference/breaks_extended.html" class="external-link">scales::extended_breaks()</a></code>).
 Also accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function notation.</p></li>
 </ul></dd>
+
+
 <dt>labels</dt>
 <dd><p>One of:</p><ul><li><p><code>NULL</code> for no labels</p></li>
 <li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default labels computed by the
 transformation object</p></li>
 <li><p>A character vector giving labels (must be same length as <code>breaks</code>)</p></li>
+<li><p>An expression vector (must be the same length as breaks). See ?plotmath for details.</p></li>
 <li><p>A function that takes the breaks as input and returns labels
 as output. Also accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function
 notation.</p></li>
 </ul></dd>
+
+
 <dt>limits</dt>
 <dd><p>One of:</p><ul><li><p><code>NULL</code> to use the default scale range</p></li>
 <li><p>A numeric vector of length two providing limits of the scale.
@@ -291,6 +319,8 @@ Note that setting limits on positional scales will <strong>remove</strong> data 
 If the purpose is to zoom, use the limit argument in the coordinate system
 (see <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian()</a></code>).</p></li>
 </ul></dd>
+
+
 <dt>trans</dt>
 <dd><p>For continuous scales, the name of a transformation object
 or the object itself. Built-in transformations include "asn", "atanh",
@@ -302,12 +332,18 @@ and methods for generating breaks and labels. Transformation objects
 are defined in the scales package, and are called <code>&lt;name&gt;_trans</code> (e.g.,
 <code><a href="https://scales.r-lib.org/reference/boxcox_trans.html" class="external-link">scales::boxcox_trans()</a></code>). You can create your own
 transformation with <code><a href="https://scales.r-lib.org/reference/trans_new.html" class="external-link">scales::trans_new()</a></code>.</p></dd>
+
+
 <dt>drop</dt>
 <dd><p>Should unused factor levels be omitted from the scale? The default, TRUE, uses the
 levels that appear in the data; FALSE uses all the levels in the factor.</p></dd>
+
+
 <dt>position</dt>
 <dd><p>For position scales, The position of the axis.
 <code>left</code> or <code>right</code> for y axes, <code>top</code> or <code>bottom</code> for x axes.</p></dd>
+
+
 <dt>rescaler</dt>
 <dd><p>A function used to scale the input values to the
 range [0, 1]. This is always <code><a href="https://scales.r-lib.org/reference/rescale.html" class="external-link">scales::rescale()</a></code>, except for
@@ -315,6 +351,8 @@ diverging and n colour gradients (i.e., <code><a href="https://ggplot2.tidyverse
 <code><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_colour_gradientn()</a></code>). The <code>rescaler</code> is ignored by position
 scales, which always use <code><a href="https://scales.r-lib.org/reference/rescale.html" class="external-link">scales::rescale()</a></code>. Also accepts rlang
 <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function notation.</p></dd>
+
+
 <dt>oob</dt>
 <dd><p>One of:</p><ul><li><p>Function that handles limits outside of the scale limits
 (out of bounds). Also accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a>
@@ -324,12 +362,17 @@ bounds values with <code>NA</code>.</p></li>
 <li><p><code><a href="https://scales.r-lib.org/reference/oob.html" class="external-link">scales::squish()</a></code> for squishing out of bounds values into range.</p></li>
 <li><p><code><a href="https://scales.r-lib.org/reference/oob.html" class="external-link">scales::squish_infinite()</a></code> for squishing infinite values into range.</p></li>
 </ul></dd>
+
+
 <dt>super</dt>
 <dd><p>The super class to use for the constructed scale</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A function with the same arguments as <code>scale_function</code> that works with discretised
+    
+
+<p>A function with the same arguments as <code>scale_function</code> that works with discretised
 values.</p>
     </div>
     <div id="details">
@@ -338,7 +381,7 @@ values.</p>
 and the breaks shown no the colour guide. Bear in mind that when using
 <code><a href="geom_contour_fill.html">geom_contour_fill()</a></code>, the default fill aesthetic (<code>level_mid</code>) is <strong>not</strong>
 discretised. To use this scale with that geom, you need to set
-<code>aes(fill = stat(level))</code>.</p>
+<code>aes(fill = after_stat(level))</code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -347,63 +390,65 @@ discretised. To use this scale with that geom, you need to set
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">scale_fill_brewer_discretised</span> <span class="op">&lt;-</span> <span class="fu">as.discretised_scale</span><span class="op">(</span><span class="va">scale_fill_distiller</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using the `level` compute aesthetic from `geom_contour_fill()`</span></span>
-<span class="r-in"><span class="co"># (or ggplot2::geom_contour_filled()), the default scale is discrete.</span></span>
-<span class="r-in"><span class="co"># This means that you cannot map colours to the underying numbers.</span></span>
-<span class="r-in"><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">faithfuld</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">waiting</span>, <span class="va">eruptions</span>, z <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">scale_fill_brewer_discretised</span> <span class="op">&lt;-</span> <span class="fu">as.discretised_scale</span><span class="op">(</span><span class="va">scale_fill_distiller</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/openmp-utils.html" class="external-link">setDTthreads</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using the `level` compute aesthetic from `geom_contour_fill()`</span></span></span>
+<span class="r-in"><span><span class="co"># (or ggplot2::geom_contour_filled()), the default scale is discrete.</span></span></span>
+<span class="r-in"><span><span class="co"># This means that you cannot map colours to the underlying numbers.</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">faithfuld</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">waiting</span>, <span class="va">eruptions</span>, z <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="discretised_scale-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu">scale_fill_discretised</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">scale_fill_discretised</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="discretised_scale-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The scale can be customised the same as any continuous colour scale</span></span>
-<span class="r-in"><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu">scale_fill_discretised</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#a62100"</span>, high <span class="op">=</span> <span class="st">"#fff394"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The scale can be customised the same as any continuous colour scale</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">scale_fill_discretised</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#a62100"</span>, high <span class="op">=</span> <span class="st">"#fff394"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="discretised_scale-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Setting limits explicitly will truncate the scale</span></span>
-<span class="r-in"><span class="co"># (if any limit is inside the range of the breaks but doesn't</span></span>
-<span class="r-in"><span class="co"># coincide with any range, it will be rounded with a warning)</span></span>
-<span class="r-in"><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu">scale_fill_discretised</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#a62100"</span>, high <span class="op">=</span> <span class="st">"#fff394"</span>,</span>
-<span class="r-in">                         limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.028</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Setting limits explicitly will truncate the scale</span></span></span>
+<span class="r-in"><span><span class="co"># (if any limit is inside the range of the breaks but doesn't</span></span></span>
+<span class="r-in"><span><span class="co"># coincide with any range, it will be rounded with a warning)</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">scale_fill_discretised</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#a62100"</span>, high <span class="op">=</span> <span class="st">"#fff394"</span>,</span></span>
+<span class="r-in"><span>                         limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.028</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>User supplied limits don't correspond to valid breaks. [0.01, 0.028] rounded to [0.01, 0.03]</span>
 <span class="r-plt img"><img src="discretised_scale-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Or extend it.</span></span>
-<span class="r-in"><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu">scale_fill_discretised</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#a62100"</span>, high <span class="op">=</span> <span class="st">"#fff394"</span>,</span>
-<span class="r-in">                         limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.07</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Or extend it.</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">scale_fill_discretised</span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#a62100"</span>, high <span class="op">=</span> <span class="st">"#fff394"</span>,</span></span>
+<span class="r-in"><span>                         limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.07</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="discretised_scale-5.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu">scale_fill_divergent_discretised</span><span class="op">(</span>midpoint <span class="op">=</span> <span class="fl">0.02</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">scale_fill_divergent_discretised</span><span class="op">(</span>midpoint <span class="op">=</span> <span class="fl">0.02</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="discretised_scale-6.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Existing continous scales can be "retrofitted" by changing the `super`</span></span>
-<span class="r-in"><span class="co"># and `guide` arguments.</span></span>
-<span class="r-in"><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_distiller</a></span><span class="op">(</span>super <span class="op">=</span> <span class="va">ScaleDiscretised</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Existing continous scales can be "retrofitted" by changing the `super`</span></span></span>
+<span class="r-in"><span><span class="co"># and `guide` arguments.</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_distiller</a></span><span class="op">(</span>super <span class="op">=</span> <span class="va">ScaleDiscretised</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="discretised_scale-7.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Unequal breaks will, by default, map to unequal spacing in the guide</span></span>
-<span class="r-in"><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.005</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="fl">0.04</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu">scale_fill_discretised</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Unequal breaks will, by default, map to unequal spacing in the guide</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.005</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="fl">0.04</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">scale_fill_discretised</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="discretised_scale-8.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># You can change that by the `even.steps` argument on ggplot2::guide_colorsteps()</span></span>
-<span class="r-in"><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.005</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="fl">0.04</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu">scale_fill_discretised</span><span class="op">(</span>guide <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_coloursteps.html" class="external-link">guide_colorsteps</a></span><span class="op">(</span>even.steps <span class="op">=</span> <span class="cn">TRUE</span>, show.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># You can change that by the `even.steps` argument on ggplot2::guide_colorsteps()</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">+</span> <span class="fu"><a href="geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.005</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="fl">0.04</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">scale_fill_discretised</span><span class="op">(</span>guide <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_coloursteps.html" class="external-link">guide_colorsteps</a></span><span class="op">(</span>even.steps <span class="op">=</span> <span class="cn">TRUE</span>, show.limits <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="discretised_scale-9.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -418,7 +463,7 @@ discretised. To use this scale with that geom, you need to set
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

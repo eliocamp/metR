@@ -18,7 +18,7 @@ on latitude."><meta property="og:image" content="/logo.png"><!-- mathjax --><scr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@ on latitude."><meta property="og:image" content="/logo.png"><!-- mathjax --><scr
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -68,36 +68,43 @@ on latitude.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">dlon</span><span class="op">(</span><span class="va">dx</span>, <span class="va">lat</span>, a <span class="op">=</span> <span class="fl">6731000</span><span class="op">)</span>
-
-<span class="fu">dlat</span><span class="op">(</span><span class="va">dy</span>, a <span class="op">=</span> <span class="fl">6731000</span><span class="op">)</span>
-
-<span class="fu">dx</span><span class="op">(</span><span class="va">dlon</span>, <span class="va">lat</span>, a <span class="op">=</span> <span class="fl">6731000</span><span class="op">)</span>
-
-<span class="fu">dy</span><span class="op">(</span><span class="va">dlat</span>, a <span class="op">=</span> <span class="fl">6731000</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dlon</span><span class="op">(</span><span class="va">dx</span>, <span class="va">lat</span>, a <span class="op">=</span> <span class="fl">6731000</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">dlat</span><span class="op">(</span><span class="va">dy</span>, a <span class="op">=</span> <span class="fl">6731000</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">dx</span><span class="op">(</span><span class="va">dlon</span>, <span class="va">lat</span>, a <span class="op">=</span> <span class="fl">6731000</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">dy</span><span class="op">(</span><span class="va">dlat</span>, a <span class="op">=</span> <span class="fl">6731000</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dx, dy</dt>
 <dd><p>interval in meters</p></dd>
+
+
 <dt>lat</dt>
 <dd><p>latitude, in degrees</p></dd>
+
+
 <dt>a</dt>
 <dd><p>radius of the Earth</p></dd>
+
+
 <dt>dlon, dlat</dt>
 <dd><p>interval in degrees</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Geostrophic wind</span></span>
-<span class="r-in"><span class="va">geopotential</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"v"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="GeostrophicWind.html">GeostrophicWind</a></span><span class="op">(</span><span class="va">gh</span>, <span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span>  <span class="co"># in meters/second</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Geostrophic wind</span></span></span>
+<span class="r-in"><span><span class="va">geopotential</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"v"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="GeostrophicWind.html">GeostrophicWind</a></span><span class="op">(</span><span class="va">gh</span>, <span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span>  <span class="co"># in meters/second</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lon   lat lev       gh       date  u           v</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.08181190</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.55189199</span>
@@ -110,7 +117,7 @@ on latitude.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4030: 352.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4031: 355.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000</span>
-<span class="r-in"><span class="va">geopotential</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dlon"</span>, <span class="st">"dlat"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="fu">dlon</span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span>, <span class="fu">dlat</span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="co"># in degrees/second</span></span>
+<span class="r-in"><span><span class="va">geopotential</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dlon"</span>, <span class="st">"dlat"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="fu">dlon</span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span>, <span class="fu">dlat</span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="co"># in degrees/second</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lon   lat lev       gh       date  u           v dlon          dlat</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.08181190   NA  9.208625e-06</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.55189199   NA  4.697828e-06</span>
@@ -123,7 +130,7 @@ on latitude.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4030: 352.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4031: 355.0 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4032: 357.5 -90.0 700 2715.936 1990-01-01 NA  0.00000000   NA  0.000000e+00</span>
-<span class="r-in"><span class="va">geopotential</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u2"</span>, <span class="st">"v2"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="fu">dx</span><span class="op">(</span><span class="va">dlon</span>, <span class="va">lat</span><span class="op">)</span>, <span class="fu">dy</span><span class="op">(</span><span class="va">dlat</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>   <span class="co"># again in degrees/second</span></span>
+<span class="r-in"><span><span class="va">geopotential</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u2"</span>, <span class="st">"v2"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="fu">dx</span><span class="op">(</span><span class="va">dlon</span>, <span class="va">lat</span><span class="op">)</span>, <span class="fu">dy</span><span class="op">(</span><span class="va">dlat</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>   <span class="co"># again in degrees/second</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         lon   lat lev       gh       date  u           v dlon          dlat u2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1:   0.0 -22.5 700 3163.839 1990-01-01 NA  1.08181190   NA  9.208625e-06 NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2:   2.5 -22.5 700 3162.516 1990-01-01 NA  0.55189199   NA  4.697828e-06 NA</span>
@@ -148,7 +155,7 @@ on latitude.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4030:  0.00000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4031:  0.00000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4032:  0.00000000</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -163,7 +170,7 @@ on latitude.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

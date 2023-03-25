@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,55 +66,55 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">label_placer_fraction</span><span class="op">(</span>
-  frac <span class="op">=</span> <span class="fl">0.5</span>,
-  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">label_placement_fraction</span><span class="op">(</span>
-  frac <span class="op">=</span> <span class="fl">0.5</span>,
-  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">label_placer_n</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">2</span>, rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">label_placement_n</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">2</span>, rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">label_placer_random</span><span class="op">(</span>
-  seed <span class="op">=</span> <span class="fl">42</span>,
-  n <span class="op">=</span> <span class="fl">1</span>,
-  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">label_placement_random</span><span class="op">(</span>
-  seed <span class="op">=</span> <span class="fl">42</span>,
-  n <span class="op">=</span> <span class="fl">1</span>,
-  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">label_placer_all</span><span class="op">(</span>rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">label_placement_all</span><span class="op">(</span>rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">label_placer_flattest</span><span class="op">(</span>
-  ref_angle <span class="op">=</span> <span class="fl">0</span>,
-  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">label_placement_flattest</span><span class="op">(</span>
-  ref_angle <span class="op">=</span> <span class="fl">0</span>,
-  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">label_placer_minmax</span><span class="op">(</span>
-  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vertical"</span>, <span class="st">"horizontal"</span><span class="op">)</span>,
-  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">label_placement_minmax</span><span class="op">(</span>
-  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vertical"</span>, <span class="st">"horizontal"</span><span class="op">)</span>,
-  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">label_placer_fraction</span><span class="op">(</span></span>
+<span>  frac <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">label_placement_fraction</span><span class="op">(</span></span>
+<span>  frac <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">label_placer_n</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">2</span>, rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">label_placement_n</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">2</span>, rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">label_placer_random</span><span class="op">(</span></span>
+<span>  seed <span class="op">=</span> <span class="fl">42</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">label_placement_random</span><span class="op">(</span></span>
+<span>  seed <span class="op">=</span> <span class="fl">42</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">label_placer_all</span><span class="op">(</span>rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">label_placement_all</span><span class="op">(</span>rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">label_placer_flattest</span><span class="op">(</span></span>
+<span>  ref_angle <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">label_placement_flattest</span><span class="op">(</span></span>
+<span>  ref_angle <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">label_placer_minmax</span><span class="op">(</span></span>
+<span>  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vertical"</span>, <span class="st">"horizontal"</span><span class="op">)</span>,</span>
+<span>  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">label_placement_minmax</span><span class="op">(</span></span>
+<span>  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vertical"</span>, <span class="st">"horizontal"</span><span class="op">)</span>,</span>
+<span>  rot_adjuster <span class="op">=</span> <span class="fu">isoband</span><span class="fu">::</span><span class="fu"><a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">angle_halfcircle_bottom</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -123,18 +123,29 @@
 <dd><p>A numeric vector with values between 0 and 1 representing
 where in the contour to put labels (i.e. <code>frac = 0.5</code> puts labels
 at the midpoint).</p></dd>
+
+
 <dt>rot_adjuster</dt>
 <dd><p>A function that standardizes the rotation angles of the labels.
-See e.g. <a href="https://wilkelab.org/isoband/reference/angle_halfcircle_bottom.html" class="external-link">isoband::angle_halfcircle_bottom</a>.</p></dd>
+See e.g. <a href="https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html" class="external-link">isoband::angle_halfcircle_bottom</a>.</p></dd>
+
+
 <dt>n</dt>
 <dd><p>Number of labels to put.</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>Seed to use for randomly choosing where to put labels.</p></dd>
+
+
 <dt>ref_angle</dt>
 <dd><p>Angle (in degrees counter-clockwise from East) to try
 to approximate labels.</p></dd>
+
+
 <dt>direction</dt>
 <dd><p>Direction in which to compute the maximum and minimum.</p></dd>
+
 </dl></div>
 
   </div>
@@ -149,7 +160,7 @@ to approximate labels.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

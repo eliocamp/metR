@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -62,6 +62,39 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="development version" id="metr-development-version">metR (development version)<a class="anchor" aria-label="anchor" href="#metr-development-version"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<ul><li>Fixes error in <code><a href="../reference/Derivate.html">Laplacian()</a></code> when computing the laplacian of a single variable. (<a href="https://github.com/eliocamp/metR/issues/170" class="external-link">#170</a>, Thanks <a href="https://github.com/pascaloettli" class="external-link">@pascaloettli</a>)</li></ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.14.0" id="metr-0140">metR 0.14.0<small>2023-03-23</small><a class="anchor" aria-label="anchor" href="#metr-0140"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-14-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-14-0"></a></h3>
+<ul><li>Not really a new feature per se, but all geoms now support the new linewidth aesthetic. <code><a href="../reference/geom_relief.html">geom_relief()</a></code> and <code><a href="../reference/geom_relief.html">geom_shadow()</a></code> now don’t have a size aesthetic, since they shouldn’t have had it anyway.</li>
+<li>The value of the maximum vector magnitude in <code><a href="../reference/scale_mag.html">scale_mag()</a></code> is now chosen to be a “pretty” number close to the maximum. This will prevent guides with many unnecesary decimal places (thanks, <a href="https://github.com/PanfengZhang" class="external-link">@PanfengZhang</a> <a href="https://github.com/eliocamp/metR/issues/161" class="external-link">#161</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-14-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-14-0"></a></h3>
+<ul><li>Documents the correct default <code>expand</code> value in <code>sale_x_longitude()</code> and friends (thanks, <a href="https://github.com/tamas-ferenci" class="external-link">@tamas-ferenci</a>, <a href="https://github.com/eliocamp/metR/issues/167" class="external-link">#167</a>).</li>
+<li>Fixes inconsistencies in generic methods.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.13.0" id="metr-0130">metR 0.13.0<small>2022-10-06</small><a class="anchor" aria-label="anchor" href="#metr-0130"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-13-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-13-0"></a></h3>
+<ul><li>The new function <code><a href="../reference/Smooth2D.html">Smooth2D()</a></code> smooths a 2D field (hence the name). There are two smoothing methods. <code><a href="../reference/Smooth2D.html">smooth_svd()</a></code> computes the SVD of the field and reconstructs it keeping only the leading values that ensures a maximum variance lost. <code><a href="../reference/Smooth2D.html">smooth_dct()</a></code> computes the Discrete Cosine Transform of the field and sets a proportion of the components to zero.</li></ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-13-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-13-0"></a></h3>
+<ul><li><p>Fixed a bug in <code><a href="../reference/geom_streamline.html">geom_streamline()</a></code> when plotting multiple fields on the same panel.</p></li>
+<li><p>Fixes a bug with <code><a href="../reference/GetTopography.html">GetTopography()</a></code> on Windows.</p></li>
+<li><p>Updates documentation to use valid HTML5 per CRAN’s new format.</p></li>
+<li><p>Fixes the “The following aesthetics were dropped during statistical transformation” warning for contours.</p></li>
+<li><p>Removes <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> file and URL checking because it didn’t work in some cases. (<a href="https://github.com/eliocamp/metR/issues/164" class="external-link">#164</a>, thanks <a href="https://github.com/pascaloettli" class="external-link">@pascaloettli</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="breaking-changes-0-13-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-13-0"></a></h3>
+<ul><li>Due to the udunits2 package being orphaned, <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> not longer uses it to parse dates and times. The homebrewed parser might be more limited, and the wild variety of netCDF files in the wild makes it hard to fully test. Please report any issues you have!</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.12.0" id="metr-0120">metR 0.12.0<small>2022-02-15</small><a class="anchor" aria-label="anchor" href="#metr-0120"></a></h2>
@@ -85,7 +118,7 @@
 <div class="section level3">
 <h3 id="new-features-0-11-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-11-0"></a></h3>
 <ul><li><p><code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> gains the ability to draw –and leave space for– labels! This is finally proper labelling support without having to use a different geom (<code><a href="../reference/geom_text_contour.html">geom_text_contour()</a></code>). Thanks to the isoband package for this.</p></li>
-<li><p>Following <a href="https://wilkelab.org/isoband/reference/label_placer.html" class="external-link">isoband’s naming convention</a>, the family of functions that decide where to place labels has been renamed as <code>label_placer_</code> and the corresponding argument is now <code>label.placer</code> . The <code>label_placement_</code> family of functions will be deprecated in future releases.</p></li>
+<li><p>Following <a href="https://isoband.r-lib.org/reference/label_placer.html" class="external-link">isoband’s naming convention</a>, the family of functions that decide where to place labels has been renamed as <code>label_placer_</code> and the corresponding argument is now <code>label.placer</code> . The <code>label_placement_</code> family of functions will be deprecated in future releases.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -114,8 +147,7 @@
 <h2 class="page-header" data-toc-text="0.9.2" id="metr-092">metR 0.9.2<small>2021-05-20</small><a class="anchor" aria-label="anchor" href="#metr-092"></a></h2>
 <div class="section level3">
 <h3 id="bugfixes-0-9-2">Bugfixes<a class="anchor" aria-label="anchor" href="#bugfixes-0-9-2"></a></h3>
-<ul><li>Fixes a bug in <code><a href="../reference/geom_contour_tanaka.html">geom_contour_tanaka()</a></code> in R &gt;= 4.1.0.</li>
-</ul></div>
+<ul><li>Fixes a bug in <code><a href="../reference/geom_contour_tanaka.html">geom_contour_tanaka()</a></code> in R &gt;= 4.1.0.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9.1" id="metr-091">metR 0.9.1<small>2021-02-07</small><a class="anchor" aria-label="anchor" href="#metr-091"></a></h2>
@@ -137,7 +169,7 @@
 <ul><li><p>I’m very happy with <code><a href="../reference/discretised_scale.html">discretised_scale()</a></code>, which is a type of scale which takes a discrete values that are the result of some discretisation and treats them as continuous. It’s, in a sense, the inverse of the new <code><a href="https://ggplot2.tidyverse.org/reference/binned_scale.html" class="external-link">ggplot2::binned_scale()</a></code>. Whereas. <code><a href="https://ggplot2.tidyverse.org/reference/binned_scale.html" class="external-link">ggplot2::binned_scale()</a></code> takes continuous values and then discretises them, <code><a href="../reference/discretised_scale.html">discretised_scale()</a></code> takes discrete values which where the result of some discretisation procedure (such as the levels of <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code>/<code><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">ggplot2::geom_contour_filled()</a></code>) and allows you to treat them as continuous.</p></li>
 <li><p>Related to that, <code><a href="../reference/geom_contour_fill.html">geom_contour_fill()</a></code> now gains a new computed aesthetic called <code>level_d</code>, which is the same as <code>level</code> but forces ggplot2 to automatically use the new discretised scale.</p></li>
 <li><p><code><a href="../reference/MakeBreaks.html">AnchorBreaks()</a></code> gains a <code>bins</code> argument to mimic the default functionality of <code><a href="../reference/MakeBreaks.html">MakeBreaks()</a></code>.</p></li>
-<li><p>New <code><a href="../reference/label_placers.html">label_placement_minmax()</a></code> to label contours at the maximum and minimum points of a contour (mimicking <a href="https://wilkelab.org/isoband/articles/isoband3.html" class="external-link">isoband’s behaviour</a>)</p></li>
+<li><p>New <code><a href="../reference/label_placers.html">label_placement_minmax()</a></code> to label contours at the maximum and minimum points of a contour (mimicking <a href="https://isoband.r-lib.org/articles/isoband3.html" class="external-link">isoband’s behaviour</a>)</p></li>
 <li><p><code><a href="../reference/geom_contour_tanaka.html">geom_contour_tanaka()</a></code> now has a (rather experimental) argument <code>smooth</code> which allows to smooth the transition between segments.</p></li>
 </ul></div>
 <div class="section level3">
@@ -176,13 +208,11 @@
 <div class="section level3">
 <h3 id="bugfixes-0-7-0">Bugfixes<a class="anchor" aria-label="anchor" href="#bugfixes-0-7-0"></a></h3>
 <ul><li>
-<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> won’t try to parse “time” dimensions that are not dates and will try to parse as time all dimensions.</li>
-</ul></div>
+<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> won’t try to parse “time” dimensions that are not dates and will try to parse as time all dimensions.</li></ul></div>
 <div class="section level3">
 <h3 id="breaking-changes-0-7-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-7-0"></a></h3>
 <ul><li>
-<code>seasonaly()</code> is now correctly called <code><a href="../reference/season.html">seasonally()</a></code>. This proves that you don’t put an ESL person in charge of naming stuff.</li>
-</ul></div>
+<code>seasonaly()</code> is now correctly called <code><a href="../reference/season.html">seasonally()</a></code>. This proves that you don’t put an ESL person in charge of naming stuff.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.6.0" id="metr-060---pileus">metR 0.6.0 - Pileus<small>2020-02-10</small><a class="anchor" aria-label="anchor" href="#metr-060---pileus"></a></h2>
@@ -205,8 +235,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="internals-0-6-0">Internals<a class="anchor" aria-label="anchor" href="#internals-0-6-0"></a></h3>
-<ul><li>Cleaned up a lot of dependencies. Some are gone (they were not longer needed) and some have been moved to Suggest. Overall metR should now be a bit lighter to install.</li>
-</ul></div>
+<ul><li>Cleaned up a lot of dependencies. Some are gone (they were not longer needed) and some have been moved to Suggest. Overall metR should now be a bit lighter to install.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5.0" id="metr-050---incus">metR 0.5.0 - Incus<small>2019-11-12</small><a class="anchor" aria-label="anchor" href="#metr-050---incus"></a></h2>
@@ -238,8 +267,7 @@
 <div class="section level3">
 <h3 id="bugfixes-0-4-0">Bugfixes<a class="anchor" aria-label="anchor" href="#bugfixes-0-4-0"></a></h3>
 <ul><li>
-<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> result will print correctly.</li>
-</ul></div>
+<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> result will print correctly.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.0" id="metr-030---cumulonimbus">metR 0.3.0 - Cumulonimbus<small>2019-03-12</small><a class="anchor" aria-label="anchor" href="#metr-030---cumulonimbus"></a></h2>
@@ -387,7 +415,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

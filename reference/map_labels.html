@@ -18,7 +18,7 @@ maps."><meta property="og:image" content="/logo.png"><!-- mathjax --><script src
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@ maps."><meta property="og:image" content="/logo.png"><!-- mathjax --><script src
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -68,19 +68,24 @@ maps.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">LonLabel</span><span class="op">(</span><span class="va">lon</span>, east <span class="op">=</span> <span class="st">"°E"</span>, west <span class="op">=</span> <span class="st">"°W"</span>, zero <span class="op">=</span> <span class="st">"°"</span><span class="op">)</span>
-
-<span class="fu">LatLabel</span><span class="op">(</span><span class="va">lat</span>, north <span class="op">=</span> <span class="st">"°N"</span>, south <span class="op">=</span> <span class="st">"°S"</span>, zero <span class="op">=</span> <span class="st">"°"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">LonLabel</span><span class="op">(</span><span class="va">lon</span>, east <span class="op">=</span> <span class="st">"°E"</span>, west <span class="op">=</span> <span class="st">"°W"</span>, zero <span class="op">=</span> <span class="st">"°"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">LatLabel</span><span class="op">(</span><span class="va">lat</span>, north <span class="op">=</span> <span class="st">"°N"</span>, south <span class="op">=</span> <span class="st">"°S"</span>, zero <span class="op">=</span> <span class="st">"°"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>lon</dt>
 <dd><p>longitude in degrees</p></dd>
+
+
 <dt>east, west, north, south, zero</dt>
 <dd><p>text to append for each quadrant</p></dd>
+
+
 <dt>lat</dt>
 <dd><p>latitude in degrees</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -108,8 +113,8 @@ maps.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="fu">LonLabel</span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">360</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">LonLabel</span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">360</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "0°"    "1°E"   "2°E"   "3°E"   "4°E"   "5°E"   "6°E"   "7°E"   "8°E"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [10] "9°E"   "10°E"  "11°E"  "12°E"  "13°E"  "14°E"  "15°E"  "16°E"  "17°E" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [19] "18°E"  "19°E"  "20°E"  "21°E"  "22°E"  "23°E"  "24°E"  "25°E"  "26°E" </span>
@@ -151,7 +156,7 @@ maps.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [343] "18°W"  "17°W"  "16°W"  "15°W"  "14°W"  "13°W"  "12°W"  "11°W"  "10°W" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [352] "9°W"   "8°W"   "7°W"   "6°W"   "5°W"   "4°W"   "3°W"   "2°W"   "1°W"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [361] "0°"   </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -166,7 +171,7 @@ maps.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

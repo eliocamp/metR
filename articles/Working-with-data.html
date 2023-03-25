@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.9000</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -91,7 +91,7 @@
       <h1 data-toc-skip>Working with data</h1>
                         <h4 data-toc-skip class="author">Elio Campitelli</h4>
             
-            <h4 data-toc-skip class="date">2022-02-15</h4>
+            <h4 data-toc-skip class="date">2023-03-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/HEAD/vignettes/Working-with-data.Rmd" class="external-link"><code>vignettes/Working-with-data.Rmd</code></a></small>
       <div class="hidden name"><code>Working-with-data.Rmd</code></div>
@@ -109,40 +109,40 @@
 </h3>
 <p>The function <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> relies on the <code>ncdf4</code> package to read NetCDF files with ease. It intelligently reads dimensions and data and returns a tidy <code>data.table</code> with optional keyed columns for faster processing afterwards. It can also return an <code>array</code> with named dimensions or a <code>vector</code>, for the case of adding new columns to an existing <code>data.table</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eliocamp/metR" class="external-link">metR</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-
-<span class="co"># If out = "vars", returns information about the available variables and </span>
-<span class="co"># dimensions</span>
-<span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"temperature.nc"</span>, package <span class="op">=</span> <span class="st">"metR"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/ReadNetCDF.html">GlanceNetCDF</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span>
-<span class="co">#&gt; ----- Variables ----- </span>
-<span class="co">#&gt; air:</span>
-<span class="co">#&gt;     mean Daily Air temperature in degK</span>
-<span class="co">#&gt;     Dimensions: lon by lat by level by time</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ----- Dimensions ----- </span>
-<span class="co">#&gt;   time: 1 values from 2010-07-09 to 2010-07-09 </span>
-<span class="co">#&gt;   level: 17 values from 10 to 1000 millibar</span>
-<span class="co">#&gt;   lat: 73 values from -90 to 90 degrees_north</span>
-<span class="co">#&gt;   lon: 144 values from 0 to 357.5 degrees_east</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eliocamp/metR" class="external-link">metR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># If out = "vars", returns information about the available variables and </span></span>
+<span><span class="co"># dimensions</span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"temperature.nc"</span>, package <span class="op">=</span> <span class="st">"metR"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/ReadNetCDF.html">GlanceNetCDF</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ----- Variables ----- </span></span>
+<span><span class="co">#&gt; air:</span></span>
+<span><span class="co">#&gt;     mean Daily Air temperature in degK</span></span>
+<span><span class="co">#&gt;     Dimensions: lon by lat by level by time</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ----- Dimensions ----- </span></span>
+<span><span class="co">#&gt;   time: 1 values from 2010-07-09 to 2010-07-09 </span></span>
+<span><span class="co">#&gt;   level: 17 values from 10 to 1000 millibar</span></span>
+<span><span class="co">#&gt;   lat: 73 values from -90 to 90 degrees_north</span></span>
+<span><span class="co">#&gt;   lon: 144 values from 0 to 357.5 degrees_east</span></span></code></pre></div>
 <p>Now that we know the name and the dimensions of the data, we can read it. <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> can also read only a (continuous) subset of the data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">air</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span><span class="op">(</span><span class="va">file</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="fl">90</span><span class="op">:</span><span class="fl">0</span>, level <span class="op">=</span> <span class="fl">925</span><span class="op">)</span><span class="op">)</span>
-
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">air</span>, color <span class="op">=</span> <span class="va">..level..</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">air</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span><span class="op">(</span><span class="va">file</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="fl">90</span><span class="op">:</span><span class="fl">0</span>, level <span class="op">=</span> <span class="fl">925</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">air</span>, color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 <p>Since the most consuming part of reading the file is melting a multidimensional array into a tidy <code>data.table</code>, if we wanted to add another variable to the same <code>data.table</code> we could save time by only returning a vector. <strong>It is of the utmost importance that both variables are on the same exact grid</strong>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">air</span><span class="op">[</span>, <span class="va">air2</span> <span class="op">:=</span> <span class="fu"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span><span class="op">(</span><span class="va">file</span>, out <span class="op">=</span> <span class="st">"vector"</span>,
-                         subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="fl">90</span><span class="op">:</span><span class="fl">0</span>, level <span class="op">=</span> <span class="fl">300</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">air2</span>, color <span class="op">=</span> <span class="va">..level..</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">air</span><span class="op">[</span>, <span class="va">air2</span> <span class="op">:=</span> <span class="fu"><a href="../reference/ReadNetCDF.html">ReadNetCDF</a></span><span class="op">(</span><span class="va">file</span>, out <span class="op">=</span> <span class="st">"vector"</span>,</span>
+<span>                         subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="fl">90</span><span class="op">:</span><span class="fl">0</span>, level <span class="op">=</span> <span class="fl">300</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">air2</span>, color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
 <p>Because <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> can read multiple variables at the same time, the <code>out = "vector"</code> output will be actually return a <code>list</code> of vectors (which integrates seamlessly with the <code>data.table</code> syntax). If one of the variables has degenerate dimensions (dimensions of length 1) then it will be recycled. That means that if the same file has Sea Surface Temperatures (a 2D field) and Air Temperature (a 3D field), then the returned <code>data.table</code> fill have an observation of Air Temperature <em>and</em> Sea Surface Temperature for each vertical level.</p>
 <p>The netCDF format is very flexible and this function has not been tested on every possible file so things may break in strange cases. If you have a file that cannot be read with this function, please <a href="https://github.com/eliocamp/metR/issues" class="external-link">submit an issue</a>.</p>
@@ -150,37 +150,37 @@
 <div class="section level3">
 <h3 id="gettopography">GetTopography<a class="anchor" aria-label="anchor" href="#gettopography"></a>
 </h3>
-<p><code><a href="../reference/GetTopography.html">GetTopography()</a></code> retrieves topographic data from the <a href="https://www.ngdc.noaa.gov/mgg/global/global.html" class="external-link">ETOPO1 Global Relief Model</a> into a convenient tidy <code>data.table</code>. By default, it also stores a cached version.</p>
+<p><code><a href="../reference/GetTopography.html">GetTopography()</a></code> retrieves topographic data from the <a href="https://www.ncei.noaa.gov/products/etopo-global-relief-model" class="external-link">ETOPO1 Global Relief Model</a> into a convenient tidy <code>data.table</code>. By default, it also stores a cached version.</p>
 <p>As an example, let’s look at a global relief map at 1/2° resolution with some ugly colour palette.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Not run because it needs internet access</span>
-<span class="co"># world &lt;- GetTopography(0, 360, 90, -90, resolution = 1)</span>
-
-<span class="co"># ggplot(world, aes(lon, lat)) +</span>
-<span class="co">#     geom_raster(aes(fill = h/1000)) +</span>
-<span class="co">#     geom_contour2(aes(z = h), breaks = 0, color = "black", size = 0.5) +</span>
-<span class="co">#     coord_fixed(expand = FALSE) +</span>
-<span class="co">#     scale_fill_gradientn(colors = topo.colors(6)[c(1, 2, 3, 4, 6)], </span>
-<span class="co">#                          values = scales::rescale(c(-11, 0, 0, 2, 7)),</span>
-<span class="co">#                          guide = "none") +</span>
-<span class="co">#     theme_void()</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Not run because it needs internet access</span></span>
+<span><span class="co"># world &lt;- GetTopography(0, 360, 90, -90, resolution = 1)</span></span>
+<span></span>
+<span><span class="co"># ggplot(world, aes(lon, lat)) +</span></span>
+<span><span class="co">#     geom_raster(aes(fill = h/1000)) +</span></span>
+<span><span class="co">#     geom_contour2(aes(z = h), breaks = 0, color = "black", size = 0.5) +</span></span>
+<span><span class="co">#     coord_fixed(expand = FALSE) +</span></span>
+<span><span class="co">#     scale_fill_gradientn(colors = topo.colors(6)[c(1, 2, 3, 4, 6)], </span></span>
+<span><span class="co">#                          values = scales::rescale(c(-11, 0, 0, 2, 7)),</span></span>
+<span><span class="co">#                          guide = "none") +</span></span>
+<span><span class="co">#     theme_void()</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="maskland">MaskLand<a class="anchor" aria-label="anchor" href="#maskland"></a>
 </h3>
 <p>Related to this problem, <code><a href="../reference/MaskLand.html">MaskLand()</a></code> returns a logical vector with <code>TRUE</code> if a point is over land.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">air</span><span class="op">[</span>, <span class="va">land</span> <span class="op">:=</span> <span class="fu"><a href="../reference/MaskLand.html">MaskLand</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span>
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">land</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">air</span><span class="op">[</span>, <span class="va">land</span> <span class="op">:=</span> <span class="fu"><a href="../reference/MaskLand.html">MaskLand</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">land</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 <p>With this, we can compare mean temperature over land and over sea by latitude.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>air <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">air</span><span class="op">)</span> <span class="op">-</span> <span class="fl">273.15</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lat</span>, <span class="va">land</span><span class="op">)</span><span class="op">]</span>,
-       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lat</span>, <span class="va">air</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">land</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>air <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">air</span><span class="op">)</span> <span class="op">-</span> <span class="fl">273.15</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lat</span>, <span class="va">land</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lat</span>, <span class="va">air</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">land</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 <p>The resolution of <code><a href="../reference/MaskLand.html">MaskLand()</a></code> is, in principle, only limited by the polygons used as mask. Currently it can only use maps from the <code>maps</code> package (see <code><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">?maps::map</a></code>).</p>
 </div>
@@ -189,11 +189,11 @@
 </h3>
 <p>Finally, <code><a href="../reference/GetSMNData.html">GetSMNData()</a></code> retrieves data from Argentina’s National Weather Service’s public access. This is a rapidly evolving project, and data availability is not guaranteed. Currently available data are hourly station data, daily station maximum and minimum temperature, and global and diffuse radiation measured at Buenos Aires and Ushuaia.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Not run because it needs internet access</span>
-<span class="co"># rad &lt;- GetSMNData(as.Date("2018-03-15"), type = "radiation")</span>
-
-<span class="co"># ggplot(rad, aes(date, global)) + </span>
-<span class="co">#     geom_line(aes(color = station))</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Not run because it needs internet access</span></span>
+<span><span class="co"># rad &lt;- GetSMNData(as.Date("2018-03-15"), type = "radiation")</span></span>
+<span></span>
+<span><span class="co"># ggplot(rad, aes(date, global)) + </span></span>
+<span><span class="co">#     geom_line(aes(color = station))</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -204,48 +204,48 @@
 </h3>
 <p>Empirical Orthogonal Functions (also known as Principal Component Analysis) is a widely use technique for dimensional reduction of large datasets. In R there are multiple packages that implement this methodology (in fact, base R has <em>two</em> functions) but, IMHO, they have awkward interfaces that don’t interact well with <code>data.table</code> (or <code>dplyr</code>) syntax. <code>metR</code>’s <code><a href="../reference/EOF.html">EOF()</a></code> essentially performs a Singular Value Decomposition of the data and returns the left and right singular vectors, and singular values in a tidy format.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span>
-<span class="co"># Weigthed geopotential anomaly</span>
-<span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.t.w</span> <span class="op">:=</span> <span class="fu"><a href="../reference/Anomaly.html">Anomaly</a></span><span class="op">(</span><span class="va">gh</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">lat</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
-
-<span class="va">eof</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/EOF.html">EOF</a></span><span class="op">(</span><span class="va">gh.t.w</span> <span class="op">~</span> <span class="va">date</span> <span class="op">|</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span>, data <span class="op">=</span> <span class="va">geopotential</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">eof</span><span class="op">)</span>
-<span class="co">#&gt; List of 3</span>
-<span class="co">#&gt;  $ left :Classes 'data.table' and 'data.frame':  144 obs. of  3 variables:</span>
-<span class="co">#&gt;   ..$ date  : Date[1:144], format: "1990-01-01" "1990-02-01" ...</span>
-<span class="co">#&gt;   ..$ PC    : Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="co">#&gt;   ..$ gh.t.w: num [1:144] 0.0633 -0.1145 -0.0432 0.1926 0.1539 ...</span>
-<span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
-<span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:</span>
-<span class="co">#&gt;   ..$ lon   : num [1:8064] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span>
-<span class="co">#&gt;   ..$ lat   : num [1:8064] -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 ...</span>
-<span class="co">#&gt;   ..$ PC    : Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="co">#&gt;   ..$ gh.t.w: num [1:8064] 2.32e-04 4.67e-06 -1.17e-04 -1.47e-04 -1.12e-04 ...</span>
-<span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
-<span class="co">#&gt;  $ sdev :Classes 'data.table' and 'data.frame':  2 obs. of  3 variables:</span>
-<span class="co">#&gt;   ..$ PC: Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 2</span>
-<span class="co">#&gt;   ..$ sd: num [1:2] 7050 4228</span>
-<span class="co">#&gt;   ..$ r2: num [1:2] 0.318 0.114</span>
-<span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
-<span class="co">#&gt;  - attr(*, "call")= language EOF(formula = gh.t.w ~ date | lon + lat, n = 1:2, data = geopotential)</span>
-<span class="co">#&gt;  - attr(*, "class")= chr [1:2] "eof" "list"</span>
-<span class="co">#&gt;  - attr(*, "suffix")= chr "PC"</span>
-<span class="co">#&gt;  - attr(*, "value.var")= chr "gh.t.w"</span>
-<span class="co">#&gt;  - attr(*, "engine")=function (A, nv, nu)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span>
+<span><span class="co"># Weigthed geopotential anomaly</span></span>
+<span><span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.t.w</span> <span class="op">:=</span> <span class="fu"><a href="../reference/Anomaly.html">Anomaly</a></span><span class="op">(</span><span class="va">gh</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">lat</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">eof</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/EOF.html">EOF</a></span><span class="op">(</span><span class="va">gh.t.w</span> <span class="op">~</span> <span class="va">date</span> <span class="op">|</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span>, data <span class="op">=</span> <span class="va">geopotential</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">eof</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 3</span></span>
+<span><span class="co">#&gt;  $ left :Classes 'data.table' and 'data.frame':  144 obs. of  3 variables:</span></span>
+<span><span class="co">#&gt;   ..$ date  : Date[1:144], format: "1990-01-01" "1990-02-01" ...</span></span>
+<span><span class="co">#&gt;   ..$ PC    : Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">#&gt;   ..$ gh.t.w: num [1:144] 0.0633 -0.1145 -0.0432 0.1926 0.1539 ...</span></span>
+<span><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:</span></span>
+<span><span class="co">#&gt;   ..$ lon   : num [1:8064] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span></span>
+<span><span class="co">#&gt;   ..$ lat   : num [1:8064] -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 ...</span></span>
+<span><span class="co">#&gt;   ..$ PC    : Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">#&gt;   ..$ gh.t.w: num [1:8064] 2.32e-04 4.67e-06 -1.17e-04 -1.47e-04 -1.12e-04 ...</span></span>
+<span><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ sdev :Classes 'data.table' and 'data.frame':  2 obs. of  3 variables:</span></span>
+<span><span class="co">#&gt;   ..$ PC: Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 2</span></span>
+<span><span class="co">#&gt;   ..$ sd: num [1:2] 7050 4228</span></span>
+<span><span class="co">#&gt;   ..$ r2: num [1:2] 0.318 0.114</span></span>
+<span><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  - attr(*, "call")= language EOF(formula = gh.t.w ~ date | lon + lat, n = 1:2, data = geopotential)</span></span>
+<span><span class="co">#&gt;  - attr(*, "class")= chr [1:2] "eof" "list"</span></span>
+<span><span class="co">#&gt;  - attr(*, "suffix")= chr "PC"</span></span>
+<span><span class="co">#&gt;  - attr(*, "value.var")= chr "gh.t.w"</span></span>
+<span><span class="co">#&gt;  - attr(*, "engine")=function (A, nv, nu)</span></span></code></pre></div>
 <p>In the returned list of <code>data.table</code>s the left (right) singular vectors are fields defined with the dimensions on the left (right) hand of the formula. In this case, the right <code>data.table</code> holds spatial fields and the left <code>data.table</code> holds a timeseries. If the order of the right hand side and left hand side of the formula are reversed, and <code>rotate == FALSE</code>, then the result is the same. Rotation of the singular vectors is perform via <code><a href="https://rdrr.io/r/stats/varimax.html" class="external-link">stats::varimax()</a></code> and perform from the (scaled) right singular vector.</p>
 <p>For completion, let’s plot each Principal Component.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">eof</span><span class="op">$</span><span class="va">right</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh.t.w</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">PC</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">eof</span><span class="op">$</span><span class="va">right</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh.t.w</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">PC</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">eof</span><span class="op">$</span><span class="va">left</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">gh.t.w</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">PC</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">eof</span><span class="op">$</span><span class="va">left</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">gh.t.w</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">PC</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-9-2.png" width="672"></p>
 <p>Where the 1st Principal Component is clearly the <a href="http://www.cpc.ncep.noaa.gov/products/precip/CWlink/daily_ao_index/aao/aao.shtml" class="external-link">Antarctic Oscillation</a> and the 2nd Principal Component looks like the Pacific–South American Pattern.</p>
 </div>
@@ -254,42 +254,42 @@
 </h3>
 <p>As shown above, <code><a href="../reference/EOF.html">EOF()</a></code> needs a complete data matrix. Imputing missing values is a huge problem on it’s own with a lot of different algorithms. <code>metR</code> offers <code><a href="../reference/ImputeEOF.html">ImputeEOF()</a></code>, which is an implementation of the <a href="https://doi.org/10.12681/mms.64" class="external-link">DINEOF</a> algorithm for imputation of missing data. Its interface is similar to that of <code><a href="../reference/EOF.html">EOF()</a></code> but it returns a vector of imputed values.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="va">geopotential</span><span class="op">[</span><span class="op">]</span>
-<span class="va">geopotential</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">.N</span>, <span class="va">.N</span><span class="op">*</span><span class="fl">0.8</span><span class="op">)</span>, <span class="va">gh.na</span> <span class="op">:=</span> <span class="va">gh</span><span class="op">]</span>
-
-<span class="va">geopotential</span><span class="op">[</span>, <span class="va">imputed</span> <span class="op">:=</span> <span class="fu"><a href="../reference/ImputeEOF.html">ImputeEOF</a></span><span class="op">(</span><span class="va">gh.na</span> <span class="op">~</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span> <span class="op">|</span> <span class="va">date</span>, max.eof <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span>
-<span class="co">#&gt; Classes 'data.table' and 'data.frame':   290304 obs. of  8 variables:</span>
-<span class="co">#&gt;  $ lon    : num  0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span>
-<span class="co">#&gt;  $ lat    : num  -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 ...</span>
-<span class="co">#&gt;  $ lev    : int  700 700 700 700 700 700 700 700 700 700 ...</span>
-<span class="co">#&gt;  $ gh     : num  3164 3163 3162 3162 3163 ...</span>
-<span class="co">#&gt;  $ date   : Date, format: "1990-01-01" "1990-01-01" ...</span>
-<span class="co">#&gt;  $ gh.t.w : num  -3.82 -3.59 -2.86 -2.4 -2.07 ...</span>
-<span class="co">#&gt;  $ gh.na  : num  3164 3163 NA 3162 3163 ...</span>
-<span class="co">#&gt;  $ imputed: num  3164 3163 3168 3162 3163 ...</span>
-<span class="co">#&gt;   ..- attr(*, "eof")= int 5</span>
-<span class="co">#&gt;   ..- attr(*, "rmse")= num 26.8</span>
-<span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></code></pre></div>
-<p>The imputed vector is returned along with the Root Mean Square Error estimated from cross-validation and the number of EOFs used in the imputation as attributes. In this case, with 5 EOFs the imputed values have an estimated rmse of 26.85.</p>
+<code class="sourceCode R"><span><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="va">geopotential</span><span class="op">[</span><span class="op">]</span></span>
+<span><span class="va">geopotential</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">.N</span>, <span class="va">.N</span><span class="op">*</span><span class="fl">0.8</span><span class="op">)</span>, <span class="va">gh.na</span> <span class="op">:=</span> <span class="va">gh</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">geopotential</span><span class="op">[</span>, <span class="va">imputed</span> <span class="op">:=</span> <span class="fu"><a href="../reference/ImputeEOF.html">ImputeEOF</a></span><span class="op">(</span><span class="va">gh.na</span> <span class="op">~</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span> <span class="op">|</span> <span class="va">date</span>, max.eof <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Classes 'data.table' and 'data.frame':   290304 obs. of  8 variables:</span></span>
+<span><span class="co">#&gt;  $ lon    : num  0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span></span>
+<span><span class="co">#&gt;  $ lat    : num  -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 ...</span></span>
+<span><span class="co">#&gt;  $ lev    : int  700 700 700 700 700 700 700 700 700 700 ...</span></span>
+<span><span class="co">#&gt;  $ gh     : num  3164 3163 3162 3162 3163 ...</span></span>
+<span><span class="co">#&gt;  $ date   : Date, format: "1990-01-01" "1990-01-01" ...</span></span>
+<span><span class="co">#&gt;  $ gh.t.w : num  -3.82 -3.59 -2.86 -2.4 -2.07 ...</span></span>
+<span><span class="co">#&gt;  $ gh.na  : num  3164 3163 3162 NA 3163 ...</span></span>
+<span><span class="co">#&gt;  $ imputed: num  3164 3163 3162 3160 3163 ...</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "eof")= int 5</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "rmse")= num 26.6</span></span>
+<span><span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></span></code></pre></div>
+<p>The imputed vector is returned along with the Root Mean Square Error estimated from cross-validation and the number of EOFs used in the imputation as attributes. In this case, with 5 EOFs the imputed values have an estimated rmse of 26.57.</p>
 </div>
 <div class="section level3">
 <h3 id="interpolate">Interpolate<a class="anchor" aria-label="anchor" href="#interpolate"></a>
 </h3>
-<p><code><a href="../reference/Interpolate.html">Interpolate()</a></code> is a convenient wrapper of <code><a href="https://rdrr.io/pkg/fields/man/interp.surface.html" class="external-link">fields::interp.surface()</a></code> that makes it work better inside <code>data.table</code>s. It can be used to a new grid or to add interpolated values to an existing grid. It’s easy to interpolate multiple values with the formula interface.</p>
+<p><code><a href="../reference/Interpolate.html">Interpolate()</a></code> performs linear interpolation using a <code>data.table</code>-friendly syntax. It can be used to a new grid or to add interpolated values to an existing grid. It’s easy to interpolate multiple values with the formula interface.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># new grid</span>
-<span class="va">x.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-<span class="va">y.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">90</span>, <span class="fl">0</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-
-<span class="va">interpolated</span> <span class="op">&lt;-</span> <span class="va">geopotential</span><span class="op">[</span>, <span class="fu"><a href="../reference/Interpolate.html">Interpolate</a></span><span class="op">(</span><span class="va">gh</span> <span class="op">|</span> <span class="va">gh.t.w</span> <span class="op">~</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span>, <span class="va">x.out</span>, <span class="va">y.out</span><span class="op">)</span>, 
-                             by <span class="op">=</span> <span class="va">date</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># new grid</span></span>
+<span><span class="va">x.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">y.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">90</span>, <span class="fl">0</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">interpolated</span> <span class="op">&lt;-</span> <span class="va">geopotential</span><span class="op">[</span>, <span class="fu"><a href="../reference/Interpolate.html">Interpolate</a></span><span class="op">(</span><span class="va">gh</span> <span class="op">|</span> <span class="va">gh.t.w</span> <span class="op">~</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span>, <span class="va">x.out</span>, <span class="va">y.out</span><span class="op">)</span>, </span>
+<span>                             by <span class="op">=</span> <span class="va">date</span><span class="op">]</span></span></code></pre></div>
 <p>To add interpolated values to an existing <code>data.table</code> use <code>grid = FALSE</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.new</span> <span class="op">:=</span> <span class="fu"><a href="../reference/Interpolate.html">Interpolate</a></span><span class="op">(</span><span class="va">gh</span> <span class="op">~</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span>, <span class="va">lon</span>, <span class="va">lat</span>, 
-                                     data <span class="op">=</span> <span class="va">interpolated</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">d</span><span class="op">]</span>,
-                                     grid <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">gh</span>, 
-             by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span>d <span class="op">=</span> <span class="va">date</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.new</span> <span class="op">:=</span> <span class="fu"><a href="../reference/Interpolate.html">Interpolate</a></span><span class="op">(</span><span class="va">gh</span> <span class="op">~</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span>, <span class="va">lon</span>, <span class="va">lat</span>, </span>
+<span>                                     data <span class="op">=</span> <span class="va">interpolated</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">d</span><span class="op">]</span>,</span>
+<span>                                     grid <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">gh</span>, </span>
+<span>             by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span>d <span class="op">=</span> <span class="va">date</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -300,17 +300,17 @@
 </h3>
 <p>Derivation is the bread and butter of the researcher so <code><a href="../reference/Derivate.html">Derivate()</a></code> offers a convenient interface for derivation using finite differences of multidimensional data. It has support for cyclical boundary conditions and for the special case of spherical coordinates (think: Earth).</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,    <span class="co"># think: gh as a function of lon and lat</span>
-             <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gh.dlon"</span>, <span class="st">"gh.dlat"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="../reference/Derivate.html">Derivate</a></span><span class="op">(</span><span class="va">gh</span> <span class="op">~</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span>, 
-                                                 cyclical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, 
-                                                 sphere <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">]</span>
-
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/geom_arrow.html">geom_vector</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">gh.dlon</span>, dy <span class="op">=</span> <span class="va">gh.dlat</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,    <span class="co"># think: gh as a function of lon and lat</span></span>
+<span>             <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gh.dlon"</span>, <span class="st">"gh.dlat"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="../reference/Derivate.html">Derivate</a></span><span class="op">(</span><span class="va">gh</span> <span class="op">~</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span>, </span>
+<span>                                                 cyclical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, </span>
+<span>                                                 sphere <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_arrow.html">geom_vector</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">gh.dlon</span>, dy <span class="op">=</span> <span class="va">gh.dlat</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 <p>There are several wrappers around <code><a href="../reference/Derivate.html">Derivate()</a></code> to perform other common related operations, <code><a href="../reference/Derivate.html">Laplacian()</a></code>, <code><a href="../reference/Derivate.html">Divergence()</a></code> and <code><a href="../reference/Derivate.html">Vorticity()</a></code>.</p>
 </div>
@@ -319,14 +319,14 @@
 </h3>
 <p>Finally, the function <code><a href="../reference/GeostrophicWind.html">GeostrophicWind()</a></code> computes geostrophic wind from geopotential height.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"v"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="../reference/GeostrophicWind.html">GeostrophicWind</a></span><span class="op">(</span><span class="va">gh</span>, <span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span>
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/geom_arrow.html">geom_vector</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="fu"><a href="../reference/spherical.html">dlon</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span>, dy <span class="op">=</span> <span class="fu"><a href="../reference/spherical.html">dlat</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span>, 
-              skip.y <span class="op">=</span> <span class="fl">1</span>, skip.x <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"v"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="../reference/GeostrophicWind.html">GeostrophicWind</a></span><span class="op">(</span><span class="va">gh</span>, <span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_arrow.html">geom_vector</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="fu"><a href="../reference/spherical.html">dlon</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">lat</span><span class="op">)</span>, dy <span class="op">=</span> <span class="fu"><a href="../reference/spherical.html">dlat</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>              skip.y <span class="op">=</span> <span class="fl">1</span>, skip.x <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 </div>
 <div class="section level3">
@@ -335,27 +335,27 @@
 <p><code>metR</code> offers several functions related to thermodynamical processes in the atmosphere (see <code><a href="../reference/thermodynamics.html">?thermodynamics</a></code>). These are <code><a href="../reference/thermodynamics.html">IdealGas()</a></code>, <code><a href="../reference/thermodynamics.html">Adiabat()</a></code>, <code><a href="../reference/thermodynamics.html">VirtualTemperature()</a></code>, <code><a href="../reference/thermodynamics.html">MixingRatio()</a></code>, <code><a href="../reference/thermodynamics.html">ClausiusClapeyron()</a></code> and <code><a href="../reference/thermodynamics.html">DewPoint()</a></code>. Each function represents a different physical relationship between variables and computes one of them from the others.</p>
 <p>For example, <code><a href="../reference/thermodynamics.html">IdealGas()</a></code> uses the ideal gas law to compute pressure, temperature or density.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Density of air at 20°C and 1030hPa.</span>
-<span class="op">(</span><span class="va">rho</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thermodynamics.html">IdealGas</a></span><span class="op">(</span><span class="fl">1013</span><span class="op">*</span><span class="fl">100</span>, <span class="fl">20</span> <span class="op">+</span> <span class="fl">273.15</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1.203788</span>
-
-<span class="co"># Of course, the temperature of air at that density </span>
-<span class="co"># and same pressure is 20°C.</span>
-<span class="fu"><a href="../reference/thermodynamics.html">IdealGas</a></span><span class="op">(</span><span class="fl">1013</span><span class="op">*</span><span class="fl">100</span>, rho <span class="op">=</span> <span class="va">rho</span><span class="op">)</span> <span class="op">-</span> <span class="fl">273.15</span>
-<span class="co">#&gt; [1] 20</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Density of air at 20°C and 1030hPa.</span></span>
+<span><span class="op">(</span><span class="va">rho</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thermodynamics.html">IdealGas</a></span><span class="op">(</span><span class="fl">1013</span><span class="op">*</span><span class="fl">100</span>, <span class="fl">20</span> <span class="op">+</span> <span class="fl">273.15</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1.203788</span></span>
+<span></span>
+<span><span class="co"># Of course, the temperature of air at that density </span></span>
+<span><span class="co"># and same pressure is 20°C.</span></span>
+<span><span class="fu"><a href="../reference/thermodynamics.html">IdealGas</a></span><span class="op">(</span><span class="fl">1013</span><span class="op">*</span><span class="fl">100</span>, rho <span class="op">=</span> <span class="va">rho</span><span class="op">)</span> <span class="op">-</span> <span class="fl">273.15</span></span>
+<span><span class="co">#&gt; [1] 20</span></span></code></pre></div>
 <p>Different variables can be derived by combining these functions. For example, it’s easy to calculate relative humidity from data on temperature and dewpoint, then saturation mixing ratio from pressure and temperature and finally the actual mixing ratio.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Relative humidity from T and Td</span>
-<span class="va">t</span> <span class="op">&lt;-</span> <span class="fl">25</span> <span class="op">+</span> <span class="fl">273.15</span>
-<span class="va">td</span> <span class="op">&lt;-</span> <span class="fl">20</span> <span class="op">+</span> <span class="fl">273.15</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1000000</span>
-<span class="op">(</span><span class="va">rh</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span><span class="op">(</span><span class="va">td</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.7380251</span>
-
-<span class="co"># Mixing ratio</span>
-<span class="va">ws</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thermodynamics.html">MixingRatio</a></span><span class="op">(</span><span class="va">p</span>, <span class="fu"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span>
-<span class="op">(</span><span class="va">w</span> <span class="op">&lt;-</span> <span class="va">ws</span><span class="op">*</span><span class="va">rh</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.001456004</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Relative humidity from T and Td</span></span>
+<span><span class="va">t</span> <span class="op">&lt;-</span> <span class="fl">25</span> <span class="op">+</span> <span class="fl">273.15</span></span>
+<span><span class="va">td</span> <span class="op">&lt;-</span> <span class="fl">20</span> <span class="op">+</span> <span class="fl">273.15</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1000000</span></span>
+<span><span class="op">(</span><span class="va">rh</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span><span class="op">(</span><span class="va">td</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.7380251</span></span>
+<span></span>
+<span><span class="co"># Mixing ratio</span></span>
+<span><span class="va">ws</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thermodynamics.html">MixingRatio</a></span><span class="op">(</span><span class="va">p</span>, <span class="fu"><a href="../reference/thermodynamics.html">ClausiusClapeyron</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">w</span> <span class="op">&lt;-</span> <span class="va">ws</span><span class="op">*</span><span class="va">rh</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.001456004</span></span></code></pre></div>
 <p>Of course, <code>w</code> can be also be computed by <code>DewPoint(p, td = td)</code> which gives essentially the same result: 0.0014548.</p>
 </div>
 </div>
@@ -378,7 +378,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

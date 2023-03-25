@@ -2,7 +2,7 @@ Type: Package
 Package: metR
 Language: en-GB
 Title: Tools for Easier Analysis of Meteorological Fields
-Version: 0.14.0
+Version: 0.14.0.9000
 Authors@R: 
     c(person(given = "Elio",
            family = "Campitelli",

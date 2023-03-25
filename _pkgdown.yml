@@ -27,6 +27,7 @@ reference:
       - map_labels
       - label_placers
       - standard_atmosphere
+      - Smooth2D
   - title: Physics
     desc: functions related to physical processes
     contents:

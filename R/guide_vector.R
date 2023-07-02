@@ -121,6 +121,16 @@ guide_geom.vector <- function(guide, layers, ...) {
     legend$get_layer_key(guide, layers)
 }
 
+#' @export
+#' @importFrom ggplot2 guide_gengrob
+guide_gengrob.vector <- function(guide, theme) {
+    if (utils::packageVersion("ggplot2") <= "3.4.2") {
+        return(NextMethod())
+    }
+    legend <- ggplot2::guide_legend()
+    legend$draw(theme, guide)
+}
+
 
 globalVariables(c("C", "R", "key.row", "key.col", "label.row", "label.col"))
 

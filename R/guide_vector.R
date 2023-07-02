@@ -111,6 +111,15 @@ guide_train.vector <- function(guide, scale, aesthetic = NULL) {
     guide
 }
 
+#' @export
+#' @importFrom ggplot2 guide_geom
+guide_geom.vector <- function(guide, layers, ...) {
+    if (utils::packageVersion("ggplot2") <= "3.4.2") {
+        return(NextMethod())
+    }
+    legend <- ggplot2::guide_legend()
+    legend$get_layer_key(guide, layers)
+}
 
 
 globalVariables(c("C", "R", "key.row", "key.col", "label.row", "label.col"))

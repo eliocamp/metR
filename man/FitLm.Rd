@@ -6,9 +6,9 @@
 \alias{Detrend}
 \title{Fast estimates of linear regression}
 \usage{
-FitLm(y, ..., weights = NULL, se = FALSE, r2 = se)
+FitLm(y, ..., intercept = TRUE, weights = NULL, se = FALSE, r2 = se)
 
-ResidLm(y, ..., weights = NULL)
+ResidLm(y, ..., intercept = TRUE, weights = NULL)
 
 Detrend(y, time = seq_along(y))
 }
@@ -16,6 +16,8 @@ Detrend(y, time = seq_along(y))
 \item{y}{numeric vector of observations to model}
 
 \item{...}{numeric vectors of variables used in the modelling}
+
+\item{intercept}{logical indicating whether to automatically add the intercept}
 
 \item{weights}{numerical vector of weights (which doesn't need to be normalised)}
 

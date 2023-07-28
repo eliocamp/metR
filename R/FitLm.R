@@ -5,6 +5,7 @@
 #'
 #' @param y numeric vector of observations to model
 #' @param ... numeric vectors of variables used in the modelling
+#' @param intercept logical indicating whether to automatically add the intercept
 #' @param se logical indicating whether to compute the standard error
 #' @param r2 logical indicating whether to compute r squared
 #' @param weights numerical vector of weights (which doesn't need to be normalised)
@@ -47,14 +48,14 @@
 #' }
 #'
 #' @export
-FitLm <- function(y, ..., weights = NULL, se = FALSE, r2 = se) {
-    .FitLm(y = y, ..., weights = weights, se = se, r2 = r2, resid = FALSE)
+FitLm <- function(y, ..., intercept = TRUE, weights = NULL, se = FALSE, r2 = se) {
+    .FitLm(y = y, ..., intercept = intercept, weights = weights, se = se, r2 = r2, resid = FALSE)
 }
 
 #' @export
 #' @rdname FitLm
-ResidLm <- function(y, ..., weights = NULL) {
-    .FitLm(y = y, ..., weights = weights, resid = TRUE)
+ResidLm <- function(y, ..., intercept = TRUE, weights = NULL) {
+    .FitLm(y = y, ..., intercept = intercept, weights = weights, resid = TRUE)
 }
 
 #' @export
@@ -64,8 +65,13 @@ Detrend <- function(y, time = seq_along(y)) {
     ResidLm(y, time) + m
 }
 
-.FitLm <- function(y, ..., weights = NULL, se = FALSE, r2 = se, resid = FALSE) {
-    X <- cbind(`(Intercept)` = 1, ...)
+.FitLm <- function(y, ..., intercept = TRUE, weights = NULL, se = FALSE, r2 = se, resid = FALSE) {
+    if (isTRUE(intercept)) {
+        X <- cbind(`(Intercept)` = intercept, ...)
+    } else {
+        X <- cbind(...)
+    }
+
     has_weights <- !is.null(weights)
 
     term <- dimnames(X)[[2]]

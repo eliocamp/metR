@@ -114,7 +114,7 @@ guide_train.vector <- function(guide, scale, aesthetic = NULL) {
 #' @export
 #' @importFrom ggplot2 guide_geom
 guide_geom.vector <- function(guide, layers, ...) {
-    if (utils::packageVersion("ggplot2") <= "3.4.2") {
+    if (!inherits(ggplot2::guide_none(), "Guide")) {
         return(NextMethod())
     }
     legend <- ggplot2::guide_legend()
@@ -124,7 +124,7 @@ guide_geom.vector <- function(guide, layers, ...) {
 #' @export
 #' @importFrom ggplot2 guide_gengrob
 guide_gengrob.vector <- function(guide, theme) {
-    if (utils::packageVersion("ggplot2") <= "3.4.2") {
+    if (!inherits(ggplot2::guide_none(), "Guide")) {
         return(NextMethod())
     }
     legend <- ggplot2::guide_legend()

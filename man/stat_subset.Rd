@@ -93,7 +93,6 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 \link{stat_na} for a more specialized stat for filtering \code{NA} values.
 
 Other ggplot2 helpers: 
-\code{\link{DivideTimeseries}()},
 \code{\link{MakeBreaks}()},
 \code{\link{WrapCircular}()},
 \code{\link{geom_arrow}()},

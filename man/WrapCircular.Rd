@@ -54,7 +54,6 @@ ggplot(geopotential[date == date[1]], aes(lon, lat)) +
 geom_contour2
 
 Other ggplot2 helpers: 
-\code{\link{DivideTimeseries}()},
 \code{\link{MakeBreaks}()},
 \code{\link{geom_arrow}()},
 \code{\link{geom_contour2}()},

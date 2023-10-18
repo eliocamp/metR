@@ -31,7 +31,6 @@ LonLabel(0:360)
 }
 \seealso{
 Other ggplot2 helpers: 
-\code{\link{DivideTimeseries}()},
 \code{\link{MakeBreaks}()},
 \code{\link{WrapCircular}()},
 \code{\link{geom_arrow}()},

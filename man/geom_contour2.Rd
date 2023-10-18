@@ -213,7 +213,6 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
 }
 \seealso{
 Other ggplot2 helpers: 
-\code{\link{DivideTimeseries}()},
 \code{\link{MakeBreaks}()},
 \code{\link{WrapCircular}()},
 \code{\link{geom_arrow}()},
@@ -230,7 +229,6 @@ Other ggplot2 helpers:
 \code{\link{stat_subset}()}
 
 Other ggplot2 helpers: 
-\code{\link{DivideTimeseries}()},
 \code{\link{MakeBreaks}()},
 \code{\link{WrapCircular}()},
 \code{\link{geom_arrow}()},

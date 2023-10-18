@@ -126,7 +126,6 @@ ggplot(temperature[lon == lon[1] & lat == lat[1]], aes(air, lev)) +
 }
 \seealso{
 Other ggplot2 helpers: 
-\code{\link{DivideTimeseries}()},
 \code{\link{MakeBreaks}()},
 \code{\link{WrapCircular}()},
 \code{\link{geom_arrow}()},

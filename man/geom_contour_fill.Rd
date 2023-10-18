@@ -163,7 +163,6 @@ ggplot(surface, aes(Var1, Var2, z = value)) +
 }
 \seealso{
 Other ggplot2 helpers: 
-\code{\link{DivideTimeseries}()},
 \code{\link{MakeBreaks}()},
 \code{\link{WrapCircular}()},
 \code{\link{geom_arrow}()},

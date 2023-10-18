@@ -1,5 +1,9 @@
 # metR (development version)
 
+## Breaking Changes
+
+-   The `DivideTimeseries()` function is now defunct.
+
 ## New Features
 
 -   `FitLm()` gains a new `intercept` argument that allows you to remove the intercept term that is automatically added.

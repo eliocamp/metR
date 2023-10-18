@@ -1,4 +1,4 @@
-dates <- as.Date(c("2022-09-05", "2022-09-06"))
+dates <- as.Date(c("2023-09-05", "2023-09-06"))
 test_that("hourly works", {
     skip_if_offline()
     skip_on_cran()

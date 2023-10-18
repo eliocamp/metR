@@ -1,4 +1,7 @@
 
+This is a resubmission. 
+In this submission I added `data.table::setDTthreads(2)` to examples and tests to only use 2 cores. 
+
 In this submission I removed the gdal dependency. 
 
 ## Test environments

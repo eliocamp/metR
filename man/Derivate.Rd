@@ -95,6 +95,7 @@ call \code{Derivate()} and make the appropriate sums. For \code{Divergence()} an
 (\strong{in that order}).
 }
 \examples{
+data.table::setDTthreads(2)
 theta <- seq(0, 360, length.out = 20)*pi/180
 theta <- theta[-1]
 x <- cos(theta)

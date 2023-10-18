@@ -11,7 +11,7 @@
 #' Else, a list with vectors `lon` and `group`.
 #'
 #' @examples
-#' data.table::setDTthreads(2)
+#' data.table::setDTthreads(1)
 #' library(ggplot2)
 #' library(data.table)
 #' data(geopotential)

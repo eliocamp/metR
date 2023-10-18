@@ -22,7 +22,7 @@ Else, a list with vectors \code{lon} and \code{group}.
 Converts longitude from [0, 360) to [-180, 180) and vice versa.
 }
 \examples{
-data.table::setDTthreads(2)
+data.table::setDTthreads(1)
 library(ggplot2)
 library(data.table)
 data(geopotential)

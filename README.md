@@ -61,7 +61,6 @@ citation information with
 
 ``` r
 citation("metR")
-#> 
 #> To cite metR in publications use:
 #> 
 #> 
@@ -72,7 +71,7 @@ citation("metR")
 #>     title = {metR: Tools for Easier Analysis of Meteorological Fields},
 #>     author = {Elio Campitelli},
 #>     year = {2021},
-#>     note = {R package version 0.13.0.9000},
+#>     note = {R package version 0.14.1},
 #>     url = {https://github.com/eliocamp/metR},
 #>     doi = {10.5281/zenodo.2593516},
 #>   }

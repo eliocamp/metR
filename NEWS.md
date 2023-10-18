@@ -7,6 +7,7 @@
 ## Bug Fixes
 
 -   Fixes error in `Laplacian()` when computing the laplacian of a single variable. (#170, Thanks @pascaloettli)
+-   Removes dependencies on raster and gdal packages.
 
 # metR 0.14.0
 

@@ -51,8 +51,7 @@ Suggests:
     vdiffr,
     proj4,
     kriging,
-    raster,
-    rgdal,
+    terra,
     here,
     gsignal
 ByteCompile: yes

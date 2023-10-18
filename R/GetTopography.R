@@ -90,9 +90,9 @@ GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution =
 
             if (is.error(field)) stopf("Failed to fetch file.")
 
-            check_packages(c("raster", "rgdal"), "GetTopography")
+            check_packages(c("terra"), "GetTopography")
 
-            field <- data.table::as.data.table(raster::rasterToPoints(raster::raster(temp_file)))
+            field <- data.table::as.data.table(terra::rast(temp_file), xy = TRUE)
             colnames(field) <- c("lon", "lat", "h")
 
         }

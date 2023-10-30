@@ -1,201 +1,198 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://eliocamp.github.io/metR/404.html</loc>
   </url>
   <url>
-    <loc>/articles/Visualization-tools.html</loc>
+    <loc>https://eliocamp.github.io/metR/articles/Visualization-tools.html</loc>
   </url>
   <url>
-    <loc>/articles/Working-with-data.html</loc>
+    <loc>https://eliocamp.github.io/metR/articles/Working-with-data.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://eliocamp.github.io/metR/articles/index.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://eliocamp.github.io/metR/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://eliocamp.github.io/metR/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://eliocamp.github.io/metR/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/Anomaly.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/Anomaly.html</loc>
   </url>
   <url>
-    <loc>/reference/ConvertLongitude.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/ConvertLongitude.html</loc>
   </url>
   <url>
-    <loc>/reference/Derivate.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/Derivate.html</loc>
   </url>
   <url>
-    <loc>/reference/DivideTimeseries.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/EOF.html</loc>
   </url>
   <url>
-    <loc>/reference/EOF.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/EPflux.html</loc>
   </url>
   <url>
-    <loc>/reference/EPflux.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/FitLm.html</loc>
   </url>
   <url>
-    <loc>/reference/FitLm.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/GeostrophicWind.html</loc>
   </url>
   <url>
-    <loc>/reference/GeostrophicWind.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/GetSMNData.html</loc>
   </url>
   <url>
-    <loc>/reference/GetSMNData.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/GetTopography.html</loc>
   </url>
   <url>
-    <loc>/reference/GetTopography.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/Impute2D.html</loc>
   </url>
   <url>
-    <loc>/reference/Impute2D.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/ImputeEOF.html</loc>
   </url>
   <url>
-    <loc>/reference/ImputeEOF.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/Interpolate.html</loc>
   </url>
   <url>
-    <loc>/reference/Interpolate.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/JumpBy.html</loc>
   </url>
   <url>
-    <loc>/reference/JumpBy.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/Mag.html</loc>
   </url>
   <url>
-    <loc>/reference/Mag.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/MakeBreaks.html</loc>
   </url>
   <url>
-    <loc>/reference/MakeBreaks.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/MaskLand.html</loc>
   </url>
   <url>
-    <loc>/reference/MaskLand.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/Percentile.html</loc>
   </url>
   <url>
-    <loc>/reference/Percentile.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/ReadNetCDF.html</loc>
   </url>
   <url>
-    <loc>/reference/ReadNetCDF.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/Smooth2D.html</loc>
   </url>
   <url>
-    <loc>/reference/Smooth2D.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/Trajectory.html</loc>
   </url>
   <url>
-    <loc>/reference/Trajectory.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/WaveFlux.html</loc>
   </url>
   <url>
-    <loc>/reference/WaveFlux.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/WrapCircular.html</loc>
   </url>
   <url>
-    <loc>/reference/WrapCircular.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/as.path.html</loc>
   </url>
   <url>
-    <loc>/reference/as.path.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/coriolis.html</loc>
   </url>
   <url>
-    <loc>/reference/coriolis.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/cut.eof.html</loc>
   </url>
   <url>
-    <loc>/reference/cut.eof.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/denormalise.html</loc>
   </url>
   <url>
-    <loc>/reference/denormalise.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/discretised_scale.html</loc>
   </url>
   <url>
-    <loc>/reference/discretised_scale.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/geom_arrow.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_arrow.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/geom_contour2.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_contour2.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/geom_contour_fill.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_contour_fill.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/geom_contour_tanaka.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_contour_tanaka.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/geom_relief.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_relief.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/geom_streamline.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_streamline.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/geom_text_contour.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_text_contour.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/geopotential.html</loc>
   </url>
   <url>
-    <loc>/reference/geopotential.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/guide_colourstrip.html</loc>
   </url>
   <url>
-    <loc>/reference/guide_colourstrip.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/guide_vector.html</loc>
   </url>
   <url>
-    <loc>/reference/guide_vector.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/is.cross.html</loc>
   </url>
   <url>
-    <loc>/reference/is.cross.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/label_placers.html</loc>
   </url>
   <url>
-    <loc>/reference/label_placers.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/label_scales.html</loc>
   </url>
   <url>
-    <loc>/reference/label_scales.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/logic.html</loc>
   </url>
   <url>
-    <loc>/reference/logic.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/map_labels.html</loc>
   </url>
   <url>
-    <loc>/reference/map_labels.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/metR.html</loc>
   </url>
   <url>
-    <loc>/reference/metR.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/reverselog_trans.html</loc>
   </url>
   <url>
-    <loc>/reference/reverselog_trans.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/scale_divergent.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_divergent.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/scale_longitude.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_longitude.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/scale_mag.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_mag.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/scale_stroke.colour_continuous.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_stroke.colour_continuous.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/season.html</loc>
   </url>
   <url>
-    <loc>/reference/season.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/spherical.html</loc>
   </url>
   <url>
-    <loc>/reference/spherical.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/standard_atmosphere.html</loc>
   </url>
   <url>
-    <loc>/reference/standard_atmosphere.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/stat_na.html</loc>
   </url>
   <url>
-    <loc>/reference/stat_na.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/stat_subset.html</loc>
   </url>
   <url>
-    <loc>/reference/stat_subset.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/surface.html</loc>
   </url>
   <url>
-    <loc>/reference/surface.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/temperature.html</loc>
   </url>
   <url>
-    <loc>/reference/temperature.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/thermodynamics.html</loc>
   </url>
   <url>
-    <loc>/reference/thermodynamics.html</loc>
-  </url>
-  <url>
-    <loc>/reference/waves.html</loc>
+    <loc>https://eliocamp.github.io/metR/reference/waves.html</loc>
   </url>
 </urlset>

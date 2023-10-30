@@ -14,7 +14,7 @@ Description: Many useful functions and extensions for dealing
     for better plotting of scalar and vector fields and provides commonly
     used analysis methods in the atmospheric sciences.
 License: GPL-3
-URL: https://github.com/eliocamp/metR
+URL: https://github.com/eliocamp/metR, https://eliocamp.github.io/metR/
 BugReports: https://github.com/eliocamp/metR/issues
 Depends:
      R (>= 2.10)

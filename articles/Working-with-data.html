@@ -326,15 +326,15 @@ imputation of missing data. Its interface is similar to that of
 <span><span class="co">#&gt;  $ gh     : num  3164 3163 3162 3162 3163 ...</span></span>
 <span><span class="co">#&gt;  $ date   : Date, format: "1990-01-01" "1990-01-01" ...</span></span>
 <span><span class="co">#&gt;  $ gh.t.w : num  -3.82 -3.59 -2.86 -2.4 -2.07 ...</span></span>
-<span><span class="co">#&gt;  $ gh.na  : num  3164 3163 3162 3162 3163 ...</span></span>
-<span><span class="co">#&gt;  $ imputed: num  3164 3163 3162 3162 3163 ...</span></span>
+<span><span class="co">#&gt;  $ gh.na  : num  3164 3163 3162 NA NA ...</span></span>
+<span><span class="co">#&gt;  $ imputed: num  3164 3163 3162 3167 3168 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "eof")= int 5</span></span>
-<span><span class="co">#&gt;   ..- attr(*, "rmse")= num 26.5</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "rmse")= num 26.7</span></span>
 <span><span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></span></code></pre></div>
 <p>The imputed vector is returned along with the Root Mean Square Error
 estimated from cross-validation and the number of EOFs used in the
 imputation as attributes. In this case, with 5 EOFs the imputed values
-have an estimated rmse of 26.55.</p>
+have an estimated rmse of 26.66.</p>
 </div>
 <div class="section level3">
 <h3 id="interpolate">Interpolate<a class="anchor" aria-label="anchor" href="#interpolate"></a>

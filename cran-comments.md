@@ -1,6 +1,6 @@
 
 This is a resubmission. 
-In this submission I added `data.table::setDTthreads(2)` to examples and tests to only use 2 cores (and `data.table::setDTthreads(1)` in one example that seems to still be using more threads).
+In this submission I added `data.table::setDTthreads(1)` to examples and tests to only use 1 core. 
 
 In this submission I removed the gdal dependency. 
 

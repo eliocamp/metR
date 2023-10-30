@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
     comment = "#>",
     fig.path = "man/figures/"
 )
+set.seed(42)
 ```
 
 # metR <img src="man/figures/logo.png" align="right"/>
@@ -34,11 +35,10 @@ You can install metR from CRAN with:
 install.packages("metR")
 ```
 
-Or the development version ([![Build Status](https://github.com/eliocamp/metR/workflows/R-CMD-check/badge.svg?branch=dev)](https://github.com/eliocamp/metR/actions?query=workflow%3AR-CMD-check)) with:
+Or the development version with:
 
 ```{r gh-installation, eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("eliocamp/metR@dev")
+install.packages("metR", repos = c("https://eliocamp.github.io/metR/repo", getOption("repos")))
 ```
 
 If you need to read netcdf files, you might need to install the netcdf and udunits2 libraries. On Ubuntu and it's derivatives this can be done by typing 

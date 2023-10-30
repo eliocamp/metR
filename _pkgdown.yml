@@ -1,75 +1,71 @@
+url: https://eliocamp.github.io/metR/
 template:
   params:
     bootswatch: flatly
-
-
 reference:
-  - title: Package information
-    contents:
-      - metR
-
-  - title: ggplot2 extension
-    desc:  stats, geoms and other ggplot2 extensions
-    contents:
-      - starts_with("geom_")
-      - is.cross
-      - starts_with("stat_")
-      - starts_with("scale_")
-      - discretised_scale
-      - starts_with("guide_")
-      - reverselog_trans
-  - title: ggplot2 helpers
-    desc: functions that help in plotting
-    contents:
-      - MakeBreaks
-      - WrapCircular
-      - DivideTimeseries
-      - map_labels
-      - label_placers
-      - standard_atmosphere
-      - Smooth2D
-  - title: Physics
-    desc: functions related to physical processes
-    contents:
-      - thermodynamics
-      - coriolis
-      - Derivate
-      - GeostrophicWind
-      - WaveFlux
-      - EPflux
-  - title: Data Manipulation
-    desc: get and manipulate data
-    contents:
-      - ReadNetCDF
-      - MaskLand
-      - GetTopography
-      - GetSMNData
-      - EOF
-      - denormalise
-      - ImputeEOF
-      - Impute2D
-      - Interpolate
-      - Trajectory
-      - waves
-      - FitLm
-#      - ReadCtl
-  - title: Helpers
-    desc: other helpers
-    contents:
-      - logic
-      - season
-      - Anomaly
-      - Percentile
-      - Mag
-      - JumpBy
-      - ConvertLongitude
-      - spherical
-      - as.path
-      - cut.eof
-  - title: Datasets
-    desc: sample datasets
-    contents:
-      - geopotential
-      - temperature
-      - surface
+- title: Package information
+  contents: metR
+- title: ggplot2 extension
+  desc: stats, geoms and other ggplot2 extensions
+  contents:
+  - starts_with("geom_")
+  - is.cross
+  - starts_with("stat_")
+  - starts_with("scale_")
+  - discretised_scale
+  - starts_with("guide_")
+  - reverselog_trans
+- title: ggplot2 helpers
+  desc: functions that help in plotting
+  contents:
+  - MakeBreaks
+  - WrapCircular
+  - DivideTimeseries
+  - map_labels
+  - label_placers
+  - standard_atmosphere
+  - Smooth2D
+- title: Physics
+  desc: functions related to physical processes
+  contents:
+  - thermodynamics
+  - coriolis
+  - Derivate
+  - GeostrophicWind
+  - WaveFlux
+  - EPflux
+- title: Data Manipulation
+  desc: get and manipulate data
+  contents:
+  - ReadNetCDF
+  - MaskLand
+  - GetTopography
+  - GetSMNData
+  - EOF
+  - denormalise
+  - ImputeEOF
+  - Impute2D
+  - Interpolate
+  - Trajectory
+  - waves
+  - FitLm
+- title: Helpers
+  desc: other helpers
+  contents:
+  - logic
+  - season
+  - Anomaly
+  - Percentile
+  - Mag
+  - JumpBy
+  - ConvertLongitude
+  - spherical
+  - as.path
+  - cut.eof
+- title: Datasets
+  desc: sample datasets
+  contents:
+  - geopotential
+  - temperature
+  - surface
 

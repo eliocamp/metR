@@ -22,3 +22,4 @@
 ^data-raw$
 ^crowdin\.yml$
 ^CRAN-SUBMISSION$
+add_repo.R

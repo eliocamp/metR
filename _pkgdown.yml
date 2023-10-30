@@ -20,7 +20,6 @@ reference:
   contents:
   - MakeBreaks
   - WrapCircular
-  - DivideTimeseries
   - map_labels
   - label_placers
   - standard_atmosphere

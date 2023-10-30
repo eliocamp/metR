@@ -8,5 +8,5 @@ Suggests: maps, covr, irlba, knitr, ncdf4, pkgdown, reshape2,
         rmarkdown, testthat (>= 2.1.0), viridis, PCICt, gridExtra,
         vdiffr, proj4, kriging, terra, here, gsignal
 License: GPL-3
-MD5sum: e73cbd1086354fa755baa0ba75affd25
+MD5sum: ce86795e0d7378733572262086762fc6
 NeedsCompilation: no

@@ -103,10 +103,9 @@
 <p>You can install metR from CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"metR"</span><span class="op">)</span></span></code></pre></div>
-<p>Or the development version (<a href="https://github.com/eliocamp/metR/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/eliocamp/metR/workflows/R-CMD-check/badge.svg?branch=dev" alt="Build Status"></a>) with:</p>
+<p>Or the development version with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"eliocamp/metR@dev"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"metR"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://eliocamp.github.io/metR/repo"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>If you need to read netcdf files, you might need to install the netcdf and udunits2 libraries. On Ubuntu and it’s derivatives this can be done by typing</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sudo apt install libnetcdf<span class="sc">-</span>dev netcdf<span class="sc">-</span>bin libudunits2<span class="sc">-</span>dev</span></code></pre></div>
 </div>
@@ -127,7 +126,7 @@
 <span><span class="co">#&gt;     author = {Elio Campitelli},</span></span>
 <span><span class="co">#&gt;     year = {2021},</span></span>
 <span><span class="co">#&gt;     note = {R package version 0.14.1},</span></span>
-<span><span class="co">#&gt;     url = {https://github.com/eliocamp/metR},</span></span>
+<span><span class="co">#&gt;     url = {https://github.com/eliocamp/metR, https://eliocamp.github.io/metR/},</span></span>
 <span><span class="co">#&gt;     doi = {10.5281/zenodo.2593516},</span></span>
 <span><span class="co">#&gt;   }</span></span></code></pre></div>
 </div>

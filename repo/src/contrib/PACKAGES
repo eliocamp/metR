@@ -1,0 +1,12 @@
+Package: metR
+Version: 0.14.1
+Depends: R (>= 2.10)
+Imports: checkmate, data.table, digest, Formula, formula.tools, ggplot2
+        (>= 3.0.0), grid, gtable, memoise, plyr, scales, sf, stringr,
+        purrr, isoband, lubridate
+Suggests: maps, covr, irlba, knitr, ncdf4, pkgdown, reshape2,
+        rmarkdown, testthat (>= 2.1.0), viridis, PCICt, gridExtra,
+        vdiffr, proj4, kriging, terra, here, gsignal
+License: GPL-3
+MD5sum: e73cbd1086354fa755baa0ba75affd25
+NeedsCompilation: no

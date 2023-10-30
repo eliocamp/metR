@@ -1,7 +1,7 @@
 temp <- tempdir()
 pkgbuild::build(dest_path = temp)
 
-repo <- "docs/repo"
+repo <- "docs"
 unlink(repo, recursive = TRUE)
 dir.create(repo)
 

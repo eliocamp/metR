@@ -29,7 +29,7 @@ To get started, check the vignettes:
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/eliocamp/metR}
+  \item \url{https://eliocamp.github.io/metR/}
   \item Report bugs at \url{https://github.com/eliocamp/metR/issues}
 }
 

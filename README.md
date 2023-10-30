@@ -42,7 +42,7 @@ install.packages("metR")
 Or the development version with:
 
 ``` r
-install.packages("metR", repos = c("https://eliocamp.github.io/metR/repo", getOption("repos")))
+install.packages("metR", repos = c("https://eliocamp.github.io/metR", getOption("repos")))
 ```
 
 If you need to read netcdf files, you might need to install the netcdf
@@ -69,7 +69,7 @@ citation("metR")
 #>     author = {Elio Campitelli},
 #>     year = {2021},
 #>     note = {R package version 0.14.1},
-#>     url = {https://github.com/eliocamp/metR, https://eliocamp.github.io/metR/},
+#>     url = {https://eliocamp.github.io/metR/},
 #>     doi = {10.5281/zenodo.2593516},
 #>   }
 ```

@@ -22,10 +22,11 @@ Else, a list with vectors \code{lon} and \code{group}.
 Converts longitude from [0, 360) to [-180, 180) and vice versa.
 }
 \examples{
-data.table::setDTthreads(1)
 library(ggplot2)
 library(data.table)
+\dontshow{data.table::setDTthreads(1)}
 data(geopotential)
+
 ggplot(geopotential[date == date[1]], aes(lon, lat, z = gh)) +
     geom_contour(color = "black") +
     geom_contour(aes(x = ConvertLongitude(lon)))

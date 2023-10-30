@@ -17,6 +17,7 @@ collapse = TRUE,
 message = FALSE,
 fig.width = 7,
 comment = "#>")
+data.table::setDTthreads(1)
 ```
 
 One of the "conceptual branches" of `metR` is the *visualization tools*. These are a set of functions that interface with [ggplot2](https://ggplot2.tidyverse.org/index.html) for easier and better plotting of meteorological (an other) fields. 

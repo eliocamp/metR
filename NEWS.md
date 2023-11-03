@@ -1,5 +1,9 @@
 # metR (development version)
 
+## New features
+
+-   The contour functions gain a `clip` argument to only show contours in an area defined by a polygon.
+
 # metR 0.14.1
 
 ## Breaking Changes

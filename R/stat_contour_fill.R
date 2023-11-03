@@ -7,6 +7,8 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               bins = NULL,
                               binwidth = NULL,
                               global.breaks = TRUE,
+                              proj = NULL,
+                              clip = NULL,
                               kriging = FALSE,
                               na.fill = FALSE,
                               show.legend = NA,
@@ -28,6 +30,8 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
             binwidth = binwidth,
             global.breaks = global.breaks,
             kriging = kriging,
+            proj = proj,
+            clip = clip,
             ...
         )
     )
@@ -82,7 +86,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              breaks = scales::fullseq, complete = TRUE,
                              na.rm = FALSE, xwrap = NULL,
                              ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
-                             proj = NULL, kriging = FALSE) {
+                             proj = NULL, kriging = FALSE, clip = NULL) {
         data.table::setDT(data)
 
         if (isFALSE(global.breaks)) {
@@ -102,7 +106,6 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                     warningf("The data must be a complete regular grid.", call. = FALSE)
                     return(data.frame())
                 } else {
-                    # data <- data.table::setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
                     data <- .complete(data, x, y)
                 }
             }
@@ -156,9 +159,17 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             }
         }
 
+        if (!is.null(clip)) {
+            if (!is.na(sf::st_crs(clip))) {
+                sf::st_crs(clip) <- NA
+            }
+            clip <- sf::st_union(clip)
+            cont <- cont[, clip_contours(x, y, clip), by = setdiff(colnames(cont), c("x", "y"))]
+            cont[, subgroup := interaction(subgroup, L)]
+        }
+
 
         cont
-
         }
 )
 
@@ -222,4 +233,23 @@ pretty_isoband_levels <- function(isoband_levels, dig.lab = 3) {
     # the intervals specifying isobands are closed at their lower boundary
     # and open at their upper boundary
     sprintf("(%s, %s]", label_low, label_high)
+}
+
+
+clip_contours <- function(x, y, clip, type = "POLYGON") {
+
+    xy <- sf::st_linestring(x = matrix(c(x, y), ncol = 2)) |>
+        sf::st_cast(type) |>
+        sf::st_intersection(clip)
+
+    if (length(xy) == 0) {
+        return(NULL)
+    }
+    xy <- sf::st_coordinates(xy)
+
+    L <- do.call(interaction, lapply(seq(3, ncol(xy)), function(i) xy[, i]))
+    list(x = xy[, 1],
+         y = xy[, 2],
+         L = L)
+
 }

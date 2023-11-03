@@ -16,6 +16,8 @@ geom_contour_fill(
   breaks = MakeBreaks(),
   bins = NULL,
   binwidth = NULL,
+  proj = NULL,
+  clip = NULL,
   kriging = FALSE,
   global.breaks = TRUE,
   na.fill = FALSE,
@@ -33,6 +35,8 @@ stat_contour_fill(
   bins = NULL,
   binwidth = NULL,
   global.breaks = TRUE,
+  proj = NULL,
+  clip = NULL,
   kriging = FALSE,
   na.fill = FALSE,
   show.legend = NA,
@@ -80,6 +84,13 @@ to the paired geom/stat.}
 \item{bins}{Number of evenly spaced breaks.}
 
 \item{binwidth}{Distance between breaks.}
+
+\item{proj}{The projection to which to project the contours to.
+It can be either a projection string or a function to apply to the whole
+contour dataset.}
+
+\item{clip}{A simple features object to be used as a clip. Contours are only
+drawn in the interior of this polygon.}
 
 \item{kriging}{Logical indicating whether to perform ordinary kriging before contouring.
 Use this if you want to use contours with irregularly spaced data.}

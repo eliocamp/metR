@@ -10,6 +10,11 @@
 #' data or for each grouping.
 #' @param kriging Logical indicating whether to perform ordinary kriging before contouring.
 #' Use this if you want to use contours with irregularly spaced data.
+#' @param proj The projection to which to project the contours to.
+#' It can be either a projection string or a function to apply to the whole
+#' contour dataset.
+#' @param clip A simple features object to be used as a clip. Contours are only
+#' drawn in the interior of this polygon.
 #'
 #' @export
 #' @section Computed variables:
@@ -24,6 +29,8 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
                           breaks = MakeBreaks(),
                           bins = NULL,
                           binwidth = NULL,
+                          proj = NULL,
+                          clip = NULL,
                           kriging = FALSE,
                           global.breaks = TRUE,
                           na.rm = FALSE,
@@ -47,6 +54,8 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
             binwidth = binwidth,
             global.breaks = global.breaks,
             kriging = kriging,
+            proj = proj,
+            clip = clip,
             ...
         )
     )
@@ -94,7 +103,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
                            breaks = scales::fullseq, complete = TRUE,
                            na.rm = FALSE, circular = NULL, xwrap = NULL,
                            ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
-                           proj = NULL, kriging = FALSE) {
+                           proj = NULL, kriging = FALSE, clip = NULL) {
     if (isFALSE(global.breaks)) {
       breaks <- setup_breaks(data,
                              breaks = breaks,
@@ -178,6 +187,17 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
         }
       }
     }
+
+
+    if (!is.null(clip)) {
+        if (!is.na(sf::st_crs(clip))) {
+            sf::st_crs(clip) <- NA
+        }
+        clip <- sf::st_union(clip)
+        contours <- contours[, clip_contours(x, y, clip, type = "LINESTRING"), by = setdiff(colnames(contours), c("x", "y", "dx", "dy"))]
+        contours[, group := interaction(group, L)]
+    }
+
 
     return(contours)
   }

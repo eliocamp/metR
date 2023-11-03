@@ -20,6 +20,9 @@ geom_contour_tanaka(
   dark = "gray20",
   range = c(0.01, 0.5),
   smooth = 0,
+  proj = NULL,
+  clip = NULL,
+  kriging = FALSE,
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
@@ -80,6 +83,16 @@ and returns breaks as output
 
 \item{smooth}{numeric indicating the degree of smoothing of illumination and size.
 Larger}
+
+\item{proj}{The projection to which to project the contours to.
+It can be either a projection string or a function to apply to the whole
+contour dataset.}
+
+\item{clip}{A simple features object to be used as a clip. Contours are only
+drawn in the interior of this polygon.}
+
+\item{kriging}{Logical indicating whether to perform ordinary kriging before contouring.
+Use this if you want to use contours with irregularly spaced data.}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}

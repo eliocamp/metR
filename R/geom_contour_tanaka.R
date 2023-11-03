@@ -80,6 +80,9 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
                                 dark = "gray20",
                                 range = c(0.01, 0.5),
                                 smooth = 0,
+                                proj = NULL,
+                                clip = NULL,
+                                kriging = FALSE,
                                 na.rm = FALSE,
                                 show.legend = NA,
                                 inherit.aes = TRUE) {
@@ -102,6 +105,9 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
             dark = dark,
             range = range,
             smooth = smooth,
+            kriging = kriging,
+            proj = proj,
+            clip = clip,
             ...
         )
     )

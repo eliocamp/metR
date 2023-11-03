@@ -164,10 +164,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                 sf::st_crs(clip) <- NA
             }
             clip <- sf::st_union(clip)
+
             cont <- cont[, clip_contours(x, y, clip), by = setdiff(colnames(cont), c("x", "y"))]
             cont[, subgroup := interaction(subgroup, L)]
         }
-
 
         cont
         }
@@ -238,16 +238,25 @@ pretty_isoband_levels <- function(isoband_levels, dig.lab = 3) {
 
 clip_contours <- function(x, y, clip, type = "POLYGON") {
 
-    xy <- sf::st_linestring(x = matrix(c(x, y), ncol = 2)) |>
-        sf::st_cast(type) |>
-        sf::st_intersection(clip)
+    xy <- sf::st_linestring(x = matrix(c(x, y), ncol = 2))
+    xy <- sf::st_cast(xy, type)
+    xy <- sf::st_make_valid(xy)
+
+    xy <- sf::st_intersection(xy, clip)
 
     if (length(xy) == 0) {
         return(NULL)
     }
+
     xy <- sf::st_coordinates(xy)
 
-    L <- do.call(interaction, lapply(seq(3, ncol(xy)), function(i) xy[, i]))
+    # Annoying st_coordinates that returns variable columns!!!
+    if (ncol(xy) > 2) {
+        L <- do.call(interaction, lapply(seq(3, ncol(xy)), function(i) xy[, i]))
+    } else {
+        L <- factor("1")
+    }
+
     list(x = xy[, 1],
          y = xy[, 2],
          L = L)

@@ -92,8 +92,10 @@ contour dataset.}
 \item{clip}{A simple features object to be used as a clip. Contours are only
 drawn in the interior of this polygon.}
 
-\item{kriging}{Logical indicating whether to perform ordinary kriging before contouring.
-Use this if you want to use contours with irregularly spaced data.}
+\item{kriging}{Whether to perform ordinary kriging before contouring.
+Use this if you want to use contours with irregularly spaced data.
+If \code{FALSE}, no kriging is performed. If \code{TRUE}, kriging will be performed with
+40 points. If a numeric, kriging will be performed with \code{kriging} points.}
 
 \item{global.breaks}{Logical indicating whether \code{breaks} should be computed for the whole
 data or for each grouping.}

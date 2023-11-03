@@ -8,8 +8,10 @@
 #' @param binwidth Distance between breaks.
 #' @param global.breaks Logical indicating whether `breaks` should be computed for the whole
 #' data or for each grouping.
-#' @param kriging Logical indicating whether to perform ordinary kriging before contouring.
+#' @param kriging Whether to perform ordinary kriging before contouring.
 #' Use this if you want to use contours with irregularly spaced data.
+#' If `FALSE`, no kriging is performed. If `TRUE`, kriging will be performed with
+#' 40 points. If a numeric, kriging will be performed with `kriging` points.
 #' @param proj The projection to which to project the contours to.
 #' It can be either a projection string or a function to apply to the whole
 #' contour dataset.

@@ -115,11 +115,13 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             data <- data[!is.na(z), ]
         }
 
-        if (kriging) {
+        if (!isFALSE(kriging)) {
             check_packages("kriging", "kriging")
 
-            pixels <- 40
-            data <- try(with(data, setNames(kriging::kriging(x, y, z, pixels = pixels)$map,
+            if (isTRUE(kriging)) {
+                kriging <- 40
+            }
+            data <- try(with(data, setNames(kriging::kriging(x, y, z, pixels = kriging)$map,
                                             c("x", "y", "z"))), silent = TRUE)
             if (inherits(data, "try-error")) {
                 warningf("kriging failed. Perhaps the number of points is too small.")

@@ -53,7 +53,8 @@ Suggests:
     kriging,
     terra,
     here,
-    gsignal
+    gsignal,
+    rnaturalearth
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true

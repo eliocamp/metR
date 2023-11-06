@@ -7,8 +7,7 @@
 
 ## Breaking changes
 
--   The `proj` argument in `geom_contour_fill()` and friends now operate over the isolines returned by the isoband package.
-    This might break code that used a custom function to `proj`.
+-   The `proj` argument in `geom_contour_fill()` and friends now operate over the isolines returned by the isoband package. This might break code that used a custom function to `proj`.
 
 # metR 0.14.1
 

@@ -115,7 +115,7 @@ Clipping is done after `proj` is applied.
 ```{r}
 argentina <- rnaturalearth::ne_countries(country = "argentina", returnclass = "sf")
 ggplot(surface, aes(x, y)) +
-    geom_contour_fill(aes(z = height), proj = proj_string, clip = arg) 
+    geom_contour_fill(aes(z = height), proj = proj_string, clip = argentina) 
 ```
 
 

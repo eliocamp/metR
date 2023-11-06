@@ -5,6 +5,11 @@
 -   The contour functions gain a `clip` argument to only show contours in an area defined by a polygon.
 -   The `kriging` argument of the contour functions now can be a numeric to control de number of pixels used.
 
+## Breaking changes
+
+-   The `proj` argument in `geom_contour_fill()` and friends now operate over the isolines returned by the isoband package.
+    This might break code that used a custom function to `proj`.
+
 # metR 0.14.1
 
 ## Breaking Changes

@@ -140,43 +140,19 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 
 
         # Make contours
-        cont <- data.table::setDT(.contour_bands(data, breaks, complete = complete))
+        cont <- data.table::setDT(.contour_bands(data, breaks, complete = complete, clip = clip, proj = proj))
 
         cont[, int.level := (level_high + level_low)/2]
         cont[, level_mid := int.level]
         cont[, nlevel := level_high/max(level_high)]
 
-        if (!is.null(proj)) {
-            if (is.function(proj)) {
-                cont <- proj(cont)
-            } else {
-                if (is.character(proj)) {
-                    if (!requireNamespace("proj4", quietly = TRUE)) {
-                        stopf("Projection requires the proj4 package. Install it with 'install.packages(\"proj4\")'.")
-                    }
-                    cont <- data.table::copy(cont)[, c("x", "y") := proj4::project(list(x, y), proj,
-                                                                                           inverse = TRUE)][]
-
-                }
-            }
-        }
-
-        if (!is.null(clip)) {
-            if (!is.na(sf::st_crs(clip))) {
-                sf::st_crs(clip) <- NA
-            }
-            clip <- sf::st_union(clip)
-
-            cont <- cont[, clip_contours(x, y, clip), by = setdiff(colnames(cont), c("x", "y"))]
-            cont[, subgroup := interaction(subgroup, L)]
-        }
 
         cont
         }
 )
 
 
-.contour_bands <- function(data, breaks, complete = FALSE) {
+.contour_bands <- function(data, breaks, complete = FALSE, proj = NULL, clip = NULL) {
     band <- level_high <- level_low <- NULL
 
     # From ggplot2
@@ -189,20 +165,45 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     z <- matrix(NA_real_, nrow = nrow, ncol = ncol)
     z[cbind(y_pos, x_pos)] <- data$z
 
-
-
     cl <- isoband::isobands(x = sort(unique(data$x)),
                             y = sort(unique(data$y)),
                             z = z,
                             levels_low = breaks[-length(breaks)],
                             levels_high = breaks[-1])
 
-
     if (length(cl) == 0) {
         warningf("Not possible to generate contour data.", call. = FALSE)
         return(data.frame())
     }
 
+    if (!is.null(proj)) {
+        cl_class <- class(cl)
+        if (is.function(proj)) {
+            cl <- proj(cl)
+        } else {
+            if (is.character(proj)) {
+                if (!requireNamespace("proj4", quietly = TRUE)) {
+                    stopf("Projection requires the proj4 package. Install it with 'install.packages(\"proj4\")'.")
+                }
+                cl <- lapply(cl, function(x) {
+                    x[c("x", "y")] <- proj4::project(list(x$x, x$y), proj, inverse = TRUE)
+                    return(x)
+                })
+            }
+        }
+        class(cl) <- cl_class
+    }
+
+
+    if (!is.null(clip)) {
+        clip <- sf::st_union(clip)
+
+        if (!is.na(sf::st_crs(clip))) {
+            sf::st_crs(clip) <- NA
+        }
+
+        cl <- clip_iso(cl, clip, "POLYGON")
+    }
     # Convert list of lists into single data frame
 
     bands <- pretty_isoband_levels(names(cl))
@@ -240,14 +241,23 @@ pretty_isoband_levels <- function(isoband_levels, dig.lab = 3) {
 
 clip_contours <- function(x, y, clip, type = "POLYGON") {
 
+    if (type == "POLYGON" & length(x) < 4) {
+        return(NULL)
+    }
+
     xy <- sf::st_linestring(x = matrix(c(x, y), ncol = 2))
     xy <- sf::st_cast(xy, type)
     xy <- sf::st_make_valid(xy)
-
     xy <- sf::st_intersection(xy, clip)
 
     if (length(xy) == 0) {
         return(NULL)
+    }
+
+    # browser(expr = inherits(xy, "GEOMETRYCOLLECTION"))
+
+    if (inherits(xy, "GEOMETRYCOLLECTION"))  {
+        xy <- sf::st_collection_extract(xy, type)
     }
 
     xy <- sf::st_coordinates(xy)
@@ -262,5 +272,43 @@ clip_contours <- function(x, y, clip, type = "POLYGON") {
     list(x = xy[, 1],
          y = xy[, 2],
          L = L)
-
 }
+
+
+
+get_sf_coords <- function(x, type = "POLYGON")  {
+    if (inherits(x, "GEOMETRYCOLLECTION"))  {
+        x <- sf::st_collection_extract(x, type)
+    }
+
+    x <- sf::st_coordinates(x)
+
+    # Annoying st_coordinates that returns variable columns!!!
+    if (ncol(x) > 2) {
+        L <- do.call(interaction, lapply(seq(3, ncol(x)), function(i) x[, i]))
+    } else {
+        L <- factor("1")
+    }
+
+    list(x = x[, 1],
+         y = x[, 2],
+         id = L)
+}
+
+
+clip_iso  <- function(iso, clip, type = "POLYGON") {
+    iso <- isoband::iso_to_sfg(iso)
+
+    iso <- lapply(iso, function(x) {
+        result <- sf::st_intersection(sf::st_make_valid(x), clip)
+        if (sf::st_is_empty(result)) {
+            return(NULL)
+        }
+        get_sf_coords(result, type)
+    })
+    iso <- iso[!vapply(iso, is.null, TRUE)]
+
+    class(iso) <- c("isobands", "iso")
+    return(iso)
+}
+

@@ -163,7 +163,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 
 
     data.table::setDF(data)
-    contours <- data.table::as.data.table(.contour_lines(data, breaks, complete = complete))
+    contours <- data.table::as.data.table(.contour_lines(data, breaks, complete = complete, clip = clip, proj = proj))
 
     if (length(contours) == 0) {
       warningf("Not possible to generate contour data.", call. = FALSE)
@@ -174,31 +174,6 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     # contours <- contours[, unique(.SD), by = .(group, piece)]
     # contours[, start := NULL]
     contours <- .order_contour(contours, data.table::setDT(data))
-
-    if (!is.null(proj)) {
-      if (is.function(proj)) {
-        contours <- proj(contours)
-      } else {
-        if (is.character(proj)) {
-          if (!requireNamespace("proj4", quietly = TRUE)) {
-            stopf("Projection requires the proj4 package. Install it with 'install.packages(\"proj4\")'.")
-          }
-          contours <- data.table::copy(contours)[, c("x", "y") := proj4::project(list(x, y), proj,
-                                                                                 inverse = TRUE)][]
-
-        }
-      }
-    }
-
-
-    if (!is.null(clip)) {
-        if (!is.na(sf::st_crs(clip))) {
-            sf::st_crs(clip) <- NA
-        }
-        clip <- sf::st_union(clip)
-        contours <- contours[, clip_contours(x, y, clip, type = "LINESTRING"), by = setdiff(colnames(contours), c("x", "y", "dx", "dy"))]
-        contours[, group := interaction(group, L)]
-    }
 
 
     return(contours)
@@ -292,7 +267,7 @@ isoband_z_matrix <- function(data) {
   raster
 }
 
-.contour_lines <- function(data, breaks, complete = FALSE) {
+.contour_lines <- function(data, breaks, complete = FALSE, clip = NULL, proj = NULL) {
   z <- isoband_z_matrix(data)
 
   if (is.list(z)) {
@@ -309,6 +284,35 @@ isoband_z_matrix <- function(data) {
   if (length(cl) == 0) {
     warningf("Not possible to generate contour data.", call. = FALSE)
     return(data.frame())
+  }
+
+  if (!is.null(proj)) {
+      cl_class <- class(cl)
+      if (is.function(proj)) {
+          cl <- proj(cl)
+      } else {
+          if (is.character(proj)) {
+              if (!requireNamespace("proj4", quietly = TRUE)) {
+                  stopf("Projection requires the proj4 package. Install it with 'install.packages(\"proj4\")'.")
+              }
+              cl <- lapply(cl, function(x) {
+                  x[c("x", "y")] <- proj4::project(list(x$x, x$y), proj, inverse = TRUE)
+                  return(x)
+              })
+          }
+      }
+      class(cl) <- cl_class
+  }
+
+
+  if (!is.null(clip)) {
+      clip <- sf::st_union(clip)
+
+      if (!is.na(sf::st_crs(clip))) {
+          sf::st_crs(clip) <- NA
+      }
+
+      cl <- clip_iso(cl, clip, "LINESTRING")
   }
 
   # Convert list of lists into single data frame

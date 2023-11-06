@@ -9,14 +9,14 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-  
+
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  dev = "jpeg",
-collapse = TRUE,
-message = FALSE,
-fig.width = 7,
-comment = "#>")
+    dev = "jpeg",
+    collapse = TRUE,
+    message = FALSE,
+    fig.width = 7,
+    comment = "#>")
 data.table::setDTthreads(1)
 ```
 
@@ -50,8 +50,8 @@ For example, is is very common in meteorological science to not draw contours at
 
 ```{r}
 ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
-  geom_contour_fill(breaks = MakeBreaks(binwidth = 2, exclude = 0)) +
-  scale_fill_divergent(breaks = MakeBreaks(binwidth = 2, exclude = 0))
+    geom_contour_fill(breaks = MakeBreaks(binwidth = 2, exclude = 0)) +
+    scale_fill_divergent(breaks = MakeBreaks(binwidth = 2, exclude = 0))
 ```
 
 
@@ -85,10 +85,10 @@ Contouring only works on regular grids (although see {[contoureR](https://cran.r
 ```{r}
 data(surface)
 ggplot(surface, aes(lon, lat)) +
-  geom_point(aes(color = height))
+    geom_point(aes(color = height))
 
 ggplot(surface, aes(x, y)) +
-  geom_point(aes(color = height))
+    geom_point(aes(color = height))
 ```
 
 
@@ -98,13 +98,26 @@ If you know the projection string, you can pass it to the `proj` argument and ge
 proj_string <- "+proj=lcc +lat_1=-30.9659996032715 +lat_2=-30.9659996032715 +lat_0=-30.9660034179688 +lon_0=-63.5670013427734 +a=6370000 +b=6370000"
 
 ggplot(surface, aes(x, y)) +
-  geom_contour_fill(aes(z = height))
+    geom_contour_fill(aes(z = height))
 
 ggplot(surface, aes(x, y)) +
-  geom_contour_fill(aes(z = height), proj = proj_string)
+    geom_contour_fill(aes(z = height), proj = proj_string)
 ```
 
-You can actually pass any arbitrary function to `proj`. It should take a data.frame with the contour information and return the modified contours. 
+You can actually pass any arbitrary function to `proj`. It should take an iso object as returned by the isoband package with the contour information and return the modified contours. 
+
+
+### Clipping
+
+The `clip` argument takes a simple feature polygon and clips the contours to the interior of the polygon. 
+Clipping is done after `proj` is applied. 
+
+```{r}
+argentina <- rnaturalearth::ne_countries(country = "argentina", returnclass = "sf")
+ggplot(surface, aes(x, y)) +
+    geom_contour_fill(aes(z = height), proj = proj_string, clip = arg) 
+```
+
 
 ### On the fly kriging
 
@@ -118,11 +131,11 @@ some_volcano[, Var1 := Var1 + rnorm(.N)]    # add some random noise
 some_volcano[, Var2 := Var2 + rnorm(.N)]
 
 ggplot(some_volcano, aes(Var1, Var2)) +
-  geom_point(aes(color = value))
+    geom_point(aes(color = value))
 
 ggplot(some_volcano, aes(Var1, Var2)) +
-  geom_contour_fill(aes(z = value), kriging = TRUE) +
-  geom_point(size = 0.2)
+    geom_contour_fill(aes(z = value), kriging = TRUE) +
+    geom_point(size = 0.2)
 ```
 
 ### Unequal `breaks` between facets
@@ -133,18 +146,18 @@ With the default, separation between levels is always the same. Good for compari
 
 ```{r}
 ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
-  geom_contour_fill() +
-  scale_fill_divergent() +
-  facet_grid(~lev)
+    geom_contour_fill() +
+    scale_fill_divergent() +
+    facet_grid(~lev)
 ```
 
 With `global.breaks = FALSE`, binwidth is no longer the same in each panel and now you can see more detail in the leftmost panel.
 
 ```{r}
 ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
-  geom_contour_fill(global.breaks = FALSE) +
-  scale_fill_divergent() +
-  facet_grid(~lev)
+    geom_contour_fill(global.breaks = FALSE) +
+    scale_fill_divergent() +
+    facet_grid(~lev)
 ```
 
 
@@ -226,9 +239,9 @@ Illuminated contours (aka Tanaka contours) use varying brightness and width to c
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-     geom_contour_fill() +
-     geom_contour_tanaka() +
-     scale_fill_divergent()
+    geom_contour_fill() +
+    geom_contour_tanaka() +
+    scale_fill_divergent()
 ```
 
 ## stat_subset
@@ -273,10 +286,10 @@ temperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat,
             by = lev]
 
 (g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
-    geom_contour_fill(aes(z = air.z)) +
-    geom_vector(aes(dx = t.dx, dy = t.dy), skip.x = 2, 
-                skip.y = 1) +
-    scale_mag())
+        geom_contour_fill(aes(z = air.z)) +
+        geom_vector(aes(dx = t.dx, dy = t.dy), skip.x = 2, 
+                    skip.y = 1) +
+        scale_mag())
 ```
 
 In the above example, t.dx and t.dy represent displacements in the same units as the x and y dimension, so using `geom_vector()` each arrow points perpendicular to the contours even if we change the coordinate system.
@@ -341,7 +354,7 @@ One way of achieving this is to use the `level` stat, which --as discussed previ
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill(aes(fill = after_stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
-  guides(fill = guide_colorsteps())
+    guides(fill = guide_colorsteps())
 ```
 
 This can work, but this example shows its limitations. Since the scale has no real understanding of the underlying numbers, breaks and colours are always distributed evenly even when they shouldn't. For the same reason it's also not possible to use diverging colour scales with a set midpoint. 
@@ -350,16 +363,16 @@ For that, the solution is to use `scale_fill_discretised()`:
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-  geom_contour_fill(aes(fill = after_stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
-  scale_fill_discretised()
+    geom_contour_fill(aes(fill = after_stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
+    scale_fill_discretised()
 ```
 
 This type of scale understand discrete values that have an underlying continuous nature. This means that the scale can be modified by referencing the continuous values. For example, using a divergent scale and setting the midpoint.  
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
-  geom_contour_fill(aes(fill = after_stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
-  scale_fill_divergent_discretised(midpoint = 3)
+    geom_contour_fill(aes(fill = after_stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
+    scale_fill_divergent_discretised(midpoint = 3)
 ```
 
 ## Other scales
@@ -373,7 +386,7 @@ To see how this scales work, let's visualize the vertical distribution of temper
 ```{r, message = FALSE}
 # Plot made with base ggplot
 (g <- ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
-        geom_contour2(aes(color = after_stat(level))))
+     geom_contour2(aes(color = after_stat(level))))
 ```
 
 While this is fine, since pressure levels are roughly proportional to $\mathrm{e}^{-z}$ in meteorology we usually plot the vertical coordinate as $-\log(p)$. However, while ggplot2 has `scale_y_log10()` and `scale_y_reverse()`, they don't work together. `metR` defines the new transformation `reverselog_trans()` that can be used with any scale but that is the default for `scale_*_level()`. 

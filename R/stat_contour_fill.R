@@ -194,9 +194,10 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         class(cl) <- cl_class
     }
 
-
     if (!is.null(clip)) {
-        clip <- sf::st_union(clip)
+        s2 <- suppressMessages(sf::sf_use_s2(FALSE))
+        on.exit(suppressMessages(sf::sf_use_s2(s2)))
+        clip <- suppressMessages(sf::st_union(sf::st_make_valid(clip)))
 
         if (!is.na(sf::st_crs(clip))) {
             sf::st_crs(clip) <- NA
@@ -298,8 +299,9 @@ get_sf_coords <- function(x, type = "POLYGON")  {
 
 clip_iso  <- function(iso, clip, type = "POLYGON") {
     iso <- isoband::iso_to_sfg(iso)
-
     iso <- lapply(iso, function(x) {
+        # stopifnot(!sf::st_is_valid(x))
+
         result <- sf::st_intersection(sf::st_make_valid(x), clip)
         if (sf::st_is_empty(result)) {
             return(NULL)

@@ -3,6 +3,7 @@
 \name{guide_colourstrip}
 \alias{guide_colourstrip}
 \alias{guide_train.colorstrip}
+\alias{guide_geom.colorstrip}
 \alias{guide_colorstrip}
 \alias{guide_gengrob.colorstrip}
 \title{Discretized continuous colour guide}

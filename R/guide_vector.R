@@ -111,6 +111,25 @@ guide_train.vector <- function(guide, scale, aesthetic = NULL) {
     guide
 }
 
+#' @export
+#' @importFrom ggplot2 guide_geom
+guide_geom.vector <- function(guide, layers, ...) {
+    if (!inherits(ggplot2::guide_none(), "Guide")) {
+        return(NextMethod())
+    }
+    legend <- ggplot2::guide_legend()
+    legend$get_layer_key(guide, layers)
+}
+
+#' @export
+#' @importFrom ggplot2 guide_gengrob
+guide_gengrob.vector <- function(guide, theme) {
+    if (!inherits(ggplot2::guide_none(), "Guide")) {
+        return(NextMethod())
+    }
+    legend <- ggplot2::guide_legend()
+    legend$draw(theme, guide)
+}
 
 
 globalVariables(c("C", "R", "key.row", "key.col", "label.row", "label.col"))

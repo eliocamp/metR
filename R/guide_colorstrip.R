@@ -171,6 +171,19 @@ guide_train.colorstrip <- function(guide, scale, aesthetic = NULL) {
     guide
 }
 
+#' @usage NULL
+#' @format NULL
+#' @export
+#' @rdname guide_colourstrip
+#' @keywords internal
+#' @importFrom ggplot2 guide_geom
+guide_geom.colorstrip <- function(guide, layers, ...) {
+    if (!inherits(ggplot2::guide_none(), "Guide")) {
+        return(NextMethod())
+    }
+    bar <- ggplot2::guide_colourbar()
+    bar$get_layer_key(guide, layers)
+}
 
 #' @export
 #' @rdname guide_colourstrip

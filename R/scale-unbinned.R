@@ -1,52 +1,4 @@
 
-get_middle <- function(x) {
-    if (is.numeric(x)) {
-        return(x)
-    }
-    breaks <- levels(x)
-    splitted <- strsplit(gsub("[\\(\\[\\)\\]]", "", as.character(breaks), perl = TRUE), ",")
-
-
-    low <- vapply(splitted, function(x) min(as.numeric(x)), FUN.VALUE =  numeric(1))
-    high <- vapply(splitted, function(x) max(as.numeric(x)), FUN.VALUE =  numeric(1))
-
-    if (low[1] == -Inf) {
-        low[1] <- high[1] - (high[2] - low[2])
-    }
-    n <- length(breaks)
-    if (high[n] == Inf) {
-        high[n] <- high[n-1] + (high[n-1] - low[n-1])
-    }
-
-    middle <- (high + low)/2
-    names(middle) <- breaks
-    middle <- middle[x]
-    middle
-}
-
-
-uncut <- function(x, squash_infinite = TRUE) {
-
-    splitted <- strsplit(gsub("[\\(\\[\\)\\]]", "", as.character(x), perl = TRUE), ",")
-
-    low <- vapply(splitted, function(x) as.numeric(x[1]), FUN.VALUE =  numeric(1))
-    high <- vapply(splitted, function(x) as.numeric(x[2]), FUN.VALUE =  numeric(1))
-
-    if (squash_infinite) {
-        if (low[1] == -Inf) {
-            low[1] <- high[1] - (high[2] - low[2])
-        }
-        n <- length(x)
-        if (high[n] == Inf) {
-            high[n] <- high[n-1] + (high[n-1] - low[n-1])
-        }
-    }
-
-    sort(c(low, high))
-
-}
-
-
 mid_rescaler <- function(mid) {
     function(x, from) {
         scales::rescale_mid(x, to = c(0, 1), from = from, mid)
@@ -275,18 +227,22 @@ ScaleDiscretised <-  ggplot2::ggproto("ScaleDiscretised", ggplot2::ScaleBinned,
 
    },
 
-    map = function(self, x, limits = self$get_limits()) {
-      # If a value is right at the limits, put it back into range
-      breaks <-  sort(unique(c(self$breaks, self$limits)))
-      x[x == self$limits[1]] <- x[x == self$limits[1]] + diff(breaks)[1]/2
-      x[x == self$limits[2]] <- x[x == self$limits[2]] - rev(diff(breaks))[1]/2
+   map = function(self, x, limits = self$get_limits()) {
 
-     new_x <- get_middle(cut(x, breaks = breaks, include.lowest = TRUE))
+       dec <- getOption("OutDec")
+       options(OutDec = ".")
+       on.exit(options(OutDec = dec))
+       # If a value is right at the limits, put it back into range
+       breaks <-  sort(unique(c(self$breaks, self$limits)))
+       x[x == self$limits[1]] <- x[x == self$limits[1]] + diff(breaks)[1]/2
+       x[x == self$limits[2]] <- x[x == self$limits[2]] - rev(diff(breaks))[1]/2
+
+       new_x <- get_middle(cut(x, breaks = breaks, include.lowest = TRUE))
 
 
-     a <- ggplot2::ggproto_parent(ggplot2::ScaleContinuous,
+       a <- ggplot2::ggproto_parent(ggplot2::ScaleContinuous,
                                     self)$map(new_x, self$scale_limits)
-     a
+       a
    }
 )
 
@@ -298,6 +254,9 @@ get_middle <- function(x) {
   breaks <- levels(x)
   splitted <- strsplit(gsub("[\\(\\[\\)\\]]", "", as.character(breaks), perl = TRUE), ",")
 
+  dec <- getOption("OutDec")
+  options(OutDec = ".")
+  on.exit(options(OutDec = dec))
 
   low <- vapply(splitted, function(x) min(as.numeric(x)), FUN.VALUE =  numeric(1))
   high <- vapply(splitted, function(x) max(as.numeric(x)), FUN.VALUE =  numeric(1))
@@ -318,23 +277,26 @@ get_middle <- function(x) {
 
 
 uncut <- function(x, squash_infinite = TRUE) {
+    dec <- getOption("OutDec")
+    options(OutDec = ".")
+    on.exit(options(OutDec = dec))
 
-  splitted <- strsplit(gsub("[\\(\\[\\)\\]]", "", as.character(x), perl = TRUE), ",")
+    splitted <- strsplit(gsub("[\\(\\[\\)\\]]", "", as.character(x), perl = TRUE), ",")
 
-  low <- vapply(splitted, function(x) as.numeric(x[1]), FUN.VALUE =  numeric(1))
-  high <- vapply(splitted, function(x) as.numeric(x[2]), FUN.VALUE =  numeric(1))
+    low <- vapply(splitted, function(x) as.numeric(x[1]), FUN.VALUE =  numeric(1))
+    high <- vapply(splitted, function(x) as.numeric(x[2]), FUN.VALUE =  numeric(1))
 
-  if (squash_infinite) {
-    if (low[1] == -Inf) {
-      low[1] <- high[1] - (high[2] - low[2])
+    if (squash_infinite) {
+        if (low[1] == -Inf) {
+            low[1] <- high[1] - (high[2] - low[2])
+        }
+        n <- length(x)
+        if (high[n] == Inf) {
+            high[n] <- high[n-1] + (high[n-1] - low[n-1])
+        }
     }
-    n <- length(x)
-    if (high[n] == Inf) {
-      high[n] <- high[n-1] + (high[n-1] - low[n-1])
-    }
-  }
 
-  sort(c(low, high))
+    sort(c(low, high))
 
 }
 

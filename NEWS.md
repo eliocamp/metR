@@ -9,9 +9,10 @@
 
 -   The `proj` argument in `geom_contour_fill()` and friends now operate over the isolines returned by the isoband package. This might break code that used a custom function to `proj`.
 
-## Other stuff
+## Bug Fixes
 
 -   Guides are compatible with the new versions of ggplot2 (#117, @teunbrand).
+-   Contour functions will work even if OutDec is not ".".
 
 # metR 0.14.1
 

@@ -161,9 +161,11 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
       data <- suppressWarnings(WrapCircular(data, "y", ywrap))
     }
 
-
     data.table::setDF(data)
+    dec <- getOption("OutDec")
+    options(OutDec = ".")
     contours <- data.table::as.data.table(.contour_lines(data, breaks, complete = complete, clip = clip, proj = proj))
+    options(OutDec = dec)
 
     if (length(contours) == 0) {
       warningf("Not possible to generate contour data.", call. = FALSE)

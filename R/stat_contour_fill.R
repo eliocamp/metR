@@ -142,8 +142,8 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         # Make contours
         dec <- getOption("OutDec")
         options(OutDec = ".")
+        on.exit(options(OutDec = dec))
         cont <- data.table::setDT(.contour_bands(data, breaks, complete = complete, clip = clip, proj = proj))
-        options(OutDec = dec)
 
         cont[, int.level := (level_high + level_low)/2]
         cont[, level_mid := int.level]

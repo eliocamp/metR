@@ -235,7 +235,34 @@ labelGrob <- function (label, x = grid::unit(0.5, "npc"), y = grid::unit(0.5, "n
         y <- grid::unit(y, default.units)
     grid::gTree(label = label, x = x, y = y, just = just, padding = padding,
           r = r, name = name, text.gp = text.gp, rect.gp = rect.gp,
-          vp = vp, cl = "labelgrob")
+          vp = vp, cl = "metR_labelgrob")
+}
+
+#' @export
+makeContent.metR_labelgrob <- function(x) {
+    hj <- grid::resolveHJust(x$just, NULL)
+    vj <- grid::resolveVJust(x$just, NULL)
+
+    t <- grid::textGrob(
+        x$label,
+        x$x + 2 * (0.5 - hj) * x$padding,
+        x$y + 2 * (0.5 - vj) * x$padding,
+        just = c(hj, vj),
+        gp = x$text.gp,
+        name = "text"
+    )
+
+    r <- grid::roundrectGrob(
+        x$x, x$y, default.units = "native",
+        width = grid::grobWidth(t) + 2 * x$padding,
+        height = grid::grobHeight(t) + 2 * x$padding,
+        just = c(hj, vj),
+        r = x$r,
+        gp = x$rect.gp,
+        name = "box"
+    )
+
+    grid::setChildren(x, grid::gList(r, t))
 }
 
 ggname <- function (prefix, grob) {

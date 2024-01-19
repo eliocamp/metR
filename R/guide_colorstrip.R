@@ -143,7 +143,6 @@ guide_train.colorstrip <- function(guide, scale, aesthetic = NULL) {
         .bar <- breaks[keep]
     } else {
         breaks <- .get_breaks(scale)
-        # keep <- breaks >= .limits[1] & breaks <= .limits[2] & is.finite(breaks)
         keep <- is.finite(breaks)
         .bar <- .inside(breaks[keep])
         guide$nbin <- length(.bar)

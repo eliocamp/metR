@@ -118,7 +118,7 @@ guide_geom.vector <- function(guide, layers, ...) {
         return(NextMethod())
     }
     legend <- ggplot2::guide_legend()
-    legend$get_layer_key(guide, layers)
+    legend$get_layer_key(guide, layers, rep(list(NULL), length(layers)))
 }
 
 #' @export
@@ -127,8 +127,13 @@ guide_gengrob.vector <- function(guide, theme) {
     if (!inherits(ggplot2::guide_none(), "Guide")) {
         return(NextMethod())
     }
+    position  <- theme$legend.position %||% "right"
+    direction <- theme$legend.direction %||% switch(
+        position, top = , bottom = "horizontal", "vertical"
+    )
+    theme$legend.key.width <- guide$keywidth
     legend <- ggplot2::guide_legend()
-    legend$draw(theme, guide)
+    legend$draw(theme, position = position, direction = direction, params = guide)
 }
 
 

@@ -6,7 +6,7 @@
 \alias{BuildWave}
 \alias{FilterWave}
 \alias{WaveEnvelope}
-\title{Fourier transform}
+\title{Fourier transform functions}
 \usage{
 FitWave(y, k = 1)
 
@@ -57,15 +57,16 @@ vector if \code{sum} is \code{TRUE} or, instead, a list with components
 \item{y}{the reconstructed signal of each wavenumber}
 }
 
-\code{FilterWave} returns a vector of the same length as \code{y}
+\code{FilterWave} and \code{WaveEnvelope} return a vector of the same length as \code{y}
 `
 }
 \description{
-Perform a fourier transform of the data and return the
+Use \code{\link[=fft]{fft()}} to fit, filter and reconstruct signals in the frequency domain, as
+well as to compute the wave envelope.
 }
 \details{
-\code{FitWave} uses \link{fft} to make a fourier transform of the
-data and then returns a list of parameters for each wave number kept.
+\code{FitWave} performs a fourier transform of the input vector
+and returns a list of parameters for each wave number kept.
 The  amplitude (A), phase (\eqn{\phi}) and wave number (k) satisfy:
 \deqn{y = \sum A cos((x - \phi)k)}
 The phase is calculated so that it lies between 0 and \eqn{2\pi/k} so it
@@ -89,6 +90,31 @@ the envelope of only a restricted band, first filter it with \code{FilterWave}.
 \examples{
 \dontshow{data.table::setDTthreads(1)}
 
+# Build a wave with specific wavenumbers
+waves <- list(k = 1:10,
+              amplitude = rnorm(10)^2,
+              phase = runif(10, 0, 2*pi/(1:10)))
+x <- BuildWave(seq(0, 2*pi, length.out = 60)[-1], wave = waves)
+
+# Just fancy FFT
+FitWave(x, k = 1:10)
+
+# Extract only specific wave components
+plot(FilterWave(x,  1), type = "l")
+plot(FilterWave(x,  2), type = "l")
+plot(FilterWave(x,  1:4), type = "l")
+
+# Remove components from the signal
+plot(FilterWave(x,  -4:-1), type = "l")
+
+# The sum of the two above is the original signal (minus floating point errors)
+all.equal(x, FilterWave(x,  1:4) + FilterWave(x,  -4:-1))
+
+# The Wave envelopes shows where the signal is the most "wavy".
+plot(x, type = "l", col = "grey")
+lines(WaveEnvelope(x), add = TRUE)
+
+# Examples with real data
 data(geopotential)
 library(data.table)
 # January mean of geopotential height

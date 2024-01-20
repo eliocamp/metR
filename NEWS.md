@@ -4,6 +4,7 @@
 
 -   The contour functions gain a `clip` argument to only show contours in an area defined by a polygon.
 -   The `kriging` argument of the contour functions now can be a numeric to control de number of pixels used.
+-   Documentation of `FitWave()` and friends improved (#184, @pascaloettli).
 
 ## Breaking changes
 

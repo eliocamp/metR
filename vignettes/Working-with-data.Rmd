@@ -3,10 +3,10 @@ title: "Working with data"
 author: "Elio Campitelli"
 date: "`r Sys.Date()`"
 output: 
-    rmarkdown::html_vignette
+    markdown::html_format
 vignette: >
   %\VignetteIndexEntry{Working with data}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
   

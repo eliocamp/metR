@@ -3,10 +3,10 @@ title: "Visualization tools"
 author: "Elio Campitelli"
 date: "`r Sys.Date()`"
 output: 
-    rmarkdown::html_vignette
+    markdown::html_format
 vignette: >
   %\VignetteIndexEntry{Visualization tools}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
 

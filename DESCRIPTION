@@ -43,7 +43,7 @@ Suggests:
     ncdf4,
     pkgdown,
     reshape2,
-    rmarkdown,
+    markdown,
     testthat (>= 2.1.0),
     viridis,
     PCICt,

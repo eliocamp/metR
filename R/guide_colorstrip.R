@@ -138,12 +138,13 @@ guide_train.colorstrip <- function(guide, scale, aesthetic = NULL) {
 
     if (guide$inside) {
         breaks <- scale$get_breaks()
-        breaks <- breaks[!is.na(breaks)]
-        guide$nbin <- length(breaks)
-        .bar <- breaks
+        keep <- breaks >= .limits[1] & breaks <= .limits[2] & is.finite(breaks)
+        guide$nbin <- sum(keep)
+        .bar <- breaks[keep]
     } else {
         breaks <- .get_breaks(scale)
-        .bar <- .inside(breaks[!is.na(breaks)])
+        keep <- is.finite(breaks)
+        .bar <- .inside(breaks[keep])
         guide$nbin <- length(.bar)
     }
     if (length(breaks) == 0 || all(is.na(breaks)))
@@ -160,7 +161,7 @@ guide_train.colorstrip <- function(guide, scale, aesthetic = NULL) {
     ticks$.value <- breaks
     ticks$.label <- scale$get_labels(breaks)
 
-    guide$key <- ticks
+    guide$key <- ticks[keep, ,drop = FALSE]
 
     if (guide$reverse) {
         guide$key <- guide$key[nrow(guide$key):1, ]

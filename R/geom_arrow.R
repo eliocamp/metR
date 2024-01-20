@@ -358,7 +358,8 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
                                     warningf("The use of preserve.dir = FALSE with discrete scales is not recommended.", call. = FALSE)
                                   }
 
-                                  if (scales$x$scale_name == "date" | scales$x$scale_name == "date") {
+                                  trans_name <- scales$x$trans$name
+                                  if (trans_name == "date") {
                                     warningf("The use of preserve.dir = FALSE with date scales is not recommended.", call. = FALSE)
                                   }
                                 }

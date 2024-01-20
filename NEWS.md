@@ -12,7 +12,7 @@
 
 ## Bug Fixes
 
--   Guides are compatible with the new versions of ggplot2 (#117, @teunbrand).
+-   Guides are compatible with the new versions of ggplot2 (#117 and #185, @teunbrand).
 -   Contour functions will work even if OutDec is not ".".
 
 # metR 0.14.1

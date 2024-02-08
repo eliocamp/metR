@@ -68,7 +68,7 @@ citation("metR")
 #>     title = {metR: Tools for Easier Analysis of Meteorological Fields},
 #>     author = {Elio Campitelli},
 #>     year = {2021},
-#>     note = {R package version 0.14.1},
+#>     note = {R package version 0.15.0},
 #>     url = {https://eliocamp.github.io/metR/},
 #>     doi = {10.5281/zenodo.2593516},
 #>   }

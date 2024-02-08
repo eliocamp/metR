@@ -90,7 +90,7 @@ the envelope of only a restricted band, first filter it with \code{FilterWave}.
 \examples{
 \dontshow{data.table::setDTthreads(1)}
 
-# Build a wave with specific wavenumbers
+# Build a wave with specific wavenumber profile
 waves <- list(k = 1:10,
               amplitude = rnorm(10)^2,
               phase = runif(10, 0, 2*pi/(1:10)))

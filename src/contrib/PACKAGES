@@ -1,5 +1,5 @@
 Package: metR
-Version: 0.14.1.9000
+Version: 0.15.0
 Depends: R (>= 2.10)
 Imports: checkmate, data.table, digest, Formula, formula.tools, ggplot2
         (>= 3.0.0), grid, gtable, memoise, plyr, scales, sf, stringr,
@@ -8,5 +8,5 @@ Suggests: maps, covr, irlba, knitr, ncdf4, pkgdown, reshape2, markdown,
         testthat (>= 2.1.0), viridis, PCICt, gridExtra, vdiffr, proj4,
         kriging, terra, here, gsignal, rnaturalearth
 License: GPL-3
-MD5sum: ee38273fe9b04af8a87f855c8de2e528
+MD5sum: 61e2adcf382c30fd1a0cc5e1c805efa6
 NeedsCompilation: no

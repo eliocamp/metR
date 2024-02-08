@@ -40,7 +40,7 @@
 #' @family ggplot2 helpers
 #' @export
 guide_colourstrip <- function(
-    # title
+        # title
     title = ggplot2::waiver(),
     title.position = NULL,
     title.theme = NULL,
@@ -203,7 +203,13 @@ guide_colorstrip <- guide_colourstrip
     if (scale$is_empty()) return(numeric())
 
     # Limits in transformed space need to be converted back to data space
-    limits <- scale$trans$inverse(limits)
+
+    ## ggplot2 3.5.0 changed the internals.
+    if (is.null(scale[["trans"]])) {
+        limits <- scale$transformation$inverse(limits)
+    } else {
+        limits <- scale$trans$inverse(limits)
+    }
 
     if (is.null(scale$breaks)) {
         return(NULL)
@@ -212,14 +218,24 @@ guide_colorstrip <- guide_colourstrip
     } else if (scales::zero_range(as.numeric(limits))) {
         breaks <- limits[1]
     } else if (is.waive(scale$breaks)) {
-        breaks <- scale$trans$breaks(limits)
+        if (is.null(scale[["trans"]])) {
+            breaks <- scale$transformation$breaks(limits)
+        } else {
+            breaks <- scale$trans$breaks(limits)
+        }
+
     } else if (is.function(scale$breaks)) {
         breaks <- scale$breaks(limits)
     } else {
         breaks <- scale$breaks
     }
 
-    breaks <- scale$trans$transform(breaks)
+    if (is.null(scale[["trans"]])) {
+        breaks <- scale$transformation$transform(breaks)
+    } else {
+        breaks <- scale$trans$transform(breaks)
+    }
+
     breaks
 }
 
@@ -255,33 +271,33 @@ guide_gengrob.colorstrip <- function(guide, theme) {
 
     tic_pos.c <- scales::rescale(guide$key$.value, c(0.5, guide$nbin - 0.5), guide$bar$value[c(1, nrow(guide$bar))]) * barlength.c / guide$nbin
     grob.bar <-
-            switch(guide$direction,
-                   horizontal = {
-                       if (guide$inside) {
-                           bx <- .inside(tic_pos.c)
-                           bx <- c(2*tic_pos.c[1] - bx[1], bx)
-                           bw <- c(diff(bx), 2*(tic_pos.c[length(tic_pos.c)] - bx[length(bx)]))
-                       } else {
-                           bx <- tic_pos.c[-length(tic_pos.c)]
-                           bw <- diff(tic_pos.c)
-                       }
+        switch(guide$direction,
+               horizontal = {
+                   if (guide$inside) {
+                       bx <- .inside(tic_pos.c)
+                       bx <- c(2*tic_pos.c[1] - bx[1], bx)
+                       bw <- c(diff(bx), 2*(tic_pos.c[length(tic_pos.c)] - bx[length(bx)]))
+                   } else {
+                       bx <- tic_pos.c[-length(tic_pos.c)]
+                       bw <- diff(tic_pos.c)
+                   }
 
-                       grid::rectGrob(x = bx, y = 0, vjust = 0, hjust = 0, width = bw, height = barheight.c, default.units = "mm",
-                                      gp = grid::gpar(col = NA, fill = guide$bar$colour))
-                   },
-                   vertical = {
-                       if (guide$inside) {
-                           by <- .inside(tic_pos.c)
-                           by <- c(2*tic_pos.c[1] - by[1], by)
-                           bh <- c(diff(by), 2*(tic_pos.c[length(tic_pos.c)] - by[length(by)]))
-                       } else {
-                           by <- tic_pos.c[-length(tic_pos.c)]
-                           bh <- diff(tic_pos.c)
-                       }
+                   grid::rectGrob(x = bx, y = 0, vjust = 0, hjust = 0, width = bw, height = barheight.c, default.units = "mm",
+                                  gp = grid::gpar(col = NA, fill = guide$bar$colour))
+               },
+               vertical = {
+                   if (guide$inside) {
+                       by <- .inside(tic_pos.c)
+                       by <- c(2*tic_pos.c[1] - by[1], by)
+                       bh <- c(diff(by), 2*(tic_pos.c[length(tic_pos.c)] - by[length(by)]))
+                   } else {
+                       by <- tic_pos.c[-length(tic_pos.c)]
+                       bh <- diff(tic_pos.c)
+                   }
 
-                       grid::rectGrob(x = 0, y = by, vjust = 0, hjust = 0, width = barwidth.c, height = bh, default.units = "mm",
-                                      gp = grid::gpar(col = NA, fill = guide$bar$colour))
-                   })
+                   grid::rectGrob(x = 0, y = by, vjust = 0, hjust = 0, width = barwidth.c, height = bh, default.units = "mm",
+                                  gp = grid::gpar(col = NA, fill = guide$bar$colour))
+               })
 
 
     # tick and label position
@@ -297,7 +313,7 @@ guide_gengrob.colorstrip <- function(guide, theme) {
                              label = guide$title,
                              hjust = guide$title.hjust %||% theme$legend.title.align %||% 0,
                              vjust = guide$title.vjust %||% 0.5
-                             )
+                         )
     )
 
 
@@ -361,7 +377,7 @@ guide_gengrob.colorstrip <- function(guide, theme) {
                    y1 = rep(tic_pos.c, 2)
                })
         grid::segmentsGrob(x0 = x0, y0 = y0, x1 = x1, y1 = y1,
-                     default.units = "mm", gp = grid::gpar(col = "white", lwd = 0.5, lineend = "butt"))
+                           default.units = "mm", gp = grid::gpar(col = "white", lwd = 0.5, lineend = "butt"))
     }
 
     # layout of bar and label
@@ -442,19 +458,19 @@ guide_gengrob.colorstrip <- function(guide, theme) {
 
     gt <- gtable::gtable(widths = grid::unit(widths, "mm"), heights = grid::unit(heights, "mm"))
     gt <- gtable::gtable_add_grob(gt, grob.background, name = "background", clip = "off",
-                          t = 1, r = -1, b = -1, l = 1)
+                                  t = 1, r = -1, b = -1, l = 1)
     gt <- gtable::gtable_add_grob(gt, grob.bar, name = "bar", clip = "off",
-                          t = 1 + min(vps$bar.row), r = 1 + max(vps$bar.col),
-                          b = 1 + max(vps$bar.row), l = 1 + min(vps$bar.col))
+                                  t = 1 + min(vps$bar.row), r = 1 + max(vps$bar.col),
+                                  b = 1 + max(vps$bar.row), l = 1 + min(vps$bar.col))
     gt <- gtable::gtable_add_grob(gt, grob.label, name = "label", clip = "off",
-                          t = 1 + min(vps$label.row), r = 1 + max(vps$label.col),
-                          b = 1 + max(vps$label.row), l = 1 + min(vps$label.col))
+                                  t = 1 + min(vps$label.row), r = 1 + max(vps$label.col),
+                                  b = 1 + max(vps$label.row), l = 1 + min(vps$label.col))
     gt <- gtable::gtable_add_grob(gt, grob.title, name = "title", clip = "off",
-                          t = 1 + min(vps$title.row), r = 1 + max(vps$title.col),
-                          b = 1 + max(vps$title.row), l = 1 + min(vps$title.col))
+                                  t = 1 + min(vps$title.row), r = 1 + max(vps$title.col),
+                                  b = 1 + max(vps$title.row), l = 1 + min(vps$title.col))
     gt <- gtable::gtable_add_grob(gt, grob.ticks, name = "ticks", clip = "off",
-                          t = 1 + min(vps$bar.row), r = 1 + max(vps$bar.col),
-                          b = 1 + max(vps$bar.row), l = 1 + min(vps$bar.col))
+                                  t = 1 + min(vps$bar.row), r = 1 + max(vps$bar.col),
+                                  b = 1 + max(vps$bar.row), l = 1 + min(vps$bar.col))
 
     gt
 }

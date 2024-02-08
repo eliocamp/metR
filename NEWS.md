@@ -250,7 +250,8 @@
 
 -   `FitLm()` adds names to unnamed terms.
 
--   New function `WaveEnvelope()` that computes... the wave envelope.
+-   New function `WaveEnvelope()` that computes...
+    the wave envelope.
 
 -   `geom_contour2()`, `geom_contour_fill()` and `geom_text_contour()` now accept a `global.breaks` argument that controls whether breaks should be computed once using the range of the whole dataset or once for every grouping (e.g. faceting).
     `TRUE` (the default) ensures that intervals between contours are comparable between panels.

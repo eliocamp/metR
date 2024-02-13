@@ -1,5 +1,10 @@
 # metR (development version)
 
+## New features
+
+-   `EOF()`'s `rotate` argument now will take a function to apply to the EOF loadings.
+    `rotate = TRUE` is still supported but deprecated and will default to using `function(x) stats::varimax(x, normalize = FALSE)`.
+
 # metR 0.15.0
 
 ## New features

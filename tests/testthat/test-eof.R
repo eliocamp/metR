@@ -38,10 +38,18 @@ test_that("EOF works inside data.table", {
 
 test_that("EOF rotates", {
     expect_identical(
-        round(EOF(gh ~ lon + lat | date, data = geopotential, n = 1:2, rotate = TRUE)$sdev$sd),
+        round(EOF(gh ~ lon + lat | date, data = geopotential, n = 1:2, rotate = function(x) stats::varimax(x, normalize = FALSE))$sdev$sd),
         c(1424982, 542271)
     )
+
+    expect_equal(
+        EOF(gh ~ lon + lat | date, data = geopotential, n = 1:2,
+            rotate = function(x) stats::varimax(x, normalize = FALSE))$sdev$sd,
+        expect_warning(EOF(gh ~ lon + lat | date, data = geopotential, n = 1:2,
+                           rotate = TRUE)$sdev$sd, "deprecated"))
 })
+
+
 
 test_that("EOF fails gracefully", {
     expect_error(EOF(gh ~ lon + lat | date, data = geopotential, fill = "a"))

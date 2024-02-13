@@ -23,3 +23,4 @@
 ^crowdin\.yml$
 ^CRAN-SUBMISSION$
 add_repo.R
+^tests/testthat/_snaps$

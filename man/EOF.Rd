@@ -10,7 +10,7 @@ EOF(
   data = NULL,
   B = 0,
   probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
-  rotate = FALSE,
+  rotate = NULL,
   suffix = "PC",
   fill = NULL,
   engine = NULL
@@ -30,7 +30,8 @@ Ignored if <= 1.}
 \item{probs}{the probabilities of the lower and upper values of estimated
 confidence intervals. If named, it's names will be used as column names.}
 
-\item{rotate}{if \code{TRUE}, scores and loadings will be rotated using \link{varimax}}
+\item{rotate}{a function to apply to the loadings to rotate them. E.g. for
+varimax rotation use \code{stats::varimax}.}
 
 \item{suffix}{character to name the principal components}
 

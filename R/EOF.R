@@ -11,7 +11,8 @@
 #' Ignored if <= 1.
 #' @param probs the probabilities of the lower and upper values of estimated
 #' confidence intervals. If named, it's names will be used as column names.
-#' @param rotate if `TRUE`, scores and loadings will be rotated using [varimax]
+#' @param rotate a function to apply to the loadings to rotate them. E.g. for
+#' varimax rotation use `stats::varimax`.
 #' @param suffix character to name the principal components
 #' @param fill value to infill implicit missing values or `NULL` if the
 #' data is dense.
@@ -110,7 +111,7 @@
 #' @export
 EOF <- function(formula, n = 1, data = NULL, B = 0,
                 probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
-                rotate = FALSE, suffix = "PC", fill = NULL,
+                rotate = NULL, suffix = "PC", fill = NULL,
                 engine = NULL) {
     checks <- makeAssertCollection()
 
@@ -122,7 +123,6 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
     assertCharacter(names(probs), unique = TRUE, any.missing = FALSE,
                     null.ok = TRUE, min.chars = 1,
                     add = checks)
-    assertFlag(rotate, add = checks)
     assertCharacter(suffix, len = 1, any.missing = FALSE, add = checks)
     assertNumber(fill, finite = TRUE, null.ok = TRUE, add = checks)
 
@@ -190,12 +190,22 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
     remove(data)
     gc()
     pcomps <- paste0(suffix, n)
-    if (rotate == TRUE & max(n) > 1) {
+    # For backwards compatibility
+    if (isFALSE(rotate)) {
+        rotate <- NULL
+    }
+    if (!is.null(rotate) & max(n) > 1) {
         # Rotation
         eof$D <- diag(eof$d, ncol = max(n), nrow = max(n))
         loadings <- t(with(eof, D%*%t(v)))
         scores <- eof$u
-        R <- stats::varimax(loadings, normalize = FALSE)
+        if (isTRUE(rotate)) {
+            warningf("`rotate = TRUE` is deprecated. Use a function instead. Using `stats::varimax()`")
+            rotate <- function(x) stats::varimax(x, normalize = FALSE)
+        }
+        rotate <- match.fun(rotate)
+
+        R <- rotate(loadings)
         eof$u <- eof$u%*%R$rotmat
 
         # Recover rotated V and D matrixs
@@ -234,9 +244,9 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
             Prow <- sample(seq_len(p), replace = TRUE)
             m <- loadings[, Prow]
             eof <- svd(m)
-            if (rotate == TRUE) {
+            if (!is.null(rotate)) {
                 loadings <- t(with(eof, diag(d, ncol = max(n), nrow = max(n))%*%t(v)))
-                R <- stats::varimax(loadings, normalize = FALSE)
+                R <- rotate(loadings)
                 loadings <- R$loadings
                 class(loadings) <- "matrix"
                 return(sqrt(apply(loadings, 2, function(x) sum(x^2))))
@@ -261,3 +271,4 @@ EOF <- function(formula, n = 1, data = NULL, B = 0,
 }
 
 irlba_engine <- function(A, nv, nu) irlba::irlba(A, nv, nu, rng = runif)
+

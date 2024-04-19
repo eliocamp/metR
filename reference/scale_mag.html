@@ -70,21 +70,17 @@ Highly experimental.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">scale_mag</span><span class="op">(</span></span>
 <span>  name <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  labels <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  max_size <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  default_unit <span class="op">=</span> <span class="st">"cm"</span>,</span>
-<span>  max <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  guide <span class="op">=</span> <span class="fu"><a href="guide_vector.html">guide_vector</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  n.breaks <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  breaks <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  oob <span class="op">=</span> <span class="va">no_censor</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">scale_mag_continuous</span><span class="op">(</span></span>
 <span>  name <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  labels <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  max_size <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  default_unit <span class="op">=</span> <span class="st">"cm"</span>,</span>
-<span>  max <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  guide <span class="op">=</span> <span class="fu"><a href="guide_vector.html">guide_vector</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  n.breaks <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  breaks <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  oob <span class="op">=</span> <span class="va">no_censor</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -98,33 +94,34 @@ mapping used for that aesthetic. If <code>NULL</code>, the legend title will be
 omitted.</p></dd>
 
 
-<dt>labels</dt>
-<dd><p>One of:</p><ul><li><p><code>NULL</code> for no labels</p></li>
-<li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default labels computed by the
-transformation object</p></li>
-<li><p>A character vector giving labels (must be same length as <code>breaks</code>)</p></li>
-<li><p>An expression vector (must be the same length as breaks). See ?plotmath for details.</p></li>
-<li><p>A function that takes the breaks as input and returns labels
-as output. Also accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function
-notation.</p></li>
+<dt>n.breaks</dt>
+<dd><p>An integer guiding the number of major breaks. The algorithm
+may choose a slightly different number to ensure nice break labels. Will
+only have an effect if <code>breaks = waiver()</code>. Use <code>NULL</code> to use the default
+number of breaks given by the transformation.</p></dd>
+
+
+<dt>breaks</dt>
+<dd><p>One of:</p><ul><li><p><code>NULL</code> for no breaks</p></li>
+<li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default breaks computed by the
+<a href="https://scales.r-lib.org/reference/new_transform.html" class="external-link">transformation object</a></p></li>
+<li><p>A numeric vector of positions</p></li>
+<li><p>A function that takes the limits as input and returns breaks
+as output (e.g., a function returned by <code><a href="https://scales.r-lib.org/reference/breaks_extended.html" class="external-link">scales::extended_breaks()</a></code>).
+Note that for position scales, limits are provided after scale expansion.
+Also accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function notation.</p></li>
 </ul></dd>
 
 
-<dt>max_size</dt>
-<dd><p>size of the arrow in centimetres</p></dd>
-
-
-<dt>default_unit</dt>
-<dd><p>ignored</p></dd>
-
-
-<dt>max</dt>
-<dd><p>magnitude of the reference arrow in data units. Will be the
-maximum value if <code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code></p></dd>
-
-
-<dt>guide</dt>
-<dd><p>type of legend</p></dd>
+<dt>oob</dt>
+<dd><p>One of:</p><ul><li><p>Function that handles limits outside of the scale limits
+(out of bounds). Also accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a>
+function notation.</p></li>
+<li><p>The default (<code><a href="https://scales.r-lib.org/reference/oob.html" class="external-link">scales::censor()</a></code>) replaces out of
+bounds values with <code>NA</code>.</p></li>
+<li><p><code><a href="https://scales.r-lib.org/reference/oob.html" class="external-link">scales::squish()</a></code> for squishing out of bounds values into range.</p></li>
+<li><p><code><a href="https://scales.r-lib.org/reference/oob.html" class="external-link">scales::squish_infinite()</a></code> for squishing infinite values into range.</p></li>
+</ul></dd>
 
 
 <dt>...</dt>
@@ -141,13 +138,9 @@ maximum value if <code><a href="https://ggplot2.tidyverse.org/reference/waiver.h
 <span class="r-in"><span><span class="va">g</span> <span class="op">+</span> <span class="fu">scale_mag</span><span class="op">(</span><span class="st">"Seals velocity"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="scale_mag-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">g</span> <span class="op">+</span> <span class="fu">scale_mag</span><span class="op">(</span><span class="st">"Seals velocity"</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">g</span> <span class="op">+</span> <span class="fu">scale_mag</span><span class="op">(</span><span class="st">"Seals velocity"</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="scale_mag-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">g</span> <span class="op">+</span> <span class="fu">scale_mag</span><span class="op">(</span><span class="st">"Seals velocity"</span>, max_size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="scale_mag-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="va">g</span> <span class="op">+</span> <span class="fu">scale_mag</span><span class="op">(</span><span class="st">"Seals velocity"</span>, default_unit <span class="op">=</span> <span class="st">"mm"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="scale_mag-4.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>

@@ -45,9 +45,10 @@ scale_mag <- function(name = ggplot2::waiver(),
     # guide <- guide_vector(default )
     # guide = guide_vector(default.unit = "cm")
 
-    ggplot2::continuous_scale("mag",
-                              "mag",
-                              identity,
+
+    ggplot2::continuous_scale(aesthetics = "mag",
+                              palette = scales::identity_pal(),
+                              transform = "identity",
                               name = name,
                               breaks = breaks,
                               labels = labels,

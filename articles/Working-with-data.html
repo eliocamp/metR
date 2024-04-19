@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.9000</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@
                         <h4 data-toc-skip class="author">Elio
 Campitelli</h4>
             
-            <h4 data-toc-skip class="date">2023-10-30</h4>
+            <h4 data-toc-skip class="date">2024-04-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/HEAD/vignettes/Working-with-data.Rmd" class="external-link"><code>vignettes/Working-with-data.Rmd</code></a></small>
       <div class="hidden name"><code>Working-with-data.Rmd</code></div>
@@ -117,7 +117,7 @@ processing afterwards. It can also return an <code>array</code> with
 named dimensions or a <code>vector</code>, for the case of adding new
 columns to an existing <code>data.table</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eliocamp/metR" class="external-link">metR</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://eliocamp.github.io/metR/">metR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
@@ -251,7 +251,7 @@ vectors, and singular values in a tidy format.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span>
 <span><span class="co"># Weigthed geopotential anomaly</span></span>
-<span><span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.t.w</span> <span class="op">:=</span> <span class="fu"><a href="../reference/Anomaly.html">Anomaly</a></span><span class="op">(</span><span class="va">gh</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">lat</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/IDateTime.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.t.w</span> <span class="op">:=</span> <span class="fu"><a href="../reference/Anomaly.html">Anomaly</a></span><span class="op">(</span><span class="va">gh</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">lat</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/IDateTime.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">eof</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/EOF.html">EOF</a></span><span class="op">(</span><span class="va">gh.t.w</span> <span class="op">~</span> <span class="va">date</span> <span class="op">|</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span>, data <span class="op">=</span> <span class="va">geopotential</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">eof</span><span class="op">)</span></span>
@@ -326,15 +326,15 @@ imputation of missing data. Its interface is similar to that of
 <span><span class="co">#&gt;  $ gh     : num  3164 3163 3162 3162 3163 ...</span></span>
 <span><span class="co">#&gt;  $ date   : Date, format: "1990-01-01" "1990-01-01" ...</span></span>
 <span><span class="co">#&gt;  $ gh.t.w : num  -3.82 -3.59 -2.86 -2.4 -2.07 ...</span></span>
-<span><span class="co">#&gt;  $ gh.na  : num  3164 3163 3162 NA NA ...</span></span>
-<span><span class="co">#&gt;  $ imputed: num  3164 3163 3162 3167 3168 ...</span></span>
+<span><span class="co">#&gt;  $ gh.na  : num  3164 3163 3162 NA 3163 ...</span></span>
+<span><span class="co">#&gt;  $ imputed: num  3164 3163 3162 3169 3163 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "eof")= int 5</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "rmse")= num 26.7</span></span>
 <span><span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></span></code></pre></div>
 <p>The imputed vector is returned along with the Root Mean Square Error
 estimated from cross-validation and the number of EOFs used in the
 imputation as attributes. In this case, with 5 EOFs the imputed values
-have an estimated rmse of 26.66.</p>
+have an estimated rmse of 26.71.</p>
 </div>
 <div class="section level3">
 <h3 id="interpolate">Interpolate<a class="anchor" aria-label="anchor" href="#interpolate"></a>
@@ -381,7 +381,12 @@ coordinates (think: Earth).</p>
 <span>  <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/geom_arrow.html">geom_vector</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">gh.dlon</span>, dy <span class="op">=</span> <span class="va">gh.dlat</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The S3 guide system was deprecated in ggplot2 3.5.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> It has been replaced by a ggproto system that can be extended.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 <p>There are several wrappers around <code><a href="../reference/Derivate.html">Derivate()</a></code> to perform
 other common related operations, <code><a href="../reference/Derivate.html">Laplacian()</a></code>,
@@ -464,7 +469,7 @@ result: 0.0014548.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
       </footer>

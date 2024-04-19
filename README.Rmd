@@ -38,7 +38,10 @@ install.packages("metR")
 Or the development version with:
 
 ```{r gh-installation, eval = FALSE}
-install.packages("metR", repos = c("https://eliocamp.github.io/metR", getOption("repos")))
+if (!requireNamespace("pak", quietly = TRUE)) {
+    install.packages("pak")
+}
+pak::pak("metR")
 ```
 
 If you need to read netcdf files, you might need to install the netcdf and udunits2 libraries. On Ubuntu and it's derivatives this can be done by typing 

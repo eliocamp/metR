@@ -3,9 +3,6 @@
 \name{GetSMNData}
 \alias{GetSMNData}
 \title{Get Meteorological data}
-\source{
-https://ssl.smn.gob.ar/dpd/pron5d-calendario.php
-}
 \usage{
 GetSMNData(
   date,
@@ -60,15 +57,6 @@ Argentina's National Weather Service's public access. Data availability is not
 guaranteed so you are encouraged to check it on
 \href{https://www.smn.gob.ar/descarga-de-datos}{the website}.
 }
-\examples{
-\dontrun{
-dates <- seq.Date(lubridate::today() - 30, lubridate::today(), by = "1 day")
-data <- GetSMNData(dates, type = "daily", bar = TRUE)
-
-library(ggplot2)
-ggplot(subset(data, station == "BASE BELGRANO II"),
-       aes(date, (tmax + tmin)/2)) +
-    geom_line()
-}
-
+\details{
+This function is defunct.
 }

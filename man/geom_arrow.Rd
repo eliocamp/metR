@@ -215,7 +215,7 @@ geopotential[, c("u", "v") := GeostrophicWind(gh.z, lon, lat)]
     geom_arrow(aes(dx = dlon(u, lat), dy = dlat(v)), skip.x = 3, skip.y = 2,
                color = "red") +
     geom_vector(aes(dx = dlon(u, lat), dy = dlat(v)), skip.x = 3, skip.y = 2) +
-    scale_mag(max_size = 2, guide = "none"))
+    scale_mag( guide = "none"))
 
 # A dramatic illustration of the difference between arrow and vector
 g + coord_polar()

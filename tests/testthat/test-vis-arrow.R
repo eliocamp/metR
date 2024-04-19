@@ -14,10 +14,6 @@ test_that("arrow guide works", {
     expect_doppelganger("guide-default", g + scale_mag("Seals velocity"))
     expect_doppelganger("guide-name-guide",
                         g + scale_mag(guide = guide_legend(title = "Velocity (m/s)")))
-    expect_doppelganger("guide-max-1", g + scale_mag("Seals velocity", max = 1))
-    expect_doppelganger("guide-max-2", g + scale_mag("Seals velocity", max = 2))
-    expect_doppelganger("guide-max-size-2", g + scale_mag("Seals velocity", max_size = 2))
-    expect_doppelganger("guide-mm",  g + scale_mag("Seals velocity", default_unit = "mm"))
 
 
      g <- ggplot(seals, aes(long, lat)) +

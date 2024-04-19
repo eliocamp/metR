@@ -8,6 +8,7 @@
 
 -   The `GetSMNData()` function is defunct. The functionality is a hack and hard to maintain and it's also very specific and should be out of scope for a general package.
 -   The `trans` argument of scales has been renamed to `transform` following ggplot2's change.
+-   `scale_mag()` internals are now much simpler and inherits all the functionality from common continuous scales. (thanks @teunbrand for the suggestion, #186)
 
 # metR 0.15.0
 

@@ -7,21 +7,17 @@
 \usage{
 scale_mag(
   name = ggplot2::waiver(),
-  labels = ggplot2::waiver(),
-  max_size = 1,
-  default_unit = "cm",
-  max = ggplot2::waiver(),
-  guide = guide_vector(),
+  n.breaks = 1,
+  breaks = ggplot2::waiver(),
+  oob = no_censor,
   ...
 )
 
 scale_mag_continuous(
   name = ggplot2::waiver(),
-  labels = ggplot2::waiver(),
-  max_size = 1,
-  default_unit = "cm",
-  max = ggplot2::waiver(),
-  guide = guide_vector(),
+  n.breaks = 1,
+  breaks = ggplot2::waiver(),
+  oob = no_censor,
   ...
 )
 }
@@ -31,26 +27,33 @@ scale_mag_continuous(
 mapping used for that aesthetic. If \code{NULL}, the legend title will be
 omitted.}
 
-\item{labels}{One of:
+\item{n.breaks}{An integer guiding the number of major breaks. The algorithm
+may choose a slightly different number to ensure nice break labels. Will
+only have an effect if \code{breaks = waiver()}. Use \code{NULL} to use the default
+number of breaks given by the transformation.}
+
+\item{breaks}{One of:
 \itemize{
-\item \code{NULL} for no labels
-\item \code{waiver()} for the default labels computed by the
-transformation object
-\item A character vector giving labels (must be same length as \code{breaks})
-\item An expression vector (must be the same length as breaks). See ?plotmath for details.
-\item A function that takes the breaks as input and returns labels
-as output. Also accepts rlang \link[rlang:as_function]{lambda} function
-notation.
+\item \code{NULL} for no breaks
+\item \code{waiver()} for the default breaks computed by the
+\link[scales:new_transform]{transformation object}
+\item A numeric vector of positions
+\item A function that takes the limits as input and returns breaks
+as output (e.g., a function returned by \code{\link[scales:breaks_extended]{scales::extended_breaks()}}).
+Note that for position scales, limits are provided after scale expansion.
+Also accepts rlang \link[rlang:as_function]{lambda} function notation.
 }}
 
-\item{max_size}{size of the arrow in centimetres}
-
-\item{default_unit}{ignored}
-
-\item{max}{magnitude of the reference arrow in data units. Will be the
-maximum value if \code{waiver()}}
-
-\item{guide}{type of legend}
+\item{oob}{One of:
+\itemize{
+\item Function that handles limits outside of the scale limits
+(out of bounds). Also accepts rlang \link[rlang:as_function]{lambda}
+function notation.
+\item The default (\code{\link[scales:oob]{scales::censor()}}) replaces out of
+bounds values with \code{NA}.
+\item \code{\link[scales:oob]{scales::squish()}} for squishing out of bounds values into range.
+\item \code{\link[scales:oob]{scales::squish_infinite()}} for squishing infinite values into range.
+}}
 
 \item{...}{Other arguments passed on to \verb{scale_(x|y)_continuous()}}
 }
@@ -65,8 +68,6 @@ g <- ggplot(seals, aes(long, lat)) +
 
 g + scale_mag("Seals velocity")
 
-g + scale_mag("Seals velocity", max = 1)
+g + scale_mag("Seals velocity", limits = c(0, 1))
 
-g + scale_mag("Seals velocity", max_size = 2)
-g + scale_mag("Seals velocity", default_unit = "mm")
 }

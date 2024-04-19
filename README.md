@@ -3,8 +3,9 @@
 
 # metR <img src="man/figures/logo.png" align="right"/>
 
-[![R build
-status](https://github.com/eliocamp/metR/workflows/R-CMD-check/badge.svg)](https://github.com/eliocamp/metR/actions)
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/eliocamp/metR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/eliocamp/metR/actions/workflows/R-CMD-check.yaml)
 [![Coverage
 status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg?token=jVznWTMCpz)](https://app.codecov.io/gh/eliocamp/metR)
 [![CRAN

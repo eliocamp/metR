@@ -258,8 +258,6 @@ clip_contours <- function(x, y, clip, type = "POLYGON") {
         return(NULL)
     }
 
-    # browser(expr = inherits(xy, "GEOMETRYCOLLECTION"))
-
     if (inherits(xy, "GEOMETRYCOLLECTION"))  {
         xy <- sf::st_collection_extract(xy, type)
     }

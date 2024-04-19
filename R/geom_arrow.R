@@ -127,6 +127,7 @@ geom_arrow <- function(mapping = NULL, data = NULL,
                  position = position,
                  show.legend = show.legend,
                  inherit.aes = inherit.aes,
+                 key_glyph = draw_key_vector,
                  params = list(
                    start = start,
                    direction = direction,
@@ -198,7 +199,6 @@ draw_key_vector <- function(data, params, size) {
     }
 
     `%||%` <- function(a, b) if (is.null(a)) b else a
-# browser()
     params$arrow$length <- data$mag*params$arrow$length
 
     grob <- grid::segmentsGrob(
@@ -212,8 +212,6 @@ draw_key_vector <- function(data, params, size) {
         ),
         arrow = params$arrow
     )
-
-
 
     # Magick number is 1.25 because we like to span 80% of the width with the segment, so the
     # total width is 1 / 0.8 * size == 1.25 * size
@@ -232,7 +230,7 @@ GeomArrow <- ggplot2::ggproto("GeomArrow", ggplot2::Geom,
   default_aes = ggplot2::aes(color = "black", size = 0.5, min.mag = 0,
                              linetype = 1, alpha = NA,
                              angle = 0, mag = 0),
-  draw_key =  draw_key_vector,
+  draw_key = draw_key_vector,
   draw_panel = function(data, panel_scales, coord,
                         arrow = arrow, lineend = lineend,
                         start = start, direction = direction,

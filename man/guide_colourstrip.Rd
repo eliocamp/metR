@@ -64,49 +64,6 @@ If \code{NULL}, the title is not shown. By default
 (\code{\link[ggplot2:waiver]{waiver()}}), the name of the scale object or the name
 specified in \code{\link[ggplot2:labs]{labs()}} is used for the title.}
 
-\item{title.position}{A character string indicating the position of a
-title. One of "top" (default for a vertical guide), "bottom", "left"
-(default for a horizontal guide), or "right."}
-
-\item{title.theme}{A theme object for rendering the title text. Usually the
-object of \code{\link[ggplot2:element_text]{element_text()}} is expected. By default, the theme is
-specified by \code{legend.title} in \code{\link[ggplot2:theme]{theme()}} or theme.}
-
-\item{title.hjust}{A number specifying horizontal justification of the
-title text.}
-
-\item{title.vjust}{A number specifying vertical justification of the title
-text.}
-
-\item{label}{logical. If \code{TRUE} then the labels are drawn. If
-\code{FALSE} then the labels are invisible.}
-
-\item{label.position}{A character string indicating the position of a
-label. One of "top", "bottom" (default for horizontal guide), "left", or
-"right" (default for vertical guide).}
-
-\item{label.theme}{A theme object for rendering the label text. Usually the
-object of \code{\link[ggplot2:element_text]{element_text()}} is expected. By default, the theme is
-specified by \code{legend.text} in \code{\link[ggplot2:theme]{theme()}}.}
-
-\item{label.hjust}{A numeric specifying horizontal justification of the
-label text. The default for standard text is 0 (left-aligned) and 1
-(right-aligned) for expressions.}
-
-\item{label.vjust}{A numeric specifying vertical justification of the label
-text.}
-
-\item{barwidth}{A numeric or a \code{\link[grid:unit]{grid::unit()}} object specifying
-the width of the colourbar. Default value is \code{legend.key.width} or
-\code{legend.key.size} in \code{\link[ggplot2:theme]{theme()}} or theme.}
-
-\item{barheight}{A numeric or a \code{\link[grid:unit]{grid::unit()}} object specifying
-the height of the colourbar. Default value is \code{legend.key.height} or
-\code{legend.key.size} in \code{\link[ggplot2:theme]{theme()}} or theme.}
-
-\item{ticks}{A logical specifying if tick marks on the colourbar should be
-visible.}
-
 \item{draw.ulim}{A logical specifying if the upper limit tick marks should
 be visible.}
 
@@ -117,9 +74,6 @@ be visible.}
 
 \item{direction}{A character string indicating the direction of the guide.
 One of "horizontal" or "vertical."}
-
-\item{default.unit}{A character string indicating \code{\link[grid:unit]{grid::unit()}}
-for \code{barwidth} and \code{barheight}.}
 
 \item{reverse}{logical. If \code{TRUE} the colourbar is reversed. By default,
 the highest value is on the top and the lowest value is on the bottom}
@@ -133,6 +87,10 @@ If 0 (default), the order is determined by a secret algorithm.}
 for which a colourbar can be drawn.}
 
 \item{...}{ignored.}
+
+\item{theme}{A \code{\link[ggplot2:theme]{theme}} object to style the guide individually or
+differently from the plot's theme settings. The \code{theme} argument in the
+guide overrides, and is combined with, the plot's theme.}
 }
 \value{
 A guide object.

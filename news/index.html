@@ -67,6 +67,11 @@
 <ul><li>
 <code><a href="../reference/EOF.html">EOF()</a></code>’s <code>rotate</code> argument now will take a function to apply to the EOF loadings. <code>rotate = TRUE</code> is still supported but deprecated and will default to using <code>function(x) stats::varimax(x, normalize = FALSE)</code>.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
+<ul><li>The <code><a href="../reference/GetSMNData.html">GetSMNData()</a></code> function is defunct. The functionality is a hack and hard to maintain and it’s also very specific and should be out of scope for a general package.</li>
+<li>The <code>trans</code> argument of scales has been renamed to <code>transform</code> following ggplot2’s change.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.15.0" id="metr-0150">metR 0.15.0<small>2024-02-08</small><a class="anchor" aria-label="anchor" href="#metr-0150"></a></h2>

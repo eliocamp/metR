@@ -100,76 +100,9 @@ If <code>NULL</code>, the title is not shown. By default
 specified in <code><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs()</a></code> is used for the title.</p></dd>
 
 
-<dt>title.position</dt>
-<dd><p>A character string indicating the position of a
-title. One of "top" (default for a vertical guide), "bottom", "left"
-(default for a horizontal guide), or "right."</p></dd>
-
-
-<dt>title.theme</dt>
-<dd><p>A theme object for rendering the title text. Usually the
-object of <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text()</a></code> is expected. By default, the theme is
-specified by <code>legend.title</code> in <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> or theme.</p></dd>
-
-
-<dt>title.hjust</dt>
-<dd><p>A number specifying horizontal justification of the
-title text.</p></dd>
-
-
-<dt>title.vjust</dt>
-<dd><p>A number specifying vertical justification of the title
-text.</p></dd>
-
-
-<dt>label</dt>
-<dd><p>logical. If <code>TRUE</code> then the labels are drawn. If
-<code>FALSE</code> then the labels are invisible.</p></dd>
-
-
-<dt>label.position</dt>
-<dd><p>A character string indicating the position of a
-label. One of "top", "bottom" (default for horizontal guide), "left", or
-"right" (default for vertical guide).</p></dd>
-
-
-<dt>label.theme</dt>
-<dd><p>A theme object for rendering the label text. Usually the
-object of <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text()</a></code> is expected. By default, the theme is
-specified by <code>legend.text</code> in <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code>.</p></dd>
-
-
-<dt>label.hjust</dt>
-<dd><p>A numeric specifying horizontal justification of the
-label text. The default for standard text is 0 (left-aligned) and 1
-(right-aligned) for expressions.</p></dd>
-
-
-<dt>label.vjust</dt>
-<dd><p>A numeric specifying vertical justification of the label
-text.</p></dd>
-
-
-<dt>keywidth</dt>
-<dd><p>A numeric or a <code><a href="https://rdrr.io/r/grid/unit.html" class="external-link">grid::unit()</a></code> object specifying
-the width of the legend key. Default value is <code>legend.key.width</code> or
-<code>legend.key.size</code> in <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code>.</p></dd>
-
-
-<dt>keyheight</dt>
-<dd><p>A numeric or a <code><a href="https://rdrr.io/r/grid/unit.html" class="external-link">grid::unit()</a></code> object specifying
-the height of the legend key. Default value is <code>legend.key.height</code> or
-<code>legend.key.size</code> in <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code>.</p></dd>
-
-
 <dt>direction</dt>
 <dd><p>A character string indicating the direction of the guide.
 One of "horizontal" or "vertical."</p></dd>
-
-
-<dt>default.unit</dt>
-<dd><p>A character string indicating <code><a href="https://rdrr.io/r/grid/unit.html" class="external-link">grid::unit()</a></code>
-for <code>keywidth</code> and <code>keyheight</code>.</p></dd>
 
 
 <dt>override.aes</dt>
@@ -177,17 +110,9 @@ for <code>keywidth</code> and <code>keyheight</code>.</p></dd>
 See details and examples.</p></dd>
 
 
-<dt>nrow</dt>
-<dd><p>The desired number of rows of legends.</p></dd>
-
-
-<dt>ncol</dt>
-<dd><p>The desired number of column of legends.</p></dd>
-
-
-<dt>byrow</dt>
-<dd><p>logical. If <code>FALSE</code> (the default) the legend-matrix is
-filled by columns, otherwise the legend-matrix is filled by rows.</p></dd>
+<dt>nrow, ncol</dt>
+<dd><p>The desired number of rows and column of legends
+respectively.</p></dd>
 
 
 <dt>reverse</dt>

@@ -84,7 +84,7 @@
 <span>  labels <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  limits <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span><span class="op">)</span>,</span>
-<span>  trans <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>  transform <span class="op">=</span> <span class="st">"identity"</span>,</span>
 <span>  guide <span class="op">=</span> <span class="st">"legend"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -98,7 +98,9 @@
 each major break)</p></li>
 <li><p>A numeric vector of positions</p></li>
 <li><p>A function that given the limits returns a vector of minor breaks. Also
-accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function notation.</p></li>
+accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function notation. When
+the function has two arguments, it will be given the limits and major
+breaks.</p></li>
 </ul></dd>
 
     <dt><code>oob</code></dt>
@@ -114,17 +116,8 @@ bounds values with <code>NA</code>.</p></li>
     <dt><code>na.value</code></dt>
 <dd><p>Missing values will be replaced with this value.</p></dd>
 
-    <dt><code>expand</code></dt>
-<dd><p>For position scales, a vector of range expansion constants used to add some
-padding around the data to ensure that they are placed some distance
-away from the axes. Use the convenience function <code><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion()</a></code>
-to generate the values for the <code>expand</code> argument. The defaults are to
-expand the scale by 5% on each side for continuous variables, and by
-0.6 units on each side for discrete variables.</p></dd>
-
-    <dt><code>position</code></dt>
-<dd><p>For position scales, The position of the axis.
-<code>left</code> or <code>right</code> for y axes, <code>top</code> or <code>bottom</code> for x axes.</p></dd>
+    <dt><code>call</code></dt>
+<dd><p>The <code>call</code> used to construct the scale for reporting messages.</p></dd>
 
     <dt><code>super</code></dt>
 <dd><p>The super class to use for the constructed scale</p></dd>
@@ -163,6 +156,7 @@ omitted.</p></dd>
 <li><p>A numeric vector of positions</p></li>
 <li><p>A function that takes the limits as input and returns breaks
 as output (e.g., a function returned by <code><a href="https://scales.r-lib.org/reference/breaks_extended.html" class="external-link">scales::extended_breaks()</a></code>).
+Note that for position scales, limits are provided after scale expansion.
 Also accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function notation.</p></li>
 </ul></dd>
 
@@ -192,7 +186,7 @@ If the purpose is to zoom, use the limit argument in the coordinate system
 </ul></dd>
 
 
-<dt>trans</dt>
+<dt>transform</dt>
 <dd><p>For continuous scales, the name of a transformation object
 or the object itself. Built-in transformations include "asn", "atanh",
 "boxcox", "date", "exp", "hms", "identity", "log", "log10", "log1p", "log2",
@@ -200,9 +194,10 @@ or the object itself. Built-in transformations include "asn", "atanh",
 "reverse", "sqrt" and "time".</p>
 <p>A transformation object bundles together a transform, its inverse,
 and methods for generating breaks and labels. Transformation objects
-are defined in the scales package, and are called <code>&lt;name&gt;_trans</code> (e.g.,
-<code><a href="https://scales.r-lib.org/reference/transform_boxcox.html" class="external-link">scales::boxcox_trans()</a></code>). You can create your own
-transformation with <code><a href="https://scales.r-lib.org/reference/new_transform.html" class="external-link">scales::trans_new()</a></code>.</p></dd>
+are defined in the scales package, and are called <code>transform_&lt;name&gt;</code>. If
+transformations require arguments, you can call them from the scales
+package, e.g. <code><a href="https://scales.r-lib.org/reference/transform_boxcox.html" class="external-link">scales::transform_boxcox(p = 2)</a></code>.
+You can create your own transformation with <code><a href="https://scales.r-lib.org/reference/new_transform.html" class="external-link">scales::new_transform()</a></code>.</p></dd>
 
 </dl></div>
 

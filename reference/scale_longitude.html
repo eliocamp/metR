@@ -135,6 +135,7 @@ omitted.</p></dd>
 <li><p>A numeric vector of positions</p></li>
 <li><p>A function that takes the limits as input and returns breaks
 as output (e.g., a function returned by <code><a href="https://scales.r-lib.org/reference/breaks_extended.html" class="external-link">scales::extended_breaks()</a></code>).
+Note that for position scales, limits are provided after scale expansion.
 Also accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function notation.</p></li>
 </ul></dd>
 
@@ -160,16 +161,8 @@ notation.</p></li>
 
 
 <dt>trans</dt>
-<dd><p>For continuous scales, the name of a transformation object
-or the object itself. Built-in transformations include "asn", "atanh",
-"boxcox", "date", "exp", "hms", "identity", "log", "log10", "log1p", "log2",
-"logit", "modulus", "probability", "probit", "pseudo_log", "reciprocal",
-"reverse", "sqrt" and "time".</p>
-<p>A transformation object bundles together a transform, its inverse,
-and methods for generating breaks and labels. Transformation objects
-are defined in the scales package, and are called <code>&lt;name&gt;_trans</code> (e.g.,
-<code><a href="https://scales.r-lib.org/reference/transform_boxcox.html" class="external-link">scales::boxcox_trans()</a></code>). You can create your own
-transformation with <code><a href="https://scales.r-lib.org/reference/new_transform.html" class="external-link">scales::trans_new()</a></code>.</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Deprecated in favour of
+<code>transform</code>.</p></dd>
 
 
 <dt>...</dt>

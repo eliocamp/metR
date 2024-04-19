@@ -42,7 +42,10 @@ install.packages("metR")
 Or the development version with:
 
 ``` r
-install.packages("metR", repos = c("https://eliocamp.github.io/metR", getOption("repos")))
+if (!requireNamespace("pak", quietly = TRUE)) {
+    install.packages("pak")
+}
+pak::pak("metR")
 ```
 
 If you need to read netcdf files, you might need to install the netcdf
@@ -68,7 +71,7 @@ citation("metR")
 #>     title = {metR: Tools for Easier Analysis of Meteorological Fields},
 #>     author = {Elio Campitelli},
 #>     year = {2021},
-#>     note = {R package version 0.15.0},
+#>     note = {R package version 0.15.0.9000},
 #>     url = {https://eliocamp.github.io/metR/},
 #>     doi = {10.5281/zenodo.2593516},
 #>   }

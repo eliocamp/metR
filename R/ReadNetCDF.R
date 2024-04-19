@@ -413,7 +413,7 @@ time_units_factor <- c("days" = 24*3600,
     new_subset <- subset[has_name]
     if (sum(!has_name) != 0) new_subset["chunks"] <- list(subset[!has_name])
 
-    chunks <- purrr::cross(new_subset)
+    chunks <- suppressWarnings(purrr::cross(new_subset))  # cross is deprecated
     new_subset <- lapply(chunks, function(chunk) {
         is.chunk <- which(names(chunk) == "chunks")
         if (length(is.chunk) != 0) {

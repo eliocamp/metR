@@ -6,8 +6,8 @@
 
 ## Breaking changes
 
--   The `GetSMNData()` function is defunct.
-    The functionality is a hack and hard to maintain and it's also very specific and should be out of scope for a general package.
+-   The `GetSMNData()` function is defunct. The functionality is a hack and hard to maintain and it's also very specific and should be out of scope for a general package.
+-   The `trans` argument of scales has been renamed to `transform` following ggplot2's change.
 
 # metR 0.15.0
 

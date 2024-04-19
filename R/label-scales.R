@@ -26,8 +26,8 @@ scale_label_alpha_continuous <- function(..., range = c(0.1, 1), aesthetics = c(
 #' @export
 #' @rdname label_scales
 scale_label_size_continuous <- function(name = waiver(), breaks = waiver(), labels = waiver(),
-                                        limits = NULL, range = c(1, 6), trans = "identity",
+                                        limits = NULL, range = c(1, 6), transform = "identity",
                                         guide = "legend") {
     ggplot2::continuous_scale("label_size", "label_size", scales::area_pal(range), name = name,
-                              breaks = breaks, labels = labels, limits = limits, trans = trans)
+                              breaks = breaks, labels = labels, limits = limits, transform = transform)
 }

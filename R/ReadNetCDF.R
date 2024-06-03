@@ -358,6 +358,7 @@ time_units_factor <- c("days" = 24*3600,
 
 
 .parse_time <- function(time, units, calendar = NULL) {
+    calendar <- tolower(calendar)
     has_since <- grepl("since", units)
     if (!has_since) {
         return(time)

@@ -374,7 +374,7 @@ time_units_factor <- c("days" = 24*3600,
     }
 
 
-    if (!is.null(calendar)) {
+    if (!is.null(calendar) || length(calendar) == 0) {
         time <- as.POSIXct(PCICt::as.PCICt(time*time_units_factor[time_unit], cal = calendar, origin = origin),
                            cal = "standard", tz = "UTC", origin = origin)
     } else {

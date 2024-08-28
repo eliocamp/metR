@@ -2,8 +2,8 @@
 % Please edit documentation in R/metR-package.R
 \docType{package}
 \name{metR}
-\alias{metR}
 \alias{metR-package}
+\alias{metR}
 \title{metR: Tools for Easier Analysis of Meteorological Fields}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}

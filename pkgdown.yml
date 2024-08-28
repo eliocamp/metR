@@ -1,11 +1,10 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   Visualization-tools: Visualization-tools.html
   Working-with-data: Working-with-data.html
-last_built: 2024-06-04T03:40Z
+last_built: 2024-08-28T03:28Z
 urls:
   reference: https://eliocamp.github.io/metR/reference
   article: https://eliocamp.github.io/metR/articles
-

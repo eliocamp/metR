@@ -4,6 +4,8 @@
 
 -   `EOF()`'s `rotate` argument now will take a function to apply to the EOF loadings. `rotate = TRUE` is still supported but deprecated and will default to using `function(x) stats::varimax(x, normalize = FALSE)`.
 
+- Contour functions gain a `proj.latlon` to decide if the projection needs to go to latlon coordinates or to projected coordinates. 
+
 ## Breaking changes
 
 -   The `GetSMNData()` function is defunct. The functionality is a hack and hard to maintain and it's also very specific and should be out of scope for a general package.

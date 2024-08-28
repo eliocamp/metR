@@ -8,6 +8,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
                               binwidth = NULL,
                               global.breaks = TRUE,
                               proj = NULL,
+                              proj.latlon = TRUE,
                               clip = NULL,
                               kriging = FALSE,
                               na.fill = FALSE,
@@ -31,6 +32,7 @@ stat_contour_fill <- function(mapping = NULL, data = NULL,
             global.breaks = global.breaks,
             kriging = kriging,
             proj = proj,
+            proj.latlon = proj.latlon,
             clip = clip,
             ...
         )
@@ -86,7 +88,8 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              breaks = scales::fullseq, complete = TRUE,
                              na.rm = FALSE, xwrap = NULL,
                              ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
-                             proj = NULL, kriging = FALSE, clip = NULL) {
+                             proj = NULL, proj.latlon = TRUE, kriging = FALSE,
+                             clip = NULL) {
         data.table::setDT(data)
 
         if (isFALSE(global.breaks)) {
@@ -143,7 +146,11 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         dec <- getOption("OutDec")
         options(OutDec = ".")
         on.exit(options(OutDec = dec))
-        cont <- data.table::setDT(.contour_bands(data, breaks, complete = complete, clip = clip, proj = proj))
+        cont <- data.table::setDT(.contour_bands(data, breaks,
+                                                 complete = complete,
+                                                 clip = clip,
+                                                 proj = proj,
+                                                 proj.latlon = proj.latlon))
 
         cont[, int.level := (level_high + level_low)/2]
         cont[, level_mid := int.level]
@@ -155,7 +162,8 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
 )
 
 
-.contour_bands <- function(data, breaks, complete = FALSE, proj = NULL, clip = NULL) {
+.contour_bands <- function(data, breaks, complete = FALSE, proj = NULL,
+                           clip = NULL, proj.latlon = TRUE) {
     band <- level_high <- level_low <- NULL
 
     # From ggplot2
@@ -189,7 +197,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                     stopf("Projection requires the proj4 package. Install it with 'install.packages(\"proj4\")'.")
                 }
                 cl <- lapply(cl, function(x) {
-                    x[c("x", "y")] <- proj4::project(list(x$x, x$y), proj, inverse = TRUE)
+                    x[c("x", "y")] <- proj4::project(list(x$x, x$y), proj, inverse = proj.latlon)
                     return(x)
                 })
             }

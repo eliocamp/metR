@@ -90,6 +90,7 @@ have all the same binwidth.</p>
 <span>  bins <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  binwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  proj <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  proj.latlon <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  clip <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  kriging <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  global.breaks <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -215,6 +216,11 @@ It can be either a projection string or a function to apply to the whole
 contour dataset.</p></dd>
 
 
+<dt id="arg-proj-latlon">proj.latlon<a class="anchor" aria-label="anchor" href="#arg-proj-latlon"></a></dt>
+<dd><p>Logical indicating if the projection step should project
+from a cartographic projection to a lon/lat grid or the other way around.</p></dd>
+
+
 <dt id="arg-clip">clip<a class="anchor" aria-label="anchor" href="#arg-clip"></a></dt>
 <dd><p>A simple features object to be used as a clip. Contours are only
 drawn in the interior of this polygon.</p></dd>
@@ -266,11 +272,6 @@ give the geom as <code>"point"</code>.</p></li>
 <li><p>For more information and other ways to specify the geom, see the
 <a href="https://ggplot2.tidyverse.org/reference/layer_geoms.html" class="external-link">layer geom</a> documentation.</p></li>
 </ul></dd>
-
-
-<dt id="arg-proj-latlon">proj.latlon<a class="anchor" aria-label="anchor" href="#arg-proj-latlon"></a></dt>
-<dd><p>Logical indicating if the projection step should project
-from a cartographic projection to a lon/lat grid or the other way around.</p></dd>
 
 </dl></div>
     <div id="aesthetics">

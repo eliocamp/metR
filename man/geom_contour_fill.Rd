@@ -17,6 +17,7 @@ geom_contour_fill(
   bins = NULL,
   binwidth = NULL,
   proj = NULL,
+  proj.latlon = TRUE,
   clip = NULL,
   kriging = FALSE,
   global.breaks = TRUE,
@@ -129,6 +130,9 @@ lists which parameters it can accept.
 It can be either a projection string or a function to apply to the whole
 contour dataset.}
 
+\item{proj.latlon}{Logical indicating if the projection step should project
+from a cartographic projection to a lon/lat grid or the other way around.}
+
 \item{clip}{A simple features object to be used as a clip. Contours are only
 drawn in the interior of this polygon.}
 
@@ -171,9 +175,6 @@ give the geom as \code{"point"}.
 \item For more information and other ways to specify the geom, see the
 \link[ggplot2:layer_geoms]{layer geom} documentation.
 }}
-
-\item{proj.latlon}{Logical indicating if the projection step should project
-from a cartographic projection to a lon/lat grid or the other way around.}
 }
 \description{
 While ggplot2's \code{\link[ggplot2]{geom_contour}} can plot nice contours, it

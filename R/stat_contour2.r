@@ -309,7 +309,7 @@ isoband_z_matrix <- function(data) {
                   stopf("Projection requires the proj4 package. Install it with 'install.packages(\"proj4\")'.")
               }
               cl <- lapply(cl, function(x) {
-                  x[c("x", "y")] <- proj4::project(list(x$x, x$y), proj, inverse = TRUE)
+                  x[c("x", "y")] <- proj4::project(list(x$x, x$y), proj, inverse = proj.latlon)
                   return(x)
               })
           }

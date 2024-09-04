@@ -111,13 +111,6 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
                            ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
                            proj = NULL, proj.latlon = TRUE, kriging = FALSE,
                            clip = NULL) {
-    if (isFALSE(global.breaks)) {
-      breaks <- setup_breaks(data,
-                             breaks = breaks,
-                             bins = bins,
-                             binwidth = binwidth)
-    }
-
     data.table::setDT(data)
 
     data <- data[!(is.na(y) | is.na(x)), ]
@@ -164,6 +157,13 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     }
     if (!is.null(ywrap)) {
       data <- suppressWarnings(WrapCircular(data, "y", ywrap))
+    }
+
+    if (isFALSE(global.breaks)) {
+        breaks <- setup_breaks(data,
+                               breaks = breaks,
+                               bins = bins,
+                               binwidth = binwidth)
     }
 
     data.table::setDF(data)

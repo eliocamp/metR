@@ -91,14 +91,6 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
                              proj = NULL, proj.latlon = TRUE, kriging = FALSE,
                              clip = NULL) {
         data.table::setDT(data)
-
-        if (isFALSE(global.breaks)) {
-            breaks <- setup_breaks(data,
-                                   breaks = breaks,
-                                   bins = bins,
-                                   binwidth = binwidth)
-        }
-
         data <- data[!(is.na(y) | is.na(x)), ]
 
         if (!isFALSE(na.fill)) {
@@ -141,6 +133,12 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
             data <- suppressWarnings(WrapCircular(data, "y", ywrap))
         }
 
+        if (isFALSE(global.breaks)) {
+            breaks <- setup_breaks(data,
+                                   breaks = breaks,
+                                   bins = bins,
+                                   binwidth = binwidth)
+        }
 
         # Make contours
         dec <- getOption("OutDec")

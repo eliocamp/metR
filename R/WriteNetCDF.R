@@ -62,22 +62,27 @@ WriteNetCDF <- function(data, file, vars, dims = NULL) {
     return(invisible(file))
 }
 
+#' @keywords internal
 get_units <- function(x) {
     UseMethod("get_units")
 }
 
+#' @keywords internal
 get_units.default <- function(x) {
     return("")
 }
 
+#' @keywords internal
 get_units.Date <- function(x) {
     return("days since 1970-01-01 00:00:00")
 }
 
+#' @keywords internal
 get_units.POSIXlt <- function(x) {
     return("seconds since 1970-01-01 00:00:00")
 }
 
+#' @keywords internal
 get_units.POSIXct <- function(x) {
     return("seconds since 1970-01-01 00:00:00")
 }

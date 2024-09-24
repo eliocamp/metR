@@ -9,8 +9,10 @@
 [![Coverage
 status](https://codecov.io/gh/eliocamp/metR/branch/master/graph/badge.svg?token=jVznWTMCpz)](https://app.codecov.io/gh/eliocamp/metR)
 [![CRAN
-status](http://www.r-pkg.org/badges/version/metR)](https://cran.r-project.org/package=metR)
+status](https://www.r-pkg.org/badges/version/metR)](https://CRAN.R-project.org/package=metR)
 [![DOI](https://zenodo.org/badge/96357263.svg)](https://zenodo.org/badge/latestdoi/96357263)
+
+<!-- badges: end -->
 
 metR packages several functions and utilities that make R better for
 handling meteorological data in the tidy data paradigm. It started

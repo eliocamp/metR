@@ -545,6 +545,7 @@ streamline.f <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NU
     points[, group := interaction(group, piece, end)]
     points[, line := group]
 
+    points[, step := seq(0, .N), by = .(group)]
     return(points[, .(x, y, group, piece, end, step, dx, dy, line)])
 }
 

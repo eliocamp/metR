@@ -107,19 +107,6 @@ ggplot(air[, .(air = mean(air) - 273.15), by = .(lat, land)],
 
 The resolution of `MaskLand()` is, in principle, only limited by the polygons used as mask. Currently it can only use maps from the `maps` package (see `?maps::map`).
 
-## GetSMNData
-
-Finally, `GetSMNData()` retrieves data from Argentina's National Weather Service's public access. This is a rapidly evolving project, and data availability is not guaranteed. Currently available data are hourly station data, daily station maximum and minimum temperature, and global and diffuse radiation measured at Buenos Aires and Ushuaia. 
-
-```{r}
-# Not run because it needs internet access
-# rad <- GetSMNData(as.Date("2018-03-15"), type = "radiation")
-
-# ggplot(rad, aes(date, global)) + 
-#     geom_line(aes(color = station))
-```
-
-
 # Manipulate data
   
 ## EOF

@@ -33,7 +33,7 @@
 #'
 #' There are some methods implemented
 #' * [summary]
-#' * [screeplot] and the equivalent [autoplot]
+#' * [screeplot] and the equivalent [ggplot2::autoplot]
 #' * [cut.eof]
 #' * [predict]
 #'

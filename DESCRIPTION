@@ -7,7 +7,7 @@ Authors@R:
     c(person(given = "Elio",
            family = "Campitelli",
            role = c("cre", "aut"),
-           email = "elio.campitelli@cima.fcen.uba.ar",
+           email = "eliocampitelli@gmail.com",
            comment = c(ORCID = "0000-0002-7742-9230")))
 Description: Many useful functions and extensions for dealing
     with meteorological data in the tidy data framework. Extends 'ggplot2'

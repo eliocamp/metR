@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.16.0.9000</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@ Campitelli</h4>
             
             <h4 data-toc-skip class="date">2024-10-15</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/v0.16.0/vignettes/Visualization-tools.Rmd" class="external-link"><code>vignettes/Visualization-tools.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/vignettes/Visualization-tools.Rmd" class="external-link"><code>vignettes/Visualization-tools.Rmd</code></a></small>
       <div class="hidden name"><code>Visualization-tools.Rmd</code></div>
 
     </div>
@@ -515,10 +515,7 @@ integration.</p>
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">500</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="../reference/geom_streamline.html">geom_streamline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">t.dy</span>, dy <span class="op">=</span> <span class="op">-</span><span class="va">t.dx</span><span class="op">)</span>, L <span class="op">=</span> <span class="fl">10</span>, res <span class="op">=</span> <span class="fl">2</span>,   </span>
-<span>                     arrow.length <span class="op">=</span> <span class="fl">0.3</span>, xwrap <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Computation failed in `stat_streamline()`.</span></span>
-<span><span class="co">#&gt; Caused by error in `[.data.table`:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Supplied 5 items to be assigned to group 1 of size 4 in column 'step'. The RHS length must either be 1 (single values are ok) or match the LHS length exactly. If you wish to 'recycle' the RHS please use rep() explicitly to make this intent clear to readers of your code.</span></span></code></pre></div>
+<span>                     arrow.length <span class="op">=</span> <span class="fl">0.3</span>, xwrap <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
 <p>There are several parameters that control the feel of the result.
 <code>L</code> and <code>res</code> control the length and resolution,
@@ -532,10 +529,7 @@ first be converted into degrees/s. The functions <code><a href="../reference/sph
 <code><a href="../reference/spherical.html">dlat()</a></code> are an easy way of doing this. This tight coupling
 also means that they are robust to coordinate transformations.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Computation failed in `stat_streamline()`.</span></span>
-<span><span class="co">#&gt; Caused by error in `[.data.table`:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Supplied 5 items to be assigned to group 1 of size 4 in column 'step'. The RHS length must either be 1 (single values are ok) or match the LHS length exactly. If you wish to 'recycle' the RHS please use rep() explicitly to make this intent clear to readers of your code.</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-23-1.png" width="672"></p>
 <p><code><a href="../reference/geom_streamline.html">stat_streamline()</a></code> computes three useful variables.
 <code>step</code> is the integration step, and <code>dx</code> and
@@ -555,10 +549,7 @@ and to give a sense of direction without arrows.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` instead.</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
-<span><span class="co">#&gt; Warning: Computation failed in `stat_streamline()`.</span></span>
-<span><span class="co">#&gt; Caused by error in `[.data.table`:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Supplied 5 items to be assigned to group 1 of size 4 in column 'step'. The RHS length must either be 1 (single values are ok) or match the LHS length exactly. If you wish to 'recycle' the RHS please use rep() explicitly to make this intent clear to readers of your code.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p><img src="Visualization-tools_files/figure-html/unnamed-chunk-24-1.png" width="672"></p>
 </div>
 </div>

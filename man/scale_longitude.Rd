@@ -17,7 +17,6 @@ scale_x_longitude(
   breaks = seq(-180, 360, by = ticks),
   expand = c(0, 0),
   labels = LonLabel,
-  trans = "identity",
   ...
 )
 
@@ -27,7 +26,6 @@ scale_y_longitude(
   breaks = seq(-180, 360, by = ticks),
   expand = c(0, 0),
   labels = LonLabel,
-  trans = "identity",
   ...
 )
 
@@ -91,10 +89,10 @@ as output. Also accepts rlang \link[rlang:as_function]{lambda} function
 notation.
 }}
 
+\item{...}{Other arguments passed on to \verb{scale_(x|y)_continuous()}}
+
 \item{trans}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in favour of
 \code{transform}.}
-
-\item{...}{Other arguments passed on to \verb{scale_(x|y)_continuous()}}
 }
 \description{
 These functions are simple wrappers around

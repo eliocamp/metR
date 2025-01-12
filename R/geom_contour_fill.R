@@ -20,6 +20,8 @@
 #'    - A numeric value for constant imputation
 #'    - A function that takes a vector and returns a numeric (e.g. `mean`)
 # #' @param xwrap,ywrap vector of length two used to wrap the circular dimension.
+#' @param proj.latlon Logical indicating if the projection step should project
+#' from a cartographic projection to a lon/lat grid or the other way around.
 #'
 #' @section Aesthetics:
 #' \code{geom_contour_fill} understands the following aesthetics (required aesthetics are in bold):
@@ -67,6 +69,7 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
                          bins = NULL,
                          binwidth = NULL,
                          proj = NULL,
+                         proj.latlon = TRUE,
                          clip = NULL,
                          kriging = FALSE,
                          global.breaks = TRUE,
@@ -90,6 +93,7 @@ geom_contour_fill <- function(mapping = NULL, data = NULL,
             na.fill = na.fill,
             kriging = kriging,
             proj = proj,
+            proj.latlon = proj.latlon,
             clip = clip,
             global.breaks = global.breaks,
             ...

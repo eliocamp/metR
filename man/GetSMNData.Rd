@@ -2,7 +2,8 @@
 % Please edit documentation in R/GetSMNData.R
 \name{GetSMNData}
 \alias{GetSMNData}
-\title{Get Meteorological data}
+\title{Get Meteorological data
+This function is defunct.}
 \usage{
 GetSMNData(
   date,
@@ -24,39 +25,9 @@ GetSMNData(
 \item{file.dir}{optional directory where to save and/or retrieve data}
 }
 \value{
-For \code{type = "hourly"}, a data.frame with observations of
-\describe{
-\item{date}{date}
-\item{t}{temperature in degrees celsius}
-\item{rh}{relative humidity in \%}
-\item{slp}{sea level pressure in hPa}
-\item{dir}{wind direction in clockwise degrees from 6 o'clock}
-\item{V}{wind magnitude in m/s}
-\item{station}{station name}
-}
-
-For \code{type = "daily"}, a data.frame with observations of
-\describe{
-\item{date}{date}
-\item{tmax}{maximum daily temperature in degrees celsius}
-\item{tmin}{minimum daily temperature in degrees celsius}
-\item{station}{station name}
-}
-
-For \code{type = "radiation"}, a data.frame with observations of
-\describe{
-\item{date}{date}
-\item{global}{global radiation in W/m^2}
-\item{diffuse}{diffuse radiation in W/m^2}
-\item{station}{station name}
-}
+Nothing
 }
 \description{
-Downloads minimum and maximum temperature station data from
-Argentina's National Weather Service's public access. Data availability is not
-guaranteed so you are encouraged to check it on
-\href{https://www.smn.gob.ar/descarga-de-datos}{the website}.
-}
-\details{
+Get Meteorological data
 This function is defunct.
 }

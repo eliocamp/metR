@@ -358,6 +358,7 @@ time_units_factor <- c("days" = 24*3600,
 
 
 .parse_time <- function(time, units, calendar = NULL) {
+    calendar <- tolower(calendar)
     has_since <- grepl("since", units)
     if (!has_since) {
         return(time)
@@ -373,7 +374,7 @@ time_units_factor <- c("days" = 24*3600,
     }
 
 
-    if (!is.null(calendar)) {
+    if (length(calendar) != 0) {
         time <- as.POSIXct(PCICt::as.PCICt(time*time_units_factor[time_unit], cal = calendar, origin = origin),
                            cal = "standard", tz = "UTC", origin = origin)
     } else {

@@ -2,12 +2,12 @@ Type: Package
 Package: metR
 Language: en-GB
 Title: Tools for Easier Analysis of Meteorological Fields
-Version: 0.15.0.9000
+Version: 0.16.0.9000
 Authors@R: 
     c(person(given = "Elio",
            family = "Campitelli",
            role = c("cre", "aut"),
-           email = "elio.campitelli@cima.fcen.uba.ar",
+           email = "eliocampitelli@gmail.com",
            comment = c(ORCID = "0000-0002-7742-9230")))
 Description: Many useful functions and extensions for dealing
     with meteorological data in the tidy data framework. Extends 'ggplot2'
@@ -59,5 +59,5 @@ ByteCompile: yes
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr

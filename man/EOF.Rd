@@ -56,7 +56,7 @@ and, optionally, quantiles estimated via bootstrap}
 There are some methods implemented
 \itemize{
 \item \link{summary}
-\item \link{screeplot} and the equivalent \link{autoplot}
+\item \link{screeplot} and the equivalent \link[ggplot2:autoplot]{ggplot2::autoplot}
 \item \link{cut.eof}
 \item \link{predict}
 }

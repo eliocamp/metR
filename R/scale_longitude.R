@@ -36,13 +36,11 @@ scale_x_longitude <- function(name = "", ticks = 30,
                               breaks = seq(-180, 360, by = ticks),
                               expand = c(0, 0),
                               labels = LonLabel,
-                              trans = "identity",
                               ...) {
     # labels = waiver()
     ggplot2::scale_x_continuous(name = name, expand = expand,
                                 breaks = breaks,
                                 labels = labels,
-                                trans = trans,
                                 ...)
 }
 
@@ -52,7 +50,6 @@ scale_y_longitude <- function(name = "", ticks = 60,
                               breaks = seq(-180, 360, by = ticks),
                               expand = c(0, 0),
                               labels = LonLabel,
-                              trans = "identity",
                               ...) {
     ggplot2::scale_y_continuous(name = name, expand = expand,
                        breaks = breaks,

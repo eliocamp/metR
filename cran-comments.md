@@ -1,7 +1,13 @@
 
 ## Test environments
 
-* local installation of elementary OS 6.1 Jólnir (Built on Ubuntu 20.04.5 LTS) R version 4.3.2
+* local installation of Ubuntu 22.04.1 R version 4.4.1
+* Github Actions:
+    - macos-latest (release)
+    - windows-latest (release)
+    - ubuntu-latest (devel)
+    - ubuntu-latest (release)
+    - ubuntu-latest (oldrel-1)
 
 ## R CMD check results
 

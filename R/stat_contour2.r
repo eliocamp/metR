@@ -15,6 +15,8 @@
 #' @param proj The projection to which to project the contours to.
 #' It can be either a projection string or a function to apply to the whole
 #' contour dataset.
+#' @param proj.latlon Logical indicating if the projection step should project
+#' from a cartographic projection to a lon/lat grid or the other way around.
 #' @param clip A simple features object to be used as a clip. Contours are only
 #' drawn in the interior of this polygon.
 #'
@@ -32,6 +34,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
                           bins = NULL,
                           binwidth = NULL,
                           proj = NULL,
+                          proj.latlon = TRUE,
                           clip = NULL,
                           kriging = FALSE,
                           global.breaks = TRUE,
@@ -57,6 +60,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
             global.breaks = global.breaks,
             kriging = kriging,
             proj = proj,
+            proj.latlon = proj.latlon,
             clip = clip,
             ...
         )
@@ -105,14 +109,8 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
                            breaks = scales::fullseq, complete = TRUE,
                            na.rm = FALSE, circular = NULL, xwrap = NULL,
                            ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
-                           proj = NULL, kriging = FALSE, clip = NULL) {
-    if (isFALSE(global.breaks)) {
-      breaks <- setup_breaks(data,
-                             breaks = breaks,
-                             bins = bins,
-                             binwidth = binwidth)
-    }
-
+                           proj = NULL, proj.latlon = TRUE, kriging = FALSE,
+                           clip = NULL) {
     data.table::setDT(data)
 
     data <- data[!(is.na(y) | is.na(x)), ]
@@ -161,11 +159,22 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
       data <- suppressWarnings(WrapCircular(data, "y", ywrap))
     }
 
+    if (isFALSE(global.breaks)) {
+        breaks <- setup_breaks(data,
+                               breaks = breaks,
+                               bins = bins,
+                               binwidth = binwidth)
+    }
+
     data.table::setDF(data)
     dec <- getOption("OutDec")
     options(OutDec = ".")
     on.exit(options(OutDec = dec))
-    contours <- data.table::as.data.table(.contour_lines(data, breaks, complete = complete, clip = clip, proj = proj))
+    contours <- data.table::as.data.table(.contour_lines(data, breaks,
+                                                         complete = complete,
+                                                         clip = clip,
+                                                         proj = proj,
+                                                         proj.latlon = proj.latlon))
 
 
     if (length(contours) == 0) {
@@ -270,7 +279,8 @@ isoband_z_matrix <- function(data) {
   raster
 }
 
-.contour_lines <- function(data, breaks, complete = FALSE, clip = NULL, proj = NULL) {
+.contour_lines <- function(data, breaks, complete = FALSE, clip = NULL,
+                           proj = NULL, proj.latlon = TRUE) {
   z <- isoband_z_matrix(data)
 
   if (is.list(z)) {
@@ -299,7 +309,7 @@ isoband_z_matrix <- function(data) {
                   stopf("Projection requires the proj4 package. Install it with 'install.packages(\"proj4\")'.")
               }
               cl <- lapply(cl, function(x) {
-                  x[c("x", "y")] <- proj4::project(list(x$x, x$y), proj, inverse = TRUE)
+                  x[c("x", "y")] <- proj4::project(list(x$x, x$y), proj, inverse = proj.latlon)
                   return(x)
               })
           }

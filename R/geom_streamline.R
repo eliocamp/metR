@@ -293,7 +293,6 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
       if (!anyDuplicated(data$group)) {
           messagef("%s: Each group consists of only one observation.\nDo you need to adjust the group aesthetic?", "geom_path")
       }
-
       # must be sorted on group
       data <- data[order(data$group), , drop = FALSE]
       munched <- ggplot2::coord_munch(coord, data, panel_params)
@@ -331,10 +330,10 @@ GeomStreamline <- ggplot2::ggproto("GeomStreamline", ggplot2::GeomPath,
 
       if (!constant) {
           if (!is.null(arrow)) {
-              mult <- end&munched$end
+              mult <- end & munched$end
               mult <- mult[!start]
               if ("simpleUnit" %in% class(grid::unit(1, "mm"))) {
-                  arrow$length <- mult*arrow$length[1]
+                  arrow$length <- as.numeric(mult)*arrow$length[1]
               } else {
                   arrow$length <- grid::unit(as.numeric(arrow$length)[1]*mult,
                                        attr(arrow$length, "unit"))
@@ -389,7 +388,6 @@ streamline.f <- function(field, dt = 0.1, S = 3, skip.x = 1, skip.y = 1, nx = NU
                        ny = NULL, jitter.x = 1, jitter.y = 1, xwrap = NULL,
                        ywrap = NULL) {
     field <- data.table::copy(data.table::as.data.table(field))
-
     is.grid <- with(field, .is.regular_grid(x, y))
 
     if (!is.grid) {

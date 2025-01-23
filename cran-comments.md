@@ -1,7 +1,7 @@
 
 ## Test environments
 
-* local installation of Ubuntu 22.04.1 R version 4.4.1
+* local installation of Ubuntu 24.04.1 R version 4.4.2
 * Github Actions:
     - macos-latest (release)
     - windows-latest (release)

@@ -74,8 +74,8 @@ citation("metR")
 #>     title = {metR: Tools for Easier Analysis of Meteorological Fields},
 #>     author = {Elio Campitelli},
 #>     year = {2021},
-#>     note = {R package version 0.16.0},
-#>     url = {https://eliocamp.github.io/metR/, https://github.com/eliocamp/metR},
+#>     note = {R package version 0.16.0.9000},
+#>     url = {https://eliocamp.github.io/metR/},
 #>     doi = {10.5281/zenodo.2593516},
 #>   }
 ```
@@ -114,9 +114,6 @@ ggplot(aao$left, aes(lon, lat)) +
     coord_polar()
 #> Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be
 #> deprecated. Use ggperiodic::periodic insead.
-#> Warning: Computation failed in `stat_streamline()`.
-#> Caused by error in `[.data.table`:
-#> ! Supplied 10 items to be assigned to group 1 of size 9 in column 'step'. The RHS length must either be 1 (single values are ok) or match the LHS length exactly. If you wish to 'recycle' the RHS please use rep() explicitly to make this intent clear to readers of your code.
 ```
 
 ![](man/figures/field-1.png)<!-- -->

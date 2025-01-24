@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.0.9000</span>
       </span>
     </div>
 
@@ -79,7 +79,6 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">scale_label_size_continuous</span><span class="op">(</span></span>
-<span>  name <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  breaks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  labels <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  limits <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -96,13 +95,13 @@
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/continuous_scale.html" class="external-link">continuous_scale</a></code></p><dl><dt><code>minor_breaks</code></dt>
 <dd><p>One of:</p><ul><li><p><code>NULL</code> for no minor breaks</p></li>
-<li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default breaks (one minor break between
-each major break)</p></li>
+<li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default breaks (none for discrete, one minor break
+between each major break for continuous)</p></li>
 <li><p>A numeric vector of positions</p></li>
 <li><p>A function that given the limits returns a vector of minor breaks. Also
 accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function notation. When
 the function has two arguments, it will be given the limits and major
-breaks.</p></li>
+break positions.</p></li>
 </ul></dd>
 
     <dt><code>oob</code></dt>
@@ -142,13 +141,6 @@ or "legend" for discrete colour legend.</p></dd>
 
 <dt id="arg-range">range<a class="anchor" aria-label="anchor" href="#arg-range"></a></dt>
 <dd><p>Output range of alpha values. Must lie between 0 and 1.</p></dd>
-
-
-<dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
-<dd><p>The name of the scale. Used as the axis or legend title. If
-<code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code>, the default, the name of the scale is taken from the first
-mapping used for that aesthetic. If <code>NULL</code>, the legend title will be
-omitted.</p></dd>
 
 
 <dt id="arg-breaks">breaks<a class="anchor" aria-label="anchor" href="#arg-breaks"></a></dt>

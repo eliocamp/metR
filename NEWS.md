@@ -1,3 +1,9 @@
+# metR (development version)
+
+## New features
+
+-   `ReadNetCDF()` can now subset based on dimension indices instead of dimension values. This makes it possible to read "the first 10 timesteps" or "the last 10 timesteps" without needing to know which dates they correspond to and how many timesteps are in total.
+
 # metR 0.17.0
 
 ## Bug fixes

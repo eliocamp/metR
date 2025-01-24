@@ -33,7 +33,22 @@
 #' latitude as `lat`, then you can use:
 #' \preformatted{
 #' subset = list(lat = -90:0)
-#'}
+#' }
+#'
+#' To use dimension indices instead of values, wrap the expression in [base::I()].
+#' For example to read the first 10 timesteps of a file:
+#'
+#' \preformatted{
+#' subset = list(time = I(1, 10))
+#' }
+#'
+#' Negative indices are interpreted as starting from the end.
+#' So to read the last 10 timesteps of a file:
+#'
+#' \preformatted{
+#' subset = list(time = I(-10, 0))
+#' }
+#'
 #' More complex subsetting operations are supported. If you want to read non-contiguous
 #' chunks of data, you can specify each chunk into a list inside `subset`. For example
 #' this subset
@@ -150,7 +165,7 @@ ReadNetCDF <- function(file, vars = NULL,
     # assertCharacter(vars, null.ok = TRUE, any.missing = FALSE, unique = TRUE,
     #                 add = checks)
     assertChoice(out, c("data.frame", "vector", "array", "vars"), add = checks)
-    assertList(subset, types = c("vector", "POSIXct", "POSIXt", "Date", "list"), null.ok = TRUE, add = checks)
+    assertList(subset, types = c("vector", "POSIXct", "POSIXt", "Date", "list", "AsIs"), null.ok = TRUE, add = checks)
     # assertNamed(subset, c("unique"), add = checks)
     assertFlag(key, add = checks)
 
@@ -166,7 +181,7 @@ ReadNetCDF <- function(file, vars = NULL,
             ncdf4::nc_close(ncfile)
         })
     } else {
-       ncfile <- file
+        ncfile <- file
     }
 
 
@@ -222,9 +237,9 @@ ReadNetCDF <- function(file, vars = NULL,
     dimensions <- list()
     for (i in seq_along(dims)) {
         # if (dims[i] == "time" && ncfile$dim[[dims[i]]]$units != "") {
-            dimensions[[dims[i]]] <- .parse_time(ncfile$dim[[dims[i]]]$vals,
-                                                 ncfile$dim[[dims[i]]]$units,
-                                                 ncfile$dim[[dims[i]]]$calendar)
+        dimensions[[dims[i]]] <- .parse_time(ncfile$dim[[dims[i]]]$vals,
+                                             ncfile$dim[[dims[i]]]$units,
+                                             ncfile$dim[[dims[i]]]$calendar)
         # } else {
         #     dimensions[[dims[i]]] <- ncfile$dim[[dims[i]]]$vals
         # }
@@ -240,7 +255,7 @@ ReadNetCDF <- function(file, vars = NULL,
     subset.extra <- subset_names[!(subset_names %in% names(dimensions))]
     if (length(subset.extra) != 0) {
         stopf("Subsetting dimensions not found: %s.",
-                    paste0(subset.extra, collapse = ", "))
+              paste0(subset.extra, collapse = ", "))
     }
 
     if (length(subset) > 1) {
@@ -275,22 +290,45 @@ ReadNetCDF <- function(file, vars = NULL,
             d <- dimensions[[s]]
             sub <- subset[[s]]
 
-            if (.is.somedate(d)) {
-                sub <- lubridate::as_datetime(sub)
+            if (inherits(sub, 'AsIs')) {
+                if (is.na(sub[1])) {
+                    sub[1] <- 1
+                }
+
+                if (is.na(sub[2])) {
+                    sub[2] <- length(d)
+                }
+
+                if (sub[1] <= 0) {
+                    sub[1] <- length(d) + sub[1]
+                }
+
+                if (sub[2] <= 0) {
+                    sub[2] <- length(d) + sub[2]
+                }
+
+                start[[s]] <- sub[1]
+                count[[s]] <- abs(sub[2] - sub[1])
+            } else {
+                if (.is.somedate(d)) {
+                    sub <- lubridate::as_datetime(sub)
+                }
+
+                if (is.na(sub[1])) {
+                    sub[1] <- min(d)
+                }
+
+                if (is.na(sub[2])) {
+                    sub[2] <- max(d)
+                }
+
+                start1 <- which(d %~% sub[1])
+                end <- which(d %~% sub[length(sub)])
+
+                start[[s]] <- min(start1, end)
+                count[[s]] <- abs(end - start1) + 1
             }
 
-            if (is.na(sub[1])) {
-                sub[1] <- min(d)
-            }
-
-            if (is.na(sub[2])) {
-                sub[2] <- max(d)
-            }
-
-            start1 <- which(d %~% sub[1])
-            end <- which(d %~% sub[length(sub)])
-            start[[s]] <- min(start1, end)
-            count[[s]] <- abs(end - start1) + 1
 
 
             if(count[[s]] == 0) count[[s]] <- 1
@@ -387,7 +425,7 @@ time_units_factor <- c("days" = 24*3600,
 .read_vars <- function(varid, ncfile, start, count) {
 
     var <- ncdf4::ncvar_get(nc = ncfile, varid = varid, collapse_degen = FALSE, start = start,
-                             count = count)
+                            count = count)
     var
 }
 

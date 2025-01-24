@@ -186,8 +186,6 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     # contours <- contours[, unique(.SD), by = .(group, piece)]
     # contours[, start := NULL]
     contours <- .order_contour(contours, data.table::setDT(data))
-
-
     return(contours)
   }
 )

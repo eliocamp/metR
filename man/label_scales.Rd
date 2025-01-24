@@ -19,7 +19,6 @@ scale_label_alpha_continuous(
 )
 
 scale_label_size_continuous(
-  name = waiver(),
   breaks = waiver(),
   labels = waiver(),
   limits = NULL,
@@ -35,13 +34,13 @@ scale_label_size_continuous(
     \item{\code{minor_breaks}}{One of:
 \itemize{
 \item \code{NULL} for no minor breaks
-\item \code{waiver()} for the default breaks (one minor break between
-each major break)
+\item \code{waiver()} for the default breaks (none for discrete, one minor break
+between each major break for continuous)
 \item A numeric vector of positions
 \item A function that given the limits returns a vector of minor breaks. Also
 accepts rlang \link[rlang:as_function]{lambda} function notation. When
 the function has two arguments, it will be given the limits and major
-breaks.
+break positions.
 }}
     \item{\code{oob}}{One of:
 \itemize{
@@ -67,11 +66,6 @@ the same time, via aesthetics = c("colour", "fill").}
 or "legend" for discrete colour legend.}
 
 \item{range}{Output range of alpha values. Must lie between 0 and 1.}
-
-\item{name}{The name of the scale. Used as the axis or legend title. If
-\code{waiver()}, the default, the name of the scale is taken from the first
-mapping used for that aesthetic. If \code{NULL}, the legend title will be
-omitted.}
 
 \item{breaks}{One of:
 \itemize{

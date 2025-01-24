@@ -48,8 +48,6 @@ test_that("global.breaks work", {
     #                         facet_grid(. ~ V4)
     #                     )
 })
-
-
 test_that("labels work", {
     expect_doppelganger("contour2-labels",
                         ggplot(geo, aes(lon, lat)) +
@@ -59,7 +57,7 @@ test_that("labels work", {
                         ggplot(geo, aes(lon, lat)) +
                             geom_contour2(aes(z = gh,
                                               label = after_stat(level),
-                                              label_color = after_stat(level),
+                                              label_colour = after_stat(level),
                                               label_alpha = after_stat(level),
                                               label_size = after_stat(level))) +
                             guides(colour = guide_colorbar(order = 2),

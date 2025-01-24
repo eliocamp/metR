@@ -2,7 +2,7 @@ Type: Package
 Package: metR
 Language: en-GB
 Title: Tools for Easier Analysis of Meteorological Fields
-Version: 0.17.0
+Version: 0.17.0.9000
 Authors@R: 
     c(person(given = "Elio",
            family = "Campitelli",
@@ -24,7 +24,7 @@ Imports:
     digest,
     Formula,
     formula.tools,
-    ggplot2 (>= 3.0.0),
+    ggplot2 (>= 3.5.0),
     grid,
     gtable,
     memoise,

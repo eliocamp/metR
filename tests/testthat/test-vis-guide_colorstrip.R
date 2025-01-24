@@ -1,4 +1,3 @@
-library(metR)
 library(vdiffr)
 library(ggplot2)
 
@@ -12,13 +11,17 @@ base <- ggplot(geo, aes(lon, lat)) +
 
 test_that("guide works", {
     expect_doppelganger("default-guide_colourstrip",
-                        base + guides(fill = guide_colourstrip()))
+                        base + guides(colour = guide_colourbar(),   # https://github.com/tidyverse/ggplot2/issues/6306
+                                      fill = guide_colourstrip()))
     expect_doppelganger("inside-guide_colorstip",
-                        base + guides(fill = guide_colourstrip(inside = TRUE)))
+                        base + guides(colour = guide_colourbar(),
+                                      fill = guide_colourstrip(inside = TRUE)))
     expect_doppelganger("reverse-guide_colorstip",
-                        base + guides(fill = guide_colourstrip(reverse = TRUE)))
+                        base + guides(colour = guide_colourbar(),
+                                      fill = guide_colourstrip(reverse = TRUE)))
     expect_doppelganger("horizontal-direction",
-                        base + guides(fill = guide_colourstrip(direction = "horizontal", barwidth = 10)) +
+                        base + guides(colour = guide_colourbar(),
+                                      fill = guide_colourstrip(direction = "horizontal", barwidth = 10)) +
                             theme(legend.position = "bottom"))
 
     expect_doppelganger("colorstrip_inside",

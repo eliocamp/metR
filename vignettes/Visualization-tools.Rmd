@@ -160,10 +160,7 @@ ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
     facet_grid(~lev)
 ```
 
-
-
 All of these features are also available to regular contours in the `geom_contour2()` function. 
-
 
 ### Computed variables
 
@@ -212,24 +209,24 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     scale_fill_divergent() 
 ```
 
-You can have full control over where labels are placed with the `label.placement` argument. It takes a function that takes a vector of x and y values and returns a logical vector of the same length that indicate the points where labels should be. There are 5 build in placement functions:
+You can have full control over where labels are placed with the `label.placer` argument. It takes a function that takes a vector of x and y values and returns a logical vector of the same length that indicate the points where labels should be. There are 5 build in placement functions:
 
-* `label_placement_flattest()`: The default. It computes the curvature and the angle at each points and then selects the point which minimizes the sum of both numbers. Therefore, it tries to label the flattest and most horizontal part of the contour. 
+* `label_placer_flattest()`: The default. It computes the curvature and the angle at each points and then selects the point which minimizes the sum of both numbers. Therefore, it tries to label the flattest and most horizontal part of the contour. 
 
-* `label_placement_fraction()`: It takes a vector of numbers ranging from 0 to 1 representing where tu put the label in relation to the length of the contour. That is, using 0.5 means to put the label at the midpoint.
+* `label_placer_fraction()`: It takes a vector of numbers ranging from 0 to 1 representing where tu put the label in relation to the length of the contour. That is, using 0.5 means to put the label at the midpoint.
 
-* `label_placement_n()`: Places `n` labels approximately equally spaced along the contour.
+* `label_placer_n()`: Places `n` labels approximately equally spaced along the contour.
 
-* `label_placement_random()`: It puts the label in random places. ¯\\\_(ツ)\_/¯ .
+* `label_placer_random()`: It puts the label in random places. ¯\\\_(ツ)\_/¯ .
 
-* `label_placement_all()`: It puts the label at every point. Probably is best not to use it. 
+* `label_placer_all()`: It puts the label at every point. Probably is best not to use it. 
 
 
 ```{r}
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     geom_contour2(color = "black") +
-    geom_text_contour(stroke = 0.2, label.placement = label_placement_random()) +
+    geom_text_contour(stroke = 0.2, label.placer = label_placer_random()) +
     scale_fill_divergent() 
 ```
 
@@ -314,7 +311,6 @@ The `start` and  `direction` arguments adjust the behaviour of the arrows. This 
 ## geom_streamline
 
 Streamlines are paths tangential to a vector field and provide an intuitive way of visualizing vector fields. `geom_streamline()` computes streamlines via Euler integration. 
-
 ```{r}
 (g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
      geom_contour_fill(aes(z = air.z)) +

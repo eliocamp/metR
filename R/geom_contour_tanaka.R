@@ -127,7 +127,6 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
       if (!anyDuplicated(data$group)) {
         messagef("%s: Each group consists of only one observation.\nDo you need to adjust the group aesthetic?", "geom_path")
       }
-
       # must be sorted on group
       data <- data[order(data$group), , drop = FALSE]
 
@@ -196,7 +195,7 @@ GeomContourTanaka <- ggplot2::ggproto("GeomContourTanaka", ggplot2::GeomPath,
       attr <- plyr::ddply(munched, "group", function(df) {
         linetype <- unique(df$linetype)
         data.frame(
-              solid = identical(linetype, 1) || identical(linetype, "solid"),
+              solid = identical(as.integer(linetype), 1L) || identical(linetype, "solid"),
               constant = nrow(unique(df[, c("alpha", "colour","size", "linetype")])) == 1
           )
       })

@@ -38,7 +38,6 @@ Imports:
     lubridate
 Suggests: 
     maps,
-    covr,
     knitr,
     ncdf4,
     reshape2,
@@ -58,4 +57,5 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Config/testthat/edition: 3
 VignetteBuilder: knitr

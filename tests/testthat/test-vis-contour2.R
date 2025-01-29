@@ -3,7 +3,6 @@ library(ggplot2)
 
 skip_on_ci()
 
-context("stat_contour2")
 data(geopotential)
 geo <- subset(geopotential, date == date[1])
 test_that("geom_contour2 mimics geom_contour", {

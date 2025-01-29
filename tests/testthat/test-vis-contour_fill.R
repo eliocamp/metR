@@ -3,8 +3,6 @@ library(data.table)
 library(ggplot2)
 skip_on_ci()
 
-context("contour_fill")
-
 test_that("geom_contour_fill works", {
     skip_on_ci()
     expect_doppelganger("contour_fill-base",

@@ -4,7 +4,6 @@ library(vdiffr)
 
 skip_on_ci()
 
-context("Streamline")
 geo <- geopotential[date == date[1]]
 geo[, c("u", "v") := GeostrophicWind(gh, lon, lat)]
 

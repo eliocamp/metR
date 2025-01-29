@@ -1,6 +1,3 @@
-context("Fitlm")
-
-
 n <- 100
 x <- rnorm(n)
 y <- rnorm(n)

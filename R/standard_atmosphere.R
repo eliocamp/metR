@@ -14,7 +14,7 @@ NULL
 #' unit to meters and Pascals respectively. (E.g. if height is in feet,
 #' use `height_in = 0.3048`.)
 #' @param name,breaks,labels,guide arguments passed to [ggplot2::sec_axis()]
-#' @param n desiderd number of breaks.
+#' @param n desired number of breaks.
 #' @param ... extra arguments passed to [scales::breaks_extended].
 #'
 #' @details
@@ -22,7 +22,7 @@ NULL
 #' pressure (in pascals), height (in meters) and temperature (in Kelvin).
 #'
 #' `sa_height_trans()` and `sa_pressure_trans()` are two transformation functions
-#' to be used as the `trans` argument in ggplot2 scales (e.g. `scale_y_continuous(trans = "sa_height"`).
+#' to be used as the `transform` argument in ggplot2 scales (e.g. `scale_y_continuous(transform = "sa_height"`).
 #'
 #' `sa_height_axis()`  and `sa_pressure_axis()` return a secondary axis that transforms to
 #' height or pressure respectively to be used as ggplot2 secondary axis
@@ -67,7 +67,7 @@ NULL
 #' # is an approximate linear scale in height
 #' ggplot(temperature[lat == 0], aes(lon, lev)) +
 #'    geom_contour_fill(aes(z = air)) +
-#'    scale_y_continuous(trans = "sa_height", expand = c(0, 0))
+#'    scale_y_continuous(transform = "sa_height", expand = c(0, 0))
 #'
 #' # The result is very similar to using a reverse log transform, which is the
 #' # current behaviour of scale_y_level(). This transformation slightly
@@ -127,15 +127,15 @@ sa_pressure_trans <- function(height_in = "km", pressure_in = "hPa") {
     mult_height <- get_multiplicative_constant(tolower(height_in),
                                                km = 1000,
                                                m = 1)
-    scales::trans_new("pressure_sa",
+    scales::new_transform("pressure_sa",
                       transform =  function(x) {
                           standard_atmosphere$pressure(x*mult_height)/mult_pressure
                       },
                       inverse =  function(x) {
                           standard_atmosphere$altitude(x*mult_pressure)/mult_height
                       },
-                      breaks = scales::log_breaks(n = 6),
-                      format = scales::number_format(drop0trailing = TRUE,
+                      breaks = scales::breaks_log(n = 6),
+                      format = scales::label_number(drop0trailing = TRUE,
                                                      big.mark = "",
                                                      trim = FALSE),
                       domain = c(-610, 500000)/mult_height)
@@ -202,7 +202,7 @@ sa_height_axis <- function(name = ggplot2::waiver(),
                                                m = 1)
 
 
-    ggplot2::sec_axis(trans = ~ standard_atmosphere$altitude(.x*mult_pressure)/mult_height,
+    ggplot2::sec_axis(transform = ~ standard_atmosphere$altitude(.x*mult_pressure)/mult_height,
                       name = name,
                       breaks = breaks,
                       labels = labels,
@@ -212,8 +212,8 @@ sa_height_axis <- function(name = ggplot2::waiver(),
 #' @export
 #' @rdname standard_atmosphere
 sa_pressure_axis <- function(name = ggplot2::waiver(),
-                             breaks = scales::log_breaks(n = 6),
-                             labels = scales::number_format(drop0trailing = TRUE,
+                             breaks = scales::breaks_log(n = 6),
+                             labels = scales::label_number(drop0trailing = TRUE,
                                                             big.mark = "",
                                                             trim = FALSE),
                              guide = ggplot2::waiver(),
@@ -227,7 +227,7 @@ sa_pressure_axis <- function(name = ggplot2::waiver(),
                                                m = 1)
 
     fun <- function(x) standard_atmosphere$pressure(x*mult_height)/mult_pressure
-    ggplot2::sec_axis(trans = fun,
+    ggplot2::sec_axis(transform = fun,
                       name = name,
                       breaks = breaks,
                       labels = labels,

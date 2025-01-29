@@ -20,10 +20,9 @@ t <- data.frame(p = c(1000, 950, 850, 700, 500, 300, 200, 100))
 t$t <- 300*(t$p/1000)^gamma
 
 library(ggplot2)
-ggplot(t, aes(p, t)) +
+ggplot(t, aes(t, p)) +
    geom_line() +
-   coord_flip() +
-   scale_x_continuous(trans = "reverselog")
+   scale_y_continuous(transform = "reverselog")
 
 }
 \seealso{

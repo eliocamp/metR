@@ -107,7 +107,7 @@ scale_fill_divergent_discretised <- function(..., low = scales::muted("blue"),
                                           na.value = "grey50",
                                           guide = ggplot2::guide_colorsteps(even.steps = FALSE, show.limits = TRUE)) {
 
-    discretised_scale("fill", "brewer", palette = scales::div_gradient_pal(low, mid, high, space),
+    discretised_scale("fill", "brewer", palette = scales::pal_div_gradient(low, mid, high, space),
                    rescaler = mid_rescaler(mid = midpoint),
                    super = ScaleDiscretised, na.value = na.value, guide = guide, ...)
 
@@ -122,7 +122,7 @@ discretised_scale <- function(aesthetics, scale_name, palette, name = ggplot2::w
                               breaks = ggplot2::waiver(),
                               labels = ggplot2::waiver(),
                               limits = NULL,
-                              trans = scales::identity_trans(),
+                              trans = scales::transform_identity(),
                               na.value = NA, drop = FALSE,
                               guide = ggplot2::guide_colorsteps(even.steps = FALSE),
                               position = "left",
@@ -144,7 +144,7 @@ discretised_scale <- function(aesthetics, scale_name, palette, name = ggplot2::w
     #   stop("User-supplied breaks are not allowed in discretised scales.")
     # }
 
-    trans <- scales::as.trans(trans)
+    trans <- scales::as.transform(trans)
 
     ggplot2::ggproto(NULL, super,
                      call = match.call(),

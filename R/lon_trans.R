@@ -18,14 +18,14 @@
 # # g + scale_x_longitude(trans = "lon180")
 # #
 # # # @export
-# # @importFrom scales trans_new
+# # @importFrom scales new_transform
 # lon_trans <- function(to = c(180, 360)) {
 #     if (to[1] == 180) {
-#         scales::trans_new("lon180",
+#         scales::new_transform("lon180",
 #                           lon180,
 #                           lon360)
 #     } else if (to[1] == 360) {
-#         scales::trans_new("lon360",
+#         scales::new_transform("lon360",
 #                           lon360,
 #                           lon180)
 #     } else {

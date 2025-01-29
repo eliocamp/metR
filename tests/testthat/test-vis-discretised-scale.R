@@ -1,6 +1,5 @@
 library(ggplot2)
 library(vdiffr)
-context("discretised_scale")
 skip_on_ci()
 
 v <- ggplot(faithfuld, aes(waiting, eruptions, z = density))

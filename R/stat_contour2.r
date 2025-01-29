@@ -303,9 +303,7 @@ isoband_z_matrix <- function(data) {
           cl <- proj(cl)
       } else {
           if (is.character(proj)) {
-              if (!requireNamespace("proj4", quietly = TRUE)) {
-                  stopf("Projection requires the proj4 package. Install it with 'install.packages(\"proj4\")'.")
-              }
+              rlang::check_installed("proj4", "to do projection.")
               cl <- lapply(cl, function(x) {
                   x[c("x", "y")] <- proj4::project(list(x$x, x$y), proj, inverse = proj.latlon)
                   return(x)

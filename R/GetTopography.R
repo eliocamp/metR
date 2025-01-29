@@ -97,7 +97,7 @@ GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution =
 
         }
         field[, lon := ConvertLongitude(lon, from = 180)]
-        if (cache == TRUE) write.csv(field, file = file)    # cache data
+        if (cache == TRUE) utils::write.csv(field, file = file)    # cache data
     }
     return(field[])
 }

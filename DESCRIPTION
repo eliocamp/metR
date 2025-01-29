@@ -1,4 +1,3 @@
-Type: Package
 Package: metR
 Language: en-GB
 Title: Tools for Easier Analysis of Meteorological Fields
@@ -39,18 +38,17 @@ Imports:
     lubridate
 Suggests: 
     maps,
+    irlba,
     knitr,
     ncdf4,
     reshape2,
     markdown,
     testthat (>= 2.1.0),
     PCICt,
-    gridExtra,
     vdiffr,
     proj4,
     kriging,
     terra,
-    here,
     gsignal,
     rnaturalearth
 ByteCompile: yes

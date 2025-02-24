@@ -174,7 +174,7 @@ field <- ReadNetCDF(ncfile, subset = list(M = 1,
 
 # Using a function in `vars` to read all variables that
 # start with "radar_".
-ReadNetCDF(radar_file, vars = \(x) startsWith(x, "radar_"))
+ReadNetCDF(radar_file, vars = function(x) startsWith(x, "radar_"))
 
 }
 }

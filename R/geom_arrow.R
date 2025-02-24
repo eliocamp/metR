@@ -353,7 +353,7 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
                            skip.x = 0, skip.y = 0,
                            min.mag = 0, start = 0, direction = -1,
                            preserve.dir = TRUE, ...) {
-      if (plyr::empty(data)) return(data.frame())
+      if (is_empty_df(data)) return(data.frame())
 
       groups <- split(data, data$group)
       stats <- lapply(groups, function(group) {
@@ -361,7 +361,7 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
       })
 
       stats <- mapply(function(new, old) {
-          if (plyr::empty(new)) return(data.frame())
+          if (is_empty_df(new)) return(data.frame())
           unique <- ggplot2:::uniquecols(old)
           missing <- !(names(unique) %in% names(new))
           cbind(
@@ -370,7 +370,7 @@ StatArrow <- ggplot2::ggproto("StatArrow", ggplot2::Stat,
           )
       }, stats, groups, SIMPLIFY = FALSE)
 
-      data <- do.call(plyr::rbind.fill, stats)
+      data <- vctrs::vec_rbind(!!!stats)
 
       min.mag <- data$min.mag %||% min.mag
 

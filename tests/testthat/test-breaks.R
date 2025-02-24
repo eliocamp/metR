@@ -1,13 +1,6 @@
-library(metR)
-
-
-context("Breaks")
-
 test_that("functions return functions", {
-    expect_equal(is.function(MakeBreaks()),
-                 TRUE)
-    expect_equal(is.function(AnchorBreaks()),
-                 TRUE)
+    expect_true(is.function(MakeBreaks()))
+    expect_true(is.function(AnchorBreaks()))
 })
 
 test_that("Anchor is in breaks", {

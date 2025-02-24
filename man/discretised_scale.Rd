@@ -58,6 +58,9 @@ discretised_scale(
   \describe{
     \item{\code{scale_name}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} The name of the scale
 that should be used for error messages associated with this scale.}
+    \item{\code{palette}}{A palette function that when called with a numeric vector with
+values between 0 and 1 returns the corresponding output values
+(e.g., \code{\link[scales:pal_area]{scales::pal_area()}}).}
     \item{\code{breaks}}{One of:
 \itemize{
 \item \code{NULL} for no breaks
@@ -72,13 +75,13 @@ Also accepts rlang \link[rlang:as_function]{lambda} function notation.
     \item{\code{minor_breaks}}{One of:
 \itemize{
 \item \code{NULL} for no minor breaks
-\item \code{waiver()} for the default breaks (none for discrete, one minor break
-between each major break for continuous)
+\item \code{waiver()} for the default breaks (one minor break between
+each major break)
 \item A numeric vector of positions
 \item A function that given the limits returns a vector of minor breaks. Also
 accepts rlang \link[rlang:as_function]{lambda} function notation. When
 the function has two arguments, it will be given the limits and major
-break positions.
+breaks.
 }}
     \item{\code{n.breaks}}{An integer guiding the number of major breaks. The algorithm
 may choose a slightly different number to ensure nice break labels. Will

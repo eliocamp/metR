@@ -19,7 +19,7 @@ with proper dimensions."><meta property="og:image" content="https://eliocamp.git
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.18.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.0</span>
       </span>
     </div>
 
@@ -59,7 +59,7 @@ with proper dimensions."><meta property="og:image" content="https://eliocamp.git
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read NetCDF files.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/R/ReadNetCDF.R" class="external-link"><code>R/ReadNetCDF.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/v0.17.0/R/ReadNetCDF.R" class="external-link"><code>R/ReadNetCDF.R</code></a></small>
     <div class="hidden name"><code>ReadNetCDF.Rd</code></div>
     </div>
 
@@ -148,19 +148,7 @@ matches the actual gridpoints of the file; the closest gridpoint will be selecte
 Furthermore, you can use <code>NA</code> to refer to the existing minimum or maximum.</p>
 <p>So, if you want to get Southern Hemisphere data from the from a file that defines
 latitude as <code>lat</code>, then you can use:</p><div class="sourceCode"><pre><code><span></span>
-<span><span class="va">subset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="op">-</span><span class="fl">90</span><span class="op">:</span><span class="fl">0</span><span class="op">)</span></span></code></pre></div>
-
-<p>To use dimension indices instead of values, wrap the expression in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">base::I()</a></code>.
-For example to read the first 10 timesteps of a file:</p>
-<div class="sourceCode"><pre><code><span></span>
-<span><span class="va">subset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-
-<p>Negative indices are interpreted as starting from the end.
-So to read the last 10 timesteps of a file:</p>
-<div class="sourceCode"><pre><code><span></span>
-<span><span class="va">subset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-
-<p>More complex subsetting operations are supported. If you want to read non-contiguous
+<span><span class="va">subset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="op">-</span><span class="fl">90</span><span class="op">:</span><span class="fl">0</span><span class="op">)</span></span></code></pre></div><p>More complex subsetting operations are supported. If you want to read non-contiguous
 chunks of data, you can specify each chunk into a list inside <code>subset</code>. For example
 this subset</p><div class="sourceCode"><pre><code><span></span>
 <span><span class="va">subset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="op">-</span><span class="fl">90</span><span class="op">:</span><span class="op">-</span><span class="fl">70</span>, lon <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">60</span><span class="op">)</span>,</span>
@@ -431,7 +419,7 @@ have.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using a function in `vars` to read all variables that</span></span></span>
 <span class="r-in"><span><span class="co"># start with "radar_".</span></span></span>
-<span class="r-in"><span><span class="fu">ReadNetCDF</span><span class="op">(</span><span class="va">radar_file</span>, vars <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/startsWith.html" class="external-link">startsWith</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"radar_"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ReadNetCDF</span><span class="op">(</span><span class="va">radar_file</span>, vars <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/startsWith.html" class="external-link">startsWith</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"radar_"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>

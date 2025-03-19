@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.18.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.0</span>
       </span>
     </div>
 
@@ -57,7 +57,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate geostrophic winds</h1>
-    <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/R/GeostrophicWind.R" class="external-link"><code>R/GeostrophicWind.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/v0.17.0/R/GeostrophicWind.R" class="external-link"><code>R/GeostrophicWind.R</code></a></small>
     <div class="hidden name"><code>GeostrophicWind.Rd</code></div>
     </div>
 
@@ -121,7 +121,7 @@ predictable results, set the boundary condition explicitly.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">geopotential</span><span class="op">[</span><span class="va">date</span> <span class="op">==</span> <span class="va">date</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"v"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu">GeostrophicWind</span><span class="op">(</span><span class="va">gh</span>, <span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Index: &lt;date&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           lon   lat   lev       gh       date     u           v</span>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.18.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.0</span>
       </span>
     </div>
 
@@ -57,7 +57,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Scales for contour label aesthetics</h1>
-    <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/R/label-scales.R" class="external-link"><code>R/label-scales.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/v0.17.0/R/label-scales.R" class="external-link"><code>R/label-scales.R</code></a></small>
     <div class="hidden name"><code>label_scales.Rd</code></div>
     </div>
 
@@ -79,6 +79,7 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">scale_label_size_continuous</span><span class="op">(</span></span>
+<span>  name <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  breaks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  labels <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  limits <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -141,6 +142,13 @@ or "legend" for discrete colour legend.</p></dd>
 
 <dt id="arg-range">range<a class="anchor" aria-label="anchor" href="#arg-range"></a></dt>
 <dd><p>Output range of alpha values. Must lie between 0 and 1.</p></dd>
+
+
+<dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
+<dd><p>The name of the scale. Used as the axis or legend title. If
+<code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code>, the default, the name of the scale is taken from the first
+mapping used for that aesthetic. If <code>NULL</code>, the legend title will be
+omitted.</p></dd>
 
 
 <dt id="arg-breaks">breaks<a class="anchor" aria-label="anchor" href="#arg-breaks"></a></dt>

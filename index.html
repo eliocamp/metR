@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">metR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.18.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.0</span>
       </span>
     </div>
 
@@ -127,7 +127,7 @@
 <span><span class="co">#&gt;     title = {metR: Tools for Easier Analysis of Meteorological Fields},</span></span>
 <span><span class="co">#&gt;     author = {Elio Campitelli},</span></span>
 <span><span class="co">#&gt;     year = {2021},</span></span>
-<span><span class="co">#&gt;     note = {R package version 0.18.0},</span></span>
+<span><span class="co">#&gt;     note = {R package version 0.16.0.9000},</span></span>
 <span><span class="co">#&gt;     url = {https://eliocamp.github.io/metR/},</span></span>
 <span><span class="co">#&gt;     doi = {10.5281/zenodo.2593516},</span></span>
 <span><span class="co">#&gt;   }</span></span></code></pre></div>
@@ -142,9 +142,9 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span>
 <span><span class="co"># Use Empirical Orthogonal Functions to compute the Antarctic Oscillation</span></span>
-<span><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span>
+<span><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span>
 <span><span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.t.w</span> <span class="op">:=</span> <span class="fu"><a href="reference/Anomaly.html">Anomaly</a></span><span class="op">(</span><span class="va">gh</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">lat</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>      by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/IDateTime.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span>      by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/IDateTime.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">aao</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/EOF.html">EOF</a></span><span class="op">(</span><span class="va">gh.t.w</span> <span class="op">~</span> <span class="va">lat</span> <span class="op">+</span> <span class="va">lon</span> <span class="op">|</span> <span class="va">date</span>, data <span class="op">=</span> <span class="va">geopotential</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">aao</span><span class="op">$</span><span class="va">left</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"v"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="reference/GeostrophicWind.html">GeostrophicWind</a></span><span class="op">(</span><span class="va">gh.t.w</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">lat</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>                                                    <span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span></span>

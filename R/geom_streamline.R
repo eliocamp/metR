@@ -259,6 +259,11 @@ StatStreamline <- ggplot2::ggproto("StatStreamline", ggplot2::Stat,
 
       return(params)
   },
+  setup_data = function(data, params) {
+    data$dx[is.na(data$dx)] <- 0
+    data$dy[is.na(data$dy)] <- 0
+    data
+  },
   compute_group = function(data, scales, dt = 0.1, S = 3, skip.x = 1,
                            skip.y = 1, nx = 10, ny  = 10, jitter.x = 1,
                            jitter.y = 1, xwrap = NULL, ywrap = NULL,

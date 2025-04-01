@@ -3,7 +3,6 @@ library(ggplot2)
 
 skip_on_ci()
 
-context("guide_colourstrip")
 data(geopotential)
 geo <- geopotential[date == date[1]]
 base <- ggplot(geo, aes(lon, lat)) +

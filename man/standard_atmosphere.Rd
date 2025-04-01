@@ -35,8 +35,8 @@ sa_height_axis(
 
 sa_pressure_axis(
   name = ggplot2::waiver(),
-  breaks = scales::log_breaks(n = 6),
-  labels = scales::number_format(drop0trailing = TRUE, big.mark = "", trim = FALSE),
+  breaks = scales::breaks_log(n = 6),
+  labels = scales::label_number(drop0trailing = TRUE, big.mark = "", trim = FALSE),
   guide = ggplot2::waiver(),
   height_in = "km",
   pressure_in = "hPa"
@@ -53,7 +53,7 @@ Alternatively, it can be a numeric constant that multiplied to convert the
 unit to meters and Pascals respectively. (E.g. if height is in feet,
 use \code{height_in = 0.3048}.)}
 
-\item{n}{desiderd number of breaks.}
+\item{n}{desired number of breaks.}
 
 \item{...}{extra arguments passed to \link[scales:breaks_extended]{scales::breaks_extended}.}
 
@@ -69,7 +69,7 @@ and then extends up to the 500 km using the ARDC Model Atmosphere.
 pressure (in pascals), height (in meters) and temperature (in Kelvin).
 
 \code{sa_height_trans()} and \code{sa_pressure_trans()} are two transformation functions
-to be used as the \code{trans} argument in ggplot2 scales (e.g. \verb{scale_y_continuous(trans = "sa_height"}).
+to be used as the \code{transform} argument in ggplot2 scales (e.g. \verb{scale_y_continuous(transform = "sa_height"}).
 
 \code{sa_height_axis()}  and \code{sa_pressure_axis()} return a secondary axis that transforms to
 height or pressure respectively to be used as ggplot2 secondary axis
@@ -114,7 +114,7 @@ ggplot(temperature[lat == 0], aes(lon, lev)) +
 # is an approximate linear scale in height
 ggplot(temperature[lat == 0], aes(lon, lev)) +
    geom_contour_fill(aes(z = air)) +
-   scale_y_continuous(trans = "sa_height", expand = c(0, 0))
+   scale_y_continuous(transform = "sa_height", expand = c(0, 0))
 
 # The result is very similar to using a reverse log transform, which is the
 # current behaviour of scale_y_level(). This transformation slightly

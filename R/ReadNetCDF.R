@@ -153,7 +153,7 @@
 ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {
-    check_packages(c("ncdf4", "PCICt"), "ReadNetCDF")
+    rlang::check_installed(c("ncdf4", "PCICt"), "for ReadNetCDF.")
 
     out <- out[1]
     checks <- makeAssertCollection()
@@ -501,7 +501,7 @@ print.nc_glance <- function(x, ...) {
 
     cat("\n\n")
     cat(gettext("----- Dimensions ----- \n", domain = "R-metR"))
-    out <- lapply(x$dim, print)
+    out <- lapply(x$dims, print)
 }
 
 #' @export

@@ -1,8 +1,8 @@
-# metR (development version)
+# metR 0.18.1
 
 ## New features
 
--   `geom_streamline()` will replace missing values with zeroes. 
+-   `geom_streamline()` will replace missing values with zeroes.
 
 # metR 0.18.0
 

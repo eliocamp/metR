@@ -1,7 +1,10 @@
+skip_on_ci()
+skip_if_not_installed("vdiffr")
+
 library(vdiffr)
 library(data.table)
 library(ggplot2)
-skip_on_ci()
+
 
 context("contour_fill")
 

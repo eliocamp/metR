@@ -24,8 +24,9 @@ test_that("EOF uses bootstrap", {
 test_that("can use differnet engine", {
     set.seed(40)
     # with this seed, the base::svd result has a different sign.
+    skip_if_not_installed("irlba")
     expect_equal(
-        EOF(gh ~ lat + lon | date, data = geopotential, engine = base::svd)$left[, gh := -gh],
+        EOF(gh ~ lat + lon | date, data = geopotential, engine = base::svd)$left[, gh := -gh][],
         EOF(gh ~ lat + lon | date, data = geopotential, n = 1)$left
     )
 })

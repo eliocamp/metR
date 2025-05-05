@@ -1,4 +1,4 @@
-
+skip_if_not_installed("reshape2")
 volcano <- reshape2::melt(datasets::volcano, value.name = "original")
 volcano$noisy <- with(volcano, original + 1.5*rnorm(length(original)))
 

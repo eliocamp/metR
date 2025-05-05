@@ -1,8 +1,9 @@
+skip_on_ci()
+skip_if_not_installed("vdiffr")
+
 library(ggplot2)
 library(data.table)
 library(vdiffr)
-
-skip_on_ci()
 
 context("Streamline")
 geo <- geopotential[date == date[1]]

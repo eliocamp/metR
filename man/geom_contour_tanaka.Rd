@@ -173,6 +173,7 @@ a more aesthetically pleasing representation of topography.
 }
 
 \examples{
+\dontshow{if (requireNamespace("reshape2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \dontshow{data.table::setDTthreads(1)}
 
 library(ggplot2)
@@ -215,6 +216,6 @@ ggplot(geo, aes(lon, lat)) +
 
 # Tanaka contours can solve this issue.
 g + geom_contour_tanaka(aes(z = gh.z))
-
+\dontshow{\}) # examplesIf}
 }
 \keyword{datasets}

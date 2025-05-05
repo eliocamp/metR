@@ -212,6 +212,7 @@ have all the same binwidth.
 }
 
 \examples{
+\dontshow{if (requireNamespace("reshape2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \dontshow{data.table::setDTthreads(1)}
 
 library(ggplot2)
@@ -225,7 +226,7 @@ ggplot(surface, aes(Var1, Var2, z = value)) +
 
 ggplot(surface, aes(Var1, Var2, z = value)) +
   geom_contour_fill(aes(fill = after_stat(level_d)))
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other ggplot2 helpers: 

@@ -244,6 +244,8 @@ Aesthetics related to labels:
 }
 
 \examples{
+\dontshow{if (requireNamespace("reshape2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
 \dontshow{data.table::setDTthreads(1)}
 
 library(ggplot2)
@@ -272,7 +274,7 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
     geom_contour2(aes(z = value, label = after_stat(level)),
                   skip = 0,
                   label.placer = label_placer_flattest(rot_adjuster = 0))
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other ggplot2 helpers: 

@@ -111,7 +111,7 @@
 #' `GlanceNetCDF()` returns a list of variables and dimensions included in the
 #' file with a nice printing method.
 #'
-#' @examples
+#' @examplesIf  requireNamespace("ncdf4") && requireNamespace("PCICt")
 #' file <- system.file("extdata", "temperature.nc", package = "metR")
 #' # Get a list of variables.
 #' variables <- GlanceNetCDF(file)

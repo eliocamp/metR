@@ -16,7 +16,8 @@
 #' `smooth_dct()` computes the Discrete Cosine Transform of the field and sets
 #' a proportion of the components to zero.
 #'
-#' @examples
+#' @examplesIf requireNamespace("reshape2")
+#'
 #' library(ggplot2)
 #' # Creates a noisy version of the volcano dataset and applies the smooth
 #' volcano <- reshape2::melt(datasets::volcano, value.name = "original")

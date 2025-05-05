@@ -107,6 +107,7 @@ represent the value between contour surfaces.
 the value of the data and is very similar to \link[ggplot2:guide_legend]{ggplot2::guide_legend}.
 }
 \examples{
+\dontshow{if (requireNamespace("reshape2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # In this example the lowest colour represents an area of the data with values
 # between 80 and 100.
 library(ggplot2)
@@ -127,7 +128,7 @@ g <- ggplot(df, aes(X1, X2)) +
 g + scale_fill_continuous(guide = guide_legend())
 # Tick labels are at the bottom
 g + scale_fill_continuous(guide = guide_colourstrip(inside = TRUE))
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other ggplot2 helpers: 

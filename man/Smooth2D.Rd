@@ -38,6 +38,8 @@ the leading values that ensures a maximum variance lost.
 a proportion of the components to zero.
 }
 \examples{
+\dontshow{if (requireNamespace("reshape2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
 library(ggplot2)
 # Creates a noisy version of the volcano dataset and applies the smooth
 volcano <- reshape2::melt(datasets::volcano, value.name = "original")
@@ -53,4 +55,5 @@ ggplot(volcano, aes(Var1, Var2)) +
   scale_color_viridis_c() +
   coord_equal() +
   facet_wrap(~variable, ncol = 2)
+\dontshow{\}) # examplesIf}
 }

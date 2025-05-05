@@ -1,7 +1,9 @@
+skip_on_ci()
+skip_if_not_installed("vdiffr")
+
 library(vdiffr)
 library(ggplot2)
 
-skip_on_ci()
 data(volcano)
 v <- reshape2::melt(volcano)
 context("geom_relief")

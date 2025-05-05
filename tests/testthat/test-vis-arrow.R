@@ -1,8 +1,11 @@
+skip_on_ci()
+skip_if_not_installed("vdiffr")
+
 library(vdiffr)
 library(ggplot2)
 
 context("arrows")
-skip_on_ci()
+
 test_that("arrow guide works", {
 
     g <- ggplot(seals, aes(long, lat)) +

@@ -45,7 +45,7 @@
 #'  \item{level_low,level_high,level_mid}{Lower and upper bin boundaries for each band, as well the mid point between the boundaries.}
 #'  }
 #'
-#' @examples
+#' @examplesIf requireNamespace("reshape2")
 #' \dontshow{data.table::setDTthreads(1)}
 #'
 #' library(ggplot2)

@@ -24,7 +24,7 @@
 #' \item \code{linetype}
 #' }
 #'
-#' @examples
+#' @examplesIf requireNamespace("reshape2")
 #' \dontshow{data.table::setDTthreads(1)}
 #'
 #' library(ggplot2)

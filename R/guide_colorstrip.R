@@ -13,7 +13,7 @@
 #' `inside = TRUE`` works better for geom_tile where the colour represents
 #' the value of the data and is very similar to [ggplot2::guide_legend].
 #'
-#' @examples
+#' @examplesIf requireNamespace("reshape2")
 #' # In this example the lowest colour represents an area of the data with values
 #' # between 80 and 100.
 #' library(ggplot2)

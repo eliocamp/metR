@@ -140,6 +140,7 @@ but demands much less typing.
 }
 
 \examples{
+\dontshow{if ( requireNamespace("ncdf4") && requireNamespace("PCICt")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 file <- system.file("extdata", "temperature.nc", package = "metR")
 # Get a list of variables.
 variables <- GlanceNetCDF(file)
@@ -177,4 +178,5 @@ field <- ReadNetCDF(ncfile, subset = list(M = 1,
 ReadNetCDF(radar_file, vars = function(x) startsWith(x, "radar_"))
 
 }
+\dontshow{\}) # examplesIf}
 }

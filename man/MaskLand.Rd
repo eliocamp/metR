@@ -25,7 +25,7 @@ map (the default), this means that the point is over land.
 Creates a  mask
 }
 \examples{
-
+\dontshow{if ( requireNamespace("maps")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Make a sea-land mask
 mask <- temperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon, lat))]
 temperature <- temperature[mask, on = c("lon", "lat")]
@@ -44,6 +44,5 @@ ggplot(diftemp, aes(lat, lev)) +
     scale_y_level() +
     scale_x_latitude() +
     scale_color_divergent()
-
-
+\dontshow{\}) # examplesIf}
 }

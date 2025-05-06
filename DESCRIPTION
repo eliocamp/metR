@@ -46,7 +46,7 @@ Suggests:
     markdown,
     testthat (>= 2.1.0),
     viridis,
-    PCICt,
+    CFtime,
     gridExtra,
     vdiffr,
     proj4,

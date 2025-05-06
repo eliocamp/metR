@@ -111,7 +111,7 @@
 #' `GlanceNetCDF()` returns a list of variables and dimensions included in the
 #' file with a nice printing method.
 #'
-#' @examplesIf  requireNamespace("ncdf4") && requireNamespace("PCICt")
+#' @examplesIf  requireNamespace("ncdf4") && requireNamespace("CFtime")
 #' file <- system.file("extdata", "temperature.nc", package = "metR")
 #' # Get a list of variables.
 #' variables <- GlanceNetCDF(file)
@@ -153,7 +153,7 @@
 ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {
-    check_packages(c("ncdf4", "PCICt"), "ReadNetCDF")
+    check_packages(c("ncdf4", "CFtime"), "ReadNetCDF")
 
     out <- out[1]
     checks <- makeAssertCollection()
@@ -394,6 +394,12 @@ time_units_factor <- c("days" = 24*3600,
                        "seconds" = 1,
                        "milliseconds" = 1/1000)
 
+#' @param time the time definition. Can be accessed using [GlanceNetCDF].
+#' @export
+#' @rdname ReadNetCDF
+ParseNetCDFtime <- function(time) {
+    .parse_time(time$vals, time$units, time$calendar)
+}
 
 .parse_time <- function(time, units, calendar = NULL) {
     calendar <- tolower(calendar)
@@ -413,8 +419,9 @@ time_units_factor <- c("days" = 24*3600,
 
 
     if (length(calendar) != 0) {
-        time <- as.POSIXct(PCICt::as.PCICt(time*time_units_factor[time_unit], cal = calendar, origin = origin),
-                           cal = "standard", tz = "UTC", origin = origin)
+        # browser()
+        time <- as.POSIXct(CFtime::as_timestamp(CFtime::CFtime(units, calendar = calendar, offsets = time)),
+                   cal = "standard", tz = "UTC", origin = origin)
     } else {
         time <- as.POSIXct(origin, tz = "UTC") + time*time_units_factor[time_unit]
     }

@@ -19,7 +19,6 @@ StripTrailingWhitespace: Yes
 BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
-PackageCheckArgs: _R_CHECK_DEPENDS_ONLY_="true"
 PackageRoxygenize: rd,collate,namespace
 
 SpellingDictionary: en_GB

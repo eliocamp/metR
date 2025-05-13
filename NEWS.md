@@ -1,3 +1,5 @@
+# metR (development version)
+
 # metR 0.18.1
 
 ## New features
@@ -7,9 +9,7 @@
 
 ## Potentially breaking changes
 
--   `ReadNetCDF()`\` now uses the CFtime package to parse times.
-    This shouldn't lead to any braking changes, but times are weird and anything can happen.
-    Please report anything amiss.
+-   `ReadNetCDF()`\` now uses the CFtime package to parse times. This shouldn't lead to any braking changes, but times are weird and anything can happen. Please report anything amiss.
 
 # metR 0.18.0
 
@@ -477,4 +477,3 @@ There has been some changes in the interface of some functions for the sake of c
 
 -   Full (not perfect) documentation.
 -   Ready for serious testing.
-

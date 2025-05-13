@@ -1,7 +1,11 @@
 
+This is a resubmission. 
+In this resubmission I've removed the dependency on an archived package.
+
+
 ## Test environments
 
-* local installation of Ubuntu 24.04.1 R version 4.4.2
+* local installation of Ubuntu 24.04.1 R version 4.5.0
 * Github Actions:
     - macos-latest (release)
     - windows-latest (release)

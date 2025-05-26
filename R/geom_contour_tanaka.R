@@ -110,6 +110,7 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
             proj = proj,
             proj.latlon = proj.latlon,
             clip = clip,
+            reorder = TRUE,
             ...
         )
     )

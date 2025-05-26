@@ -62,6 +62,7 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
             proj = proj,
             proj.latlon = proj.latlon,
             clip = clip,
+            reorder = FALSE,
             ...
         )
     )
@@ -110,7 +111,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
                           na.rm = FALSE, circular = NULL, xwrap = NULL,
                           ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
                           proj = NULL, proj.latlon = TRUE, kriging = FALSE,
-                          clip = NULL) {
+                          clip = NULL, reorder = FALSE) {
      data.table::setDT(data)
 
      data <- data[!(is.na(y) | is.na(x)), ]
@@ -174,7 +175,8 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
                                                           complete = complete,
                                                           clip = clip,
                                                           proj = proj,
-                                                          proj.latlon = proj.latlon))
+                                                          proj.latlon = proj.latlon,
+                                                          reorder = reorder))
 
 
      if (length(contours) == 0) {
@@ -342,7 +344,7 @@ isoband_z_matrix <- function(data) {
 }
 
 .contour_lines <- function(data, breaks, complete = FALSE, clip = NULL,
-                           proj = NULL, proj.latlon = TRUE) {
+                           proj = NULL, proj.latlon = TRUE, reorder = FALSE) {
     z <- isoband_z_matrix(data)
 
     if (is.list(z)) {
@@ -366,7 +368,7 @@ isoband_z_matrix <- function(data) {
     }
 
 
-    cl <- .order_contour(cl, data$x, data$y, z)
+    if (reorder) cl <- .order_contour(cl, data$x, data$y, z)
 
     if (!is.null(proj)) {
         cl_class <- class(cl)

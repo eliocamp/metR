@@ -72,125 +72,125 @@ stat_contour2 <- function(mapping = NULL, data = NULL,
 #' @format NULL
 #' @export
 StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
-                                 required_aes = c("x", "y", "z"),
-                                 default_aes = ggplot2::aes(order = ggplot2::after_stat(level)),
-                                 dropped_aes = "z",
-                                 setup_params = function(data, params) {
-                                     if (is.null(params$global) || isTRUE(params$global.breaks)) {
-                                         params$breaks <- setup_breaks(data,
-                                                                       breaks = params$breaks,
-                                                                       bins = params$bins,
-                                                                       binwidth = params$binwidth)
-                                     }
-                                     return(params)
-                                 },
-                                 compute_layer = function(self, data, params, layout) {
-                                     ggplot2:::check_required_aesthetics(
-                                         self$required_aes,
-                                         c(names(data), names(params)),
-                                         ggplot2:::snake_class(self)
-                                     )
+ required_aes = c("x", "y", "z"),
+ default_aes = ggplot2::aes(order = ggplot2::after_stat(level)),
+ dropped_aes = "z",
+ setup_params = function(data, params) {
+     if (is.null(params$global) || isTRUE(params$global.breaks)) {
+         params$breaks <- setup_breaks(data,
+                                       breaks = params$breaks,
+                                       bins = params$bins,
+                                       binwidth = params$binwidth)
+     }
+     return(params)
+ },
+ compute_layer = function(self, data, params, layout) {
+     ggplot2:::check_required_aesthetics(
+         self$required_aes,
+         c(names(data), names(params)),
+         ggplot2:::snake_class(self)
+     )
 
-                                     # Trim off extra parameters
-                                     params <- params[intersect(names(params), self$parameters())]
+     # Trim off extra parameters
+     params <- params[intersect(names(params), self$parameters())]
 
-                                     args <- c(list(data = quote(data), scales = quote(scales)), params)
-                                     plyr::ddply(data, "PANEL", function(data) {
-                                         scales <- layout$get_scales(data$PANEL[1])
-                                         tryCatch(do.call(self$compute_panel, args), error = function(e) {
-                                             warningf("Computation failed in `%s()`:\n %s",
-                                                      ggplot2:::snake_class(self), e$message,
-                                                      call. = FALSE)
-                                             data.frame()
-                                         })
-                                     })
-                                 },
-                                 compute_group = function(data, scales, bins = NULL, binwidth = NULL,
-                                                          breaks = scales::fullseq, complete = TRUE,
-                                                          na.rm = FALSE, circular = NULL, xwrap = NULL,
-                                                          ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
-                                                          proj = NULL, proj.latlon = TRUE, kriging = FALSE,
-                                                          clip = NULL) {
-                                     data.table::setDT(data)
+     args <- c(list(data = quote(data), scales = quote(scales)), params)
+     plyr::ddply(data, "PANEL", function(data) {
+         scales <- layout$get_scales(data$PANEL[1])
+         tryCatch(do.call(self$compute_panel, args), error = function(e) {
+             warningf("Computation failed in `%s()`:\n %s",
+                      ggplot2:::snake_class(self), e$message,
+                      call. = FALSE)
+             data.frame()
+         })
+     })
+ },
+ compute_group = function(data, scales, bins = NULL, binwidth = NULL,
+                          breaks = scales::fullseq, complete = TRUE,
+                          na.rm = FALSE, circular = NULL, xwrap = NULL,
+                          ywrap = NULL, na.fill = FALSE, global.breaks = TRUE,
+                          proj = NULL, proj.latlon = TRUE, kriging = FALSE,
+                          clip = NULL) {
+     data.table::setDT(data)
 
-                                     data <- data[!(is.na(y) | is.na(x)), ]
+     data <- data[!(is.na(y) | is.na(x)), ]
 
-                                     if (isFALSE(na.fill)) {
-                                         data <- data[!is.na(z), ]
-                                     }
-
-
-                                     nx <- data[, data.table::uniqueN(x), by = y]$V1
-                                     ny <- data[, data.table::uniqueN(y), by = x]$V1
-
-                                     complete.grid <- abs(max(nx) - min(nx)) == 0 & abs(max(ny) - min(ny)) == 0
-
-                                     if (complete.grid == FALSE) {
-                                         if (complete == FALSE) {
-                                             warningf("The data must be a complete regular grid.", call. = FALSE)
-                                             return(data.frame())
-                                         } else {
-                                             # data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
-                                             data <- .complete(data, x, y)
-                                         }
-                                     }
-
-                                     data <- .impute_data(data, na.fill)
+     if (isFALSE(na.fill)) {
+         data <- data[!is.na(z), ]
+     }
 
 
-                                     if (kriging) {
-                                         check_packages("kriging", "kriging")
+     nx <- data[, data.table::uniqueN(x), by = y]$V1
+     ny <- data[, data.table::uniqueN(y), by = x]$V1
 
-                                         pixels <- 40
-                                         data <- try(with(data, setNames(kriging::kriging(x, y, z, pixels = pixels)$map,
-                                                                         c("x", "y", "z"))), silent = TRUE)
-                                         if (inherits(data, "try-error")) {
-                                             warningf("kriging failed. Perhaps the number of points is too small.")
-                                             return(data.frame())
-                                         }
+     complete.grid <- abs(max(nx) - min(nx)) == 0 & abs(max(ny) - min(ny)) == 0
 
-                                         data.table::setDT(data)
-                                     }
+     if (complete.grid == FALSE) {
+         if (complete == FALSE) {
+             warningf("The data must be a complete regular grid.", call. = FALSE)
+             return(data.frame())
+         } else {
+             # data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
+             data <- .complete(data, x, y)
+         }
+     }
 
-                                     if (!is.null(xwrap)) {
-                                         data <- suppressWarnings(WrapCircular(data, "x", xwrap))
-                                     }
-                                     if (!is.null(ywrap)) {
-                                         data <- suppressWarnings(WrapCircular(data, "y", ywrap))
-                                     }
-
-                                     if (isFALSE(global.breaks)) {
-                                         breaks <- setup_breaks(data,
-                                                                breaks = breaks,
-                                                                bins = bins,
-                                                                binwidth = binwidth)
-                                     }
-
-                                     data.table::setDF(data)
-                                     dec <- getOption("OutDec")
-                                     options(OutDec = ".")
-                                     on.exit(options(OutDec = dec))
-                                     contours <- data.table::as.data.table(.contour_lines(data, breaks,
-                                                                                          complete = complete,
-                                                                                          clip = clip,
-                                                                                          proj = proj,
-                                                                                          proj.latlon = proj.latlon))
+     data <- .impute_data(data, na.fill)
 
 
-                                     if (length(contours) == 0) {
-                                         warningf("Not possible to generate contour data.", call. = FALSE)
-                                         return(data.frame())
-                                     }
+     if (kriging) {
+         check_packages("kriging", "kriging")
 
-                                     # contours <<- contours
-                                     # contours[, start := 1:.N %in% 1 , by = .(piece, group)]
-                                     # contours <- contours[, unique(.SD), by = .(group, piece)]
-                                     # contours[, start := NULL]
-                                     # contours <- .order_contour_org(contours, data.table::setDT(data))
-                                     # contours <- .order_contour(contours)
-                                     # browser()
-                                     return(contours)
-                                 }
+         pixels <- 40
+         data <- try(with(data, setNames(kriging::kriging(x, y, z, pixels = pixels)$map,
+                                         c("x", "y", "z"))), silent = TRUE)
+         if (inherits(data, "try-error")) {
+             warningf("kriging failed. Perhaps the number of points is too small.")
+             return(data.frame())
+         }
+
+         data.table::setDT(data)
+     }
+
+     if (!is.null(xwrap)) {
+         data <- suppressWarnings(WrapCircular(data, "x", xwrap))
+     }
+     if (!is.null(ywrap)) {
+         data <- suppressWarnings(WrapCircular(data, "y", ywrap))
+     }
+
+     if (isFALSE(global.breaks)) {
+         breaks <- setup_breaks(data,
+                                breaks = breaks,
+                                bins = bins,
+                                binwidth = binwidth)
+     }
+
+     data.table::setDF(data)
+     dec <- getOption("OutDec")
+     options(OutDec = ".")
+     on.exit(options(OutDec = dec))
+     contours <- data.table::as.data.table(.contour_lines(data, breaks,
+                                                          complete = complete,
+                                                          clip = clip,
+                                                          proj = proj,
+                                                          proj.latlon = proj.latlon))
+
+
+     if (length(contours) == 0) {
+         warningf("Not possible to generate contour data.", call. = FALSE)
+         return(data.frame())
+     }
+
+     # contours <<- contours
+     # contours[, start := 1:.N %in% 1 , by = .(piece, group)]
+     # contours <- contours[, unique(.SD), by = .(group, piece)]
+     # contours[, start := NULL]
+     # contours <- .order_contour_org(contours, data.table::setDT(data))
+     # contours <- .order_contour(contours)
+     # browser()
+     return(contours)
+ }
 )
 
 
@@ -260,12 +260,11 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 }
 
 
-
-
 .order_contour <- function(contours, x, y, z) {
     contours <- data.table::rbindlist(lapply(contours, data.table::as.data.table), idcol = "level")
 
-    degenerate_points <- contours[, all(x == x[1]) & all(y == y[1]), by = .(id, level)][V1 == TRUE]
+    degenerate_points <- contours[, all(x == x[1]) & all(y == y[1]),
+                                  by = .(id, level)][V1 == TRUE]
 
     contours <- contours[!degenerate_points, on = c("id", "level")]
 
@@ -292,8 +291,9 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
                y = y,
                z = dy)
 
-    contour_points[, dz_x := interpolate_locations(DX, cbind(x + dx/2, y + dy/2))]
-    contour_points[, dz_y := interpolate_locations(DY, cbind(x + dx/2, y + dy/2))]
+    contour_points[, dz_x := interpolate_locations(DX, cbind(x, y))]
+    contour_points[, dz_y := interpolate_locations(DY, cbind(x, y))]
+    contour_points <- na.omit(contour_points)
 
     # The cross product between the direction of travel and the gradient
     # needs to be negative, so flip the direction if it's positive.
@@ -309,7 +309,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 
 
     flip <- contour_points[, .(flip = cross_product, level, id)]
-    contours <- flip[contours, on = c("level", "id")]
+    contours <- na.omit(flip[contours, on = c("level", "id")])
 
     contours <- contours[, if (flip[1] > 0) .SD[.N:1] else .SD, by = .(level, id)]
     contours[, flip := NULL]

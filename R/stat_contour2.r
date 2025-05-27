@@ -131,7 +131,6 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
              warningf("The data must be a complete regular grid.", call. = FALSE)
              return(data.frame())
          } else {
-             # data <- setDT(tidyr::complete(data, x, y, fill = list(z = NA)))
              data <- .complete(data, x, y)
          }
      }
@@ -184,13 +183,6 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
          return(data.frame())
      }
 
-     # contours <<- contours
-     # contours[, start := 1:.N %in% 1 , by = .(piece, group)]
-     # contours <- contours[, unique(.SD), by = .(group, piece)]
-     # contours[, start := NULL]
-     # contours <- .order_contour_org(contours, data.table::setDT(data))
-     # contours <- .order_contour(contours)
-     # browser()
      return(contours)
  }
 )
@@ -202,63 +194,6 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 
     data[coord, on = as.character(l), allow.cartesian = TRUE]
 
-}
-
-.order_contour_org <- function(contours, data) {
-    data <- data.table::copy(data)
-    contours <- data.table::copy(contours)
-    x.data <- unique(data$x)
-    x.data <- x.data[order(x.data)]
-    x.N <- length(x.data)
-    y.data <- unique(data$y)
-    y.data <- y.data[order(y.data)]
-    y.N <- length(y.data)
-
-    contours[, c("dx", "dy") := .(c(diff(x), NA), c(diff(y), NA)), by = group]
-
-    segments <- contours[dx != 0 & dy != 0]
-
-    segments[, c("x.axis", "y.axis") := .(x %in% x.data, y %in% y.data), by = group]
-
-    # x axis
-    x.axis <- segments[x.axis == TRUE]
-    x.axis[, x.axis := NULL]   # remove annoying column
-    x.axis[, y.d := .second(y.data, y), by = .(group, y)]  # select 2nd closest data point
-    x.axis[, m := y - y.d]
-
-    x.axis <- data[, .(x, y.d = y, z)][x.axis, on = c("x", "y.d")]  # get z column
-    x.axis <- x.axis[level != z]
-    x.axis <- x.axis[x.axis[, .I[1], by = group]$V1]   # select the first one.
-
-    # Rotation...
-    x.axis[, rotate := FALSE]
-    x.axis[dx > 0, rotate := (sign(level - z) == sign(m))]
-    x.axis[dx < 0, rotate := (sign(level - z) != sign(m))]
-
-    # x axis
-    y.axis <- segments[y.axis == TRUE]
-    y.axis[, y.axis := NULL]
-    y.axis[, x.d := .second(x.data, x), by = .(x, group)]
-    y.axis[, m := x - x.d]
-
-    y.axis <- data[, .(x.d = x, y, z)][y.axis, on = c("x.d", "y")]
-    y.axis <- y.axis[level != z]
-    y.axis <- y.axis[y.axis[, .I[1], by = group]$V1]
-
-    y.axis[, rotate := FALSE]
-    y.axis[dy > 0, rotate := (sign(level - z) != sign(m))]
-    y.axis[dy < 0, rotate := (sign(level - z) == sign(m))]
-
-    rot.groups <- c(as.numeric(y.axis[rotate == TRUE]$group),
-                    as.numeric(x.axis[rotate == TRUE]$group))
-
-    # rot.groups <- c(as.character(y.axis$group), as.character(x.axis$group))
-
-    contours[, rotate := as.numeric(group[1]) %in% rot.groups, by = group]
-    contours <- contours[contours[, ifelse(rotate == TRUE, .I[.N:1], .I), by = group]$V1]
-
-    # Congratulations, your contours all have the same direction.
-    return(contours)
 }
 
 isolines_as_data.table <- function(x) {

@@ -29,18 +29,6 @@ makeContent.arrow2 <- function(x) {
     x
 }
 
-# fast.unit.c <- grid::unit.c
-
-# fast.unit.c <- function(...) {
-#     browser()
-#     x <- list(...)
-#     unit <- x[[1]]
-#
-#     x <- c(...)
-#
-#     grid::unit(x, unit)
-# }
-
 vectorGrob <- function(x, y, dx, dy, length, preserve.dir,
                        default.units = "npc", pivot, ...) {
     # angle <- atan2(yend - y, xend - x)

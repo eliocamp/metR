@@ -11,6 +11,10 @@
 
 -   `ReadNetCDF()`\` now uses the CFtime package to parse times. This shouldn't lead to any braking changes, but times are weird and anything can happen. Please report anything amiss.
 
+## Other stuff
+
+-   Reworked ordering algorithm for tanaka contours.
+
 # metR 0.18.0
 
 ## New features

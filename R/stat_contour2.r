@@ -261,14 +261,28 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     return(contours)
 }
 
+isolines_as_data.table <- function(x) {
+    data.table::rbindlist(lapply(x, data.table::as.data.table), idcol = "level")
+}
 
-.order_contour <- function(contours, x, y, z) {
-    contours <- data.table::rbindlist(lapply(contours, data.table::as.data.table), idcol = "level")
+isolines_from_data.table <- function(x) {
+    lapply(split(x, by = "level"), function(dt) list(x = dt$x, y = dt$y, id = dt$id))
+}
 
-    degenerate_points <- contours[, all(x == x[1]) & all(y == y[1]),
+remove_degenerates <- function(x) {
+    x <- isolines_as_data.table(x)
+    degenerate_points <- x[, all(x == x[1]) & all(y == y[1]),
                                   by = .(id, level)][V1 == TRUE]
 
-    contours <- contours[!degenerate_points, on = c("id", "level")]
+    x <- x[!degenerate_points, on = c("id", "level")]
+
+    isolines_from_data.table(x)
+}
+
+
+.order_contour <- function(contours, x, y, z) {
+
+    contours <- isolines_as_data.table(contours)
 
     # Compute the direction of travel using the first two points of each level
     # contour_points <- contours[, .SD[1:2], by = .(level, id)]
@@ -302,7 +316,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     cross2d <- function(v1, v2) {
         return(v1[1] * v2[2] - v1[2] * v2[1])
     }
-    # browser()
+
     contour_points[, i := 1:.N]
     contour_points[, cross_product := cross2d(c(dx, dy), c(dz_x, dz_y)), by = i]
     contour_points <- contour_points[cross_product != 0 & !is.na(cross_product)]
@@ -316,8 +330,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
     contours <- contours[, if (flip[1] > 0) .SD[.N:1] else .SD, by = .(level, id)]
     contours[, flip := NULL]
 
-    # Return the original list object
-    lapply(split(contours, by = "level"), function(dt) list(x = dt$x, y = dt$y, id = dt$id))
+    isolines_from_data.table(contours)
 
 }
 
@@ -361,6 +374,8 @@ isoband_z_matrix <- function(data) {
     lengths <- vapply(cl,\(x) length(x$x), numeric(1))
     cl <- cl[lengths != 0]
 
+    # It can also return contours which are just one point repeated.
+    cl <- remove_degenerates(cl)
 
     if (length(cl) == 0) {
         warningf("Not possible to generate contour data.", call. = FALSE)

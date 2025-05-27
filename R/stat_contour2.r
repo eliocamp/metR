@@ -215,59 +215,61 @@ remove_degenerates <- function(x) {
     isolines_from_data.table(x)
 }
 
+.order_contour <- function(contours, data) {
+    data <- data.table::setDT(data.table::copy(data))
+    contours <- data.table::copy(contours)
+    x.data <- unique(data$x)
+    x.data <- x.data[order(x.data)]
+    x.N <- length(x.data)
+    y.data <- unique(data$y)
+    y.data <- y.data[order(y.data)]
+    y.N <- length(y.data)
 
-.order_contour <- function(contours, x, y, z) {
-    dz_x <- dz_y <- i <- cross_product <- NULL
-    contours <- isolines_as_data.table(contours)
+    contours[, c("dx", "dy") := .(c(diff(x), NA), c(diff(y), NA)), by = .(level, id)]
 
-    # Compute the direction of travel using the first two points of each level
-    # contour_points <- contours[, .SD[1:2], by = .(level, id)]
-    contour_points <- data.table::copy(contours)
-    contour_points[, c("dx", "dy") := list(c(diff(x), NA_real_),
-                                           c(diff(y), NA_real_)),
-                   by = .(level, id)]
-    contour_points <- stats::na.omit(contour_points)
+    segments <- contours[dx != 0 & dy != 0]
 
-    # Compute the gradient of the data at the first point
-    z <- t(z)
-    x <- sort(unique(x))
-    y <- sort(unique(y))
+    segments[, c("x.axis", "y.axis") := .(x %in% x.data, y %in% y.data), by = .(level, id)]
 
-    dy <- t(apply(z, 1, .derv, y = y, fill = TRUE))
-    dx <- apply(z, 2, .derv, y = x, fill = TRUE)
+    # x axis
+    x.axis <- segments[x.axis == TRUE]
+    x.axis[, x.axis := NULL]   # remove annoying column
+    x.axis[, y.d := .second(y.data, y), by = .(level, id, y)]  # select 2nd closest data point
+    x.axis[, m := y - y.d]
 
-    DX <- list(x = x,
-               y = y,
-               z = dx)
-    DY <- list(x = x,
-               y = y,
-               z = dy)
+    x.axis <- data[, .(x, y.d = y, z)][x.axis, on = c("x", "y.d")]  # get z column
+    x.axis <- x.axis[as.numeric(level) != z]
+    x.axis <- x.axis[x.axis[, .I[1], by = .(level, id)]$V1]   # select the first one.
 
-    contour_points[, dz_x := interpolate_locations(DX, cbind(x, y))]
-    contour_points[, dz_y := interpolate_locations(DY, cbind(x, y))]
-    contour_points <- stats::na.omit(contour_points)
+    # Rotation...
+    x.axis[, rotate := FALSE]
+    x.axis[dx > 0, rotate := (sign(as.numeric(level) - z) == sign(m))]
+    x.axis[dx < 0, rotate := (sign(as.numeric(level) - z) != sign(m))]
 
-    # The cross product between the direction of travel and the gradient
-    # needs to be negative, so flip the direction if it's positive.
-    cross2d <- function(v1, v2) {
-        return(v1[1] * v2[2] - v1[2] * v2[1])
-    }
+    # x axis
+    y.axis <- segments[y.axis == TRUE]
+    y.axis[, y.axis := NULL]
+    y.axis[, x.d := .second(x.data, x), by = .(x, level, id)]
+    y.axis[, m := x - x.d]
 
-    contour_points[, i := 1:.N]
-    contour_points[, cross_product := cross2d(c(dx, dy), c(dz_x, dz_y)), by = i]
-    contour_points <- contour_points[cross_product != 0 & !is.na(cross_product)]
+    y.axis <- data[, .(x.d = x, y, z)][y.axis, on = c("x.d", "y")]
+    y.axis <- y.axis[as.numeric(level) != z]
+    y.axis <- y.axis[y.axis[, .I[1], by = .(level, id)]$V1]
 
-    contour_points <- contour_points[, .SD[1], by = .(level, id)]
+    y.axis[, rotate := FALSE]
+    y.axis[dy > 0, rotate := (sign(as.numeric(level) - z) != sign(m))]
+    y.axis[dy < 0, rotate := (sign(as.numeric(level) - z) == sign(m))]
 
+    rot.groups <- unique(rbind(y.axis[rotate == TRUE][, .(id, level)],
+                               x.axis[rotate == TRUE][, .(id, level)]))
+    # rot.groups <- c(as.character(y.axis$group), as.character(x.axis$group))
 
-    flip <- contour_points[, .(flip = cross_product, level, id)]
-    contours <- stats::na.omit(flip[contours, on = c("level", "id")])
+    rotated <- contours[rot.groups, on = c("id", "level")][, .SD[.N:1], by = .(id, level)]
 
-    contours <- contours[, if (flip[1] > 0) .SD[.N:1] else .SD, by = .(level, id)]
-    contours[, flip := NULL]
+    contours <- rbind(rotated, contours[!rot.groups, on = c("id", "level")])
 
-    isolines_from_data.table(contours)
-
+    # Congratulations, your contours all have the same direction.
+    return(contours)
 }
 
 
@@ -319,7 +321,7 @@ isoband_z_matrix <- function(data) {
     }
 
 
-    if (reorder) cl <- .order_contour(cl, data$x, data$y, z)
+    if (reorder) cl <- isolines_from_data.table(.order_contour(isolines_as_data.table(cl), data))
 
     if (!is.null(proj)) {
         cl_class <- class(cl)

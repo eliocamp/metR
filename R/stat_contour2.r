@@ -205,6 +205,7 @@ isolines_from_data.table <- function(x) {
 }
 
 remove_degenerates <- function(x) {
+    V1 <- NULL
     x <- isolines_as_data.table(x)
     degenerate_points <- x[, all(x == x[1]) & all(y == y[1]),
                                   by = .(id, level)][V1 == TRUE]
@@ -216,7 +217,7 @@ remove_degenerates <- function(x) {
 
 
 .order_contour <- function(contours, x, y, z) {
-
+    dz_x <- dz_y <- i <- cross_product <- NULL
     contours <- isolines_as_data.table(contours)
 
     # Compute the direction of travel using the first two points of each level
@@ -225,7 +226,7 @@ remove_degenerates <- function(x) {
     contour_points[, c("dx", "dy") := list(c(diff(x), NA_real_),
                                            c(diff(y), NA_real_)),
                    by = .(level, id)]
-    contour_points <- na.omit(contour_points)
+    contour_points <- stats::na.omit(contour_points)
 
     # Compute the gradient of the data at the first point
     z <- t(z)
@@ -244,7 +245,7 @@ remove_degenerates <- function(x) {
 
     contour_points[, dz_x := interpolate_locations(DX, cbind(x, y))]
     contour_points[, dz_y := interpolate_locations(DY, cbind(x, y))]
-    contour_points <- na.omit(contour_points)
+    contour_points <- stats::na.omit(contour_points)
 
     # The cross product between the direction of travel and the gradient
     # needs to be negative, so flip the direction if it's positive.
@@ -260,7 +261,7 @@ remove_degenerates <- function(x) {
 
 
     flip <- contour_points[, .(flip = cross_product, level, id)]
-    contours <- na.omit(flip[contours, on = c("level", "id")])
+    contours <- stats::na.omit(flip[contours, on = c("level", "id")])
 
     contours <- contours[, if (flip[1] > 0) .SD[.N:1] else .SD, by = .(level, id)]
     contours[, flip := NULL]

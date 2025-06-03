@@ -1,5 +1,4 @@
 
-context("EOF")
 data(geopotential)
 test_that("EOF runs", {
     expect_s3_class({
@@ -28,6 +27,7 @@ test_that("can use differnet engine", {
     expect_equal(
         EOF(gh ~ lat + lon | date, data = geopotential, engine = base::svd)$left[, gh := -gh][],
         EOF(gh ~ lat + lon | date, data = geopotential, n = 1)$left
+
     )
 })
 
@@ -42,12 +42,16 @@ test_that("EOF rotates", {
         round(EOF(gh ~ lon + lat | date, data = geopotential, n = 1:2, rotate = function(x) stats::varimax(x, normalize = FALSE))$sdev$sd),
         c(1424982, 542271)
     )
-
+    expect_warning(
+        compare_val <- EOF(gh ~ lon + lat | date, data = geopotential, n = 1:2,
+                       rotate = TRUE)$sdev$sd,
+        "deprecated"
+    )
     expect_equal(
         EOF(gh ~ lon + lat | date, data = geopotential, n = 1:2,
             rotate = function(x) stats::varimax(x, normalize = FALSE))$sdev$sd,
-        expect_warning(EOF(gh ~ lon + lat | date, data = geopotential, n = 1:2,
-                           rotate = TRUE)$sdev$sd, "deprecated"))
+        compare_val
+    )
 })
 
 
@@ -83,6 +87,6 @@ test_that("eof methods", {
     expect_equal(predict(eof_all, n = 1:5), predict(eof))
 
 
-    expect_known_output(summary(eof), file = "eof_summary")
+    expect_snapshot(summary(eof))
 
 })

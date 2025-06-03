@@ -5,7 +5,6 @@ library(ggplot2)
 library(data.table)
 library(vdiffr)
 
-context("Streamline")
 geo <- geopotential[date == date[1]]
 geo[, c("u", "v") := GeostrophicWind(gh, lon, lat)]
 

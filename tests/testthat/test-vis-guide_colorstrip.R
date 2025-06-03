@@ -4,7 +4,6 @@ skip_if_not_installed("vdiffr")
 library(vdiffr)
 library(ggplot2)
 
-context("guide_colourstrip")
 data(geopotential)
 geo <- geopotential[date == date[1]]
 base <- ggplot(geo, aes(lon, lat)) +

@@ -3,7 +3,6 @@ skip_if_not_installed("vdiffr")
 
 library(ggplot2)
 library(vdiffr)
-context("discretised_scale")
 
 v <- ggplot(faithfuld, aes(waiting, eruptions, z = density))
 v <- v + geom_contour_filled()

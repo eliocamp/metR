@@ -1,7 +1,6 @@
 library(metR)
 
 
-context("season")
 test_that("season assigns season", {
     expect_equal(as.character(season(1)), "DJF")
     expect_equal(as.character(season(1, lang = "es")),
@@ -15,10 +14,8 @@ test_that("season assigns season", {
 
 
 
-context("MaskLand")
-test_that("Water is still water", {
+test_that("Maskland Water is still water", {
     skip_if_not_installed("maps")
-
     expect_equal(MaskLand(120, 14), FALSE)
     expect_equal(MaskLand(360-58, -34), TRUE)
     expect_equal(MaskLand(-58, -34, wrap = c(-180, 180)), TRUE)

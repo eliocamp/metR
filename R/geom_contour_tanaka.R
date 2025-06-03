@@ -24,7 +24,7 @@
 #' \item \code{linetype}
 #' }
 #'
-#' @examples
+#' @examplesIf requireNamespace("reshape2")
 #' \dontshow{data.table::setDTthreads(1)}
 #'
 #' library(ggplot2)
@@ -110,6 +110,7 @@ geom_contour_tanaka <- function(mapping = NULL, data = NULL,
             proj = proj,
             proj.latlon = proj.latlon,
             clip = clip,
+            reorder = TRUE,
             ...
         )
     )

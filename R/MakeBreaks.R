@@ -26,7 +26,7 @@
 #' my_breaks(c(1, 100), 20)    # optional new binwidth argument ignored
 #'
 #' MakeBreaks()(c(1, 100), 20)  # but is not ignored if initial binwidth is NULL
-#'
+#' @examplesIf requireNamespace("reshape2")
 #' # One to one mapping between contours and breaks
 #' library(ggplot2)
 #' binwidth <- 20

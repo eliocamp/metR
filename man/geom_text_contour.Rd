@@ -201,6 +201,7 @@ this is not the case with \code{geom_label_contour()}.
 }
 
 \examples{
+\dontshow{if (requireNamespace("reshape2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \dontshow{data.table::setDTthreads(1)}
 library(ggplot2)
 v <- reshape2::melt(volcano)
@@ -228,7 +229,7 @@ g + geom_text_contour(aes(z = value),
 
 g + geom_text_contour(aes(z = value),
                       label.placer = label_placer_flattest(ref_angle = 90))
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other ggplot2 helpers: 

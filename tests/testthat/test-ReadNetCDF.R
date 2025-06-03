@@ -1,3 +1,4 @@
+skip_if_not_installed(c("ncdf4", "CFtime"))
 file <- system.file("extdata", "temperature.nc", package = "metR")
 test_that("returns a data.table", {
     expect_s3_class(ReadNetCDF(file),

@@ -16,7 +16,7 @@
 #' \item `height`
 #' }
 #'
-#' @examples
+#' @examplesIf requireNamespace("reshape2")
 #' library(ggplot2)
 #' library(data.table)
 #' surface <- reshape2::melt(volcano)

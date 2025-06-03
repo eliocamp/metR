@@ -2,6 +2,7 @@
 % Please edit documentation in R/ReadNetCDF.R
 \name{ReadNetCDF}
 \alias{ReadNetCDF}
+\alias{ParseNetCDFtime}
 \alias{GlanceNetCDF}
 \title{Read NetCDF files.}
 \usage{
@@ -12,6 +13,8 @@ ReadNetCDF(
   subset = NULL,
   key = FALSE
 )
+
+ParseNetCDFtime(time)
 
 GlanceNetCDF(file, ...)
 }
@@ -38,6 +41,8 @@ vector that indicates a subset of variables.
 \item{subset}{a list of subsetting objects. See below.}
 
 \item{key}{if \code{TRUE}, returns a data.table keyed by the dimensions of the data.}
+
+\item{time}{the time definition. Can be accessed using \link{GlanceNetCDF}.}
 
 \item{...}{in \code{\link[=GlanceNetCDF]{GlanceNetCDF()}}, ignored. Is there for convenience so that a call to \code{\link[=ReadNetCDF]{ReadNetCDF()}} can
 be also valid for \code{\link[=GlanceNetCDF]{GlanceNetCDF()}}.}
@@ -140,6 +145,7 @@ but demands much less typing.
 }
 
 \examples{
+\dontshow{if ( requireNamespace("ncdf4") && requireNamespace("CFtime")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 file <- system.file("extdata", "temperature.nc", package = "metR")
 # Get a list of variables.
 variables <- GlanceNetCDF(file)
@@ -174,7 +180,8 @@ field <- ReadNetCDF(ncfile, subset = list(M = 1,
 
 # Using a function in `vars` to read all variables that
 # start with "radar_".
-ReadNetCDF(radar_file, vars = \(x) startsWith(x, "radar_"))
+ReadNetCDF(radar_file, vars = function(x) startsWith(x, "radar_"))
 
 }
+\dontshow{\}) # examplesIf}
 }

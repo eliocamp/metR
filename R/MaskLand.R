@@ -13,8 +13,7 @@
 #' that the point is inside one of the polygons making up the map. For a global
 #' map (the default), this means that the point is over land.
 #'
-#' @examples
-#'
+#' @examplesIf  requireNamespace("maps")
 #' # Make a sea-land mask
 #' mask <- temperature[lev == 1000, .(lon = lon, lat = lat, land = MaskLand(lon, lat))]
 #' temperature <- temperature[mask, on = c("lon", "lat")]
@@ -33,7 +32,6 @@
 #'     scale_y_level() +
 #'     scale_x_latitude() +
 #'     scale_color_divergent()
-#'
 #'
 #' @export
 MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {

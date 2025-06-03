@@ -1,5 +1,22 @@
 # metR (development version)
 
+# metR 0.18.1
+
+## New features
+
+-   `geom_streamline()` will replace missing values with zeroes.
+-   New `ParseNetCDFtime()` to quickly parse netCDF time axes.
+
+## Potentially breaking changes
+
+-   `ReadNetCDF()`\` now uses the CFtime package to parse times. This shouldn't lead to any braking changes, but times are weird and anything can happen. Please report anything amiss.
+
+## Other stuff
+
+-   Reworked ordering algorithm for tanaka contours.
+
+# metR 0.18.0
+
 ## New features
 
 -   `ReadNetCDF()` can now subset based on dimension indices instead of dimension values. This makes it possible to read "the first 10 timesteps" or "the last 10 timesteps" without needing to know which dates they correspond to and how many timesteps are in total.

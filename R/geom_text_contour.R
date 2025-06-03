@@ -18,7 +18,7 @@
 #' Note that while `geom_text_contour()` can angle itself to follow the contour,
 #' this is not the case with `geom_label_contour()`.
 #'
-#' @examples
+#' @examplesIf requireNamespace("reshape2")
 #' \dontshow{data.table::setDTthreads(1)}
 #' library(ggplot2)
 #' v <- reshape2::melt(volcano)

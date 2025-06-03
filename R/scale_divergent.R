@@ -5,7 +5,7 @@
 #'
 #' @inheritParams ggplot2::scale_colour_gradient2
 #'
-#' @examples
+#' @examplesIf requireNamespace("reshape2")
 #' library(ggplot2)
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
 #'   geom_contour(aes(color = after_stat(level))) +

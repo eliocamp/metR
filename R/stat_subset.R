@@ -17,7 +17,7 @@
 #' \item `height`
 #' }
 #'
-#' @examples
+#' @examplesIf requireNamespace("reshape2")
 #'
 #' library(ggplot2)
 #' ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +

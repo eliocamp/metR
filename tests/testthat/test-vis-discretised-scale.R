@@ -1,6 +1,8 @@
+skip_on_ci()
+skip_if_not_installed("vdiffr")
+
 library(ggplot2)
 library(vdiffr)
-skip_on_ci()
 
 v <- ggplot(faithfuld, aes(waiting, eruptions, z = density))
 v <- v + geom_contour_filled()

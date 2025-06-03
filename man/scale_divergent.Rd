@@ -140,11 +140,12 @@ Wrapper around ggplot's \code{\link[ggplot2]{scale_colour_gradient2}} with
 inverted defaults of \code{high} and \code{low}.
 }
 \examples{
+\dontshow{if (requireNamespace("reshape2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ggplot2)
 ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
   geom_contour(aes(color = after_stat(level))) +
   scale_colour_divergent(midpoint = 130)
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other ggplot2 helpers: 

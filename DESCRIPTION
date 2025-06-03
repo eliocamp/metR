@@ -1,7 +1,7 @@
 Package: metR
 Language: en-GB
 Title: Tools for Easier Analysis of Meteorological Fields
-Version: 0.17.0.9000
+Version: 0.18.1.9000
 Authors@R: 
     c(person(given = "Elio",
            family = "Campitelli",
@@ -44,7 +44,7 @@ Suggests:
     reshape2,
     markdown,
     testthat (>= 2.1.0),
-    PCICt,
+    CFtime,
     vdiffr,
     proj4,
     kriging,

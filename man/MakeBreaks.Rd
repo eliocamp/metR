@@ -40,7 +40,7 @@ my_breaks(c(1, 100))
 my_breaks(c(1, 100), 20)    # optional new binwidth argument ignored
 
 MakeBreaks()(c(1, 100), 20)  # but is not ignored if initial binwidth is NULL
-
+\dontshow{if (requireNamespace("reshape2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # One to one mapping between contours and breaks
 library(ggplot2)
 binwidth <- 20
@@ -54,7 +54,7 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
                   binwidth = binwidth) +
     geom_contour2(aes(color = after_stat(level)), breaks = AnchorBreaks(132, binwidth)) +
     scale_color_continuous(breaks = AnchorBreaks(132, binwidth))
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other ggplot2 helpers: 

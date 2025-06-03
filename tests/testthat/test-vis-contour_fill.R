@@ -1,7 +1,10 @@
+skip_on_ci()
+skip_if_not_installed("vdiffr")
+
 library(vdiffr)
 library(data.table)
 library(ggplot2)
-skip_on_ci()
+
 
 test_that("geom_contour_fill works", {
     skip_on_ci()

@@ -124,8 +124,10 @@ Detrend <- function(y, time = seq_along(y)) {
     if (resid) {
         if (length(remove) > 0) {
             residuals[-remove] <- fit$residuals
+        } else {
+            residuals <- fit$residuals
         }
-        residuals <- fit$residuals
+
 
         return(residuals)
     }

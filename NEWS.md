@@ -1,5 +1,9 @@
 # metR (development version)
 
+## Bug fixes
+
+-   `ResidLm()` now preserves NAs. 
+
 # metR 0.18.1
 
 ## New features

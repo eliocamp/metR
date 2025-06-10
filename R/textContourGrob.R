@@ -194,7 +194,7 @@ content_grob <- function(x) {
 
     # from shadowtext
     list(
-        label = rep(x$label, length = nrow(locations)),
+        label = rep(x$label, length.out = nrow(locations)),
         x = x$x[selected], y = x$y[selected],
         col = x$col,
         rot = rot[selected],

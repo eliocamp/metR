@@ -18,7 +18,7 @@ scale_label_colour_continuous <- function(..., aesthetics = c("label_colour"),
 #' @export
 #' @rdname label_scales
 scale_label_alpha_continuous <- function(..., range = c(0.1, 1), aesthetics = c("label_alpha")) {
-    ggplot2::continuous_scale(aesthetics = "label_alpha", palette = scales::rescale_pal(range),
+    ggplot2::continuous_scale(aesthetics = "label_alpha", palette = scales::pal_rescale(range),
                               ...)
 }
 
@@ -28,6 +28,6 @@ scale_label_alpha_continuous <- function(..., range = c(0.1, 1), aesthetics = c(
 scale_label_size_continuous <- function(breaks = waiver(), labels = waiver(),
                                         limits = NULL, range = c(1, 6), transform = "identity",
                                         guide = "legend") {
-    ggplot2::continuous_scale(aesthetics = "label_size", palette = scales::area_pal(range),
+    ggplot2::continuous_scale(aesthetics = "label_size", palette = scales::pal_area(range),
                               breaks = breaks, labels = labels, limits = limits, transform = transform)
 }

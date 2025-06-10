@@ -27,7 +27,7 @@ scale_mag <- function(name = ggplot2::waiver(),
 
 
     ggplot2::continuous_scale(aesthetics = "mag",
-                              palette = scales::identity_pal(),
+                              palette = scales::pal_identity(),
                               name = name,
                               oob = oob,
                               breaks = breaks,

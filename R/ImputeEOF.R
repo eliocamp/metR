@@ -101,10 +101,10 @@ ImputeEOF <- function(formula, max.eof = NULL, data = NULL,
         } else {
             f <- f[-1]
         }
-        dcast.formula <- stringr::str_squish(f[stringr::str_detect(f, "\\|")])
+        dcast.formula <- stringr::str_squish(f[grepl("|", f, fixed = TRUE)])
         dcast.formula <- as.formula(stringr::str_replace(dcast.formula, "\\|", "~"))
 
-        value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
+        value.var <- stringr::str_squish(f[!grepl("|", f, fixed = TRUE)])
 
         nas <- sum(is.na(data[[value.var]]))
         if (nas == 0) {

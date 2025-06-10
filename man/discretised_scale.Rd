@@ -40,7 +40,7 @@ discretised_scale(
   breaks = ggplot2::waiver(),
   labels = ggplot2::waiver(),
   limits = NULL,
-  trans = scales::identity_trans(),
+  trans = scales::transform_identity(),
   na.value = NA,
   drop = FALSE,
   guide = ggplot2::guide_colorsteps(even.steps = FALSE),

@@ -1,5 +1,8 @@
 # metR (development version)
 
+## Bug fixes    
+-   `ResidLm()` now returns a vector with NAs.
+
 # metR 0.18.1
 
 ## New features

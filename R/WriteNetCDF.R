@@ -1,4 +1,4 @@
-WriteNetCDF <- function(data, file, vars, dims = NULL) {
+WriteNetCDF <- function(data, file, vars, dims = NULL, order = TRUE) {
 
     if (is.null(names(vars))) {
         names(vars) <- vars
@@ -20,7 +20,11 @@ WriteNetCDF <- function(data, file, vars, dims = NULL) {
         stop("dims not found in data")
     }
 
-    order <- do.call(base::order, args = lapply(rev(names(dims)), function(x) data[[x]]))
+    if (order) {
+        order <- do.call(base::order, args = lapply(rev(names(dims)), function(x) data[[x]]))
+    } else {
+        order <- seq_len(nrow(data))
+    }
 
     nc_dims <- vector(length(dims), mode = "list")
     for (d in seq_along(dims)) {

@@ -78,8 +78,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="potentially-breaking-changes-0-18-1">Potentially breaking changes<a class="anchor" aria-label="anchor" href="#potentially-breaking-changes-0-18-1"></a></h3>
-<ul><li>
-<code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code>` now uses the CFtime package to parse times. This shouldn’t lead to any braking changes, but times are weird and anything can happen. Please report anything amiss.</li>
+<ul><li><p><code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> now uses the CFtime package to parse times. This shouldn’t lead to any braking changes, but times are weird and anything can happen. Please report anything amiss.</p></li>
+<li><p>Contour breaks are now computed after scale transformation. Previously they were computed using the whole dataset, which could lead to nonsensical contour breaks if scale limits removed extreme values.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="other-stuff-0-18-1">Other stuff<a class="anchor" aria-label="anchor" href="#other-stuff-0-18-1"></a></h3>

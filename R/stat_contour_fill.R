@@ -47,6 +47,15 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
     required_aes = c("x", "y", "z"),
     default_aes = ggplot2::aes(fill = ggplot2::after_stat(level_mid), order = ggplot2::after_stat(level)),
     dropped_aes = "z",
+    setup_params = function(data, params) {
+        if (is.null(params$global) || isTRUE(params$global.breaks)) {
+            params$breaks <- setup_breaks(na.omit(data),
+                                          breaks = params$breaks,
+                                          bins = params$bins,
+                                          binwidth = params$binwidth)
+        }
+        return(params)
+    },
     compute_layer = function(self, data, params, layout) {
         ggplot2:::check_required_aesthetics(
             self$required_aes,

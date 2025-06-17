@@ -146,7 +146,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 
 
      if (kriging) {
-         check_packages("kriging", "kriging")
+         rlang::check_installed("kriging", "for kriging.")
 
          pixels <- 40
          data <- try(with(data, setNames(kriging::kriging(x, y, z, pixels = pixels)$map,
@@ -193,7 +193,6 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
      return(contours)
  }
 )
-
 
 .complete <- function(data, ...) {
     l <-  match.call(expand.dots = FALSE)$`...`
@@ -336,9 +335,7 @@ isoband_z_matrix <- function(data) {
             cl <- proj(cl)
         } else {
             if (is.character(proj)) {
-                if (!requireNamespace("proj4", quietly = TRUE)) {
-                    stopf("Projection requires the proj4 package. Install it with 'install.packages(\"proj4\")'.")
-                }
+               rlang::check_installed("proj4", "for projection")
                 cl <- lapply(cl, function(x) {
                     x[c("x", "y")] <- proj4::project(list(x$x, x$y), proj, inverse = proj.latlon)
                     return(x)
@@ -371,7 +368,6 @@ isoband_z_matrix <- function(data) {
 
     # Remove duplicate points that are not the start or end.
     cont[, unique_mid(x, y), by = .(level, piece, group)]
-
 }
 
 unique_mid <- function(x, y) {

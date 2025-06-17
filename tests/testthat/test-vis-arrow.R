@@ -4,8 +4,6 @@ skip_if_not_installed("vdiffr")
 library(vdiffr)
 library(ggplot2)
 
-context("arrows")
-
 test_that("arrow guide works", {
 
     g <- ggplot(seals, aes(long, lat)) +

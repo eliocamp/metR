@@ -247,21 +247,23 @@ guide_colorstrip <- guide_colourstrip
 #' @keywords internal
 #' @importFrom ggplot2 guide_gengrob
 guide_gengrob.colorstrip <- function(guide, theme) {
+    theme_width  <- ggplot2::calc_element("legend.key.width", theme)
+    theme_height <- ggplot2::calc_element("legend.key.height", theme)
     # settings of location and size
     switch(guide$direction,
            "horizontal" = {
                label.position <- guide$label.position %||% "bottom"
                if (!label.position %in% c("top", "bottom")) stopf("Label position \"%s\" is invalid.", label.position)
 
-               barwidth <- grid::convertWidth(guide$barwidth %||% (theme$legend.key.width * 5), "mm")
-               barheight <- grid::convertHeight(guide$barheight %||% theme$legend.key.height, "mm")
+               barwidth <- grid::convertWidth(guide$barwidth %||% (theme_width * 5), "mm")
+               barheight <- grid::convertHeight(guide$barheight %||% theme_height, "mm")
            },
            "vertical" = {
                label.position <- guide$label.position %||% "right"
                if (!label.position %in% c("left", "right")) stopf("Label position \"%s\" is invalid.", label.position)
 
-               barwidth <- grid::convertWidth(guide$barwidth %||% theme$legend.key.width, "mm")
-               barheight <- grid::convertHeight(guide$barheight %||% (theme$legend.key.height * 5), "mm")
+               barwidth <- grid::convertWidth(guide$barwidth %||% theme_width, "mm")
+               barheight <- grid::convertHeight(guide$barheight %||% (theme_height * 5), "mm")
            })
 
     barwidth.c <- c(barwidth)

@@ -153,7 +153,7 @@ discretised_scale <- function(aesthetics, scale_name, palette, name = ggplot2::w
                      scale_name = scale_name,
                      palette = palette,
                      oob = oob,
-                     range =  ggplot2::ggproto(NULL, RangeContinuous),
+                     range =  scales::ContinuousRange$new(),
                      limits = limits,
                      na.value = na.value,
 
@@ -369,19 +369,3 @@ check_breaks_labels <- function(breaks, labels) {
     }
     TRUE
 }
-
-
-Range <- ggplot2::ggproto("Range", NULL,
-   range = NULL,
-   reset = function(self) {
-       self$range <- NULL
-       }
-)
-
-RangeContinuous <- ggplot2::ggproto("RangeContinuous", Range,
-                           train = function(self, x) {
-                             self$range <- scales::train_continuous(x, self$range)
-                           }
-)
-
-

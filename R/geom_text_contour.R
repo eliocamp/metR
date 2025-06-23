@@ -11,6 +11,9 @@
 #' @param stroke numerical indicating width of stroke relative to the size of
 #' the text. Ignored if less than zero.
 #' @param label.placer a label placer function. See [label_placer_flattest()].
+#' @param nudge_x,nudge_y Horizontal and vertical adjustment to nudge labels by.
+#'   Useful for offsetting text from points, particularly on discrete scales.
+#'   Cannot be jointly specified with `position`.
 #'
 #' @details
 #' Is best used with a previous call to [ggplot2::stat_contour] with the same

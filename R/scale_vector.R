@@ -23,6 +23,7 @@ scale_mag <- function(name = ggplot2::waiver(),
 
     if (is.waive(breaks) & n.breaks == 1) {
         breaks <- function(range) return(max(scales::breaks_extended(4)(range)))
+        n.breaks <- NULL
     }
 
 

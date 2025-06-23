@@ -247,8 +247,8 @@ guide_colorstrip <- guide_colourstrip
 #' @keywords internal
 #' @importFrom ggplot2 guide_gengrob
 guide_gengrob.colorstrip <- function(guide, theme) {
-    theme_width  <- calc_element("legend.key.width", theme)
-    theme_height <- calc_element("legend.key.height", theme)
+    theme_width  <- ggplot2::calc_element("legend.key.width", theme)
+    theme_height <- ggplot2::calc_element("legend.key.height", theme)
     # settings of location and size
     switch(guide$direction,
            "horizontal" = {

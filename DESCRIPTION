@@ -37,22 +37,17 @@ Imports:
     lubridate
 Suggests: 
     maps,
-    covr,
     irlba,
     knitr,
     ncdf4,
-    pkgdown,
     reshape2,
     markdown,
     testthat (>= 2.1.0),
-    viridis,
     CFtime,
-    gridExtra,
     vdiffr,
     proj4,
     kriging,
     terra,
-    here,
     gsignal,
     rnaturalearth
 ByteCompile: yes

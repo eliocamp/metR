@@ -1,6 +1,3 @@
-
-context("season functions")
-
 levels <-  c("DJF", "MAM", "JJA", "SON")
 niveles <- c("DEF", "MAM", "JJA", "SON")
 

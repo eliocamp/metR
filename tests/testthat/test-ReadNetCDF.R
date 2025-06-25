@@ -1,5 +1,3 @@
-
-context("ReadNetCDF")
 skip_if_not_installed(c("ncdf4", "CFtime"))
 file <- system.file("extdata", "temperature.nc", package = "metR")
 test_that("returns a data.table", {
@@ -8,7 +6,7 @@ test_that("returns a data.table", {
 })
 
 test_that("GlanceNetCDF prints nicely", {
-    expect_known_output(print(GlanceNetCDF(file)), "GlanceNetCDF")
+    expect_snapshot(print(GlanceNetCDF(file)))
 
 })
 
@@ -23,7 +21,7 @@ test_that("subsetting works", {
         list(lat = -90:-70, lon = 0:60),
         list(lat = 70:90, lon = 300:360)
     )
-    expect_known_value(ReadNetCDF(file, subset = s), "readnetcdf_unnamed_subset")
+    expect_snapshot(ReadNetCDF(file, subset = s))
 
 })
 
@@ -37,8 +35,8 @@ test_that("naming works", {
 test_that("different outs work", {
     expect_s3_class(ReadNetCDF(file),
                     "data.table")
-    expect_is(ReadNetCDF(file, out = "array")[[1]], "array")
-    expect_is(ReadNetCDF(file, out = "vector")[[1]], "numeric")
+    expect_equal(class(ReadNetCDF(file, out = "array")[[1]]), "array")
+    expect_type(ReadNetCDF(file, out = "vector")[[1]], "double")
 })
 
 

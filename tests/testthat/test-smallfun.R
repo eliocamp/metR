@@ -1,7 +1,3 @@
-library(metR)
-
-context("Small functions")
-
 test_that("Percentile works", {
     expect_equal(Percentile(1:10),
                  seq(0.1, 1, by = 0.1))

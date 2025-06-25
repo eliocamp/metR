@@ -1,5 +1,3 @@
-context("Derivate internals")
-
 test_derv <- function(y, cyclical = FALSE, fill = FALSE, equispaced = TRUE) {
     y <- sort(y)
     x <- sin(y)
@@ -52,7 +50,6 @@ test_that("Works with unequal grid", {
 })
 
 
-context("Derivate interface")
 test_that("Derivative works", {
     expect_equal({
         x <- 1:10

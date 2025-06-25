@@ -215,7 +215,7 @@ Vorticity <- function(formula, cyclical = FALSE, fill = FALSE,
     N <- length(x)
 
     if (N < order + 1) {
-        return(rep(NA, length = length(x)))
+        return(rep(NA, length.out = length(x)))
     }
     nxt <- function(v) {
         v[c(2:N, 1)]

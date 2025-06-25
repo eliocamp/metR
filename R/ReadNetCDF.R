@@ -508,7 +508,7 @@ print.nc_glance <- function(x, ...) {
 
     cat("\n\n")
     cat(gettext("----- Dimensions ----- \n", domain = "R-metR"))
-    out <- lapply(x$dim, print)
+    out <- lapply(x$dims, print)
 }
 
 #' @export

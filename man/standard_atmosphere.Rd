@@ -53,7 +53,7 @@ Alternatively, it can be a numeric constant that multiplied to convert the
 unit to meters and Pascals respectively. (E.g. if height is in feet,
 use \code{height_in = 0.3048}.)}
 
-\item{n}{desiderd number of breaks.}
+\item{n}{desired number of breaks.}
 
 \item{...}{extra arguments passed to \link[scales:breaks_extended]{scales::breaks_extended}.}
 

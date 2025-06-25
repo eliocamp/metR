@@ -1,7 +1,8 @@
 url: https://eliocamp.github.io/metR/
 template:
-  params:
-    bootswatch: flatly
+  bootswatch: flatly
+  bootstrap: 5
+
 reference:
 - title: Package information
   contents: metR

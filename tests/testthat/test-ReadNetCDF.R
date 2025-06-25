@@ -6,7 +6,7 @@ test_that("returns a data.table", {
 })
 
 test_that("GlanceNetCDF prints nicely", {
-    expect_known_output(print(GlanceNetCDF(file)), "GlanceNetCDF")
+    expect_snapshot(print(GlanceNetCDF(file)))
 
 })
 
@@ -21,7 +21,7 @@ test_that("subsetting works", {
         list(lat = -90:-70, lon = 0:60),
         list(lat = 70:90, lon = 300:360)
     )
-    expect_known_value(ReadNetCDF(file, subset = s), "readnetcdf_unnamed_subset")
+    expect_snapshot(ReadNetCDF(file, subset = s))
 
 })
 

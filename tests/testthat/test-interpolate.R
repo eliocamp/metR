@@ -1,5 +1,3 @@
-
-context("interpolate")
 library(data.table)
 data(geopotential)
 geopotential <- geopotential[date == date[1]]

@@ -1,7 +1,3 @@
-library(metR)
-
-context("Impute EOF")
-
 library(data.table)
 data(geopotential)
 geopotential <- copy(geopotential)

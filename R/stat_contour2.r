@@ -146,7 +146,7 @@ StatContour2 <- ggplot2::ggproto("StatContour2", ggplot2::Stat,
 
 
      if (kriging) {
-         check_packages("kriging", "kriging")
+         rlang::check_installed("kriging", "for kriging.")
 
          pixels <- 40
          data <- try(with(data, setNames(kriging::kriging(x, y, z, pixels = pixels)$map,

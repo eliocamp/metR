@@ -14,7 +14,7 @@ NULL
 #' unit to meters and Pascals respectively. (E.g. if height is in feet,
 #' use `height_in = 0.3048`.)
 #' @param name,breaks,labels,guide arguments passed to [ggplot2::sec_axis()]
-#' @param n desiderd number of breaks.
+#' @param n desired number of breaks.
 #' @param ... extra arguments passed to [scales::breaks_extended].
 #'
 #' @details

@@ -118,7 +118,7 @@ StatContourFill <- ggplot2::ggproto("StatContourFill", ggplot2::Stat,
         }
 
         if (!isFALSE(kriging)) {
-            check_packages("kriging", "kriging")
+            rlang::check_installed("kriging", "for kriging.")
 
             if (isTRUE(kriging)) {
                 kriging <- 40

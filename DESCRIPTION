@@ -1,4 +1,3 @@
-Type: Package
 Package: metR
 Language: en-GB
 Title: Tools for Easier Analysis of Meteorological Fields
@@ -29,6 +28,7 @@ Imports:
     gtable,
     memoise,
     plyr,
+    rlang,
     scales,
     sf,
     stringr,

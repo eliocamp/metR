@@ -302,20 +302,6 @@ checkDateish <- function(x, ...) {
 
 assertDateish <- checkmate::makeAssertionFunction(checkDateish)
 
-
-check_packages <- function(packages, fun) {
-    installed <- vapply(packages, function(p) {
-        requireNamespace(p, quietly = TRUE)
-    }, TRUE)
-
-    missing <- packages[!installed]
-
-    if (length(missing != 0)) {
-        stopf("%s needs packages %s. Install them with: 'install.packages(c(\"%s\"))'.",
-              fun, paste0(missing, collapse = ", "), paste0(missing, collapse = "\", \""))
-    }
-}
-
 .datatable.aware <- TRUE
 
 a <- 6371000

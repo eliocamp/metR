@@ -153,7 +153,7 @@
 ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {
-    check_packages(c("ncdf4", "CFtime"), "ReadNetCDF")
+    rlang::check_installed(c("ncdf4", "CFtime"), "for `ReadNetCDF()`.")
 
     out <- out[1]
     checks <- makeAssertCollection()

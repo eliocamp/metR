@@ -52,7 +52,7 @@ Smooth2D <- function (x, y, value, method = smooth_svd(0.01)) {
 smooth_dct <- function(kx = 0.5, ky = kx) {
     force(kx)
     force(ky)
-    check_packages("gsignal", "smooth_dct")
+    rlang::check_installed("gsignal", "for `smooth_dct()`.")
     function(matrix) {
         # Compute the Discreete Cosine Transform
         # We could also use fft, but it suffers from edge effects

@@ -197,15 +197,16 @@ rename_aes <- function(x) {
 
 #' @importFrom stats line runif var
 #' @importFrom utils head
+#' @importFrom rlang .data
 if(getRversion() >= "2.15.1") {
     utils::globalVariables(
-        c(".data", "as", "dep.names", "ecdf", "equal", "fft", "hasArg", "id",
+        c("as", "dep.names", "ecdf", "equal", "fft", "hasArg", "id",
           "ind.names", "inside", "int.level", "land", "latrad", "lon", "lonrad",
           "piece", "psi", "psi.dx", "psi.dxx", "psi.dxy", "psi.dy", "psi.dyy",
-          "r2", "sd", "setTxtProgressBar", "time", "txtProgressBar",
-          "u.mean", "v.mean", "write.csv", "x", "y", "z", ".", "time2",
+          "r2", "sd", "time",
+          "u.mean", "v.mean", "x", "y", "z", ".", "time2",
           "group", "step", "point", "change", "end", "level", "m", "rotate",
-          "x.d", "y.d", "PC", "step2", "runif", "N", "angle", "var", "head",
+          "x.d", "y.d", "PC", "step2", "N", "angle", "var",
           "col__", "row__", "t1", "z1", "z2", "..n", ".N", ":=", ".SD", ".I", ".GRP"))
 }
 
@@ -300,20 +301,6 @@ checkDateish <- function(x, ...) {
 }
 
 assertDateish <- checkmate::makeAssertionFunction(checkDateish)
-
-
-check_packages <- function(packages, fun) {
-    installed <- vapply(packages, function(p) {
-        requireNamespace(p, quietly = TRUE)
-    }, TRUE)
-
-    missing <- packages[!installed]
-
-    if (length(missing != 0)) {
-        stopf("%s needs packages %s. Install them with: 'install.packages(c(\"%s\"))'.",
-              fun, paste0(missing, collapse = ", "), paste0(missing, collapse = "\", \""))
-    }
-}
 
 .datatable.aware <- TRUE
 

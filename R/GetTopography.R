@@ -90,14 +90,14 @@ GetTopography <- function(lon.west, lon.east, lat.north, lat.south, resolution =
 
             if (is.error(field)) stopf("Failed to fetch file.")
 
-            check_packages(c("terra"), "GetTopography")
+            rlang::check_installed(c("terra"), "for `GetTopography()`.")
 
             field <- data.table::as.data.table(terra::rast(temp_file), xy = TRUE)
             colnames(field) <- c("lon", "lat", "h")
 
         }
         field[, lon := ConvertLongitude(lon, from = 180)]
-        if (cache == TRUE) write.csv(field, file = file)    # cache data
+        if (cache == TRUE) utils::write.csv(field, file = file)    # cache data
     }
     return(field[])
 }

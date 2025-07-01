@@ -4,7 +4,6 @@ skip_if_not_installed("vdiffr")
 library(ggplot2)
 library(vdiffr)
 
-context("text_contour")
 data(geopotential)
 geo <- subset(geopotential, date == date[1])
 

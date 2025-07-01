@@ -4,7 +4,6 @@ skip_if_not_installed("vdiffr")
 library(vdiffr)
 library(ggplot2)
 
-context("stat_contour2")
 data(geopotential)
 geo <- subset(geopotential, date == date[1])
 test_that("geom_contour2 mimics geom_contour", {

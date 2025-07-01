@@ -1,7 +1,3 @@
-
-
-context("FitWave")
-
 t <- seq(0, 2*pi, length.out = 100)[-1]
 x <- 3*cos(t) + 2*cos(2*t)
 

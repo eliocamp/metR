@@ -6,7 +6,6 @@ library(ggplot2)
 
 data(volcano)
 v <- reshape2::melt(volcano)
-context("geom_relief")
 test_that("geom-relief", {
     expect_doppelganger("volcano-relief",
                         ggplot(v, aes(Var1, Var2)) +

@@ -85,8 +85,8 @@ test_that("Supports NAs", {
 
     expect_equal(FitLm(x, y, z, se = TRUE), sim_fit)
 
-    expect_equal(ResidLm(x, y, z),
-                 unname(residuals(good_fit)))
+    expect_length(ResidLm(x, y, z), length(y))
+    expect_equal(as.vector(na.omit(ResidLm(x, y, z))), unname(residuals(good_fit)))
 })
 
 

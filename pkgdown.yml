@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   Visualization-tools: Visualization-tools.html
   Working-with-data: Working-with-data.html
-last_built: 2025-07-01T02:21Z
+last_built: 2025-07-01T02:25Z
 urls:
   reference: https://eliocamp.github.io/metR/reference
   article: https://eliocamp.github.io/metR/articles

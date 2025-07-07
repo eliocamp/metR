@@ -168,11 +168,16 @@
 ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {
-    rlang::check_installed(c("ncdf4", "CFtime"), "for `ReadNetCDF()`.")
+    if (getOption("readnetcdf_check_pkg", TRUE)) {
+        rlang::check_installed(c("ncdf4", "CFtime"), "for `ReadNetCDF()`.")
+    }
+
 
     out <- out[1]
     checks <- makeAssertCollection()
 
+    # This is not optimal. Maybe it's better to make ReatNetCDF() a generic
+    # and add methods for classes. Then rcdo can add the appropriate class.
     if (inherits(file, "cdo_operation")) {
         rlang::check_installed("rcdo", "for `ReadNetCDF()`.")
         file <- rcdo::cdo_execute(file)
@@ -182,6 +187,10 @@ ReadNetCDF <- function(file, vars = NULL,
         if (out == "array") {
             stopf("Multifile datasets are not supported for `out = 'array'`.")
         }
+        # Checking if package is installed can be relatively expensive when
+        # looping though lots of files.
+        options(readnetcdf_check_pkg = FALSE)
+        on.exit(options(readnetcdf_check_pkg = TRUE))
         data <- lapply(file, ReadNetCDF, vars = vars, out = out, subset = subset, key = key)
         if (out == "data.frame") {
             data <- data.table::rbindlist(data)

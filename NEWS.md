@@ -1,6 +1,12 @@
 # metR (development version)
 
-## Bug fixes    
+## New features
+
+-   `ReadNetCDF()` now supports cdo operations via the rcdo package.
+    You can pass an rcdo operation and it will be executed.
+
+## Bug fixes
+
 -   `ResidLm()` now returns a vector with NAs.
 
 # metR 0.18.1
@@ -12,9 +18,12 @@
 
 ## Potentially breaking changes
 
--   `ReadNetCDF()` now uses the CFtime package to parse times. This shouldn't lead to any braking changes, but times are weird and anything can happen. Please report anything amiss.
+-   `ReadNetCDF()` now uses the CFtime package to parse times.
+    This shouldn't lead to any braking changes, but times are weird and anything can happen.
+    Please report anything amiss.
 
--   Contour breaks are now computed after scale transformation. Previously they were computed using the whole dataset, which could lead to nonsensical contour breaks if scale limits removed extreme values.
+-   Contour breaks are now computed after scale transformation.
+    Previously they were computed using the whole dataset, which could lead to nonsensical contour breaks if scale limits removed extreme values.
 
 ## Other stuff
 

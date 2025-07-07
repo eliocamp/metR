@@ -7,6 +7,7 @@
 ## Bug fixes
 
 -   `ResidLm()` now returns a vector with NAs.
+-   `ReadNetCDF()` with subset used to return the data based on the coordinate closest to the subset dimensions. This mean that `subset = list(lat = c(-90, -20))` could return data north of 20°S if the gridpoint north of 20°S was closer to 20°S than the gridpoint South of it. While not a problem in general, this could fail catastrophically if the file didn't have data inside the requested range. This now is fixed to that it returns only data inside the desired range.
 
 # metR 0.18.1
 

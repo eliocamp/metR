@@ -5,10 +5,11 @@
 #' with proper dimensions.
 #'
 #' @param file source to read from. Must be one of:
-#'    * A string representing a local file with read access.
+#'    * A string representing a local file(s) with read access.
 #'    * A string representing a URL readable by [ncdf4::nc_open()].
 #'      (this includes DAP urls).
-#'    * A netcdf object returned by [ncdf4::nc_open()].
+#'    * A netcdf object returned by [ncdf4::nc_open()] or a list of such.
+#'      (Use [OpenNetCDF()] as sa helper function.)
 #' @param vars one of:
 #'    * `NULL`: reads all variables.
 #'    * a character vector with the name of the variables to read.
@@ -20,6 +21,20 @@
 #' @param key if `TRUE`, returns a data.table keyed by the dimensions of the data.
 #' @param ... in [GlanceNetCDF()], ignored. Is there for convenience so that a call to [ReadNetCDF()] can
 #' be also valid for [GlanceNetCDF()].
+#'
+#' @section Multifle datasets:
+#' `ReadNetCDF()` has rudimentary support for multifile datasets.
+#' If the `file` argument is a vector of files, then the function will be
+#' applied to each of them with the same arguments and the result concatenated.
+#' Array output is not supported in this case, since it's not clear how each
+#' result should be combined.
+#'
+#' If a file doesn't have the data included in a subset, then it won't be read
+#' (but the metadata will need to be processed).
+#' To read multiple times from the same multifle dataset, using [OpenNetCDF()]
+#' to first open all the connections might speed things up.
+#' Still, for now coordinates are read and parsed every time, so the process
+#' can be slow for dataset with a very large number of files.
 #'
 #' @section Subsetting:
 #' In the most basic form, `subset` will be a named list whose names must match
@@ -161,8 +176,20 @@ ReadNetCDF <- function(file, vars = NULL,
     if (inherits(file, "cdo_operation")) {
         rlang::check_installed("rcdo", "for `ReadNetCDF()`.")
         file <- rcdo::cdo_execute(file)
+    }
 
+    if (!inherits(file, "ncdf4") & length(file) > 1) {
+        if (out == "array") {
+            stopf("Multifile datasets are not supported for `out = 'array'`.")
+        }
+        data <- lapply(file, ReadNetCDF, vars = vars, out = out, subset = subset, key = key)
+        if (out == "data.frame") {
+            data <- data.table::rbindlist(data)
+        } else if (out == "vector") {
+            data <- as.list(data.table::rbindlist(list(list(x = 1:10, y = 1:10), list(x = 1:10, y = 1:10))))
+        }
 
+        return(data)
     }
 
     if (!inherits(file, "ncdf4")) {
@@ -329,8 +356,19 @@ ReadNetCDF <- function(file, vars = NULL,
                     sub[2] <- max(d)
                 }
 
-                start1 <- which(d %~% sub[1])
-                end <- which(d %~% sub[length(sub)])
+                sub <- range(sub)
+
+                d_temp <- d
+                d_temp[d_temp < sub[1]] <- NA
+                start1 <- which.min(abs(d_temp - sub[1]))
+
+                d_temp <- d
+                d_temp[d_temp > sub[2]] <- NA
+                end <- which.min(abs(d_temp - sub[2]))
+
+                if (length(start1) == 0 || length(end) == 0) {
+                    return(NULL)
+                }
 
                 start[[s]] <- min(start1, end)
                 count[[s]] <- abs(end - start1) + 1
@@ -407,6 +445,14 @@ time_units_factor <- c("days" = 24*3600,
 ParseNetCDFtime <- function(time) {
     .parse_time(time$vals, time$units, time$calendar)
 }
+
+#' @param files vector of files to open.
+#' @export
+#' @rdname ReadNetCDF
+OpenNetCDF <- function(files) {
+    lapply(files, ncdf4::nc_open)
+}
+
 
 .parse_time <- function(time, units, calendar = NULL) {
     calendar <- tolower(calendar)

@@ -18,13 +18,19 @@ test_that("subsetting works", {
 
     expect_equal(range(r$lat), c(-90, 20))
 
-
     s <-  list(
         list(lat = -90:-70, lon = 0:60),
         list(lat = 70:90, lon = 300:360)
     )
-    expect_known_value(ReadNetCDF(file, subset = s), "readnetcdf_unnamed_subset")
+    r <- ReadNetCDF(file, subset = s)
 
+    expect_known_value(r, "readnetcdf_unnamed_subset")
+
+
+    r <- ReadNetCDF(file, subset = list(lat = c(0, 50)))
+    r2 <- ReadNetCDF(file, subset = list(lat = c(0, 52.49)))
+
+    expect_equal(r, r2)
 })
 
 test_that("naming works", {
@@ -88,4 +94,19 @@ test_that("function in vars works", {
     expect_warning(expect_null(ReadNetCDF(file, vars = function(x) startsWith(x, "o5"))))
     expect_error(ReadNetCDF(file, "o5"))
     expect_error(ReadNetCDF(file, vars = function(x) "o5"))
+})
+
+
+test_that("multi-file works", {
+    files <- Sys.glob("era5/*")
+    r <- ReadNetCDF(files)
+    expect_equal(data.table::month(range(r$time)), c(1, 3))
+
+    r <- ReadNetCDF(files, subset = list(time = c("1959-01-01", "1959-02-28")))
+
+    expect_equal(data.table::month(range(r$time)), c(1, 2))
+    expect_equal(
+        ReadNetCDF(OpenNetCDF(files), subset = list(time = c("1959-01-01", "1959-02-28"))),
+        ReadNetCDF(files, subset = list(time = c("1959-01-01", "1959-02-28")))
+    )
 })

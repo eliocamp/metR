@@ -3,6 +3,7 @@
 \name{ReadNetCDF}
 \alias{ReadNetCDF}
 \alias{ParseNetCDFtime}
+\alias{OpenNetCDF}
 \alias{GlanceNetCDF}
 \title{Read NetCDF files.}
 \usage{
@@ -16,15 +17,18 @@ ReadNetCDF(
 
 ParseNetCDFtime(time)
 
+OpenNetCDF(files)
+
 GlanceNetCDF(file, ...)
 }
 \arguments{
 \item{file}{source to read from. Must be one of:
 \itemize{
-\item A string representing a local file with read access.
+\item A string representing a local file(s) with read access.
 \item A string representing a URL readable by \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.
 (this includes DAP urls).
-\item A netcdf object returned by \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.
+\item A netcdf object returned by \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}} or a list of such.
+(Use \code{\link[=OpenNetCDF]{OpenNetCDF()}} as sa helper function.)
 }}
 
 \item{vars}{one of:
@@ -43,6 +47,8 @@ vector that indicates a subset of variables.
 \item{key}{if \code{TRUE}, returns a data.table keyed by the dimensions of the data.}
 
 \item{time}{the time definition. Can be accessed using \link{GlanceNetCDF}.}
+
+\item{files}{vector of files to open.}
 
 \item{...}{in \code{\link[=GlanceNetCDF]{GlanceNetCDF()}}, ignored. Is there for convenience so that a call to \code{\link[=ReadNetCDF]{ReadNetCDF()}} can
 be also valid for \code{\link[=GlanceNetCDF]{GlanceNetCDF()}}.}
@@ -70,6 +76,22 @@ Using the \code{\link[ncdf4]{ncdf4-package}} package, it reads a NetCDF file. Th
 over using \code{\link[ncdf4]{ncvar_get}} is that the output is a tidy data.table
 with proper dimensions.
 }
+\section{Multifle datasets}{
+
+\code{ReadNetCDF()} has rudimentary support for multifile datasets.
+If the \code{file} argument is a vector of files, then the function will be
+applied to each of them with the same arguments and the result concatenated.
+Array output is not supported in this case, since it's not clear how each
+result should be combined.
+
+If a file doesn't have the data included in a subset, then it won't be read
+(but the metadata will need to be processed).
+To read multiple times from the same multifle dataset, using \code{\link[=OpenNetCDF]{OpenNetCDF()}}
+to first open all the connections might speed things up.
+Still, for now coordinates are read and parsed every time, so the process
+can be slow for dataset with a very large number of files.
+}
+
 \section{Subsetting}{
 
 In the most basic form, \code{subset} will be a named list whose names must match

@@ -59,6 +59,8 @@ with proper dimensions.</p>
 <span></span>
 <span><span class="fu">ParseNetCDFtime</span><span class="op">(</span><span class="va">time</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">OpenNetCDF</span><span class="op">(</span><span class="va">files</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">GlanceNetCDF</span><span class="op">(</span><span class="va">file</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -67,10 +69,11 @@ with proper dimensions.</p>
 
 
 <dl><dt id="arg-file">file<a class="anchor" aria-label="anchor" href="#arg-file"></a></dt>
-<dd><p>source to read from. Must be one of:</p><ul><li><p>A string representing a local file with read access.</p></li>
+<dd><p>source to read from. Must be one of:</p><ul><li><p>A string representing a local file(s) with read access.</p></li>
 <li><p>A string representing a URL readable by <code><a href="https://rdrr.io/pkg/ncdf4/man/nc_open.html" class="external-link">ncdf4::nc_open()</a></code>.
 (this includes DAP urls).</p></li>
-<li><p>A netcdf object returned by <code><a href="https://rdrr.io/pkg/ncdf4/man/nc_open.html" class="external-link">ncdf4::nc_open()</a></code>.</p></li>
+<li><p>A netcdf object returned by <code><a href="https://rdrr.io/pkg/ncdf4/man/nc_open.html" class="external-link">ncdf4::nc_open()</a></code> or a list of such.
+(Use <code>OpenNetCDF()</code> as sa helper function.)</p></li>
 </ul></dd>
 
 
@@ -99,6 +102,10 @@ vector that indicates a subset of variables.</p></li>
 <dd><p>the time definition. Can be accessed using GlanceNetCDF.</p></dd>
 
 
+<dt id="arg-files">files<a class="anchor" aria-label="anchor" href="#arg-files"></a></dt>
+<dd><p>vector of files to open.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>in <code>GlanceNetCDF()</code>, ignored. Is there for convenience so that a call to <code>ReadNetCDF()</code> can
 be also valid for <code>GlanceNetCDF()</code>.</p></dd>
@@ -120,6 +127,22 @@ and a 2D surface temperature field, the latter will be turned into a 3D field
 with the same values in each missing dimension.</p>
 <p><code>GlanceNetCDF()</code> returns a list of variables and dimensions included in the
 file with a nice printing method.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="multifle-datasets">Multifle datasets<a class="anchor" aria-label="anchor" href="#multifle-datasets"></a></h2>
+
+
+<p><code>ReadNetCDF()</code> has rudimentary support for multifile datasets.
+If the <code>file</code> argument is a vector of files, then the function will be
+applied to each of them with the same arguments and the result concatenated.
+Array output is not supported in this case, since it's not clear how each
+result should be combined.</p>
+<p>If a file doesn't have the data included in a subset, then it won't be read
+(but the metadata will need to be processed).
+To read multiple times from the same multifle dataset, using <code>OpenNetCDF()</code>
+to first open all the connections might speed things up.
+Still, for now coordinates are read and parsed every time, so the process
+can be slow for dataset with a very large number of files.</p>
     </div>
     <div class="section level2">
     <h2 id="subsetting">Subsetting<a class="anchor" aria-label="anchor" href="#subsetting"></a></h2>

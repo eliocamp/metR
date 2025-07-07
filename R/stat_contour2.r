@@ -316,7 +316,7 @@ isoband_z_matrix <- function(data) {
                             levels = breaks)
 
     # Isoband can create zero-length contours for some reason
-    lengths <- vapply(cl,\(x) length(x$x), numeric(1))
+    lengths <- vapply(cl, function(x) length(x$x), numeric(1))
     cl <- cl[lengths != 0]
 
     # It can also return contours which are just one point repeated.

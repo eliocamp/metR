@@ -161,6 +161,8 @@ ReadNetCDF <- function(file, vars = NULL,
     if (inherits(file, "cdo_operation")) {
         rlang::check_installed("rcdo", "for `ReadNetCDF()`.")
         file <- rcdo::cdo_execute(file)
+
+
     }
 
     if (!inherits(file, "ncdf4")) {

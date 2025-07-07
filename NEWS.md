@@ -2,8 +2,7 @@
 
 ## New features
 
--   `ReadNetCDF()` now supports cdo operations via the rcdo package.
-    You can pass an rcdo operation and it will be executed.
+-   `ReadNetCDF()` now supports cdo operations via the rcdo package. You can pass an rcdo operation and it will be executed.
 
 ## Bug fixes
 

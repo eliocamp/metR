@@ -25,7 +25,9 @@
 #' @section Multifle datasets:
 #' `ReadNetCDF()` has rudimentary support for multifile datasets.
 #' If the `file` argument is a vector of files, then the function will be
-#' applied to each of them with the same arguments and the result concatenated.
+#' applied to each of them with the same arguments using [furrr::future_map()] and 
+#' the result concatenated.`
+#' 
 #' Array output is not supported in this case, since it's not clear how each
 #' result should be combined.
 #'
@@ -35,6 +37,7 @@
 #' to first open all the connections might speed things up.
 #' Still, for now coordinates are read and parsed every time, so the process
 #' can be slow for dataset with a very large number of files.
+#' 
 #'
 #' @section Subsetting:
 #' In the most basic form, `subset` will be a named list whose names must match
@@ -169,7 +172,7 @@ ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {
     if (getOption("readnetcdf_check_pkg", TRUE)) {
-        rlang::check_installed(c("ncdf4", "CFtime"), "for `ReadNetCDF()`.")
+        rlang::check_installed(c("ncdf4", "CFtime", "furrr"), "for `ReadNetCDF()`.")
     }
 
 
@@ -191,7 +194,8 @@ ReadNetCDF <- function(file, vars = NULL,
         # looping though lots of files.
         options(readnetcdf_check_pkg = FALSE)
         on.exit(options(readnetcdf_check_pkg = TRUE))
-        data <- lapply(file, ReadNetCDF, vars = vars, out = out, subset = subset, key = key)
+        data <- furrr::future_map(file,
+            \(x) ReadNetCDF(x, vars = vars, out = out, subset = subset, key = key), .progress = TRUE)
         if (out == "data.frame") {
             data <- data.table::rbindlist(data)
         } else if (out == "vector") {
@@ -459,7 +463,8 @@ ParseNetCDFtime <- function(time) {
 #' @export
 #' @rdname ReadNetCDF
 OpenNetCDF <- function(files) {
-    lapply(files, ncdf4::nc_open)
+    rlang::check_installed(c("ncdf4", "CFtime", "furrr"), "for `OpenNetCDF()`.")
+    furrr::future_map(files, \(x) ncdf4::nc_open(x))
 }
 
 
@@ -483,7 +488,7 @@ OpenNetCDF <- function(files) {
     if (length(calendar) != 0) {
         # browser()
         time <- as.POSIXct(CFtime::as_timestamp(CFtime::CFtime(units, calendar = calendar, offsets = time)),
-                   cal = "standard", tz = "UTC", origin = origin)
+                           cal = "standard", tz = "UTC", origin = origin)
     } else {
         time <- as.POSIXct(origin, tz = "UTC") + time*time_units_factor[time_unit]
     }

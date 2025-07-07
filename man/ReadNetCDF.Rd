@@ -80,7 +80,9 @@ with proper dimensions.
 
 \code{ReadNetCDF()} has rudimentary support for multifile datasets.
 If the \code{file} argument is a vector of files, then the function will be
-applied to each of them with the same arguments and the result concatenated.
+applied to each of them with the same arguments using \code{\link[furrr:future_map]{furrr::future_map()}} and
+the result concatenated.`
+
 Array output is not supported in this case, since it's not clear how each
 result should be combined.
 

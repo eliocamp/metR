@@ -50,7 +50,8 @@ Suggests:
     terra,
     gsignal,
     rnaturalearth,
-    rcdo
+    rcdo,
+    furrr
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true

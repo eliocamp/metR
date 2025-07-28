@@ -284,7 +284,7 @@ ReadNetCDF <- function(file, vars = NULL,
     dimensions <- list()
     for (i in seq_along(dims)) {
         # if (dims[i] == "time" && ncfile$dim[[dims[i]]]$units != "") {
-        dimensions[[dims[i]]] <- .parse_time(ncfile$dim[[dims[i]]]$vals,
+        dimensions[[dims[i]]] <- try_parse_time(ncfile$dim[[dims[i]]]$vals,
                                              ncfile$dim[[dims[i]]]$units,
                                              ncfile$dim[[dims[i]]]$calendar)
         # } else {
@@ -456,7 +456,7 @@ time_units_factor <- c("days" = 24*3600,
 #' @export
 #' @rdname ReadNetCDF
 ParseNetCDFtime <- function(time) {
-    .parse_time(time$vals, time$units, time$calendar)
+    try_parse_time(time$vals, time$units, time$calendar)
 }
 
 #' @param files vector of files to open.
@@ -479,12 +479,6 @@ OpenNetCDF <- function(files) {
     origin <- trimws(strsplit(units, "since")[[1]][2])
     time_unit <- trimws(strsplit(units, "since")[[1]])[1]
 
-    if (!(time_unit %in% names(time_units_factor))) {
-        warning(sprintf(gettext("time unit has unrecognised units: %s. Not parsing", domain = "R-metR"), time_unit))
-        return(time)
-    }
-
-
     if (length(calendar) != 0) {
         # browser()
         time <- as.POSIXct(CFtime::as_timestamp(CFtime::CFtime(units, calendar = calendar, offsets = time)),
@@ -494,6 +488,16 @@ OpenNetCDF <- function(files) {
     }
 
     return(time)
+}
+
+try_parse_time <- function(time, units, calendar) {
+    tryCatch(
+        .parse_time(time, units, calendar),
+        error = function(e) {
+            warningf("Error parsing time: %s. Returning original time.", e$message)
+            return(time)
+        }
+    )
 }
 
 .read_vars <- function(varid, ncfile, start, count) {
@@ -604,7 +608,7 @@ print.ncvar4 <- function(x, ...) {
 print.ncdim4 <- function(x, ...) {
     # cat("$", dim$name, "\n", sep = "")
     units <- x$units
-    vals <- suppressMessages(suppressWarnings(.parse_time(x$vals, x$units, x$calendar)))
+    vals <- suppressMessages(suppressWarnings(try_parse_time(x$vals, x$units, x$calendar)))
 
     if (.is.somedate(vals)) {
         units <- ""

@@ -35,7 +35,7 @@ and, optionally, standard error for each regressor."><meta property="og:image" c
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Fast estimates of linear regression</h1>
-      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/master/R/FitLm.R" class="external-link"><code>R/FitLm.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/main/R/FitLm.R" class="external-link"><code>R/FitLm.R</code></a></small>
       <div class="d-none name"><code>FitLm.Rd</code></div>
     </div>
 
@@ -121,7 +121,7 @@ warning.</p>
 <span class="r-in"><span>  <span class="va">regr</span> <span class="op">&lt;-</span> <span class="va">geopotential</span><span class="op">[</span>, <span class="fu">FitLm</span><span class="op">(</span><span class="va">gh</span>, <span class="va">date</span>, se <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    user  system elapsed </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0.339   0.000   0.339 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.344   0.001   0.345 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">regr</span><span class="op">[</span><span class="va">term</span> <span class="op">!=</span> <span class="st">"(Intercept)"</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">estimate</span>, color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>

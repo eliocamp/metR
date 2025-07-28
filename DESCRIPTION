@@ -1,22 +1,18 @@
 Package: metR
-Language: en-GB
 Title: Tools for Easier Analysis of Meteorological Fields
 Version: 0.18.1.9000
 Authors@R: 
-    c(person(given = "Elio",
-           family = "Campitelli",
-           role = c("cre", "aut"),
-           email = "eliocampitelli@gmail.com",
-           comment = c(ORCID = "0000-0002-7742-9230")))
-Description: Many useful functions and extensions for dealing
-    with meteorological data in the tidy data framework. Extends 'ggplot2'
-    for better plotting of scalar and vector fields and provides commonly
-    used analysis methods in the atmospheric sciences.
+    person("Elio", "Campitelli", , "eliocampitelli@gmail.com", role = c("cre", "aut"),
+           comment = c(ORCID = "0000-0002-7742-9230"))
+Description: Many useful functions and extensions for dealing with
+    meteorological data in the tidy data framework. Extends 'ggplot2' for
+    better plotting of scalar and vector fields and provides commonly used
+    analysis methods in the atmospheric sciences.
 License: GPL-3
 URL: https://eliocamp.github.io/metR/, https://github.com/eliocamp/metR
 BugReports: https://github.com/eliocamp/metR/issues
 Depends:
-     R (>= 2.10)
+    R (>= 2.10)
 Imports:
     checkmate,
     data.table,
@@ -26,35 +22,37 @@ Imports:
     ggplot2 (>= 3.5.0),
     grid,
     gtable,
+    isoband,
+    lubridate,
     memoise,
     plyr,
+    purrr,
     rlang,
     scales,
     sf,
-    stringr,
-    purrr,
-    isoband,
-    lubridate
+    stringr
 Suggests: 
-    maps,
+    CFtime,
+    furrr,
+    gsignal,
     irlba,
     knitr,
-    ncdf4,
-    reshape2,
-    markdown,
-    testthat (>= 2.1.0),
-    CFtime,
-    vdiffr,
-    proj4,
     kriging,
-    terra,
-    gsignal,
-    rnaturalearth,
+    maps,
+    markdown,
+    ncdf4,
+    proj4,
     rcdo,
-    furrr
+    reshape2,
+    rnaturalearth,
+    terra,
+    testthat (>= 2.1.0),
+    vdiffr
+VignetteBuilder: 
+    knitr
 ByteCompile: yes
 Encoding: UTF-8
+Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-VignetteBuilder: knitr

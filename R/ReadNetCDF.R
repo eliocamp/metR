@@ -479,6 +479,12 @@ OpenNetCDF <- function(files) {
     origin <- trimws(strsplit(units, "since")[[1]][2])
     time_unit <- trimws(strsplit(units, "since")[[1]])[1]
 
+    if (!(time_unit %in% names(time_units_factor))) {
+        warning(sprintf(gettext("time unit has unrecognised units: %s. Not parsing", domain = "R-metR"), time_unit))
+        return(time)
+    }
+
+
     if (length(calendar) != 0) {
         # browser()
         time <- as.POSIXct(CFtime::as_timestamp(CFtime::CFtime(units, calendar = calendar, offsets = time)),

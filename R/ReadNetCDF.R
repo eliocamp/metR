@@ -25,9 +25,9 @@
 #' @section Multifle datasets:
 #' `ReadNetCDF()` has rudimentary support for multifile datasets.
 #' If the `file` argument is a vector of files, then the function will be
-#' applied to each of them with the same arguments using [furrr::future_map()] and 
+#' applied to each of them with the same arguments using [furrr::future_map()] and
 #' the result concatenated.`
-#' 
+#'
 #' Array output is not supported in this case, since it's not clear how each
 #' result should be combined.
 #'
@@ -37,7 +37,7 @@
 #' to first open all the connections might speed things up.
 #' Still, for now coordinates are read and parsed every time, so the process
 #' can be slow for dataset with a very large number of files.
-#' 
+#'
 #'
 #' @section Subsetting:
 #' In the most basic form, `subset` will be a named list whose names must match
@@ -478,12 +478,6 @@ OpenNetCDF <- function(files) {
     # Is there a more elegant way of extracting the origin?
     origin <- trimws(strsplit(units, "since")[[1]][2])
     time_unit <- trimws(strsplit(units, "since")[[1]])[1]
-
-    if (!(time_unit %in% names(time_units_factor))) {
-        warning(sprintf(gettext("time unit has unrecognised units: %s. Not parsing", domain = "R-metR"), time_unit))
-        return(time)
-    }
-
 
     if (length(calendar) != 0) {
         # browser()

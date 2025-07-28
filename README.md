@@ -6,8 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/eliocamp/metR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/eliocamp/metR/actions/workflows/R-CMD-check.yaml)
-[![Coverage
-status](https://codecov.io/gh/eliocamp/metR/branch/main/graph/badge.svg?token=jVznWTMCpz)](https://app.codecov.io/gh/eliocamp/metR)
+[![Codecov test
+coverage](https://codecov.io/gh/eliocamp/metR/graph/badge.svg)](https://app.codecov.io/gh/eliocamp/metR)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/metR)](https://CRAN.R-project.org/package=metR)
 [![DOI](https://zenodo.org/badge/96357263.svg)](https://zenodo.org/badge/latestdoi/96357263)

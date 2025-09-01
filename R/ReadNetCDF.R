@@ -172,7 +172,7 @@ ReadNetCDF <- function(file, vars = NULL,
                        out = c("data.frame", "vector", "array"),
                        subset = NULL, key = FALSE) {
     if (getOption("readnetcdf_check_pkg", TRUE)) {
-        rlang::check_installed(c("ncdf4", "CFtime", "furrr"), "for `ReadNetCDF()`.")
+        rlang::check_installed(c("ncdf4", "CFtime"), "for `ReadNetCDF()`.")
     }
 
 
@@ -182,7 +182,7 @@ ReadNetCDF <- function(file, vars = NULL,
     # This is not optimal. Maybe it's better to make ReatNetCDF() a generic
     # and add methods for classes. Then rcdo can add the appropriate class.
     if (inherits(file, "cdo_operation")) {
-        rlang::check_installed("rcdo", "for `ReadNetCDF()`.")
+        rlang::check_installed("rcdo", "to read rcdo commands.")
         file <- rcdo::cdo_execute(file)
     }
 
@@ -194,6 +194,7 @@ ReadNetCDF <- function(file, vars = NULL,
         # looping though lots of files.
         options(readnetcdf_check_pkg = FALSE)
         on.exit(options(readnetcdf_check_pkg = TRUE))
+        rlang::check_installed("furrr", "to read multiple files.")
         data <- furrr::future_map(file,
             \(x) ReadNetCDF(x, vars = vars, out = out, subset = subset, key = key), .progress = TRUE)
         if (out == "data.frame") {

@@ -196,7 +196,7 @@ ReadNetCDF <- function(file, vars = NULL,
         on.exit(options(readnetcdf_check_pkg = TRUE))
         rlang::check_installed("furrr", "to read multiple files.")
         data <- furrr::future_map(file,
-            \(x) ReadNetCDF(x, vars = vars, out = out, subset = subset, key = key), .progress = TRUE)
+            function(x) ReadNetCDF(x, vars = vars, out = out, subset = subset, key = key), .progress = TRUE)
         if (out == "data.frame") {
             data <- data.table::rbindlist(data)
         } else if (out == "vector") {
@@ -465,7 +465,7 @@ ParseNetCDFtime <- function(time) {
 #' @rdname ReadNetCDF
 OpenNetCDF <- function(files) {
     rlang::check_installed(c("ncdf4", "CFtime", "furrr"), "for `OpenNetCDF()`.")
-    furrr::future_map(files, \(x) ncdf4::nc_open(x))
+    furrr::future_map(files, function(x) ncdf4::nc_open(x))
 }
 
 

@@ -4,7 +4,7 @@
 
 -   `ReadNetCDF()` now supports cdo operations via the rcdo package. You can pass an rcdo operation and it will be executed.
 
--   `ReadNetCDF()` gains support for reading dara from multiple files potentially in parallel. 
+-   `ReadNetCDF()` gains support for reading data from multiple files potentially in parallel. 
 
 ## Bug fixes
 

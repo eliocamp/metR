@@ -7,7 +7,7 @@ bibentry(
   author   = meta$Author,
   year     = 2021,
   note     = note,
-  url      = meta$URL,
+  url      = "https://eliocamp.github.io/metR/",
   doi      = "10.5281/zenodo.2593516",
   textVersion = ""
 )

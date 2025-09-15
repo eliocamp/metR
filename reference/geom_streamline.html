@@ -37,7 +37,7 @@ moves with the &quot;flow&quot;."><meta property="og:image" content="https://eli
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Streamlines</h1>
-      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/main/R/geom_streamline.R" class="external-link"><code>R/geom_streamline.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/v0.18.2/R/geom_streamline.R" class="external-link"><code>R/geom_streamline.R</code></a></small>
       <div class="d-none name"><code>geom_streamline.Rd</code></div>
     </div>
 
@@ -265,7 +265,7 @@ display.</p></dd>
 <dd><p>If <code>FALSE</code>, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.org/reference/borders.html" class="external-link">borders()</a></code>.</p></dd>
+the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.org/reference/annotation_borders.html" class="external-link">borders()</a></code>.</p></dd>
 
 
 <dt id="arg-geom">geom<a class="anchor" aria-label="anchor" href="#arg-geom"></a></dt>
@@ -370,7 +370,7 @@ regular grid, for now.</p>
 <span class="r-in"><span>                    xwrap <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># The circular parameter is particularly important for polar coordinates</span></span></span>
-<span class="r-in"><span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_radial.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If u and v are not converted into degrees/second, the resulting</span></span></span>
 <span class="r-in"><span><span class="co"># streamlines have problems, specially near the pole.</span></span></span>

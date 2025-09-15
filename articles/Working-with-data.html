@@ -65,9 +65,9 @@
                         <h4 data-toc-skip class="author">Elio
 Campitelli</h4>
             
-            <h4 data-toc-skip class="date">2025-09-02</h4>
+            <h4 data-toc-skip class="date">2025-09-15</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/main/vignettes/Working-with-data.Rmd" class="external-link"><code>vignettes/Working-with-data.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/v0.18.2/vignettes/Working-with-data.Rmd" class="external-link"><code>vignettes/Working-with-data.Rmd</code></a></small>
       <div class="d-none name"><code>Working-with-data.Rmd</code></div>
     </div>
 
@@ -247,7 +247,7 @@ perform from the (scaled) right singular vector.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">eof</span><span class="op">$</span><span class="va">right</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">gh.t.w</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_radial.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">PC</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="Working-with-data_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">

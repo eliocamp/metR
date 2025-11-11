@@ -1,0 +1,75 @@
+# Get topographic data
+
+Retrieves topographic data from ETOPO1 Global Relief Model (see
+references).
+
+## Usage
+
+``` r
+GetTopography(
+  lon.west,
+  lon.east,
+  lat.north,
+  lat.south,
+  resolution = 3.5,
+  cache = TRUE,
+  file.dir = tempdir(),
+  verbose = interactive()
+)
+```
+
+## Arguments
+
+- lon.west, lon.east, lat.north, lat.south:
+
+  latitudes and longitudes of the bounding box in degrees
+
+- resolution:
+
+  numeric vector indicating the desired resolution (in degrees) in the
+  lon and lat directions (maximum resolution is 1 minute)
+
+- cache:
+
+  logical indicating if the results should be saved on disk
+
+- file.dir:
+
+  optional directory where to save and/or retrieve data
+
+- verbose:
+
+  logical indicating whether to print progress
+
+## Value
+
+A data table with height (in meters) for each longitude and latitude.
+
+## Details
+
+Very large requests can take long and can be denied by the NOAA server.
+If the function fails, try with a smaller bounding box or coarser
+resolution.
+
+Longitude coordinates must be between 0 and 360.
+
+## References
+
+Source: Amante, C. and B.W. Eakins, 2009. ETOPO1 1 Arc-Minute Global
+Relief Model: Procedures, Data Sources and Analysis. NOAA Technical
+Memorandum NESDIS NGDC-24. National Geophysical Data Center, NOAA.
+[doi:10.7289/V5C8276M](https://doi.org/10.7289/V5C8276M)
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+topo <- GetTopography(280, 330, 0, -60, resolution = 0.5)
+library(ggplot2)
+ggplot(topo, aes(lon, lat)) +
+    geom_raster(aes(fill = h)) +
+    geom_contour(aes(z = h), breaks = 0, color = "black", size = 0.3) +
+    scale_fill_gradient2(low = "steelblue", high = "goldenrod2", mid = "olivedrab") +
+    coord_quickmap()
+} # }
+```

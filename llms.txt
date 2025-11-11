@@ -1,0 +1,349 @@
+# metR
+
+metR packages several functions and utilities that make R better for
+handling meteorological data in the tidy data paradigm. It started
+mostly sa a packaging of assorted wrappers and tricks that I wrote for
+my day to day work as a researcher in atmospheric sciences. Since then,
+it has grown organically and for my own needs and feedback from users.
+
+Conceptually it’s divided into *visualization tools* and *data tools*.
+The former are geoms, stats and scales that help with plotting using
+[ggplot2](https://ggplot2.tidyverse.org/index.html), such as
+[`stat_contour_fill()`](https://eliocamp.github.io/metR/reference/geom_contour_fill.md)
+or
+[`scale_y_level()`](https://eliocamp.github.io/metR/reference/scale_longitude.md),
+while the later are functions for common data processing tools in the
+atmospheric sciences, such as
+[`Derivate()`](https://eliocamp.github.io/metR/reference/Derivate.md) or
+[`EOF()`](https://eliocamp.github.io/metR/reference/EOF.md); these are
+implemented to work in the
+[data.table](https://github.com/Rdatatable/data.table/wiki) paradigm,
+but also work with regular data frames.
+
+Currently metR is in development but maturing. Most functions check
+arguments and there are some tests. However, some functions might change
+it’s interface, and functionality can be moved to other packages, so
+please bear that in mind.
+
+## Installation
+
+You can install metR from CRAN with:
+
+``` r
+install.packages("metR")
+```
+
+Or the development version with:
+
+``` r
+if (!requireNamespace("pak", quietly = TRUE)) {
+    install.packages("pak")
+}
+pak::pak("metR")
+```
+
+If you need to read netcdf files, you might need to install the netcdf
+and udunits2 libraries. On Ubuntu and it’s derivatives this can be done
+by typing
+
+``` R
+sudo apt install libnetcdf-dev netcdf-bin libudunits2-dev
+```
+
+## Citing the package
+
+If you use metR in your research, please consider citing it. You can get
+citation information with
+
+``` r
+citation("metR")
+#> To cite metR in publications use:
+#> 
+#> 
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {metR: Tools for Easier Analysis of Meteorological Fields},
+#>     author = {Elio Campitelli},
+#>     year = {2021},
+#>     note = {R package version 0.18.2},
+#>     url = {https://eliocamp.github.io/metR/, https://github.com/eliocamp/metR},
+#>     doi = {10.5281/zenodo.2593516},
+#>   }
+```
+
+## Examples
+
+In this example we easily perform Principal Components Decomposition
+(EOF) on monthly geopotential height, then compute the geostrophic wind
+associated with this field and plot the field with filled contours and
+the wind with streamlines.
+
+``` r
+library(metR)
+library(data.table)
+library(ggplot2)
+data(geopotential)
+# Use Empirical Orthogonal Functions to compute the Antarctic Oscillation
+geopotential <- copy(geopotential)
+geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)),
+      by = .(lon, lat, month(date))]
+aao <- EOF(gh.t.w ~ lat + lon | date, data = geopotential, n = 1)
+aao$left[, c("u", "v") := GeostrophicWind(gh.t.w/sqrt(cos(lat*pi/180)), 
+                                                    lon, lat)]
+
+# AAO field
+binwidth <- 0.01
+ggplot(aao$left, aes(lon, lat)) +
+    geom_contour_fill(aes(z = gh.t.w/sqrt(cos(lat*pi/180)), 
+                          fill = after_stat(level)), binwidth = binwidth,
+                      xwrap = c(0, 360)) +
+    geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)),
+                    linewidth = 0.4, L = 80, skip = 3, xwrap = c(0, 360)) +
+    scale_x_longitude() +
+    scale_y_latitude(limits = c(-90, -20)) +
+    scale_fill_divergent_discretised(name = "AAO pattern") +
+    coord_polar()
+#> Warning in .check_wrap_param(list(...)): 'xwrap' and 'ywrap' will be
+#> deprecated. Use ggperiodic::periodic insead.
+```
+
+![](reference/figures/field-1.png)
+
+``` r
+# AAO signal
+ggplot(aao$right, aes(date, gh.t.w)) +
+    geom_line() +
+    geom_smooth(span = 0.4)
+#> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+```
+
+![](reference/figures/timeseries-1.png)
+
+You can read more in the vignettes: [Visualization
+tools](https://eliocamp.github.io/metR/articles/Visualization-tools.html)
+and [Working with
+data](https://eliocamp.github.io/metR/articles/Working-with-data.html).
+
+# Package index
+
+## Package information
+
+- [`metR-package`](https://eliocamp.github.io/metR/reference/metR.md)
+  [`metR`](https://eliocamp.github.io/metR/reference/metR.md) : metR:
+  Tools for Easier Analysis of Meteorological Fields
+
+## ggplot2 extension
+
+stats, geoms and other ggplot2 extensions
+
+- [`geom_arrow()`](https://eliocamp.github.io/metR/reference/geom_arrow.md)
+  [`geom_vector()`](https://eliocamp.github.io/metR/reference/geom_arrow.md)
+  : Arrows
+- [`geom_contour2()`](https://eliocamp.github.io/metR/reference/geom_contour2.md)
+  [`stat_contour2()`](https://eliocamp.github.io/metR/reference/geom_contour2.md)
+  : 2d contours of a 3d surface
+- [`geom_contour_fill()`](https://eliocamp.github.io/metR/reference/geom_contour_fill.md)
+  [`stat_contour_fill()`](https://eliocamp.github.io/metR/reference/geom_contour_fill.md)
+  : Filled 2d contours of a 3d surface
+- [`geom_contour_tanaka()`](https://eliocamp.github.io/metR/reference/geom_contour_tanaka.md)
+  : Illuminated contours
+- [`geom_relief()`](https://eliocamp.github.io/metR/reference/geom_relief.md)
+  [`geom_shadow()`](https://eliocamp.github.io/metR/reference/geom_relief.md)
+  : Relief Shading
+- [`geom_streamline()`](https://eliocamp.github.io/metR/reference/geom_streamline.md)
+  [`stat_streamline()`](https://eliocamp.github.io/metR/reference/geom_streamline.md)
+  : Streamlines
+- [`geom_label_contour()`](https://eliocamp.github.io/metR/reference/geom_text_contour.md)
+  [`geom_text_contour()`](https://eliocamp.github.io/metR/reference/geom_text_contour.md)
+  : Label contours
+- [`is.cross()`](https://eliocamp.github.io/metR/reference/is.cross.md)
+  [`cross()`](https://eliocamp.github.io/metR/reference/is.cross.md) :
+  Cross pattern
+- [`stat_na()`](https://eliocamp.github.io/metR/reference/stat_na.md) :
+  Filter only NA values.
+- [`stat_subset()`](https://eliocamp.github.io/metR/reference/stat_subset.md)
+  : Subset values
+- [`as.discretised_scale()`](https://eliocamp.github.io/metR/reference/discretised_scale.md)
+  [`scale_fill_discretised()`](https://eliocamp.github.io/metR/reference/discretised_scale.md)
+  [`scale_fill_divergent_discretised()`](https://eliocamp.github.io/metR/reference/discretised_scale.md)
+  [`discretised_scale()`](https://eliocamp.github.io/metR/reference/discretised_scale.md)
+  : Create discretised versions of continuous scales
+- [`scale_label_colour_continuous()`](https://eliocamp.github.io/metR/reference/label_scales.md)
+  [`scale_label_alpha_continuous()`](https://eliocamp.github.io/metR/reference/label_scales.md)
+  [`scale_label_size_continuous()`](https://eliocamp.github.io/metR/reference/label_scales.md)
+  : Scales for contour label aesthetics
+- [`scale_colour_divergent()`](https://eliocamp.github.io/metR/reference/scale_divergent.md)
+  [`scale_color_divergent()`](https://eliocamp.github.io/metR/reference/scale_divergent.md)
+  [`scale_fill_divergent()`](https://eliocamp.github.io/metR/reference/scale_divergent.md)
+  : Divergent colour scales
+- [`scale_x_longitude()`](https://eliocamp.github.io/metR/reference/scale_longitude.md)
+  [`scale_y_longitude()`](https://eliocamp.github.io/metR/reference/scale_longitude.md)
+  [`scale_x_latitude()`](https://eliocamp.github.io/metR/reference/scale_longitude.md)
+  [`scale_y_latitude()`](https://eliocamp.github.io/metR/reference/scale_longitude.md)
+  [`scale_x_level()`](https://eliocamp.github.io/metR/reference/scale_longitude.md)
+  [`scale_y_level()`](https://eliocamp.github.io/metR/reference/scale_longitude.md)
+  : Helpful scales for maps
+- [`scale_mag()`](https://eliocamp.github.io/metR/reference/scale_mag.md)
+  [`scale_mag_continuous()`](https://eliocamp.github.io/metR/reference/scale_mag.md)
+  : Scale for vector magnitudes
+- [`reverselog_trans()`](https://eliocamp.github.io/metR/reference/reverselog_trans.md)
+  : Reverse log transform
+
+## ggplot2 helpers
+
+functions that help in plotting
+
+- [`MakeBreaks()`](https://eliocamp.github.io/metR/reference/MakeBreaks.md)
+  [`AnchorBreaks()`](https://eliocamp.github.io/metR/reference/MakeBreaks.md)
+  : Functions for making breaks
+- [`WrapCircular()`](https://eliocamp.github.io/metR/reference/WrapCircular.md)
+  : Wrap periodic data to any range
+- [`LonLabel()`](https://eliocamp.github.io/metR/reference/map_labels.md)
+  [`LatLabel()`](https://eliocamp.github.io/metR/reference/map_labels.md)
+  : Label longitude and latitude
+- [`label_placer_fraction()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  [`label_placement_fraction()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  [`label_placer_n()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  [`label_placement_n()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  [`label_placer_random()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  [`label_placement_random()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  [`label_placer_all()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  [`label_placement_all()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  [`label_placer_flattest()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  [`label_placement_flattest()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  [`label_placer_minmax()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  [`label_placement_minmax()`](https://eliocamp.github.io/metR/reference/label_placers.md)
+  : Functions to place contour labels
+- [`sa_pressure()`](https://eliocamp.github.io/metR/reference/standard_atmosphere.md)
+  [`sa_height()`](https://eliocamp.github.io/metR/reference/standard_atmosphere.md)
+  [`sa_temperature()`](https://eliocamp.github.io/metR/reference/standard_atmosphere.md)
+  [`sa_height_trans()`](https://eliocamp.github.io/metR/reference/standard_atmosphere.md)
+  [`sa_pressure_trans()`](https://eliocamp.github.io/metR/reference/standard_atmosphere.md)
+  [`sa_height_breaks()`](https://eliocamp.github.io/metR/reference/standard_atmosphere.md)
+  [`sa_height_axis()`](https://eliocamp.github.io/metR/reference/standard_atmosphere.md)
+  [`sa_pressure_axis()`](https://eliocamp.github.io/metR/reference/standard_atmosphere.md)
+  : Standard atmosphere
+- [`Smooth2D()`](https://eliocamp.github.io/metR/reference/Smooth2D.md)
+  [`smooth_dct()`](https://eliocamp.github.io/metR/reference/Smooth2D.md)
+  [`smooth_svd()`](https://eliocamp.github.io/metR/reference/Smooth2D.md)
+  : Smooths a 2D field
+
+## Physics
+
+functions related to physical processes
+
+- [`IdealGas()`](https://eliocamp.github.io/metR/reference/thermodynamics.md)
+  [`Adiabat()`](https://eliocamp.github.io/metR/reference/thermodynamics.md)
+  [`VirtualTemperature()`](https://eliocamp.github.io/metR/reference/thermodynamics.md)
+  [`MixingRatio()`](https://eliocamp.github.io/metR/reference/thermodynamics.md)
+  [`ClausiusClapeyron()`](https://eliocamp.github.io/metR/reference/thermodynamics.md)
+  [`DewPoint()`](https://eliocamp.github.io/metR/reference/thermodynamics.md)
+  : Thermodynamics
+- [`coriolis()`](https://eliocamp.github.io/metR/reference/coriolis.md)
+  [`f()`](https://eliocamp.github.io/metR/reference/coriolis.md)
+  [`coriolis.dy()`](https://eliocamp.github.io/metR/reference/coriolis.md)
+  [`f.dy()`](https://eliocamp.github.io/metR/reference/coriolis.md) :
+  Effects of the Earth's rotation
+- [`Derivate()`](https://eliocamp.github.io/metR/reference/Derivate.md)
+  [`Laplacian()`](https://eliocamp.github.io/metR/reference/Derivate.md)
+  [`Divergence()`](https://eliocamp.github.io/metR/reference/Derivate.md)
+  [`Vorticity()`](https://eliocamp.github.io/metR/reference/Derivate.md)
+  : Derivate a discrete variable using finite differences
+- [`GeostrophicWind()`](https://eliocamp.github.io/metR/reference/GeostrophicWind.md)
+  : Calculate geostrophic winds
+- [`WaveFlux()`](https://eliocamp.github.io/metR/reference/WaveFlux.md)
+  : Calculate wave-activity flux
+- [`EPflux()`](https://eliocamp.github.io/metR/reference/EPflux.md) :
+  Computes Eliassen-Palm fluxes.
+
+## Data Manipulation
+
+get and manipulate data
+
+- [`ReadNetCDF()`](https://eliocamp.github.io/metR/reference/ReadNetCDF.md)
+  [`ParseNetCDFtime()`](https://eliocamp.github.io/metR/reference/ReadNetCDF.md)
+  [`OpenNetCDF()`](https://eliocamp.github.io/metR/reference/ReadNetCDF.md)
+  [`GlanceNetCDF()`](https://eliocamp.github.io/metR/reference/ReadNetCDF.md)
+  : Read NetCDF files.
+- [`MaskLand()`](https://eliocamp.github.io/metR/reference/MaskLand.md)
+  : Mask
+- [`GetTopography()`](https://eliocamp.github.io/metR/reference/GetTopography.md)
+  : Get topographic data
+- [`GetSMNData()`](https://eliocamp.github.io/metR/reference/GetSMNData.md)
+  : Get Meteorological data This function is defunct.
+- [`EOF()`](https://eliocamp.github.io/metR/reference/EOF.md) :
+  Empirical Orthogonal Function
+- [`denormalise()`](https://eliocamp.github.io/metR/reference/denormalise.md)
+  [`denormalize()`](https://eliocamp.github.io/metR/reference/denormalise.md)
+  : Denormalise eof matrices
+- [`ImputeEOF()`](https://eliocamp.github.io/metR/reference/ImputeEOF.md)
+  : Impute missing values
+- [`Impute2D()`](https://eliocamp.github.io/metR/reference/Impute2D.md)
+  : Impute missing values by linear or constant interpolation
+- [`Interpolate()`](https://eliocamp.github.io/metR/reference/Interpolate.md)
+  : Bilinear interpolation
+- [`Trajectory()`](https://eliocamp.github.io/metR/reference/Trajectory.md)
+  : Compute trajectories
+- [`FitWave()`](https://eliocamp.github.io/metR/reference/waves.md)
+  [`BuildWave()`](https://eliocamp.github.io/metR/reference/waves.md)
+  [`FilterWave()`](https://eliocamp.github.io/metR/reference/waves.md)
+  [`WaveEnvelope()`](https://eliocamp.github.io/metR/reference/waves.md)
+  : Fourier transform functions
+- [`FitLm()`](https://eliocamp.github.io/metR/reference/FitLm.md)
+  [`ResidLm()`](https://eliocamp.github.io/metR/reference/FitLm.md)
+  [`Detrend()`](https://eliocamp.github.io/metR/reference/FitLm.md) :
+  Fast estimates of linear regression
+
+## Helpers
+
+other helpers
+
+- [`` `%~%` ``](https://eliocamp.github.io/metR/reference/logic.md)
+  [`Similar()`](https://eliocamp.github.io/metR/reference/logic.md) :
+  Extended logical operators
+- [`season()`](https://eliocamp.github.io/metR/reference/season.md)
+  [`seasonally()`](https://eliocamp.github.io/metR/reference/season.md)
+  [`is.full_season()`](https://eliocamp.github.io/metR/reference/season.md)
+  : Assign seasons to months
+- [`Anomaly()`](https://eliocamp.github.io/metR/reference/Anomaly.md) :
+  Anomalies
+- [`Percentile()`](https://eliocamp.github.io/metR/reference/Percentile.md)
+  : Percentiles
+- [`Mag()`](https://eliocamp.github.io/metR/reference/Mag.md)
+  [`Angle()`](https://eliocamp.github.io/metR/reference/Mag.md) :
+  Magnitude and angle of a vector
+- [`JumpBy()`](https://eliocamp.github.io/metR/reference/JumpBy.md) :
+  Skip observations
+- [`ConvertLongitude()`](https://eliocamp.github.io/metR/reference/ConvertLongitude.md)
+  : Converts between longitude conventions
+- [`dlon()`](https://eliocamp.github.io/metR/reference/spherical.md)
+  [`dlat()`](https://eliocamp.github.io/metR/reference/spherical.md)
+  [`dx()`](https://eliocamp.github.io/metR/reference/spherical.md)
+  [`dy()`](https://eliocamp.github.io/metR/reference/spherical.md) :
+  Transform between spherical coordinates and physical coordinates
+- [`as.path()`](https://eliocamp.github.io/metR/reference/as.path.md) :
+  Interpolates between locations
+- [`cut(`*`<eof>`*`)`](https://eliocamp.github.io/metR/reference/cut.eof.md)
+  : Remove some principal components.
+
+## Datasets
+
+sample datasets
+
+- [`geopotential`](https://eliocamp.github.io/metR/reference/geopotential.md)
+  : Geopotential height
+- [`temperature`](https://eliocamp.github.io/metR/reference/temperature.md)
+  : Air temperature
+- [`surface`](https://eliocamp.github.io/metR/reference/surface.md) :
+  Surface height
+
+# Articles
+
+### All vignettes
+
+- [Visualization
+  tools](https://eliocamp.github.io/metR/articles/Visualization-tools.md):
+- [Working with
+  data](https://eliocamp.github.io/metR/articles/Working-with-data.md):

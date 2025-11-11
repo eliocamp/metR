@@ -356,7 +356,7 @@ ReadNetCDF <- function(file, vars = NULL,
                 }
 
                 start[[s]] <- sub[1]
-                count[[s]] <- abs(sub[2] - sub[1])
+                count[[s]] <- abs(sub[2] - sub[1]) + 1
             } else {
                 if (.is.somedate(d)) {
                     sub <- lubridate::as_datetime(sub)
@@ -481,7 +481,6 @@ OpenNetCDF <- function(files) {
     time_unit <- trimws(strsplit(units, "since")[[1]])[1]
 
     if (length(calendar) != 0) {
-        # browser()
         time <- as.POSIXct(CFtime::as_timestamp(CFtime::CFtime(units, calendar = calendar, offsets = time)),
                            cal = "standard", tz = "UTC", origin = origin)
     } else {
@@ -546,7 +545,11 @@ try_parse_time <- function(time, units, calendar) {
             lapply(x, to_range)
         } else {
             if (length(x) != 2) {
-                range(x)
+                # Range strips the AsIs class.
+                class <- class(x)
+                x <- range(x)
+                class(x) <- class
+                x
             } else {
                 x
             }

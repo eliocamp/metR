@@ -7,6 +7,15 @@ test_that("returns a data.table", {
                         "data.table")
 })
 
+test_that("using I() works", {
+    file <- system.file("extdata", "temperature.nc", package = "metR")
+
+    expect_equal(unique(ReadNetCDF(file, subset = list(level = I(1)))$level), 1000)
+
+    expect_equal(unique(ReadNetCDF(file, subset = list(level = I(1:3)))$level), c(1000, 925, 850))
+})
+
+
 test_that("GlanceNetCDF prints nicely", {
     expect_known_output(print(GlanceNetCDF(file)), "GlanceNetCDF")
 

@@ -1,5 +1,9 @@
 # metR (development version)
 
+## Bug fixes
+
+-   Fixed `I()` notation in `ReadNetCDF()` subset.
+
 # metR 0.18.2
 
 ## New features

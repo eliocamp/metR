@@ -77,7 +77,9 @@ that they are placed some distance away from the axes.
 Use the convenience function \code{\link[ggplot2:expansion]{ggplot2::expansion()}} to generate
 the values for the expand argument.}
 
-\item{labels}{One of:
+\item{labels}{One of the options below. Please note that when \code{labels} is a
+vector, it is highly recommended to also set the \code{breaks} argument as a
+vector to protect against unintended mismatches.
 \itemize{
 \item \code{NULL} for no labels
 \item \code{waiver()} for the default labels computed by the

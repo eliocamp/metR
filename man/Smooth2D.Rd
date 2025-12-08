@@ -38,7 +38,7 @@ the leading values that ensures a maximum variance lost.
 a proportion of the components to zero.
 }
 \examples{
-\dontshow{if (requireNamespace("reshape2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("reshape2")) withAutoprint(\{ # examplesIf}
 
 library(ggplot2)
 # Creates a noisy version of the volcano dataset and applies the smooth

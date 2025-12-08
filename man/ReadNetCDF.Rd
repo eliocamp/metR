@@ -169,7 +169,7 @@ but demands much less typing.
 }
 
 \examples{
-\dontshow{if ( requireNamespace("ncdf4") && requireNamespace("CFtime")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if ( requireNamespace("ncdf4") && requireNamespace("CFtime")) withAutoprint(\{ # examplesIf}
 file <- system.file("extdata", "temperature.nc", package = "metR")
 # Get a list of variables.
 variables <- GlanceNetCDF(file)

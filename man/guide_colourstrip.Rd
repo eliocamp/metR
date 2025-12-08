@@ -90,7 +90,11 @@ for which a colourbar can be drawn.}
 
 \item{theme}{A \code{\link[ggplot2:theme]{theme}} object to style the guide individually or
 differently from the plot's theme settings. The \code{theme} argument in the
-guide overrides, and is combined with, the plot's theme.}
+guide partially overrides, and is combined with, the plot's theme.
+Arguments that apply to a single legend are respected, most of which have
+the \code{legend}-prefix. Arguments that apply to combined legends
+(the legend box) are ignored, including \code{legend.position},
+\verb{legend.justification.*}, \code{legend.location} and \verb{legend.box.*}.}
 }
 \value{
 A guide object.
@@ -107,7 +111,7 @@ represent the value between contour surfaces.
 the value of the data and is very similar to \link[ggplot2:guide_legend]{ggplot2::guide_legend}.
 }
 \examples{
-\dontshow{if (requireNamespace("reshape2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("reshape2")) withAutoprint(\{ # examplesIf}
 # In this example the lowest colour represents an area of the data with values
 # between 80 and 100.
 library(ggplot2)

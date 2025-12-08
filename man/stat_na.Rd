@@ -95,12 +95,14 @@ lists which parameters it can accept.
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.
 It can also be a named logical vector to finely select the aesthetics to
-display.}
+display. To include legend keys for all levels, even
+when no data exists, use \code{TRUE}.  If \code{NA}, all levels are shown in legend,
+but unobserved levels are omitted.}
 
 \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
+the default plot specification, e.g. \code{\link[ggplot2:annotation_borders]{annotation_borders()}}.}
 }
 \description{
 Useful for indicating or masking missing data. This stat subsets data where
@@ -120,7 +122,7 @@ one variable is \code{NA}.
 }
 
 \examples{
-\dontshow{if (requireNamespace("reshape2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("reshape2")) withAutoprint(\{ # examplesIf}
 library(ggplot2)
 library(data.table)
 surface <- reshape2::melt(volcano)

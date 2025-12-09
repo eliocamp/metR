@@ -1,9 +1,6 @@
-
-This patch changes a few visual tests to make them pass with the upcoming ggplot2 new version
-
 ## Test environments
 
-* local installation of Ubuntu 24.04.1 R version 4.4.2
+* local installation of Ubuntu 24.04.1 R version 4.5.1
 * Github Actions:
     - macos-latest (release)
     - windows-latest (release)

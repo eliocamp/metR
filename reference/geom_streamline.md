@@ -108,7 +108,7 @@ stat_streamline(
 
   The statistical transformation to use on the data for this layer. When
   using a `geom_*()` function to construct a layer, the `stat` argument
-  can be used the override the default coupling between geoms and stats.
+  can be used to override the default coupling between geoms and stats.
   The `stat` argument accepts the following:
 
   - A `Stat` ggproto subclass, for example `StatCount`.
@@ -243,7 +243,9 @@ stat_streamline(
   logical. Should this layer be included in the legends? `NA`, the
   default, includes if any aesthetics are mapped. `FALSE` never
   includes, and `TRUE` always includes. It can also be a named logical
-  vector to finely select the aesthetics to display.
+  vector to finely select the aesthetics to display. To include legend
+  keys for all levels, even when no data exists, use `TRUE`. If `NA`,
+  all levels are shown in legend, but unobserved levels are omitted.
 
 - inherit.aes:
 
@@ -251,7 +253,7 @@ stat_streamline(
   with them. This is most useful for helper functions that define both
   data and aesthetics and shouldn't inherit behaviour from the default
   plot specification, e.g.
-  [`borders()`](https://ggplot2.tidyverse.org/reference/annotation_borders.html).
+  [`annotation_borders()`](https://ggplot2.tidyverse.org/reference/annotation_borders.html).
 
 - geom:
 

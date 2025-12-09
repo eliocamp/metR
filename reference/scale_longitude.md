@@ -94,7 +94,9 @@ scale_y_level(name = "", expand = c(0, 0), trans = "reverselog", ...)
 
 - labels:
 
-  One of:
+  One of the options below. Please note that when `labels` is a vector,
+  it is highly recommended to also set the `breaks` argument as a vector
+  to protect against unintended mismatches.
 
   - `NULL` for no labels
 

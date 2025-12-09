@@ -53,13 +53,6 @@ scale_fill_divergent(
   :   **\[deprecated\]** The name of the scale that should be used for
       error messages associated with this scale.
 
-  `palette`
-
-  :   A palette function that when called with a numeric vector with
-      values between 0 and 1 returns the corresponding output values
-      (e.g.,
-      [`scales::pal_area()`](https://scales.r-lib.org/reference/pal_area.html)).
-
   `breaks`
 
   :   One of:
@@ -87,8 +80,8 @@ scale_fill_divergent(
       - `NULL` for no minor breaks
 
       - [`waiver()`](https://ggplot2.tidyverse.org/reference/waiver.html)
-        for the default breaks (one minor break between each major
-        break)
+        for the default breaks (none for discrete, one minor break
+        between each major break for continuous)
 
       - A numeric vector of positions
 
@@ -96,7 +89,7 @@ scale_fill_divergent(
         breaks. Also accepts rlang
         [lambda](https://rlang.r-lib.org/reference/as_function.html)
         function notation. When the function has two arguments, it will
-        be given the limits and major breaks.
+        be given the limits and major break positions.
 
   `n.breaks`
 
@@ -107,7 +100,9 @@ scale_fill_divergent(
 
   `labels`
 
-  :   One of:
+  :   One of the options below. Please note that when `labels` is a
+      vector, it is highly recommended to also set the `breaks` argument
+      as a vector to protect against unintended mismatches.
 
       - `NULL` for no labels
 

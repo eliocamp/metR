@@ -112,8 +112,12 @@ guide_colorstrip(
 
   A [`theme`](https://ggplot2.tidyverse.org/reference/theme.html) object
   to style the guide individually or differently from the plot's theme
-  settings. The `theme` argument in the guide overrides, and is combined
-  with, the plot's theme.
+  settings. The `theme` argument in the guide partially overrides, and
+  is combined with, the plot's theme. Arguments that apply to a single
+  legend are respected, most of which have the `legend`-prefix.
+  Arguments that apply to combined legends (the legend box) are ignored,
+  including `legend.position`, `legend.justification.*`,
+  `legend.location` and `legend.box.*`.
 
 ## Value
 

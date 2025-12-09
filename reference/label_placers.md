@@ -67,7 +67,7 @@ label_placement_minmax(
 
   A function that standardizes the rotation angles of the labels. See
   e.g.
-  [isoband::angle_halfcircle_bottom](https://isoband.r-lib.org/reference/angle_halfcircle_bottom.html).
+  [isoband::angle_halfcircle_bottom](http://isoband.r-lib.org/reference/angle_halfcircle_bottom.md).
 
 - n:
 

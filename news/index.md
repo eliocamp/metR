@@ -1,6 +1,12 @@
 # Changelog
 
-## metR (development version)
+## metR 0.18.3
+
+### Bug fixes
+
+- Fixed [`I()`](https://rdrr.io/r/base/AsIs.html) notation in
+  [`ReadNetCDF()`](https://eliocamp.github.io/metR/reference/ReadNetCDF.md)
+  subset.
 
 ## metR 0.18.2
 

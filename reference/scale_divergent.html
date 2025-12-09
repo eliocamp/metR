@@ -9,7 +9,7 @@ inverted defaults of high and low."><meta property="og:image" content="https://e
 
     <a class="navbar-brand me-2" href="../index.html">metR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,11 +89,6 @@ inverted defaults of <code>high</code> and <code>low</code>.</p>
 <dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> The name of the scale
 that should be used for error messages associated with this scale.</p></dd>
 
-    <dt><code>palette</code></dt>
-<dd><p>A palette function that when called with a numeric vector with
-values between 0 and 1 returns the corresponding output values
-(e.g., <code><a href="https://scales.r-lib.org/reference/pal_area.html" class="external-link">scales::pal_area()</a></code>).</p></dd>
-
     <dt><code>breaks</code></dt>
 <dd><p>One of:</p><ul><li><p><code>NULL</code> for no breaks</p></li>
 <li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default breaks computed by the
@@ -107,13 +102,13 @@ Also accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" 
 
     <dt><code>minor_breaks</code></dt>
 <dd><p>One of:</p><ul><li><p><code>NULL</code> for no minor breaks</p></li>
-<li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default breaks (one minor break between
-each major break)</p></li>
+<li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default breaks (none for discrete, one minor break
+between each major break for continuous)</p></li>
 <li><p>A numeric vector of positions</p></li>
 <li><p>A function that given the limits returns a vector of minor breaks. Also
 accepts rlang <a href="https://rlang.r-lib.org/reference/as_function.html" class="external-link">lambda</a> function notation. When
 the function has two arguments, it will be given the limits and major
-breaks.</p></li>
+break positions.</p></li>
 </ul></dd>
 
     <dt><code>n.breaks</code></dt>
@@ -123,7 +118,9 @@ only have an effect if <code>breaks = waiver()</code>. Use <code>NULL</code> to 
 number of breaks given by the transformation.</p></dd>
 
     <dt><code>labels</code></dt>
-<dd><p>One of:</p><ul><li><p><code>NULL</code> for no labels</p></li>
+<dd><p>One of the options below. Please note that when <code>labels</code> is a
+vector, it is highly recommended to also set the <code>breaks</code> argument as a
+vector to protect against unintended mismatches.</p><ul><li><p><code>NULL</code> for no labels</p></li>
 <li><p><code><a href="https://ggplot2.tidyverse.org/reference/waiver.html" class="external-link">waiver()</a></code> for the default labels computed by the
 transformation object</p></li>
 <li><p>A character vector giving labels (must be same length as <code>breaks</code>)</p></li>

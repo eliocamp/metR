@@ -1,5 +1,7 @@
 # Changelog
 
+## metR (development version)
+
 ## metR 0.18.3
 
 CRAN release: 2025-12-09

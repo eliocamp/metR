@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/eliocamp/metR/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/eliocamp/metR/blob/v0.18.3/inst/CITATION)
 
 person, c) c= (2021). *metR: Tools for Easier Analysis of Meteorological
 Fields*.

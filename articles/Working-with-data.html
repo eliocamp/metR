@@ -65,9 +65,9 @@
                         <h4 data-toc-skip class="author">Elio
 Campitelli</h4>
             
-            <h4 data-toc-skip class="date">2025-12-09</h4>
+            <h4 data-toc-skip class="date">2026-01-07</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/main/vignettes/Working-with-data.Rmd" class="external-link"><code>vignettes/Working-with-data.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/v0.18.3/vignettes/Working-with-data.Rmd" class="external-link"><code>vignettes/Working-with-data.Rmd</code></a></small>
       <div class="d-none name"><code>Working-with-data.Rmd</code></div>
     </div>
 
@@ -117,7 +117,7 @@ of the data.</p>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">air</span>, color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="672"></p>
 <p>Since the most consuming part of reading the file is melting a
 multidimensional array into a tidy <code>data.table</code>, if we wanted
 to add another variable to the same <code>data.table</code> we could
@@ -129,7 +129,7 @@ importance that both variables are on the same exact grid</strong>.</p>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">air2</span>, color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="672"></p>
 <p>Because <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> can read multiple variables at the
 same time, the <code>out = "vector"</code> output will be actually
 return a <code>list</code> of vectors (which integrates seamlessly with
@@ -176,14 +176,14 @@ vector with <code>TRUE</code> if a point is over land.</p>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">land</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="672"></p>
 <p>With this, we can compare mean temperature over land and over sea by
 latitude.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">air</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>air <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">air</span><span class="op">)</span> <span class="op">-</span> <span class="fl">273.15</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lat</span>, <span class="va">land</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lat</span>, <span class="va">air</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">land</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="672"></p>
 <p>The resolution of <code><a href="../reference/MaskLand.html">MaskLand()</a></code> is, in principle, only
 limited by the polygons used as mask. Currently it can only use maps
 from the <code>maps</code> package (see <code><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">?maps::map</a></code>).</p>
@@ -249,13 +249,13 @@ perform from the (scaled) right singular vector.</p>
 <span>  <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_radial.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">PC</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">eof</span><span class="op">$</span><span class="va">left</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">gh.t.w</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">PC</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-8-2.png" class="r-plt" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-8-2.png" class="r-plt" alt="" width="672"></p>
 <p>Where the 1st Principal Component is clearly the <a href="http://www.cpc.ncep.noaa.gov/products/precip/CWlink/daily_ao_index/aao/aao.shtml" class="external-link">Antarctic
 Oscillation</a> and the 2nd Principal Component looks like the
 Pacific–South American Pattern.</p>
@@ -338,7 +338,7 @@ coordinates (think: Earth).</p>
 <span>  <span class="fu"><a href="../reference/geom_arrow.html">geom_vector</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">gh.dlon</span>, dy <span class="op">=</span> <span class="va">gh.dlat</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="672"></p>
 <p>There are several wrappers around <code><a href="../reference/Derivate.html">Derivate()</a></code> to perform
 other common related operations, <code><a href="../reference/Derivate.html">Laplacian()</a></code>,
 <code><a href="../reference/Derivate.html">Divergence()</a></code> and <code><a href="../reference/Derivate.html">Vorticity()</a></code>.</p>
@@ -357,7 +357,7 @@ geostrophic wind from geopotential height.</p>
 <span>              skip.y <span class="op">=</span> <span class="fl">1</span>, skip.x <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Working-with-data_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" width="672"></p>
+<p><img src="Working-with-data_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="thermodynamics">Thermodynamics<a class="anchor" aria-label="anchor" href="#thermodynamics"></a>

@@ -2,6 +2,8 @@
 
 ## metR 0.18.3
 
+CRAN release: 2025-12-09
+
 ### Bug fixes
 
 - Fixed [`I()`](https://rdrr.io/r/base/AsIs.html) notation in

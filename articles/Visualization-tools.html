@@ -65,9 +65,9 @@
                         <h4 data-toc-skip class="author">Elio
 Campitelli</h4>
             
-            <h4 data-toc-skip class="date">2025-12-09</h4>
+            <h4 data-toc-skip class="date">2026-01-07</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/main/vignettes/Visualization-tools.Rmd" class="external-link"><code>vignettes/Visualization-tools.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/v0.18.3/vignettes/Visualization-tools.Rmd" class="external-link"><code>vignettes/Visualization-tools.Rmd</code></a></small>
       <div class="d-none name"><code>Visualization-tools.Rmd</code></div>
     </div>
 
@@ -128,7 +128,7 @@ binwidth, but also which levels <strong>not</strong> to draw.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lon</span> <span class="op"><a href="../reference/logic.html">%~%</a></span> <span class="fl">180</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lat</span>, <span class="va">lev</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="../reference/MakeBreaks.html">MakeBreaks</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">2</span>, exclude <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="../reference/MakeBreaks.html">MakeBreaks</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">2</span>, exclude <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="infilling-of-missing-values">Infilling of missing values<a class="anchor" aria-label="anchor" href="#infilling-of-missing-values"></a>
@@ -144,7 +144,7 @@ but they will leave a somewhat ugly empty patch when they are found.</p>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">volcano</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span>, z <span class="op">=</span> <span class="va">value.gap</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="672"></p>
 <p>This is an OK behaviour, but sometimes it’s more visually appealing
 to fill in these missing areas. The <code>na.fill</code> argument allows
 for some control over how this values are imputed. It can take a number,
@@ -155,7 +155,7 @@ number, or <code>TRUE</code>, in which case it will use
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">volcano</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span>, z <span class="op">=</span> <span class="va">value.gap</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span>na.fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; Warning: Imputing missing values.</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="on-the-fly-projecting">On-the-fly projecting<a class="anchor" aria-label="anchor" href="#on-the-fly-projecting"></a>
@@ -170,12 +170,12 @@ lambertian grid.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">surface</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">surface</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">height</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">surface</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">height</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-5-2.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-5-2.png" class="r-plt" alt="" width="672"></p>
 <p>If you know the projection string, you can pass it to the
 <code>proj</code> argument and get filled contours in longitude by
 latitude space (this needs {<a href="https://cran.r-project.org/package=proj4" class="external-link">proj4</a>} to be
@@ -185,12 +185,12 @@ installed).</p>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">surface</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">height</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">surface</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">height</span><span class="op">)</span>, proj <span class="op">=</span> <span class="va">proj_string</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-6-2.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-6-2.png" class="r-plt" alt="" width="672"></p>
 <p>You can actually pass any arbitrary function to <code>proj</code>. It
 should take an iso object as returned by the isoband package with the
 contour information and return the modified contours.</p>
@@ -205,7 +205,7 @@ after <code>proj</code> is applied.</p>
 <code class="sourceCode R"><span><span class="va">argentina</span> <span class="op">&lt;-</span> <span class="fu">rnaturalearth</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/rnaturalearth/reference/ne_countries.html" class="external-link">ne_countries</a></span><span class="op">(</span>country <span class="op">=</span> <span class="st">"argentina"</span>, returnclass <span class="op">=</span> <span class="st">"sf"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">surface</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">height</span><span class="op">)</span>, proj <span class="op">=</span> <span class="va">proj_string</span>, clip <span class="op">=</span> <span class="va">argentina</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="on-the-fly-kriging">On the fly kriging<a class="anchor" aria-label="anchor" href="#on-the-fly-kriging"></a>
@@ -227,13 +227,13 @@ create a dataset of irregularly spaced points. Using kriging,
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">some_volcano</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">some_volcano</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">value</span><span class="op">)</span>, kriging <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-8-2.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-8-2.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="unequal-breaks-between-facets">Unequal <code>breaks</code> between facets<a class="anchor" aria-label="anchor" href="#unequal-breaks-between-facets"></a>
@@ -251,7 +251,7 @@ for comparison, but in this case the panel on the left lacks detail.</p>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">lev</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="672"></p>
 <p>With <code>global.breaks = FALSE</code>, binwidth is no longer the
 same in each panel and now you can see more detail in the leftmost
 panel.</p>
@@ -260,7 +260,7 @@ panel.</p>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span>global.breaks <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">lev</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="672"></p>
 <p>All of these features are also available to regular contours in the
 <code><a href="../reference/geom_contour2.html">geom_contour2()</a></code> function.</p>
 </div>
@@ -277,12 +277,12 @@ factor that represents the range of the contour.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-11-2.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-11-2.png" class="r-plt" alt="" width="672"></p>
 <p>A big difference between the two variables is that one is compatible
 with continuous scales while the other only works with discrete scales.
 The advantage of using <code>level_mid</code> is that it preserves the
@@ -299,7 +299,7 @@ in the data automatically.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level_d</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="672"></p>
 <p>See the <a href="#discretised_scale">discretised_scale</a> section
 for a way of using continuous sales for discretised data.</p>
 </div>
@@ -317,7 +317,7 @@ or labels to the flattest part of a contour.</p>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_text_contour.html">geom_text_contour</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="672"></p>
 <p>By default it labels every 2nd contour (this can be changed by the
 <code>skip</code> parameter) and it rotates to follow the angle of the
 contour (this is not available on <code><a href="../reference/geom_text_contour.html">geom_label_contour()</a></code>).
@@ -334,7 +334,7 @@ draw a stroke around the text.</p>
 <span>    <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_text_contour.html">geom_text_contour</a></span><span class="op">(</span>stroke <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="672"></p>
 <p>You can have full control over where labels are placed with the
 <code>label.placer</code> argument. It takes a function that takes a
 vector of x and y values and returns a logical vector of the same length
@@ -362,7 +362,7 @@ point. Probably is best not to use it.</p></li>
 <span>    <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_text_contour.html">geom_text_contour</a></span><span class="op">(</span>stroke <span class="op">=</span> <span class="fl">0.2</span>, label.placer <span class="op">=</span> <span class="fu"><a href="../reference/label_placers.html">label_placer_random</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="geom_contour_tanaka">geom_contour_tanaka<a class="anchor" aria-label="anchor" href="#geom_contour_tanaka"></a>
@@ -377,7 +377,7 @@ plots with divergent colour palettes, and it just looks cool.</p>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_tanaka.html">geom_contour_tanaka</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="stat_subset">stat_subset<a class="anchor" aria-label="anchor" href="#stat_subset"></a>
@@ -403,14 +403,14 @@ to mark only the points with significant correlations:</p>
 <span>    <span class="fu"><a href="../reference/stat_subset.html">stat_subset</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>subset <span class="op">=</span> <span class="va">correlation</span> <span class="op">&gt;</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
 <span>                geom <span class="op">=</span> <span class="st">"point"</span>, size <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_divergent.html">scale_fill_divergent</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="672"></p>
 <p>Another possible use it to quickly mask missing values.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">volcano</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span>, z <span class="op">=</span> <span class="va">value.gap</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span>na.fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/stat_subset.html">stat_subset</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">value.gap</span><span class="op">)</span><span class="op">)</span>, geom <span class="op">=</span> <span class="st">"raster"</span>, </span>
 <span>                fill <span class="op">=</span> <span class="st">"#a56de2"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="geom_vector-and-geom_arrow">geom_vector and geom_arrow<a class="anchor" aria-label="anchor" href="#geom_vector-and-geom_arrow"></a>
@@ -444,14 +444,14 @@ this:</p>
 <span>        <span class="fu"><a href="../reference/geom_arrow.html">geom_vector</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">t.dx</span>, dy <span class="op">=</span> <span class="va">t.dy</span><span class="op">)</span>, skip.x <span class="op">=</span> <span class="fl">2</span>, </span>
 <span>                    skip.y <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>        <span class="fu"><a href="../reference/scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="672"></p>
 <p>In the above example, t.dx and t.dy represent displacements in the
 same units as the x and y dimension, so using <code><a href="../reference/geom_arrow.html">geom_vector()</a></code>
 each arrow points perpendicular to the contours even if we change the
 coordinate system.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_radial.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="672"></p>
 <p>But if we want to plot how the (horizontal) direction changes with
 height it makes more sense to use <code><a href="../reference/geom_arrow.html">geom_arrow()</a></code> (or
 <code>geom_vector(preserve.dir = TRUE)</code>)</p>
@@ -460,7 +460,7 @@ height it makes more sense to use <code><a href="../reference/geom_arrow.html">g
 <span>    <span class="fu"><a href="../reference/geom_arrow.html">geom_arrow</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="fu"><a href="../reference/spherical.html">dx</a></span><span class="op">(</span><span class="va">t.dx</span>, <span class="va">lat</span><span class="op">)</span>, dy <span class="op">=</span> <span class="fu"><a href="../reference/spherical.html">dy</a></span><span class="op">(</span><span class="va">t.dy</span><span class="op">)</span><span class="op">)</span>, skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_longitude.html">scale_y_level</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_mag.html">scale_mag</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" alt="" width="672"></p>
 <p>In this case, an arrow at a 45° angle represents temperature gradient
 from the Southwest regardless of the <code>x</code> and <code>y</code>
 scales.</p>
@@ -481,7 +481,7 @@ integration.</p>
 <span>     <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="../reference/geom_streamline.html">geom_streamline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="va">t.dy</span>, dy <span class="op">=</span> <span class="op">-</span><span class="va">t.dx</span><span class="op">)</span>, L <span class="op">=</span> <span class="fl">10</span>, res <span class="op">=</span> <span class="fl">2</span>,   </span>
 <span>                     arrow.length <span class="op">=</span> <span class="fl">0.3</span>, xwrap <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="672"></p>
 <p>There are several parameters that control the feel of the result.
 <code>L</code> and <code>res</code> control the length and resolution,
 while the <code>skip</code> parameters change the amount of the
@@ -495,7 +495,7 @@ first be converted into degrees/s. The functions <code><a href="../reference/sph
 also means that they are robust to coordinate transformations.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_radial.html" class="external-link">coord_polar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="672"></p>
 <p><code><a href="../reference/geom_streamline.html">stat_streamline()</a></code> computes three useful variables.
 <code>step</code> is the integration step, and <code>dx</code> and
 <code>dy</code> are the components of the vector field at each point.
@@ -515,7 +515,7 @@ and to give a sense of direction without arrows.</p>
 <span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 <div class="section level2">
@@ -538,7 +538,7 @@ guide.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">8</span>, <span class="op">-</span><span class="fl">6</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_coloursteps.html" class="external-link">guide_colorsteps</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" alt="" width="672"></p>
 <p>This can work, but this example shows its limitations. Since the
 scale has no real understanding of the underlying numbers, breaks and
 colours are always distributed evenly even when they shouldn’t. For the
@@ -550,7 +550,7 @@ set midpoint.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">8</span>, <span class="op">-</span><span class="fl">6</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/discretised_scale.html">scale_fill_discretised</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" alt="" width="672"></p>
 <p>This type of scale understand discrete values that have an underlying
 continuous nature. This means that the scale can be modified by
 referencing the continuous values. For example, using a divergent scale
@@ -559,7 +559,7 @@ and setting the midpoint.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lev</span> <span class="op">==</span> <span class="fl">300</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_contour_fill.html">geom_contour_fill</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">8</span>, <span class="op">-</span><span class="fl">6</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/discretised_scale.html">scale_fill_divergent_discretised</a></span><span class="op">(</span>midpoint <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-27-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-27-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="other-scales">Other scales<a class="anchor" aria-label="anchor" href="#other-scales"></a>
@@ -580,7 +580,7 @@ distribution of temperature anomalies from the zonal mean.</p>
 <code class="sourceCode R"><span><span class="co"># Plot made with base ggplot</span></span>
 <span><span class="op">(</span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">[</span><span class="va">lon</span> <span class="op"><a href="../reference/logic.html">%~%</a></span> <span class="fl">180</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lat</span>, <span class="va">lev</span>, z <span class="op">=</span> <span class="va">air.z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="../reference/geom_contour2.html">geom_contour2</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-28-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-28-1.png" class="r-plt" alt="" width="672"></p>
 <p>While this is fine, since pressure levels are roughly proportional to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi mathvariant="normal">e</mi><mrow><mo>−</mo><mi>z</mi></mrow></msup><annotation encoding="application/x-tex">\mathrm{e}^{-z}</annotation></semantics></math>
 in meteorology we usually plot the vertical coordinate as
@@ -603,7 +603,7 @@ dimensions are understood by the shape of the plot.</p>
 <span>    <span class="fu"><a href="../reference/scale_longitude.html">scale_y_level</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_longitude.html">scale_x_latitude</a></span><span class="op">(</span>ticks <span class="op">=</span> <span class="fl">15</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">90</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/scale_divergent.html">scale_color_divergent</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-29-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-29-1.png" class="r-plt" alt="" width="672"></p>
 <p>Note: <code>scale_*_longitude()</code> (currently) assumes the data
 goes from 0° to 360° but puts labels between -180° and 180°. This very
 idiosyncratic choice stems from the fact that model output is usually in
@@ -624,7 +624,7 @@ data.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">volcano</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var1</span>, <span class="va">Var2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/geom_relief.html">geom_relief</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-30-1.png" class="r-plt" width="672"></p>
+<p><img src="Visualization-tools_files/figure-html/unnamed-chunk-30-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

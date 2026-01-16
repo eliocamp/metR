@@ -1,5 +1,9 @@
 # metR (development version)
 
+## New features
+
+-  `geom_streamline()` gets a `start` argument to manually specify starting locations for the integration. 
+
 # metR 0.18.3
 
 ## Bug fixes

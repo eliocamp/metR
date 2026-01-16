@@ -23,6 +23,7 @@ geom_streamline(
   skip = 1,
   skip.x = skip,
   skip.y = skip,
+  start = NULL,
   n = NULL,
   nx = n,
   ny = n,
@@ -57,6 +58,7 @@ stat_streamline(
   skip = 1,
   skip.x = skip,
   skip.y = skip,
+  start = NULL,
   n = NULL,
   nx = n,
   ny = n,
@@ -210,6 +212,11 @@ stat_streamline(
 
   numeric specifying number of gridpoints not to draw in the x and y
   direction
+
+- start:
+
+  optional list/data.frame with x and y columns giving the starting
+  locations for integration.
 
 - n, nx, ny:
 

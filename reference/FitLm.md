@@ -87,7 +87,7 @@ system.time({
   regr <- geopotential[, FitLm(gh, date, se = TRUE), by = .(lon, lat)]
 })
 #>    user  system elapsed 
-#>   0.258   0.015   0.273 
+#>   0.265   0.008   0.273 
 
 ggplot(regr[term != "(Intercept)"], aes(lon, lat)) +
     geom_contour(aes(z = estimate, color = after_stat(level))) +

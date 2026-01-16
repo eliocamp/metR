@@ -2,6 +2,12 @@
 
 ## metR (development version)
 
+### New features
+
+- [`geom_streamline()`](https://eliocamp.github.io/metR/reference/geom_streamline.md)
+  gets a `start` argument to manually specify starting locations for the
+  integration.
+
 ## metR 0.18.3
 
 CRAN release: 2025-12-09

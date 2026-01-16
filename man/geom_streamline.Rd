@@ -24,6 +24,7 @@ geom_streamline(
   skip = 1,
   skip.x = skip,
   skip.y = skip,
+  start = NULL,
   n = NULL,
   nx = n,
   ny = n,
@@ -58,6 +59,7 @@ stat_streamline(
   skip = 1,
   skip.x = skip,
   skip.y = skip,
+  start = NULL,
   n = NULL,
   nx = n,
   ny = n,
@@ -165,6 +167,9 @@ lists which parameters it can accept.
 
 \item{skip, skip.x, skip.y}{numeric specifying number of gridpoints not to draw
 in the x and y direction}
+
+\item{start}{optional list/data.frame with x and y columns giving the starting
+locations for integration.}
 
 \item{n, nx, ny}{optional numeric indicating the number of points to draw in the
 x and y direction (replaces \code{skip} if not \code{NULL})}

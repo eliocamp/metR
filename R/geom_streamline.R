@@ -14,7 +14,8 @@
 #' @param dt optional numeric size "timestep" for integration
 #' @param n,nx,ny optional numeric indicating the number of points to draw in the
 #' x and y direction (replaces `skip` if not `NULL`)
-#' @param x.start,y.start optional numeric vectors indicating starting positions.
+#' @param start optional list/data.frame with x and y columns giving the starting
+#' locations for integration.
 #' @param jitter,jitter.x,jitter.y amount of jitter of the starting points
 #' @param xwrap,ywrap vector of length two used to wrap the circular dimension.
 #'
@@ -135,14 +136,13 @@ geom_streamline <- function(
   skip = 1,
   skip.x = skip,
   skip.y = skip,
+  start = NULL,
   n = NULL,
   nx = n,
   ny = n,
   jitter = 1,
   jitter.x = jitter,
   jitter.y = jitter,
-  x.start = NULL,
-  y.start = NULL,
   arrow.angle = 6,
   arrow.length = 0.5,
   arrow.ends = "last",
@@ -183,8 +183,7 @@ geom_streamline <- function(
       ny = ny,
       jitter.x = jitter.x,
       jitter.y = jitter.y,
-      x.start = x.start,
-      y.start = y.start,
+      start = start,
       ...
     )
   )
@@ -208,11 +207,10 @@ stat_streamline <- function(
   skip = 1,
   skip.x = skip,
   skip.y = skip,
+  start = NULL,
   n = NULL,
   nx = n,
   ny = n,
-  x.start = NULL,
-  y.start = NULL,
   jitter = 1,
   jitter.x = jitter,
   jitter.y = jitter,
@@ -256,8 +254,7 @@ stat_streamline <- function(
       ny = ny,
       jitter.x = jitter.x,
       jitter.y = jitter.y,
-      x.start = x.start,
-      y.start = y.start,
+      start = start,
       ...
     )
   )
@@ -316,8 +313,7 @@ StatStreamline <- ggplot2::ggproto(
     L = NULL,
     res = NULL,
     no.cache = FALSE,
-    x.start = NULL,
-    y.start = NULL
+    start = NULL
   ) {
     if (no.cache == TRUE) {
       memoise::forget(streamline.f)
@@ -334,8 +330,7 @@ StatStreamline <- ggplot2::ggproto(
       jitter.y = jitter.y,
       xwrap = xwrap,
       ywrap = ywrap,
-      x.start = x.start,
-      y.start = y.start
+      start = start
     )
 
     distance <- data[, .(dx = diff(x), dy = diff(y)), by = line]
@@ -502,8 +497,7 @@ streamline.f <- function(
   jitter.y = 1,
   xwrap = NULL,
   ywrap = NULL,
-  x.start = NULL,
-  y.start = NULL
+  start = NULL
 ) {
   field <- data.table::copy(data.table::as.data.table(field))
   is.grid <- with(field, .is.regular_grid(x, y))
@@ -554,29 +548,29 @@ streamline.f <- function(
     return(cbind(dx = dx, dy = dy))
   }
 
-  # Build grid
-  if (is.null(x.start)) {
-    if (is.null(nx)) {
-      x.start <- JumpBy(dx.field$x, skip.x + 1)
-    } else {
-      x.start <- seq(range.x[1], range.x[2], length.out = nx)
-    }
-  }
-  if (is.null(y.start)) {
-    if (is.null(ny)) {
-      y.start <- JumpBy(dx.field$y, skip.y + 1)
-    } else {
-      y.start <- seq(range.y[1], range.y[2], length.out = ny)
-    }
-  }
-
-  if ((is.null(nx) && is.null(ny))) {
-    points <- data.table::as.data.table(field[
-      x %in% x.start & y %in% y.start,
-      .(x = x, y = y)
-    ])
+  if (!is.null(start)) {
+    points <- data.table::setDT(start)
   } else {
-    points <- data.table::as.data.table(expand.grid(x = x.start, y = y.start))
+    # Build grid
+    if (is.null(nx)) {
+      xs <- JumpBy(dx.field$x, skip.x + 1)
+    } else {
+      xs <- seq(range.x[1], range.x[2], length.out = nx)
+    }
+    if (is.null(ny)) {
+      ys <- JumpBy(dx.field$y, skip.y + 1)
+    } else {
+      ys <- seq(range.y[1], range.y[2], length.out = ny)
+    }
+
+    if ((is.null(nx) && is.null(ny))) {
+      points <- data.table::as.data.table(field[
+        x %in% xs & y %in% ys,
+        .(x = x, y = y)
+      ])
+    } else {
+      points <- data.table::as.data.table(expand.grid(x = xs, y = ys))
+    }
   }
 
   set.seed(42)

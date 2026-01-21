@@ -4,6 +4,10 @@
 
 -  `geom_streamline()` gets a `start` argument to manually specify starting locations for the integration. 
 
+## Bug fixes
+
+-   Errors in the mismatched spatial positioning of  `WaveFlux()` calculation results and the internal calculation of the Coriolis parameter(`f`) have been corrected. Additionally, robust adjustments have been made to data at low latitudes (near the equator).
+
 # metR 0.18.3
 
 ## Bug fixes

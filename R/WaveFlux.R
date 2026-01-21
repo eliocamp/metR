@@ -13,8 +13,7 @@
 #' Calculates Plum-like wave activity fluxes
 #'
 #' @return
-#' A list with elements: longitude, latitude, gh, psi, and the two horizontal components
-#' of the wave activity flux.
+#' A list with elements: the two horizontal components of the wave activity flux.
 #'
 #' @references
 #' Takaya, K. and H. Nakamura, 2001: A Formulation of a Phase-Independent Wave-Activity Flux for Stationary and Migratory Quasigeostrophic Eddies on a Zonally Varying Basic Flow. J. Atmos. Sci., 58, 608–627, \doi{10.1175/1520-0469(2001)058<0608:AFOAPI>2.0.CO;2} \cr
@@ -42,9 +41,13 @@ WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
     dt <- data.table::data.table(lon = lon, lat = lat,
                      lonrad = lon*pi/180, latrad = lat*pi/180,
                      gh = gh, u.mean = u, v.mean = v)
+    
+    positon_tem = dt[, .(lon, lat)]
+    
     data.table::setkey(dt, lat, lon)
-    dt[, f := 2 * 2 * pi / (3600*24) * sin(latrad)] 
-    dt[, psi := g/f*gh]
+    dt[, f := coriolis(lat)]
+
+    dt[, psi := ifelse(abs(f) < 1e-5, NA_real_, g / f * gh)] # Processing Near-EQ Data
 
     # Derivadas
     dt[, `:=`(psi.dx  = Derivate(psi ~ lonrad, cyclical = TRUE)[[1]],
@@ -55,27 +58,28 @@ WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
 
     # Cálculo del flujo (al fin!)
     flux <- dt[, {
-        wind <- sqrt(u.mean^2 + v.mean^2)
-
-        xu <- psi.dx^2      - psi*psi.dxx
-        xv <- psi.dx*psi.dy - psi*psi.dxy
-        yv <- psi.dy^2      - psi*psi.dyy
-
-        coslat <- cos(latrad)
-        coeff <- lev*100/p0/(2*wind*a^2)
-
-        w.x <- coeff*(u.mean/coslat*xu + v.mean*xv)
-        w.y <- coeff*(u.mean*xv + v.mean*coslat*yv)
-
-        list(
-            lon = lon,
-            lat = lat,
-            gh = gh,  # Both `gh` and `psi` are provided for verification purposes.
-            psi = psi, 
-            w.x = w.x, 
-            w.y = w.y)
+            wind <- sqrt(u.mean^2 + v.mean^2)
+            
+            xu <- psi.dx^2 - psi * psi.dxx
+            xv <- psi.dx * psi.dy - psi * psi.dxy
+            yv <- psi.dy^2 - psi * psi.dyy
+            
+            coslat <- cos(latrad)
+            coeff <- lev / p0 / (2 * wind * a^2)
+            
+            w.x <- coeff * (u.mean / coslat * xu + v.mean * xv)
+            w.y <- coeff * (u.mean * xv + v.mean * coslat * yv)
+            
+            list(
+                lon  = lon,
+                lat = lat,
+                w.x = w.x,
+                w.y = w.y
+            )
         }]
-    return(flux)
+    flux <- flux[positon_tem, on = c('lon', 'lat')]
+  
+    return(list(w.x = flux$w.x, w.y = flux$w.y))
 }
 
 

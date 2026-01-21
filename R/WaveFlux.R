@@ -1,6 +1,6 @@
 #' Calculate wave-activity flux
 #'
-#' @param gh geopotential height
+#' @param gh geopotential height (Unit: m)
 #' @param u mean zonal velocity
 #' @param v mean meridional velocity
 #' @param lon longitude (in degrees)
@@ -13,7 +13,7 @@
 #' Calculates Plum-like wave activity fluxes
 #'
 #' @return
-#' A list with elements: longitude, latitude, and the two horizontal components
+#' A list with elements: longitude, latitude, gh, psi, and the two horizontal components
 #' of the wave activity flux.
 #'
 #' @references
@@ -36,14 +36,14 @@ WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
     assertNumber(a, finite = TRUE, add = checks)
     reportAssertions(checks)
 
-    p0 <- 100000    # normalizo a 100hPa
+    p0 <- 100000    # normalizo a 1000hPa
 
     # Todo en una data.table para que sea más cómodo.
     dt <- data.table::data.table(lon = lon, lat = lat,
                      lonrad = lon*pi/180, latrad = lat*pi/180,
                      gh = gh, u.mean = u, v.mean = v)
     data.table::setkey(dt, lat, lon)
-    dt[, f := 2*pi/(3600*24)*sin(latrad)]
+    dt[, f := 2 * 2 * pi / (3600*24) * sin(latrad)] 
     dt[, psi := g/f*gh]
 
     # Derivadas
@@ -68,7 +68,12 @@ WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
         w.y <- coeff*(u.mean*xv + v.mean*coslat*yv)
 
         list(
-             w.x = w.x, w.y = w.y)
+            lon = lon,
+            lat = lat,
+            gh = gh,  # Both `gh` and `psi` are provided for verification purposes.
+            psi = psi, 
+            w.x = w.x, 
+            w.y = w.y)
         }]
     return(flux)
 }

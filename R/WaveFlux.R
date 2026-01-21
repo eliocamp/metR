@@ -65,7 +65,7 @@ WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
             yv <- psi.dy^2 - psi * psi.dyy
             
             coslat <- cos(latrad)
-            coeff <- lev / p0 / (2 * wind * a^2)
+            coeff <- lev * 100/ p0 / (2 * wind * a^2)
             
             w.x <- coeff * (u.mean / coslat * xu + v.mean * xv)
             w.y <- coeff * (u.mean * xv + v.mean * coslat * yv)

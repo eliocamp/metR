@@ -2,6 +2,7 @@ url: https://eliocamp.github.io/metR/
 template:
   bootswatch: flatly
   bootstrap: 5
+  math-rendering: katex
 
 reference:
 - title: Package information

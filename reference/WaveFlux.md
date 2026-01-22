@@ -12,44 +12,64 @@ WaveFlux(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000)
 
 - gh:
 
-  geopotential height
+  Geopotential Height Anomaly (unit: gpm or m). The deviation of the
+  geopotential height from the climatological mean (\\z' = z -
+  \bar{z}\\). It is used to compute the perturbation geostrophic
+  streamfunction: \\\psi' = \frac{g}{f}z'\\.
 
 - u:
 
-  mean zonal velocity
+  Mean Zonal Wind (unit: m/s). The background basic flow (\\\bar{u}\\),
+  usually representing the long-term climatological mean zonal velocity.
 
 - v:
 
-  mean meridional velocity
+  Mean Meridional Wind (unit: m/s). The background basic flow
+  (\\\bar{v}\\), usually representing the long-term climatological mean
+  meridional velocity.
 
 - lon:
 
-  longitude (in degrees)
+  Numeric vector of longitudes (unit: degrees).
 
 - lat:
 
-  latitude (in degrees)
+  Numeric vector of latitudes (unit: degrees).
 
 - lev:
 
-  pressure level (in hPa)
+  The pressure level of the data (unit: hPa). Used for the vertical
+  scaling factor \\p/1000\\ in the T-N flux formula.
 
 - g:
 
-  acceleration of gravity
+  Standard gravity acceleration (default: \\9.81 m/s^2\\).
 
 - a:
 
-  Earth's radius
+  Earth's mean radius (default: 6,371,000 m).
 
 ## Value
 
-A list with elements: longitude, latitude, and the two horizontal
-components of the wave activity flux.
+A `data.table` containing the calculated wave activity flux components:
+
+- w.x:
+
+  Zonal component of the Wave Activity Flux.
+
+- w.y:
+
+  Meridional component of the Wave Activity Flux.
 
 ## Details
 
-Calculates Plum-like wave activity fluxes
+The function computes the horizontal components (\\W_x, W_y\\) of the
+phase-independent wave activity flux.
+
+**Note on Units:** Ensure that `gh` is provided as **Geopotential
+Height** (in meters or gpm). If your input data is **Geopotential**
+(\\\Phi\\, in \\m^2/s^2\\, common in ERA5 raw data), you must divide it
+by gravity (g) before passing it to this function.
 
 ## References
 

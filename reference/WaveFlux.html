@@ -51,45 +51,63 @@
 
 
 <dl><dt id="arg-gh">gh<a class="anchor" aria-label="anchor" href="#arg-gh"></a></dt>
-<dd><p>geopotential height</p></dd>
+<dd><p>Geopotential Height Anomaly (unit: gpm or m).
+The deviation of the geopotential height from the climatological mean
+(\(z' = z - \bar{z}\)). It is used to compute the perturbation
+geostrophic streamfunction: \(\psi' = \frac{g}{f}z'\).</p></dd>
 
 
 <dt id="arg-u">u<a class="anchor" aria-label="anchor" href="#arg-u"></a></dt>
-<dd><p>mean zonal velocity</p></dd>
+<dd><p>Mean Zonal Wind (unit: m/s).
+The background basic flow (\(\bar{u}\)), usually representing the
+long-term climatological mean zonal velocity.</p></dd>
 
 
 <dt id="arg-v">v<a class="anchor" aria-label="anchor" href="#arg-v"></a></dt>
-<dd><p>mean meridional velocity</p></dd>
+<dd><p>Mean Meridional Wind (unit: m/s).
+The background basic flow (\(\bar{v}\)), usually representing the
+long-term climatological mean meridional velocity.</p></dd>
 
 
 <dt id="arg-lon">lon<a class="anchor" aria-label="anchor" href="#arg-lon"></a></dt>
-<dd><p>longitude (in degrees)</p></dd>
+<dd><p>Numeric vector of longitudes (unit: degrees).</p></dd>
 
 
 <dt id="arg-lat">lat<a class="anchor" aria-label="anchor" href="#arg-lat"></a></dt>
-<dd><p>latitude (in degrees)</p></dd>
+<dd><p>Numeric vector of latitudes (unit: degrees).</p></dd>
 
 
 <dt id="arg-lev">lev<a class="anchor" aria-label="anchor" href="#arg-lev"></a></dt>
-<dd><p>pressure level (in hPa)</p></dd>
+<dd><p>The pressure level of the data (unit: hPa).
+Used for the vertical scaling factor \(p/1000\) in the T-N flux formula.</p></dd>
 
 
 <dt id="arg-g">g<a class="anchor" aria-label="anchor" href="#arg-g"></a></dt>
-<dd><p>acceleration of gravity</p></dd>
+<dd><p>Standard gravity acceleration (default: \(9.81 m/s^2\)).</p></dd>
 
 
 <dt id="arg-a">a<a class="anchor" aria-label="anchor" href="#arg-a"></a></dt>
-<dd><p>Earth's radius</p></dd>
+<dd><p>Earth's mean radius (default: 6,371,000 m).</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with elements: longitude, latitude, and the two horizontal components
-of the wave activity flux.</p>
-    </div>
+    <p>A <code>data.table</code> containing the calculated wave activity flux components:</p>
+<dl><dt>w.x</dt>
+<dd><p>Zonal component of the Wave Activity Flux.</p></dd>
+
+<dt>w.y</dt>
+<dd><p>Meridional component of the Wave Activity Flux.</p></dd>
+
+</dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Calculates Plum-like wave activity fluxes</p>
+    <p>The function computes the horizontal components (\(W_x, W_y\)) of the
+phase-independent wave activity flux.</p>
+<p><strong>Note on Units:</strong>
+Ensure that <code>gh</code> is provided as <strong>Geopotential Height</strong> (in meters or gpm).
+If your input data is <strong>Geopotential</strong> (\(\Phi\), in \(m^2/s^2\), common in ERA5 raw data),
+you must divide it by gravity (g) before passing it to this function.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

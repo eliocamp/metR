@@ -653,8 +653,8 @@ of temperature anomalies from the zonal mean.
 ![](Visualization-tools_files/figure-html/unnamed-chunk-28-1.png)
 
 While this is fine, since pressure levels are roughly proportional to
-$e^{- z}$ in meteorology we usually plot the vertical coordinate as
-$- \log(p)$. However, while ggplot2 has
+\mathrm{e}^{-z} in meteorology we usually plot the vertical coordinate
+as -\log(p). However, while ggplot2 has
 [`scale_y_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
 and
 [`scale_y_reverse()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html),

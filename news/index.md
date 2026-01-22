@@ -547,7 +547,7 @@ CRAN release: 2020-04-10
 
 - [`ReadNetCDF()`](https://eliocamp.github.io/metR/reference/ReadNetCDF.md)
   now can read files directly from DAP servers and other urls, and
-  objects returned by $$ncdf4::nc_{o}pen{()}$$.
+  objects returned by ncdf4::nc_open().
 
 ### Bugfixes
 
@@ -581,7 +581,7 @@ CRAN release: 2020-02-10
   and `seasonaly()`.
 
 - [`FitLm()`](https://eliocamp.github.io/metR/reference/FitLm.md)
-  returns model $r^{2}$ and adjusted $r^{2}$.
+  returns model r^2 and adjusted r^2.
 
 - [`FitLm()`](https://eliocamp.github.io/metR/reference/FitLm.md) adds
   names to unnamed terms.

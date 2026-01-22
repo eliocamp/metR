@@ -109,166 +109,215 @@
 #' Fisher, A., Caffo, B., Schwartz, B., & Zipunnikov, V. (2016). Fast, Exact Bootstrap Principal Component Analysis for p > 1 million. Journal of the American Statistical Association, 111(514), 846–860. \doi{10.1080/01621459.2015.1062383}
 #' @family meteorology functions
 #' @export
-EOF <- function(formula, n = 1, data = NULL, B = 0,
-                probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
-                rotate = NULL, suffix = "PC", fill = NULL,
-                engine = NULL) {
-    checks <- makeAssertCollection()
+EOF <- function(
+  formula,
+  n = 1,
+  data = NULL,
+  B = 0,
+  probs = c(lower = 0.025, mid = 0.5, upper = 0.975),
+  rotate = NULL,
+  suffix = "PC",
+  fill = NULL,
+  engine = NULL
+) {
+  checks <- makeAssertCollection()
 
-    assertClass(formula, "formula", add = checks)
-    assertDataFrame(data, null.ok = TRUE, add = checks)
-    assertIntegerish(n, lower = 1, null.ok = TRUE, add = checks)
-    assertCount(B, add = checks)
-    assertNumeric(probs, lower = 0, upper = 1, any.missing = FALSE, add = checks)
-    assertCharacter(names(probs), unique = TRUE, any.missing = FALSE,
-                    null.ok = TRUE, min.chars = 1,
-                    add = checks)
-    assertCharacter(suffix, len = 1, any.missing = FALSE, add = checks)
-    assertNumber(fill, finite = TRUE, null.ok = TRUE, add = checks)
+  assertClass(formula, "formula", add = checks)
+  assertDataFrame(data, null.ok = TRUE, add = checks)
+  assertIntegerish(n, lower = 1, null.ok = TRUE, add = checks)
+  assertCount(B, add = checks)
+  assertNumeric(probs, lower = 0, upper = 1, any.missing = FALSE, add = checks)
+  assertCharacter(
+    names(probs),
+    unique = TRUE,
+    any.missing = FALSE,
+    null.ok = TRUE,
+    min.chars = 1,
+    add = checks
+  )
+  assertCharacter(suffix, len = 1, any.missing = FALSE, add = checks)
+  assertNumber(fill, finite = TRUE, null.ok = TRUE, add = checks)
 
-    reportAssertions(checks)
+  reportAssertions(checks)
 
-    f <- as.character(formula)
+  f <- as.character(formula)
 
-    if (length(f) == 1) {  # formula.tool did its thing
-        f <- stringr::str_split(f, "~", n = 2)[[1]]
+  if (length(f) == 1) {
+    # formula.tool did its thing
+    f <- stringr::str_split(f, "~", n = 2)[[1]]
+  } else {
+    f <- f[-1]
+  }
+
+  value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
+
+  matrix.vars <- f[stringr::str_detect(f, "\\|")]
+  matrix.vars <- stringr::str_split(matrix.vars, "\\|", n = 2)[[1]]
+
+  row.vars <- stringr::str_squish(stringr::str_split(matrix.vars[1], "\\+")[[
+    1
+  ]])
+  col.vars <- stringr::str_squish(stringr::str_split(matrix.vars[2], "\\+")[[
+    1
+  ]])
+
+  if (is.null(data)) {
+    formula <- Formula::as.Formula(formula)
+    data <- data.table::as.data.table(eval(quote(model.frame(
+      formula,
+      data = data
+    ))))
+  } else {
+    # Check if columns are indata
+    all.cols <- c(value.var, row.vars, col.vars)
+    missing.cols <- all.cols[!(all.cols %in% colnames(data))]
+    if (length(missing.cols) != 0) {
+      stopf(
+        "Columns not found in data: %s.",
+        paste0(missing.cols, collapse = ", ")
+      )
+    }
+    data <- data.table::setDT(data)[, (all.cols), with = FALSE]
+  }
+
+  data.table::setDT(data)
+  dcast.formula <- stringr::str_squish(f[stringr::str_detect(f, "\\|")])
+  dcast.formula <- stats::as.formula(stringr::str_replace(
+    dcast.formula,
+    "\\|",
+    "~"
+  ))
+  value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
+
+  g <- .tidy2matrix(data, dcast.formula, value.var, fill = fill)
+
+  if (length(g$matrix) < nrow(data)) {
+    stopf(
+      "The formula %s does not identify an unique observation for each cell.",
+      as.character(formula)
+    )
+  }
+
+  tall <- dim(g$matrix)[1] > dim(g$matrix)[2]
+  v.g <- norm(abs(g$matrix), type = "F")
+
+  if (is.null(n)) {
+    n <- seq_len(min(ncol(g$matrix), nrow(g$matrix)))
+  }
+
+  if (is.null(engine)) {
+    if (
+      requireNamespace("irlba", quietly = TRUE) &
+        max(n) < 0.5 * min(ncol(g$matrix), nrow(g$matrix))
+    ) {
+      engine <- irlba_engine
     } else {
-        f <- f[-1]
+      engine <- base::svd
     }
+  } else {
+    engine <- match.fun(engine)
+  }
 
-    value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
+  eof <- engine(g$matrix, nu = max(n), nv = max(n))
+  eof$d <- eof$d[n]
 
-    matrix.vars <- f[stringr::str_detect(f, "\\|")]
-    matrix.vars <- stringr::str_split(matrix.vars,"\\|", n = 2)[[1]]
-
-    row.vars <- stringr::str_squish(stringr::str_split(matrix.vars[1], "\\+")[[1]])
-    col.vars <- stringr::str_squish(stringr::str_split(matrix.vars[2], "\\+")[[1]])
-
-    if (is.null(data)) {
-        formula <- Formula::as.Formula(formula)
-        data <- data.table::as.data.table(eval(quote(model.frame(formula, data  = data))))
-    } else {
-        # Check if columns are indata
-        all.cols <- c(value.var, row.vars, col.vars)
-        missing.cols <- all.cols[!(all.cols %in% colnames(data))]
-        if (length(missing.cols) != 0) {
-            stopf("Columns not found in data: %s.", paste0(missing.cols, collapse = ", "))
-        }
-        data <- data.table::setDT(data)[, (all.cols), with = FALSE]
+  remove(data)
+  gc()
+  pcomps <- paste0(suffix, n)
+  # For backwards compatibility
+  if (isFALSE(rotate)) {
+    rotate <- NULL
+  }
+  if (!is.null(rotate) & max(n) > 1) {
+    # Rotation
+    eof$D <- diag(eof$d, ncol = max(n), nrow = max(n))
+    loadings <- t(with(eof, D %*% t(v)))
+    scores <- eof$u
+    if (isTRUE(rotate)) {
+      warningf(
+        "`rotate = TRUE` is deprecated. Use a function instead. Using `stats::varimax()`"
+      )
+      rotate <- function(x) stats::varimax(x, normalize = FALSE)
     }
+    rotate <- match.fun(rotate)
 
-    data.table::setDT(data)
-    dcast.formula <- stringr::str_squish(f[stringr::str_detect(f, "\\|")])
-    dcast.formula <- stats::as.formula(stringr::str_replace(dcast.formula, "\\|", "~"))
-    value.var <- stringr::str_squish(f[!stringr::str_detect(f, "\\|")])
+    R <- rotate(loadings)
+    eof$u <- eof$u %*% R$rotmat
 
-    g <- .tidy2matrix(data, dcast.formula, value.var, fill = fill)
+    # Recover rotated V and D matrixs
+    loadings <- R$loadings
+    class(loadings) <- "matrix"
+    eof$d <- sqrt(apply(loadings, 2, function(x) sum(x^2)))
+    eof$v <- t(diag(1 / eof$d) %*% t(loadings))
+  }
 
-    if (length(g$matrix) < nrow(data)) {
-        stopf("The formula %s does not identify an unique observation for each cell.",  as.character(formula))
+  # setDF(data)
+  right <- cbind(
+    data.table::data.table(rep(pcomps, each = nrow(eof$v))),
+    c(eof$v[, n])
+  )
+  colnames(right) <- c(suffix, value.var)
+  right <- cbind(unique(g$coldims), right)
+  right[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
+
+  left <- cbind(
+    data.table::data.table(rep(pcomps, each = nrow(eof$u))),
+    c(eof$u[, n])
+  )
+  colnames(left) <- c(suffix, value.var)
+  left <- cbind(unique(g$rowdims), left)
+  left[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
+
+  # setDT(data)
+  r2 <- eof$d^2 / v.g^2
+  sdev <- data.table::data.table(pcomps, eof$d)
+  colnames(sdev) <- c(suffix, "sd")
+  sdev[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
+  sdev[, r2 := r2]
+
+  if (B > 1) {
+    set.seed(42)
+    if (!tall) {
+      names(eof)[1:3] <- c("d", "v", "u")
     }
-
-    tall <- dim(g$matrix)[1] > dim(g$matrix)[2]
-    v.g  <- norm(abs(g$matrix), type = "F")
-
-    if (is.null(n)) n <- seq_len(min(ncol(g$matrix), nrow(g$matrix)))
-
-    if (is.null(engine)) {
-        if (requireNamespace("irlba", quietly = TRUE) &
-            max(n) < 0.5 *  min(ncol(g$matrix), nrow(g$matrix))) {
-            engine <- irlba_engine
-        } else {
-            engine <- base::svd
-        }
-    } else {
-        engine <- match.fun(engine)
-    }
-
-    eof <- engine(g$matrix, nu = max(n), nv = max(n))
-    eof$d <- eof$d[n]
-
-    remove(data)
-    gc()
-    pcomps <- paste0(suffix, n)
-    # For backwards compatibility
-    if (isFALSE(rotate)) {
-        rotate <- NULL
-    }
-    if (!is.null(rotate) & max(n) > 1) {
-        # Rotation
-        eof$D <- diag(eof$d, ncol = max(n), nrow = max(n))
-        loadings <- t(with(eof, D%*%t(v)))
-        scores <- eof$u
-        if (isTRUE(rotate)) {
-            warningf("`rotate = TRUE` is deprecated. Use a function instead. Using `stats::varimax()`")
-            rotate <- function(x) stats::varimax(x, normalize = FALSE)
-        }
-        rotate <- match.fun(rotate)
-
+    loadings <- with(eof, diag(d, ncol = max(n), nrow = max(n)) %*% t(v))
+    p <- nrow(eof$v)
+    sdevs <- lapply(seq_len(B), function(x) {
+      Prow <- sample(seq_len(p), replace = TRUE)
+      m <- loadings[, Prow]
+      eof <- svd(m)
+      if (!is.null(rotate)) {
+        loadings <- t(with(eof, diag(d, ncol = max(n), nrow = max(n)) %*% t(v)))
         R <- rotate(loadings)
-        eof$u <- eof$u%*%R$rotmat
-
-        # Recover rotated V and D matrixs
         loadings <- R$loadings
         class(loadings) <- "matrix"
-        eof$d <- sqrt(apply(loadings, 2, function(x) sum(x^2)))
-        eof$v <- t(diag(1/eof$d)%*%t(loadings))
+        return(sqrt(apply(loadings, 2, function(x) sum(x^2))))
+      } else {
+        return(svd(m)$d)
+      }
+    })
+
+    se <- lapply(
+      data.table::transpose(sdevs),
+      stats::quantile,
+      probs = probs,
+      names = FALSE
+    )
+    se <- data.table::transpose(se)
+    if (is.null(names(probs))) {
+      names(probs) <- scales::percent(probs)
     }
+    sdev[, names(probs) := se]
+  }
 
-    # setDF(data)
-    right <- cbind(data.table::data.table(rep(pcomps, each = nrow(eof$v))), c(eof$v[, n]))
-    colnames(right) <- c(suffix, value.var)
-    right <- cbind(unique(g$coldims), right)
-    right[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
-
-    left <- cbind(data.table::data.table(rep(pcomps, each = nrow(eof$u))), c(eof$u[, n]))
-    colnames(left) <- c(suffix, value.var)
-    left <- cbind(unique(g$rowdims), left)
-    left[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
-
-    # setDT(data)
-    r2 <- eof$d^2/v.g^2
-    sdev <- data.table::data.table(pcomps, eof$d)
-    colnames(sdev) <- c(suffix, "sd")
-    sdev[, (suffix) := factor(get(suffix), levels = pcomps, ordered = TRUE)]
-    sdev[, r2 := r2]
-
-    if (B > 1) {
-        set.seed(42)
-        if (!tall) {
-            names(eof)[1:3] <- c("d", "v", "u")
-        }
-        loadings <- with(eof, diag(d, ncol = max(n), nrow = max(n))%*%t(v))
-        p <- nrow(eof$v)
-        sdevs <- lapply(seq_len(B), function(x) {
-            Prow <- sample(seq_len(p), replace = TRUE)
-            m <- loadings[, Prow]
-            eof <- svd(m)
-            if (!is.null(rotate)) {
-                loadings <- t(with(eof, diag(d, ncol = max(n), nrow = max(n))%*%t(v)))
-                R <- rotate(loadings)
-                loadings <- R$loadings
-                class(loadings) <- "matrix"
-                return(sqrt(apply(loadings, 2, function(x) sum(x^2))))
-            } else {
-                return(svd(m)$d)
-            }
-        })
-
-        se <- lapply(data.table::transpose(sdevs), stats::quantile, probs = probs, names = FALSE)
-        se <- data.table::transpose(se)
-        if (is.null(names(probs))) names(probs) <- scales::percent(probs)
-        sdev[, names(probs) := se]
-    }
-
-
-    return(structure(list(left = left, right = right, sdev = sdev),
-                     call = match.call(),
-                     class = c("eof", "list"),
-                     suffix = suffix,
-                     value.var = value.var,
-                     engine = engine))
+  return(structure(
+    list(left = left, right = right, sdev = sdev),
+    call = match.call(),
+    class = c("eof", "list"),
+    suffix = suffix,
+    value.var = value.var,
+    engine = engine
+  ))
 }
 
 irlba_engine <- function(A, nv, nu) irlba::irlba(A, nv, nu, rng = runif)
-

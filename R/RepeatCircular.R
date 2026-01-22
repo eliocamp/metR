@@ -43,47 +43,49 @@
 #' @family ggplot2 helpers
 #' @export
 WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
-    warningf("'WrapCircular' is deprecated, use ggperiodic::wrap instead.")
+  warningf("'WrapCircular' is deprecated, use ggperiodic::wrap instead.")
 
-    checks <- makeAssertCollection()
-    assertDataFrame(x, add = checks)
-    assertCharacter(circular, len = 1, any.missing = FALSE, add = checks)
-    assertNumeric(wrap, len = 2)
-    reportAssertions(checks)
+  checks <- makeAssertCollection()
+  assertDataFrame(x, add = checks)
+  assertCharacter(circular, len = 1, any.missing = FALSE, add = checks)
+  assertNumeric(wrap, len = 2)
+  reportAssertions(checks)
 
-    if (nrow(x) == 0) return(x)
+  if (nrow(x) == 0) {
+    return(x)
+  }
 
-    x <- data.table::as.data.table(x)
-    data.table::setorderv(x, circular)
+  x <- data.table::as.data.table(x)
+  data.table::setorderv(x, circular)
 
-    res <- ggplot2::resolution(x[[circular]])
-    m <- min(x[[circular]])
-    M <- max(x[[circular]])
+  res <- ggplot2::resolution(x[[circular]])
+  m <- min(x[[circular]])
+  M <- max(x[[circular]])
 
-    # How many steps form the left and right extremes
-    # represent the range
-    right <- trunc((max(wrap) - M)/res)
-    left <- trunc((min(wrap) - m)/res)
+  # How many steps form the left and right extremes
+  # represent the range
+  right <- trunc((max(wrap) - M) / res)
+  left <- trunc((min(wrap) - m) / res)
 
-    # New "grid"
-    x.new <- seq(m + left*res, M + right*res, by = res)
+  # New "grid"
+  x.new <- seq(m + left * res, M + right * res, by = res)
 
-    right <- right + data.table::uniqueN(x[[circular]]) - 1
+  right <- right + data.table::uniqueN(x[[circular]]) - 1
 
-    # The old coord of the new grid
-    index <- seq(left, right)
-    index <- index %% length(unique(x[[circular]])) + 1
-    x.old <- unique(x[[circular]])[index]
+  # The old coord of the new grid
+  index <- seq(left, right)
+  index <- index %% length(unique(x[[circular]])) + 1
+  x.old <- unique(x[[circular]])[index]
 
-    x.new <- data.table::data.table(x.old, x.new)
-    colnames(x.new) <- c(circular, paste0(circular, "new"))
+  x.new <- data.table::data.table(x.old, x.new)
+  colnames(x.new) <- c(circular, paste0(circular, "new"))
 
-    # Add values according to the old grid and then
-    # remove it.
-    y <- x[x.new, on = circular, allow.cartesian = TRUE]
-    data.table::set(y, NULL, circular, NULL )
-    data.table::setnames(y, paste0(circular, "new"), circular)
-    return(y)
+  # Add values according to the old grid and then
+  # remove it.
+  y <- x[x.new, on = circular, allow.cartesian = TRUE]
+  data.table::set(y, NULL, circular, NULL)
+  data.table::setnames(y, paste0(circular, "new"), circular)
+  return(y)
 }
 
 #' @rdname WrapCircular
@@ -91,5 +93,5 @@ WrapCircular <- function(x, circular = "lon", wrap = c(0, 360)) {
 #' @format NULL
 #' @export
 RepeatCircular <- function(x, circular = "lon", max = NULL) {
-    .Deprecated("WrapCircular")
+  .Deprecated("WrapCircular")
 }

@@ -29,48 +29,51 @@
 #'
 #' @export
 ConvertLongitude <- function(lon, group = NULL, from = NULL) {
-    checks <- makeAssertCollection()
+  checks <- makeAssertCollection()
 
-    assertNumeric(lon, add = checks, lower = -180, upper = 360)
-    assertVector(group, len = length(lon), null.ok = TRUE, add = checks)
-    assert_choice(from, c(180, 360), null.ok = TRUE)
+  assertNumeric(lon, add = checks, lower = -180, upper = 360)
+  assertVector(group, len = length(lon), null.ok = TRUE, add = checks)
+  assert_choice(from, c(180, 360), null.ok = TRUE)
 
-    reportAssertions(checks)
+  reportAssertions(checks)
 
-    if (all(is.na(lon))) return(lon)
+  if (all(is.na(lon))) {
+    return(lon)
+  }
 
-    m <- min(lon, na.rm = TRUE)
-    if (m < -180) stopf("'lon' lower than 180 is not a valid longitude")
+  m <- min(lon, na.rm = TRUE)
+  if (m < -180) {
+    stopf("'lon' lower than 180 is not a valid longitude")
+  }
 
-    M <- max(lon, na.rm = TRUE)
-    if (M > 360) stopf("'lon' greater than 360 is not a valid longitude")
+  M <- max(lon, na.rm = TRUE)
+  if (M > 360) {
+    stopf("'lon' greater than 360 is not a valid longitude")
+  }
 
-    lon360 <- FALSE
-    lon180 <- FALSE
+  lon360 <- FALSE
+  lon180 <- FALSE
 
-    new.lon <- lon
-    if (is.null(from) || from == 180) {
-        lon180 <- which(lon < 0)
-        new.lon[lon180] <- new.lon[lon180] + 360
+  new.lon <- lon
+  if (is.null(from) || from == 180) {
+    lon180 <- which(lon < 0)
+    new.lon[lon180] <- new.lon[lon180] + 360
+  }
+  if (is.null(from) || from == 360) {
+    lon360 <- which(lon > 180)
+    new.lon[lon360] <- new.lon[lon360] - 360
+  }
+
+  if (!is.null(group)) {
+    group.c <- as.character(group)
+    group.c[lon360 | lon180] <- paste0(group.c[lon360 | lon180], "_2")
+
+    if (is.factor(group)) {
+      group.c <- factor(group.c)
     }
-    if (is.null(from) || from == 360) {
-        lon360 <- which(lon > 180)
-        new.lon[lon360] <- new.lon[lon360] - 360
-    }
 
-    if (!is.null(group)) {
+    return(list(lon = new.lon, group = group.c))
+  }
 
-        group.c <- as.character(group)
-        group.c[lon360 | lon180] <- paste0(group.c[lon360 | lon180], "_2")
-
-        if (is.factor(group)) {
-            group.c <- factor(group.c)
-        }
-
-        return(list(lon = new.lon, group = group.c))
-    }
-
-    return(new.lon)
+  return(new.lon)
 }
-
-

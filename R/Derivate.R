@@ -70,229 +70,330 @@
 #' @family meteorology functions
 #' @import checkmate
 #' @export
-Derivate <- function(formula, order = 1, cyclical = FALSE, fill = FALSE,
-                     data = NULL, sphere = FALSE, a = 6371000, equispaced = TRUE) {
-    checks <- makeAssertCollection()
+Derivate <- function(
+  formula,
+  order = 1,
+  cyclical = FALSE,
+  fill = FALSE,
+  data = NULL,
+  sphere = FALSE,
+  a = 6371000,
+  equispaced = TRUE
+) {
+  checks <- makeAssertCollection()
 
-    assertClass(formula, "formula", add = checks)
-    assertDataFrame(data, null.ok = TRUE, add = checks)
-    assertCount(order, positive = TRUE, add = checks)
-    assertFlag(fill, add = checks)
-    assertFlag(sphere, add = checks)
-    assertNumber(a, lower = 0, finite = TRUE, add = checks)
-    assertLogical(cyclical, any.missing = FALSE, add = checks)
+  assertClass(formula, "formula", add = checks)
+  assertDataFrame(data, null.ok = TRUE, add = checks)
+  assertCount(order, positive = TRUE, add = checks)
+  assertFlag(fill, add = checks)
+  assertFlag(sphere, add = checks)
+  assertNumber(a, lower = 0, finite = TRUE, add = checks)
+  assertLogical(cyclical, any.missing = FALSE, add = checks)
 
-    reportAssertions(checks)
+  reportAssertions(checks)
 
-    dep.names <- formula.tools::lhs.vars(formula)
-    ind.names <- formula.tools::rhs.vars(formula)
+  dep.names <- formula.tools::lhs.vars(formula)
+  ind.names <- formula.tools::rhs.vars(formula)
 
-    formula <- Formula::as.Formula(formula)
-    data <- data.table::as.data.table(eval(quote(model.frame(formula, data = data,
-                                                             na.action = NULL))))
+  formula <- Formula::as.Formula(formula)
+  data <- data.table::as.data.table(eval(quote(model.frame(
+    formula,
+    data = data,
+    na.action = NULL
+  ))))
 
-    # id.name <- digest::digest(data[1, 1])
-    id.name <- "ff19bdd67ff5f59cdce2824074707d20"
-    data.table::set(data, NULL, id.name, 1:nrow(data))
-    data.table::setkeyv(data, ind.names[length(ind.names):1])
+  # id.name <- digest::digest(data[1, 1])
+  id.name <- "ff19bdd67ff5f59cdce2824074707d20"
+  data.table::set(data, NULL, id.name, 1:nrow(data))
+  data.table::setkeyv(data, ind.names[length(ind.names):1])
 
-    if (length(ind.names) > 1) {
-        if (length(cyclical) == 1) {
-            cyclical <- rep(cyclical, length(ind.names))
-        } else if (length(cyclical) < length(ind.names)) {
-            stopf("One boundary condition per variable needed.")
-        }
+  if (length(ind.names) > 1) {
+    if (length(cyclical) == 1) {
+      cyclical <- rep(cyclical, length(ind.names))
+    } else if (length(cyclical) < length(ind.names)) {
+      stopf("One boundary condition per variable needed.")
     }
+  }
 
-    dernames <- lapply(dep.names, FUN = function(x) {
-        paste0(x, ".",
-               paste0(rep("d", order[1]), collapse = ""),
-               ind.names)
+  dernames <- lapply(dep.names, FUN = function(x) {
+    paste0(x, ".", paste0(rep("d", order[1]), collapse = ""), ind.names)
+  })
+  coords <- lapply(ind.names, function(x) unique(data[[x]]))
+  # coords <- coords[length(coords):1]
+
+  for (v in seq_along(dep.names)) {
+    data.array <- array(
+      data[[dep.names[v]]],
+      dim = unlist(lapply(coords, length))
+    )
+    s <- lapply(seq_along(coords), function(x) {
+      c(.derv.array(
+        data.array,
+        coords,
+        x,
+        order = order[1],
+        cyclical = cyclical[x],
+        fill = fill,
+        equispaced = equispaced
+      ))
     })
-    coords <- lapply(ind.names, function(x) unique(data[[x]]))
-    # coords <- coords[length(coords):1]
+    data.table::set(data, NULL, dernames[[v]], s)
+  }
+  # data <- data[order(data[[id.name]])]
+  data.table::setkeyv(data, id.name)
 
-    for (v in seq_along(dep.names)) {
-        data.array <- array(data[[dep.names[v]]], dim = unlist(lapply(coords, length)))
-        s <- lapply(seq_along(coords), function(x) {
-            c(.derv.array(data.array, coords, x, order = order[1],
-                          cyclical = cyclical[x], fill = fill,
-                          equispaced = equispaced))
-        })
-        data.table::set(data, NULL, dernames[[v]], s)
+  # Correction for spherical coordinates.
+  if (sphere == TRUE) {
+    cosvar <- cos(data[, get(ind.names[2])] * pi / 180)
+    for (var in seq_along(dernames)) {
+      data[,
+        dernames[[var]][1] := get(dernames[[var]][1]) *
+          (180 / pi / (a * cosvar))^order[1]
+      ]
+      data[,
+        dernames[[var]][2] := get(dernames[[var]][2]) * (180 / pi / a)^order[1]
+      ]
     }
-    # data <- data[order(data[[id.name]])]
-    data.table::setkeyv(data, id.name)
+  }
 
-    # Correction for spherical coordinates.
-    if (sphere == TRUE) {
-        cosvar <- cos(data[, get(ind.names[2])]*pi/180)
-        for (var in seq_along(dernames)) {
-            data[, dernames[[var]][1] := get(dernames[[var]][1])*(180/pi/(a*cosvar))^order[1]]
-            data[, dernames[[var]][2] := get(dernames[[var]][2])*(180/pi/a)^order[1]]
-        }
-    }
+  data <- data[, unlist(dernames), with = FALSE]
 
-    data <- data[, unlist(dernames), with = FALSE]
-
-    return(as.list(data))
+  return(as.list(data))
 }
 
 
 # Derivates multidimensional arrays.
-.derv.array <- function(X, coords, margin, order = 1, cyclical = FALSE, fill = FALSE,
-                        equispaced = TRUE) {
-    if (length(dim(X)) == 1) {
-        return(.derv(X, coords[[1]], order = order, cyclical = cyclical, fill = fill,
-                     equispaced = equispaced))
-    }
-    dims <- seq(dim(X))
-    coord <- coords[[margin]]
-    margins <- dims[!(dims %in% margin)]
-    f <- apply(X, margins, function(x) .derv(x, coord, order = order,
-                                             cyclical = cyclical, fill = fill,
-                                             equispaced = equispaced))
-    f <- aperm(f, c(margin, margins))
-    return(f)
+.derv.array <- function(
+  X,
+  coords,
+  margin,
+  order = 1,
+  cyclical = FALSE,
+  fill = FALSE,
+  equispaced = TRUE
+) {
+  if (length(dim(X)) == 1) {
+    return(.derv(
+      X,
+      coords[[1]],
+      order = order,
+      cyclical = cyclical,
+      fill = fill,
+      equispaced = equispaced
+    ))
+  }
+  dims <- seq(dim(X))
+  coord <- coords[[margin]]
+  margins <- dims[!(dims %in% margin)]
+  f <- apply(X, margins, function(x) {
+    .derv(
+      x,
+      coord,
+      order = order,
+      cyclical = cyclical,
+      fill = fill,
+      equispaced = equispaced
+    )
+  })
+  f <- aperm(f, c(margin, margins))
+  return(f)
 }
-
 
 
 #' @rdname Derivate
 #' @export
-Laplacian <- function(formula, cyclical = FALSE, fill = FALSE,
-                      data = NULL, sphere = FALSE, a = 6371000,
-                      equispaced = TRUE) {
-    der <- Derivate(formula = formula, data = data, cyclical = cyclical,
-                    sphere = sphere, a = a, order = 2,
-                    equispaced = equispaced)
+Laplacian <- function(
+  formula,
+  cyclical = FALSE,
+  fill = FALSE,
+  data = NULL,
+  sphere = FALSE,
+  a = 6371000,
+  equispaced = TRUE
+) {
+  der <- Derivate(
+    formula = formula,
+    data = data,
+    cyclical = cyclical,
+    sphere = sphere,
+    a = a,
+    order = 2,
+    equispaced = equispaced
+  )
 
-    dep.names <- formula.tools::lhs.vars(formula)
-    lap.names <- paste0(dep.names, ".lap")
-    coord.names <- formula.tools::rhs.vars(formula)
+  dep.names <- formula.tools::lhs.vars(formula)
+  lap.names <- paste0(dep.names, ".lap")
+  coord.names <- formula.tools::rhs.vars(formula)
 
+  lap <- lapply(dep.names, function(var) {
+    Reduce("+", der[paste0(var, ".", "dd", coord.names)])
+  })
 
-    lap <- lapply(dep.names, function(var) {
-        Reduce("+", der[paste0(var, ".", "dd", coord.names)])
-    })
-
-    names(lap) <- lap.names
-    if(length(lap) == 1) {
-        return(lap[[1]])
-    } else {
-        return(lap)
-    }
+  names(lap) <- lap.names
+  if (length(lap) == 1) {
+    return(lap[[1]])
+  } else {
+    return(lap)
+  }
 }
 
 #' @export
 #' @rdname Derivate
-Divergence <- function(formula, cyclical = FALSE, fill = FALSE,
-                       data = NULL, sphere = FALSE, a = 6371000,
-                       equispaced = TRUE) {
-    der <- Derivate(formula = formula, data = data, cyclical = cyclical,
-                    sphere = sphere, a = a, order = 1,
-                    equispaced = equispaced)
+Divergence <- function(
+  formula,
+  cyclical = FALSE,
+  fill = FALSE,
+  data = NULL,
+  sphere = FALSE,
+  a = 6371000,
+  equispaced = TRUE
+) {
+  der <- Derivate(
+    formula = formula,
+    data = data,
+    cyclical = cyclical,
+    sphere = sphere,
+    a = a,
+    order = 1,
+    equispaced = equispaced
+  )
 
-    div <- der[[1]] + der[[4]]
-    div
+  div <- der[[1]] + der[[4]]
+  div
 }
 
 #' @export
 #' @rdname Derivate
-Vorticity <- function(formula, cyclical = FALSE, fill = FALSE,
-                      data = NULL, sphere = FALSE, a = 6371000,
-                      equispaced = TRUE) {
-    der <- Derivate(formula = formula, data = data, cyclical = cyclical,
-                    sphere = sphere, a = a, order = 1,
-                    equispaced = equispaced)
+Vorticity <- function(
+  formula,
+  cyclical = FALSE,
+  fill = FALSE,
+  data = NULL,
+  sphere = FALSE,
+  a = 6371000,
+  equispaced = TRUE
+) {
+  der <- Derivate(
+    formula = formula,
+    data = data,
+    cyclical = cyclical,
+    sphere = sphere,
+    a = a,
+    order = 1,
+    equispaced = equispaced
+  )
 
-    vort <- -der[[2]] + der[[3]]
-    vort
+  vort <- -der[[2]] + der[[3]]
+  vort
 }
 
 
-.derv <- function(x, y, order = 1, cyclical = FALSE, fill = FALSE, equispaced = TRUE) {
-    N <- length(x)
+.derv <- function(
+  x,
+  y,
+  order = 1,
+  cyclical = FALSE,
+  fill = FALSE,
+  equispaced = TRUE
+) {
+  N <- length(x)
 
-    if (N < order + 1) {
-        return(rep(NA, length.out = length(x)))
+  if (N < order + 1) {
+    return(rep(NA, length.out = length(x)))
+  }
+  nxt <- function(v) {
+    v[c(2:N, 1)]
+  }
+
+  prv <- function(v) {
+    v[c(N, 1:(N - 1))]
+  }
+
+  if (cyclical) {
+    # Check for equispaced grid
+    # even if the user says its equispaced, it might not be.
+    # If the user says it's not, then trust them.
+    h1 <- diff(y)
+    if (equispaced) {
+      equispaced <- slow_equal(h1)
     }
-    nxt <- function(v) {
-        v[c(2:N, 1)]
+    if (!equispaced) {
+      # TODO
+      stopf("Cyclical derivatives on a non-equispaced grid not yet supported.")
     }
+    h1 <- rep(h1[1], N)
+    h2 <- h1
+  } else {
+    h2 <- nxt(y) - y
+    h1 <- y - prv(y)
+  }
 
-    prv <- function(v) {
-        v[c(N, 1:(N-1))]
+  x0 <- prv(x)
+  x2 <- nxt(x)
+
+  # Higher order derivatives are taken by succesive differentiation
+  if (order >= 2) {
+    dxdy <- .derv(
+      x,
+      y,
+      order = 1,
+      cyclical = cyclical,
+      fill = fill,
+      equispaced = equispaced
+    )
+    dxdy <- .derv(
+      dxdy,
+      y,
+      order = order - 1,
+      cyclical = cyclical,
+      fill = fill,
+      equispaced = equispaced
+    )
+  } else {
+    # First order derivative
+    if (order == 1) {
+      # from http://www.m-hikari.com/ijma/ijma-password-2009/ijma-password17-20-2009/bhadauriaIJMA17-20-2009.pdf
+      # Eq 8b (f -> x)
+      dxdy <- -(h2 / (h1 * (h1 + h2))) *
+        x0 -
+        (h1 - h2) / (h1 * h2) * x +
+        h1 / (h2 * (h1 + h2)) * x2
     }
+    # else if (order == 2) {
+    #     # Eq 11
+    #     h2 <- nxt(y) - y
+    #     h1 <- y - prv(y)
+    #
+    #     x0 <- prv(x)
+    #     x2 <- nxt(x)
+    #     dxdy <- 2*(h2*x0 - (h1+h2)*x + h1*x2)/(h1*h2*(h1+h2))
+    # }
 
-    if (cyclical) {
-        # Check for equispaced grid
-        # even if the user says its equispaced, it might not be.
-        # If the user says it's not, then trust them.
-        h1 <- diff(y)
-        if (equispaced){
-            equispaced <- slow_equal(h1)
-        }
-        if (!equispaced) {
-            # TODO
-            stopf("Cyclical derivatives on a non-equispaced grid not yet supported.")
-        }
-        h1 <- rep(h1[1], N)
-        h2 <- h1
-    } else {
-        h2 <- nxt(y) - y
-        h1 <- y - prv(y)
+    if (!cyclical) {
+      if (!fill) {
+        dxdy[c(1, N)] <- NA
+      }
+      if (fill) {
+        # Eq 81
+        dxdy[1] <- (-(2 * h1 + h2) /
+          (h1 * (h1 + h2)) *
+          x0 +
+          (h1 + h2) / (h1 * h2) * x -
+          h1 / (h2 * (h1 + h2)) * x2)[2]
+
+        # Eq 8c
+        dxdy[N] <- (h2 /
+          (h1 * (h1 + h2)) *
+          x0 -
+          (h1 + h2) / (h1 * h2) * x +
+          (2 * h2 + h1) / (h2 * (h1 + h2)) * x2)[N - 1]
+
+        # dxdy[N] <- (11/6*x[N] - 3*x[N-1] + 3/2*x[N-2] - 1/3*x[N-3])/d
+      }
     }
-
-
-
-    x0 <- prv(x)
-    x2 <- nxt(x)
-
-    # Higher order derivatives are taken by succesive differentiation
-    if (order >= 2) {
-        dxdy <- .derv(x, y, order = 1, cyclical = cyclical, fill = fill,
-                     equispaced = equispaced)
-        dxdy <- .derv(dxdy, y, order = order - 1, cyclical = cyclical, fill = fill,
-                      equispaced = equispaced)
-
-    } else {
-        # First order derivative
-        if (order == 1) {
-            # from http://www.m-hikari.com/ijma/ijma-password-2009/ijma-password17-20-2009/bhadauriaIJMA17-20-2009.pdf
-            # Eq 8b (f -> x)
-            dxdy <- -(h2/(h1*(h1+h2)))*x0 - (h1 - h2)/(h1*h2)*x + h1/(h2*(h1+h2))*x2
-        }
-        # else if (order == 2) {
-        #     # Eq 11
-        #     h2 <- nxt(y) - y
-        #     h1 <- y - prv(y)
-        #
-        #     x0 <- prv(x)
-        #     x2 <- nxt(x)
-        #     dxdy <- 2*(h2*x0 - (h1+h2)*x + h1*x2)/(h1*h2*(h1+h2))
-        # }
-
-        if (!cyclical) {
-            if (!fill) {
-                dxdy[c(1, N)] <- NA
-            }
-            if (fill) {
-                # Eq 81
-                dxdy[1] <- (-(2*h1 + h2)/(h1*(h1 + h2))*x0 +
-                    (h1 + h2)/(h1*h2)*x - h1/(h2*(h1 + h2))*x2)[2]
-
-                # Eq 8c
-                dxdy[N] <- (h2/(h1*(h1 + h2))*x0 - (h1+h2)/(h1*h2)*x + (2*h2 + h1)/(h2*(h1+h2))*x2)[N-1]
-
-                # dxdy[N] <- (11/6*x[N] - 3*x[N-1] + 3/2*x[N-2] - 1/3*x[N-3])/d
-            }
-        }
-    }
-    return(dxdy)
+  }
+  return(dxdy)
 }
-
-
 
 # .get_order_dim <- function(data) {
 #     setDT(data)

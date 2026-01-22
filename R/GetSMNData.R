@@ -11,8 +11,12 @@
 #' Nothing
 #'
 #' @export
-GetSMNData <- function(date, type = c("hourly", "daily", "radiation"),  bar = FALSE,
-                       cache = TRUE, file.dir = tempdir()) {
-    .Defunct()
-
+GetSMNData <- function(
+  date,
+  type = c("hourly", "daily", "radiation"),
+  bar = FALSE,
+  cache = TRUE,
+  file.dir = tempdir()
+) {
+  .Defunct()
 }

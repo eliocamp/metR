@@ -48,127 +48,146 @@
 #' }
 #'
 #' @export
-FitLm <- function(y, ..., intercept = TRUE, weights = NULL, se = FALSE, r2 = se) {
-    .FitLm(y = y, ..., intercept = intercept, weights = weights, se = se, r2 = r2, resid = FALSE)
+FitLm <- function(
+  y,
+  ...,
+  intercept = TRUE,
+  weights = NULL,
+  se = FALSE,
+  r2 = se
+) {
+  .FitLm(
+    y = y,
+    ...,
+    intercept = intercept,
+    weights = weights,
+    se = se,
+    r2 = r2,
+    resid = FALSE
+  )
 }
 
 #' @export
 #' @rdname FitLm
 ResidLm <- function(y, ..., intercept = TRUE, weights = NULL) {
-    .FitLm(y = y, ..., intercept = intercept, weights = weights, resid = TRUE)
+  .FitLm(y = y, ..., intercept = intercept, weights = weights, resid = TRUE)
 }
 
 #' @export
 #' @rdname FitLm
 Detrend <- function(y, time = seq_along(y)) {
-    m <- mean(y, na.rm = TRUE)
-    ResidLm(y, time) + m
+  m <- mean(y, na.rm = TRUE)
+  ResidLm(y, time) + m
 }
 
-.FitLm <- function(y, ..., intercept = TRUE, weights = NULL, se = FALSE, r2 = se, resid = FALSE) {
-    if (isTRUE(intercept)) {
-        X <- cbind(`(Intercept)` = intercept, ...)
-    } else {
-        X <- cbind(...)
-    }
+.FitLm <- function(
+  y,
+  ...,
+  intercept = TRUE,
+  weights = NULL,
+  se = FALSE,
+  r2 = se,
+  resid = FALSE
+) {
+  if (isTRUE(intercept)) {
+    X <- cbind(`(Intercept)` = intercept, ...)
+  } else {
+    X <- cbind(...)
+  }
 
-    has_weights <- !is.null(weights)
+  has_weights <- !is.null(weights)
 
-    term <- dimnames(X)[[2]]
-    missing <- term == ""
-    term[missing] <- paste0("V", seq_len(sum(missing)))
+  term <- dimnames(X)[[2]]
+  missing <- term == ""
+  term[missing] <- paste0("V", seq_len(sum(missing)))
 
-    remove <- which(!stats::complete.cases(X) | is.na(y))
-    N <- length(y) - length(remove)
-    residuals <- rep(NA_real_, length(y))
-    # If empty, return NA
-    if (N < 2) {
-        if (resid) {
-            return(residuals)
-        }
-        estimate <- rep(NA_real_, length(term))
-        out <- list(term = term,
-                    estimate = estimate)
-        if (se == TRUE) {
-            df <- N - ncol(X)
-            out$std.error <-  estimate
-            out$df <- rep(df, length(term))
-        }
-
-        if (r2 == TRUE) {
-            out$r.squared <- estimate
-            out$adj.r.squared <- estimate
-        }
-
-        return(out)
-    } else {
-        if (length(remove) > 0) {
-            X <- X[-remove, ]
-            y <- y[-remove]
-            if (has_weights) {
-                weights <- weights[-remove]
-            }
-
-        }
-
-        if (has_weights) {
-            weights <- weights/sum(weights)
-            fit <- stats::lm.wfit(X, y, w = weights)
-        } else {
-            fit <- stats::.lm.fit(X, y)
-        }
-
-        estimate <- unname(fit$coefficients)
-    }
-
+  remove <- which(!stats::complete.cases(X) | is.na(y))
+  N <- length(y) - length(remove)
+  residuals <- rep(NA_real_, length(y))
+  # If empty, return NA
+  if (N < 2) {
     if (resid) {
-        if (length(remove) > 0) {
-            residuals[-remove] <- fit$residuals
-        } else {
-            residuals <- fit$residuals
-        }
-
-
-        return(residuals)
+      return(residuals)
+    }
+    estimate <- rep(NA_real_, length(term))
+    out <- list(term = term, estimate = estimate)
+    if (se == TRUE) {
+      df <- N - ncol(X)
+      out$std.error <- estimate
+      out$df <- rep(df, length(term))
     }
 
-    out <- list(term = term,
-                estimate = estimate)
-
-    if (se == TRUE | r2 == TRUE) {
-        df <- N - ncol(X)
-
-        if (has_weights) {
-            res_sum <- sum(weights*fit$residuals^2)
-            ss <- sum(weights*(y - stats::weighted.mean(y, w = weights))^2)
-        } else {
-            res_sum <- sum(fit$residuals^2)
-            ss <- sum((y - mean(y))^2)
-        }
-
-
-        if (se == TRUE) {
-            if (all(fit$residuals == 0)) {
-                out$std.error <-  rep(NA_real_, length(term))
-                out$df <-  rep(NA_integer_, length(term))
-            } else {
-                p <- seq_len(fit$rank)
-                if (is.qr(fit$qr)) fit$qr <- fit$qr$qr
-                R <- chol2inv(fit$qr[p, p, drop = FALSE])
-                std.error <- sqrt(diag(R) * res_sum/df)
-                out$std.error <- std.error
-                out$df <- rep(df, length(term))
-            }
-        }
-
-
-        if (r2 == TRUE) {
-            r_squared <- 1 - res_sum/ss
-            adj_r_squared <- 1 - res_sum/ss*(N-1)/df
-            out$r.squared <- rep(r_squared, length(term))
-            out$adj.r.squared <- rep(adj_r_squared, length(term))
-        }
+    if (r2 == TRUE) {
+      out$r.squared <- estimate
+      out$adj.r.squared <- estimate
     }
 
     return(out)
+  } else {
+    if (length(remove) > 0) {
+      X <- X[-remove, ]
+      y <- y[-remove]
+      if (has_weights) {
+        weights <- weights[-remove]
+      }
+    }
+
+    if (has_weights) {
+      weights <- weights / sum(weights)
+      fit <- stats::lm.wfit(X, y, w = weights)
+    } else {
+      fit <- stats::.lm.fit(X, y)
+    }
+
+    estimate <- unname(fit$coefficients)
+  }
+
+  if (resid) {
+    if (length(remove) > 0) {
+      residuals[-remove] <- fit$residuals
+    } else {
+      residuals <- fit$residuals
+    }
+
+    return(residuals)
+  }
+
+  out <- list(term = term, estimate = estimate)
+
+  if (se == TRUE | r2 == TRUE) {
+    df <- N - ncol(X)
+
+    if (has_weights) {
+      res_sum <- sum(weights * fit$residuals^2)
+      ss <- sum(weights * (y - stats::weighted.mean(y, w = weights))^2)
+    } else {
+      res_sum <- sum(fit$residuals^2)
+      ss <- sum((y - mean(y))^2)
+    }
+
+    if (se == TRUE) {
+      if (all(fit$residuals == 0)) {
+        out$std.error <- rep(NA_real_, length(term))
+        out$df <- rep(NA_integer_, length(term))
+      } else {
+        p <- seq_len(fit$rank)
+        if (is.qr(fit$qr)) {
+          fit$qr <- fit$qr$qr
+        }
+        R <- chol2inv(fit$qr[p, p, drop = FALSE])
+        std.error <- sqrt(diag(R) * res_sum / df)
+        out$std.error <- std.error
+        out$df <- rep(df, length(term))
+      }
+    }
+
+    if (r2 == TRUE) {
+      r_squared <- 1 - res_sum / ss
+      adj_r_squared <- 1 - res_sum / ss * (N - 1) / df
+      out$r.squared <- rep(r_squared, length(term))
+      out$adj.r.squared <- rep(adj_r_squared, length(term))
+    }
+  }
+
+  return(out)
 }

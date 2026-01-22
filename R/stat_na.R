@@ -30,55 +30,69 @@
 #' @seealso [stat_subset] for a more general way of filtering data.
 #' @export
 #' @family ggplot2 helpers
-stat_na <- function(mapping = NULL, data = NULL,
-                              geom = "point", position = "identity",
-                              ...,
-                              show.legend = NA,
-                              inherit.aes = TRUE) {
-    ggplot2::layer(
-        data = data,
-        mapping = mapping,
-        stat = StatNa,
-        geom = geom,
-        position = position,
-        show.legend = show.legend,
-        inherit.aes = inherit.aes,
-        params = list(
-            ...
-        )
+stat_na <- function(
+  mapping = NULL,
+  data = NULL,
+  geom = "point",
+  position = "identity",
+  ...,
+  show.legend = NA,
+  inherit.aes = TRUE
+) {
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = StatNa,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      ...
     )
+  )
 }
 
 #' @rdname stat_na
 #' @usage NULL
 #' @format NULL
 #' @export
-StatNa <- ggplot2::ggproto("StatNa", ggplot2::Stat,
-    required_aes = c("x", "y", "na"),
-    compute_layer = function(self, data, params, layout) {
-        ggplot2:::check_required_aesthetics(self$required_aes,
-                                            c(names(data), names(params)),
-                                            ggplot2:::snake_class(self))
-        # Trim off extra parameters
-        params <- params[intersect(names(params), self$parameters())]
+StatNa <- ggplot2::ggproto(
+  "StatNa",
+  ggplot2::Stat,
+  required_aes = c("x", "y", "na"),
+  compute_layer = function(self, data, params, layout) {
+    ggplot2:::check_required_aesthetics(
+      self$required_aes,
+      c(names(data), names(params)),
+      ggplot2:::snake_class(self)
+    )
+    # Trim off extra parameters
+    params <- params[intersect(names(params), self$parameters())]
 
-        args <- c(list(data = quote(data), scales = quote(scales)), params)
-        plyr::ddply(data, "PANEL", function(data) {
-            scales <- layout$get_scales(data$PANEL[1])
-            tryCatch(do.call(self$compute_panel, args), error = function(e) {
-                warningf("Computation failed in `%s()`:\n %s.",
-                                 ggplot2:::snake_class(self), e$message,
-                        call. = FALSE)
-                data.frame()})
-            })
-        },
-    compute_group = function(data, scales, width = NULL, height = NULL) {
-        data$width <- data$width %||% width %||% ggplot2::resolution(data$x, FALSE)
-        data$height <- data$height %||% height %||% ggplot2::resolution(data$y, FALSE)
+    args <- c(list(data = quote(data), scales = quote(scales)), params)
+    plyr::ddply(data, "PANEL", function(data) {
+      scales <- layout$get_scales(data$PANEL[1])
+      tryCatch(do.call(self$compute_panel, args), error = function(e) {
+        warningf(
+          "Computation failed in `%s()`:\n %s.",
+          ggplot2:::snake_class(self),
+          e$message,
+          call. = FALSE
+        )
+        data.frame()
+      })
+    })
+  },
+  compute_group = function(data, scales, width = NULL, height = NULL) {
+    data$width <- data$width %||% width %||% ggplot2::resolution(data$x, FALSE)
+    data$height <- data$height %||%
+      height %||%
+      ggplot2::resolution(data$y, FALSE)
 
-        data <- data[!(is.na(data$x) | is.na(data$y)), ]
-        data <- data[is.na(data$na), ]
+    data <- data[!(is.na(data$x) | is.na(data$y)), ]
+    data <- data[is.na(data$na), ]
 
-        data
-    }
+    data
+  }
 )

@@ -19,7 +19,7 @@
 #' @family utilities
 #' @export
 Anomaly <- function(x, baseline = seq_along(x), ...) {
-    x - mean(x[baseline], ...)
+  x - mean(x[baseline], ...)
 }
 
 #' Percentiles
@@ -39,7 +39,7 @@ Anomaly <- function(x, baseline = seq_along(x), ...) {
 #' @family utilities
 #' @export
 Percentile <- function(x) {
-    ecdf(x)(x)
+  ecdf(x)(x)
 }
 
 #' Magnitude and angle of a vector
@@ -74,20 +74,24 @@ Percentile <- function(x) {
 #' @family utilities
 #' @export
 Mag <- function(...) {
-    coords <- list(...)
-    if (is.list(coords[[1]])) coords <- coords[[1]]
-    N <- lengths(coords, use.names = FALSE)
-    if (any(N != N[1])) stopf("All variables must have the same length")
+  coords <- list(...)
+  if (is.list(coords[[1]])) {
+    coords <- coords[[1]]
+  }
+  N <- lengths(coords, use.names = FALSE)
+  if (any(N != N[1])) {
+    stopf("All variables must have the same length")
+  }
 
-    coords <- lapply(coords, `^`, 2)
-    sqrt(Reduce(`+`, coords))
+  coords <- lapply(coords, `^`, 2)
+  sqrt(Reduce(`+`, coords))
 }
 
 #' @family utilities
 #' @export
 #' @rdname Mag
 Angle <- function(x, y) {
-    atan2(y, x)*180/pi
+  atan2(y, x) * 180 / pi
 }
 
 #' Extended logical operators
@@ -127,26 +131,28 @@ Angle <- function(x, y) {
 #' @name logic
 #' @export
 `%~%` <- function(x, target) {
-    r <- rep(FALSE, length(x))
-    for (i in seq_along(target)) {
-        dif <- abs(as.numeric(x - target[i]))
-        x.select <- x[which.min(dif)]
-        r <- r | (x == x.select)
-    }
-    return(r)
+  r <- rep(FALSE, length(x))
+  for (i in seq_along(target)) {
+    dif <- abs(as.numeric(x - target[i]))
+    x.select <- x[which.min(dif)]
+    r <- r | (x == x.select)
+  }
+  return(r)
 }
 
 #' @rdname logic
 #' @export
 Similar <- function(x, target, tol = Inf) {
-    r <- rep(FALSE, length(x))
-    if (is.null(tol)) tol <- NA
-    for (i in seq_along(target)) {
-        dif <- abs(as.numeric(x - target[i]))
-        x.select <- x[which.min(dif)]
-        r <- r | (x == x.select & (is.na(tol) | x.select < abs(tol)))
-    }
-    return(r)
+  r <- rep(FALSE, length(x))
+  if (is.null(tol)) {
+    tol <- NA
+  }
+  for (i in seq_along(target)) {
+    dif <- abs(as.numeric(x - target[i]))
+    x.select <- x[which.min(dif)]
+    r <- r | (x == x.select & (is.na(tol) | x.select < abs(tol)))
+  }
+  return(r)
 }
 
 
@@ -175,15 +181,13 @@ Similar <- function(x, target, tol = Inf) {
 #' @family utilities
 #' @export
 JumpBy <- function(x, by, start = 1, fill = NULL) {
-    if (!is.null(fill)) {
-        x[-seq.int(start, length(x), by = by)] <- fill
-    } else {
-        x <- x[seq.int(start, length(x), by = by)]
-    }
-    return(x)
+  if (!is.null(fill)) {
+    x[-seq.int(start, length(x), by = by)] <- fill
+  } else {
+    x <- x[seq.int(start, length(x), by = by)]
+  }
+  return(x)
 }
-
-
 
 
 #' Transform between spherical coordinates and physical coordinates
@@ -210,23 +214,23 @@ JumpBy <- function(x, by, start = 1, fill = NULL) {
 #' @name spherical
 #' @export
 dlon <- function(dx, lat, a = 6731000) {
-    return(dx/(a*cos(lat*pi/180))*180/pi)
+  return(dx / (a * cos(lat * pi / 180)) * 180 / pi)
 }
 
 #' @export
 #' @rdname spherical
 dlat <- function(dy, a = 6731000) {
-    return(dy/a*180/pi)
+  return(dy / a * 180 / pi)
 }
 
 #' @export
 #' @rdname spherical
 dx <- function(dlon, lat, a = 6731000) {
-    return(dlon*pi/180*a*cos(lat*pi/180))
+  return(dlon * pi / 180 * a * cos(lat * pi / 180))
 }
 
 #' @export
 #' @rdname spherical
 dy <- function(dlat, a = 6731000) {
-    return(dlat*a*pi/180)
+  return(dlat * a * pi / 180)
 }

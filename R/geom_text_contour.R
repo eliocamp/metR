@@ -74,62 +74,64 @@
 #' @export
 #' @family ggplot2 helpers
 #' @importFrom ggplot2 .pt
-geom_text_contour <- function(mapping = NULL, data = NULL,
-                      stat = "text_contour",
-                      position = "identity",
-                      ...,
-                      min.size = 5,
-                      skip = 1,
-                      rotate = TRUE,
-                      label.placer = label_placer_flattest(),
-                      parse = FALSE,
-                      nudge_x = 0,
-                      nudge_y = 0,
-                      stroke = 0,
-                      # stroke.color = "white",
-                      check_overlap = FALSE,
-                      # xwrap = NULL,
-                      # ywrap = NULL,
-                      na.rm = FALSE,
-                      show.legend = NA,
-                      inherit.aes = TRUE) {
-    if (!missing(nudge_x) || !missing(nudge_y)) {
-        if (!missing(position)) {
-            stopf("Specify either 'position' or 'nudge_x'/'nudge_y'.",
-                 call. = FALSE)
-        }
-
-        position <- ggplot2::position_nudge(nudge_x, nudge_y)
+geom_text_contour <- function(
+  mapping = NULL,
+  data = NULL,
+  stat = "text_contour",
+  position = "identity",
+  ...,
+  min.size = 5,
+  skip = 1,
+  rotate = TRUE,
+  label.placer = label_placer_flattest(),
+  parse = FALSE,
+  nudge_x = 0,
+  nudge_y = 0,
+  stroke = 0,
+  # stroke.color = "white",
+  check_overlap = FALSE,
+  # xwrap = NULL,
+  # ywrap = NULL,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+) {
+  if (!missing(nudge_x) || !missing(nudge_y)) {
+    if (!missing(position)) {
+      stopf("Specify either 'position' or 'nudge_x'/'nudge_y'.", call. = FALSE)
     }
 
-    if (!is.null(list(...)$label.placement)) {
-        warningf("The 'label.placement' argument is now 'label.placer'.")
-        label.placer <- list(...)$label.placement
-    }
+    position <- ggplot2::position_nudge(nudge_x, nudge_y)
+  }
 
-    ggplot2::layer(
-        data = data,
-        mapping = mapping,
-        stat = stat,
-        geom = GeomTextContour,
-        position = position,
-        show.legend = show.legend,
-        inherit.aes = inherit.aes,
-        params = list(
-            skip = skip,
-            min.size = min.size,
-            rotate = rotate,
-            parse = parse,
-            check_overlap = check_overlap,
-            stroke = stroke,
-            # stroke.color = stroke.color,
-            # xwrap = xwrap,
-            # ywrap = ywrap,
-            label.placer = label.placer,
-            na.rm = na.rm,
-            ...
-        )
+  if (!is.null(list(...)$label.placement)) {
+    warningf("The 'label.placement' argument is now 'label.placer'.")
+    label.placer <- list(...)$label.placement
+  }
+
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomTextContour,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      skip = skip,
+      min.size = min.size,
+      rotate = rotate,
+      parse = parse,
+      check_overlap = check_overlap,
+      stroke = stroke,
+      # stroke.color = stroke.color,
+      # xwrap = xwrap,
+      # ywrap = ywrap,
+      label.placer = label.placer,
+      na.rm = na.rm,
+      ...
     )
+  )
 }
 
 #' @rdname geom_text_contour
@@ -137,80 +139,100 @@ geom_text_contour <- function(mapping = NULL, data = NULL,
 #' @format NULL
 #' @export
 # #' @importFrom shadowtext shadowtextGrob
-GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
-   required_aes = c("x", "y", "label"),
-   default_aes = ggplot2::aes(colour = "black", size = 3.88, angle = 0,
-                              hjust = 0.5, vjust = 0.5, alpha = NA, family = "",
-                              fontface = 1, lineheight = 1.2,
-                              stroke.colour = "white"),
+GeomTextContour <- ggplot2::ggproto(
+  "GeomTextContour",
+  ggplot2::Geom,
+  required_aes = c("x", "y", "label"),
+  default_aes = ggplot2::aes(
+    colour = "black",
+    size = 3.88,
+    angle = 0,
+    hjust = 0.5,
+    vjust = 0.5,
+    alpha = NA,
+    family = "",
+    fontface = 1,
+    lineheight = 1.2,
+    stroke.colour = "white"
+  ),
 
-   draw_panel = function(data, panel_params, coord, parse = FALSE,
-                         na.rm = FALSE, check_overlap = FALSE, min.size = 20,
-                         skip = 1, rotate = FALSE, gap = NULL,
-                         label.placer = label_placer_flattest(),
-                         stroke = 0) {
-       data <- data.table::as.data.table(coord$transform(data, panel_params))
-       min.size <- ceiling(min.size)
-       if (min.size %% 2 == 0) {
-           min.size <- min.size - 1
-       }
+  draw_panel = function(
+    data,
+    panel_params,
+    coord,
+    parse = FALSE,
+    na.rm = FALSE,
+    check_overlap = FALSE,
+    min.size = 20,
+    skip = 1,
+    rotate = FALSE,
+    gap = NULL,
+    label.placer = label_placer_flattest(),
+    stroke = 0
+  ) {
+    data <- data.table::as.data.table(coord$transform(data, panel_params))
+    min.size <- ceiling(min.size)
+    if (min.size %% 2 == 0) {
+      min.size <- min.size - 1
+    }
 
+    breaks <- unique(data$level)
+    breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]
 
-       breaks <- unique(data$level)
-       breaks.cut <- breaks[seq(1, length(breaks), by = skip + 1)]
+    data <- data[level %in% breaks.cut]
 
-       data <- data[level %in% breaks.cut]
+    data <- data[, unique(.SD, by = c("x", "y")), by = .(group, piece)]
 
-       data <- data[, unique(.SD, by = c("x", "y")),by = .(group, piece)]
+    data[, N := .N, by = .(group, piece)]
+    data <- data[N > 3]
+    data <- data[N >= min.size][, N := NULL]
 
-       data[, N := .N, by = .(group, piece)]
-       data <- data[N > 3]
-       data <- data[N >= min.size][, N := NULL]
+    if (nrow(data) == 0) {
+      return(grid::nullGrob())
+    }
 
-       if (nrow(data) == 0) {
-           return(grid::nullGrob())
-       }
+    ## Original ggplot2 here.
+    lab <- data$label
+    if (parse) {
+      lab <- parse(text = as.character(lab))
+    }
 
-       ## Original ggplot2 here.
-       lab <- data$label
-       if (parse) {
-           lab <- parse(text = as.character(lab))
-       }
+    if (is.character(data$vjust)) {
+      vjust <- ggplot2:::compute_just(data$vjust, data$y)[1]
+    } else {
+      vjust <- data$vjust[1]
+    }
+    if (is.character(data$hjust)) {
+      hjust <- ggplot2:::compute_just(data$hjust, data$x)[1]
+    } else {
+      hjust <- data$hjust[1]
+    }
 
-       if (is.character(data$vjust)) {
-           vjust <- ggplot2:::compute_just(data$vjust, data$y)[1]
-       } else {
-           vjust <- data$vjust[1]
-       }
-       if (is.character(data$hjust)) {
-           hjust <- ggplot2:::compute_just(data$hjust, data$x)[1]
-       } else {
-           hjust <- data$hjust[1]
-       }
+    contourTextGrob(
+      lab,
+      type = "text",
+      data$x,
+      data$y,
+      group = interaction(data$group, data$piece),
+      default.units = "native",
+      hjust = hjust,
+      vjust = vjust,
+      bg.r = stroke,
+      bg.color = data$stroke.colour,
+      position = label.placer,
 
-       contourTextGrob(
-           lab,
-           type = "text",
-           data$x, data$y,
-           group = interaction(data$group, data$piece),
-           default.units = "native",
-           hjust = hjust, vjust = vjust,
-           bg.r = stroke, bg.color = data$stroke.colour,
-           position = label.placer,
+      col = scales::alpha(data$colour, data$alpha),
+      fontsize = data$size * .pt,
+      fontfamily = data$family,
+      fontface = data$fontface,
+      lineheight = data$lineheight,
 
-               col = scales::alpha(data$colour, data$alpha),
-               fontsize = data$size * .pt,
-               fontfamily = data$family,
-               fontface = data$fontface,
-               lineheight = data$lineheight,
+      check.overlap = check_overlap,
+      rotate = rotate
+    )
+  },
 
-           check.overlap = check_overlap,
-           rotate = rotate
-       )
-
-   },
-
-   draw_key = ggplot2::draw_key_text
+  draw_key = ggplot2::draw_key_text
 )
 
 #' Scale for stroke.colour
@@ -223,5 +245,5 @@ GeomTextContour <- ggplot2::ggproto("GeomTextContour", ggplot2::Geom,
 #' @usage NULL
 #' @format NULL
 scale_stroke.colour_continuous <- function(...) {
-    ggplot2::scale_color_continuous(aesthetics = "stroke.colour", guide = "none")
+  ggplot2::scale_color_continuous(aesthetics = "stroke.colour", guide = "none")
 }

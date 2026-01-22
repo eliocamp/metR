@@ -55,101 +55,131 @@
 #' path <- geopotential[, Interpolate(gh ~ lon + lat, as.path(lons, lats))]
 #'
 #' @export
-Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = FALSE) {
-    checks <- makeAssertCollection()
+Interpolate <- function(
+  formula,
+  x.out,
+  y.out,
+  data = NULL,
+  grid = TRUE,
+  path = FALSE
+) {
+  checks <- makeAssertCollection()
 
-    assertClass(formula, "formula", add = checks)
-    assertDataFrame(data, null.ok = TRUE, add = checks)
-    assertFlag(grid, add = checks)
-    assertFlag(path, add = checks)
+  assertClass(formula, "formula", add = checks)
+  assertDataFrame(data, null.ok = TRUE, add = checks)
+  assertFlag(grid, add = checks)
+  assertFlag(path, add = checks)
 
-    reportAssertions(checks)
+  reportAssertions(checks)
 
-    if (is.list(x.out) == TRUE) {
-        path <- x.out$path %||% path
-        y.out <- x.out[[2]]
-        x.out <- x.out[[1]]
+  if (is.list(x.out) == TRUE) {
+    path <- x.out$path %||% path
+    y.out <- x.out[[2]]
+    x.out <- x.out[[1]]
+  }
+
+  index <- NULL
+  if (!isFALSE(path) & !is.null(path)) {
+    if (isTRUE(path)) {
+      path <- ".order"
+    } else if (!is.character(path)) {
+      stopf("`order` must be logical or character")
+    }
+    grid <- FALSE
+
+    index <- seq_along(x.out)
+  }
+
+  dep.names <- formula.tools::lhs.vars(formula)
+  if (length(dep.names) == 0) {
+    stopf("LHS of formula must have at least one variable")
+  }
+
+  ind.names <- formula.tools::rhs.vars(formula)
+  if (length(ind.names) > 2) {
+    stopf("RHS of formula must be of the form x + y")
+  }
+
+  formula <- Formula::as.Formula(formula)
+  data <- data.table::as.data.table(eval(quote(model.frame(
+    formula,
+    data = data,
+    na.action = NULL
+  ))))
+  if (!.has_single_value(data, ind.names)) {
+    stopf("Interpolate need a unique value for each x and y")
+  }
+
+  # Accomodate 1D interpolation
+  if (length(ind.names) == 1) {
+    if (hasArg(y.out)) {
+      warningf("Only 1 dimension in 'formula'. Ignoring 'y.out'.")
     }
 
-    index <- NULL
-    if (!isFALSE(path) & !is.null(path)) {
-        if (isTRUE(path)) {
-            path <- ".order"
-        } else if (!is.character(path)) {
-            stopf("`order` must be logical or character")
-        }
-        grid <- FALSE
-
-        index <- seq_along(x.out)
-    }
-
-    dep.names <- formula.tools::lhs.vars(formula)
-    if (length(dep.names) == 0) stopf("LHS of formula must have at least one variable")
-
-    ind.names <- formula.tools::rhs.vars(formula)
-    if (length(ind.names) > 2) {
-        stopf("RHS of formula must be of the form x + y")
-    }
-
-    formula <- Formula::as.Formula(formula)
-    data <- data.table::as.data.table(eval(quote(model.frame(formula, data = data,
-                                                 na.action = NULL))))
-    if (!.has_single_value(data, ind.names)) {
-        stopf("Interpolate need a unique value for each x and y")
-    }
-
-    # Accomodate 1D interpolation
-    if (length(ind.names) == 1) {
-        if (hasArg(y.out)) warningf("Only 1 dimension in 'formula'. Ignoring 'y.out'.")
-
-        loc <- data.table::data.table(x.out = x.out)
-        colnames(loc) <- ind.names
-        data.table::alloc.col(loc, ncol(data))
-
-        for (v in seq_along(dep.names)) {
-            value.var <- dep.names[v]
-            data.table::set(loc, NULL, value.var, stats::approx(data[[ind.names]],
-                                                    data[[value.var]],
-                                                    xout = x.out)$y)
-        }
-        return(loc)
-    }
-
-    if (grid == TRUE) {
-        if (length(unique(x.out)) != length(x.out)) {
-            stopf('duplicate values on x.out. If x.out is a vector of locations, use grid = FALSE')
-        }
-        if (length(unique(y.out)) != length(y.out)) {
-            stopf('duplicate values on y.out. If y.out is a vector of locations, use grid = FALSE')
-        }
-        loc <- data.table::setDT(expand.grid(x.out = x.out, y.out = y.out))
-    } else if (grid == FALSE) {
-        if (length(x.out) != length(y.out)) {
-            stopf('x.out is not of the same length as y.out.\nIf x.out and y.out define unique points on a regular grid, use grid = TRUE')
-        }
-        loc <- data.table::data.table(x.out, y.out)
-        if (!is.null(path) & !isFALSE(path)) {
-            data.table::set(loc, NULL, path, index)
-        }
-    } else {
-        stopf('wrong mode, choose either "grid" or "locations"')
-    }
-
-    colnames(loc)[seq_along(ind.names)] <- ind.names
+    loc <- data.table::data.table(x.out = x.out)
+    colnames(loc) <- ind.names
     data.table::alloc.col(loc, ncol(data))
 
-    dcast.formula <- as.formula(paste0(ind.names, collapse = " ~ "))
-
     for (v in seq_along(dep.names)) {
-        value.var <- dep.names[v]
-        data2 <- .tidy2matrix(data, dcast.formula, value.var = value.var)
-        data2 <- list(x = data2$rowdims[[1]],
-                      y = data2$coldims[[1]],
-                      z = data2$matrix)
-        data.table::set(loc, NULL, value.var, interpolate_locations(data2, as.matrix(loc)))
+      value.var <- dep.names[v]
+      data.table::set(
+        loc,
+        NULL,
+        value.var,
+        stats::approx(data[[ind.names]], data[[value.var]], xout = x.out)$y
+      )
     }
+    return(loc)
+  }
 
-    return(data.table::as.data.table(loc))
+  if (grid == TRUE) {
+    if (length(unique(x.out)) != length(x.out)) {
+      stopf(
+        'duplicate values on x.out. If x.out is a vector of locations, use grid = FALSE'
+      )
+    }
+    if (length(unique(y.out)) != length(y.out)) {
+      stopf(
+        'duplicate values on y.out. If y.out is a vector of locations, use grid = FALSE'
+      )
+    }
+    loc <- data.table::setDT(expand.grid(x.out = x.out, y.out = y.out))
+  } else if (grid == FALSE) {
+    if (length(x.out) != length(y.out)) {
+      stopf(
+        'x.out is not of the same length as y.out.\nIf x.out and y.out define unique points on a regular grid, use grid = TRUE'
+      )
+    }
+    loc <- data.table::data.table(x.out, y.out)
+    if (!is.null(path) & !isFALSE(path)) {
+      data.table::set(loc, NULL, path, index)
+    }
+  } else {
+    stopf('wrong mode, choose either "grid" or "locations"')
+  }
+
+  colnames(loc)[seq_along(ind.names)] <- ind.names
+  data.table::alloc.col(loc, ncol(data))
+
+  dcast.formula <- as.formula(paste0(ind.names, collapse = " ~ "))
+
+  for (v in seq_along(dep.names)) {
+    value.var <- dep.names[v]
+    data2 <- .tidy2matrix(data, dcast.formula, value.var = value.var)
+    data2 <- list(
+      x = data2$rowdims[[1]],
+      y = data2$coldims[[1]],
+      z = data2$matrix
+    )
+    data.table::set(
+      loc,
+      NULL,
+      value.var,
+      interpolate_locations(data2, as.matrix(loc))
+    )
+  }
+
+  return(data.table::as.data.table(loc))
 }
 
 
@@ -177,30 +207,29 @@ Interpolate <- function(formula, x.out, y.out, data = NULL, grid = TRUE, path = 
 #' @export
 #' @importFrom stats approx
 as.path <- function(x, y, n = 10, path = TRUE) {
-    if (length(x) < 2 & length(y) < 2) {
-        stopf("either `xs` or `ys` must be of length greater than 1")
-    }
+  if (length(x) < 2 & length(y) < 2) {
+    stopf("either `xs` or `ys` must be of length greater than 1")
+  }
 
-    if (!is.numeric(x)) {
-        stopf("`x` must be a numeric vector")
-    }
+  if (!is.numeric(x)) {
+    stopf("`x` must be a numeric vector")
+  }
 
-    if (!is.numeric(y)) {
-        stopf("`y` must be a numeric vector")
-    }
+  if (!is.numeric(y)) {
+    stopf("`y` must be a numeric vector")
+  }
 
-    if (length(x) == 1) {
-        x <- rep(x, length(y))
-    } else if (length(y) == 1) {
-        y <- rep(y, length(x))
-    }
+  if (length(x) == 1) {
+    x <- rep(x, length(y))
+  } else if (length(y) == 1) {
+    y <- rep(y, length(x))
+  }
 
-    points <- seq_len(length(x))
-    index <- seq(min(points), max(points), length.out = n)
-    index <- sort(unique(c(index, points)))
-    xs_interpolate <- approx(points, x, index)$y
-    ys_interpolate <- approx(points, y, index)$y
+  points <- seq_len(length(x))
+  index <- seq(min(points), max(points), length.out = n)
+  index <- sort(unique(c(index, points)))
+  xs_interpolate <- approx(points, x, index)$y
+  ys_interpolate <- approx(points, y, index)$y
 
-    list(x = xs_interpolate, y = ys_interpolate,
-                path = path)
+  list(x = xs_interpolate, y = ys_interpolate, path = path)
 }

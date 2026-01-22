@@ -62,43 +62,45 @@
 #'
 #' @family ggplot2 helpers
 #' @export
-geom_contour_fill <- function(mapping = NULL, data = NULL,
-                         stat = "ContourFill", position = "identity",
-                         ...,
-                         breaks = MakeBreaks(),
-                         bins = NULL,
-                         binwidth = NULL,
-                         proj = NULL,
-                         proj.latlon = TRUE,
-                         clip = NULL,
-                         kriging = FALSE,
-                         global.breaks = TRUE,
-                         na.fill = FALSE,
-                         show.legend = NA,
-                         inherit.aes = TRUE) {
-    .check_wrap_param(list(...))
-    ggplot2::layer(
-        data = data,
-        mapping = mapping,
-        stat = stat,
-        geom = ggplot2::GeomPolygon,
-        position = position,
-        show.legend = show.legend,
-        inherit.aes = inherit.aes,
-        params = list(
-            breaks = breaks,
-            bins = bins,
-            binwidth = binwidth,
-            na.rm = FALSE,
-            na.fill = na.fill,
-            kriging = kriging,
-            proj = proj,
-            proj.latlon = proj.latlon,
-            clip = clip,
-            global.breaks = global.breaks,
-            ...
-        )
+geom_contour_fill <- function(
+  mapping = NULL,
+  data = NULL,
+  stat = "ContourFill",
+  position = "identity",
+  ...,
+  breaks = MakeBreaks(),
+  bins = NULL,
+  binwidth = NULL,
+  proj = NULL,
+  proj.latlon = TRUE,
+  clip = NULL,
+  kriging = FALSE,
+  global.breaks = TRUE,
+  na.fill = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+) {
+  .check_wrap_param(list(...))
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = ggplot2::GeomPolygon,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      breaks = breaks,
+      bins = bins,
+      binwidth = binwidth,
+      na.rm = FALSE,
+      na.fill = na.fill,
+      kriging = kriging,
+      proj = proj,
+      proj.latlon = proj.latlon,
+      clip = clip,
+      global.breaks = global.breaks,
+      ...
     )
+  )
 }
-
-

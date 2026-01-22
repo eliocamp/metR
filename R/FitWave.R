@@ -137,97 +137,100 @@
 #' @aliases BuildWave FitWave
 #' @export
 FitWave <- function(y, k = 1) {
-    assertIntegerish(k, lower = 0, any.missing = FALSE)
+  assertIntegerish(k, lower = 0, any.missing = FALSE)
 
-    if (any(is.na(y))) {
-        nas <- rep(NA_real_, length(k))
-        return(list(amplitude = nas,
-                    phase = nas,
-                    k = k,
-                    r2 = nas))
-    }
+  if (any(is.na(y))) {
+    nas <- rep(NA_real_, length(k))
+    return(list(amplitude = nas, phase = nas, k = k, r2 = nas))
+  }
 
-    f <- fft(y)
-    l <- length(f)
-    f <- (f/l)[1:ceiling(l/2)]
-    amp <- Mod(f)
-    amp[-1] <- amp[-1]*2
-    # amp[1] <- mean(y)
-    phase <- -Arg(f)
+  f <- fft(y)
+  l <- length(f)
+  f <- (f / l)[1:ceiling(l / 2)]
+  amp <- Mod(f)
+  amp[-1] <- amp[-1] * 2
+  # amp[1] <- mean(y)
+  phase <- -Arg(f)
 
-    # Hago que la fase esté entre 0 y 2/k*pi
-    phase[phase < 0] <- phase[phase < 0] + 2*pi
-    phase <- phase/(seq_along(phase) - 1)
-    phase[1] <- 0
+  # Hago que la fase esté entre 0 y 2/k*pi
+  phase[phase < 0] <- phase[phase < 0] + 2 * pi
+  phase <- phase / (seq_along(phase) - 1)
+  phase[1] <- 0
 
-    r <- amp^2/sum(amp[-1]^2)
-    r[1] <- 0
-    k <- k + 1
+  r <- amp^2 / sum(amp[-1]^2)
+  r[1] <- 0
+  k <- k + 1
 
-    ret <- list(amp[k], phase[k], k - 1, r[k])
-    names(ret) <- c("amplitude", "phase", "k", "r2")
-    return(ret)
+  ret <- list(amp[k], phase[k], k - 1, r[k])
+  names(ret) <- c("amplitude", "phase", "k", "r2")
+  return(ret)
 }
 
 
 #' @rdname waves
 #' @export
-BuildWave <- function(x, amplitude, phase, k,
-                       wave = list(amplitude = amplitude, phase = phase, k = k),
-                       sum = TRUE) {
-    assertListSameLength(wave, names = TRUE)
-    assertFlag(sum)
+BuildWave <- function(
+  x,
+  amplitude,
+  phase,
+  k,
+  wave = list(amplitude = amplitude, phase = phase, k = k),
+  sum = TRUE
+) {
+  assertListSameLength(wave, names = TRUE)
+  assertFlag(sum)
 
-    if (sum == TRUE) {
-        y <- lapply(seq_along(wave$k),
-                    function(i) wave$amplitude[i]*cos((x - wave$phase[i])*wave$k[i]))
-        y <- Reduce("+", y)
-        return(y)
-    } else {
-        field <- data.table::setDT(expand.grid(x = x, k = wave$k))
-        field <- field[wave, on = "k"]
-        field[, y := amplitude*cos((x - phase)*k), by = k]
-        return(as.list(field[, .(k, x, y)]))
-    }
+  if (sum == TRUE) {
+    y <- lapply(seq_along(wave$k), function(i) {
+      wave$amplitude[i] * cos((x - wave$phase[i]) * wave$k[i])
+    })
+    y <- Reduce("+", y)
+    return(y)
+  } else {
+    field <- data.table::setDT(expand.grid(x = x, k = wave$k))
+    field <- field[wave, on = "k"]
+    field[, y := amplitude * cos((x - phase) * k), by = k]
+    return(as.list(field[, .(k, x, y)]))
+  }
 }
 
 #' @rdname waves
 #' @export
 FilterWave <- function(y, k, action = sign(k[k != 0][1])) {
-    assertIntegerish(k, any.missing = FALSE)
+  assertIntegerish(k, any.missing = FALSE)
 
-    assertNumeric(y)
+  assertNumeric(y)
 
-    if (any(is.na(y))) {
-        return(rep(NA_real_, length(y)))
-    }
+  if (any(is.na(y))) {
+    return(rep(NA_real_, length(y)))
+  }
 
-    f <- fft(y)
-    # Need to remove the k+1 spots (because index 1 is k = 0)
-    # and the N - k + 1 because of symmetry.
-    k1 <- abs(k)
-    if (is.na(action)) action <- 1
-    k1 <- c(k1 + 1, length(y) - k1[k1 != 0] + 1)
-    index <- -action*k1
-    f[index] <- 0 + 0i
-    Re(fft(f, inverse = T))/length(y)
+  f <- fft(y)
+  # Need to remove the k+1 spots (because index 1 is k = 0)
+  # and the N - k + 1 because of symmetry.
+  k1 <- abs(k)
+  if (is.na(action)) {
+    action <- 1
+  }
+  k1 <- c(k1 + 1, length(y) - k1[k1 != 0] + 1)
+  index <- -action * k1
+  f[index] <- 0 + 0i
+  Re(fft(f, inverse = T)) / length(y)
 }
-
 
 
 #' @rdname waves
 #' @export
 WaveEnvelope <- function(y) {
-    assertNumeric(y)
+  assertNumeric(y)
 
-    if (any(is.na(y))) {
-        return(rep(NA_real_, length(y)))
-    }
+  if (any(is.na(y))) {
+    return(rep(NA_real_, length(y)))
+  }
 
-
-    N <- length(y)
-    x_hat <- fft(y)/N
-    k <- 1:ceiling(N/2)
-    x_hat[k] <- 0
-    Mod(fft(x_hat, inverse = T))*2
+  N <- length(y)
+  x_hat <- fft(y) / N
+  k <- 1:ceiling(N / 2)
+  x_hat[k] <- 0
+  Mod(fft(x_hat, inverse = T)) * 2
 }

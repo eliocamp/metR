@@ -9,25 +9,46 @@
 #'
 #' @export
 #' @rdname label_scales
-scale_label_colour_continuous <- function(..., aesthetics = c("label_colour"),
-                                          guide = ggplot2::guide_colorbar(available_aes = "label_colour")) {
-    ggplot2::scale_color_continuous(..., aesthetics = aesthetics, guide = guide)
+scale_label_colour_continuous <- function(
+  ...,
+  aesthetics = c("label_colour"),
+  guide = ggplot2::guide_colorbar(available_aes = "label_colour")
+) {
+  ggplot2::scale_color_continuous(..., aesthetics = aesthetics, guide = guide)
 }
 
 #' @param range Output range of alpha values. Must lie between 0 and 1.
 #' @export
 #' @rdname label_scales
-scale_label_alpha_continuous <- function(..., range = c(0.1, 1), aesthetics = c("label_alpha")) {
-    ggplot2::continuous_scale(aesthetics = "label_alpha", palette = scales::rescale_pal(range),
-                              ...)
+scale_label_alpha_continuous <- function(
+  ...,
+  range = c(0.1, 1),
+  aesthetics = c("label_alpha")
+) {
+  ggplot2::continuous_scale(
+    aesthetics = "label_alpha",
+    palette = scales::rescale_pal(range),
+    ...
+  )
 }
 
 #' @inheritParams ggplot2::scale_size
 #' @export
 #' @rdname label_scales
-scale_label_size_continuous <- function(breaks = waiver(), labels = waiver(),
-                                        limits = NULL, range = c(1, 6), transform = "identity",
-                                        guide = "legend") {
-    ggplot2::continuous_scale(aesthetics = "label_size", palette = scales::area_pal(range),
-                              breaks = breaks, labels = labels, limits = limits, transform = transform)
+scale_label_size_continuous <- function(
+  breaks = waiver(),
+  labels = waiver(),
+  limits = NULL,
+  range = c(1, 6),
+  transform = "identity",
+  guide = "legend"
+) {
+  ggplot2::continuous_scale(
+    aesthetics = "label_size",
+    palette = scales::area_pal(range),
+    breaks = breaks,
+    labels = labels,
+    limits = limits,
+    transform = transform
+  )
 }

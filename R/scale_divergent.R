@@ -14,11 +14,26 @@
 #' @name scale_divergent
 #' @family ggplot2 helpers
 #' @export
-scale_colour_divergent <- function(..., low = scales::muted("blue"), mid = "white",
-                                  high = scales::muted("red"), midpoint = 0, space = "Lab",
-                                  na.value = "grey50", guide = "colourbar") {
-    ggplot2::scale_color_gradient2(..., low = low, high = high, mid = mid, midpoint = midpoint,
-                                   space = space, na.value = na.value, guide = guide)
+scale_colour_divergent <- function(
+  ...,
+  low = scales::muted("blue"),
+  mid = "white",
+  high = scales::muted("red"),
+  midpoint = 0,
+  space = "Lab",
+  na.value = "grey50",
+  guide = "colourbar"
+) {
+  ggplot2::scale_color_gradient2(
+    ...,
+    low = low,
+    high = high,
+    mid = mid,
+    midpoint = midpoint,
+    space = space,
+    na.value = na.value,
+    guide = guide
+  )
 }
 
 #' @export
@@ -27,15 +42,24 @@ scale_color_divergent <- scale_colour_divergent
 
 #' @rdname scale_divergent
 #' @export
-scale_fill_divergent <- function(..., low = scales::muted("blue"),
-                                 mid = "white",
-                                 high = scales::muted("red"),
-                                 midpoint = 0,
-                                 space = "Lab",
-                                 na.value = "grey50",
-                                 guide = "colourbar") {
-    ggplot2::scale_fill_gradient2(..., low = low, high = high, mid = mid,
-                                  midpoint = midpoint, space = space,
-                                  na.value = na.value, guide = guide)
+scale_fill_divergent <- function(
+  ...,
+  low = scales::muted("blue"),
+  mid = "white",
+  high = scales::muted("red"),
+  midpoint = 0,
+  space = "Lab",
+  na.value = "grey50",
+  guide = "colourbar"
+) {
+  ggplot2::scale_fill_gradient2(
+    ...,
+    low = low,
+    high = high,
+    mid = mid,
+    midpoint = midpoint,
+    space = space,
+    na.value = na.value,
+    guide = guide
+  )
 }
-

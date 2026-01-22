@@ -168,472 +168,537 @@
 #'
 #' }
 #' @export
-ReadNetCDF <- function(file, vars = NULL,
-                       out = c("data.frame", "vector", "array"),
-                       subset = NULL, key = FALSE) {
-    if (getOption("readnetcdf_check_pkg", TRUE)) {
-        rlang::check_installed(c("ncdf4", "CFtime"), "for `ReadNetCDF()`.")
+ReadNetCDF <- function(
+  file,
+  vars = NULL,
+  out = c("data.frame", "vector", "array"),
+  subset = NULL,
+  key = FALSE
+) {
+  if (getOption("readnetcdf_check_pkg", TRUE)) {
+    rlang::check_installed(c("ncdf4", "CFtime"), "for `ReadNetCDF()`.")
+  }
+
+  out <- out[1]
+  checks <- makeAssertCollection()
+
+  # This is not optimal. Maybe it's better to make ReatNetCDF() a generic
+  # and add methods for classes. Then rcdo can add the appropriate class.
+  if (inherits(file, "cdo_operation")) {
+    rlang::check_installed("rcdo", "to read rcdo commands.")
+    file <- rcdo::cdo_execute(file)
+  }
+
+  if (!inherits(file, "ncdf4") & length(file) > 1) {
+    if (out == "array") {
+      stopf("Multifile datasets are not supported for `out = 'array'`.")
+    }
+    # Checking if package is installed can be relatively expensive when
+    # looping though lots of files.
+    options(readnetcdf_check_pkg = FALSE)
+    on.exit(options(readnetcdf_check_pkg = TRUE))
+    rlang::check_installed("furrr", "to read multiple files.")
+    data <- furrr::future_map(
+      file,
+      function(x) {
+        ReadNetCDF(x, vars = vars, out = out, subset = subset, key = key)
+      },
+      .progress = TRUE
+    )
+    if (out == "data.frame") {
+      data <- data.table::rbindlist(data)
+    } else if (out == "vector") {
+      data <- as.list(data.table::rbindlist(list(
+        list(x = 1:10, y = 1:10),
+        list(x = 1:10, y = 1:10)
+      )))
     }
 
+    return(data)
+  }
 
-    out <- out[1]
-    checks <- makeAssertCollection()
+  if (!inherits(file, "ncdf4")) {
+    assertCharacter(
+      file,
+      len = 1,
+      min.chars = 1,
+      any.missing = FALSE,
+      add = checks
+    )
+  }
 
-    # This is not optimal. Maybe it's better to make ReatNetCDF() a generic
-    # and add methods for classes. Then rcdo can add the appropriate class.
-    if (inherits(file, "cdo_operation")) {
-        rlang::check_installed("rcdo", "to read rcdo commands.")
-        file <- rcdo::cdo_execute(file)
+  # assertCharacter(vars, null.ok = TRUE, any.missing = FALSE, unique = TRUE,
+  #                 add = checks)
+  assertChoice(out, c("data.frame", "vector", "array", "vars"), add = checks)
+  assertList(
+    subset,
+    types = c("vector", "POSIXct", "POSIXt", "Date", "list", "AsIs"),
+    null.ok = TRUE,
+    add = checks
+  )
+  # assertNamed(subset, c("unique"), add = checks)
+  assertFlag(key, add = checks)
+
+  reportAssertions(checks)
+
+  if (!inherits(file, "ncdf4")) {
+    utils::capture.output(ncfile <- try(ncdf4::nc_open(file), silent = TRUE))
+    if (inherits(ncfile, "try-error")) {
+      ncfile <- strsplit(ncfile, "\n", fixed = TRUE)[[1]][2]
+      stop(ncfile)
     }
+    on.exit({
+      ncdf4::nc_close(ncfile)
+    })
+  } else {
+    ncfile <- file
+  }
 
-    if (!inherits(file, "ncdf4") & length(file) > 1) {
-        if (out == "array") {
-            stopf("Multifile datasets are not supported for `out = 'array'`.")
-        }
-        # Checking if package is installed can be relatively expensive when
-        # looping though lots of files.
-        options(readnetcdf_check_pkg = FALSE)
-        on.exit(options(readnetcdf_check_pkg = TRUE))
-        rlang::check_installed("furrr", "to read multiple files.")
-        data <- furrr::future_map(file,
-            function(x) ReadNetCDF(x, vars = vars, out = out, subset = subset, key = key), .progress = TRUE)
-        if (out == "data.frame") {
-            data <- data.table::rbindlist(data)
-        } else if (out == "vector") {
-            data <- as.list(data.table::rbindlist(list(list(x = 1:10, y = 1:10), list(x = 1:10, y = 1:10))))
-        }
+  if (out[1] == "vars") {
+    r <- list(vars = ncfile$var, dims = ncfile$dim)
+    class(r) <- c("nc_glance", class(r))
+    return(r)
+  }
 
-        return(data)
-    }
+  all_vars <- names(ncfile$var)
 
-    if (!inherits(file, "ncdf4")) {
-        assertCharacter(file, len = 1, min.chars = 1, any.missing = FALSE, add = checks)
-    }
+  if (is.null(vars)) {
+    vars <- as.list(all_vars)
+  } else if (is.function(vars)) {
+    vars_result <- vars(all_vars)
 
-    # assertCharacter(vars, null.ok = TRUE, any.missing = FALSE, unique = TRUE,
-    #                 add = checks)
-    assertChoice(out, c("data.frame", "vector", "array", "vars"), add = checks)
-    assertList(subset, types = c("vector", "POSIXct", "POSIXt", "Date", "list", "AsIs"), null.ok = TRUE, add = checks)
-    # assertNamed(subset, c("unique"), add = checks)
-    assertFlag(key, add = checks)
-
-    reportAssertions(checks)
-
-    if (!inherits(file, "ncdf4")) {
-        utils::capture.output(ncfile <- try(ncdf4::nc_open(file), silent = TRUE))
-        if (inherits(ncfile, "try-error")) {
-            ncfile <- strsplit(ncfile, "\n", fixed = TRUE)[[1]][2]
-            stop(ncfile)
-        }
-        on.exit({
-            ncdf4::nc_close(ncfile)
-        })
+    if (!is.character(vars_result)) {
+      vars <- all_vars[vars_result]
     } else {
-        ncfile <- file
+      vars <- vars_result
     }
+  }
 
+  empty_vars <- length(vars) == 0
+  if (empty_vars) {
+    warningf("No variables selected. Returning NULL")
+    return(NULL)
+  }
 
-    if (out[1] == "vars") {
-        r <- list(vars = ncfile$var,
-                  dims = ncfile$dim)
-        class(r) <- c("nc_glance", class(r))
-        return(r)
+  not_valid <- !(vars %in% all_vars)
+
+  if (any(not_valid)) {
+    bad_vars <- paste0(vars[not_valid], collapse = ", ")
+    stopf("Invalid variables selected. Bad variables: %s.", bad_vars)
+  }
+
+  # Vars must be a (fully) named vector.
+  varnames <- names(vars)
+  if (is.null(varnames)) {
+    names(vars) <- vars
+  } else {
+    no.names <- nchar(varnames) == 0
+    names(vars)[no.names] <- vars[no.names]
+  }
+
+  # Leo las dimensiones.
+  dims <- names(ncfile$dim)
+  # dims <- dims[dims != "nbnds"]
+  ids <- vector()
+  dimensions <- list()
+  for (i in seq_along(dims)) {
+    # if (dims[i] == "time" && ncfile$dim[[dims[i]]]$units != "") {
+    dimensions[[dims[i]]] <- try_parse_time(
+      ncfile$dim[[dims[i]]]$vals,
+      ncfile$dim[[dims[i]]]$units,
+      ncfile$dim[[dims[i]]]$calendar
+    )
+    # } else {
+    #     dimensions[[dims[i]]] <- ncfile$dim[[dims[i]]]$vals
+    # }
+    ids[i] <- ncfile$dim[[i]]$id
+  }
+  names(dims) <- ids
+
+  ## Hago los subsets
+  # Me fijo si faltan dimensiones
+  subset <- .expand_chunks(subset)
+
+  subset_names <- .names_recursive(subset)
+  subset.extra <- subset_names[!(subset_names %in% names(dimensions))]
+  if (length(subset.extra) != 0) {
+    stopf(
+      "Subsetting dimensions not found: %s.",
+      paste0(subset.extra, collapse = ", ")
+    )
+  }
+
+  if (length(subset) > 1) {
+    if (out != "data.frame") {
+      stopf('Multiple subsets only supported for `out = "data.frame"')
     }
+    reads <- lapply(subset, function(this_subset) {
+      ReadNetCDF(
+        file = file,
+        vars = vars,
+        out = out,
+        key = key,
+        subset = this_subset
+      )
+    })
+    return(data.table::rbindlist(reads))
+  } else {
+    subset <- subset[[1]]
+  }
 
-    all_vars <- names(ncfile$var)
+  # Leo las variables y las meto en una lista.
+  nc <- list()
+  nc_dim <- list()
 
-    if (is.null(vars)) {
-        vars <- as.list(all_vars)
-    } else if (is.function(vars)) {
+  dim.length <- vector("numeric", length = length(vars))
 
-        vars_result <- vars(all_vars)
+  for (v in seq_along(vars)) {
+    # Para cada variable, veo start y count
+    order <- ncfile$var[[vars[[v]]]]$dimids
+    start <- rep(1, length(order))
+    names(start) <- names(dimensions[dims[as.character(order)]])
+    count <- rep(-1, length(order))
+    names(count) <- names(dimensions[dims[as.character(order)]])
 
-        if (!is.character(vars_result)) {
-            vars <- all_vars[vars_result]
-        } else {
-            vars <- vars_result
+    sub.dimensions <- dimensions
+
+    for (s in names(subset)[names(subset) %in% names(start)]) {
+      d <- dimensions[[s]]
+      sub <- subset[[s]]
+
+      if (inherits(sub, 'AsIs')) {
+        if (is.na(sub[1])) {
+          sub[1] <- 1
         }
+
+        if (is.na(sub[2])) {
+          sub[2] <- length(d)
+        }
+
+        if (sub[1] <= 0) {
+          sub[1] <- length(d) + sub[1]
+        }
+
+        if (sub[2] <= 0) {
+          sub[2] <- length(d) + sub[2]
+        }
+
+        start[[s]] <- sub[1]
+        count[[s]] <- abs(sub[2] - sub[1]) + 1
+      } else {
+        if (.is.somedate(d)) {
+          sub <- lubridate::as_datetime(sub)
+        }
+
+        if (is.na(sub[1])) {
+          sub[1] <- min(d)
+        }
+
+        if (is.na(sub[2])) {
+          sub[2] <- max(d)
+        }
+
+        sub <- range(sub)
+
+        d_temp <- d
+        d_temp[d_temp < sub[1]] <- NA
+        start1 <- which.min(abs(d_temp - sub[1]))
+
+        d_temp <- d
+        d_temp[d_temp > sub[2]] <- NA
+        end <- which.min(abs(d_temp - sub[2]))
+
+        if (length(start1) == 0 || length(end) == 0) {
+          return(NULL)
+        }
+
+        start[[s]] <- min(start1, end)
+        count[[s]] <- abs(end - start1) + 1
+      }
+
+      if (count[[s]] == 0) {
+        count[[s]] <- 1
+      }
+
+      sub.dimensions[[s]] <- dimensions[[s]][seq.int(
+        start[[s]],
+        start[[s]] + count[[s]] - 1
+      )]
     }
 
-    empty_vars <- length(vars) == 0
-    if (empty_vars) {
-        warningf("No variables selected. Returning NULL")
-        return(NULL)
+    if (all(is.na(order))) {
+      start <- NA
+      count <- NA
+      s <- 1
     }
+    var1 <- .read_vars(
+      varid = vars[[v]],
+      ncfile = ncfile,
+      start = start,
+      count = count
+    )
 
-    not_valid <- !(vars %in% all_vars)
+    if (!all(is.na(order))) {
+      # Even with collapse_degen = FALSE, deegenerate dimensions are still an issue
+      correct_dims <- sub.dimensions[dims[as.character(order)]]
+      var1 <- array(var1, dim = lengths(correct_dims))
 
-    if (any(not_valid)) {
-        bad_vars <- paste0(vars[not_valid], collapse = ", ")
-        stopf("Invalid variables selected. Bad variables: %s.", bad_vars)
-    }
-
-    # Vars must be a (fully) named vector.
-    varnames <- names(vars)
-    if (is.null(varnames)) {
-        names(vars) <- vars
+      dimnames(var1) <- correct_dims
+      attr(var1, "dimvalues") <- correct_dims
+      nc_dim[[v]] <- as.vector(correct_dims)
     } else {
-        no.names <- nchar(varnames) == 0
-        names(vars)[no.names] <- vars[no.names]
+      nc_dim[[v]] <- 0
     }
 
+    dim.length[v] <- length(order)
+    nc[[v]] <- var1
+  }
 
-    # Leo las dimensiones.
-    dims <- names(ncfile$dim)
-    # dims <- dims[dims != "nbnds"]
-    ids <- vector()
-    dimensions <- list()
-    for (i in seq_along(dims)) {
-        # if (dims[i] == "time" && ncfile$dim[[dims[i]]]$units != "") {
-        dimensions[[dims[i]]] <- try_parse_time(ncfile$dim[[dims[i]]]$vals,
-                                             ncfile$dim[[dims[i]]]$units,
-                                             ncfile$dim[[dims[i]]]$calendar)
-        # } else {
-        #     dimensions[[dims[i]]] <- ncfile$dim[[dims[i]]]$vals
-        # }
-        ids[i] <- ncfile$dim[[i]]$id
-    }
-    names(dims) <- ids
+  if (out[1] == "array") {
+    return(nc)
+  } else if (out[1] == "vector") {
+    nc <- lapply(seq_along(nc), function(x) c(nc[[x]]))
+    names(nc) <- names(vars)
+    return(nc)
+  } else {
+    first.var <- which.max(dim.length)
+    nc.df <- .melt_array(
+      nc[[first.var]],
+      dims = nc_dim[[first.var]],
+      value.name = names(vars)[first.var]
+    )
 
-    ## Hago los subsets
-    # Me fijo si faltan dimensiones
-    subset <- .expand_chunks(subset)
-
-    subset_names <- .names_recursive(subset)
-    subset.extra <- subset_names[!(subset_names %in% names(dimensions))]
-    if (length(subset.extra) != 0) {
-        stopf("Subsetting dimensions not found: %s.",
-              paste0(subset.extra, collapse = ", "))
+    for (v in seq_along(vars)[-first.var]) {
+      this.dim <- names(dimnames(nc[[v]]))
+      first.dim <- names(dimnames(nc[[first.var]]))
+      missing.dim <- first.dim[!(first.dim %in% this.dim)]
+      n <- c(nc[[v]])
+      nc.df[, names(vars)[v] := ..n, by = c(missing.dim)]
     }
 
-    if (length(subset) > 1) {
-        if (out != "data.frame") {
-            stopf('Multiple subsets only supported for `out = "data.frame"')
-        }
-        reads <- lapply(subset, function(this_subset) {
-            ReadNetCDF(file = file, vars = vars, out = out, key = key, subset = this_subset)
-        })
-        return(data.table::rbindlist(reads))
-    } else {
-        subset <- subset[[1]]
+    if (key == TRUE) {
+      data.table::setkeyv(nc.df, names(nc.df)[!(names(nc.df) %in% names(vars))])
     }
+  }
 
-    # Leo las variables y las meto en una lista.
-    nc <- list()
-    nc_dim <- list()
-
-    dim.length <- vector("numeric", length = length(vars))
-
-    for (v in seq_along(vars)) {
-        # Para cada variable, veo start y count
-        order <- ncfile$var[[vars[[v]]]]$dimids
-        start <- rep(1, length(order))
-        names(start) <- names(dimensions[dims[as.character(order)]])
-        count <- rep(-1, length(order))
-        names(count) <- names(dimensions[dims[as.character(order)]])
-
-        sub.dimensions <- dimensions
-
-        for (s in names(subset)[names(subset) %in% names(start)]) {
-            d <- dimensions[[s]]
-            sub <- subset[[s]]
-
-            if (inherits(sub, 'AsIs')) {
-                if (is.na(sub[1])) {
-                    sub[1] <- 1
-                }
-
-                if (is.na(sub[2])) {
-                    sub[2] <- length(d)
-                }
-
-                if (sub[1] <= 0) {
-                    sub[1] <- length(d) + sub[1]
-                }
-
-                if (sub[2] <= 0) {
-                    sub[2] <- length(d) + sub[2]
-                }
-
-                start[[s]] <- sub[1]
-                count[[s]] <- abs(sub[2] - sub[1]) + 1
-            } else {
-                if (.is.somedate(d)) {
-                    sub <- lubridate::as_datetime(sub)
-                }
-
-                if (is.na(sub[1])) {
-                    sub[1] <- min(d)
-                }
-
-                if (is.na(sub[2])) {
-                    sub[2] <- max(d)
-                }
-
-                sub <- range(sub)
-
-                d_temp <- d
-                d_temp[d_temp < sub[1]] <- NA
-                start1 <- which.min(abs(d_temp - sub[1]))
-
-                d_temp <- d
-                d_temp[d_temp > sub[2]] <- NA
-                end <- which.min(abs(d_temp - sub[2]))
-
-                if (length(start1) == 0 || length(end) == 0) {
-                    return(NULL)
-                }
-
-                start[[s]] <- min(start1, end)
-                count[[s]] <- abs(end - start1) + 1
-            }
-
-
-
-            if(count[[s]] == 0) count[[s]] <- 1
-
-            sub.dimensions[[s]] <- dimensions[[s]][seq.int(start[[s]], start[[s]] + count[[s]] - 1)]
-        }
-
-        if (all(is.na(order))) {
-            start <- NA
-            count <- NA
-            s <- 1
-        }
-        var1 <- .read_vars(varid = vars[[v]], ncfile = ncfile, start = start, count = count)
-
-        if (!all(is.na(order))) {
-            # Even with collapse_degen = FALSE, deegenerate dimensions are still an issue
-            correct_dims <- sub.dimensions[dims[as.character(order)]]
-            var1 <- array(var1, dim = lengths(correct_dims))
-
-            dimnames(var1) <- correct_dims
-            attr(var1, "dimvalues") <- correct_dims
-            nc_dim[[v]] <- as.vector(correct_dims)
-        } else {
-            nc_dim[[v]] <- 0
-        }
-
-        dim.length[v] <- length(order)
-        nc[[v]] <- var1
-
-    }
-
-    if (out[1] == "array") {
-        return(nc)
-    } else if (out[1] == "vector") {
-        nc <- lapply(seq_along(nc), function(x) c(nc[[x]]))
-        names(nc) <- names(vars)
-        return(nc)
-    } else {
-        first.var <- which.max(dim.length)
-        nc.df <- .melt_array(nc[[first.var]], dims = nc_dim[[first.var]],
-                             value.name = names(vars)[first.var])
-
-        for (v in seq_along(vars)[-first.var]) {
-            this.dim <- names(dimnames(nc[[v]]))
-            first.dim <- names(dimnames(nc[[first.var]]))
-            missing.dim <- first.dim[!(first.dim %in% this.dim)]
-            n <- c(nc[[v]])
-            nc.df[, names(vars)[v] := ..n, by = c(missing.dim)]
-        }
-
-        if (key == TRUE) data.table::setkeyv(nc.df, names(nc.df)[!(names(nc.df) %in% names(vars))])
-    }
-
-
-    return(nc.df[][])
+  return(nc.df[][])
 }
 
 
-
-time_units_factor <- c("days" = 24*3600,
-                       "hours" = 3600,
-                       "minutes" = 60,
-                       "seconds" = 1,
-                       "milliseconds" = 1/1000)
+time_units_factor <- c(
+  "days" = 24 * 3600,
+  "hours" = 3600,
+  "minutes" = 60,
+  "seconds" = 1,
+  "milliseconds" = 1 / 1000
+)
 
 #' @param time the time definition. Can be accessed using [GlanceNetCDF].
 #' @export
 #' @rdname ReadNetCDF
 ParseNetCDFtime <- function(time) {
-    try_parse_time(time$vals, time$units, time$calendar)
+  try_parse_time(time$vals, time$units, time$calendar)
 }
 
 #' @param files vector of files to open.
 #' @export
 #' @rdname ReadNetCDF
 OpenNetCDF <- function(files) {
-    rlang::check_installed(c("ncdf4", "CFtime", "furrr"), "for `OpenNetCDF()`.")
-    furrr::future_map(files, function(x) ncdf4::nc_open(x))
+  rlang::check_installed(c("ncdf4", "CFtime", "furrr"), "for `OpenNetCDF()`.")
+  furrr::future_map(files, function(x) ncdf4::nc_open(x))
 }
 
 
 .parse_time <- function(time, units, calendar = NULL) {
-    calendar <- tolower(calendar)
-    has_since <- grepl("since", units)
-    if (!has_since) {
-        return(time)
-    }
-    # For all I know this could fail to actually get the origin.
-    # Is there a more elegant way of extracting the origin?
-    origin <- trimws(strsplit(units, "since")[[1]][2])
-    time_unit <- trimws(strsplit(units, "since")[[1]])[1]
-
-    if (length(calendar) != 0) {
-        time <- as.POSIXct(CFtime::as_timestamp(CFtime::CFtime(units, calendar = calendar, offsets = time)),
-                           cal = "standard", tz = "UTC", origin = origin)
-    } else {
-        time <- as.POSIXct(origin, tz = "UTC") + time*time_units_factor[time_unit]
-    }
-
+  calendar <- tolower(calendar)
+  has_since <- grepl("since", units)
+  if (!has_since) {
     return(time)
+  }
+  # For all I know this could fail to actually get the origin.
+  # Is there a more elegant way of extracting the origin?
+  origin <- trimws(strsplit(units, "since")[[1]][2])
+  time_unit <- trimws(strsplit(units, "since")[[1]])[1]
+
+  if (length(calendar) != 0) {
+    time <- as.POSIXct(
+      CFtime::as_timestamp(CFtime::CFtime(
+        units,
+        calendar = calendar,
+        offsets = time
+      )),
+      cal = "standard",
+      tz = "UTC",
+      origin = origin
+    )
+  } else {
+    time <- as.POSIXct(origin, tz = "UTC") + time * time_units_factor[time_unit]
+  }
+
+  return(time)
 }
 
 try_parse_time <- function(time, units, calendar) {
-    tryCatch(
-        .parse_time(time, units, calendar),
-        error = function(e) {
-            warningf("Error parsing time: %s. Returning original time.", e$message)
-            return(time)
-        }
-    )
+  tryCatch(
+    .parse_time(time, units, calendar),
+    error = function(e) {
+      warningf("Error parsing time: %s. Returning original time.", e$message)
+      return(time)
+    }
+  )
 }
 
 .read_vars <- function(varid, ncfile, start, count) {
-
-    var <- ncdf4::ncvar_get(nc = ncfile, varid = varid, collapse_degen = FALSE, start = start,
-                            count = count)
-    var
+  var <- ncdf4::ncvar_get(
+    nc = ncfile,
+    varid = varid,
+    collapse_degen = FALSE,
+    start = start,
+    count = count
+  )
+  var
 }
 
 .expand_chunks <- function(subset) {
-    if (is.null(subset)) {
-        return(list(NULL))
+  if (is.null(subset)) {
+    return(list(NULL))
+  }
+  # Make everything a list
+  subset <- lapply(subset, function(l) {
+    if (!is.list(l)) {
+      list(l)
+    } else {
+      l
     }
-    # Make everything a list
-    subset <- lapply(subset, function(l) {
-        if (!is.list(l)) {
-            list(l)
-        } else {
-            l
-        }
-    })
+  })
 
-    if (is.null(names(subset))) {
-        names(subset) <- rep("", length(subset))
+  if (is.null(names(subset))) {
+    names(subset) <- rep("", length(subset))
+  }
+  # If it has name, is a global subset,
+  # otherwhise, is a chunck definition
+  has_name <- names(subset) != ""
+
+  new_subset <- subset[has_name]
+  if (sum(!has_name) != 0) {
+    new_subset["chunks"] <- list(subset[!has_name])
+  }
+
+  chunks <- suppressWarnings(purrr::cross(new_subset)) # cross is deprecated
+  new_subset <- lapply(chunks, function(chunk) {
+    is.chunk <- which(names(chunk) == "chunks")
+    if (length(is.chunk) != 0) {
+      c(chunk[-is.chunk], chunk[[is.chunk]])
+    } else {
+      chunk
     }
-    # If it has name, is a global subset,
-    # otherwhise, is a chunck definition
-    has_name <- names(subset) != ""
+  })
 
-    new_subset <- subset[has_name]
-    if (sum(!has_name) != 0) new_subset["chunks"] <- list(subset[!has_name])
-
-    chunks <- suppressWarnings(purrr::cross(new_subset))  # cross is deprecated
-    new_subset <- lapply(chunks, function(chunk) {
-        is.chunk <- which(names(chunk) == "chunks")
-        if (length(is.chunk) != 0) {
-            c(chunk[-is.chunk], chunk[[is.chunk]])
-        } else {
-            chunk
-        }
-    })
-
-    to_range <- function(x) {
-        if (is.list(x)) {
-            lapply(x, to_range)
-        } else {
-            if (length(x) != 2) {
-                # Range strips the AsIs class.
-                class <- class(x)
-                x <- range(x)
-                class(x) <- class
-                x
-            } else {
-                x
-            }
-        }
+  to_range <- function(x) {
+    if (is.list(x)) {
+      lapply(x, to_range)
+    } else {
+      if (length(x) != 2) {
+        # Range strips the AsIs class.
+        class <- class(x)
+        x <- range(x)
+        class(x) <- class
+        x
+      } else {
+        x
+      }
     }
+  }
 
-    new_subset <- lapply(new_subset, to_range)
-    new_subset
+  new_subset <- lapply(new_subset, to_range)
+  new_subset
 }
 
 
 .names_recursive <- function(x) {
-    out <- names(x)
-    if (is.list(x)) {
-        out <- c(out, unlist(lapply(x, .names_recursive)))
-    }
-    unique(out[out != ""])
+  out <- names(x)
+  if (is.list(x)) {
+    out <- c(out, unlist(lapply(x, .names_recursive)))
+  }
+  unique(out[out != ""])
 }
 
 #' @rdname ReadNetCDF
 #'
 #' @export
 GlanceNetCDF <- function(file, ...) {
-    ReadNetCDF(file, out = "vars")
+  ReadNetCDF(file, out = "vars")
 }
 
 #' @export
 print.nc_glance <- function(x, ...) {
-    cat(gettext("----- Variables ----- \n", domain = "R-metR"))
-    out <- lapply(x$vars, print)
+  cat(gettext("----- Variables ----- \n", domain = "R-metR"))
+  out <- lapply(x$vars, print)
 
-    cat("\n\n")
-    cat(gettext("----- Dimensions ----- \n", domain = "R-metR"))
-    out <- lapply(x$dims, print)
+  cat("\n\n")
+  cat(gettext("----- Dimensions ----- \n", domain = "R-metR"))
+  out <- lapply(x$dims, print)
 }
 
 #' @export
 print.ncvar4 <- function(x, ...) {
-    cat(x$name, ":\n", sep = "")
-    cat("    ", x$longname, sep = "")
+  cat(x$name, ":\n", sep = "")
+  cat("    ", x$longname, sep = "")
 
-    if (x$units != "") cat(" in ", x$units, sep = "")
+  if (x$units != "") {
+    cat(" in ", x$units, sep = "")
+  }
 
+  cat("\n")
+  dims <- vapply(x$dim, function(x) x$name, "a")
+
+  cat(gettext("    Dimensions: ", domain = "R-metR"))
+  cat(paste0(dims, collapse = gettext(" by ", domain = "R-metR")), sep = "")
+  cat("\n")
+
+  if (x$hasScaleFact) {
+    cat(gettext("    (Scaled)", domain = "R-metR"))
     cat("\n")
-    dims <- vapply(x$dim, function(x) x$name, "a")
+  }
 
-    cat(gettext("    Dimensions: ", domain = "R-metR"))
-    cat(paste0(dims, collapse = gettext(" by ", domain = "R-metR")), sep = "")
-    cat("\n")
-
-    if (x$hasScaleFact) {
-        cat(gettext("    (Scaled)", domain = "R-metR"))
-        cat("\n")
-    }
-
-    return(invisible(x))
+  return(invisible(x))
 }
 
 #' @export
 print.ncdim4 <- function(x, ...) {
-    # cat("$", dim$name, "\n", sep = "")
-    units <- x$units
-    vals <- suppressMessages(suppressWarnings(try_parse_time(x$vals, x$units, x$calendar)))
+  # cat("$", dim$name, "\n", sep = "")
+  units <- x$units
+  vals <- suppressMessages(suppressWarnings(try_parse_time(
+    x$vals,
+    x$units,
+    x$calendar
+  )))
 
-    if (.is.somedate(vals)) {
-        units <- ""
-    }
+  if (.is.somedate(vals)) {
+    units <- ""
+  }
 
-    catf("  %s: %d values from %s to %s %s\n",
-         x$name, x$len, as.character(min(vals)), as.character(max(vals)), units)
-    return(invisible(x))
+  catf(
+    "  %s: %d values from %s to %s %s\n",
+    x$name,
+    x$len,
+    as.character(min(vals)),
+    as.character(max(vals)),
+    units
+  )
+  return(invisible(x))
 }
 
 
-
 .melt_array <- function(array, dims, value.name = "V1") {
-    if (!is.array(array)) {
-        return(array)
-    }
+  if (!is.array(array)) {
+    return(array)
+  }
 
-    # dims <- lapply(dims, c)
-    dims <- c(dims[length(dims):1], sorted = FALSE)
-    grid <- do.call(data.table::CJ, dims)
-    grid[, c(value.name) := c(array)][]
+  # dims <- lapply(dims, c)
+  dims <- c(dims[length(dims):1], sorted = FALSE)
+  grid <- do.call(data.table::CJ, dims)
+  grid[, c(value.name) := c(array)][]
 
-    return(grid)
+  return(grid)
 }

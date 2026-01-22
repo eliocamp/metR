@@ -22,81 +22,91 @@
 #' @aliases AssignSeason
 #' @export
 season <- function(x, lang = c("en", "es")) {
-    checks <- makeAssertCollection()
-    assertChoice(lang[1], c("en", "es"), .var.name = "lang", add = checks)
-    assertVector(x, any.missing = FALSE, add = checks)
-    assert(
-        checkIntegerish(x, lower = 1, upper = 12),
-        checkDateish(x),
-        .var.name = "month")
+  checks <- makeAssertCollection()
+  assertChoice(lang[1], c("en", "es"), .var.name = "lang", add = checks)
+  assertVector(x, any.missing = FALSE, add = checks)
+  assert(
+    checkIntegerish(x, lower = 1, upper = 12),
+    checkDateish(x),
+    .var.name = "month"
+  )
 
-    reportAssertions(checks)
+  reportAssertions(checks)
 
-    if (is.character(x)) x <- as.Date(x)
-    if (.is.somedate(x)) x <- lubridate::month(x)
+  if (is.character(x)) {
+    x <- as.Date(x)
+  }
+  if (.is.somedate(x)) {
+    x <- lubridate::month(x)
+  }
 
-    if (lang[1] == "en") {
-        djf <- "DJF" #"Summer"
+  if (lang[1] == "en") {
+    djf <- "DJF" #"Summer"
+  } else {
+    djf <- "DEF" # "Verano"
+    # win <- "Invierno"
+    # aut <- "Oto\u00f1o"
+    # spr <- "Primavera"
+  }
+  jja <- "JJA" # "Winter"
+  mam <- "MAM" #  "Autumn"
+  son <- "SON" #"Spring"spr
 
-    } else {
-        djf <- "DEF" # "Verano"
-        # win <- "Invierno"
-        # aut <- "Oto\u00f1o"
-        # spr <- "Primavera"
-    }
-    jja <- "JJA" # "Winter"
-    mam <-  "MAM"#  "Autumn"
-    son <- "SON" #"Spring"spr
-
-    seasons <- c(djf, djf, rep(c(mam, jja, son), each = 3), djf)
-    return(factor(seasons[x], levels = c(djf, mam, jja, son)))
+  seasons <- c(djf, djf, rep(c(mam, jja, son), each = 3), djf)
+  return(factor(seasons[x], levels = c(djf, mam, jja, son)))
 }
 
 
 #' @export
 #' @rdname season
 seasonally <- function(x) {
-    checks <- makeAssertCollection()
-    assertVector(x, add = checks)
-    assert(checkDateish(x))
-    reportAssertions(checks)
-    if (is.character(x)) x <- as.Date(x)
+  checks <- makeAssertCollection()
+  assertVector(x, add = checks)
+  assert(checkDateish(x))
+  reportAssertions(checks)
+  if (is.character(x)) {
+    x <- as.Date(x)
+  }
 
+  times <- unique(x)
+  m <- data.table::month(times)
+  times_org <- times
+  lubridate::year(times[m == 12]) <- data.table::year(times[m == 12]) + 1
+  s <- season(times)
 
-    times <- unique(x)
-    m <- data.table::month(times)
-    times_org <- times
-    lubridate::year(times[m == 12]) <- data.table::year(times[m == 12]) + 1
-    s <- season(times)
+  lubridate::day(times) <- 15
+  lubridate::month(times) <- (as.numeric(s) - 1) * 3 + 1
 
-    lubridate::day(times) <- 15
-    lubridate::month(times) <- (as.numeric(s) - 1)*3 + 1
-
-    as.Date(times[match(x, times_org)])
+  as.Date(times[match(x, times_org)])
 }
 
 #' @export
 #' @rdname season
 is.full_season <- function(x) {
-    checks <- makeAssertCollection()
-    assertVector(x, add = checks)
-    assert(checkDateish(x))
-    reportAssertions(checks)
-    if (is.character(x)) x <- as.Date(x)
+  checks <- makeAssertCollection()
+  assertVector(x, add = checks)
+  assert(checkDateish(x))
+  reportAssertions(checks)
+  if (is.character(x)) {
+    x <- as.Date(x)
+  }
 
-    times <- unique(x)
+  times <- unique(x)
 
-    times_org <- times
-    m <- data.table::month(times)
-    lubridate::year(times[m == 12]) <- data.table::year(times[m == 12]) + 1
-    season <- season(times)
-    year <- data.table::year(times)
-    n <- NULL
-    complete <- data.table::data.table(times, year, season)[
-        , n := .N, by = .(year, season)][n == 3][
-        , n := NULL]
+  times_org <- times
+  m <- data.table::month(times)
+  lubridate::year(times[m == 12]) <- data.table::year(times[m == 12]) + 1
+  season <- season(times)
+  year <- data.table::year(times)
+  n <- NULL
+  complete <- data.table::data.table(times, year, season)[,
+    n := .N,
+    by = .(year, season)
+  ][n == 3][,
+    n := NULL
+  ]
 
-    x %in% times_org[times %in% complete$times]
+  x %in% times_org[times %in% complete$times]
 }
 
 
@@ -105,5 +115,5 @@ AssignSeason <- season
 
 
 .is.somedate <- function(x) {
-    inherits(x, "Date") | inherits(x, "POSIXct") | inherits(x, "POSIXlt")
+  inherits(x, "Date") | inherits(x, "POSIXct") | inherits(x, "POSIXlt")
 }

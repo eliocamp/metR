@@ -44,43 +44,51 @@
 #' @export
 #' @family ggplot2 helpers
 MakeBreaks <- function(binwidth = NULL, bins = 10, exclude = NULL) {
-    force(binwidth)
-    force(bins)
-    force(exclude)
-    function(range, binwidth2 = NULL) {
-        if (!is.null(binwidth)) binwidth2 <- binwidth
-
-        # If no parameters set, use pretty bins
-        if (is.null(binwidth2)) {
-            b <- pretty(range, bins)
-            return(b[!(b %in% exclude)])
-        } else {
-            b <- scales::fullseq(range, binwidth2)
-            b[!(b %in% exclude)]
-        }
+  force(binwidth)
+  force(bins)
+  force(exclude)
+  function(range, binwidth2 = NULL) {
+    if (!is.null(binwidth)) {
+      binwidth2 <- binwidth
     }
+
+    # If no parameters set, use pretty bins
+    if (is.null(binwidth2)) {
+      b <- pretty(range, bins)
+      return(b[!(b %in% exclude)])
+    } else {
+      b <- scales::fullseq(range, binwidth2)
+      b[!(b %in% exclude)]
+    }
+  }
 }
 
 #' @rdname MakeBreaks
 #' @export
-AnchorBreaks <- function(anchor = 0, binwidth = NULL, exclude = NULL,  bins = 10) {
-    force(anchor)
-    force(binwidth)
-    force(exclude)
-    force(bins)
-    function(x, binwidth2 = NULL) {
-        if (!is.null(binwidth)) binwidth2 <- binwidth
-        if (is.null(binwidth2)) {
-            binwidth2 <- diff(pretty(x, bins))[1]
-        }
-
-        mult <- ceiling((x[1] - anchor)/binwidth2) - 1L
-        start <- anchor + mult*binwidth2
-        b <- seq(start, x[2] + binwidth2, binwidth2)
-        b[!(b %in% exclude)]
+AnchorBreaks <- function(
+  anchor = 0,
+  binwidth = NULL,
+  exclude = NULL,
+  bins = 10
+) {
+  force(anchor)
+  force(binwidth)
+  force(exclude)
+  force(bins)
+  function(x, binwidth2 = NULL) {
+    if (!is.null(binwidth)) {
+      binwidth2 <- binwidth
     }
-}
+    if (is.null(binwidth2)) {
+      binwidth2 <- diff(pretty(x, bins))[1]
+    }
 
+    mult <- ceiling((x[1] - anchor) / binwidth2) - 1L
+    start <- anchor + mult * binwidth2
+    b <- seq(start, x[2] + binwidth2, binwidth2)
+    b[!(b %in% exclude)]
+  }
+}
 
 # InScale <- function(fun, binwidith, ...) {
 #     function(range){

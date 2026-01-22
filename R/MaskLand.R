@@ -35,36 +35,45 @@
 #'
 #' @export
 MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
-    checks <- makeAssertCollection()
-    assertSameLength(c(lon = length(lon), lat = length(lat)), .var.name = "lon and lat",
-                     add = checks)
-    assertCharacter(mask, len = 1, add = checks)
-    assertNumeric(wrap, len = 2, add = checks)
-    reportAssertions(checks)
+  checks <- makeAssertCollection()
+  assertSameLength(
+    c(lon = length(lon), lat = length(lat)),
+    .var.name = "lon and lat",
+    add = checks
+  )
+  assertCharacter(mask, len = 1, add = checks)
+  assertNumeric(wrap, len = 2, add = checks)
+  reportAssertions(checks)
 
-    rlang::check_installed(c("maps"), "for `MaskLand()`")
+  rlang::check_installed(c("maps"), "for `MaskLand()`")
 
-    seamask <- maps::map(paste0("maps::", mask), fill = TRUE, col = "transparent",
-                         plot = FALSE, wrap = wrap)
-    proj <- "+proj=longlat +datum=WGS84 +over"
+  seamask <- maps::map(
+    paste0("maps::", mask),
+    fill = TRUE,
+    col = "transparent",
+    plot = FALSE,
+    wrap = wrap
+  )
+  proj <- "+proj=longlat +datum=WGS84 +over"
 
-    seamask <- sf::st_as_sf(seamask, fill = TRUE, crs = proj)
-    seamask <- sf::st_make_valid(seamask)
+  seamask <- sf::st_as_sf(seamask, fill = TRUE, crs = proj)
+  seamask <- sf::st_make_valid(seamask)
 
-    field <- data.table::data.table(lon, lat)
-    field.unique <- unique(field)
+  field <- data.table::data.table(lon, lat)
+  field.unique <- unique(field)
 
-    points <- sf::st_as_sf(field.unique, coords = c("lon", "lat"),
-                           crs = proj)
+  points <- sf::st_as_sf(field.unique, coords = c("lon", "lat"), crs = proj)
 
-    points <- suppressWarnings(sf::st_make_valid(points))
+  points <- suppressWarnings(sf::st_make_valid(points))
 
-    points <-  sf::st_transform(points, sf::st_crs(seamask))
-    field.unique[, land := lengths(suppressWarnings(sf::st_covered_by(points, seamask))) > 0]
+  points <- sf::st_transform(points, sf::st_crs(seamask))
+  field.unique[,
+    land := lengths(suppressWarnings(sf::st_covered_by(points, seamask))) > 0
+  ]
 
-    field.unique[!(lat %between% c(-90, 90)), land := NA]
+  field.unique[!(lat %between% c(-90, 90)), land := NA]
 
-    field <- field.unique[, .(lon, lat, land)][field, on = c("lon", "lat")]
+  field <- field.unique[, .(lon, lat, land)][field, on = c("lon", "lat")]
 
-    return(field$land)
+  return(field$land)
 }

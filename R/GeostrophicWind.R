@@ -30,29 +30,37 @@
 #'
 #' @export
 #' @family meteorology functions
-GeostrophicWind <- function(gh, lon, lat, cyclical = "guess", g = 9.81, a = 6371000) {
-    checks <- makeAssertCollection()
-    assertNumeric(gh, add = checks)
-    assertNumeric(lon, add = checks)
-    assertNumeric(lat, add = checks)
-    lengths <- c(gh = length(gh), lon = length(lon), lat = length(lat))
-    assertSameLength(lengths, add = checks)
-    assertNumber(g, finite = TRUE, add = checks)
-    assertNumber(a, finite = TRUE, add = checks)
-    reportAssertions(checks)
+GeostrophicWind <- function(
+  gh,
+  lon,
+  lat,
+  cyclical = "guess",
+  g = 9.81,
+  a = 6371000
+) {
+  checks <- makeAssertCollection()
+  assertNumeric(gh, add = checks)
+  assertNumeric(lon, add = checks)
+  assertNumeric(lat, add = checks)
+  lengths <- c(gh = length(gh), lon = length(lon), lat = length(lat))
+  assertSameLength(lengths, add = checks)
+  assertNumber(g, finite = TRUE, add = checks)
+  assertNumber(a, finite = TRUE, add = checks)
+  reportAssertions(checks)
 
-    if (cyclical == "guess") {
-        cyclical <- FALSE
-        rlon <- diff(range(lon)) + ggplot2::resolution(lon, zero = FALSE)
-        if (rlon == 360) cyclical <- TRUE
-    }
+  if (cyclical == "guess") {
+    cyclical <- FALSE
+    rlon <- diff(range(lon)) + ggplot2::resolution(lon, zero = FALSE)
+    if (rlon == 360) cyclical <- TRUE
+  }
 
-    gh.d <- Derivate(gh ~ lon + lat, sphere = TRUE, cyclical = c(cyclical, FALSE),
-                     a = a)
-    u <- -g*gh.d$gh.dlat/coriolis(lat)
-    v <- g*gh.d$gh.dlon/coriolis(lat)
-    return(list(ug = u, vg = v))
+  gh.d <- Derivate(
+    gh ~ lon + lat,
+    sphere = TRUE,
+    cyclical = c(cyclical, FALSE),
+    a = a
+  )
+  u <- -g * gh.d$gh.dlat / coriolis(lat)
+  v <- g * gh.d$gh.dlon / coriolis(lat)
+  return(list(ug = u, vg = v))
 }
-
-
-

@@ -15,26 +15,27 @@
 #' g + scale_mag("Seals velocity", limits = c(0, 1))
 #'
 #' @export
-scale_mag <- function(name = ggplot2::waiver(),
-                      n.breaks = 1,
-                      breaks = ggplot2::waiver(),
-                      oob = no_censor,
-                      ...) {
+scale_mag <- function(
+  name = ggplot2::waiver(),
+  n.breaks = 1,
+  breaks = ggplot2::waiver(),
+  oob = no_censor,
+  ...
+) {
+  if (is.waive(breaks) & n.breaks == 1) {
+    breaks <- function(range) return(max(scales::breaks_extended(4)(range)))
+    n.breaks <- NULL
+  }
 
-    if (is.waive(breaks) & n.breaks == 1) {
-        breaks <- function(range) return(max(scales::breaks_extended(4)(range)))
-        n.breaks <- NULL
-    }
-
-
-    ggplot2::continuous_scale(aesthetics = "mag",
-                              palette = scales::identity_pal(),
-                              name = name,
-                              oob = oob,
-                              breaks = breaks,
-                              n.breaks	= n.breaks,
-                              ...
-    )
+  ggplot2::continuous_scale(
+    aesthetics = "mag",
+    palette = scales::identity_pal(),
+    name = name,
+    oob = oob,
+    breaks = breaks,
+    n.breaks = n.breaks,
+    ...
+  )
 }
 
 #' @export
@@ -42,5 +43,5 @@ scale_mag <- function(name = ggplot2::waiver(),
 scale_mag_continuous <- scale_mag
 
 no_censor <- function(x, range) {
-    x
+  x
 }

@@ -76,109 +76,109 @@
 #' @export
 #' @family meteorology functions
 IdealGas <- function(p, t, rho, R = 287.058) {
-    if (!hasArg(p) & hasArg(t) & hasArg(rho)) {
-        return(rho*R*t)
-    } else if (hasArg(p) & hasArg(t) & !hasArg(rho)) {
-        return(p/(R*t))
-    } else if (hasArg(p) & !hasArg(t) & hasArg(rho)) {
-        return(p/(rho*R))
-    } else if (hasArg(p) & hasArg(t) & hasArg(rho)) {
-        stopf("Too many state variables.")
-    } else {
-        stopf("Too few state variables.")
-    }
+  if (!hasArg(p) & hasArg(t) & hasArg(rho)) {
+    return(rho * R * t)
+  } else if (hasArg(p) & hasArg(t) & !hasArg(rho)) {
+    return(p / (R * t))
+  } else if (hasArg(p) & !hasArg(t) & hasArg(rho)) {
+    return(p / (rho * R))
+  } else if (hasArg(p) & hasArg(t) & hasArg(rho)) {
+    stopf("Too many state variables.")
+  } else {
+    stopf("Too few state variables.")
+  }
 }
 
 #' @rdname thermodynamics
 #' @export
-Adiabat <- function(p, t, theta, p0 = 100000, kappa = 2/7) {
-    if (!hasArg(p) & hasArg(t) & hasArg(theta)) {
-        return(p0*(t/theta)^(1/kappa))
-    } else if (hasArg(p) & !hasArg(t) & hasArg(theta)) {
-        return(theta/(p0/p)^(kappa))
-    } else if (hasArg(p) & hasArg(t) & !hasArg(theta)) {
-        return(t*(p0/p)^kappa)
-    } else if (hasArg(p) & hasArg(t) & hasArg(theta)) {
-        stopf("Too many state variables.")
-    } else {
-        stopf("Too few state variables.")
-    }
+Adiabat <- function(p, t, theta, p0 = 100000, kappa = 2 / 7) {
+  if (!hasArg(p) & hasArg(t) & hasArg(theta)) {
+    return(p0 * (t / theta)^(1 / kappa))
+  } else if (hasArg(p) & !hasArg(t) & hasArg(theta)) {
+    return(theta / (p0 / p)^(kappa))
+  } else if (hasArg(p) & hasArg(t) & !hasArg(theta)) {
+    return(t * (p0 / p)^kappa)
+  } else if (hasArg(p) & hasArg(t) & hasArg(theta)) {
+    stopf("Too many state variables.")
+  } else {
+    stopf("Too few state variables.")
+  }
 }
 
 #' @rdname thermodynamics
 #' @export
 VirtualTemperature <- function(p, t, e, tv, epsilon = 0.622) {
-    a <- 1 - epsilon
-    if (!hasArg(tv) & hasArg(p) & hasArg(t) & hasArg(e)) {
-        return(t/(1 - e/p*a))
-    } else if (hasArg(tv) & hasArg(p) & !hasArg(t) & hasArg(e)) {
-        return(tv*(1 - e/p*a))
-    } else if (hasArg(tv) & !hasArg(p) & hasArg(t) & hasArg(e)) {
-        return(e*a/(1 - t/tv))
-    } else if (hasArg(tv) & hasArg(p) & hasArg(t) & !hasArg(e)) {
-        return(p/a*(1 - t/tv))
-    } else if (hasArg(tv) & hasArg(p) & hasArg(t) & hasArg(e)) {
-        stopf("Too many state variables.")
-    } else {
-        stopf("Too few state variables.")
-    }
+  a <- 1 - epsilon
+  if (!hasArg(tv) & hasArg(p) & hasArg(t) & hasArg(e)) {
+    return(t / (1 - e / p * a))
+  } else if (hasArg(tv) & hasArg(p) & !hasArg(t) & hasArg(e)) {
+    return(tv * (1 - e / p * a))
+  } else if (hasArg(tv) & !hasArg(p) & hasArg(t) & hasArg(e)) {
+    return(e * a / (1 - t / tv))
+  } else if (hasArg(tv) & hasArg(p) & hasArg(t) & !hasArg(e)) {
+    return(p / a * (1 - t / tv))
+  } else if (hasArg(tv) & hasArg(p) & hasArg(t) & hasArg(e)) {
+    stopf("Too many state variables.")
+  } else {
+    stopf("Too few state variables.")
+  }
 }
 
 #' @rdname thermodynamics
 #' @export
 MixingRatio <- function(p, e, w, epsilon = 0.622) {
-    if (hasArg(p) & !hasArg(w) & hasArg(e)) {
-        return(epsilon*(e/(p - e)))
-    } else if (!hasArg(p) & hasArg(w) & hasArg(e)) {
-        return(e*epsilon/w + e)
-    } else if (hasArg(p) & hasArg(w) & !hasArg(e)) {
-        return(p/(epsilon/w + 1))
-    } else if (hasArg(p) & hasArg(w) & hasArg(e)) {
-        stopf("Too many state variables.")
-    } else {
-        stopf("Too few state variables.")
-    }
+  if (hasArg(p) & !hasArg(w) & hasArg(e)) {
+    return(epsilon * (e / (p - e)))
+  } else if (!hasArg(p) & hasArg(w) & hasArg(e)) {
+    return(e * epsilon / w + e)
+  } else if (hasArg(p) & hasArg(w) & !hasArg(e)) {
+    return(p / (epsilon / w + 1))
+  } else if (hasArg(p) & hasArg(w) & hasArg(e)) {
+    stopf("Too many state variables.")
+  } else {
+    stopf("Too few state variables.")
+  }
 }
 
 #' @rdname thermodynamics
 #' @export
 ClausiusClapeyron <- function(t, es) {
-    a <- 6.1094*100
-    b <- 17.625
-    c <- 243.04
+  a <- 6.1094 * 100
+  b <- 17.625
+  c <- 243.04
 
-    if (hasArg(t) & !hasArg(es)) {
-        t <- t - 273.15
-        return(a*exp(b*t/(t + c)))
-    } else if (!hasArg(t) & hasArg(es)) {
-        d <- log(es/a)
-        return(d*c/b/(1 - d/b) + 273.15)
-    } else if (hasArg(t) & hasArg(es)) {
-        stopf("Too many state variables.")
-    } else {
-        stopf("Too few state variables.")
-    }
+  if (hasArg(t) & !hasArg(es)) {
+    t <- t - 273.15
+    return(a * exp(b * t / (t + c)))
+  } else if (!hasArg(t) & hasArg(es)) {
+    d <- log(es / a)
+    return(d * c / b / (1 - d / b) + 273.15)
+  } else if (hasArg(t) & hasArg(es)) {
+    stopf("Too many state variables.")
+  } else {
+    stopf("Too few state variables.")
+  }
 }
 
 #' @rdname thermodynamics
 #' @export
 #' @importFrom stats uniroot
 DewPoint <- function(p, ws, td, epsilon = 0.622) {
-    if (hasArg(p) & hasArg(ws) & !hasArg(td)) {
+  if (hasArg(p) & hasArg(ws) & !hasArg(td)) {
     .dew <- function(td) {
-        es <- ClausiusClapeyron(td)
-        ws - epsilon*es/(p - es)
+      es <- ClausiusClapeyron(td)
+      ws - epsilon * es / (p - es)
     }
     return(uniroot(.dew, c(273, 273 + 50))$root)
-    } else  if (hasArg(p) & !hasArg(ws) & hasArg(td)) {
-        es <- ClausiusClapeyron(td)
-        return(epsilon*es/(p - es))
-    } else  if (!hasArg(p) & hasArg(ws) & hasArg(td)) {
-        es <- ClausiusClapeyron(td)
-        return(es*(1 + epsilon/ws))
-    } else if (hasArg(p) & hasArg(ws) & hasArg(td)) {
-        stopf("Too many state variables.")
-    } else {
-        stopf("Too few state variables.")
-    }
+  } else if (hasArg(p) & !hasArg(ws) & hasArg(td)) {
+    es <- ClausiusClapeyron(td)
+    return(epsilon * es / (p - es))
+  } else if (!hasArg(p) & hasArg(ws) & hasArg(td)) {
+    es <- ClausiusClapeyron(td)
+    return(es * (1 + epsilon / ws))
+  } else if (hasArg(p) & hasArg(ws) & hasArg(td)) {
+    stopf("Too many state variables.")
+  } else {
+    stopf("Too few state variables.")
+  }
 }

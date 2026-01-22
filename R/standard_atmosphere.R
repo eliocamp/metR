@@ -94,252 +94,302 @@ sa_temperature <- function(height) standard_atmosphere$temperature(height)
 #' @export
 #' @rdname standard_atmosphere
 sa_height_trans <- function(pressure_in = "hPa", height_in = "km") {
+  mult_pressure <- get_multiplicative_constant(
+    tolower(pressure_in),
+    hpa = 100,
+    pa = 1
+  )
 
-    mult_pressure <- get_multiplicative_constant(tolower(pressure_in),
-                                                 hpa = 100,
-                                                 pa = 1)
+  mult_height <- get_multiplicative_constant(
+    tolower(height_in),
+    km = 1000,
+    m = 1
+  )
 
-    mult_height <- get_multiplicative_constant(tolower(height_in),
-                                               km = 1000,
-                                               m = 1)
-
-    scales::trans_new("height_sa",
-                      transform = function(x) {
-                          standard_atmosphere$altitude(x*mult_pressure)/mult_height
-                      },
-                      inverse =  function(x) {
-                          standard_atmosphere$pressure(x*mult_height)/mult_pressure
-                      },
-                      breaks = scales::log_breaks(n = 6),
-                      format = scales::number_format(drop0trailing = TRUE,
-                                                     big.mark = "",
-                                                     trim = TRUE),
-                      domain = sort(standard_atmosphere$pressure(c(-610, 500000)/mult_height)/mult_pressure))
+  scales::trans_new(
+    "height_sa",
+    transform = function(x) {
+      standard_atmosphere$altitude(x * mult_pressure) / mult_height
+    },
+    inverse = function(x) {
+      standard_atmosphere$pressure(x * mult_height) / mult_pressure
+    },
+    breaks = scales::log_breaks(n = 6),
+    format = scales::number_format(
+      drop0trailing = TRUE,
+      big.mark = "",
+      trim = TRUE
+    ),
+    domain = sort(
+      standard_atmosphere$pressure(c(-610, 500000) / mult_height) /
+        mult_pressure
+    )
+  )
 }
 
 #' @export
 #' @rdname standard_atmosphere
 sa_pressure_trans <- function(height_in = "km", pressure_in = "hPa") {
+  mult_pressure <- get_multiplicative_constant(
+    tolower(pressure_in),
+    hpa = 100,
+    pa = 1
+  )
 
-    mult_pressure <- get_multiplicative_constant(tolower(pressure_in),
-                                                 hpa = 100, pa = 1)
-
-    mult_height <- get_multiplicative_constant(tolower(height_in),
-                                               km = 1000,
-                                               m = 1)
-    scales::trans_new("pressure_sa",
-                      transform =  function(x) {
-                          standard_atmosphere$pressure(x*mult_height)/mult_pressure
-                      },
-                      inverse =  function(x) {
-                          standard_atmosphere$altitude(x*mult_pressure)/mult_height
-                      },
-                      breaks = scales::log_breaks(n = 6),
-                      format = scales::number_format(drop0trailing = TRUE,
-                                                     big.mark = "",
-                                                     trim = FALSE),
-                      domain = c(-610, 500000)/mult_height)
+  mult_height <- get_multiplicative_constant(
+    tolower(height_in),
+    km = 1000,
+    m = 1
+  )
+  scales::trans_new(
+    "pressure_sa",
+    transform = function(x) {
+      standard_atmosphere$pressure(x * mult_height) / mult_pressure
+    },
+    inverse = function(x) {
+      standard_atmosphere$altitude(x * mult_pressure) / mult_height
+    },
+    breaks = scales::log_breaks(n = 6),
+    format = scales::number_format(
+      drop0trailing = TRUE,
+      big.mark = "",
+      trim = FALSE
+    ),
+    domain = c(-610, 500000) / mult_height
+  )
 }
 
 
-get_multiplicative_constant <- function(x, ... ) {
-    if (is.numeric(x)) {
-        return(x)
-    }
-    switch(tolower(x),
-           ...)
-}
-
-#' @export
-#' @rdname standard_atmosphere
-sa_height_breaks <- function(n = 6, pressure_in  = "hPa",
-                             height_in = "km", ...) {
-    force(n)
-    mult_pressure <- get_multiplicative_constant(tolower(pressure_in),
-                                                 hpa = 100,
-                                                 pa = 1)
-    mult_height <- get_multiplicative_constant(tolower(height_in),
-                                               km = 1000,
-                                               m = 1)
-    function(x) {
-        breaks <- scales::breaks_extended(n = n, ...)(standard_atmosphere$pressure(x*mult_height)/mult_pressure)
-        breaks <- standard_atmosphere$altitude(breaks*mult_pressure)/mult_height
-
-        breaks <- breaks[is.finite(breaks)]
-        breaks <- breaks[breaks > x[1] & breaks < x[2]]
-
-        breaks <- sort(breaks)
-
-        diff <- diff(breaks)
-        diff <- c(diff[1], diff)
-
-        precision <- -(floor(log10(diff)))
-
-
-        breaks <- vapply(seq_along(breaks), function(i) round(breaks[i], precision[i]), numeric(1))
-
-
-        unique(breaks)
-    }
-
+get_multiplicative_constant <- function(x, ...) {
+  if (is.numeric(x)) {
+    return(x)
+  }
+  switch(tolower(x), ...)
 }
 
 #' @export
 #' @rdname standard_atmosphere
-sa_height_axis <- function(name = ggplot2::waiver(),
-                           breaks = sa_height_breaks(pressure_in  = pressure_in,
-                                                     height_in = height_in),
-                           labels = ggplot2::waiver(),
-                           guide = ggplot2::waiver(),
-                           pressure_in = "hPa", height_in = "km") {
+sa_height_breaks <- function(
+  n = 6,
+  pressure_in = "hPa",
+  height_in = "km",
+  ...
+) {
+  force(n)
+  mult_pressure <- get_multiplicative_constant(
+    tolower(pressure_in),
+    hpa = 100,
+    pa = 1
+  )
+  mult_height <- get_multiplicative_constant(
+    tolower(height_in),
+    km = 1000,
+    m = 1
+  )
+  function(x) {
+    breaks <- scales::breaks_extended(n = n, ...)(
+      standard_atmosphere$pressure(x * mult_height) / mult_pressure
+    )
+    breaks <- standard_atmosphere$altitude(breaks * mult_pressure) / mult_height
 
-    mult_pressure <- get_multiplicative_constant(tolower(pressure_in),
-                                                 hpa = 100,
-                                                 pa = 1)
+    breaks <- breaks[is.finite(breaks)]
+    breaks <- breaks[breaks > x[1] & breaks < x[2]]
 
-    mult_height <- get_multiplicative_constant(tolower(height_in),
-                                               km = 1000,
-                                               m = 1)
+    breaks <- sort(breaks)
 
+    diff <- diff(breaks)
+    diff <- c(diff[1], diff)
 
-    ggplot2::sec_axis(trans = ~ standard_atmosphere$altitude(.x*mult_pressure)/mult_height,
-                      name = name,
-                      breaks = breaks,
-                      labels = labels,
-                      guide = guide)
+    precision <- -(floor(log10(diff)))
+
+    breaks <- vapply(
+      seq_along(breaks),
+      function(i) round(breaks[i], precision[i]),
+      numeric(1)
+    )
+
+    unique(breaks)
+  }
 }
 
 #' @export
 #' @rdname standard_atmosphere
-sa_pressure_axis <- function(name = ggplot2::waiver(),
-                             breaks = scales::log_breaks(n = 6),
-                             labels = scales::number_format(drop0trailing = TRUE,
-                                                            big.mark = "",
-                                                            trim = FALSE),
-                             guide = ggplot2::waiver(),
-                             height_in = "km", pressure_in = "hPa") {
-    mult_pressure <- get_multiplicative_constant(pressure_in,
-                                                 hpa = 100,
-                                                 pa = 1)
+sa_height_axis <- function(
+  name = ggplot2::waiver(),
+  breaks = sa_height_breaks(pressure_in = pressure_in, height_in = height_in),
+  labels = ggplot2::waiver(),
+  guide = ggplot2::waiver(),
+  pressure_in = "hPa",
+  height_in = "km"
+) {
+  mult_pressure <- get_multiplicative_constant(
+    tolower(pressure_in),
+    hpa = 100,
+    pa = 1
+  )
 
-    mult_height <- get_multiplicative_constant(height_in,
-                                               km = 1000,
-                                               m = 1)
+  mult_height <- get_multiplicative_constant(
+    tolower(height_in),
+    km = 1000,
+    m = 1
+  )
 
-    fun <- function(x) standard_atmosphere$pressure(x*mult_height)/mult_pressure
-    ggplot2::sec_axis(trans = fun,
-                      name = name,
-                      breaks = breaks,
-                      labels = labels,
-                      guide = guide)
+  ggplot2::sec_axis(
+    trans = ~ standard_atmosphere$altitude(.x * mult_pressure) / mult_height,
+    name = name,
+    breaks = breaks,
+    labels = labels,
+    guide = guide
+  )
 }
 
+#' @export
+#' @rdname standard_atmosphere
+sa_pressure_axis <- function(
+  name = ggplot2::waiver(),
+  breaks = scales::log_breaks(n = 6),
+  labels = scales::number_format(
+    drop0trailing = TRUE,
+    big.mark = "",
+    trim = FALSE
+  ),
+  guide = ggplot2::waiver(),
+  height_in = "km",
+  pressure_in = "hPa"
+) {
+  mult_pressure <- get_multiplicative_constant(pressure_in, hpa = 100, pa = 1)
 
+  mult_height <- get_multiplicative_constant(height_in, km = 1000, m = 1)
+
+  fun <- function(x) {
+    standard_atmosphere$pressure(x * mult_height) / mult_pressure
+  }
+  ggplot2::sec_axis(
+    trans = fun,
+    name = name,
+    breaks = breaks,
+    labels = labels,
+    guide = guide
+  )
+}
 
 
 atmosphere <- function(h0, P0, T0, lapse_rate) {
-    force(h0)
-    force(P0)
-    force(T0)
+  force(h0)
+  force(P0)
+  force(T0)
 
-    g <- 9.8665  # m/s^2
-    R <- 287.04
-    if (lapse_rate == 0) lapse_rate <- 1e-10
-    # if (lapse_rate == 0) {
-    #   list(
-    #     pressure = function(h) {
-    #       P0*exp(-g/(R*T0)*(h - h0))
-    #     },
-    #     altitude = function(p) {
-    #       h0 + log(p/P0)*R*T0/g
-    #     },
-    #     temperature = function(h) {
-    #       rep(T0, length(h))
-    #     }
-    #   )
-    # } else {
-    lapse_rate <- -lapse_rate
-    list(
-        pressure = function(h) {
-            P0*(1 - lapse_rate*(h - h0)/T0)^(g/(R*lapse_rate))
-        },
-        altitude = function(p) {
-            h0 + T0/lapse_rate*(1 - (p/P0)^(R*lapse_rate/g))
-        },
-        temperature = function(h) {
-            T0 - lapse_rate*(h - h0)
-
-        }
-    )
-    # }
+  g <- 9.8665 # m/s^2
+  R <- 287.04
+  if (lapse_rate == 0) {
+    lapse_rate <- 1e-10
+  }
+  # if (lapse_rate == 0) {
+  #   list(
+  #     pressure = function(h) {
+  #       P0*exp(-g/(R*T0)*(h - h0))
+  #     },
+  #     altitude = function(p) {
+  #       h0 + log(p/P0)*R*T0/g
+  #     },
+  #     temperature = function(h) {
+  #       rep(T0, length(h))
+  #     }
+  #   )
+  # } else {
+  lapse_rate <- -lapse_rate
+  list(
+    pressure = function(h) {
+      P0 * (1 - lapse_rate * (h - h0) / T0)^(g / (R * lapse_rate))
+    },
+    altitude = function(p) {
+      h0 + T0 / lapse_rate * (1 - (p / P0)^(R * lapse_rate / g))
+    },
+    temperature = function(h) {
+      T0 - lapse_rate * (h - h0)
+    }
+  )
+  # }
 }
 
 
 stepwise <- function(breaks, functions) {
-    force(breaks)
-    force(functions)
+  force(breaks)
+  force(functions)
 
-    function(x) {
-        if (is.null(x)) return(NULL)
-        y <- rep(NA, length(x))
-        for (i in seq_len(length(breaks) - 1)) {
-            layer <- which(x >= breaks[i] & x <= breaks[i + 1])
-            y[layer] <- functions[[i]](x[layer])
-        }
-        return(y)
+  function(x) {
+    if (is.null(x)) {
+      return(NULL)
     }
+    y <- rep(NA, length(x))
+    for (i in seq_len(length(breaks) - 1)) {
+      layer <- which(x >= breaks[i] & x <= breaks[i + 1])
+      y[layer] <- functions[[i]](x[layer])
+    }
+    return(y)
+  }
 }
 
 
-layers <- list(troposphere   = list(h0 = -610, T0 = 19 + 273.15, P0 = 108900,
-                                    lapse_rate = -6.5/1000, hf = 11000),
-               tropopause    = list(lapse_rate = 0, hf = 25000),
-               stratosphere  = list(lapse_rate = 3/1000, hf = 47000),
-               stratopause   = list(lapse_rate = 0, hf = 53000),
-               mesosphere    = list(lapse_rate = -3.9/1000, hf = 75000),
-               mesopause     = list(lapse_rate = 0, hf = 90000),
-               thermosphere1 = list(lapse_rate = 3.5/1000, hf = 126000),
-               thermosphere2 = list(lapse_rate = 10/1000, hf = 175000),
-               thermosphere3 = list(lapse_rate = 5.8/1000, hf = 500000))
+layers <- list(
+  troposphere = list(
+    h0 = -610,
+    T0 = 19 + 273.15,
+    P0 = 108900,
+    lapse_rate = -6.5 / 1000,
+    hf = 11000
+  ),
+  tropopause = list(lapse_rate = 0, hf = 25000),
+  stratosphere = list(lapse_rate = 3 / 1000, hf = 47000),
+  stratopause = list(lapse_rate = 0, hf = 53000),
+  mesosphere = list(lapse_rate = -3.9 / 1000, hf = 75000),
+  mesopause = list(lapse_rate = 0, hf = 90000),
+  thermosphere1 = list(lapse_rate = 3.5 / 1000, hf = 126000),
+  thermosphere2 = list(lapse_rate = 10 / 1000, hf = 175000),
+  thermosphere3 = list(lapse_rate = 5.8 / 1000, hf = 500000)
+)
 
 
 make_atmosphere <- function(layers) {
-    layer_fun <- list()
+  layer_fun <- list()
 
-    for (i in seq_along(layers)) {
-        layer_fun[[i]] <- with(layers[[i]], atmosphere(h0 = h0, P0 = P0, T0 = T0, lapse_rate = lapse_rate))
-        layers[[i]]$P0 <- layer_fun[[i]]$pressure(layers[[i]]$h0)
-        layers[[i]]$Pf <- layer_fun[[i]]$pressure(layers[[i]]$hf)
+  for (i in seq_along(layers)) {
+    layer_fun[[i]] <- with(
+      layers[[i]],
+      atmosphere(h0 = h0, P0 = P0, T0 = T0, lapse_rate = lapse_rate)
+    )
+    layers[[i]]$P0 <- layer_fun[[i]]$pressure(layers[[i]]$h0)
+    layers[[i]]$Pf <- layer_fun[[i]]$pressure(layers[[i]]$hf)
 
-        if (i + 1 <= length(layers)) {
-            layers[[i + 1]]$h0 <- layers[[i]]$hf
-            layers[[i + 1]]$P0 <- layer_fun[[i]]$pressure(layers[[i]]$hf)
-            layers[[i + 1]]$T0 <- layer_fun[[i]]$temperature(layers[[i]]$hf)
-        }
+    if (i + 1 <= length(layers)) {
+      layers[[i + 1]]$h0 <- layers[[i]]$hf
+      layers[[i + 1]]$P0 <- layer_fun[[i]]$pressure(layers[[i]]$hf)
+      layers[[i + 1]]$T0 <- layer_fun[[i]]$temperature(layers[[i]]$hf)
     }
-    heights <- c(layers[[1]][["h0"]],
-                 vapply(layers, function(x) x[["hf"]], numeric(1)))
+  }
+  heights <- c(
+    layers[[1]][["h0"]],
+    vapply(layers, function(x) x[["hf"]], numeric(1))
+  )
 
-    pressures <- c(layers[[1]][["P0"]],
-                   vapply(layers, function(x) x[["Pf"]], numeric(1)))
+  pressures <- c(
+    layers[[1]][["P0"]],
+    vapply(layers, function(x) x[["Pf"]], numeric(1))
+  )
 
+  names(layer_fun) <- names(layers)
 
-    names(layer_fun) <- names(layers)
+  pressure <- stepwise(heights, lapply(layer_fun, function(x) x$pressure))
 
+  altitude <- stepwise(
+    rev(pressures),
+    rev(lapply(layer_fun, function(x) x$altitude))
+  )
 
-    pressure <- stepwise(heights, lapply(layer_fun, function(x) x$pressure))
+  temperature <- stepwise(heights, lapply(layer_fun, function(x) x$temperature))
 
-    altitude <- stepwise(rev(pressures), rev(lapply(layer_fun, function(x) x$altitude)))
-
-    temperature <- stepwise(heights, lapply(layer_fun, function(x) x$temperature))
-
-
-    list(pressure = pressure,
-         altitude = altitude,
-         temperature = temperature)
+  list(pressure = pressure, altitude = altitude, temperature = temperature)
 }
 
 
 standard_atmosphere <- make_atmosphere(layers)
-
-

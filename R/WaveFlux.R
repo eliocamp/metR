@@ -1,28 +1,28 @@
 #' Calculate wave-activity flux
 #'
-#' @param gh Geopotential Height Anomaly (unit: gpm or m). 
-#'   The deviation of the geopotential height from the climatological mean 
-#'   ($z' = Z - \bar{Z}$). It is used to compute the perturbation 
+#' @param gh Geopotential Height Anomaly (unit: gpm or m).
+#'   The deviation of the geopotential height from the climatological mean
+#'   ($z' = Z - \bar{Z}$). It is used to compute the perturbation
 #'   geostrophic streamfunction: $\psi' = \frac{g}{f}z'$.
-#' @param u Mean Zonal Wind (unit: m/s). 
-#'   The background basic flow ($\bar{u}$), usually representing the 
+#' @param u Mean Zonal Wind (unit: m/s).
+#'   The background basic flow ($\bar{u}$), usually representing the
 #'   long-term climatological mean zonal velocity.
-#' @param v Mean Meridional Wind (unit: m/s). 
-#'   The background basic flow ($\bar{v}$), usually representing the 
+#' @param v Mean Meridional Wind (unit: m/s).
+#'   The background basic flow ($\bar{v}$), usually representing the
 #'   long-term climatological mean meridional velocity.
 #' @param lon Numeric vector of longitudes (unit: degrees).
 #' @param lat Numeric vector of latitudes (unit: degrees).
-#' @param lev The pressure level of the data (unit: hPa). 
+#' @param lev The pressure level of the data (unit: hPa).
 #'   Used for the vertical scaling factor $p/1000$ in the T-N flux formula.
 #' @param g Standard gravity acceleration (default: 9.81 m/s^2).
 #' @param a Earth's mean radius (default: 6,371,000 m).
 #'
-#' @details 
-#' The function computes the horizontal components ($W_x, W_y$) of the 
-#' phase-independent wave activity flux. 
-#' 
-#' **Note on Units:** #' Ensure that `gh` is provided as **Geopotential Height** (in meters or gpm). 
-#' If your input data is **Geopotential** ($\Phi$, in $m^2/s^2$, common in ERA5 raw data), 
+#' @details
+#' The function computes the horizontal components ($W_x, W_y$) of the
+#' phase-independent wave activity flux.
+#'
+#' **Note on Units:** #' Ensure that `gh` is provided as **Geopotential Height** (in meters or gpm).
+#' If your input data is **Geopotential** ($\Phi$, in $m^2/s^2$, common in ERA5 raw data),
 #' you must divide it by gravity ($g$) before passing it to this function.
 #'
 #' @return A \code{data.table} containing the calculated wave activity flux components:
@@ -35,67 +35,87 @@
 #' @family meteorology functions
 #' @export
 WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
-    checks <- makeAssertCollection()
-    assertNumeric(gh, add = checks)
-    assertNumeric(u, add = checks)
-    assertNumeric(v, add = checks)
-    assertNumeric(lon, add = checks)
-    assertNumeric(lat, add = checks)
-    assertNumber(lev, add = checks)
-    lengths <- c(gh = length(gh), lon = length(lon), lat = length(lat),
-                 y = length(u), v = length(v))
-    assertSameLength(lengths, add = checks)
-    assertNumber(g, finite = TRUE, add = checks)
-    assertNumber(a, finite = TRUE, add = checks)
-    reportAssertions(checks)
+  checks <- makeAssertCollection()
+  assertNumeric(gh, add = checks)
+  assertNumeric(u, add = checks)
+  assertNumeric(v, add = checks)
+  assertNumeric(lon, add = checks)
+  assertNumeric(lat, add = checks)
+  assertNumber(lev, add = checks)
+  lengths <- c(
+    gh = length(gh),
+    lon = length(lon),
+    lat = length(lat),
+    y = length(u),
+    v = length(v)
+  )
+  assertSameLength(lengths, add = checks)
+  assertNumber(g, finite = TRUE, add = checks)
+  assertNumber(a, finite = TRUE, add = checks)
+  reportAssertions(checks)
 
-    p0 <- 100000    # normalizo a 1000hPa
+  p0 <- 100000 # normalizo a 1000hPa
 
-    # Todo en una data.table para que sea más cómodo.
-    dt <- data.table::data.table(lon = lon, lat = lat,
-                     lonrad = lon*pi/180, latrad = lat*pi/180,
-                     gh = gh, u.mean = u, v.mean = v)
-    
-    positon_tem = dt[, .(lon, lat)]
-    
-    data.table::setkey(dt, lat, lon)
-    dt[, f := coriolis(lat)]
+  # Todo en una data.table para que sea más cómodo.
+  dt <- data.table::data.table(
+    lon = lon,
+    lat = lat,
+    lonrad = lon * pi / 180,
+    latrad = lat * pi / 180,
+    gh = gh,
+    u.mean = u,
+    v.mean = v
+  )
 
-    dt[, psi := ifelse(abs(f) < 1e-5, NA_real_, g / f * gh)] # Processing Near-EQ Data
+  positon_tem = dt[, .(lon, lat)]
 
-    # Derivadas
-    dt[, `:=`(psi.dx  = Derivate(psi ~ lonrad, cyclical = TRUE)[[1]],
-              psi.dxx = Derivate(psi ~ lonrad, 2, cyclical = TRUE)[[1]]), by = lat]
-    dt[, `:=`(psi.dy  = Derivate(psi ~ latrad, cyclical = FALSE)[[1]],
-              psi.dyy = Derivate(psi ~ latrad, 2, cyclical = FALSE)[[1]],
-              psi.dxy = Derivate(psi.dx ~ latrad, cyclical = FALSE)[[1]]), by = lon]
+  data.table::setkey(dt, lat, lon)
+  dt[, f := coriolis(lat)]
 
-    # Cálculo del flujo (al fin!)
-    flux <- dt[, {
-            wind <- sqrt(u.mean^2 + v.mean^2)
-            
-            xu <- psi.dx^2 - psi * psi.dxx
-            xv <- psi.dx * psi.dy - psi * psi.dxy
-            yv <- psi.dy^2 - psi * psi.dyy
-            
-            coslat <- cos(latrad)
-            coeff <- lev * 100/ p0 / (2 * wind * a^2)
-            
-            w.x <- coeff * (u.mean / coslat * xu + v.mean * xv)
-            w.y <- coeff * (u.mean * xv + v.mean * coslat * yv)
-            
-            list(
-                lon  = lon,
-                lat = lat,
-                w.x = w.x,
-                w.y = w.y
-            )
-        }]
-    flux <- flux[positon_tem, on = c('lon', 'lat')]
-  
-    return(list(w.x = flux$w.x, w.y = flux$w.y))
+  dt[, psi := ifelse(abs(f) < 1e-5, NA_real_, g / f * gh)] # Processing Near-EQ Data
+
+  # Derivadas
+  dt[,
+    `:=`(
+      psi.dx = Derivate(psi ~ lonrad, cyclical = TRUE)[[1]],
+      psi.dxx = Derivate(psi ~ lonrad, 2, cyclical = TRUE)[[1]]
+    ),
+    by = lat
+  ]
+  dt[,
+    `:=`(
+      psi.dy = Derivate(psi ~ latrad, cyclical = FALSE)[[1]],
+      psi.dyy = Derivate(psi ~ latrad, 2, cyclical = FALSE)[[1]],
+      psi.dxy = Derivate(psi.dx ~ latrad, cyclical = FALSE)[[1]]
+    ),
+    by = lon
+  ]
+
+  # Cálculo del flujo (al fin!)
+  flux <- dt[, {
+    wind <- sqrt(u.mean^2 + v.mean^2)
+
+    xu <- psi.dx^2 - psi * psi.dxx
+    xv <- psi.dx * psi.dy - psi * psi.dxy
+    yv <- psi.dy^2 - psi * psi.dyy
+
+    coslat <- cos(latrad)
+    coeff <- lev * 100 / p0 / (2 * wind * a^2)
+
+    w.x <- coeff * (u.mean / coslat * xu + v.mean * xv)
+    w.y <- coeff * (u.mean * xv + v.mean * coslat * yv)
+
+    list(
+      lon = lon,
+      lat = lat,
+      w.x = w.x,
+      w.y = w.y
+    )
+  }]
+  flux <- flux[positon_tem, on = c('lon', 'lat')]
+
+  return(list(w.x = flux$w.x, w.y = flux$w.y))
 }
-
 
 
 #' Computes Eliassen-Palm fluxes.
@@ -116,48 +136,72 @@ WaveFlux <- function(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000) {
 #' Cohen, J., Barlow, M., Kushner, P. J., & Saito, K. (2007). Stratosphere–Troposphere Coupling and Links with Eurasian Land Surface Variability. Journal of Climate, 20(21), 5335–5343. \doi{10.1175/2007JCLI1725.1}
 #' @export
 EPflux <- function(lon, lat, lev, t, u, v) {
-    # Ecuación 7.1 plumb 1984
-    # https://journals.ametsoc.org/doi/pdf/10.1175/1520-0469%281985%29042%3C0217%3AOTTDPO%3E2.0.CO%3B2
-    a <-  6371000
-    H <- 8000
+  # Ecuación 7.1 plumb 1984
+  # https://journals.ametsoc.org/doi/pdf/10.1175/1520-0469%281985%29042%3C0217%3AOTTDPO%3E2.0.CO%3B2
+  a <- 6371000
+  H <- 8000
 
-    data <- data.table::data.table(
-        lon = lon,
-        lat = lat,
-        lev = lev,
-        t = t,
-        u = u,
-        v = v)
+  data <- data.table::data.table(
+    lon = lon,
+    lat = lat,
+    lev = lev,
+    t = t,
+    u = u,
+    v = v
+  )
 
-    # Cáclulo de S: Cohen et.al.
-    # https://journals.ametsoc.org/doi/pdf/10.1175/2007JCLI1725.1
+  # Cáclulo de S: Cohen et.al.
+  # https://journals.ametsoc.org/doi/pdf/10.1175/2007JCLI1725.1
 
-    data[, tita := Adiabat(lev, t) ][
-         , dtp := .derv(t, lev), by = .(lon, lat) ][
-         , `:=`(S = mean(-lev*H*dtp + 2/7*t/H, na.rm = TRUE)),
-            by = .(lev, sign(lat)) ][
-         , `:=`(tita_z = Anomaly(tita),
-                 t_z = Anomaly(t),
-                 u_z = Anomaly(u),
-                 v_z = Anomaly(v)),
-            by = .(lev, lat)][
-         , `:=`(vtita = v_z*tita_z,
-                 utita = u_z*tita_z,
-                 vt = v_z*t_z,
-                 uv = u_z*v_z,
-                 ttita = t_z*tita_z)][
-         , `:=`(dvtita = .derv(vtita, lon*pi/180, cyclical = TRUE),
-                 dutita = .derv(utita, lon*pi/180, cyclical = TRUE),
-                 dttita = .derv(ttita, lon*pi/180, cyclical = TRUE),
-                 p = lev/1000),
-            by = .(lev, lat)][
-         , `:=`(Flat = p*cos(lat*pi/180)*(v_z^2 - dvtita*2*.omega*a*sin(2*lat*pi/180)),
-                 Flon = p*cos(lat*pi/180)*(-uv   + dutita*2*.omega*a*sin(2*lat*pi/180)),
-                 Flev   = p*cos(lat*pi/180)/S*coriolis(lat)*(vt  - dttita*2*.omega*a*sin(2*lat*pi/180)))]
+  data[, tita := Adiabat(lev, t)][,
+    dtp := .derv(t, lev),
+    by = .(lon, lat)
+  ][,
+    `:=`(S = mean(-lev * H * dtp + 2 / 7 * t / H, na.rm = TRUE)),
+    by = .(lev, sign(lat))
+  ][,
+    `:=`(
+      tita_z = Anomaly(tita),
+      t_z = Anomaly(t),
+      u_z = Anomaly(u),
+      v_z = Anomaly(v)
+    ),
+    by = .(lev, lat)
+  ][,
+    `:=`(
+      vtita = v_z * tita_z,
+      utita = u_z * tita_z,
+      vt = v_z * t_z,
+      uv = u_z * v_z,
+      ttita = t_z * tita_z
+    )
+  ][,
+    `:=`(
+      dvtita = .derv(vtita, lon * pi / 180, cyclical = TRUE),
+      dutita = .derv(utita, lon * pi / 180, cyclical = TRUE),
+      dttita = .derv(ttita, lon * pi / 180, cyclical = TRUE),
+      p = lev / 1000
+    ),
+    by = .(lev, lat)
+  ][,
+    `:=`(
+      Flat = p *
+        cos(lat * pi / 180) *
+        (v_z^2 - dvtita * 2 * .omega * a * sin(2 * lat * pi / 180)),
+      Flon = p *
+        cos(lat * pi / 180) *
+        (-uv + dutita * 2 * .omega * a * sin(2 * lat * pi / 180)),
+      Flev = p *
+        cos(lat * pi / 180) /
+        S *
+        coriolis(lat) *
+        (vt - dttita * 2 * .omega * a * sin(2 * lat * pi / 180))
+    )
+  ]
 
-    # Undefined global blah blah blah
-    tita <- dtp <- S <- tita_z  <-
-        t_z <- u_z <- v_z <- vtita <- utita <- vt <- uv <- ttita <- dvtita <-
-        dutita <- dttita <- p <- Flat <- Flon <- Flev <- NULL
-    data[, .(Flon, Flat, Flev)][]
+  # Undefined global blah blah blah
+  tita <- dtp <- S <- tita_z <-
+    t_z <- u_z <- v_z <- vtita <- utita <- vt <- uv <- ttita <- dvtita <-
+      dutita <- dttita <- p <- Flat <- Flon <- Flev <- NULL
+  data[, .(Flon, Flat, Flev)][]
 }

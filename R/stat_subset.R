@@ -28,35 +28,43 @@
 #' @seealso [stat_na] for a more specialized stat for filtering `NA` values.
 #' @export
 #' @family ggplot2 helpers
-stat_subset <- function(mapping = NULL, data = NULL,
-                    geom = "point", position = "identity",
-                    ...,
-                    show.legend = NA,
-                    inherit.aes = TRUE) {
+stat_subset <- function(
+  mapping = NULL,
+  data = NULL,
+  geom = "point",
+  position = "identity",
+  ...,
+  show.legend = NA,
+  inherit.aes = TRUE
+) {
   ggplot2::layer(
-        data = data,
-        mapping = mapping,
-        stat = StatSubset,
-        geom = geom,
-        position = position,
-        show.legend = show.legend,
-        inherit.aes = inherit.aes,
-        params = list(
-            ...
-        )
+    data = data,
+    mapping = mapping,
+    stat = StatSubset,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      ...
     )
+  )
 }
 
 #' @rdname stat_subset
 #' @usage NULL
 #' @format NULL
 #' @export
-StatSubset <- ggplot2::ggproto("StatSubset", ggplot2::Stat,
+StatSubset <- ggplot2::ggproto(
+  "StatSubset",
+  ggplot2::Stat,
   required_aes = c("x", "y", "subset"),
   compute_group = function(data, scales, width = NULL, height = NULL) {
-      data$width <- data$width %||% width %||% ggplot2::resolution(data$x, FALSE)
-      data$height <- data$height %||% height %||% ggplot2::resolution(data$y, FALSE)
-      data <- subset(data, subset == TRUE)
-      data
+    data$width <- data$width %||% width %||% ggplot2::resolution(data$x, FALSE)
+    data$height <- data$height %||%
+      height %||%
+      ggplot2::resolution(data$y, FALSE)
+    data <- subset(data, subset == TRUE)
+    data
   }
 )

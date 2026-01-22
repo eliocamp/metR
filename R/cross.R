@@ -29,26 +29,23 @@
 #'
 #' @export
 is.cross <- function(x, y, skip = 0) {
-    x[!(x %in% JumpBy(unique(x), by = skip + 1))] <- NA
-    y[!(y %in% JumpBy(unique(y), by = skip + 1))] <- NA
+  x[!(x %in% JumpBy(unique(x), by = skip + 1))] <- NA
+  y[!(y %in% JumpBy(unique(y), by = skip + 1))] <- NA
 
+  x_r <- data.table::frank(x, ties.method = "dense", na.last = "keep")
+  y_r <- data.table::frank(y, ties.method = "dense", na.last = "keep")
 
-    x_r <- data.table::frank(x, ties.method = "dense", na.last = "keep")
-    y_r <- data.table::frank(y, ties.method = "dense", na.last = "keep")
+  # x_r[!(x_r %in% JumpBy(unique(x_r), by = skip + 1))] <- NA
+  # y_r[!(y_r %in% JumpBy(unique(y_r), by = skip + 1))] <- NA
 
-    # x_r[!(x_r %in% JumpBy(unique(x_r), by = skip + 1))] <- NA
-    # y_r[!(y_r %in% JumpBy(unique(y_r), by = skip + 1))] <- NA
+  test <- (x_r + y_r) %% 2
 
-    test <- (x_r + y_r) %% 2
-
-    !(test != 0 | is.na(test))
-
+  !(test != 0 | is.na(test))
 }
 
 #' @export
 #' @rdname is.cross
 cross <- function(x, y) {
-    out <- is.cross(x, y)
-    return(list(x = x[out],
-                y = y[out]))
+  out <- is.cross(x, y)
+  return(list(x = x[out], y = y[out]))
 }

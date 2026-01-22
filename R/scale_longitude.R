@@ -32,70 +32,103 @@
 #'
 #' @family ggplot2 helpers
 #' @export
-scale_x_longitude <- function(name = "", ticks = 30,
-                              breaks = seq(-180, 360, by = ticks),
-                              expand = c(0, 0),
-                              labels = LonLabel,
-                              ...) {
-    # labels = waiver()
-    ggplot2::scale_x_continuous(name = name, expand = expand,
-                                breaks = breaks,
-                                labels = labels,
-                                ...)
+scale_x_longitude <- function(
+  name = "",
+  ticks = 30,
+  breaks = seq(-180, 360, by = ticks),
+  expand = c(0, 0),
+  labels = LonLabel,
+  ...
+) {
+  # labels = waiver()
+  ggplot2::scale_x_continuous(
+    name = name,
+    expand = expand,
+    breaks = breaks,
+    labels = labels,
+    ...
+  )
 }
 
 #' @rdname scale_longitude
 #' @export
-scale_y_longitude <- function(name = "", ticks = 60,
-                              breaks = seq(-180, 360, by = ticks),
-                              expand = c(0, 0),
-                              labels = LonLabel,
-                              ...) {
-    ggplot2::scale_y_continuous(name = name, expand = expand,
-                       breaks = breaks,
-                       labels = labels,
-                       ...)
+scale_y_longitude <- function(
+  name = "",
+  ticks = 60,
+  breaks = seq(-180, 360, by = ticks),
+  expand = c(0, 0),
+  labels = LonLabel,
+  ...
+) {
+  ggplot2::scale_y_continuous(
+    name = name,
+    expand = expand,
+    breaks = breaks,
+    labels = labels,
+    ...
+  )
 }
 
 
 #' @rdname scale_longitude
 #' @export
-scale_x_latitude <- function(name = "", ticks = 30,
-                             breaks = seq(-90, 90, by = ticks),
-                             expand = c(0, 0),
-                             labels = LatLabel, ...) {
-    ggplot2::scale_x_continuous(name = name, expand = expand,
-                                breaks = breaks, labels = labels,
-                                ...)
+scale_x_latitude <- function(
+  name = "",
+  ticks = 30,
+  breaks = seq(-90, 90, by = ticks),
+  expand = c(0, 0),
+  labels = LatLabel,
+  ...
+) {
+  ggplot2::scale_x_continuous(
+    name = name,
+    expand = expand,
+    breaks = breaks,
+    labels = labels,
+    ...
+  )
 }
 
 #' @rdname scale_longitude
 #' @export
-scale_y_latitude <- function(name = "", ticks = 30,
-                             breaks = seq(-90, 90, by = ticks),
-                             expand = c(0, 0),
-                             labels = LatLabel, ...) {
-    ggplot2::scale_y_continuous(name = name, expand = expand,
-                       breaks = breaks, labels = labels,
-                       ...)
+scale_y_latitude <- function(
+  name = "",
+  ticks = 30,
+  breaks = seq(-90, 90, by = ticks),
+  expand = c(0, 0),
+  labels = LatLabel,
+  ...
+) {
+  ggplot2::scale_y_continuous(
+    name = name,
+    expand = expand,
+    breaks = breaks,
+    labels = labels,
+    ...
+  )
 }
 
 #' @rdname scale_longitude
 #' @export
-scale_x_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...) {
-    ggplot2::scale_x_continuous(name = name, expand = expand,
-                       trans = trans,
-                       ...)
+scale_x_level <- function(
+  name = "",
+  expand = c(0, 0),
+  trans = "reverselog",
+  ...
+) {
+  ggplot2::scale_x_continuous(name = name, expand = expand, trans = trans, ...)
 }
 
 #' @rdname scale_longitude
 #' @export
-scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...) {
-    ggplot2::scale_y_continuous(name = name, expand = expand,
-                       trans = trans,
-                       ...)
+scale_y_level <- function(
+  name = "",
+  expand = c(0, 0),
+  trans = "reverselog",
+  ...
+) {
+  ggplot2::scale_y_continuous(name = name, expand = expand, trans = trans, ...)
 }
-
 
 
 #' Label longitude and latitude
@@ -118,19 +151,27 @@ scale_y_level <- function(name = "", expand = c(0, 0), trans = "reverselog", ...
 #' @name map_labels
 #' @family ggplot2 helpers
 LonLabel <- function(lon, east = "\u00B0E", west = "\u00B0W", zero = "\u00B0") {
-    lon <- as.numeric(lon)
-    lon <- ifelse(lon > 180, ConvertLongitude(lon), lon)
-    newlon <- ifelse(lon < 0, paste0(abs(lon), west), paste0(lon, east))
-    newlon[lon == 0 & !is.na(lon)] <- paste0(lon[lon == 0 & !is.na(lon)], zero)
-    newlon[lon == 180 & !is.na(lon)] <- paste0(lon[lon == 180 & !is.na(lon)], zero)
-    return(newlon)
+  lon <- as.numeric(lon)
+  lon <- ifelse(lon > 180, ConvertLongitude(lon), lon)
+  newlon <- ifelse(lon < 0, paste0(abs(lon), west), paste0(lon, east))
+  newlon[lon == 0 & !is.na(lon)] <- paste0(lon[lon == 0 & !is.na(lon)], zero)
+  newlon[lon == 180 & !is.na(lon)] <- paste0(
+    lon[lon == 180 & !is.na(lon)],
+    zero
+  )
+  return(newlon)
 }
 
 #' @export
 #' @rdname map_labels
-LatLabel <- function(lat, north = "\u00B0N", south = "\u00B0S", zero = "\u00B0") {
-    lat <- as.numeric(lat)
-    newlat <- ifelse(lat < 0, paste0(abs(lat), south), paste0(lat, north))
-    newlat[lat == 0 & !is.na(lat)] <- paste0(lat[lat == 0 & !is.na(lat)], zero)
-    return(newlat)
+LatLabel <- function(
+  lat,
+  north = "\u00B0N",
+  south = "\u00B0S",
+  zero = "\u00B0"
+) {
+  lat <- as.numeric(lat)
+  newlat <- ifelse(lat < 0, paste0(abs(lat), south), paste0(lat, north))
+  newlat[lat == 0 & !is.na(lat)] <- paste0(lat[lat == 0 & !is.na(lat)], zero)
+  return(newlat)
 }

@@ -17,22 +17,22 @@
 #' @export
 #' @rdname discretised_scale
 as.discretised_scale <- function(scale_function) {
-    new_fun <- function(...) {
-        call <- match.call()
+  new_fun <- function(...) {
+    call <- match.call()
 
-        if (is.null(call$super)) {
-            call$super <- ScaleDiscretised
-        }
-
-        if (is.null(call$guide)) {
-            call$guide <- ggplot2::guide_colorsteps()
-        }
-
-        call[[1]] <- scale_function
-
-        eval(call)
+    if (is.null(call$super)) {
+      call$super <- ScaleDiscretised
     }
 
-    formals(new_fun) <- formals(scale_function)
-    new_fun
+    if (is.null(call$guide)) {
+      call$guide <- ggplot2::guide_colorsteps()
+    }
+
+    call[[1]] <- scale_function
+
+    eval(call)
+  }
+
+  formals(new_fun) <- formals(scale_function)
+  new_fun
 }

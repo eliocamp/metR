@@ -2,28 +2,29 @@
 #'
 #' @param gh Geopotential Height Anomaly (unit: gpm or m).
 #'   The deviation of the geopotential height from the climatological mean
-#'   ($z' = Z - \bar{Z}$). It is used to compute the perturbation
-#'   geostrophic streamfunction: $\psi' = \frac{g}{f}z'$.
+#'   (\eqn{z' = z - \bar{z}}). It is used to compute the perturbation
+#'   geostrophic streamfunction: \eqn{\psi' = \frac{g}{f}z'}.
 #' @param u Mean Zonal Wind (unit: m/s).
-#'   The background basic flow ($\bar{u}$), usually representing the
+#'   The background basic flow (\eqn{\bar{u}}), usually representing the
 #'   long-term climatological mean zonal velocity.
 #' @param v Mean Meridional Wind (unit: m/s).
-#'   The background basic flow ($\bar{v}$), usually representing the
+#'   The background basic flow (\eqn{\bar{v}}), usually representing the
 #'   long-term climatological mean meridional velocity.
 #' @param lon Numeric vector of longitudes (unit: degrees).
 #' @param lat Numeric vector of latitudes (unit: degrees).
 #' @param lev The pressure level of the data (unit: hPa).
-#'   Used for the vertical scaling factor $p/1000$ in the T-N flux formula.
-#' @param g Standard gravity acceleration (default: 9.81 m/s^2).
+#'   Used for the vertical scaling factor \eqn{p/1000} in the T-N flux formula.
+#' @param g Standard gravity acceleration (default: \eqn{9.81 m/s^2}).
 #' @param a Earth's mean radius (default: 6,371,000 m).
 #'
 #' @details
-#' The function computes the horizontal components ($W_x, W_y$) of the
+#' The function computes the horizontal components (\eqn{W_x, W_y}) of the
 #' phase-independent wave activity flux.
 #'
-#' **Note on Units:** #' Ensure that `gh` is provided as **Geopotential Height** (in meters or gpm).
-#' If your input data is **Geopotential** ($\Phi$, in $m^2/s^2$, common in ERA5 raw data),
-#' you must divide it by gravity ($g$) before passing it to this function.
+#' **Note on Units:**
+#' Ensure that `gh` is provided as **Geopotential Height** (in meters or gpm).
+#' If your input data is **Geopotential** (\eqn{\Phi}, in \eqn{m^2/s^2}, common in ERA5 raw data),
+#' you must divide it by gravity (g) before passing it to this function.
 #'
 #' @return A \code{data.table} containing the calculated wave activity flux components:
 #' \item{w.x}{Zonal component of the Wave Activity Flux.}

@@ -9,15 +9,15 @@ WaveFlux(gh, u, v, lon, lat, lev, g = 9.81, a = 6371000)
 \arguments{
 \item{gh}{Geopotential Height Anomaly (unit: gpm or m).
 The deviation of the geopotential height from the climatological mean
-($z' = Z - \bar{Z}$). It is used to compute the perturbation
-geostrophic streamfunction: $\psi' = \frac{g}{f}z'$.}
+(\eqn{z' = z - \bar{z}}). It is used to compute the perturbation
+geostrophic streamfunction: \eqn{\psi' = \frac{g}{f}z'}.}
 
 \item{u}{Mean Zonal Wind (unit: m/s).
-The background basic flow ($\bar{u}$), usually representing the
+The background basic flow (\eqn{\bar{u}}), usually representing the
 long-term climatological mean zonal velocity.}
 
 \item{v}{Mean Meridional Wind (unit: m/s).
-The background basic flow ($\bar{v}$), usually representing the
+The background basic flow (\eqn{\bar{v}}), usually representing the
 long-term climatological mean meridional velocity.}
 
 \item{lon}{Numeric vector of longitudes (unit: degrees).}
@@ -25,9 +25,9 @@ long-term climatological mean meridional velocity.}
 \item{lat}{Numeric vector of latitudes (unit: degrees).}
 
 \item{lev}{The pressure level of the data (unit: hPa).
-Used for the vertical scaling factor $p/1000$ in the T-N flux formula.}
+Used for the vertical scaling factor \eqn{p/1000} in the T-N flux formula.}
 
-\item{g}{Standard gravity acceleration (default: 9.81 m/s^2).}
+\item{g}{Standard gravity acceleration (default: \eqn{9.81 m/s^2}).}
 
 \item{a}{Earth's mean radius (default: 6,371,000 m).}
 }
@@ -40,12 +40,13 @@ A \code{data.table} containing the calculated wave activity flux components:
 Calculate wave-activity flux
 }
 \details{
-The function computes the horizontal components ($W_x, W_y$) of the
+The function computes the horizontal components (\eqn{W_x, W_y}) of the
 phase-independent wave activity flux.
 
-\strong{Note on Units:} #' Ensure that \code{gh} is provided as \strong{Geopotential Height} (in meters or gpm).
-If your input data is \strong{Geopotential} ($\Phi$, in $m^2/s^2$, common in ERA5 raw data),
-you must divide it by gravity ($g$) before passing it to this function.
+\strong{Note on Units:}
+Ensure that \code{gh} is provided as \strong{Geopotential Height} (in meters or gpm).
+If your input data is \strong{Geopotential} (\eqn{\Phi}, in \eqn{m^2/s^2}, common in ERA5 raw data),
+you must divide it by gravity (g) before passing it to this function.
 }
 \references{
 Takaya, K. and H. Nakamura, 2001: A Formulation of a Phase-Independent Wave-Activity Flux for Stationary and Migratory Quasigeostrophic Eddies on a Zonally Varying Basic Flow. J. Atmos. Sci., 58, 608–627, \doi{10.1175/1520-0469(2001)058<0608:AFOAPI>2.0.CO;2} \cr

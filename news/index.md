@@ -8,6 +8,14 @@
   gets a `start` argument to manually specify starting locations for the
   integration.
 
+### Bug fixes
+
+- Errors in the mismatched spatial positioning of
+  [`WaveFlux()`](https://eliocamp.github.io/metR/reference/WaveFlux.md)
+  calculation results and the internal calculation of the Coriolis
+  parameter(`f`) have been corrected. Additionally, robust adjustments
+  have been made to data at low latitudes (near the equator).
+
 ## metR 0.18.3
 
 CRAN release: 2025-12-09

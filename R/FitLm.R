@@ -13,7 +13,7 @@
 #' irregularly sampled timeseries
 #'
 #' @return
-#' FitLm returns a list with elements
+#' `FitLm` returns a list with elements
 #' \describe{
 #'    \item{term}{the name of the regressor}
 #'    \item{estimate}{estimate of the regression}
@@ -23,10 +23,28 @@
 #'    \item{adj.r.squared}{ r.squared` adjusted based on the degrees of freedom)}
 #' }
 #'
-#' ResidLm and Detrend returns a vector of the same length
+#' `ResidLm` returns a numeric vector of the same length as `y`.
+#' It represents the **residuals** (anomalies) of the linear model.
+#' The result is centered at approximately 0 (the trend is removed, and the mean is subtracted--Derived from the calculation of the least squares method).
+#'
+#' `Detrend` returns a numeric vector of the same length as `y`.
+#' It represents the detrended data with the **original mean preserved**.
+#' Mathematically, it is `residuals + mean(y)`.
 #'
 #' If there's no complete cases in the regression, `NA`s are returned with no
 #' warning.
+#'
+#' @details
+#' The functions provide different ways to handle linear trends:
+#' \itemize{
+#'   \item **ResidLm**: Use this to compute **anomalies**. It subtracts the linear trend
+#'   (including the intercept), effectively removing both the long-term trend and the mean.
+#'   This corresponds to the standard "detrending and anomaly" step in climate analysis.
+#'   \item **Detrend**: Use this to remove the slope (trend) while retaining the
+#'   physical magnitude of the data. It subtracts the linear trend but adds the
+#'   original mean back. Ideally suited for visualizing data without the distraction
+#'   of long-term trends while keeping the values in their original level.
+#' }
 #'
 #' @examples
 #' # Linear trend with "signficant" areas shaded with points

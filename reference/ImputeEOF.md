@@ -69,7 +69,7 @@ RIGHT".
 
 Alternatively, if `value.var` is not `NULL`, it's possible to use the
 (probably) more familiar
-[data.table::dcast](https://rdatatable.gitlab.io/data.table/reference/dcast.data.table.html)
+[data.table::dcast](https://rdrr.io/pkg/data.table/man/dcast.data.table.html)
 formula interface. In that case, `data` must be provided.
 
 If `data` is a matrix, the `formula` argument is ignored and the

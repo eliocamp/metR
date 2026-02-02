@@ -46,7 +46,7 @@ Detrend(y, time = seq_along(y))
 
 ## Value
 
-FitLm returns a list with elements
+`FitLm` returns a list with elements
 
 - term:
 
@@ -72,10 +72,32 @@ FitLm returns a list with elements
 
   r.squared\` adjusted based on the degrees of freedom)
 
-ResidLm and Detrend returns a vector of the same length
+`ResidLm` returns a numeric vector of the same length as `y`. It
+represents the **residuals** (anomalies) of the linear model. The result
+is centered at approximately 0 (the trend is removed, and the mean is
+subtracted–Derived from the calculation of the least squares method).
+
+`Detrend` returns a numeric vector of the same length as `y`. It
+represents the detrended data with the **original mean preserved**.
+Mathematically, it is `residuals + mean(y)`.
 
 If there's no complete cases in the regression, `NA`s are returned with
 no warning.
+
+## Details
+
+The functions provide different ways to handle linear trends:
+
+- **ResidLm**: Use this to compute **anomalies**. It subtracts the
+  linear trend (including the intercept), effectively removing both the
+  long-term trend and the mean. This corresponds to the standard
+  "detrending and anomaly" step in climate analysis.
+
+- **Detrend**: Use this to remove the slope (trend) while retaining the
+  physical magnitude of the data. It subtracts the linear trend but adds
+  the original mean back. Ideally suited for visualizing data without
+  the distraction of long-term trends while keeping the values in their
+  original level.
 
 ## Examples
 
@@ -87,7 +109,7 @@ system.time({
   regr <- geopotential[, FitLm(gh, date, se = TRUE), by = .(lon, lat)]
 })
 #>    user  system elapsed 
-#>   0.291   0.012   0.303 
+#>   0.340   0.017   0.356 
 
 ggplot(regr[term != "(Intercept)"], aes(lon, lat)) +
     geom_contour(aes(z = estimate, color = after_stat(level))) +

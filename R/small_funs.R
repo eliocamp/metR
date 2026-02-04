@@ -189,6 +189,11 @@ JumpBy <- function(x, by, start = 1, fill = NULL) {
   return(x)
 }
 
+#' @export
+`JumpBy<-` <- function(x, by, start = 1, value) {
+  x[seq.int(start, length(x), by = by)] <- value
+  return(x)
+}
 
 #' Transform between spherical coordinates and physical coordinates
 #'

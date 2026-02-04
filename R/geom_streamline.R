@@ -483,10 +483,52 @@ GeomStreamline <- ggplot2::ggproto(
 )
 
 
+create_start <- function(
+  field,
+  skip.x = 1,
+  skip.y = 1,
+  nx = NULL,
+  ny = NULL,
+  jitter.x = 1,
+  jitter.y = 1
+) {
+  rx <- ggplot2::resolution(as.numeric(field$x), zero = FALSE)
+  ry <- ggplot2::resolution(as.numeric(field$y), zero = FALSE)
+  range.x <- range(field$x)
+  range.y <- range(field$y)
+
+  if (is.null(nx)) {
+    xs <- JumpBy(unique(field$x), skip.x + 1)
+  } else {
+    xs <- seq(range.x[1], range.x[2], length.out = nx)
+  }
+  if (is.null(ny)) {
+    ys <- JumpBy(unique(field$y), skip.y + 1)
+  } else {
+    ys <- seq(range.y[1], range.y[2], length.out = ny)
+  }
+
+  if ((is.null(nx) && is.null(ny))) {
+    points <- data.table::as.data.table(field[
+      x %in% xs & y %in% ys,
+      .(x = x, y = y)
+    ])
+  } else {
+    points <- data.table::as.data.table(expand.grid(x = xs, y = ys))
+  }
+
+  withr::with_seed(42, {
+    points[, x := x + rnorm(.N, 0, rx) * jitter.x]
+    points[, y := y + rnorm(.N, 0, ry) * jitter.y]
+  })
+  return(points)
+}
+
 #' @importFrom stats rnorm
 #' @importFrom data.table %between%
 streamline.f <- function(
   field,
+  geometry = c("cartesian", "spherical", "cylindrical_x", "cylindrical_y"),
   dt = 0.1,
   S = 3,
   skip.x = 1,
@@ -495,10 +537,11 @@ streamline.f <- function(
   ny = NULL,
   jitter.x = 1,
   jitter.y = 1,
+  start = NULL,
   xwrap = NULL,
-  ywrap = NULL,
-  start = NULL
+  ywrap = NULL
 ) {
+  geometry <- "spherical"
   field <- data.table::copy(data.table::as.data.table(field))
   is.grid <- with(field, .is.regular_grid(x, y))
 
@@ -508,20 +551,8 @@ streamline.f <- function(
 
   data.table::setorder(field, x, y)
 
-  circ.x <- !is.null(xwrap)
-  circ.y <- !is.null(ywrap)
-
-  if (circ.x) {
-    field <- suppressWarnings(WrapCircular(field, "x", xwrap))
-  }
-  if (circ.y) {
-    field <- suppressWarnings(WrapCircular(field, "y", ywrap))
-  }
-
   field <- field[!is.na(dx) & !is.na(dy)]
 
-  rx <- ggplot2::resolution(as.numeric(field$x), zero = FALSE)
-  ry <- ggplot2::resolution(as.numeric(field$y), zero = FALSE)
   range.x <- range(field$x)
   range.y <- range(field$y)
 
@@ -539,72 +570,84 @@ streamline.f <- function(
     z = matrix$matrix
   )
 
+  fold_position <- switch(
+    geometry[1],
+    cartesian = identity,
+    spherical = function(xy) {
+      fold_sphere(xy, lon_range = 360)
+    },
+    cylindrical_x = function(xy) {
+      xy$x <- fold_cylinder(xy$x, lon_range = 360)
+      return(xy)
+    },
+    cylindrical_y = function(xy) {
+      xy$y <- fold_cylinder(xy$y, lon_range = 360)
+      return(xy)
+    }
+  )
+
+  fold_delta <- switch(
+    geometry[1],
+    cartesian = function(delta, xy) {
+      delta
+    },
+    spherical = function(delta, xy) {
+      delta$dy <- fold_sphere_delta(delta$dy, xy$y)
+      return(delta)
+    },
+    cylindrical_x = function(delta, xy) {
+      delta
+    },
+    cylindrical_y = function(delta, xy) {
+      delta
+    }
+  )
+
   force.fun <- function(X) {
-    X[, 1] <- .fold(X[, 1], 1, range.x, circ.x)[[1]]
-    X[, 2] <- .fold(X[, 2], 1, range.y, circ.y)[[1]]
+    X_fold <- with(
+      fold_position(list(x = X[, 1], y = X[, 2])),
+      cbind(x, y)
+    )
 
-    dx <- interpolate_locations(dx.field, X)
-    dy <- interpolate_locations(dy.field, X)
-    return(cbind(dx = dx, dy = dy))
+    dx <- interpolate_locations(dx.field, X_fold)
+    dy <- interpolate_locations(dy.field, X_fold)
+
+    delta <- fold_delta(list(dx = dx, dy = dy), list(x = X[, 1], y = X[, 2]))
+
+    return(cbind(dx = delta$dx, dy = delta$dy))
   }
 
-  if (!is.null(start)) {
-    if (!(sort(names(start)) == c("x", "y"))) {
-      stopf("'start' needs to have x and y elements.")
-    }
-    if (!data.table::uniqueN(lengths(start)) == 1) {
-      stopf("'x' and 'y' elements in 'start' need to be of the same length.")
-    }
-    if (!all(vapply(start, is.numeric, logical(1)))) {
-      stopf("'x' and 'y' elements in 'start' need to be numeric.")
-    }
-    points <- data.table::as.data.table(start)
-  } else {
-    # Build grid
-    if (is.null(nx)) {
-      xs <- JumpBy(dx.field$x, skip.x + 1)
-    } else {
-      xs <- seq(range.x[1], range.x[2], length.out = nx)
-    }
-    if (is.null(ny)) {
-      ys <- JumpBy(dx.field$y, skip.y + 1)
-    } else {
-      ys <- seq(range.y[1], range.y[2], length.out = ny)
-    }
-
-    if ((is.null(nx) && is.null(ny))) {
-      points <- data.table::as.data.table(field[
-        x %in% xs & y %in% ys,
-        .(x = x, y = y)
-      ])
-    } else {
-      points <- data.table::as.data.table(expand.grid(x = xs, y = ys))
-    }
+  if (is.null(start)) {
+    # Create starting points
+    start <- create_start(
+      field,
+      skip.x = skip.x,
+      skip.y = skip.y,
+      nx = nx,
+      ny = ny,
+      jitter.x = jitter.x,
+      jitter.y = jitter.y
+    )
   }
 
-  set.seed(42)
-  points[, x := x + rnorm(.N, 0, rx) * jitter.x]
-  points[, y := y + rnorm(.N, 0, ry) * jitter.y]
+  if (!all(c("x", "y") %in% names(start))) {
+    stopf("'start' needs to have x and y elements.")
+  }
+  if (!data.table::uniqueN(lengths(start)) == 1) {
+    stopf("'x' and 'y' elements in 'start' need to be of the same length.")
+  }
+  if (!all(vapply(start, is.numeric, logical(1)))) {
+    stopf("'x' and 'y' elements in 'start' need to be numeric.")
+  }
+
+  points <- data.table::as.data.table(start)
 
   points[, group := interaction(1:.N, field$group[1])]
-  points[, piece := 1]
-  points[, step := 0]
-  points[, end := FALSE]
+  points[, piece := "1"]
 
-  # Muy poco elegante, pero bueno...
-  if (circ.x == TRUE) {
-    points[, x := .fold(x, 1, range.x, circ.x)[[1]]]
-  } else {
-    points[, x := ifelse(x > range.x[2], range.x[2], x)]
-    points[, x := ifelse(x < range.x[1], range.x[1], x)]
-  }
-
-  if (circ.y == TRUE) {
-    points[, y := .fold(y, 1, range.y, circ.y)[[1]]]
-  } else {
-    points[, y := ifelse(y > range.y[2], range.y[2], y)]
-    points[, y := ifelse(y < range.y[1], range.y[1], y)]
-  }
+  points[,
+    c("x", "y") := fold_position(list(x = x, y = y))
+  ]
 
   as.list.matrix <- function(x, ...) {
     list(x[, 1], x[, 2])
@@ -621,6 +664,7 @@ streamline.f <- function(
 
   accum_forw <- vector(mode = "list", length = S)
   accum_back <- vector(mode = "list", length = S)
+
   # Integration
   for (s in 1:S) {
     points_forw <- points_forw[dx + dy != 0]
@@ -631,13 +675,10 @@ streamline.f <- function(
         x,
         y,
         force.fun,
-        dt,
-        piece,
-        list(range.x, range.y),
-        c(circ.x, circ.y)
+        dt
       )
     ]
-    points_forw[, step := s]
+
     points_forw[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
 
     points_back[,
@@ -645,13 +686,10 @@ streamline.f <- function(
         x,
         y,
         force.fun,
-        -dt,
-        piece,
-        list(range.x, range.y),
-        c(circ.x, circ.y)
+        -dt
       )
     ]
-    points_back[, step := -s]
+
     points_back[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
 
     points_forw <- points_forw[!is.na(dx) & !is.na(dy)]
@@ -661,96 +699,91 @@ streamline.f <- function(
     accum_back[[S - s + 1]] <- points_back
   }
 
-  # accum_back <- list()
   points <- data.table::rbindlist(c(accum_back, list(points), accum_forw)) # se puede optimizar prealocando
-  # points[, step := step - min(step)]
-  # Empalmo los pieces que pasan de un lado
-  # al otro del dominio.
-  range.select <- function(sign, range) {
-    ifelse(sign == 1, range[2], range[1])
-  }
-  points[, step2 := step]
-  if (circ.x == TRUE) {
-    points <- points[, .approx_order(x, y, range.x), by = group]
-    points[,
-      piece := as.numeric(data.table::rleid(x %between% range.x)),
-      by = group
+
+  if (geometry %in% c("spherical")) {
+    points <- points[,
+      fold_streamline(x, y),
+      by = .(group)
     ]
-    points[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
-    points[, step := seq_along(x), by = group]
-    points[, x := .fold(x, 1, range.x, circ.x)[[1]]]
   }
 
-  if (circ.y == TRUE) {
-    points <- points[, .approx_order(y, x, range.y), by = group]
-    points[,
-      piece := as.numeric(data.table::rleid(y %between% range.y)),
-      by = group
-    ]
-    points[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
-    points[, step := seq_along(y), by = group]
-    points[, y := .fold(y, 1, range.y, circ.y)[[1]]]
-  }
+  points[, c("dx", "dy") := as.list(force.fun(cbind(x, y)))]
 
-  # Me fijo si ese piece tiene el final.
-  # Esto luego va al geom que decide si ponerle flecha o no.
-  points[, end := seq_len(.N) < .N / 2, by = .(group, piece)]
-  points_last <- points[end == FALSE, ]
-  points_first <- rbind(
-    points[end == TRUE, ],
-    points_last[, head(.SD, 1), by = .(group, piece)]
-  )
-  points_first[, end := TRUE]
-  points <- rbind(points_first, points_last)
+  points[, end := TRUE]
+
+  points[, step := seq(1, .N), by = .(group)]
 
   points[, group := interaction(group, piece, end)]
   points[, line := group]
 
-  points[, step := seq(1, .N), by = .(group)]
   return(points[, .(x, y, group, piece, end, step, dx, dy, line)])
 }
 
 
-.fold <- function(x, piece, range, circular = TRUE) {
-  if (circular) {
-    R <- diff(range)
-    piece <- ifelse(x > range[2], piece + 1, piece)
-    x <- ifelse(x > range[2], x - R, x)
-
-    piece <- ifelse(x < range[1], piece + 1, piece)
-    x <- ifelse(x < range[1], x + R, x)
-  } else {
-    x <- ifelse(x > range[2], NA, x)
-    x <- ifelse(x < range[1], NA, x)
+cut_streamlines <- function(
+  x,
+  y,
+  piece,
+  x_range = c(0, 360)
+) {
+  x2 <- fold_cylinder(x, lon_range = 360)
+  lon_diff <- c(0, diff(x2))
+  cut_points <- which(abs(lon_diff) > diff(x_range) / 2)
+  if (length(cut_points) == 0) {
+    return(list(x = x, y = y, piece = piece))
   }
-  return(list(x, piece))
-}
+  n_pieces <- length(cut_points) + 1
+  piece2 <- rep(
+    seq_len(n_pieces),
+    c(
+      cut_points[1],
+      diff(cut_points) + 2,
+      length(x) - cut_points[length(cut_points)] + 2
+    )
+  )
+  piece <- paste0(piece, "_", piece2)
 
+  offset <- 0
+  for (cut in cut_points) {
+    cut_where <- cut + offset
+    if (lon_diff[cut] > 0) {
+      # going left to right
+      x_border <- x_range[1] + x[cut - 1] - x2[cut_where - 1]
 
-#
-# xbk <- x
-# ybk <- y
-# extra.x <- c(0, 360)
-.approx_order <- function(x, y, extra.x) {
-  rx <- ggplot2::resolution(x, zero = FALSE)
-  extra.x <- c(extra.x - rx / 100000, extra.x + rx / 100000)
-  for (i in seq_along(extra.x)) {
-    ind <- which(diff(x < extra.x[i]) != 0) + 1
-    if (length(ind) != 0) {
-      val <- rep(extra.x[i], length(ind))
+      x2 <- c(
+        x2[1:(cut_where - 1)],
+        x_range[1],
+        x_range[2],
+        x2[cut_where:length(x2)]
+      )
+    } else {
+      # going right to left
+      x_border <- x_range[1] + x[cut] - x2[cut_where]
 
-      new_x <- vector(mode = "numeric", length(x) + length(val))
-      new_y <- new_x
-      new_x[-ind] <- x
-      new_x[ind] <- val
-
-      new_y[-ind] <- y
-      new_y[ind] <- y[ind - 1] +
-        (extra.x[i] - x[ind - 1]) * (diff(y) / diff(x))[ind - 1]
-      x <- new_x
-      y <- new_y
+      x2 <- c(
+        x2[1:(cut_where - 1)],
+        x_range[2],
+        x_range[1],
+        x2[cut_where:length(x2)]
+      )
     }
+
+    #interpolate y at border
+    slope <- (y[cut_where] - y[cut_where - 1]) /
+      (x[cut] - x[cut - 1])
+    y_border <- y[cut_where - 1] +
+      slope * (x_border - x[cut - 1])
+
+    y <- c(
+      y[1:(cut_where - 1)],
+      y_border,
+      y_border,
+      y[cut_where:length(y)]
+    )
+
+    offset <- offset + 2
   }
 
-  return(list(x = x, y = y))
+  list(x = x2, y = y, piece = piece)
 }

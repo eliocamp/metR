@@ -8,6 +8,8 @@
 
 -   Errors in the mismatched spatial positioning of  `WaveFlux()` calculation results and the internal calculation of the Coriolis parameter(`f`) have been corrected. Additionally, robust adjustments have been made to data at low latitudes (near the equator).
 
+-   Fixes parsing of some netCDF timestamps (#217)
+
 # metR 0.18.3
 
 ## Bug fixes

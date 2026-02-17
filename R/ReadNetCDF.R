@@ -521,16 +521,18 @@ OpenNetCDF <- function(files) {
   time_unit <- trimws(strsplit(units, "since")[[1]])[1]
 
   if (length(calendar) != 0) {
-    time <- as.POSIXct(
-      CFtime::as_timestamp(CFtime::CFtime(
-        units,
-        calendar = calendar,
-        offsets = time
-      )),
-      cal = "standard",
-      tz = "UTC",
-      origin = origin
-    )
+    time <- as.POSIXct(strptime(
+      format(
+        CFtime::CFtime(
+          units,
+          calendar = calendar,
+          offsets = time
+        ),
+        format = "%Y-%m-%dT%H:%M:%OS"
+      ),
+      format = "%Y-%m-%dT%H:%M:%OS",
+      tz = "UTC"
+    ))
   } else {
     time <- as.POSIXct(origin, tz = "UTC") + time * time_units_factor[time_unit]
   }

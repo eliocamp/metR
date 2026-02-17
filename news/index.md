@@ -16,6 +16,9 @@
   parameter(`f`) have been corrected. Additionally, robust adjustments
   have been made to data at low latitudes (near the equator).
 
+- Fixes parsing of some netCDF timestamps
+  ([\#217](https://github.com/eliocamp/metR/issues/217))
+
 ## metR 0.18.3
 
 CRAN release: 2025-12-09

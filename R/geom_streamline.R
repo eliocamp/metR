@@ -549,16 +549,17 @@ streamline.f <- function(
   }
 
   if (!is.null(start)) {
-    if (!(sort(names(start)) == c("x", "y"))) {
+    if (!(all(c("x", "y") %in% names(start)))) {
       stopf("'start' needs to have x and y elements.")
     }
+    start <- data.table::data.table(x = start$x, y = start$y)
     if (!data.table::uniqueN(lengths(start)) == 1) {
       stopf("'x' and 'y' elements in 'start' need to be of the same length.")
     }
     if (!all(vapply(start, is.numeric, logical(1)))) {
       stopf("'x' and 'y' elements in 'start' need to be numeric.")
     }
-    points <- data.table::as.data.table(start)
+    points <- start
   } else {
     # Build grid
     if (is.null(nx)) {

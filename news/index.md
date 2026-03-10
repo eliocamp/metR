@@ -19,6 +19,10 @@
 - Fixes parsing of some netCDF timestamps
   ([\#217](https://github.com/eliocamp/metR/issues/217))
 
+- Fixes return value of
+  [`FitWave()`](https://eliocamp.github.io/metR/reference/waves.md) to
+  always return integer `k`.
+
 ## metR 0.18.3
 
 CRAN release: 2025-12-09

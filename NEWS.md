@@ -10,6 +10,8 @@
 
 -   Fixes parsing of some netCDF timestamps (#217)
 
+-   Fixes return value of `FitWave()` to always return integer `k`. 
+
 # metR 0.18.3
 
 ## Bug fixes

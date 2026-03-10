@@ -141,7 +141,7 @@ FitWave <- function(y, k = 1) {
 
   if (any(is.na(y))) {
     nas <- rep(NA_real_, length(k))
-    return(list(amplitude = nas, phase = nas, k = k, r2 = nas))
+    return(list(amplitude = nas, phase = nas, k = as.integer(k), r2 = nas))
   }
 
   f <- fft(y)
@@ -161,7 +161,7 @@ FitWave <- function(y, k = 1) {
   r[1] <- 0
   k <- k + 1
 
-  ret <- list(amp[k], phase[k], k - 1, r[k])
+  ret <- list(amp[k], phase[k], as.integer(k - 1), r[k])
   names(ret) <- c("amplitude", "phase", "k", "r2")
   return(ret)
 }

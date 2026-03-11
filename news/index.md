@@ -8,6 +8,9 @@
   gets a `start` argument to manually specify starting locations for the
   integration.
 
+- [`geom_streamline()`](https://eliocamp.github.io/metR/reference/geom_streamline.md)
+  handles groups defined in different grids better.
+
 ### Bug fixes
 
 - Errors in the mismatched spatial positioning of

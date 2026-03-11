@@ -269,12 +269,17 @@ StatStreamline <- ggplot2::ggproto(
   ggplot2::Stat,
   required_aes = c("x", "y", "dx", "dy"),
   setup_params = function(data, params) {
-    # M <- with(data, max(Mag(dx, dy), na.rm = T))
     m <- with(data, mean(Mag(dx, dy), na.rm = TRUE)) # No me gustaaaa
-    r <- min(
-      ggplot2::resolution(data$x, zero = FALSE),
-      ggplot2::resolution(data$y, zero = FALSE)
-    )
+
+    # Supports using different (regular) grids for different groups,
+    # but uses the same paramters for all to make fair comparisons
+    r <- data.table::as.data.table(data)[,
+      .(
+        rx = ggplot2::resolution(x, zero = FALSE),
+        ry = ggplot2::resolution(y, zero = FALSE)
+      ),
+      by = group
+    ][, min(rx, ry)]
 
     if (is.null(params$dt)) {
       params$dt <- r / m / params$res
@@ -292,6 +297,16 @@ StatStreamline <- ggplot2::ggproto(
     return(params)
   },
   setup_data = function(data, params) {
+    regular_test <- data.table::as.data.table(data)[,
+      .(is_regular = .is.regular_grid(x, y)),
+      by = group
+    ]
+    if (any(!regular_test$is_regular)) {
+      stopf(
+        "'x' and 'y' do not define a regular grid. If using multiple groups with different grids, set the 'group' aesthetic explicitly."
+      )
+    }
+
     data$dx[is.na(data$dx)] <- 0
     data$dy[is.na(data$dy)] <- 0
     data

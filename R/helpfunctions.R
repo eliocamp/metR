@@ -296,7 +296,7 @@ if (getRversion() >= "2.15.1") {
   xs <- data.table::uniqueN(data$x)
   ys <- data.table::uniqueN(data$y)
 
-  # Conditinos for regular grid
+  # Conditions for regular grid
   # 1. each y has the same number of unique values of x
   # 2. each x has the same number of unique values of y
   regularity <- sum(abs(ys - ny)) == 0 & sum(abs(xs - nx)) == 0

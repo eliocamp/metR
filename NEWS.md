@@ -4,6 +4,8 @@
 
 -  `geom_streamline()` gets a `start` argument to manually specify starting locations for the integration. 
 
+-   `geom_streamline()` handles groups defined in different grids better. 
+
 ## Bug fixes
 
 -   Errors in the mismatched spatial positioning of  `WaveFlux()` calculation results and the internal calculation of the Coriolis parameter(`f`) have been corrected. Additionally, robust adjustments have been made to data at low latitudes (near the equator).
@@ -11,6 +13,8 @@
 -   Fixes parsing of some netCDF timestamps (#217).
 
 -   Fixes return value of `FitWave()` to always return integer `k`. 
+
+
 
 # metR 0.18.3
 

@@ -87,7 +87,7 @@ test_that("Streamline ignores irregular grids", {
   g2 <- ggplot(geo, aes(lon, lat)) +
     geom_streamline(aes(dx = dlon(u, lat), dy = dlat(v)), L = 20)
 
-  expect_warning(
+  expect_error(
     invisible(print(g)),
     "'x' and 'y' do not define a regular grid."
   )

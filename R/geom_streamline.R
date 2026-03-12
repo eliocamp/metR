@@ -298,7 +298,7 @@ StatStreamline <- ggplot2::ggproto(
   },
   setup_data = function(data, params) {
     regular_test <- data.table::as.data.table(data)[,
-      .(is_regular = .is.regular_grid(x, y)),
+      .(is_regular = .is.regular_grid(x, y, dups_allowed = TRUE)),
       by = group
     ]
     if (any(!regular_test$is_regular)) {

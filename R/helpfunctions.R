@@ -288,7 +288,7 @@ if (getRversion() >= "2.15.1") {
 }
 
 
-.is.regular_grid <- function(x, y) {
+.is.regular_grid <- function(x, y, dups_allowed = FALSE) {
   data <- data.table::data.table(x = x, y = y)
   nx <- data[, data.table::uniqueN(x), by = y]$V1
   ny <- data[, data.table::uniqueN(y), by = x]$V1
@@ -300,6 +300,10 @@ if (getRversion() >= "2.15.1") {
   # 1. each y has the same number of unique values of x
   # 2. each x has the same number of unique values of y
   regularity <- sum(abs(ys - ny)) == 0 & sum(abs(xs - nx)) == 0
+
+  if (dups_allowed) {
+    return(regularity)
+  }
 
   # 3. there are no duplicated values
   lengths <- data[, .N, by = .(x, y)]$N

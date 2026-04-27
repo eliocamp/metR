@@ -66,7 +66,7 @@
                         <h4 data-toc-skip class="author">Elio
 Campitelli</h4>
             
-            <h4 data-toc-skip class="date">2026-03-11</h4>
+            <h4 data-toc-skip class="date">2026-04-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/eliocamp/metR/blob/main/vignettes/Working-with-data.Rmd" class="external-link"><code>vignettes/Working-with-data.Rmd</code></a></small>
       <div class="d-none name"><code>Working-with-data.Rmd</code></div>
@@ -92,6 +92,11 @@ columns to an existing <code>data.table</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://eliocamp.github.io/metR/">metR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'data.table'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     %notin%</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># If out = "vars", returns information about the available variables and </span></span>
@@ -217,18 +222,18 @@ vectors, and singular values in a tidy format.</p>
 <span><span class="co">#&gt;   ..$ date  : Date[1:144], format: "1990-01-01" "1990-02-01" ...</span></span>
 <span><span class="co">#&gt;   ..$ PC    : Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">#&gt;   ..$ gh.t.w: num [1:144] 0.0633 -0.1145 -0.0432 0.1926 0.1539 ...</span></span>
-<span><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;pointer: 0x55cb2011ef20&gt; </span></span>
 <span><span class="co">#&gt;  $ right:Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:</span></span>
 <span><span class="co">#&gt;   ..$ lon   : num [1:8064] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...</span></span>
 <span><span class="co">#&gt;   ..$ lat   : num [1:8064] -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 ...</span></span>
 <span><span class="co">#&gt;   ..$ PC    : Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">#&gt;   ..$ gh.t.w: num [1:8064] 2.32e-04 4.67e-06 -1.17e-04 -1.47e-04 -1.12e-04 ...</span></span>
-<span><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;pointer: 0x55cb2011ef20&gt; </span></span>
 <span><span class="co">#&gt;  $ sdev :Classes 'data.table' and 'data.frame':  2 obs. of  3 variables:</span></span>
 <span><span class="co">#&gt;   ..$ PC: Ord.factor w/ 2 levels "PC1"&lt;"PC2": 1 2</span></span>
 <span><span class="co">#&gt;   ..$ sd: num [1:2] 7050 4228</span></span>
 <span><span class="co">#&gt;   ..$ r2: num [1:2] 0.318 0.114</span></span>
-<span><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   ..- attr(*, ".internal.selfref")=&lt;pointer: 0x55cb2011ef20&gt; </span></span>
 <span><span class="co">#&gt;  - attr(*, "call")= language EOF(formula = gh.t.w ~ date | lon + lat, n = 1:2, data = geopotential)</span></span>
 <span><span class="co">#&gt;  - attr(*, "class")= chr [1:2] "eof" "list"</span></span>
 <span><span class="co">#&gt;  - attr(*, "suffix")= chr "PC"</span></span>
@@ -287,7 +292,7 @@ imputation of missing data. Its interface is similar to that of
 <span><span class="co">#&gt;  $ imputed: num  3164 3163 3162 3162 3163 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "eof")= int 5</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "rmse")= num 26.6</span></span>
-<span><span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;pointer: 0x55cb2011ef20&gt;</span></span></code></pre></div>
 <p>The imputed vector is returned along with the Root Mean Square Error
 estimated from cross-validation and the number of EOFs used in the
 imputation as attributes. In this case, with 5 EOFs the imputed values

@@ -12,7 +12,7 @@ Source:
 
 person, c) c= (2021). *metR: Tools for Easier Analysis of Meteorological
 Fields*.
-[doi:10.5281/zenodo.2593516](https://doi.org/10.5281/zenodo.2593516), R
+[doi:10.5281/zenodo.2593516](https://doi.org/10.5281/zenodo.2593516). R
 package version 0.18.3.9000, <https://eliocamp.github.io/metR/>.
 
     @Manual{,

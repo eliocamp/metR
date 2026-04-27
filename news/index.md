@@ -26,6 +26,12 @@
   [`FitWave()`](https://eliocamp.github.io/metR/reference/waves.md) to
   always return integer `k`.
 
+- Fixes regression in
+  [`ReadNetCDF()`](https://eliocamp.github.io/metR/reference/ReadNetCDF.md)
+  when selecting one point.
+  ([\#219](https://github.com/eliocamp/metR/issues/219), thanks
+  [@delie0512](https://github.com/delie0512))
+
 ## metR 0.18.3
 
 CRAN release: 2025-12-09

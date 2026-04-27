@@ -42,6 +42,11 @@ Other utilities:
 ``` r
 # Zonal temperature anomaly
 library(data.table)
+#> 
+#> Attaching package: ‘data.table’
+#> The following object is masked from ‘package:base’:
+#> 
+#>     %notin%
 temperature[, .(lon = lon, air.z = Anomaly(air)), by = .(lat, lev)]
 #>           lat   lev   lon air.z
 #>         <num> <int> <num> <num>

@@ -66,6 +66,7 @@ Other ggplot2 helpers:
 ## Examples
 
 ``` r
+
 my_breaks <- MakeBreaks(10)
 my_breaks(c(1, 100))
 #>  [1]   0  10  20  30  40  50  60  70  80  90 100

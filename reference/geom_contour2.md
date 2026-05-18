@@ -365,6 +365,7 @@ Other ggplot2 helpers:
 
 ``` r
 
+
 library(ggplot2)
 
 # Breaks can be a function.

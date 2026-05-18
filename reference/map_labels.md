@@ -50,6 +50,7 @@ Other ggplot2 helpers:
 ## Examples
 
 ``` r
+
 LonLabel(0:360)
 #>   [1] "0°"    "1°E"   "2°E"   "3°E"   "4°E"   "5°E"   "6°E"   "7°E"   "8°E"  
 #>  [10] "9°E"   "10°E"  "11°E"  "12°E"  "13°E"  "14°E"  "15°E"  "16°E"  "17°E" 

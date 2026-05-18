@@ -234,6 +234,7 @@ aesthetics are in bold)
 ## Examples
 
 ``` r
+
 library(ggplot2)
 library(data.table)
 # A fresh look at the boring old volcano dataset

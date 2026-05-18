@@ -305,6 +305,7 @@ Other ggplot2 helpers:
 ## Examples
 
 ``` r
+
 library(ggplot2)
 surface <- reshape2::melt(volcano)
 ggplot(surface, aes(Var1, Var2, z = value)) +

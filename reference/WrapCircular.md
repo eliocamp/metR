@@ -50,6 +50,7 @@ Other ggplot2 helpers:
 ## Examples
 
 ``` r
+
 library(ggplot2)
 library(data.table)
 data(geopotential)

@@ -128,22 +128,26 @@ use `NA` to refer to the existing minimum or maximum.
 So, if you want to get Southern Hemisphere data from the from a file
 that defines latitude as `lat`, then you can use:
 
+
     subset = list(lat = -90:0)
 
 To use dimension indices instead of values, wrap the expression in
 [`base::I()`](https://rdrr.io/r/base/AsIs.html). For example to read the
 first 10 timesteps of a file:
 
+
     subset = list(time = I(1, 10))
 
 Negative indices are interpreted as starting from the end. So to read
 the last 10 timesteps of a file:
+
 
     subset = list(time = I(-10, 0))
 
 More complex subsetting operations are supported. If you want to read
 non-contiguous chunks of data, you can specify each chunk into a list
 inside `subset`. For example this subset
+
 
     subset = list(list(lat = -90:-70, lon = 0:60),
                   list(lat = 70:90, lon = 300:360))
@@ -152,10 +156,12 @@ will return two contiguous chunks: one on the South-West corner and one
 on the North-East corner. Alternatively, if you want to get the four
 corners that are combination of those two conditions,
 
+
     subset = list(lat = list(-90:-70, 70:90),
                   lon = list(0:60, 300:360))
 
 Both operations can be mixed together. So for example this
+
 
     subset = list(list(lat = -90:-70,
                        lon = 0:60),
@@ -170,6 +176,7 @@ define one contiguous chunk. In the above example, `time` defines two
 temporal ranges that every subset of data will have.
 
 The above example, then, is equivalent to
+
 
     subset = list(list(lat = -90:-70,
                        lon = 0:60,

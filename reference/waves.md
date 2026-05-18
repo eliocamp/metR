@@ -141,6 +141,7 @@ Other meteorology functions:
 ## Examples
 
 ``` r
+
 # Build a wave with specific wavenumber profile
 waves <- list(k = 1:10,
               amplitude = rnorm(10)^2,

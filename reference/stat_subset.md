@@ -180,6 +180,7 @@ Other ggplot2 helpers:
 ## Examples
 
 ``` r
+
 library(ggplot2)
 ggplot(reshape2::melt(volcano), aes(Var1, Var2)) +
     geom_contour(aes(z = value)) +

@@ -51,6 +51,7 @@ sets a proportion of the components to zero.
 ## Examples
 
 ``` r
+
 library(ggplot2)
 # Creates a noisy version of the volcano dataset and applies the smooth
 volcano <- reshape2::melt(datasets::volcano, value.name = "original")

@@ -36,6 +36,7 @@ dy(dlat, a = 6731000)
 ## Examples
 
 ``` r
+
 library(data.table)
 data(geopotential)
 geopotential <- geopotential[date == date[1]]

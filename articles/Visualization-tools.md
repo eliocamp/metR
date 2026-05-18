@@ -6,6 +6,7 @@ These are a set of functions that interface with
 better plotting of meteorological (an other) fields.
 
 ``` r
+
 # Packages and data use throught 
 library(metR)
 library(ggplot2)
@@ -62,6 +63,7 @@ as the `breaks` argument allows you to control not only the binwidth,
 but also which levels **not** to draw.
 
 ``` r
+
 ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
     geom_contour_fill(breaks = MakeBreaks(binwidth = 2, exclude = 0)) +
     scale_fill_divergent(breaks = MakeBreaks(binwidth = 2, exclude = 0))
@@ -79,6 +81,7 @@ will work fine with missing values, but they will leave a somewhat ugly
 empty patch when they are found.
 
 ``` r
+
 data(volcano)
 volcano <- setDT(reshape2::melt(volcano))
 volcano[, value.gap := value]
@@ -99,6 +102,7 @@ number, or `TRUE`, in which case it will use
 to interpolate the missing values.
 
 ``` r
+
 ggplot(volcano, aes(Var1, Var2, z = value.gap)) +
     geom_contour_fill(na.fill = TRUE) 
 #> Warning: Imputing missing values.
@@ -117,6 +121,7 @@ coordinate system, but it is regular on the x y coordinates which is a
 lambertian grid.
 
 ``` r
+
 data(surface)
 ggplot(surface, aes(lon, lat)) +
     geom_point(aes(color = height))
@@ -125,6 +130,7 @@ ggplot(surface, aes(lon, lat)) +
 ![](Visualization-tools_files/figure-html/unnamed-chunk-5-1.png)
 
 ``` r
+
 
 ggplot(surface, aes(x, y)) +
     geom_point(aes(color = height))
@@ -138,6 +144,7 @@ needs {[proj4](https://cran.r-project.org/package=proj4)} to be
 installed).
 
 ``` r
+
 proj_string <- "+proj=lcc +lat_1=-30.9659996032715 +lat_2=-30.9659996032715 +lat_0=-30.9660034179688 +lon_0=-63.5670013427734 +a=6370000 +b=6370000"
 
 ggplot(surface, aes(x, y)) +
@@ -147,6 +154,7 @@ ggplot(surface, aes(x, y)) +
 ![](Visualization-tools_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
+
 
 ggplot(surface, aes(x, y)) +
     geom_contour_fill(aes(z = height), proj = proj_string)
@@ -165,6 +173,7 @@ contours to the interior of the polygon. Clipping is done after `proj`
 is applied.
 
 ``` r
+
 argentina <- rnaturalearth::ne_countries(country = "argentina", returnclass = "sf")
 ggplot(surface, aes(x, y)) +
     geom_contour_fill(aes(z = height), proj = proj_string, clip = argentina) 
@@ -186,6 +195,7 @@ dataset of irregularly spaced points. Using kriging,
 can recover the general shape.
 
 ``` r
+
 set.seed(42)
 
 some_volcano <- volcano[sample(.N, .N/7)]   # select 70% of the points
@@ -199,6 +209,7 @@ ggplot(some_volcano, aes(Var1, Var2)) +
 ![](Visualization-tools_files/figure-html/unnamed-chunk-8-1.png)
 
 ``` r
+
 
 ggplot(some_volcano, aes(Var1, Var2)) +
     geom_contour_fill(aes(z = value), kriging = TRUE) +
@@ -222,6 +233,7 @@ With the default, separation between levels is always the same. Good for
 comparison, but in this case the panel on the left lacks detail.
 
 ``` r
+
 ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     scale_fill_divergent() +
@@ -234,6 +246,7 @@ With `global.breaks = FALSE`, binwidth is no longer the same in each
 panel and now you can see more detail in the leftmost panel.
 
 ``` r
+
 ggplot(temperature[lev %in% c(1000, 300)], aes(lon, lat, z = air.z)) +
     geom_contour_fill(global.breaks = FALSE) +
     scale_fill_divergent() +
@@ -257,6 +270,7 @@ corresponds to the midpoint of the levels while the latter is an ordered
 factor that represents the range of the contour.
 
 ``` r
+
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill()
 ```
@@ -264,6 +278,7 @@ ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
 ![](Visualization-tools_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
+
 
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill(aes(fill = after_stat(level)))
@@ -288,6 +303,7 @@ A third important computed variable is `level_d`, which is identical to
 automatically.
 
 ``` r
+
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill(aes(fill = after_stat(level_d)))
 ```
@@ -307,6 +323,7 @@ can be use to automatically add text or labels to the flattest part of a
 contour.
 
 ``` r
+
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     geom_contour(color = "black") +
@@ -331,6 +348,7 @@ doesn’t know it’s being labelled;
 addresses this issue by allowing you to draw a stroke around the text.
 
 ``` r
+
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     geom_contour2(color = "black") +
@@ -367,6 +385,7 @@ placement functions:
   It puts the label at every point. Probably is best not to use it.
 
 ``` r
+
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     geom_contour2(color = "black") +
@@ -385,6 +404,7 @@ specially in black and white plots. It also allows for photocopy safe
 plots with divergent colour palettes, and it just looks cool.
 
 ``` r
+
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill() +
     geom_contour_tanaka() +
@@ -408,6 +428,7 @@ For example, it can be used if you have a correlation field and want to
 mark only the points with significant correlations:
 
 ``` r
+
 data(geopotential)    # geopotential height at 700hPa for the Southern Hemisphere. 
 
 ggplot(geopotential[, gh.base := gh[lon == 120 & lat == -50], by = date][
@@ -425,6 +446,7 @@ ggplot(geopotential[, gh.base := gh[lon == 120 & lat == -50], by = date][
 Another possible use it to quickly mask missing values.
 
 ``` r
+
 ggplot(volcano, aes(Var1, Var2, z = value.gap)) +
     geom_contour_fill(na.fill = TRUE) +
     stat_subset(aes(subset = is.na(value.gap)), geom = "raster", 
@@ -461,6 +483,7 @@ coordinates.
 So, as an example, we can plot the temperature gradient like this:
 
 ``` r
+
 temperature[, c("t.dx", "t.dy") := Derivate(air.z ~ lon + lat,
                                             cyclical = c(TRUE, FALSE)), 
             by = lev]
@@ -481,6 +504,7 @@ each arrow points perpendicular to the contours even if we change the
 coordinate system.
 
 ``` r
+
 g + coord_polar()
 ```
 
@@ -492,6 +516,7 @@ height it makes more sense to use
 (or `geom_vector(preserve.dir = TRUE)`)
 
 ``` r
+
 ggplot(temperature[lon %between% c(100, 200) & lat == -50], aes(lon, lev)) + 
     geom_arrow(aes(dx = dx(t.dx, lat), dy = dy(t.dy)), skip = 1) +
     scale_y_level() +
@@ -516,6 +541,7 @@ intuitive way of visualizing vector fields.
 computes streamlines via Euler integration.
 
 ``` r
+
 (g <- ggplot(temperature[lev == 500], aes(lon, lat)) +
      geom_contour_fill(aes(z = air.z)) +
      geom_streamline(aes(dx = t.dy, dy = -t.dx), L = 10, res = 2,   
@@ -539,6 +565,7 @@ an easy way of doing this. This tight coupling also means that they are
 robust to coordinate transformations.
 
 ``` r
+
 g + coord_polar()
 ```
 
@@ -551,6 +578,7 @@ can be used to visualize information about the field in each point, and
 to give a sense of direction without arrows.
 
 ``` r
+
 ggplot(temperature[lev == 500], aes(lon, lat)) +
     geom_streamline(aes(dx = t.dy, dy = -t.dx, size = after_stat(step), 
                         alpha = after_stat(step),
@@ -588,6 +616,7 @@ discussed previously– is a discrete variable. With that, one can use
 to get a nice looking guide.
 
 ``` r
+
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill(aes(fill = after_stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
     guides(fill = guide_colorsteps())
@@ -605,6 +634,7 @@ For that, the solution is to use
 [`scale_fill_discretised()`](https://eliocamp.github.io/metR/reference/discretised_scale.md):
 
 ``` r
+
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill(aes(fill = after_stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
     scale_fill_discretised()
@@ -618,6 +648,7 @@ referencing the continuous values. For example, using a divergent scale
 and setting the midpoint.
 
 ``` r
+
 ggplot(temperature[lev == 300], aes(lon, lat, z = air.z)) +
     geom_contour_fill(aes(fill = after_stat(level)), breaks = c(-10, -8, -6, -2, -1, 0, 6, 8, 10)) +
     scale_fill_divergent_discretised(midpoint = 3)
@@ -645,6 +676,7 @@ To see how this scales work, let’s visualize the vertical distribution
 of temperature anomalies from the zonal mean.
 
 ``` r
+
 # Plot made with base ggplot
 (g <- ggplot(temperature[lon %~% 180], aes(lat, lev, z = air.z)) +
      geom_contour2(aes(color = after_stat(level))))
@@ -673,6 +705,7 @@ These scales default to printing no label, since usually the dimensions
 are understood by the shape of the plot.
 
 ``` r
+
 g + 
     scale_y_level() +
     scale_x_latitude(ticks = 15, limits = c(-90, 90)) +
@@ -696,6 +729,7 @@ the data per se, but it provides an intuitive representation of hills
 and valleys that can be used as a background for plotting actual data.
 
 ``` r
+
 ggplot(volcano, aes(Var1, Var2)) +
     geom_relief(aes(z = value))
 ```

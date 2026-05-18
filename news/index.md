@@ -11,6 +11,15 @@
 - [`geom_streamline()`](https://eliocamp.github.io/metR/reference/geom_streamline.md)
   handles groups defined in different grids better.
 
+- When reading multiple files,
+  [`ReadNetCDF()`](https://eliocamp.github.io/metR/reference/ReadNetCDF.md)
+  will add a “file” column that uses the names of the vector of files
+  (if it has).
+
+- Reading multiple files with
+  [`ReadNetCDF()`](https://eliocamp.github.io/metR/reference/ReadNetCDF.md)
+  does not require `furrr` but will use it if it’s installed.
+
 ### Bug fixes
 
 - Errors in the mismatched spatial positioning of

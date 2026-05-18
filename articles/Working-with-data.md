@@ -16,6 +16,7 @@ also return an `array` with named dimensions or a `vector`, for the case
 of adding new columns to an existing `data.table`.
 
 ``` r
+
 library(metR)
 library(data.table)
 #> 
@@ -48,6 +49,7 @@ it.
 can also read only a (continuous) subset of the data.
 
 ``` r
+
 air <- ReadNetCDF(file, subset = list(lat = 90:0, level = 925))
 
 
@@ -64,6 +66,7 @@ returning a vector. **It is of the utmost importance that both variables
 are on the same exact grid**.
 
 ``` r
+
 air[, air2 := ReadNetCDF(file, out = "vector",
                          subset = list(lat = 90:0, level = 300))]
 
@@ -100,6 +103,7 @@ As an example, let’s look at a global relief map at 1/2° resolution with
 some ugly colour palette.
 
 ``` r
+
 # Not run because it needs internet access
 # world <- GetTopography(0, 360, 90, -90, resolution = 1)
 
@@ -120,6 +124,7 @@ Related to this problem,
 returns a logical vector with `TRUE` if a point is over land.
 
 ``` r
+
 air[, land := MaskLand(lon, lat)]
 
 ggplot(air, aes(lon, lat)) +
@@ -133,6 +138,7 @@ With this, we can compare mean temperature over land and over sea by
 latitude.
 
 ``` r
+
 ggplot(air[, .(air = mean(air) - 273.15), by = .(lat, land)],
        aes(lat, air)) +
   geom_line(aes(color = land))
@@ -161,6 +167,7 @@ performs a Singular Value Decomposition of the data and returns the left
 and right singular vectors, and singular values in a tidy format.
 
 ``` r
+
 data(geopotential)
 # Weigthed geopotential anomaly
 geopotential[, gh.t.w := Anomaly(gh)*sqrt(cos(lat*pi/180)), by = .(lon, lat, month(date))]
@@ -172,18 +179,18 @@ str(eof)
 #>   ..$ date  : Date[1:144], format: "1990-01-01" "1990-02-01" ...
 #>   ..$ PC    : Ord.factor w/ 2 levels "PC1"<"PC2": 1 1 1 1 1 1 1 1 1 1 ...
 #>   ..$ gh.t.w: num [1:144] 0.0633 -0.1145 -0.0432 0.1926 0.1539 ...
-#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55cb2011ef20> 
+#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55b121965f20> 
 #>  $ right:Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:
 #>   ..$ lon   : num [1:8064] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...
 #>   ..$ lat   : num [1:8064] -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 ...
 #>   ..$ PC    : Ord.factor w/ 2 levels "PC1"<"PC2": 1 1 1 1 1 1 1 1 1 1 ...
 #>   ..$ gh.t.w: num [1:8064] 2.32e-04 4.67e-06 -1.17e-04 -1.47e-04 -1.12e-04 ...
-#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55cb2011ef20> 
+#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55b121965f20> 
 #>  $ sdev :Classes 'data.table' and 'data.frame':  2 obs. of  3 variables:
 #>   ..$ PC: Ord.factor w/ 2 levels "PC1"<"PC2": 1 2
 #>   ..$ sd: num [1:2] 7050 4228
 #>   ..$ r2: num [1:2] 0.318 0.114
-#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55cb2011ef20> 
+#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55b121965f20> 
 #>  - attr(*, "call")= language EOF(formula = gh.t.w ~ date | lon + lat, n = 1:2, data = geopotential)
 #>  - attr(*, "class")= chr [1:2] "eof" "list"
 #>  - attr(*, "suffix")= chr "PC"
@@ -204,6 +211,7 @@ from the (scaled) right singular vector.
 For completion, let’s plot each Principal Component.
 
 ``` r
+
 ggplot(eof$right, aes(lon, lat)) +
   geom_contour_fill(aes(z = gh.t.w), binwidth = 0.01) +
   scale_fill_divergent() +
@@ -214,6 +222,7 @@ ggplot(eof$right, aes(lon, lat)) +
 ![](Working-with-data_files/figure-html/unnamed-chunk-8-1.png)
 
 ``` r
+
 
 ggplot(eof$left, aes(date, gh.t.w)) +
   geom_line(aes(color = PC)) +
@@ -241,6 +250,7 @@ missing data. Its interface is similar to that of
 returns a vector of imputed values.
 
 ``` r
+
 geopotential <- geopotential[]
 geopotential[sample(1:.N, .N*0.8), gh.na := gh]
 
@@ -257,7 +267,7 @@ str(geopotential)
 #>  $ imputed: num  3164 3163 3162 3162 3163 ...
 #>   ..- attr(*, "eof")= int 5
 #>   ..- attr(*, "rmse")= num 26.6
-#>  - attr(*, ".internal.selfref")=<pointer: 0x55cb2011ef20>
+#>  - attr(*, ".internal.selfref")=<pointer: 0x55b121965f20>
 ```
 
 The imputed vector is returned along with the Root Mean Square Error
@@ -274,6 +284,7 @@ grid. It’s easy to interpolate multiple values with the formula
 interface.
 
 ``` r
+
 # new grid
 x.out <- seq(0, 360, by = 10)
 y.out <- seq(-90, 0, by = 10)
@@ -286,6 +297,7 @@ To add interpolated values to an existing `data.table` use
 `grid = FALSE`.
 
 ``` r
+
 geopotential[, gh.new := Interpolate(gh ~ lon + lat, lon, lat, 
                                      data = interpolated[date == d],
                                      grid = FALSE)$gh, 
@@ -303,6 +315,7 @@ multidimensional data. It has support for cyclical boundary conditions
 and for the special case of spherical coordinates (think: Earth).
 
 ``` r
+
 geopotential[date == date[1],    # think: gh as a function of lon and lat
              c("gh.dlon", "gh.dlat") := Derivate(gh ~ lon + lat, 
                                                  cyclical = c(TRUE, FALSE), 
@@ -333,6 +346,7 @@ Finally, the function
 computes geostrophic wind from geopotential height.
 
 ``` r
+
 geopotential[date == date[1], c("u", "v") := GeostrophicWind(gh, lon, lat)]
 
 ggplot(geopotential[date == date[1]], aes(lon, lat)) +
@@ -366,6 +380,7 @@ For example,
 uses the ideal gas law to compute pressure, temperature or density.
 
 ``` r
+
 # Density of air at 20°C and 1030hPa.
 (rho <- IdealGas(1013*100, 20 + 273.15))
 #> [1] 1.203788
@@ -382,6 +397,7 @@ temperature and dewpoint, then saturation mixing ratio from pressure and
 temperature and finally the actual mixing ratio.
 
 ``` r
+
 # Relative humidity from T and Td
 t <- 25 + 273.15
 td <- 20 + 273.15

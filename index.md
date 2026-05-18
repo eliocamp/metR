@@ -30,12 +30,14 @@ please bear that in mind.
 You can install metR from CRAN with:
 
 ``` r
+
 install.packages("metR")
 ```
 
 Or the development version with:
 
 ``` r
+
 if (!requireNamespace("pak", quietly = TRUE)) {
     install.packages("pak")
 }
@@ -56,6 +58,7 @@ If you use metR in your research, please consider citing it. You can get
 citation information with
 
 ``` r
+
 citation("metR")
 #> To cite metR in publications use:
 #> 
@@ -81,6 +84,7 @@ associated with this field and plot the field with filled contours and
 the wind with streamlines.
 
 ``` r
+
 library(metR)
 library(data.table)
 library(ggplot2)
@@ -112,6 +116,7 @@ ggplot(aao$left, aes(lon, lat)) +
 ![](reference/figures/field-1.png)
 
 ``` r
+
 # AAO signal
 ggplot(aao$right, aes(date, gh.t.w)) +
     geom_line() +

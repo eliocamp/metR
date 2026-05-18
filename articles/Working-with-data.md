@@ -179,18 +179,18 @@ str(eof)
 #>   ..$ date  : Date[1:144], format: "1990-01-01" "1990-02-01" ...
 #>   ..$ PC    : Ord.factor w/ 2 levels "PC1"<"PC2": 1 1 1 1 1 1 1 1 1 1 ...
 #>   ..$ gh.t.w: num [1:144] 0.0633 -0.1145 -0.0432 0.1926 0.1539 ...
-#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55b121965f20> 
+#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55739139cf20> 
 #>  $ right:Classes 'data.table' and 'data.frame':  8064 obs. of  4 variables:
 #>   ..$ lon   : num [1:8064] 0 2.5 5 7.5 10 12.5 15 17.5 20 22.5 ...
 #>   ..$ lat   : num [1:8064] -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 -22.5 ...
 #>   ..$ PC    : Ord.factor w/ 2 levels "PC1"<"PC2": 1 1 1 1 1 1 1 1 1 1 ...
 #>   ..$ gh.t.w: num [1:8064] 2.32e-04 4.67e-06 -1.17e-04 -1.47e-04 -1.12e-04 ...
-#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55b121965f20> 
+#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55739139cf20> 
 #>  $ sdev :Classes 'data.table' and 'data.frame':  2 obs. of  3 variables:
 #>   ..$ PC: Ord.factor w/ 2 levels "PC1"<"PC2": 1 2
 #>   ..$ sd: num [1:2] 7050 4228
 #>   ..$ r2: num [1:2] 0.318 0.114
-#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55b121965f20> 
+#>   ..- attr(*, ".internal.selfref")=<pointer: 0x55739139cf20> 
 #>  - attr(*, "call")= language EOF(formula = gh.t.w ~ date | lon + lat, n = 1:2, data = geopotential)
 #>  - attr(*, "class")= chr [1:2] "eof" "list"
 #>  - attr(*, "suffix")= chr "PC"
@@ -267,7 +267,7 @@ str(geopotential)
 #>  $ imputed: num  3164 3163 3162 3162 3163 ...
 #>   ..- attr(*, "eof")= int 5
 #>   ..- attr(*, "rmse")= num 26.6
-#>  - attr(*, ".internal.selfref")=<pointer: 0x55b121965f20>
+#>  - attr(*, ".internal.selfref")=<pointer: 0x55739139cf20>
 ```
 
 The imputed vector is returned along with the Root Mean Square Error

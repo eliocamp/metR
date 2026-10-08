@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">metR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,9 +37,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="metr-development-version">metR (development version)<a class="anchor" aria-label="anchor" href="#metr-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.19.0" id="metr-0190">metR 0.19.0<a class="anchor" aria-label="anchor" href="#metr-0190"></a></h2>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-0-19-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-19-0"></a></h3>
 <ul><li><p><code><a href="../reference/geom_streamline.html">geom_streamline()</a></code> gets a <code>start</code> argument to manually specify starting locations for the integration.</p></li>
 <li><p><code><a href="../reference/geom_streamline.html">geom_streamline()</a></code> handles groups defined in different grids better.</p></li>
 <li><p>When reading multiple files, <code><a href="../reference/ReadNetCDF.html">ReadNetCDF()</a></code> will add a “file” column that uses the names of the vector of files (if it has).</p></li>
@@ -47,7 +47,7 @@
 <li><p>New function <code><a href="../reference/MakeBreaks.html">robust_breaks()</a></code> to make a version of a break function that is not sensitive to outliers.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-0-19-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-19-0"></a></h3>
 <ul><li><p>Errors in the mismatched spatial positioning of <code><a href="../reference/WaveFlux.html">WaveFlux()</a></code> calculation results and the internal calculation of the Coriolis parameter(<code>f</code>) have been corrected. Additionally, robust adjustments have been made to data at low latitudes (near the equator).</p></li>
 <li><p>Fixes parsing of some netCDF timestamps (<a href="https://github.com/eliocamp/metR/issues/217" class="external-link">#217</a>).</p></li>
 <li><p>Fixes return value of <code><a href="../reference/waves.html">FitWave()</a></code> to always return integer <code>k</code>.</p></li>

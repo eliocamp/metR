@@ -92,7 +92,7 @@ hectopascals and kilometres by default.
 
 Standard atmosphere—Glossary of Meteorology. (n.d.). Retrieved 22
 February 2021, from
-<https://glossary.ametsoc.org/wiki/Standard_atmosphere>
+<https://glossary.ametsoc.org/wiki/standard-atmosphere/>
 
 ## Examples
 

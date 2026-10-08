@@ -197,7 +197,7 @@ ReadNetCDF <- function(
     # looping though lots of files.
     options(readnetcdf_check_pkg = FALSE)
     on.exit(options(readnetcdf_check_pkg = TRUE))
-    if (rlang::is_installed("furr")) {
+    if (rlang::is_installed("furrr")) {
       iterator <- \(...) furrr::future_map(..., .progress = TRUE)
     } else {
       iterator <- lapply

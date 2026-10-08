@@ -472,7 +472,7 @@ setup_breaks <- function(data, breaks, bins, binwidth) {
 
   if (is.function(breaks)) {
     if (inherits(breaks, "metR_breaks_fulldata")) {
-      return(breaks(data, bins, binwidth))
+      return(breaks(data = data, binwidth = binwidth, bins = bins))
     }
     # If no parameters set, use pretty bins to calculate binwidth
     if (is.null(bins) && is.null(binwidth)) {

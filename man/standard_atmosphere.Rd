@@ -126,5 +126,5 @@ ggplot(temperature[lat == 0], aes(lon, lev)) +
 }
 \references{
 Standard atmosphere—Glossary of Meteorology. (n.d.).
-Retrieved 22 February 2021, from \url{https://glossary.ametsoc.org/wiki/Standard_atmosphere}
+Retrieved 22 February 2021, from \url{https://glossary.ametsoc.org/wiki/standard-atmosphere/}
 }

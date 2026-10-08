@@ -77,7 +77,7 @@ NULL
 #'    scale_y_level()
 #'
 #' @references Standard atmosphere—Glossary of Meteorology. (n.d.).
-#' Retrieved 22 February 2021, from \url{https://glossary.ametsoc.org/wiki/Standard_atmosphere}
+#' Retrieved 22 February 2021, from \url{https://glossary.ametsoc.org/wiki/standard-atmosphere/}
 #' @export
 #' @rdname standard_atmosphere
 sa_pressure <- function(height) standard_atmosphere$pressure(height)

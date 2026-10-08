@@ -121,12 +121,16 @@ label_placement_random <- function(
 }
 
 with_seed <- function(seed, expr) {
-  old_seed <- get(
-    ".Random.seed",
-    globalenv(),
-    mode = "integer",
-    inherits = FALSE
-  )
+  if (exists(".Random.seed", globalenv(), mode = "integer", inherits = FALSE)) {
+    old_seed <- get(
+      ".Random.seed",
+      globalenv(),
+      mode = "integer",
+      inherits = FALSE
+    )
+  } else {
+    old_seed <- NULL
+  }
 
   on.exit({
     if (is.null(old_seed)) {

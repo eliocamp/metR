@@ -4,7 +4,7 @@
 \alias{scale_stroke.colour_continuous}
 \title{Scale for stroke.colour}
 \arguments{
-\item{...}{parameters sent to \link[ggplot2:scale_colour_continuous]{ggplot2::scale_color_continuous}}
+\item{...}{parameters sent to \link[ggplot2:scale_color_continuous]{ggplot2::scale_color_continuous}}
 }
 \description{
 Scale for stroke.colour

@@ -4,7 +4,7 @@
 #'
 #' @inheritParams Interpolate
 #' @param method "interpolate" for interpolation, a numeric for constant imputation
-#' or a function that takes a vector and returns a number (like [mean])
+#' or a function that takes a vector and returns a number (like [base::mean])
 #'
 #' @details
 #' This is "soft" imputation because the imputed values are not supposed to be

@@ -127,10 +127,10 @@ ggplot(variable, aes(lon, lat)) +
 
 }
 \seealso{
-Other meteorology functions: 
-\code{\link{EOF}()},
-\code{\link{GeostrophicWind}()},
-\code{\link{WaveFlux}()},
+Other meteorology functions:
+\code{\link[=EOF]{EOF()}},
+\code{\link[=GeostrophicWind]{GeostrophicWind()}},
+\code{\link[=WaveFlux]{WaveFlux()}},
 \code{\link{thermodynamics}},
 \code{\link{waves}}
 }

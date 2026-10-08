@@ -43,10 +43,10 @@ ggplot(geopotential[date == date[1]], aes(lon, lat)) +
 
 }
 \seealso{
-Other meteorology functions: 
-\code{\link{Derivate}()},
-\code{\link{EOF}()},
-\code{\link{WaveFlux}()},
+Other meteorology functions:
+\code{\link[=Derivate]{Derivate()}},
+\code{\link[=EOF]{EOF()}},
+\code{\link[=WaveFlux]{WaveFlux()}},
 \code{\link{thermodynamics}},
 \code{\link{waves}}
 }

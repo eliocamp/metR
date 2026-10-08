@@ -109,7 +109,7 @@ latitude as \code{lat}, then you can use:
 subset = list(lat = -90:0)
 }
 
-To use dimension indices instead of values, wrap the expression in \code{\link[base:AsIs]{base::I()}}.
+To use dimension indices instead of values, wrap the expression in \code{\link[base:I]{base::I()}}.
 For example to read the first 10 timesteps of a file:
 
 \preformatted{

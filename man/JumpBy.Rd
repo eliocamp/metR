@@ -34,10 +34,10 @@ JumpBy(x, 2, fill = 6)   # even numbers replaced by 6
 
 }
 \seealso{
-Other utilities: 
-\code{\link{Anomaly}()},
-\code{\link{Mag}()},
-\code{\link{Percentile}()},
+Other utilities:
+\code{\link[=Anomaly]{Anomaly()}},
+\code{\link[=Mag]{Mag()}},
+\code{\link[=Percentile]{Percentile()}},
 \code{\link{logic}}
 }
 \concept{utilities}

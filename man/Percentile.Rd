@@ -22,10 +22,10 @@ p <- Percentile(x)
 
 }
 \seealso{
-Other utilities: 
-\code{\link{Anomaly}()},
-\code{\link{JumpBy}()},
-\code{\link{Mag}()},
+Other utilities:
+\code{\link[=Anomaly]{Anomaly()}},
+\code{\link[=JumpBy]{JumpBy()}},
+\code{\link[=Mag]{Mag()}},
 \code{\link{logic}}
 }
 \concept{utilities}

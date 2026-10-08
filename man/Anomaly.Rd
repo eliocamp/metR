@@ -28,10 +28,10 @@ temperature[, .(lon = lon, air.z = Anomaly(air)), by = .(lat, lev)]
 
 }
 \seealso{
-Other utilities: 
-\code{\link{JumpBy}()},
-\code{\link{Mag}()},
-\code{\link{Percentile}()},
+Other utilities:
+\code{\link[=JumpBy]{JumpBy()}},
+\code{\link[=Mag]{Mag()}},
+\code{\link[=Percentile]{Percentile()}},
 \code{\link{logic}}
 }
 \concept{utilities}

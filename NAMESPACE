@@ -160,23 +160,29 @@ export(stat_na)
 export(stat_streamline)
 export(stat_subset)
 import(checkmate)
-importFrom(data.table,"%between%")
-importFrom(data.table,"%chin%")
-importFrom(ggplot2,.pt)
-importFrom(ggplot2,autoplot)
-importFrom(ggplot2,guide_gengrob)
-importFrom(ggplot2,guide_geom)
-importFrom(ggplot2,guide_train)
-importFrom(ggplot2,scale_type)
+importFrom(data.table,
+  "%between%",
+  "%chin%"
+)
+importFrom(ggplot2,
+  .pt,
+  autoplot,
+  guide_gengrob,
+  guide_geom,
+  guide_train,
+  scale_type
+)
 importFrom(grid,makeContent)
 importFrom(rlang,.data)
-importFrom(stats,approx)
-importFrom(stats,as.formula)
-importFrom(stats,line)
-importFrom(stats,predict)
-importFrom(stats,rnorm)
-importFrom(stats,runif)
-importFrom(stats,screeplot)
-importFrom(stats,uniroot)
-importFrom(stats,var)
+importFrom(stats,
+  approx,
+  as.formula,
+  line,
+  predict,
+  rnorm,
+  runif,
+  screeplot,
+  uniroot,
+  var
+)
 importFrom(utils,head)

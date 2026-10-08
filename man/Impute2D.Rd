@@ -12,7 +12,7 @@ Impute2D(formula, data = NULL, method = "interpolate")
 \item{data}{optional data.frame with the data}
 
 \item{method}{"interpolate" for interpolation, a numeric for constant imputation
-or a function that takes a vector and returns a number (like \link{mean})}
+or a function that takes a vector and returns a number (like \link[base:mean]{base::mean})}
 }
 \description{
 Provides methods for (soft) imputation of missing values.

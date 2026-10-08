@@ -32,10 +32,10 @@
 #' }
 #'
 #' There are some methods implemented
-#' * [summary]
-#' * [screeplot] and the equivalent [ggplot2::autoplot]
+#' * [metR::summary]
+#' * [metR::screeplot] and the equivalent [ggplot2::autoplot]
 #' * [cut.eof]
-#' * [predict]
+#' * [metR::predict]
 #'
 #' @details
 #' Singular values can be computed over matrices so \code{formula} denotes how

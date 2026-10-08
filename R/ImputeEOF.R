@@ -241,8 +241,11 @@ ImputeEOF <- function(
   rmse <- Inf
   for (i in 2:max.iter) {
     if (requireNamespace("irlba", quietly = TRUE)) {
-      set.seed(42)
       prval <- irlba::irlba(X.rec, nv = n.eof, v = prev)
+      # irla in warm start returns more singular values than asked
+      # https://github.com/bwlewis/irlba/issues/81
+      prval$u <- prval$u[, seq_len(n.eof)]
+      prval$v <- prval$v[, seq_len(n.eof)]
     } else {
       prval <- base::svd(X.rec, nu = n.eof, nv = n.eof)
       prval$d <- prval$d[1:n.eof]

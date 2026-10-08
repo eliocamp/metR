@@ -11,13 +11,18 @@ geopotential[, gh.t := Anomaly(gh), by = .(lat, lon, month(date))]
 geopotential[, gh.gap := gh.t]
 set.seed(42)
 geopotential[sample(1:.N, .N * 0.3), gh.gap := NA]
-geopotential[,
-  gh.impute := ImputeEOF(
-    gh.gap ~ lat + lon | date,
-    max.eof = 5,
-    max.iter = 2000
+
+test_that("ImputeEOF works", {
+  expect_no_error(
+    geopotential[,
+      gh.impute := ImputeEOF(
+        gh.gap ~ lat + lon | date,
+        max.eof = 5,
+        max.iter = 2000
+      )
+    ]
   )
-]
+})
 test_that("Returns a vector in the correct order", {
   expect_equal(geopotential[!is.na(gh.gap), all(gh.gap - gh.impute == 0)], TRUE)
 })

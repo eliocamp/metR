@@ -138,7 +138,7 @@ robust_breaks <- function(
 
   fun <- function(data, binwidth = NULL, bins = NULL) {
     x <- data$z
-    r <- quantile(x, quantiles, na.rm = TRUE)
+    r <- stats::quantile(x, quantiles, na.rm = TRUE)
     
     if (is.null(bins) && is.null(binwidth)) {
       binwidth <- diff(pretty(r, 10))[1]

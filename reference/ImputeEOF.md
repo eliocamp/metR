@@ -87,6 +87,7 @@ the Sea-Surface Temperature around Corsican Island, Ocean Sci., 2,
 ## Examples
 
 ``` r
+# \donttest{  
 library(data.table)
 data(geopotential)
 geopotential <- copy(geopotential)
@@ -176,5 +177,5 @@ attr(geopotential$gh.impute, "rmse")
 # Real RMSE
 geopotential[is.na(gh.gap), sqrt(mean((gh.t - gh.impute)^2))]
 #> [1] 20.95526
-
+# }
 ```

@@ -121,7 +121,8 @@ returns a matrix.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{  </span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">geopotential</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">geopotential</span><span class="op">[</span>, <span class="va">gh.t</span> <span class="op">:=</span> <span class="fu"><a href="Anomaly.html">Anomaly</a></span><span class="op">(</span><span class="va">gh</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lat</span>, <span class="va">lon</span>, <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/IDateTime.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></span>
@@ -210,7 +211,7 @@ returns a matrix.</p>
 <span class="r-in"><span><span class="co"># Real RMSE</span></span></span>
 <span class="r-in"><span><span class="va">geopotential</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gh.gap</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">gh.t</span> <span class="op">-</span> <span class="va">gh.impute</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20.95526</span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

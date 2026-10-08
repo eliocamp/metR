@@ -197,7 +197,7 @@ StatContourFill <- ggplot2::ggproto(
       proj.latlon = proj.latlon
     ))
 
-    cont[, int.level := (level_high + level_low) / 2]
+    cont[, int.level := get_middle(level)]
     cont[, level_mid := int.level]
     cont[, nlevel := level_high / max(level_high)]
 

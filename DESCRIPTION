@@ -1,6 +1,6 @@
 Package: metR
 Title: Tools for Easier Analysis of Meteorological Fields
-Version: 0.19.0
+Version: 0.19.0.9000
 Authors@R: 
     person("Elio", "Campitelli", , "eliocampitelli@gmail.com", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0002-7742-9230"))

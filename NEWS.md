@@ -10,6 +10,8 @@
 
 - Reading multiple files with `ReadNetCDF()` does not require `furrr` but will use it if it's installed.
 
+- New function `robust_breaks()` to make a version of a break function that is not sensitive to outliers. 
+
 ## Bug fixes
 
 - Errors in the mismatched spatial positioning of `WaveFlux()` calculation results and the internal calculation of the Coriolis parameter(`f`) have been corrected.

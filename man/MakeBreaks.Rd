@@ -21,6 +21,10 @@ AnchorBreaks(anchor = 0, binwidth = NULL, exclude = NULL, bins = 10)
 \value{
 A function that takes a range as argument and a binwidth as an optional argument
 and returns a sequence of equally spaced intervals covering the range.
+For \code{robust_breaks}, a function to use as \code{breaks} argument in contour geoms.
+It takes a data frame containing a column \code{z}, \code{binwidth} and \code{bin}
+arguments and returns a numeric vector of breaks, possibly including
+\code{-Inf} and \code{Inf}.
 }
 \description{
 Functions that return functions suitable to use as the \code{breaks} argument in
@@ -28,7 +32,7 @@ ggplot2's continuous scales and in \link{geom_contour_fill}.
 }
 \details{
 \code{MakeBreaks} is essentially an export of the default way
-\link[ggplot2:geom_contour]{ggplot2::stat_contour} makes breaks.
+\link[ggplot2:stat_contour]{ggplot2::stat_contour} makes breaks.
 
 \code{AnchorBreaks} makes breaks starting from an \code{anchor} value and covering
 the range of the data according to \code{binwidth}.
@@ -54,23 +58,37 @@ ggplot(reshape2::melt(volcano), aes(Var1, Var2, z = value)) +
                   binwidth = binwidth) +
     geom_contour2(aes(color = after_stat(level)), breaks = AnchorBreaks(132, binwidth)) +
     scale_color_continuous(breaks = AnchorBreaks(132, binwidth))
+
+# Sample data with extremes
+surface <- reshape2::melt(volcano)
+surface$value[sample(nrow(surface), 20)] <- 1000
+
+# With regular breaks the outliers stretch the scale
+# and prevent seeing the variability of the bulk of the data
+ggplot(surface, aes(Var1, Var2, z = value)) +
+  geom_contour_fill()
+
+# Robust breaks removes those points from the break 
+# computation and allow to see the variability
+ggplot(surface, aes(Var1, Var2, z = value)) +
+  geom_contour_fill(breaks = robust_breaks())
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other ggplot2 helpers: 
-\code{\link{WrapCircular}()},
-\code{\link{geom_arrow}()},
-\code{\link{geom_contour2}()},
-\code{\link{geom_contour_fill}()},
-\code{\link{geom_label_contour}()},
-\code{\link{geom_relief}()},
-\code{\link{geom_streamline}()},
-\code{\link{guide_colourstrip}()},
+Other ggplot2 helpers:
+\code{\link[=WrapCircular]{WrapCircular()}},
+\code{\link[=geom_arrow]{geom_arrow()}},
+\code{\link[=geom_contour2]{geom_contour2()}},
+\code{\link[=geom_contour_fill]{geom_contour_fill()}},
+\code{\link[=geom_label_contour]{geom_label_contour()}},
+\code{\link[=geom_relief]{geom_relief()}},
+\code{\link[=geom_streamline]{geom_streamline()}},
+\code{\link[=guide_colourstrip]{guide_colourstrip()}},
 \code{\link{map_labels}},
-\code{\link{reverselog_trans}()},
+\code{\link[=reverselog_trans]{reverselog_trans()}},
 \code{\link{scale_divergent}},
 \code{\link{scale_longitude}},
-\code{\link{stat_na}()},
-\code{\link{stat_subset}()}
+\code{\link[=stat_na]{stat_na()}},
+\code{\link[=stat_subset]{stat_subset()}}
 }
 \concept{ggplot2 helpers}

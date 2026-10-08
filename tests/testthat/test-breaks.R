@@ -22,3 +22,14 @@ test_that("breaks work with binwith = NULL", {
   expect_equal(AnchorBreaks(1)(c(1, 5), 1), 0:6)
   expect_equal(MakeBreaks()(c(1, 5), 1), 1:5)
 })
+
+
+test_that("robust breaks work", {
+  z <- metR:::with_seed(42, rnorm(100))
+  df <- data.frame(z = c(50, -50, z))
+
+  expect_equal(
+    robust_breaks()(df, binwidth = 0.5),
+    c(-Inf, seq(-3, 2.5, by = 0.5), Inf)
+  )
+})

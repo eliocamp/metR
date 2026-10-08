@@ -1,3 +1,6 @@
+This is a resubmission. 
+In this submission I've changed the URL that was moved.
+
 ## Test environments
 
 * local installation of Ubuntu 24.04 R version 4.6.0

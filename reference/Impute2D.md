@@ -22,7 +22,7 @@ Impute2D(formula, data = NULL, method = "interpolate")
 
   "interpolate" for interpolation, a numeric for constant imputation or
   a function that takes a vector and returns a number (like
-  [mean](https://rdrr.io/r/base/mean.html))
+  [base::mean](https://rdrr.io/r/base/mean.html))
 
 ## Details
 

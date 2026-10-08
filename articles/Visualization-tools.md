@@ -451,6 +451,7 @@ ggplot(volcano, aes(Var1, Var2, z = value.gap)) +
     geom_contour_fill(na.fill = TRUE) +
     stat_subset(aes(subset = is.na(value.gap)), geom = "raster", 
                 fill = "#a56de2")
+#> Warning: Imputing missing values.
 ```
 
 ![](Visualization-tools_files/figure-html/unnamed-chunk-18-1.png)

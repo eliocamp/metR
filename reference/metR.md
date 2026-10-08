@@ -42,3 +42,8 @@ Useful links:
 
 **Maintainer**: Elio Campitelli <eliocampitelli@gmail.com>
 ([ORCID](https://orcid.org/0000-0002-7742-9230))
+
+Authors:
+
+- Elio Campitelli <eliocampitelli@gmail.com>
+  ([ORCID](https://orcid.org/0000-0002-7742-9230))

@@ -345,22 +345,6 @@ Other ggplot2 helpers:
 [`stat_na()`](https://eliocamp.github.io/metR/reference/stat_na.md),
 [`stat_subset()`](https://eliocamp.github.io/metR/reference/stat_subset.md)
 
-Other ggplot2 helpers:
-[`MakeBreaks()`](https://eliocamp.github.io/metR/reference/MakeBreaks.md),
-[`WrapCircular()`](https://eliocamp.github.io/metR/reference/WrapCircular.md),
-[`geom_arrow()`](https://eliocamp.github.io/metR/reference/geom_arrow.md),
-[`geom_contour_fill()`](https://eliocamp.github.io/metR/reference/geom_contour_fill.md),
-[`geom_label_contour()`](https://eliocamp.github.io/metR/reference/geom_text_contour.md),
-[`geom_relief()`](https://eliocamp.github.io/metR/reference/geom_relief.md),
-[`geom_streamline()`](https://eliocamp.github.io/metR/reference/geom_streamline.md),
-[`guide_colourstrip()`](https://eliocamp.github.io/metR/reference/guide_colourstrip.md),
-[`map_labels`](https://eliocamp.github.io/metR/reference/map_labels.md),
-[`reverselog_trans()`](https://eliocamp.github.io/metR/reference/reverselog_trans.md),
-[`scale_divergent`](https://eliocamp.github.io/metR/reference/scale_divergent.md),
-[`scale_longitude`](https://eliocamp.github.io/metR/reference/scale_longitude.md),
-[`stat_na()`](https://eliocamp.github.io/metR/reference/stat_na.md),
-[`stat_subset()`](https://eliocamp.github.io/metR/reference/stat_subset.md)
-
 ## Examples
 
 ``` r

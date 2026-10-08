@@ -40,12 +40,6 @@ Other utilities:
 [`Percentile()`](https://eliocamp.github.io/metR/reference/Percentile.md),
 [`logic`](https://eliocamp.github.io/metR/reference/logic.md)
 
-Other utilities:
-[`Anomaly()`](https://eliocamp.github.io/metR/reference/Anomaly.md),
-[`JumpBy()`](https://eliocamp.github.io/metR/reference/JumpBy.md),
-[`Percentile()`](https://eliocamp.github.io/metR/reference/Percentile.md),
-[`logic`](https://eliocamp.github.io/metR/reference/logic.md)
-
 ## Examples
 
 ``` r

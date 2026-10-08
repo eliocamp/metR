@@ -141,9 +141,9 @@ geopotential[, gh.impute := ImputeEOF(gh.gap ~ lat + lon | date, max.eof,
                                       verbose = TRUE, max.iter = 2000)]
 #> With 1 eof  - rmse = 27.147
 #> With 2 eofs - rmse = 25.139
-#> With 3 eofs - rmse = 23.658
-#> With 4 eofs - rmse = 22.264
-#> With 5 eofs - rmse = 21.105
+#> With 3 eofs - rmse = 23.763
+#> With 4 eofs - rmse = 22.374
+#> With 5 eofs - rmse = 21.296
 #>           lon   lat   lev       gh       date       gh.t     gh.gap  gh.impute
 #>         <num> <num> <int>    <num>     <Date>      <num>      <num>      <num>
 #>      1:   0.0 -22.5   700 3163.839 1990-01-01  -3.978597         NA   1.214005
@@ -172,7 +172,7 @@ ggplot(na.sample, aes(gh.t, gh.impute)) +
 
 # Estimated RMSE
 attr(geopotential$gh.impute, "rmse")
-#> [1] 21.10459
+#> [1] 21.29588
 # Real RMSE
 geopotential[is.na(gh.gap), sqrt(mean((gh.t - gh.impute)^2))]
 #> [1] 20.95526

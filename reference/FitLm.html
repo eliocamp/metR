@@ -40,7 +40,7 @@ and, optionally, standard error for each regressor."><meta property="og:image" c
     </div>
 
     <div class="ref-description section level2">
-    <p>Computes a linear regression with stats::.lm.fit and returns the estimate
+    <p>Computes a linear regression with <a href="https://rdrr.io/r/stats/lmfit.html" class="external-link">stats::.lm.fit</a> and returns the estimate
 and, optionally, standard error for each regressor.</p>
     </div>
 
@@ -136,7 +136,7 @@ of long-term trends while keeping the values in their original level.</p></li>
 <span class="r-in"><span>  <span class="va">regr</span> <span class="op">&lt;-</span> <span class="va">geopotential</span><span class="op">[</span>, <span class="fu">FitLm</span><span class="op">(</span><span class="va">gh</span>, <span class="va">date</span>, se <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    user  system elapsed </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0.201   0.000   0.201 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.256   0.000   0.255 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">regr</span><span class="op">[</span><span class="va">term</span> <span class="op">!=</span> <span class="st">"(Intercept)"</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">estimate</span>, color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">level</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
@@ -161,7 +161,7 @@ of long-term trends while keeping the values in their original level.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

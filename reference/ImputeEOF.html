@@ -175,9 +175,9 @@ returns a matrix.</p>
 <span class="r-in"><span>                                      verbose <span class="op">=</span> <span class="cn">TRUE</span>, max.iter <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> With 1 eof  - rmse = 27.147</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> With 2 eofs - rmse = 25.139</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> With 3 eofs - rmse = 23.658</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> With 4 eofs - rmse = 22.264</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> With 5 eofs - rmse = 21.105</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> With 3 eofs - rmse = 23.763</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> With 4 eofs - rmse = 22.374</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> With 5 eofs - rmse = 21.296</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           lon   lat   lev       gh       date       gh.t     gh.gap  gh.impute</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;num&gt; &lt;num&gt; &lt;int&gt;    &lt;num&gt;     &lt;Date&gt;      &lt;num&gt;      &lt;num&gt;      &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1:   0.0 -22.5   700 3163.839 1990-01-01  -3.978597         NA   1.214005</span>
@@ -206,7 +206,7 @@ returns a matrix.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Estimated RMSE</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">geopotential</span><span class="op">$</span><span class="va">gh.impute</span>, <span class="st">"rmse"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 21.10459</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 21.29588</span>
 <span class="r-in"><span><span class="co"># Real RMSE</span></span></span>
 <span class="r-in"><span><span class="va">geopotential</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gh.gap</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">gh.t</span> <span class="op">-</span> <span class="va">gh.impute</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20.95526</span>
@@ -223,7 +223,7 @@ returns a matrix.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

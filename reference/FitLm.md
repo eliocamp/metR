@@ -1,6 +1,7 @@
 # Fast estimates of linear regression
 
-Computes a linear regression with stats::.lm.fit and returns the
+Computes a linear regression with
+[stats::.lm.fit](https://rdrr.io/r/stats/lmfit.html) and returns the
 estimate and, optionally, standard error for each regressor.
 
 ## Usage
@@ -109,7 +110,7 @@ system.time({
   regr <- geopotential[, FitLm(gh, date, se = TRUE), by = .(lon, lat)]
 })
 #>    user  system elapsed 
-#>   0.201   0.000   0.201 
+#>   0.256   0.000   0.255 
 
 ggplot(regr[term != "(Intercept)"], aes(lon, lat)) +
     geom_contour(aes(z = estimate, color = after_stat(level))) +

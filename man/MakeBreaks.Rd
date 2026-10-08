@@ -3,11 +3,14 @@
 \name{MakeBreaks}
 \alias{MakeBreaks}
 \alias{AnchorBreaks}
+\alias{robust_breaks}
 \title{Functions for making breaks}
 \usage{
 MakeBreaks(binwidth = NULL, bins = 10, exclude = NULL)
 
 AnchorBreaks(anchor = 0, binwidth = NULL, exclude = NULL, bins = 10)
+
+robust_breaks(breaks = MakeBreaks(), quantiles = c(0.02, 0.98))
 }
 \arguments{
 \item{binwidth}{width of breaks}
@@ -17,6 +20,13 @@ AnchorBreaks(anchor = 0, binwidth = NULL, exclude = NULL, bins = 10)
 \item{exclude}{a vector of breaks to exclude}
 
 \item{anchor}{anchor value}
+
+\item{breaks}{A function that takes the range of the data and binwidth as input
+and returns the the breaks as output.}
+
+\item{quantiles}{Numeric vector of length 2, sorted in ascending order,
+with values between 0 and 1 representing the quantiles of \code{z} that
+define the range used to compute breaks.}
 }
 \value{
 A function that takes a range as argument and a binwidth as an optional argument
@@ -29,6 +39,9 @@ arguments and returns a numeric vector of breaks, possibly including
 \description{
 Functions that return functions suitable to use as the \code{breaks} argument in
 ggplot2's continuous scales and in \link{geom_contour_fill}.
+
+Modifies a breaks function to compute breaks using a trimmed range
+of the data to avoid extreme outliers stretching the scale.
 }
 \details{
 \code{MakeBreaks} is essentially an export of the default way

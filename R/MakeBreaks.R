@@ -121,6 +121,7 @@ AnchorBreaks <- function(
 #'   define the range used to compute breaks.
 #' 
 #' @export
+#' @rdname MakeBreaks
 robust_breaks <- function(
   breaks = MakeBreaks(),
   quantiles = c(0.02, 0.98)

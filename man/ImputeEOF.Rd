@@ -58,6 +58,7 @@ If \code{data} is a matrix, the \code{formula} argument is ignored and the funct
 returns a matrix.
 }
 \examples{
+\donttest{  
 library(data.table)
 data(geopotential)
 geopotential <- copy(geopotential)
@@ -86,7 +87,7 @@ ggplot(na.sample, aes(gh.t, gh.impute)) +
 attr(geopotential$gh.impute, "rmse")
 # Real RMSE
 geopotential[is.na(gh.gap), sqrt(mean((gh.t - gh.impute)^2))]
-
+}
 
 }
 \references{

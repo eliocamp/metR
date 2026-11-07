@@ -418,6 +418,7 @@ isoband_z_matrix <- function(data) {
   }
 
   if (!is.null(clip)) {
+    rlang::check_installed("sf", "for clipping contours")
     s2 <- suppressMessages(sf::sf_use_s2(FALSE))
     on.exit(suppressMessages(sf::sf_use_s2(s2)))
     clip <- suppressMessages(sf::st_union(sf::st_make_valid(clip)))

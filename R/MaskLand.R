@@ -45,7 +45,7 @@ MaskLand <- function(lon, lat, mask = "world", wrap = c(0, 360)) {
   assertNumeric(wrap, len = 2, add = checks)
   reportAssertions(checks)
 
-  rlang::check_installed(c("maps"), "for `MaskLand()`")
+  rlang::check_installed(c("maps", "sf"), "for `MaskLand()`")
 
   seamask <- maps::map(
     paste0("maps::", mask),

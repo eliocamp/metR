@@ -28,7 +28,6 @@ Imports:
     plyr,
     rlang,
     scales,
-    sf,
     stringr
 Suggests: 
     CFtime,
@@ -44,14 +43,15 @@ Suggests:
     rcdo,
     reshape2,
     rnaturalearth,
+    sf,
     terra,
     testthat (>= 2.1.0),
     vdiffr
 VignetteBuilder: 
     knitr
 ByteCompile: yes
+Config/roxygen2/version: 8.1.1
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-Config/roxygen2/version: 8.1.0

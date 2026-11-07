@@ -4,6 +4,8 @@
 
 ## metR 0.19.0
 
+CRAN release: 2026-10-08
+
 ### New features
 
 - [`geom_streamline()`](https://eliocamp.github.io/metR/reference/geom_streamline.md)

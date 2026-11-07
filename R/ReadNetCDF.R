@@ -592,7 +592,15 @@ try_parse_time <- function(time, units, calendar) {
     new_subset["chunks"] <- list(subset[!has_name])
   }
 
-  chunks <- suppressWarnings(purrr::cross(new_subset)) # cross is deprecated
+  grid <- do.call(
+    expand.grid,
+    c(lapply(new_subset, seq_along), list(KEEP.OUT.ATTRS = FALSE))
+  )
+  chunks <- lapply(seq_len(nrow(grid)), function(i) {
+    out <- lapply(seq_along(new_subset), function(j) new_subset[[j]][[grid[[j]][i]]])
+    names(out) <- names(new_subset)
+    out
+  })
   new_subset <- lapply(chunks, function(chunk) {
     is.chunk <- which(names(chunk) == "chunks")
     if (length(is.chunk) != 0) {

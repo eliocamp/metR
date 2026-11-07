@@ -26,7 +26,6 @@ Imports:
     lubridate,
     memoise,
     plyr,
-    purrr,
     rlang,
     scales,
     sf,
